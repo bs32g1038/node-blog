@@ -3,7 +3,7 @@ var redis = require("redis");
 
 var client = redis.createClient(6379, '127.0.0.1', {});
 
-client.auth('4@M61LUYCIxfE0WKR8ukUR$xKL$adXvD@P7OKrjb');
+// client.auth('');
 
 
 client.on('error', function (err) {
