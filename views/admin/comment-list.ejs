@@ -1,0 +1,134 @@
+<%- include header %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <section class="page-header">
+        <h1>控制台
+            <small>文档评论管理</small>
+
+        </h1>
+
+    </section>
+    <div class="panel">
+        <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
+                                                                                        aria-hidden="true">&nbsp;</span>批量删除
+        </button>
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="mini" id="selectAll"></th>
+                <th>文章标题</th>
+                <th>昵称</th>
+                <th>评论内容</th>
+                <th>创建时间</th>
+                <th>邮箱</th>
+                <th>关联用户(回复)</th>
+                <th>审核</th>
+                <th>管理</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            <% comments.forEach(function(comment){ %>
+            <tr>
+                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
+                <td><%= comment.doc_title %></td>
+                <td><%= comment.nick_name %></td>
+                <td><%= comment.content %></td>
+                <td><%= comment.create_at %></td>
+                <td><%= comment.email %></td>
+                <td><%= comment.reply %></td>
+                <td><%= comment.pass ? '通过' : '未审核' %></td>
+                <td>
+                    <% if(comment.pass){ %>
+                    <a href="/admin/comment/<%= comment._id %>/reply" class="btn btn-primary btn-xs"><span
+                                class="fa fa-fw fa-mail-reply"></span>回复</a>
+                    <% }else{ %>
+
+                    <a href="/admin/comment/pass/do" class="btn btn-primary btn-xs btn-pass" comment-id="<%= comment._id %>">
+                        <span class="fa fa-fw fa-eye"></span>通过
+                    </a>
+
+                    <% } %>
+                    <button class="btn btn-default btn-xs comment_del"
+                            comment-id=<%= comment._id %> post-id=<%= comment.doc_id %> ><span
+                                class="fa fa-fw fa-trash-o"></span>删除
+                    </button>
+                </td>
+            </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            <% if(curPage - 1 > 0 ){ %>
+            <li>
+                <a href="/admin/comment-list/page/<%= curPage - 1 %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <% } %>
+            <% for (var i = 1; i <= pageCount; i++){ %>
+            <li>
+                <a href="/admin/comment-list/page/<%= i %>"><%= i %></a>
+            </li>
+            <% } %>
+            <% if(pageCount >= curPage + 1 ){ %>
+            <li>
+                <a href="/admin/comment-list/page/<%= curPage + 1 %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('.comment_del').on('click', function () {
+
+            var comment_id = $(this).attr("comment-id");
+            var post_id = $(this).attr("post-id");
+
+            if (comment_id && post_id && confirm('确定要删除该评论吗？')) {
+                $.post('/admin/comment/del', {
+                    id: comment_id,
+                    post_id: post_id
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.msg);
+                    } else {
+                        location.href = 'comment-list';
+                    }
+                });
+            }
+        });
+
+        $('.btn-pass').on('click', function () {
+
+            var comment_id = $(this).attr("comment-id");
+
+            if (comment_id && confirm('确定要通过该评论吗？')) {
+                $.post('/admin/comment/pass/do', {
+                    id: comment_id
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.msg);
+                    } else {
+                        location.href = '/admin/comment-list';
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

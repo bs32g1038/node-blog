@@ -1,0 +1,155 @@
+/*
+ * Base structure
+ */
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+body {
+	padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+
+.navbar-fixed-top {
+	border: 0;
+}
+
+
+/*
+ * Sidebar
+ */
+
+
+/* Hide for mobile, show later */
+
+.sidebar {
+	display: none;
+}
+
+@media (min-width: 768px) {
+	.sidebar {
+		position: fixed;
+		top: 51px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		display: block;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		/* Scrollable contents if viewport is shorter than content. */
+		background-color: #f5f5f5;
+		border-right: 1px solid #eee;
+	}
+}
+
+.sky-blue {
+	background-color: #3c8dbc;
+}
+
+
+/* Sidebar navigation */
+
+.nav-sidebar {
+	margin-right: -21px;
+	/* 20px padding + 1px border */
+	margin-bottom: 20px;
+	margin-left: -20px;
+}
+
+.nav-sidebar> li> a {
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.nav-sidebar> .active> a,
+.nav-sidebar> .active> a:hover,
+.nav-sidebar> .active> a:focus {
+	color: #fff;
+	background-color: #428bca;
+}
+
+.nav-sidebar>li.header {
+	color: #fff;
+	background: #3c8dbc;
+	padding: 10px 0 10px 0;
+	text-align: center;
+}
+
+.main .page-header {
+	margin-top: 0;
+}
+.page-header>h1>small {
+    font-size: 15px;
+    display: inline-block;
+    padding-left: 4px;
+    font-weight: 300;
+}
+
+.content-header>.breadcrumb {
+	float: right;
+	background: transparent;
+	margin-top: 0px;
+	margin-bottom: 0;
+	font-size: 12px;
+	padding: 7px 5px;
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	border-radius: 2px;
+}
+
+.breadcrumb>.active {
+	color: #777;
+}
+
+.breadcrumb> li {
+	display: inline-block;
+}
+
+.nav>li>a:hover {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.navbar-brand {
+	color: #fff;
+}
+
+.navbar-nav a {
+	padding-bottom: 15px;
+	padding-top: 15px;
+	color: #fff;
+}
+
+.user-menu .user-image {
+	float: left;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	margin-right: 10px;
+	margin-top: -2px;
+}
+
+.main-footer {
+	margin-top: 60px;
+	padding: 20px 0;
+	color: #999;
+	text-align: center;
+	background-color: #f9f9f9;
+	border-top: 1px solid #e5e5e5;
+}

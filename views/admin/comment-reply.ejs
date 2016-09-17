@@ -1,0 +1,64 @@
+<%- include header %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+    <section class="page-header">
+        <h1>控制台
+            <small>文档评论管理</small>
+        </h1>
+    </section>
+    <div class="box-body">
+        <form id="form" class="form-horizontal" action="/admin/comment/<%= comment._id %>/reply-do" method="post">
+            <div class="form-group">
+                <label class="control-label col-sm-3">文章标题</label>
+                <div class="col-sm-5">
+                    <div class="form-control"><%= comment.doc_title %></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">昵称</label>
+                <div class="col-sm-5">
+                    <div class="form-control"><%= comment.nick_name %></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">邮箱</label>
+                <div class="col-sm-5">
+                    <div class="form-control"><%= comment.email %></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">评论内容</label>
+                <div class="col-sm-6">
+                    <div class="form-control" style="word-wrap: break-word;height:auto;"><%= comment.content %></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">回复：</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" cols="30" rows="6" name="reply"></textarea>
+                </div>
+            </div>
+            <input type="hidden" value=<%= comment.doc_id %> name="doc_id">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary">返回</button>
+        <button type="button" class="btn btn-primary" id="reply-btn">回复</button>
+    </div>
+    <footer class="main-footer">
+        <!-- Default to the left -->
+        <strong>Copyright © 2015 <a href="https://github.com/doramart/DoraCMS" target="_blank">DoraCMS
+                v1.1.1</a>.</strong> All rights reserved.
+    </footer>
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#reply-btn').on('click', function () {
+            $('#form').submit();
+        });
+    });
+</script>
+</body>
+
+</html>

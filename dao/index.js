@@ -1,0 +1,95 @@
+/**************************************
+ * 数据库核心操作控制
+ * 2016-7-25
+ **************************************/
+"use strict";
+
+var config = require('../common/config');
+
+//post模型
+var postModel = require('../models/post');
+//lab模型
+var labModel = require('../models/lab');
+//category模型
+var categoryModel = require('../models/category');
+//tag模型
+var tagModel = require('../models/tag');
+//comment模型
+var commentModel = require('../models/comment');
+//guestbook模型
+var guestbookModel = require('../models/guestbook');
+//link模型
+var linkModel = require('../models/link');
+//user模型
+var userModel = require('../models/user');
+
+
+//var o = {};
+//o.map = function () {
+//    this.tags.forEach(function(z){  //z即是具体的某个tag了
+//        emit(z,1);                    //对某个tag出现一次就计数一次
+//    });
+//}
+//o.reduce = function (k, vals) { return vals.length}
+//postModel.mapReduce(o, function (err, results) {
+//    console.log(results)
+//})
+
+
+//文档操作类
+var DocDao = require('./DocDao');
+//目录操作类
+var CategoryDao = require('./CategoryDao');
+//标签操作类
+var TagDao = require('./TagDao');
+//评论操作类
+var CommentDao = require('./CommentDao');
+//留言操作类
+var GuestbookDao = require('./GuestbookDao');
+//友情链接操作类
+var LinkDao = require('./LinkDao');
+//用户操作类
+var UserDao = require('./UserDao');
+
+
+//暴露接口
+
+exports.post = new DocDao(postModel);
+
+exports.lab = new DocDao(labModel);
+
+exports.category = new CategoryDao(categoryModel);
+
+exports.comment = new CommentDao(commentModel);
+
+exports.guestbook = new GuestbookDao(guestbookModel);
+
+exports.tag = new TagDao(tagModel);
+
+exports.link = new LinkDao(linkModel);
+
+
+var userDao = new UserDao(userModel);
+
+userDao.getOneByAcount(config.administrator.account, '', function (err, user) {
+
+    if (!user) {
+
+        return userDao.add(config.administrator, function (err) {
+
+            if (err) {
+
+            }
+
+            console.log("初始化成功")
+
+        })
+
+    }
+
+    console.log("管理员数据已存在，可正常运行程序")
+
+});
+
+exports.user = userDao;
+

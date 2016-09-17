@@ -1,0 +1,221 @@
+<%- include header %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+    <section class="page-header">
+        <h1>控制台
+            <small>文档管理</small>
+        </h1>
+    </section>
+    <div class="box-body">
+
+        <% if (typeof(action) !== 'undefined' && action == "edit"){ %>
+        <form class="form-horizontal" id="doc_form" action="/admin/doc/edit/<%= doc._id %>/do" method="post">
+            <% }else { %>
+            <form class="form-horizontal" id="doc_form" action="/admin/doc-publish-do" method="post">
+                <% } %>
+                <% if(typeof(editError) !== 'undefined' && editError){ %>
+                <div class="alert alert-warning text-center" role="alert">
+                    <%= editError %>
+                </div>
+                <% } %>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">文章标题</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm" id="title" name="title"
+                               value=<%= typeof(doc.title) !== 'undefined' && doc.title || '' %>>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">来源</label>
+                    <div class="radio col-sm-4">
+                        <label>
+                            <input type="radio" checked="" class="mini" name="from" value="1">原创&nbsp;
+                        </label>
+                        <label>
+                            <input type="radio" class="mini" name="from" value="2">转载
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">自定义URL</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm" id="custom_url" name="custom_url"
+                               value=<%= typeof(doc.custom_url) !== 'undefined' && doc.custom_url || '' %>>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">文章类别</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" id="category" name="category">
+
+                            <% var category = typeof(doc.category) !== 'undefined' && doc.category || '' %>
+                            ;
+                            <% for(var i = 0; i < cats.length; i++){ %>
+                            <% if (cats[i].alias == category) { %>
+                            <option value=<%= cats[i].alias %>><%= cats[i].name %></option>
+                            <% } %>
+                            <% } %>
+                            <% for(var i = 0; i < cats.length; i++){ %>
+                            <% if (cats[i].alias != category) { %>
+                            <option value=<%= cats[i].alias %>><%= cats[i].name %></option>
+                            <% } %>
+                            <% } %>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">标签</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm" name="tags"
+                               value=<%= typeof(doc.tags) !== 'undefined' && doc.tags || '' %>>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">缩略图</label>
+                    <div class="col-sm-3">
+                        <div>
+                            <div id="uploader" class="wu-example">
+                                <!--用来存放文件信息-->
+                                <div id="thelist" class="uploader-list"></div>
+                                <div class="btns">
+                                    <div id="picker">上传图片</div>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        var img_url = typeof(doc.img_url) !== 'undefined' && doc.img_url || '/uploads/default.jpg';
+                        %>
+                        <input type="hidden" value=<%= img_url %> name="img_url" id="img_url">
+                        <img src=<%= img_url %> width="121" height="170" class="img-thumbnail" id="show_img">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">内容摘要</label>
+                    <div class="col-sm-6">
+                    <textarea class="form-control input-sm" id="summary" name="summary" cols="30"
+                              rows="6"><%= typeof( doc.summary) !== 'undefined' && doc.summary || '' %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">文章详情</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control input-sm" id="content" name="content" cols="30"
+                                  rows="6"><%= typeof( doc.content) !== 'undefined' && doc.content || '' %></textarea>
+                    </div>
+                </div>
+                <input type="hidden" id="is_draft"
+                       value=<%= typeof(doc.is_draft) !== 'undefined' && doc.is_draft || "0" %> name="is_draft">
+                <input type="hidden" value=<%= flag %> name="flag">
+                <div class="modal-footer">
+                    <button id="save_draft" class="btn btn-default">存为草稿</button>
+                    <button type="submit" class="btn btn-primary">发布</button>
+                </div>
+            </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#save_draft').on('click', function () {
+                $('#is_draft').val(1);
+                $('#doc_form').submit();
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="/admin/js/webuploader.withoutimage.js"></script>
+
+    <script type="text/javascript">
+
+        var $list = $('#thelist');
+
+        var uploader = WebUploader.create({
+
+            // swf文件路径
+            swf: '/admin/js/Uploader.swf',
+            // 文件接收服务端。
+            server: '/admin/upload',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            auto: true
+        });
+        uploader.on('fileQueued', function (file) {
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            var $li = $('#' + file.id),
+                    $percent = $li.find('.progress .progress-bar');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                        '</div>' +
+                        '</div>').appendTo($li).find('.progress-bar');
+            }
+
+            $li.find('p.state').text('上传中');
+
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        uploader.on('uploadSuccess', function (file) {
+            $('#' + file.id).find('p.state').text('已上传');
+        });
+
+        uploader.on('uploadError', function (file) {
+            $('#' + file.id).find('p.state').text('上传出错');
+        });
+
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').fadeOut();
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            var $li = $('#' + file.id),
+                    $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<p class="progress"><span></span></p>')
+                        .appendTo($li)
+                        .find('span');
+            }
+
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, res) {
+            $('#' + file.id).addClass('upload-state-done');
+            $("#show_img").attr('src', res.url);
+            $("#img_url").val(res.url);
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on('uploadError', function (file) {
+            var $li = $('#' + file.id),
+                    $error = $li.find('div.error');
+
+            // 避免重复创建
+            if (!$error.length) {
+                $error = $('<div class="error"></div>').appendTo($li);
+            }
+
+            $error.text('上传失败');
+        });
+
+    </script>
+
+
+<%- include footer %>

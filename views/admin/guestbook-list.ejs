@@ -1,0 +1,129 @@
+<%- include header %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <section class="page-header">
+        <h1>控制台
+            <small>留言管理</small>
+
+        </h1>
+
+    </section>
+    <div class="panel">
+        <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
+                                                                                        aria-hidden="true">&nbsp;</span>批量删除
+        </button>
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="mini" id="selectAll"></th>
+                <th>昵称</th>
+                <th>留言内容</th>
+                <th>博主回复内容</th>
+                <th>创建时间</th>
+                <th>邮箱</th>
+                <th>审核</th>
+                <th>管理</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <% guestbooks.forEach(function(guestbook){ %>
+            <tr>
+                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
+                <td><%= guestbook.nick_name %></td>
+                <td><%= guestbook.content %></td>
+                <td><%= guestbook.reply_content %></td>
+                <td><%= guestbook.create_at %></td>
+                <td><%= guestbook.email %></td>
+                <td><%= guestbook.pass ? '通过' : '未审核' %></td>
+                <td>
+                    <% if(guestbook.pass){ %>
+                    <a href="/admin/guestbook/<%= guestbook._id %>/reply" class="btn btn-primary btn-xs"><span
+                                class="fa fa-fw fa-mail-reply"></span>回复</a>
+                    <% }else{ %>
+                    <a href="/admin/guestbook/pass"
+                       class="btn btn-primary btn-xs btn-pass"
+                       guestbook-id="<%= guestbook._id %>">
+                        <span class="fa fa-fw fa-eye"></span>通过
+                    </a>
+                    <% } %>
+                    <button class="btn btn-default btn-xs guestbook_del" guestbook-id=<%= guestbook._id %>><span
+                                class="fa fa-fw fa-trash-o"></span>删除
+                    </button>
+                </td>
+            </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            <% if(curPage - 1 > 0 ){ %>
+            <li>
+                <a href="/admin/guestbook/list/page/<%= curPage - 1 %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <% } %>
+            <% for (var i = 1; i <= pageCount; i++){ %>
+            <li>
+                <a href="/admin/guestbook/list/page/<%= i %>"><%= i %></a>
+            </li>
+            <% } %>
+            <% if(pageCount >= curPage + 1 ){ %>
+            <li>
+                <a href="/admin/guestbook/list/page/<%= curPage + 1 %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('.guestbook_del').on('click', function () {
+
+            var guestbook_id = $(this).attr("guestbook-id");
+
+            if (guestbook_id && confirm('确定要删除该评论吗？')) {
+                $.post('/admin/guestbook/del', {
+                    id: guestbook_id
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.msg);
+                    } else {
+                        location.href = '/admin/guestbook/list';
+                    }
+                });
+            }
+        });
+
+        $('.btn-pass').on('click', function () {
+
+            var guestbook_id = $(this).attr("guestbook-id");
+
+            if (guestbook_id && confirm('确定要通过该留言吗？')) {
+                $.post('/admin/guestbook/pass/do', {
+                    id: guestbook_id
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.msg);
+                    } else {
+                        location.href = '/admin/guestbook/list';
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+</body>
+
+</html>

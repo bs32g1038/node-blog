@@ -1,0 +1,107 @@
+<%- include header %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+    <section class="page-header">
+        <h1>控制台
+            <small>标签管理</small>
+
+        </h1>
+
+    </section>
+    <div class="panel">
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+            <span class="fa fa-plus-square">&nbsp;</span>
+            添加标签
+        </button>
+        <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
+                                                                                        aria-hidden="true">&nbsp;</span>批量删除
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="mini" id="selectAll"></th>
+                <th>名称</th>
+                <th>描述</th>
+                <th>文章数量</th>
+                <th>操作</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <% for(var i = 0 ; i < tags.length; i++){ %>
+            <tr>
+                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
+                <td><%= tags[i].name %></td>
+                <td><%= tags[i].description %></td>
+                <td><%= tags[i].post_count %></td>
+                <td>
+                    <button class="btn btn-default btn-xs category_del" tag-id=<%= tags[i]._id %> title="修改"><i
+                                class="fa fa-edit"></i>&nbsp;修改
+                    </button>
+                    <button class="btn btn-default btn-xs category_del" tag-id=<%= tags[i]._id %> title="删除"><i
+                                class="fa fa-trash-o"></i>&nbsp;删除
+                    </button>
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="add" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">修改标签描述</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form" class="form-horizontal" action="/admin/tag/edit" method="post">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">标签描述</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control input-sm" name="description">
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="add-submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('.category_del').on('click', function () {
+
+            var tag_id = $(this).attr("tag-id");
+
+            if (tag_id && confirm('确定要删除目录？')) {
+                $.post('/admin/tag/del', {
+                    id: tag_id
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.msg);
+                    } else {
+                        location.href = '/admin/tag/list';
+                    }
+                });
+            }
+        });
+
+        $('#add-submit').on('click', function () {
+            $('#form').submit();
+        });
+
+    });
+</script>
+</body>
+
+</html>
