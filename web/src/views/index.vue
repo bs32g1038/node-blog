@@ -28,9 +28,7 @@
             PathNav
         },
         data () {
-            return {
-                //paths: [{url: '', name: '文章列表'}]
-            }
+            return {}
         },
         beforeMount () {
             this.fetchData(this.$store)
@@ -64,9 +62,16 @@
             cats(){
                 return this.$store.state.cats;
             },
-        
             paths(){
                 var paths = [{url: '', name: '文章列表'}];
+                var category =  this.$route.params.category;
+                var cats = this.$store.state.cats;
+                for(var cat  of cats ){             //更改路径导航
+                    if(cat.alias == category){
+                        paths = [{url: '/', name: '文章列表'},{url: '', name: cat.name}];
+                        break;
+                    }
+                }
                 return paths;
              }
         },

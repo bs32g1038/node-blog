@@ -46,9 +46,9 @@ export default {
 
         var page = page || 1;
 
-        let baseUrl = "http://127.0.0.1/api/guestbook/page/" + page;
+        let url = this.base_url + "/guestbook/page/" + page;
 
-        return fetch(baseUrl).then(res => res.json())
+        return fetch(url).then(res => res.json())
             .then(data => data)
             .catch(e => console.log("uh error", e))
 
@@ -60,11 +60,9 @@ export default {
 
         var key = key || '';
 
-        let baseUrl = "/api/post/search?" + 'key=' + key + '&page=' + page;
+        let url = this.base_url + "/post/search?" + 'key=' + key + '&page=' + page;
 
-        window.location.href = "/post/search?" + 'key=' + key + '&page=' + page;
-
-        return fetch(baseUrl).then(res => res.json())
+        return fetch(url).then(res => res.json())
             .then(data => data)
             .catch(e => console.log("uh error", e))
 

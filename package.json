@@ -1,6 +1,6 @@
 {
-  "name": "myblog",
-  "version": "0.0.0",
+  "name": "node-blog",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "node server",
