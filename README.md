@@ -1,6 +1,6 @@
 # node-blog
 
-Project introduction：
+**Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API。
 * Data stored in Mongodb，Driven by Mongoose。
@@ -9,7 +9,7 @@ Project introduction：
 * Support the front and back end of the renderer by vue-server-renderer。
 * ......
 
-Checkout and Run：
+**Checkout and Run：**
 
 First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
