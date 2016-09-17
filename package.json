@@ -1,7 +1,6 @@
 {
   "name": "node-blog",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
   "description": "Simple, Fast & Light Node-Blog",
   "scripts": {
