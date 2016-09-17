@@ -12,7 +12,7 @@ Checkout and Run：
 
 First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
-### 1，clone code
+1，clone code
 
         git clone https://github.com/bs32g1038/node-blog.git
 
