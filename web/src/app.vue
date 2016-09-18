@@ -104,15 +104,15 @@
             }
         },
         methods: {
+
             fetchData(store) {
                 return store.dispatch('loadInitData');
             },
             search(){
-                this.$store.dispatch('loadSearchList', {key: this.search_key});
+                console.log(this.$router.push('/search?key=' + this.search_key))
+                
+                return this.$store.dispatch('loadSearchList', {key: this.search_key});
             }
-        },
-        beforeMount () {
-            //this.fetchData(this.$store)
         },
         computed: {
             cats () {

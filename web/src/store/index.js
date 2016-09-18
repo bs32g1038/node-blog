@@ -50,7 +50,7 @@ export default new Vuex.Store({
             }).then(() => dispatch('loadInitData'));
 
         },
-        loadSearchList({commit}, params){
+        loadSearchList({commit,dispatch}, params){
             return api.loadSearchList(params).then((data) => {
                 commit('set_postList', data)
             }).then(() => dispatch('loadInitData'));

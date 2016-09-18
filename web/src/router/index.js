@@ -12,8 +12,14 @@ export default new VueRouter({
             path: "/category/:category",
             component: require('../views/index.vue')
         },
+        
         {
             path: "/category/:category/:page",
+            component: require('../views/index.vue')
+        },
+
+        {
+            path: "/search",
             component: require('../views/index.vue')
         },
         {

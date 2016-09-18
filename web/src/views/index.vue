@@ -40,6 +40,10 @@
         },
         methods: {
             fetchData (store) {
+                var key = store.state.route.query.key;
+                if(key){
+                    return store.dispatch('loadSearchList', {key: key});
+                }
                 var category = store.state.route.params.category;
                 var page = store.state.route.params.page;
                 return store.dispatch('loadPostList', {
@@ -63,15 +67,23 @@
                 return this.$store.state.cats;
             },
             paths(){
+
                 var paths = [{url: '', name: '文章列表'}];
-                var category =  this.$route.params.category;
-                var cats = this.$store.state.cats;
-                for(var cat  of cats ){             //更改路径导航
-                    if(cat.alias == category){
-                        paths = [{url: '/', name: '文章列表'},{url: '', name: cat.name}];
-                        break;
+                var key = this.$route.query.key;                        //搜索关键词
+                var category =  this.$route.params.category;            //分类目录,非显示名称
+                var cats = this.$store.state.cats;                      //目录列表
+                
+               if(key){
+                   paths[0].name = '搜索结果'; 
+               }else if(category){
+                    for(var cat  of cats ){             //更改路径导航
+                        if(cat.alias == category){
+                            paths = [{url: '/', name: '文章列表'},{url: '', name: cat.name}];
+                            break;
+                        }
                     }
                 }
+
                 return paths;
              }
         },
