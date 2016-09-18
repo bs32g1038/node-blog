@@ -6,8 +6,10 @@ var config = {
 
     site: {
         name: '个人博客',
-        logo: '',
+        logo: '/web/src/asset/logo.jpg',
         icp: '',
+        url: 'http://127.0.0.1',
+        qr_code: '/web/src/asset/qr-code.png'
     },
 
     administrator: {
@@ -19,6 +21,7 @@ var config = {
         qq: '845177026',
         img_url: '',
         motto: 'yourmotoo你的个人格言',
+        github: 'https://github.com/bs32g1038/node-blog'
     },
     redis: {
         host: '127.0.0.1',

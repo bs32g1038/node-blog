@@ -14,6 +14,7 @@ var UserSchema = new Schema({
     qq: {type: String},            //QQ
     img_url: {type: String},       //头像
     motto: {type: String},         //格言
+    github: {type: String},         //格言    
     create_at: {type: Date, default: Date.now},
     update_at: {type: Date, default: Date.now},
 });

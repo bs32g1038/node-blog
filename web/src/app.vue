@@ -3,8 +3,7 @@
         <header class="header">
             <div class="site-music">
                 <div class="m-music">
-                    <img src="/web/src/asset/logo.jpg" id="musicCtrl" title="嗨一下" class="music-wrap"
-                         alt="冷夜流星博客,爱酷星,博客"/>
+                    <img v-bind:src="site.logo" title="嗨一下" class="music-wrap"/>
                 </div>
             </div>
             <div class="site-meta">
@@ -27,7 +26,7 @@
                         <router-link :to="'/about'"><i class="fa fa-fw fa-user"></i>关于</router-link>
                     </li>
                     <li class="action">
-                        <router-link :to="'/about'"><i class="fa fa-fw fa-github"></i>GitHub</router-link>
+                        <a v-bind:href="user.github" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                     </li>
                 </ul>
                 <div class="actions float-right search">
@@ -79,7 +78,7 @@
                 <li>
                     <div class="title"><i class="fa fa-html5 fa-fw"></i>网站声明</div>
                     <div class="footer-text">
-                        Copyright © <a href="http://www.jikezhi.cn">冷夜流星</a>
+                        Copyright © <a v-bind:href="site.url">冷夜流星</a>
                         &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;{{ site.icp }}
                     </div>
                 </li>
@@ -87,7 +86,7 @@
             <div class="footer-side float-right">
                 <span> 快速扫描二维码打开网站</span>
                 <div class="qr-code">
-                    <img src="/web/src/asset/qr-code.png" alt="">
+                    <img v-bind:src="site.qr_code" alt="">
                 </div>
             </div>
         </footer>
@@ -109,8 +108,7 @@
                 return store.dispatch('loadInitData');
             },
             search(){
-                console.log(this.$router.push('/search?key=' + this.search_key))
-                
+                this.$router.push('/search?key=' + this.search_key);    
                 return this.$store.dispatch('loadSearchList', {key: this.search_key});
             }
         },

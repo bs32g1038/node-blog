@@ -38,7 +38,7 @@ exports.initData = function (req, res) {
             }),
 
             user: new Promise(function (resolve, reject) {
-                userDao.getOneByAcount(config.administrator.account, 'location email qq motto', function (err, user) {
+                userDao.getOneByAcount(config.administrator.account, '-_id -__v', function (err, user) {
                     if (err) {
                         reject(err);
                     }
