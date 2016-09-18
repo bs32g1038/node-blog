@@ -60,12 +60,14 @@ const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 
 // parse index.html template
 const html = (() => {
-    const template = fs.readFileSync(resolve('./index.html'), 'utf-8')
-    const i = template.indexOf('{{ APP }}')
+    const template = fs.readFileSync(resolve('./index.html'), 'utf-8');
+    const s = template.indexOf('{{ STYLE }}');
+    const i = template.indexOf('{{ APP }}');
     // styles are injected dynamically via vue-style-loader in development
+    const title = 'node-blog';
     const style = '<link rel="stylesheet" href="/css/style.css">'
     return {
-        head: template.slice(0, i).replace('{{ STYLE }}', style),
+        head: template.slice(0, s).replace('{{ TITLE }}', title) + template.slice(s, i).replace('{{ STYLE }}', style),
         tail: template.slice(i + '{{ APP }}'.length)
     }
 })()
