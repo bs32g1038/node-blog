@@ -31,7 +31,7 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 * 数据存储在Mongodb数据库，连接驱动使用Mongoose。
 * 前端使用VUE2.0框架。
 * 使用webpack构建vue2.0。
-* 支持前端渲染，通过vue2.0的特性。
+* 支持前后端同构渲染，通过vue2.0的特性。
 * 等等
 
 **检查和运行：**
