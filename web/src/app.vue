@@ -78,7 +78,7 @@
                 <li>
                     <div class="title"><i class="fa fa-html5 fa-fw"></i>网站声明</div>
                     <div class="footer-text">
-                        Copyright © <a v-bind:href="site.url">冷夜流星</a>
+                        Copyright © <a v-bind:href="site.url">{{ site.name }}</a>
                         &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;{{ site.icp }}
                     </div>
                 </li>

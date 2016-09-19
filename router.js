@@ -12,22 +12,23 @@ var router = express.Router();
 
 //router.get('/', site.home);
 
-////
-///**************后台请求处理*****************/
-//router.get('/backstage/login', routes.b_login);
-//
-//router.post('/backstage/login-do', routes.b_loginDo);
-//
-//router.get('/backstage/login-out', routes.b_loginOut);
-//
-///************登录拦截**************/
-//router.use(function (req, res, next) {
-//    var url = req.originalUrl;
-//    if (url != "/backstage/login" && !req.session.user && ( url.indexOf('backstage') != -1)) {
-//        return res.redirect("/backstage/login");
-//    }
-//    next();
-//});
+
+/***************************后台请求处理***********************/
+
+router.get('/admin/login', user.b_login);
+
+router.post('/admin/login-do', user.b_loginDo);
+
+router.get('/admin/login-out', user.b_loginOut);
+
+/************登录拦截**************/
+router.use(function (req, res, next) {
+   var url = req.originalUrl;
+   if (url != "/admin/login" && !req.session.user && ( url.indexOf('admin') != -1)) {
+       return res.redirect("/admin/login");
+   }
+   next();
+});
 
 /**************************文章管理**************************/
 

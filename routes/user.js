@@ -54,5 +54,39 @@ exports.b_user_edit_do = function (req, res) {
     userDao.updateById(id, { nick_name, motto, qq, email, img_url, github }, function (err) {
         res.redirect('/admin/user/edit');
     });
+}
+
+exports.b_login = function (req, res) {
+    res.render('admin/login', {
+    });
+}
+
+exports.b_loginDo = function (req, res) {
+
+    var user = {
+        username: req.body.account,
+        password: req.body.password
+    }
+
+    if (user.username === config.administrator.account && user.password === config.administrator.password) {
+
+        req.session.user = user; //记住到session
+
+        res.redirect('doc-list');
+
+    } else {
+
+        res.redirect('login');
+
+    }
 
 }
+
+exports.b_loginOut = function (req, res) {
+
+    req.session.user = null;
+
+    res.redirect('login');
+
+}
+
