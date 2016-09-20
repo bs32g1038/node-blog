@@ -1,51 +1,50 @@
+/**************************************
+ * 数据库操作类GuestbookDao继承BaseDao
+ * 2016-7-25
+ **************************************/
+
 var config = require('../common/config');
-var util = require('util');
 
 //基础类
 var BaseDao = require('./BaseDao');
 
-function GuestbookDao(model) {
-    BaseDao.call(this);
-    this.model = model;
-}
+class GuestbookDao extends BaseDao {
 
-util.inherits(GuestbookDao, BaseDao);
+    updateReplyContentById(id, reply_content, callback) {
 
-GuestbookDao.prototype.updateReplyContentById = function (id, reply_content, callback) {
+        this.model.update({ _id: id }, {
+            $set: {
+                reply_content: reply_content,
+                pass: true
+            }
+        }, function (err, raw) {
 
-    this.model.update({_id: id}, {
-        $set: {
-            reply_content: reply_content,
-            pass: true
-        }
-    }, function (err, raw) {
+            if (err) {
+                return callback(err);
+            }
 
-        if (err) {
-            return callback(err);
-        }
+            callback(null, raw);
 
-        callback(null, raw);
+        });
 
-    });
+    }
 
-}
+    updatePass(_id, callback) {
 
-GuestbookDao.prototype.updatePass = function (_id, callback) {
+        this.model.update({ _id: _id }, {
+            $set: {
+                pass: true
+            }
+        }, function (err, raw) {
 
-    this.model.update({_id: _id}, {
-        $set: {
-            pass: true
-        }
-    }, function (err, raw) {
+            if (err) {
+                return callback(err);
+            }
 
-        if (err) {
-            return callback(err);
-        }
+            callback(null, raw);
 
-        callback(null, raw);
-
-    });
-
+        });
+    }
 }
 
 module.exports = GuestbookDao;

@@ -151,8 +151,6 @@ function vue_server(req, res) {
 }
 
 app.get('*', vue_server);
-//app.get('/',vue_server);
-//app.get('/guestbook',vue_server);
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

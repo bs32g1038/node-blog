@@ -25,17 +25,17 @@ export default new Vuex.Store({
         error_msg: ''
     },
     actions: {
-        loadPost({commit}, id){
+        loadPost({commit}, id) {
             return api.loadPost(id).then((data) => {
                 commit('set_post', data)
             }).then(() => dispatch('loadInitData'));
         },
-        loadPostList ({ commit,dispatch}, params) {
+        loadPostList({ commit, dispatch}, params) {
             return api.loadPostList(params).then((data) => {
                 commit('set_postList', data)
             }).then(() => dispatch('loadInitData'));
         },
-        loadInitData({commit,state}){
+        loadInitData({commit, state}) {
 
             if (state.init) {
                 return Promise.resolve();
@@ -44,40 +44,42 @@ export default new Vuex.Store({
                 commit('set_initData', data)
             })
         },
-        loadGuestbookList({commit,dispatch}, params){
+        loadGuestbookList({commit, dispatch}, params) {
             return api.loadGuestbookList(params).then((data) => {
                 commit('set_guestbookList', data);
             }).then(() => dispatch('loadInitData'));
 
         },
-        loadSearchList({commit,dispatch}, params){
+        loadSearchList({commit, dispatch}, params) {
             return api.loadSearchList(params).then((data) => {
                 commit('set_postList', data)
             }).then(() => dispatch('loadInitData'));
         }
     },
     mutations: {
-        set_post(state, {success,error_msg,data}){
+        set_post(state, {success, error_msg, data}) {
             state.success = success;
             state.error_msg = error_msg;
             state.post = data.post;
             state.comments = data.comments;
         },
-        set_postList (state, {success,error_msg,data}) {
+        set_postList(state, {success, error_msg, data}) {
             state.success = success;
             state.error_msg = error_msg;
             state.postList = data.docs;
             state.curPage = data.curPage;
             state.pageCount = data.pageCount;
         },
-        set_initData(state, {cats, user, links, site }){
-            state.cats = cats;
-            state.user = user;
-            state.links = links;
-            state.site = site;
+        set_initData(state, {success, error_msg, data}) {
+            state.success = success;
+            state.error_msg = error_msg;
+            state.cats = data.cats;
+            state.user = data.user;
+            state.links = data.links;
+            state.site = data.site;
             state.init = true;
         },
-        set_guestbookList(state, {success,error_msg,data}){
+        set_guestbookList(state, {success, error_msg, data}) {
             state.success = success;
             state.error_msg = error_msg;
             state.guestbooks = data.guestbooks;
@@ -89,16 +91,16 @@ export default new Vuex.Store({
     getters: {
         post: (state) => state.post,
         postList: (state) => state.postList,
-        guestbooks: (state)=>state.guestbooks,
-        curPage: (state) =>state.curPage,
-        pageCount: (state)=>state.pageCount,
-        cats: (state)=>state.cats,
-        user: (state)=>state.user,
-        links: (state)=>state.links,
-        site: (state)=>state.site,
-        comments: (state)=>state.comments,
-        error_msg: (state)=>state.error_msg,
-        success: (state)=>state.success,
-        init: (state)=>state.init
+        guestbooks: (state) => state.guestbooks,
+        curPage: (state) => state.curPage,
+        pageCount: (state) => state.pageCount,
+        cats: (state) => state.cats,
+        user: (state) => state.user,
+        links: (state) => state.links,
+        site: (state) => state.site,
+        comments: (state) => state.comments,
+        error_msg: (state) => state.error_msg,
+        success: (state) => state.success,
+        init: (state) => state.init
     }
 })
