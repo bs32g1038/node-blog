@@ -10,7 +10,7 @@ var userDao = Index.user;
 
 exports.b_user_edit = function (req, res) {
 
-    var fields = '-_id -__v -password -account';
+    var fields = '-__v -password -account';
 
     userDao.getOneByAcount(config.administrator.account, fields, function (err, user) {
 

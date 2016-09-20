@@ -22,7 +22,8 @@ var guestbookModel = require('../models/guestbook');
 var linkModel = require('../models/link');
 //user模型
 var userModel = require('../models/user');
-
+//site模型
+var siteModel = require('../models/site');
 
 //var o = {};
 //o.map = function () {
@@ -50,7 +51,8 @@ var GuestbookDao = require('./GuestbookDao');
 var LinkDao = require('./LinkDao');
 //用户操作类
 var UserDao = require('./UserDao');
-
+//用户操作类
+var SiteDao = require('./SiteDao');
 
 //暴露接口
 
@@ -69,27 +71,34 @@ exports.tag = new TagDao(tagModel);
 exports.link = new LinkDao(linkModel);
 
 
+/***********************初始化管理员数据*******************************/
+
 var userDao = new UserDao(userModel);
 
 userDao.getOneByAcount(config.administrator.account, '', function (err, user) {
-
     if (!user) {
-
         return userDao.add(config.administrator, function (err) {
-
             if (err) {
-
             }
-
-            console.log("初始化成功")
-
+            console.log("init user info success!");
         })
-
     }
-
-    console.log("管理员数据已存在，可正常运行程序")
-
+    console.log("----------user info already exists,it can be used normally!----------------");
 });
 
 exports.user = userDao;
 
+/*************************初始化网站数据*******************************/
+
+var siteDao = new SiteDao(siteModel);
+
+siteDao.getOneByQuery({ key: config.site.key }, '',null, function(err, site){
+    if (!site) {
+        return siteDao.add(config.site, function (err) {
+            console.log("init site info success!")
+        })
+    }
+    console.log("----------site info already exists,it can be used normally!--------------");
+});
+
+exports.site = siteDao;

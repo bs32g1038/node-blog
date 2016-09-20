@@ -1,5 +1,5 @@
 /*!
- * tag model
+ * user model
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;

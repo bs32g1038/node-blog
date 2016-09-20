@@ -6,6 +6,7 @@ var guestbook = require('./routes/guestbook');
 var link = require('./routes/link');
 var tag = require('./routes/tag');
 var user = require('./routes/user');
+var site = require('./routes/site');
 var category = require('./routes/category');
 
 var router = express.Router();
@@ -107,6 +108,12 @@ router.post('/admin/link/del', link.b_link_del);
 router.get('/admin/user/edit', user.b_user_edit);
 
 router.post('/admin/user/edit/:id/do', user.b_user_edit_do);
+
+/**************************网站信息管理**************************/
+
+router.get('/admin/site/edit', site.b_edit);
+
+router.post('/admin/site/edit/:id/do', site.b_edit_do);
 
 /**************************图片上传实现**************************/
 
