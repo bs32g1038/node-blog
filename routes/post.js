@@ -257,7 +257,7 @@ exports.b_doc_edit_do = function (req, res) {
 
             });
 
-            tags.map(function (name) {
+            doc.tags.map(function (name) {
 
                 tagDao.getOneByName(name, function (err, tag) {
 
@@ -346,7 +346,7 @@ exports.b_doc_publish_do = function (req, res) {
             categoryDao.incPostCountByAlias(category, function (err) {
             });     //目录文章数量自增
 
-            tags.map(function (name) {
+            doc.tags.map(function (name) {
 
                 tagDao.getOneByName(name, function (err, tag) {
 

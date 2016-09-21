@@ -83,7 +83,7 @@ exports.detail = function (req, res) {
 
             commentDao.getByQuery({post_id: postId, pass: true}, null, null, function (err, comments) {
 
-                async.map(comments, function (callback) {
+                async.map(comments, function (cmt, callback) {
 
                     commentDao.getById(cmt.reply_id, function (err, result) {
 

@@ -17,7 +17,7 @@
 
         <p class="tc state"><i class="fc-lb fa fa-comment-o">共有{{ guestbook_count }}条留言，</i>在这里留下你的足迹</p>
 
-        <CommentBox url="/ajax/guestbook/add"></CommentBox>
+        <CommentBox url="/api/guestbook/add"></CommentBox>
 
     </div>
 </template>

@@ -6,7 +6,7 @@
 
         <p class="comment-list-tip">华丽分割线</p>
 
-        <CommentBox url="/ajax/post/comment/add" :post_id="post._id"></CommentBox>
+        <CommentBox url="/api/post/comment/add" :post_id="post._id"></CommentBox>
 
         <CommentList :comments="comments" :post_id="post._id"></CommentList>
 

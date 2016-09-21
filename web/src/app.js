@@ -3,6 +3,9 @@ import App from './app.vue'
 import store from './store'
 import router from './router'
 import { sync } from 'vuex-router-sync'
+import local from './lib/local'
+
+Vue.use(local);//初始化插件
 
 sync(store, router)
 

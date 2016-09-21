@@ -9,20 +9,20 @@
             </h3>
 
             <p class="post-meta">
-                    <span class="post-time">
-                        <i class="fa fa-fw fa-calendar-o"></i>发表于&nbsp;{{ post.create_at }}
+                <span class="post-time">
+                        <i class="fa fa-fw fa-calendar-o"></i>发表于&nbsp;{{ parseTime(post.create_at,"y年m月d日 h:i") }}
                     </span>
 
-                    <span class="post-category">&nbsp; | &nbsp;
+                <span class="post-category">&nbsp; | &nbsp;
                         <i class="fa fa-fw fa-folder-o"></i>分类于
                         <router-link :to=" '/category/' + post.category_alias">{{ post.category_name }}</router-link>
                     </span>
 
-                    <span class="post-comments-count">&nbsp; | &nbsp;
+                <span class="post-comments-count">&nbsp; | &nbsp;
                         <span>{{ post.comment_count }}</span>
-                    </span>
+                </span>
 
-                    <span class="post-visit-count">&nbsp; | &nbsp;
+                <span class="post-visit-count">&nbsp; | &nbsp;
                         <i class="fa  fa-fw fa-eye"></i>阅读次数&nbsp;{{ post.visit_count }}
                     </span>
             </p>
@@ -36,6 +36,7 @@
 
 <script>
     var marked = require('marked');
+   // var local = require('../lib/local');
     export default{
         name: 'post',
         props: ['post'],

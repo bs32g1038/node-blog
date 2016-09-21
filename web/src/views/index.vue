@@ -16,6 +16,7 @@
 </template>
 <script>
 
+   // var local = require('../lib/local');
     import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
@@ -39,6 +40,7 @@
             }
         },
         methods: {
+         //   formatDate: local.parseTime,
             fetchData (store) {
                 var key = store.state.route.query.key;
                 if(key){
@@ -67,7 +69,6 @@
                 return this.$store.state.cats;
             },
             paths(){
-
                 var paths = [{url: '', name: '文章列表'}];
                 var key = this.$route.query.key;                        //搜索关键词
                 var category =  this.$route.params.category;            //分类目录,非显示名称
