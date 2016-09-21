@@ -3,6 +3,7 @@ var site = require('./api/site');
 var post = require('./api/post');
 var guestbook = require('./api/guestbook');
 var comment = require('./api/comment');
+var about = require('./api/about');
 
 var router = express.Router();
 
@@ -34,5 +35,8 @@ router.post('/guestbook/add', guestbook.add);
 
 router.get('/guestbook/page/:page', guestbook.index);
 
+/************************************about**************************************/
+
+router.get('/about', about.index);
 
 module.exports = router;

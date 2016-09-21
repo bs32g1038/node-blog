@@ -20,7 +20,7 @@ exports.index = function (req, res) {
     async.parallel({
 
         docs: function (callback) {
-            postDao.getListByPage({page: page}, callback);
+            postDao.getListByPage({ page: page, page_size: limit }, callback);
         },
 
         //cats: function (callback) {
@@ -40,10 +40,10 @@ exports.index = function (req, res) {
     }, function (err, data) {
 
         if (err) {
-            return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
         }
 
-        res.json({success: true, data: data});
+        res.json({ success: true, data: data });
 
     });
 
@@ -56,20 +56,20 @@ exports.detail = function (req, res) {
 
     if (!validator.isMongoId(postId)) {
         res.status(400);
-        return res.json({success: false, error_msg: '不是有效的文章id'});
+        return res.json({ success: false, error_msg: '不是有效的文章id' });
     }
 
     async.auto({
 
         post: function (callback) {
-            postDao.getById(postId, callback);
+            postDao.getByIdAndUpdate(postId, { $inc: { visit_count: 1 } }, callback);   //由于重构会导致浏览次数每次多增加1
         },
 
         category: ['post', function (results, callback) {
 
             if (!results.post) {
                 res.status(404);
-                return res.send({success: false, error_msg: '话题不存在'});
+                return res.send({ success: false, error_msg: '话题不存在' });
             }
 
             var post = results.post;
@@ -81,7 +81,7 @@ exports.detail = function (req, res) {
 
         comments: function (callback) {
 
-            commentDao.getByQuery({post_id: postId, pass: true}, null, null, function (err, comments) {
+            commentDao.getByQuery({ post_id: postId, pass: true }, null, null, function (err, comments) {
 
                 async.map(comments, function (cmt, callback) {
 
@@ -107,7 +107,7 @@ exports.detail = function (req, res) {
     }, function (err, results) {
 
         if (err) {
-            return res.json({success: false, error_msg: '文章数据错误，可能已经丢失！'});
+            return res.json({ success: false, error_msg: '文章数据错误，可能已经丢失！' });
         }
 
         let post = results.post.toObject();
@@ -118,7 +118,7 @@ exports.detail = function (req, res) {
             category_name: category.name,
         });
 
-        res.json({success: true, data: {post: post, comments: comments}});
+        res.json({ success: true, data: { post: post, comments: comments } });
 
     });
 
@@ -133,28 +133,28 @@ exports.getListByCategory = function (req, res) {
 
     async.parallel({
 
-            docs: function (callback) {
-                postDao.getListByPage({query: {category: category}, page: page}, callback);
-            },
-
-            pageCount: function (callback) {
-                categoryDao.getPostCountByAlias(category, function (err, sum) {
-                    callback(err, Math.ceil(sum / limit));
-                });
-            },
-
-            curPage: function (callback) {
-                callback(null, page);
-            }
-
+        docs: function (callback) {
+            postDao.getListByPage({ query: { category: category }, page: page }, callback);
         },
+
+        pageCount: function (callback) {
+            categoryDao.getPostCountByAlias(category, function (err, sum) {
+                callback(err, Math.ceil(sum / limit));
+            });
+        },
+
+        curPage: function (callback) {
+            callback(null, page);
+        }
+
+    },
         function (err, data) {
 
             if (err) {
-                return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
             }
 
-            res.json({success: true, data: data});
+            res.json({ success: true, data: data });
         });
 }
 
@@ -168,40 +168,40 @@ exports.search = function (req, res) {
 
     async.parallel({
 
-            docs: function (callback) {
-                postDao.getListByPage({
-                    page: page, query: {title: {$regex: key + ''}}
-                }, callback);
-            },
-
-            pageCount: function (callback) {
-                postDao.getSumCountByQuery({title: {$regex: key + ''}}, function (err, sum) {
-
-                    let count;
-
-                    if (err) {
-                        return callback(err, null);
-                    }
-
-                    count = parseInt(sum) || 0;
-
-                    callback(null, Math.ceil(count / limit));
-
-                });
-            },
-
-            curPage: function (callback) {
-                callback(null, page);
-            }
-
+        docs: function (callback) {
+            postDao.getListByPage({
+                page: page, query: { title: { $regex: key + '' } }
+            }, callback);
         },
+
+        pageCount: function (callback) {
+            postDao.getSumCountByQuery({ title: { $regex: key + '' } }, function (err, sum) {
+
+                let count;
+
+                if (err) {
+                    return callback(err, null);
+                }
+
+                count = parseInt(sum) || 0;
+
+                callback(null, Math.ceil(count / limit));
+
+            });
+        },
+
+        curPage: function (callback) {
+            callback(null, page);
+        }
+
+    },
         function (err, data) {
 
             if (err) {
-                return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
             }
 
-            res.json({success: true, data: data});
+            res.json({ success: true, data: data });
         });
 
 }

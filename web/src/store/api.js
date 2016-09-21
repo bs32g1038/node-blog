@@ -66,6 +66,13 @@ export default {
             .then(data => data)
             .catch(e => console.log("uh error", e))
 
+    },
+
+    loadAbout(){
+        let url = this.base_url + "/about";
+        return fetch(url).then(res => res.json())
+            .then(data => data)
+            .catch(e => console.log("uh error", e))
     }
 }
 

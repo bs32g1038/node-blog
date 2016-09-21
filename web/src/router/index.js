@@ -17,13 +17,16 @@ export default new VueRouter({
             path: "/category/:category/:page",
             component: require('../views/index.vue')
         },
-
         {
             path: "/search",
             component: require('../views/index.vue')
         },
         {
             path: "/",
+            component: require('../views/index.vue')
+        },
+        {
+            path: "/list/:page",
             component: require('../views/index.vue')
         },
         {

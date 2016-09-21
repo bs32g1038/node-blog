@@ -10,7 +10,7 @@
             </ul>
         </div>
 
-        <PageNav url='/index/page/' v-bind:curPage="curPage" v-bind:pageCount="pageCount"></PageNav>
+        <PageNav url='/list/' v-bind:curPage="curPage" v-bind:pageCount="pageCount"></PageNav>
 
     </div>
 </template>

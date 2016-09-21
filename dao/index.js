@@ -24,7 +24,8 @@ var linkModel = require('../models/link');
 var userModel = require('../models/user');
 //site模型
 var siteModel = require('../models/site');
-
+//about模型
+var aboutModel = require('../models/about');
 //var o = {};
 //o.map = function () {
 //    this.tags.forEach(function(z){  //z即是具体的某个tag了
@@ -51,8 +52,10 @@ var GuestbookDao = require('./GuestbookDao');
 var LinkDao = require('./LinkDao');
 //用户操作类
 var UserDao = require('./UserDao');
-//用户操作类
+//网站操作类
 var SiteDao = require('./SiteDao');
+//关于页面操作类
+var AboutDao = require('./AboutDao');
 
 //暴露接口
 
@@ -92,7 +95,7 @@ exports.user = userDao;
 
 var siteDao = new SiteDao(siteModel);
 
-siteDao.getOneByQuery({ key: config.site.key }, '',null, function(err, site){
+siteDao.getOneByQuery({ key: config.site.key }, '', null, function (err, site) {
     if (!site) {
         return siteDao.add(config.site, function (err) {
             console.log("init site info success!")
@@ -102,3 +105,18 @@ siteDao.getOneByQuery({ key: config.site.key }, '',null, function(err, site){
 });
 
 exports.site = siteDao;
+
+/*************************初始化关于页面数据*******************************/
+
+var aboutDao = new AboutDao(aboutModel);
+
+aboutDao.getOneByQuery({ key: config.about.key }, '', null, function (err, about) {
+    if (!about) {
+        return aboutDao.add(config.about, function (err) {
+            console.log("init about info success!")
+        })
+    }
+    console.log("----------about info already exists,it can be used normally!--------------");
+});
+
+exports.about = aboutDao;

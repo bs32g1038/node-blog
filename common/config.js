@@ -27,6 +27,11 @@ var config = {
         motto: 'yourmotoo你的个人格言',
         github: 'https://github.com/bs32g1038/node-blog'
     },
+    about: {
+        key: 'about',                   //关键词用于检索数据
+        title: '关于我',
+        content: '内容为空'
+    },
     redis: {
         host: '127.0.0.1',
         port: 6379,

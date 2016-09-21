@@ -22,7 +22,8 @@ export default new Vuex.Store({
         site: {},
         comments: [],
         success: true,
-        error_msg: ''
+        error_msg: '',
+        about: {}
     },
     actions: {
         loadPost({commit, dispatch }, id) {
@@ -53,6 +54,11 @@ export default new Vuex.Store({
         loadSearchList({commit, dispatch}, params) {
             return api.loadSearchList(params).then((data) => {
                 commit('set_postList', data)
+            }).then(() => dispatch('loadInitData'));
+        },
+        loadAbout({commit, dispatch}) {
+            return api.loadAbout().then((data) => {
+                commit('set_about', data)
             }).then(() => dispatch('loadInitData'));
         }
     },
@@ -86,6 +92,11 @@ export default new Vuex.Store({
             state.curPage = data.curPage;
             state.pageCount = data.pageCount;
             state.guestbook_count = data.count
+        },
+        set_about(state,{success, error_msg, data}){
+            state.success = success;
+            state.error_msg = error_msg;
+            state.about = data.about;
         }
     },
     getters: {
@@ -101,6 +112,7 @@ export default new Vuex.Store({
         comments: (state) => state.comments,
         error_msg: (state) => state.error_msg,
         success: (state) => state.success,
-        init: (state) => state.init
+        init: (state) => state.init,
+        about: (state) => state.about
     }
 })
