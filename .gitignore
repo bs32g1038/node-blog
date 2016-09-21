@@ -3,4 +3,4 @@ node_modules
 .vscode
 logs
 /web/dist/
-/public/uploads
+/public/uploads/
