@@ -10,9 +10,9 @@ export default {
 
     loadPost(id){
 
-        let baseUrl = "/api/post/" + id;
+        let url = this.base_url + "/post/" + id;
 
-        return fetch(baseUrl).then(res => res.json())
+        return fetch(url).then(res => res.json())
             .then(data => data)
             .catch(e => console.log("uh error", e))
 

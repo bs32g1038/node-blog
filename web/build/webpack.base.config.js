@@ -4,7 +4,7 @@ module.exports = {
     devtool: '#source-map',
     entry: {
         app: './web/src/client-entry.js',
-        vendor: ['vue', 'vue-router', 'vuex', 'es6-promise', 'whatwg-fetch'],//'lru-cache';
+        vendor: ['vue', 'vue-router', 'vuex', 'es6-promise', 'whatwg-fetch','marked'],//'lru-cache';
     },
     output: {
         path: path.resolve(__dirname, '../dist'),

@@ -25,7 +25,7 @@ export default new Vuex.Store({
         error_msg: ''
     },
     actions: {
-        loadPost({commit}, id) {
+        loadPost({commit, dispatch }, id) {
             return api.loadPost(id).then((data) => {
                 commit('set_post', data)
             }).then(() => dispatch('loadInitData'));

@@ -16,6 +16,7 @@
 
 <script>
 
+    // var JSHL = require('../lib/code-prettify');
     import Post from '../components/Post.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
@@ -34,9 +35,12 @@
                 comment_nums: []
             }
         },
+        beforeMount () {
+            this.fetchData(this.$store)
+        },
         methods: {
-            fetch(store) {
-                return store.dispatch('loadPost', this.$route.params.id)
+            fetchData(store) {
+                return store.dispatch('loadPost', store.state.route.params.id)
             }
         },
         computed: {
@@ -49,6 +53,12 @@
             comments(){
                 return this.$store.state.comments
             }
+        },
+        preFetch: function (store) {
+            return this.methods.fetchData(store);
+        },
+        mounted(){
+            // JSHL();
         }
     }
 

@@ -28,18 +28,19 @@
             </p>
         </header>
 
-        <div class="markdown">
-
-        </div>
+        <div class="markdown" v-html="compileMarkdown(post.content)"></div>
 
     </article>
 
 </template>
 
 <script>
+    var marked = require('marked');
     export default{
         name: 'post',
-        props: ['post']
+        props: ['post'],
+        methods: {
+          compileMarkdown: marked,
+        }
     }
-
 </script>

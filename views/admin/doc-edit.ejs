@@ -74,14 +74,17 @@
                               rows="6"><%= doc.summary %></textarea>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-sm-3">文章详情</label>
                 <div class="col-sm-6">
                     <textarea class="form-control input-sm" id="content" name="content" cols="30"
-                              rows="6"><%= doc.content %></textarea>
+                              rows="30"><%= doc.content %></textarea>
                 </div>
             </div>
+
             <input type="hidden" id="is_draft" value="0" name="is_draft">
+
             <input type="hidden" value=<%= flag %> name="flag">
             <div class="modal-footer">
                 <button id="save_draft" class="btn btn-default">存为草稿</button>

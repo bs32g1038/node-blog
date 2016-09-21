@@ -56,7 +56,7 @@ exports.detail = function (req, res) {
 
     if (!validator.isMongoId(postId)) {
         res.status(400);
-        return res.send({success: false, error_msg: '不是有效的文章id'});
+        return res.json({success: false, error_msg: '不是有效的文章id'});
     }
 
     async.auto({
