@@ -29,6 +29,8 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript" src="/admin/editor/editor.js"></script>
+    <script type="text/javascript" src="/admin/editor/marked.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -37,5 +39,10 @@
             });
         });
     </script>
-
+    <script type="text/javascript">
+        var editor = new Editor({
+            element: document.getElementById('content'),
+        });
+        editor.render();
+    </script>
 <%- include footer %>
