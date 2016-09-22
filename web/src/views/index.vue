@@ -5,7 +5,7 @@
 
         <div class="entries-box">
             <ul class="entries">
-                <item v-for="item in postList" :key="item.id" :item="item">
+                <item v-for="item in postList" :key="item._id" :item="item">
                 </item>
             </ul>
         </div>

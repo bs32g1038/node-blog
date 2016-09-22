@@ -2,6 +2,10 @@ var config = {
 
     list_post_count: 10,                    //文章列表显示的话题数量
 
+    max_comment_per_day: 100,               //每个访问者一天可以发的评论数
+
+    max_guestbook_per_day: 100,             //每个访问者一天可以发的留言数
+
     db: 'mongodb://127.0.0.1/test',
 
     site: {
@@ -36,7 +40,7 @@ var config = {
         host: '127.0.0.1',
         port: 6379,
         db: 0,
-        cache_expired: "300",
+        cache_expired: "300",//秒
     }
 
 }

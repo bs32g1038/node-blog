@@ -1,12 +1,16 @@
-var config = require('../config');
+var config = require('./config');
 var redis = require("redis");
+var logger = require('./logger');
 
-var client = redis.createClient(6379, '127.0.0.1', {});
+var client = redis.createClient(config.redis.port, config.redis.host, {});
 
 // client.auth('');
 
-
 client.on('error', function (err) {
+    if (err) {
+        logger.error('connect to %s error: ', err.message);
+        process.exit(1);
+    }
 })
 
 exports.client = client;
@@ -20,22 +24,14 @@ exports.client = client;
  * @param callback  回调函数，返回增加后的结果
  */
 exports.hincrby = function (key, field, value, expired, callback) {
-
     client.exists(key, function (err, res) {
-
         client.hincrby(key, field, value, function (err, num) {
-
             if (res == 0 && expired) {
                 client.expire(key, expired);
             }
-
-
             callback(null, num);
-
         });
-
     });
-
 }
 
 /**
@@ -88,4 +84,4 @@ exports.removeItem = function (key, callback) {
 /**
  * 获取默认过期时间，单位秒
  */
-exports.defaultExpired = parseInt(config.cache_expired);
+exports.defaultExpired = parseInt(config.redis.cache_expired);

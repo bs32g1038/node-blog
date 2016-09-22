@@ -5,12 +5,11 @@
 
         <div class="entries-box">
             <ul class="guestbook-list">
-                <item v-for="item in guestbooks" :key="item.id" :item="item">
-                </item>
+                <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
             </ul>
         </div>
 
-        <PageNav url='/index/page/'
+        <PageNav url='/guestbook/'
                  :curPage="curPage"
                  :pageCount="pageCount"
         ></PageNav>
@@ -45,7 +44,7 @@
         methods: {
             fetchData(store) {
                 return store.dispatch('loadGuestbookList', {
-                    page: 1
+                    page: store.state.route.params.page
                 })
             }
         },
@@ -64,9 +63,7 @@
             }
         },
         preFetch: function (store) {
-            return store.dispatch('loadGuestbookList', {
-                page: 1
-            })
+            return this.methods.fetchData(store);
         }
     }
 </script>
