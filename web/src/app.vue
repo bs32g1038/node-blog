@@ -41,7 +41,7 @@
             </transition>
         </div>
         <footer class="footer clearfix">
-            <div class="back-top" title="返回顶部">
+            <div class="back-top" title="返回顶部" id="backTop">
                 <i class="fa fa-long-arrow-up"></i>
             </div>
             <ul class="footer-nav float-left">
@@ -94,36 +94,46 @@
 
 </template>
 <script>
-    export default{
+    import GoTop from './lib/goTop.js';
 
-        data () {
+    export default {
+        data() {
             return {
                 search_key: ''
             }
         },
         methods: {
-
             fetchData(store) {
                 return store.dispatch('loadInitData');
             },
-            search(){
-                this.$router.push('/search?key=' + this.search_key);    
-                return this.$store.dispatch('loadSearchList', {key: this.search_key});
+            search() {
+                this.$router.push('/search?key=' + this.search_key);
+                return this.$store.dispatch('loadSearchList', {
+                    key: this.search_key
+                });
+            },
+            backTop() {
+
             }
         },
         computed: {
-            cats () {
+            cats() {
                 return this.$store.state.cats
             },
-            user(){
+            user() {
                 return this.$store.state.user
             },
-            links(){
+            links() {
                 return this.$store.state.links
             },
-            site(){
+            site() {
                 return this.$store.state.site
             }
+        },
+        mounted() {
+            new GoTop({
+                el: 'backTop',
+            })
         }
     }
 </script>

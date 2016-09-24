@@ -28,7 +28,7 @@
             </p>
         </header>
 
-        <div class="markdown" v-html="compileMarkdown(post.content)"></div>
+        <div class="markdown" v-html="compileMarkdown(post.content || '')"></div>
 
     </article>
 

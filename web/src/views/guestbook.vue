@@ -2,7 +2,6 @@
     <div>
         <PathNav :paths="[{url:'',name:'留言板'}]"></PathNav>
 
-
         <div class="entries-box">
             <ul class="guestbook-list">
                 <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
@@ -21,24 +20,25 @@
     </div>
 </template>
 <script>
-
     import Item from '../components/GuestbookItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
 
-    export default{
+    export default {
 
         components: {
             Item,
             PageNav,
             PathNav,
-            CommentBox
+            CommentBox,
         },
-        data () {
-            return {}
+        data() {
+            return {
+
+            }
         },
-        beforeMount () {
+        beforeMount() {
             this.fetchData(this.$store)
         },
         methods: {
@@ -49,20 +49,20 @@
             }
         },
         computed: {
-            guestbooks () {
+            guestbooks() {
                 return this.$store.state.guestbooks
             },
-            curPage(){
+            curPage() {
                 return this.$store.state.curPage
             },
-            pageCount(){
+            pageCount() {
                 return this.$store.state.pageCount
             },
-            guestbook_count(){
+            guestbook_count() {
                 return this.$store.state.guestbook_count
             }
         },
-        preFetch: function (store) {
+        preFetch: function(store) {
             return this.methods.fetchData(store);
         }
     }

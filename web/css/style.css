@@ -245,6 +245,7 @@ textarea {
     color: #888;
 }
 
+
 /***********************基础初始化*****************************/
 
 body {
@@ -288,6 +289,7 @@ ul {
     margin: 0;
     list-style: none;
 }
+
 
 /*清除浮动*/
 
@@ -358,6 +360,7 @@ ul {
     color: #7594b3;
 }
 
+
 /******************上面定义通用**************************/
 
 .container {
@@ -385,6 +388,7 @@ ul {
     clear: both;
 }
 
+
 /*.actions {
     display: inline-block;
     white-space: nowrap;
@@ -393,6 +397,7 @@ ul {
 .active {
     color: #0088cc;
 }
+
 
 /***********************S头部**********************************/
 
@@ -482,6 +487,7 @@ ul {
     font-size: 13px;
 }
 
+
 /*播放器S*/
 
 .site-music {
@@ -549,13 +555,14 @@ ul {
     -o-animation: 9.5s linear 0s normal none infinite rotate;
 }
 
+
 /*播放器E*/
+
 
 /*************************************S头部S*********************************/
 
-.main {
+.main {}
 
-}
 
 /*************************************S路径导航S*********************************/
 
@@ -573,7 +580,9 @@ ul {
     color: #8F8F8F;
 }
 
-.box-nav .actions, .box-nav .actions > .action, .box-nav .box-tip {
+.box-nav .actions,
+.box-nav .actions>.action,
+.box-nav .box-tip {
     font-size: 12px;
 }
 
@@ -590,7 +599,9 @@ ul {
     color: #999
 }
 
+
 /*************************************E路径导航E*********************************/
+
 
 /*文章入口*/
 
@@ -681,7 +692,7 @@ ul {
     padding: 0;
 }
 
-.entry-tags .tag.action{
+.entry-tags .tag.action {
     border: none;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -691,7 +702,7 @@ ul {
     height: 25px;
     letter-spacing: .01em;
     border-radius: 1px;
-    background-color: hsla(0,0%,85%,.3);
+    background-color: hsla(0, 0%, 85%, .3);
     -webkit-transition: all .3s;
     transition: all .3s;
 }
@@ -715,6 +726,7 @@ ul {
     border-radius: 50%;
 }
 
+
 /*页导航*/
 
 .page-nav {
@@ -734,9 +746,12 @@ ul {
     height: 20px;
 }
 
+
 /*页导航*/
 
+
 /*页面底部*/
+
 
 /*返回顶部按钮样式*/
 
@@ -762,7 +777,7 @@ ul {
     font-size: 12px;
 }
 
-.footer-nav > li {
+.footer-nav>li {
     padding: 8px 16px 8px 0;
     font-size: 14px;
     line-height: 26px;
@@ -780,7 +795,7 @@ ul {
     display: block;
 }
 
-.footer-nav .actions > .action {
+.footer-nav .actions>.action {
     display: inline-block;
     margin-right: 10px;
 }
@@ -805,7 +820,9 @@ ul {
     height: 160px;
 }
 
+
 /*E页面底部*/
+
 
 /*******************S留言****************************/
 
@@ -896,7 +913,9 @@ ul {
     color: #909090;
 }
 
+
 /******************E留言***********************/
+
 
 /*********************************通用评论框编写****************/
 
@@ -949,7 +968,8 @@ ul {
 .comment-wrap button[type="submit"] {
     cursor: pointer;
     border: none;
-    background: #ffd99b;;
+    background: #ffd99b;
+    ;
     padding: 8px;
     font-size: 15px;
     color: #555;
@@ -982,6 +1002,7 @@ ul {
     }
 }
 
+
 /***评论列表****/
 
 .comment-list-tip {
@@ -989,7 +1010,8 @@ ul {
     text-align: center;
 }
 
-.comment-list-tip:before, .comment-list-tip:after {
+.comment-list-tip:before,
+.comment-list-tip:after {
     content: "";
     width: 40%;
     height: 1px;
@@ -1038,11 +1060,10 @@ ul {
     border: 1px solid #ccc;
 }
 
+
 /*文章*/
 
-.post {
-
-}
+.post {}
 
 .post-title-link {
     font-size: 20px;
@@ -1058,7 +1079,10 @@ ul {
     line-height: 28px;
 }
 
-.markdown h1, .markdown h2, .markdown h3, .markdown h4 {
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
     min-height: 26px;
     line-height: 26px;
     margin: 20px 0;
@@ -1125,9 +1149,11 @@ pre {
     border: 1px solid #e8e9e7;
 }
 
-pre, code {
+pre,
+code {
     font-family: SourceCodeProRegular, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
 
 /*****************S代码高亮*****************/
 
@@ -1193,6 +1219,7 @@ pre, code {
     color: #E6DB74;
 }
 
+
 /*****************E代码高亮*****************/
 
 .example-enter {
@@ -1212,3 +1239,60 @@ pre, code {
 .example-leave.example-leave-active {
     opacity: 0.01;
 }
+
+
+/*****************S模态框 modal*****************/
+
+#modal-overlay {
+    font-family: 'Lobster Two', 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
+    visibility: visible;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(6, 6, 6, .5);
+}
+
+.modal-data {
+    position: relative;
+    width: 300px;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 3px;
+    color: #333;
+}
+
+.modal-content {
+    text-align: center;
+    font-size: 14px;
+}
+
+.modal-content .tip {
+    color: #ff0000
+}
+
+.modal-footer {
+    text-align: center
+}
+
+.modal-close {
+    border: 1px solid #ccc;
+    padding: 0 30px;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in;
+    font-size: 12px
+}
+
+.modal-close:hover {
+    background-color: #e6e6e6;
+}
+
+
+/*****************E模态框 modal*****************/
