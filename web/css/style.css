@@ -1296,3 +1296,56 @@ code {
 
 
 /*****************E模态框 modal*****************/
+
+
+/*********************S404页面*************************/
+
+.error {
+    text-align: center;
+    line-height: normal
+}
+
+.error .error-message .error-type {
+    color: #333;
+    font-size: 90px;
+    font-family: wow, Blizzard, sans-serif;
+}
+
+.error .error-message .error-issue {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.error .error-button {
+    padding: 4px 20px;
+    text-decoration: none;
+    color: #666;
+}
+
+.error .error-button:hover {
+    color: #0088cc;
+}
+
+
+/*********************E404页面*************************/
+
+.alert {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .2s ease
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0
+}
