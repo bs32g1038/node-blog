@@ -37,6 +37,7 @@
 						<textarea class="form-control" name="reply" cols="30" rows="6"><%= guestbook.reply_content %></textarea>
 					</div>
 				</div>
+				<input type='hidden' name='_csrf' value='<%= csrf %>'/>
 			</form>
 		</div>
 		<div class="modal-footer">
@@ -56,10 +57,7 @@
         $('#reply-btn').on('click', function () {
             $('#form').submit();
         });
-
-		
     });
-	
 	</script>
 	</body>
 

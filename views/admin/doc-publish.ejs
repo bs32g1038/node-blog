@@ -105,7 +105,7 @@
                 </div>
                 <input type="hidden" id="is_draft"
                        value=<%= typeof(doc.is_draft) !== 'undefined' && doc.is_draft || "0" %> name="is_draft">
-                <input type="hidden" value=<%= flag %> name="flag">
+                <input type='hidden' name='_csrf' value='<%= csrf %>'/>
                 <div class="modal-footer">
                     <button id="save_draft" class="btn btn-default">存为草稿</button>
                     <button type="submit" class="btn btn-primary">发布</button>

@@ -39,12 +39,13 @@ exports.index = function (req, res) {
 
     }, function (err, data) {
 
+        if (data.docs.length <= 0) {
+            return res.json({ success: false, error_msg: '该页并没有数据存在，请重试！' });
+        }
         if (err) {
             return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
         }
-
-        res.json({ success: true, data: data });
-
+        return res.json({ success: true, data: data });
     });
 
 }
@@ -56,7 +57,7 @@ exports.detail = function (req, res) {
 
     if (!validator.isMongoId(postId)) {
         res.status(400);
-        return res.json({ success: false, error_msg: '不是有效的文章id' });
+        return res.json({ success: false, error_msg: '此文章不存在或已被删除。' });
     }
 
     async.auto({
@@ -69,7 +70,7 @@ exports.detail = function (req, res) {
 
             if (!results.post) {
                 res.status(404);
-                return res.send({ success: false, error_msg: '话题不存在' });
+                return res.send({ success: false, error_msg: '此文章不存在或已被删除。' });
             }
 
             var post = results.post;
@@ -149,7 +150,9 @@ exports.getListByCategory = function (req, res) {
 
     },
         function (err, data) {
-
+            if (data.docs.length <= 0) {
+                return res.json({ success: false, error_msg: '该目录下没有文章！' });
+            }
             if (err) {
                 return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
             }
@@ -196,12 +199,12 @@ exports.search = function (req, res) {
 
     },
         function (err, data) {
-
+            if (data.docs.length <= 0) {
+                return res.json({ success: false, error_msg: '没有该关键词的搜索结果！' });
+            }
             if (err) {
                 return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
             }
-
             res.json({ success: true, data: data });
         });
-
 }

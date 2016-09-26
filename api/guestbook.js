@@ -32,6 +32,9 @@ exports.index = function (req, res) {
         }
 
     }, function (err, data) {
+        if (data.guestbooks.length <= 0) {
+            return res.json({ success: false, error_msg: '该页并没有数据存在，请重试！' });
+        }
         if (err) {
             return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
         }

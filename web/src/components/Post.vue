@@ -35,13 +35,12 @@
 </template>
 
 <script>
-    var marked = require('marked');
-   // var local = require('../lib/local');
-    export default{
+    import marked from 'marked';
+    export default {
         name: 'post',
         props: ['post'],
         methods: {
-          compileMarkdown: marked,
+            compileMarkdown: marked,
         }
     }
 </script>

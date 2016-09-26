@@ -4,16 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var apiRouter = require('./api_router');         //路由api接口
 var webRouter = require('./router');            //Web路由
-
+var csurf = require('csurf');
 var parseurl = require('parseurl');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
-
 var config = require('./common/config');
 
 //初始化连接数据库
@@ -24,26 +22,27 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(compression());
 app.use(logger('dev'));
-app.use(bodyParser.json({limit: '1mb'}));
-app.use(bodyParser.urlencoded({extended: true, limit: '1mb'}));
-app.use(cookieParser());
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(cookieParser(config.session_secret));
+app.use(compression());
 app.use(session({
     store: new RedisStore({
         host: config.redis.host,
         port: config.redis.port,
-        pass: '',
+        pass: config.redis.password,
     }),
     resave: true,
     saveUninitialized: false,
-    secret: 'keyboard cat'
+    secret: config.session_secret,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'web')));
 
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard());
+
 
 
 /***************************测试**************************/
@@ -103,6 +102,11 @@ function createRenderer(bundle) {
 
 
 app.use('/api', apiRouter);
+app.use(csurf());                      //防止跨站请求伪造
+app.use(function (req, res, next) {
+  res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
+  next();
+});
 app.use('/', webRouter);              //自定义
 
 
@@ -113,7 +117,7 @@ function vue_server(req, res) {
     }
 
     var s = Date.now()
-    const context = {url: req.url}
+    const context = { url: req.url }
 
     //const  App = require('vue');
     //
@@ -131,8 +135,8 @@ function vue_server(req, res) {
             if (context.initialState) {
                 res.write(
                     `<script>window.__INITIAL_STATE__=${
-                        serialize(context.initialState, {isJSON: true})
-                        }</script>`
+                    serialize(context.initialState, { isJSON: true })
+                    }</script>`
                 )
             }
             firstChunk = false

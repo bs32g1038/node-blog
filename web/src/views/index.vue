@@ -15,36 +15,37 @@
     </div>
 </template>
 <script>
-
-   // var local = require('../lib/local');
+    // var local = require('../lib/local');
     import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
 
-    export default{
+    export default {
 
         components: {
             Item,
             PageNav,
             PathNav
         },
-        data () {
+        data() {
             return {}
         },
-        beforeMount () {
+        beforeMount() {
             this.fetchData(this.$store)
         },
         watch: {
-            '$route': function () {
+            '$route': function() {
                 this.fetchData(this.$store);
             }
         },
         methods: {
-         //   formatDate: local.parseTime,
-            fetchData (store) {
+            //   formatDate: local.parseTime,
+            fetchData(store) {
                 var key = store.state.route.query.key;
-                if(key){
-                    return store.dispatch('loadSearchList', {key: key});
+                if (key) {
+                    return store.dispatch('loadSearchList', {
+                        key: key
+                    });
                 }
                 var category = store.state.route.params.category;
                 var page = store.state.route.params.page;
@@ -55,41 +56,48 @@
             }
         },
         computed: {
-
-            postList () {
+            postList() {
                 return this.$store.state.postList;
             },
-            curPage(){
+            curPage() {
                 return this.$store.state.curPage;
             },
-            pageCount(){
+            pageCount() {
                 return this.$store.state.pageCount;
             },
-            cats(){
+            cats() {
                 return this.$store.state.cats;
             },
-            paths(){
-                var paths = [{url: '', name: '文章列表'}];
-                var key = this.$route.query.key;                        //搜索关键词
-                var category =  this.$route.params.category;            //分类目录,非显示名称
-                var cats = this.$store.state.cats;                      //目录列表
-                
-               if(key){
-                   paths[0].name = '搜索结果'; 
-               }else if(category){
-                    for(var cat  of cats ){             //更改路径导航
-                        if(cat.alias == category){
-                            paths = [{url: '/', name: '文章列表'},{url: '', name: cat.name}];
+            paths() {
+                var paths = [{
+                    url: '',
+                    name: '文章列表'
+                }];
+                var key = this.$route.query.key; //搜索关键词
+                var category = this.$route.params.category; //分类目录,非显示名称
+                var cats = this.$store.state.cats; //目录列表
+
+                if (key) {
+                    paths[0].name = '搜索结果';
+                } else if (category) {
+                    for (var cat of cats) { //更改路径导航
+                        if (cat.alias == category) {
+                            paths = [{
+                                url: '/',
+                                name: '文章列表'
+                            }, {
+                                url: '',
+                                name: cat.name
+                            }];
                             break;
                         }
                     }
                 }
 
                 return paths;
-             }
+            }
         },
-
-        preFetch: function (store) {
+        preFetch: function(store) {
             return this.methods.fetchData(store);
         }
     }

@@ -56,6 +56,7 @@
             <% }) %>
             </tbody>
         </table>
+        <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
     </div>
 
     <nav>
@@ -89,39 +90,41 @@
     $(document).ready(function () {
 
         $('.guestbook_del').on('click', function () {
-
             var guestbook_id = $(this).attr("guestbook-id");
-
+            var _csrf = $('#csrf').val();
             if (guestbook_id && confirm('确定要删除该评论吗？')) {
                 $.post('/admin/guestbook/del', {
-                    id: guestbook_id
+                    id: guestbook_id,
+                    _csrf: _csrf
                 }, function (res) {
                     if (!res.success) {
                         alert(res.msg);
                     } else {
-                        location.href = '/admin/guestbook/list';
+                        window.location.href = '/admin/guestbook/list';
                     }
                 });
             }
         });
 
         $('.btn-pass').on('click', function () {
-
             var guestbook_id = $(this).attr("guestbook-id");
-
+            var _csrf = $('#csrf').val();
             if (guestbook_id && confirm('确定要通过该留言吗？')) {
                 $.post('/admin/guestbook/pass/do', {
-                    id: guestbook_id
+                    id: guestbook_id,
+                    _csrf: _csrf
                 }, function (res) {
+
+                    console.log(res)
+
                     if (!res.success) {
                         alert(res.msg);
                     } else {
-                        location.href = '/admin/guestbook/list';
+                        window.location.href = '/admin/guestbook/list';
                     }
                 });
             }
         });
-
     });
 </script>
 </body>

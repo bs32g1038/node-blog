@@ -42,9 +42,7 @@
                     <textarea class="form-control input-sm"  name="code_header" cols="30" rows="6"><%= site.code_header %></textarea>
                 </div>
             </div>
-
-            <input type="hidden" value=<%= flag %> name="flag">
-
+            <input type='hidden' name='_csrf' value='<%= csrf %>'/>
             <div class="modal-footer">
                 <button id="save_draft" class="btn btn-default">保存</button>
             </div>

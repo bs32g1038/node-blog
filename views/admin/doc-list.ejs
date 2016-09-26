@@ -121,6 +121,7 @@
             <% } %>
             </tbody>
         </table>
+        <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
     </div>
 
     <nav>
@@ -151,12 +152,12 @@
         $(document).ready(function () {
 
             $('.doc_del').on('click', function () {
-
                 var doc_id = $(this).attr("doc-id");
-
+                var _csrf = $('#csrf').val();
                 if (doc_id && confirm('确定要删除该文章吗？')) {
                     $.post('/admin/doc-del', {
-                        id: doc_id
+                        id: doc_id,
+                        _csrf: _csrf
                     }, function (res) {
                         if (!res.success) {
                             alert(res.msg);
@@ -171,10 +172,11 @@
 
                 var doc_id = $(this).attr("doc-id");
                 var value = $(this).data("value");
-
+                var _csrf = $('#csrf').val();
                 $.post('/admin/doc-recommend-do', {
                     id: doc_id,
-                    is_recommend: value
+                    is_recommend: value,
+                    _csrf: _csrf
                 }, function (res) {
                     if (!res.success) {
                         alert(res.msg);

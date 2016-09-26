@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-    var marked = require('marked');
+    import marked from 'marked';
     import PathNav from '../components/PathNav.vue'
 
     export default {
@@ -27,9 +27,7 @@
             this.fetchData(this.$store)
         },
         methods: {
-            compileMarkdown: function(input) {
-                return marked(input);
-            },
+            compileMarkdown: marked,
             fetchData(store) {
                 return store.dispatch('loadAbout');
             }

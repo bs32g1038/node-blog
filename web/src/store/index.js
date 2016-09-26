@@ -60,43 +60,60 @@ export default new Vuex.Store({
             return api.loadAbout().then((data) => {
                 commit('set_about', data)
             }).then(() => dispatch('loadInitData'));
+        },
+        closeErrorMsg({commit}) {
+            commit('set_errorMsg');
+            return Promise.resolve();
         }
     },
     mutations: {
         set_post(state, {success, error_msg, data}) {
+            if (success) {
+                state.post = data.post;
+                state.comments = data.comments;
+            }
             state.success = success;
             state.error_msg = error_msg;
-            state.post = data.post;
-            state.comments = data.comments;
         },
         set_postList(state, {success, error_msg, data}) {
+            if (success) {
+                state.postList = data.docs;
+                state.curPage = data.curPage;
+                state.pageCount = data.pageCount;
+            }
             state.success = success;
             state.error_msg = error_msg;
-            state.postList = data.docs;
-            state.curPage = data.curPage;
-            state.pageCount = data.pageCount;
         },
         set_initData(state, {success, error_msg, data}) {
             state.success = success;
             state.error_msg = error_msg;
-            state.cats = data.cats;
-            state.user = data.user;
-            state.links = data.links;
-            state.site = data.site;
-            state.init = true;
+            if (success) {
+                state.cats = data.cats;
+                state.user = data.user;
+                state.links = data.links;
+                state.site = data.site;
+                state.init = true;
+            }
         },
         set_guestbookList(state, {success, error_msg, data}) {
+            if (success) {
+                state.guestbooks = data.guestbooks;
+                state.curPage = data.curPage;
+                state.pageCount = data.pageCount;
+                state.guestbook_count = data.count
+            }
             state.success = success;
             state.error_msg = error_msg;
-            state.guestbooks = data.guestbooks;
-            state.curPage = data.curPage;
-            state.pageCount = data.pageCount;
-            state.guestbook_count = data.count
         },
-        set_about(state,{success, error_msg, data}){
+        set_about(state, {success, error_msg, data}) {
+            if (success) {
+                state.about = data.about;
+            }
             state.success = success;
             state.error_msg = error_msg;
-            state.about = data.about;
+        },
+        set_errorMsg(state) {
+            state.success = true;
         }
     },
     getters: {

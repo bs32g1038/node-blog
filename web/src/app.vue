@@ -36,8 +36,9 @@
             </nav>
         </header>
         <div class="main">
-            <transition name="fade" mode="out-in">
-                <router-view class="view"></router-view>
+            <transition name="fade" mode="out-in" >
+                <ErrorMessage v-if="!success"></ErrorMessage>
+                <router-view class="view" v-else></router-view>
             </transition>
         </div>
         <footer class="footer clearfix">
@@ -91,21 +92,26 @@
             </div>
         </footer>
     </div>
-
 </template>
 <script>
     import GoTop from './lib/goTop.js';
+    import ErrorMessage from './components/ErrorMessage.vue'
 
     export default {
+        components: {
+            ErrorMessage
+        },
         data() {
             return {
                 search_key: ''
             }
         },
+        watch: {
+            '$route': function() {
+                return this.$store.dispatch('closeErrorMsg');
+            }
+        },
         methods: {
-            fetchData(store) {
-                return store.dispatch('loadInitData');
-            },
             search() {
                 this.$router.push('/search?key=' + this.search_key);
                 return this.$store.dispatch('loadSearchList', {
@@ -128,6 +134,9 @@
             },
             site() {
                 return this.$store.state.site
+            },
+            success() {
+                return this.$store.state.success
             }
         },
         mounted() {
