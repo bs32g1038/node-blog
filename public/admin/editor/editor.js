@@ -5799,9 +5799,12 @@ var CodeMirror = (function() {
   return CodeMirror;
 })();
 
-const listRE = /^(\s*)([*+-]|(\d+)\.)([\w+(\s+\w+)]|[\s*])/,
-    emptyListRE = /^(\s*)([*+-]|(\d+)\.)(\s*)$/,
-    unorderedBullets = '*+-';
+// const listRE = /^(\s*)([*+-]|(\d+)\.)([\w+(\s+\w+)]|[\s*])/,
+//     emptyListRE = /^(\s*)([*+-]|(\d+)\.)(\s*)$/,
+//     unorderedBullets = '*+-';
+
+ var listRE = /^(\s*)([*+-]|(\d+)\.)(\s*)/,
+      unorderedBullets = '*+-';
 
 var inListState = function(cm, pos){
   return cm.getStateAfter(pos.line).list || null;
@@ -5839,7 +5842,7 @@ CodeMirror.commands.newlineAndIndentContinueMarkdownList = function(cm){
 
   pos = cm.getCursor();
   tok = cm.getTokenAt(pos);
-  emptyMatch = cm.getLine(pos.line).match(emptyListRE);
+  emptyMatch = cm.getLine(pos.line).match(listRE);  //修改
   inList = inListState(cm, pos);
 
   if (!inList && emptyMatch){

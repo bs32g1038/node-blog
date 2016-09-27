@@ -622,6 +622,7 @@ ul {
 
 .entry-screenshot {
     float: left;
+    position: relative;
     cursor: pointer;
     margin-right: 16px;
     padding-top: 12px;
@@ -1348,4 +1349,36 @@ code {
 .fade-enter,
 .fade-leave-active {
     opacity: 0
+}
+
+.span-mark {
+    background-color: #d9534f;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 9px;
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    left: -8px;
+}
+
+.span-mark::after {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent #d41b1b transparent transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 10px;
+    bottom: -10px;
+    clip: rect(10px, 20px, 20px, 0px);
+    content: "";
+    display: inline-block;
+    left: -10px;
+    position: absolute;
+    z-index: 0;
 }

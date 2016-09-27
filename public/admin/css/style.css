@@ -153,3 +153,44 @@ body {
 	background-color: #f9f9f9;
 	border-top: 1px solid #e5e5e5;
 }
+
+.tag_tx {
+    font-size: 12px;
+    border: 1px solid #d7d7d7;
+    background: #f4f4f4;
+    float: left;
+    padding: 1px 3px 0 6px;
+    margin: 1px 2px 2px;
+    white-space: nowrap;
+}
+
+.tag_tx a, .tag_tx a:link {
+    color: #999;
+}
+
+.tag_input {
+    min-height: 18px;
+    white-space: nowrap;
+    float: left;
+    width: 440px;
+    margin-right: 10px;
+    line-height: 16px;
+    border: 1px solid #C1C1BB;
+    padding: 3px 2px 2px;
+    font-size: 14px;
+    font-family: simsun;
+    color: #333;
+    background: #fff;
+}
+
+.tag_input input {
+    float: left;
+    margin-bottom: 3px;
+    border: 1px solid #fff;
+    padding: 2px 2px 0;
+    width: 130px;
+    outline: none;
+    white-space: nowrap;
+	height: 100%;
+}
+

@@ -3,6 +3,7 @@
     <li class="entry">
         <div class="entry-container">
             <div class="entry-screenshot">
+                <span class="span-mark" v-if="item.is_recommend">荐</span>
                 <img class="entry-screenshot-img" v-bind:src="item.img_url"/>
             </div>
             <div class="entry-info">
@@ -13,7 +14,6 @@
                     </router-link>
                 </div>
                 <div class="entry-tags tags">
-                    <div class="tag no-pointer" v-if="item.is_recommend">推荐</div>
                     <div class="tag no-pointer">{{ item.from == 1 ? '原创' : '转载' }}</div>
                     <div class="tag clean no-pointer">{{ parseTime(item.create_at,"y年m月d日") }}</div>
                     <router-link :to="'/tag/' + tag" v-for="tag in item.tags" :key="tag" class="tag action">

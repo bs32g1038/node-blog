@@ -74,7 +74,7 @@ const html = (() => {
 // setup the server renderer, depending on dev/prod environment
 var renderer;
 
-if (isProd) {
+if (!isProd) {
     // create server renderer from real fs
     const bundlePath = resolve('./web/dist/server-bundle.js')
 

@@ -103,17 +103,16 @@ exports.b_getDocList = function (req, res) {
  */
 exports.b_doc_publish = function (req, res) {
 
+    console.log("输出")
+
     categoryDao.getAll(function (err, cats) {
 
         if (err) {
             return res.send('404');
         }
-
-        req.session.flag = "lzc200";
-
+        
         res.render('admin/doc-publish', {
             doc: {},
-            flag: "lzc200",
             cats: cats
         });
 
