@@ -66,10 +66,10 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">标签</label>
                     <div class="col-sm-5">
-                        <input type='hidden' autocomplete="off" id="postTagInput" name="tags" value="<%= typeof(doc.tags) !== 'undefined' && doc.tags || '' %>">
-                        <div id="t-input-container" class="tag_input">
-                            <input id="t-input" value="" />
-                        </div>       
+                        <input type='hidden' autocomplete="off" id="tag" name="tags" value="<%= typeof(doc.tags) !== 'undefined' && doc.tags || '' %>">
+                        <div id="tag-container" class="tag-container">
+                            <input id="tag-input" value="" />
+                        </div>  
                     </div>
                 </div>
                 <div class="form-group">
@@ -118,6 +118,7 @@
     <script type="text/javascript" src="/admin/js/webuploader.withoutimage.js"></script>
     <script type="text/javascript" src="/admin/editor/editor.js"></script>
     <script type="text/javascript" src="/admin/editor/marked.js"></script>
+    <script type="text/javascript" src="/admin/js/jquery-tag"></script>
     <script type="text/javascript">
 
         var $list = $('#thelist');
@@ -218,51 +219,10 @@
                 $('#is_draft').val(1);
                 $('#doc_form').submit();
             });
-            var tag_input_container = $('#t-input-container');
-            var tag_input = $('#t-input');
-            var postTagInput = $('#postTagInput');
-            tag_input.keydown(function(event){
-                var tag_input_value = $(this).val();
-                var post_tag_value = postTagInput.val();
-                var len = tag_input_container.children().length;
-
-                if(event.keyCode == 32){       //13等于回车键(Enter)键值
-
-                    if(len > 3){
-                        alert("标签最多只能三个！")
-                        $(this).val("");
-                        return false;
-                    }
-
-                    $(this).before('<div deleteable="true" class="tag_tx">' + $(this).val() +
-                        '<a onclick="return false" href="javascript:;" title="删除">×</a></div>');
-                    if(post_tag_value){
-                        postTagInput.val(post_tag_value + ',' + $.trim(tag_input_value));
-                    }else{
-                        postTagInput.val($.trim(tag_input_value));
-                    }
-                    $('#t-input').val("");
-                    return false;                
-                }
-                if(event.keyCode == 8 && tag_input_value.length <= 0){//8等于后退键(BackSpace)键值
-                    var p = post_tag_value.lastIndexOf(',')
-                    postTagInput.val(post_tag_value.substring(0,p))
-                    $(this).prev().remove();
-                }
-                
+            var editor = new Editor({
+                element: document.getElementById('content'),
             });
-            $("#t-input-container").on('click', '.tag_tx a', function(event){
-                $(this).parent().remove();
-            });
-            tag_input_container.click(function(){
-                tag_input.focus();
-            })
-        
-                var editor = new Editor({
-                    element: document.getElementById('content'),
-                });
-                editor.render();
-  
+            editor.render();
         });
     </script>
 

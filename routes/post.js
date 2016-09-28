@@ -233,7 +233,7 @@ exports.b_doc_edit_do = function (req, res) {
 
     console.log(doc.tags)
 
-    doc.tags = tags.split('#');
+    doc.tags = tags.split(',');
 
     console.log(doc.tags)
 
@@ -322,21 +322,17 @@ exports.b_doc_publish_do = function (req, res) {
     doc = {title, from, custom_url, img_url, category, is_draft, summary, content, tags};
 
     if (editError) {
-
         return categoryDao.getAll(function (err, cats) {
-
             res.render('admin/doc-publish', {
                 doc: doc,
                 cats: cats,
-                editError: editError,
-                flag: req.session.flag
+                editError: editError
             });
-
         });
     }
 
     //划分标签
-    doc.tags = tags.split('#');
+    doc.tags = tags.split(',');
 
     postDao.add(doc, function (err) {       ///保存数据
 

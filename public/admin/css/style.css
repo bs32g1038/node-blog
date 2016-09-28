@@ -154,7 +154,7 @@ body {
 	border-top: 1px solid #e5e5e5;
 }
 
-.tag_tx {
+.tag-tx {
     font-size: 12px;
     border: 1px solid #d7d7d7;
     background: #f4f4f4;
@@ -164,11 +164,11 @@ body {
     white-space: nowrap;
 }
 
-.tag_tx a, .tag_tx a:link {
+.tag-tx a, .tag-tx a:link {
     color: #999;
 }
 
-.tag_input {
+.tag-container {
     min-height: 18px;
     white-space: nowrap;
     float: left;
@@ -183,7 +183,7 @@ body {
     background: #fff;
 }
 
-.tag_input input {
+.tag-container input {
     float: left;
     margin-bottom: 3px;
     border: 1px solid #fff;
@@ -193,4 +193,3 @@ body {
     white-space: nowrap;
 	height: 100%;
 }
-
