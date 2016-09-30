@@ -25,11 +25,11 @@ router.get('/admin/login-out', user.b_loginOut);
 
 /************登录拦截**************/
 router.use(function (req, res, next) {
-   var url = req.originalUrl;
-   if (url != "/admin/login" && !req.session.user && ( url.indexOf('admin') != -1)) {
-       return res.redirect("/admin/login");
-   }
-   next();
+    var url = req.originalUrl;
+    if (url != "/admin/login" && !req.session.user && (url.indexOf('admin') != -1)) {
+        return res.redirect("/admin/login");
+    }
+    next();
 });
 
 /**************************文章管理**************************/
@@ -138,7 +138,9 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({storage: storage})
+var upload = multer({
+    storage: storage
+})
 
 router.post('/admin/upload', function (req, res, next) {
 
@@ -155,7 +157,10 @@ router.post('/admin/upload', function (req, res, next) {
         //
         console.log("uploads/" + req.file.filename);
 
-        res.send({url: "/uploads/" + req.file.filename});
+        res.json({
+            url: "/uploads/" + req.file.filename,
+            success: true
+        });
         //});
 
     });
@@ -163,5 +168,3 @@ router.post('/admin/upload', function (req, res, next) {
 });
 
 module.exports = router;
-
-
