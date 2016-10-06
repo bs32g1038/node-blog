@@ -85,7 +85,7 @@
                             '<div class="upload-img">',
                                 '<div class="button">上传图片</div>',
                                 '<span class="tip"></span>',
-                                '<div class="alert alert-error hide"></div>',
+                                '<div class="alert alert-danger alert-error hide"></div>',
                             '</div>',
                     '</div>',
                  '</div>',

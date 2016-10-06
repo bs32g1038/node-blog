@@ -1,24 +1,21 @@
-var config  = require('../config');
+var multer = require('multer');
+var path = require('path');
 var utility = require('utility');
-var path    = require('path');
-var fs      = require('fs');
 
-exports.upload = function (file, options, callback) {
-  var filename = options.filename;
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    var key = utility.md5(file.originalname + String((new Date()).getTime())) + path.extname(file.originalname);
+    cb(null, key);
+  }
+})
 
-  var newFilename = utility.md5(filename + String((new Date()).getTime())) +
-    path.extname(filename);
+var upload = multer({
+  storage: storage
+})
 
-  var upload_path = config.upload.path;
-  var base_url    = config.upload.url;
-  var filePath    = path.join(upload_path, newFilename);
-  var fileUrl     = base_url + newFilename;
+var uploadSingle = upload.single('file');
 
-  file.on('end', function () {
-    callback(null, {
-      url: fileUrl
-    });
-  });
-
-  file.pipe(fs.createWriteStream(filePath));
-};
+exports.uploadSingle = uploadSingle;

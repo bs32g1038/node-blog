@@ -10,6 +10,11 @@ var site = require('./routes/site');
 var about = require('./routes/about');
 var category = require('./routes/category');
 
+//本地存储文件接口
+var uploadSingle = require('./common/store_local').uploadSingle;
+//七牛存储文件接口
+var uploadQn = require('./common/store_qn');
+
 var router = express.Router();
 
 //router.get('/', site.home);
@@ -124,45 +129,21 @@ router.post('/admin/site/edit/:id/do', site.b_edit_do);
 
 /**************************图片上传实现**************************/
 
-var multer = require('multer');
-var path = require('path');
-var shortId = require('shortid');
-var utility = require('utility');
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/uploads')
-    },
-    filename: function (req, file, cb) {
-
-        cb(null, shortId.generate() + path.extname(file.originalname));
-    }
-})
-
-var upload = multer({
-    storage: storage
-})
-
 router.post('/admin/upload', function (req, res, next) {
 
-    var up = upload.single('file');
-
-    up(req, res, function (err) {
+    uploadSingle(req, res, function (err) {
         //添加错误处理
         if (err) {
-            return console.log(err);
+            return res.json({
+                success: false,
+                error_msg: '上传失败！'
+            });
         }
-        var key = "";
-
         //qn.upload(req.file.buffer, {key:key}, function (err, result) {
-        //
-        console.log("uploads/" + req.file.filename);
-
         res.json({
             url: "/uploads/" + req.file.filename,
             success: true
         });
-        //});
-
     });
 
 });

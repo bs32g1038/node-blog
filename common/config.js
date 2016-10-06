@@ -1,12 +1,12 @@
 var config = {
 
-    list_post_count: 10,                    //文章列表显示的话题数量
-    max_comment_per_day: 100,               //每个访问者一天可以发的评论数
-    max_guestbook_per_day: 100,             //每个访问者一天可以发的留言数
+    list_post_count: 10, //文章列表显示的话题数量
+    max_comment_per_day: 100, //每个访问者一天可以发的评论数
+    max_guestbook_per_day: 100, //每个访问者一天可以发的留言数
     db: 'mongodb://127.0.0.1/test',
     session_secret: 'node_club_secret', // 务必修改
     site: {
-        key: 'site-info',                   //关键词用于检索数据
+        key: 'site-info', //关键词用于检索数据
         name: '个人博客',
         logo: '/web/src/asset/logo.jpg',
         icp: '',
@@ -28,7 +28,7 @@ var config = {
         github: 'https://github.com/bs32g1038/node-blog'
     },
     about: {
-        key: 'about',                   //关键词用于检索数据
+        key: 'about', //关键词用于检索数据
         title: '关于我',
         content: '内容为空'
     },
@@ -36,9 +36,17 @@ var config = {
         host: '127.0.0.1',
         port: 6379,
         db: 0,
-        cache_expired: "300",//秒
+        cache_expired: "300", //秒
+    },
+    // 7牛的access信息，用于文件上传
+    qn_access: {
+        accessKey: 'your access key',
+        secretKey: 'your secret key',
+        bucket: 'your bucket name',
+        origin: 'http://your qiniu domain',
+        // if your app outside of China, please set `uploadURL` to `http://up.qiniug.com/`
+        //uploadURL: 'http://xxxxxxxx',
     }
 
 }
 module.exports = config;
-
