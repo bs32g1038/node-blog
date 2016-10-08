@@ -1135,6 +1135,9 @@ blockquote {
     color: #787977;
 }
 
+
+/*****************S代码高亮*****************/
+
 pre {
     display: block;
     margin: 10px 0;
@@ -1147,7 +1150,7 @@ pre {
     word-wrap: normal;
     color: #383937;
     background: #fff;
-    border: 1px solid #e8e9e7;
+    border: 1px solid #e8e9e7
 }
 
 pre,
@@ -1155,69 +1158,57 @@ code {
     font-family: SourceCodeProRegular, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-
-/*****************S代码高亮*****************/
-
 .jshl-linenum {
     position: absolute;
-    top: 10px;
-    left: 0;
     z-index: 0;
-    padding-right: 2px;
-    width: 32px;
-    border-right: 2px #E6DB74 solid;
-    text-align: right;
+    left: 0;
+    top: 10px;
     line-height: inherit;
-    _left: -42px;
-    _top: 9px;
+    width: 36px;
+    border-right: 1px #eee solid;
+    text-align: right;
+    color: rgba(0, 0, 0, .3)
 }
 
-.com {
-    color: #75715E;
+pre .com,
+pre .doc {
+    color: #919290
 }
 
-.doc {
-    color: #48BEEF;
+pre .str {
+    color: #CB4AAF
 }
 
-.str {
-    color: #E6DB74;
+pre .key {
+    color: #a71d5d
 }
 
-.key {
-    color: #48BEEF;
-    font-weight: bold;
-    font-style: italic;
+pre .obj {
+    color: #0086b3
 }
 
-.obj {
-    color: #AE81FF;
-    font-weight: bold;
+pre .num {
+    color: #a55cd6
 }
 
-.num {
-    color: #F92672;
+pre .ope {
+    color: #687687
 }
 
-.ope {
-    color: #FD971F;
+pre .bol {
+    color: #0086b3
 }
 
-.bol {
-    color: #FF5600;
-    font-style: italic;
+pre .mrk {
+    color: #6d8fa9
 }
 
-.mrk {
-    color: #F92665;
+pre .attr {
+    color: #795da3
 }
 
-.attr {
-    color: #A6E22E;
-}
-
-.val {
-    color: #E6DB74;
+pre .val {
+    color: #0086b3
 }
 
 
