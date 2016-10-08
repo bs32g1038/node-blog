@@ -17,8 +17,6 @@ var uploadQn = require('./common/store_qn');
 
 var router = express.Router();
 
-//router.get('/', site.home);
-
 
 /***************************后台请求处理***********************/
 
@@ -134,13 +132,9 @@ router.post('/admin/upload', function (req, res, next) {
     uploadSingle(req, res, function (err) {
         //添加错误处理
         if (err) {
-            return res.json({
-                success: false,
-                error_msg: '上传失败！'
-            });
+            return res.json({ success: false, error_msg: '上传失败！' });
         }
-        //qn.upload(req.file.buffer, {key:key}, function (err, result) {
-        res.json({
+        return res.json({
             url: "/uploads/" + req.file.filename,
             success: true
         });

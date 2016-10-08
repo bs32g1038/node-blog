@@ -13,6 +13,7 @@ var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./common/config');
+var RateLimit = require('./middlewares/rate-limit');
 
 //初始化连接数据库
 require('./common/mongoose');
@@ -74,7 +75,7 @@ const html = (() => {
 // setup the server renderer, depending on dev/prod environment
 var renderer;
 
-if (!isProd) {
+if (isProd) {
     // create server renderer from real fs
     const bundlePath = resolve('./web/dist/server-bundle.js')
 
@@ -100,12 +101,16 @@ function createRenderer(bundle) {
 
 /***************************测试**************************/
 
-
+app.use(new RateLimit({
+    errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',
+    limitCount: 1000,
+    expired: 24 * 60 * 60
+}));
 app.use('/api', apiRouter);
 app.use(csurf());                      //防止跨站请求伪造
 app.use(function (req, res, next) {
-  res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
-  next();
+    res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
+    next();
 });
 app.use('/', webRouter);              //自定义
 
@@ -162,14 +167,14 @@ app.use(function (req, res, next) {
     next(err);
 });
 
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('web/index', {
-        message: err.message,
-        error: err,
-        title: '冷夜流星的个人网站'
-    });
-});
+// app.use(function (err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.render('web/index', {
+//         message: err.message,
+//         error: err,
+//         title: '冷夜流星的个人网站'
+//     });
+// });
 
 
 module.exports = app;

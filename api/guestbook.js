@@ -59,21 +59,14 @@ exports.add = function (req, res) {
     console.log(nick_name)
     console.log(email)
     console.log(content)
+    
+    guestbookDao.add({ nick_name, email, content, }, function (err) {
 
-    //添加redis缓存
-    redis.hincrby('guestbook:limit', tools.getClientIP(req), 1, 60 * 60 * 24, function (err, num) {
-
-        if (num > config.max_guestbook_per_day) {
-            return res.json({ success: false, error_msg: '你今天已经到达最大的留言次数，谢谢你对本博客的支持！' });
+        if (err) {
+            return res.json({ success: false, error_msg: '提交留言失败！' });
         }
 
-        guestbookDao.add({ nick_name, email, content, }, function (err) {
-
-            if (err) {
-                return res.json({ success: false, error_msg: '提交留言失败！' });
-            }
-
-            res.json({ success: true });
-        });
+        res.json({ success: true });
     });
+
 }

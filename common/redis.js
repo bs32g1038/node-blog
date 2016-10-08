@@ -38,19 +38,29 @@ exports.hincrby = function (key, field, value, expired, callback) {
  * 设置缓存
  * @param key 缓存key
  * @param value 缓存value
- * @param expired 缓存的有效时长，单位秒
+ * @param expired 缓存有效时长
  * @param callback 回调函数
  */
-exports.setItem = function (key, value, expired, callback) {
-    client.set(key, JSON.stringify(value), function (err) {
-        if (err) {
-            return callback(err);
-        }
-        if (expired) {
-            client.expire(key, expired);
-        }
-        return callback(null);
-    });
+exports.set = function (key, value, expired, callback) {
+
+    var s = new Date();
+
+    if (typeof expired === 'function') {
+        callback = expired;
+        expired = null;
+    }
+
+    value = JSON.stringify(value);
+
+    if (!expired) {
+        client.set(key, value, callback);
+    } else {
+        client.setex(key, expired, value, callback);
+    }
+
+    var duration = (new Date() - s);
+    logger.debug("Cache", "set", key, (duration + 'ms').green);
+
 };
 
 /**
@@ -58,13 +68,23 @@ exports.setItem = function (key, value, expired, callback) {
  * @param key 缓存key
  * @param callback 回调函数
  */
-exports.getItem = function (key, callback) {
-    client.get(key, function (err, reply) {
+exports.get = function (key, callback) {
+
+    var t = new Date();
+
+    client.get(key, function (err, data) {
         if (err) {
             return callback(err);
         }
-        return callback(null, JSON.parse(reply));
+        if (!data) {
+            return callback();
+        }
+        data = JSON.parse(data);
+        var duration = (new Date() - t);
+        logger.debug('Cache', 'get', key, (duration + 'ms').green);
+        callback(null, data);
     });
+
 };
 
 /**
@@ -72,16 +92,10 @@ exports.getItem = function (key, callback) {
  * @param key 缓存key
  * @param callback 回调函数
  */
-exports.removeItem = function (key, callback) {
-    client.del(key, function (err) {
-        if (err) {
-            return callback(err);
-        }
-        return callback(null);
-    });
+exports.remove = function (key, callback) {
+    client.del(key, callback);
 };
 
-/**
- * 获取默认过期时间，单位秒
- */
-exports.defaultExpired = parseInt(config.redis.cache_expired);
+exports.ttl = function (key, callback) {
+    client.ttl(key, callback);
+}
