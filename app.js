@@ -58,6 +58,6 @@ app.use(function (req, res, next) {
 });
 app.use('/', webRouter);              //自定义
 
-app.get('*', vueServerRouter);        //找不到的页面直接在前端显示，暂时这样处理，没完善
+app.get('*', vueServerRouter(app));        //找不到的页面直接在前端显示，暂时这样处理，没完善
 
 module.exports = app;
