@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import marked from 'marked';
+    import marked from '../lib/marked';
     export default {
         name: 'post',
         props: ['post'],
