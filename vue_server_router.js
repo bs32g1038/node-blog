@@ -23,7 +23,7 @@ module.exports = (app) => {
         const i = template.indexOf('{{ APP }}');
         // styles are injected dynamically via vue-style-loader in development
         const title = 'node-blog';
-        const style = '<link rel="stylesheet" href="/css/style.css">'
+        const style = '<link rel="stylesheet" href="/dist/css/style.min.css">' || ''
         return {
             head: template.slice(0, s).replace('{{ TITLE }}', title) + template.slice(s, i).replace('{{ STYLE }}', style),
             tail: template.slice(i + '{{ APP }}'.length)
