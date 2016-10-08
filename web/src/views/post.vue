@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    // var JSHL = require('../lib/code-prettify');
+    import JSHL from '../lib/code-prettify';
     import Post from '../components/Post.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
@@ -26,6 +26,13 @@
             return {
                 comment_nums: []
             }
+        },
+        watch: {
+            '$store.state.post': function () {
+                this.$nextTick(function () {
+                    JSHL();
+                })
+            },
         },
         beforeMount() {
             this.fetchData(this.$store)
@@ -54,9 +61,6 @@
         },
         preFetch: function(store) {
             return this.methods.fetchData(store);
-        },
-        mounted() {
-            // JSHL();
         }
     }
 </script>

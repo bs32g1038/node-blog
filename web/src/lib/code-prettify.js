@@ -60,8 +60,6 @@ function JSHL(langName) {
         lang = 'javascript',
         html, outer;
 
-        console.log(pres)
-
     /**
      * 转义html字符
      * @param {String} html 要转义的html代码
