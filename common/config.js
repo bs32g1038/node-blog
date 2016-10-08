@@ -1,9 +1,9 @@
 var config = {
-
-    list_post_count: 10, //文章列表显示的话题数量
-    max_comment_per_day: 100, //每个访问者一天可以发的评论数
-    max_guestbook_per_day: 100, //每个访问者一天可以发的留言数
-    db: 'mongodb://127.0.0.1/test',
+    list_post_count: 10,                //文章列表显示的话题数量
+    max_comment_per_day: 100,           //每个访问者一天可以发的评论数
+    max_guestbook_per_day: 100,         //每个访问者一天可以发的留言数
+    max_open_per_day: 1000,             //每个访问者一天可以打开网站的次数，主要用于防止循环攻击
+    db: 'mongodb://127.0.0.1/test',     
     session_secret: 'node_club_secret', // 务必修改
     site: {
         key: 'site-info', //关键词用于检索数据

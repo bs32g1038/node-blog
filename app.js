@@ -47,7 +47,7 @@ app.use(helmet.frameguard());
 
 app.use(new RateLimit({
     errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',
-    limitCount: 1000,
+    limitCount: config.max_open_per_day,
     expired: 24 * 60 * 60
 }));
 app.use('/api', apiRouter);

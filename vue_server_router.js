@@ -3,7 +3,8 @@
  * 2016.10.8 更新(update)
  * vue2.0.0 释放版本
  */
-
+var express = require('express');
+var app = express();
 process.env.VUE_ENV = 'server'             //开发调用 
 //process.env.VUE_ENV = 'production'        线上启用
 const path = require('path');

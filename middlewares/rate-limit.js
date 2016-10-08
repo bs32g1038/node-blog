@@ -22,34 +22,21 @@ function RateLimit(options) {
 
   //处理频率过快的结果
   var handler = function (req, res /*, next*/) {
-    // res.format({
-    //   html: function () {
     var key = keyGenerator(req, res);
     cache.ttl(key, function (err, expired) {
-
       var h = parseInt(expired / 60 / 60);
       var m = parseInt(expired / 60 % 60);
       var s = parseInt(expired % 60);
-
       function zfill(num) {
         if (num < 10) {
           return '0' + num;
         }
         return num;
       }
-
       const pos = errorMsg.indexOf('{{ expired }}') + '{{ expired }}'.length;
-
       var error = errorMsg.slice(0, pos).replace('{{ expired }}', zfill(h) + ":" + zfill(m) + ":" + zfill(s)) + errorMsg.slice(pos);
-
       res.status(statusCode).render('notify/notify', { error: error });
     });
-
-    // },
-    // json: function () {
-    //   res.status(statusCode).json({ success: false, error_msg: errorMsg });
-    // }
-    // });
   }
 
   function rateLimit(req, res, next) {
@@ -59,7 +46,6 @@ function RateLimit(options) {
         return next(err);
       }
       count = count || 0;
-      console.log(limitCount)
       if (count < limitCount) {
         count += 1;
         cache.set(key, count, expired);
