@@ -22,7 +22,7 @@ class DocDao extends BaseDao {
 
         });
 
-    };
+    }
 
     getPostsByCategoryId(category_id, pageIndex, pageSize, callback) {
 
@@ -36,7 +36,7 @@ class DocDao extends BaseDao {
                 return callback(null, docs);
 
             });
-    };
+    }
 
     getArchivesByPage(page, callback) {
 
@@ -50,7 +50,7 @@ class DocDao extends BaseDao {
                 return callback(null, docs);
 
             });
-    };
+    }
 
     incCommentCount(id, callback) {
 
@@ -63,7 +63,7 @@ class DocDao extends BaseDao {
             return callback(null, raw);
 
         });
-    };
+    }
 
     decCommentCount(id, callback) {
 
@@ -76,7 +76,7 @@ class DocDao extends BaseDao {
             return callback(null, raw);
 
         });
-    };
+    }
 
 
     getSearchResult(title, page, callback) {
@@ -91,7 +91,7 @@ class DocDao extends BaseDao {
                 return callback(null, docs);
 
             });
-    };
+    }
 
     getCountByLikeTitle(title, callback) {
 

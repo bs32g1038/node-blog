@@ -19,7 +19,7 @@ class CommentDao extends BaseDao {
 
 
         });
-    };
+    }
 
     updatePassById(id, callback) {
 
@@ -33,7 +33,7 @@ class CommentDao extends BaseDao {
 
         });
 
-    };
+    }
 
 }
 

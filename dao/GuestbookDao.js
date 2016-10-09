@@ -3,8 +3,6 @@
  * 2016-7-25
  **************************************/
 
-var config = require('../common/config');
-
 //基础类
 var BaseDao = require('./BaseDao');
 

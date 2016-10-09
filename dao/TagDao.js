@@ -1,6 +1,3 @@
-var config = require('../common/config');
-var util = require('util');
-
 //基础类
 var BaseDao = require('./BaseDao');
 
@@ -8,7 +5,7 @@ class TagDao extends BaseDao {
 
     incPostCountByName(name, callback) {
 
-        var callback = callback || function () {};
+        callback = callback || function () {};
 
         this.model.update({name: name}, {$inc: {post_count: 1}}, function (err) {
 

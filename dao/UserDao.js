@@ -1,5 +1,3 @@
-var config = require('../common/config');
-
 //基础类
 var BaseDao = require('./BaseDao');
 
