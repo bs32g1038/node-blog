@@ -2,13 +2,12 @@
  * 参考vue 服务器端渲染
  * 2016.10.8 更新(update)
  * vue2.0.0 释放版本
+ * vue server renderer
  */
 
 module.exports = (app) => {
-    process.env.VUE_ENV = 'server'             //开发调用 
-    //process.env.VUE_ENV = 'production'        线上启用
     const path = require('path');
-    const isProd = process.env.NODE_ENV === 'production'
+    const isProd = process.env.NODE_ENV === 'production' //是否是产品环境下？
     const fs = require('fs')
     const resolve = file => path.resolve(__dirname, file)
     const serialize = require('serialize-javascript')
@@ -23,12 +22,23 @@ module.exports = (app) => {
         const i = template.indexOf('{{ APP }}');
         // styles are injected dynamically via vue-style-loader in development
         const title = 'node-blog';
-        const style = '<link rel="stylesheet" href="/dist/css/style.min.css">' || ''
+        const style = isProd ? '<link rel="stylesheet" href="/dist/css/style.min.css">' : '<link rel="stylesheet" href="/css/style.css">'
         return {
             head: template.slice(0, s).replace('{{ TITLE }}', title) + template.slice(s, i).replace('{{ STYLE }}', style),
             tail: template.slice(i + '{{ APP }}'.length)
         }
     })()
+
+    function createRenderer(bundle) {
+        //开启服务器端渲染缓存
+        // return createBundleRenderer(bundle, {
+        //     cache: require('lru-cache')({
+        //         max: 1000,
+        //         maxAge: 1000 * 60 * 15
+        //     })
+        // })
+        return createBundleRenderer(bundle)
+    }
 
     // setup the server renderer, depending on dev/prod environment
     var renderer;
@@ -46,28 +56,19 @@ module.exports = (app) => {
         })
     }
 
-    function createRenderer(bundle) {
-        //开启服务器端渲染缓存
-        // return createBundleRenderer(bundle, {
-        //     cache: require('lru-cache')({
-        //         max: 1000,
-        //         maxAge: 1000 * 60 * 15
-        //     })
-        // })
-        return createBundleRenderer(bundle)
-    }
-
     function initVueServer(req, res) {
 
         if (!renderer) {
             return res.end('waiting for compilation...')
         }
 
-        const context = { url: req.url }
+        const context = {
+            url: req.url
+        }
         const renderStream = renderer.renderToStream(context)
         let firstChunk = true;
 
-        res.write(html.head)                //写入html的头部
+        res.write(html.head) //写入html的头部
 
         renderStream.on('data', chunk => {
             if (firstChunk) {
@@ -84,7 +85,7 @@ module.exports = (app) => {
             res.write(chunk)
         })
         renderStream.on('end', () => {
-            res.end(html.tail)              //写入html的尾部
+            res.end(html.tail) //写入html的尾部
         })
         renderStream.on('error', err => {
             throw err

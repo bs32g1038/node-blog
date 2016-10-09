@@ -18,8 +18,8 @@ var config = {
     //用于初始化管理员数据，init data
     administrator: {
         nick_name: '冷夜流星',
-        account: 'admin',
-        password: 'admin',
+        account: 'admin',               //不支持动态修改
+        password: 'admin',              //不支持动态修改
         email: 'bs32g1038@163.com',
         location: '广东',
         qq: '845177026',

@@ -6,14 +6,11 @@ var guestbook = require('./routes/guestbook');
 var link = require('./routes/link');
 var tag = require('./routes/tag');
 var user = require('./routes/user');
-var site = require('./routes/site');
 var about = require('./routes/about');
 var category = require('./routes/category');
 
-//本地存储文件接口
-var uploadSingle = require('./common/store_local').uploadSingle;
-//七牛存储文件接口
-var uploadQn = require('./common/store_qn');
+//存储文件接口（包括七牛和本地上传）
+var uploadSingle = require('./common/store_file');
 
 var router = express.Router();
 
@@ -129,13 +126,16 @@ router.post('/admin/site/edit/:id/do', site.b_edit_do);
 
 router.post('/admin/upload', function (req, res, next) {
 
-    uploadSingle(req, res, function (err) {
+    uploadSingle(req, res, function (err, url) {
         //添加错误处理
         if (err) {
-            return res.json({ success: false, error_msg: '上传失败！' });
+            return res.json({
+                success: false,
+                error_msg: '上传失败！'
+            });
         }
         return res.json({
-            url: "/uploads/" + req.file.filename,
+            url: url,
             success: true
         });
     });

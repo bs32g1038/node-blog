@@ -8,7 +8,6 @@ var apiRouter = require('./api_router');         //路由api接口
 var webRouter = require('./router');            //Web路由
 var vueServerRouter = require('./vue_server_router');            //Web路由
 var csurf = require('csurf');
-var parseurl = require('parseurl');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var compression = require('compression');

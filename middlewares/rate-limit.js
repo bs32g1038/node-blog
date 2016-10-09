@@ -1,8 +1,11 @@
-var config = require('../common/config');
 var cache = require('../common/redis');
-var moment = require('moment');
 
-function RateLimit(options) {
+/**
+ * 限制访问速度，默认通过ip记录
+ * @param {Object} options
+ * @returns
+ */
+function RateLimit (options) {
   var expired = options.expired || 60 * 60;
   var limitCount = options.limitCount || 150;
   var errorMsg = options.errorMsg || 'There is an exception to your IP, please try again later.';
@@ -21,12 +24,13 @@ function RateLimit(options) {
   }
 
   //处理频率过快的结果
-  var handler = function (req, res /*, next*/) {
+  var handler = function (req, res /*, next*/ ) {
     var key = keyGenerator(req, res);
     cache.ttl(key, function (err, expired) {
       var h = parseInt(expired / 60 / 60);
       var m = parseInt(expired / 60 % 60);
       var s = parseInt(expired % 60);
+
       function zfill(num) {
         if (num < 10) {
           return '0' + num;
@@ -35,7 +39,9 @@ function RateLimit(options) {
       }
       const pos = errorMsg.indexOf('{{ expired }}') + '{{ expired }}'.length;
       var error = errorMsg.slice(0, pos).replace('{{ expired }}', zfill(h) + ":" + zfill(m) + ":" + zfill(s)) + errorMsg.slice(pos);
-      res.status(statusCode).render('notify/notify', { error: error });
+      res.status(statusCode).render('notify/notify', {
+        error: error
+      });
     });
   }
 
@@ -52,16 +58,15 @@ function RateLimit(options) {
         res.set('X-RateLimit-Limit', limitCount);
         res.set('X-RateLimit-Remaining', limitCount - count);
         next();
-      }
-      else {
+      } else {
         return handler(req, res, next);
       }
     })
-  };
+  }
 
   return rateLimit;
 
-};
+}
 
 // exports.peripperday = new RateLimit({
 //   errorMsg: 'There is an exception to your IP, please try again in 24 hours later.',

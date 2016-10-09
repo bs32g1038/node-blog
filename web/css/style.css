@@ -1348,23 +1348,24 @@ pre .val {
     display: inline-block;
     font-size: 12px;
     height: 20px;
+    left: -10px;
     line-height: 20px;
     padding: 0 9px;
     position: absolute;
     z-index: 1;
     top: 12px;
-    left: -8px;
 }
 
 .span-mark::after {
-    border: none;
     border-color: transparent #d41b1b transparent transparent;
     border-image: none;
     border-style: solid;
     border-width: 10px;
     bottom: -10px;
-    clip: rect(10px, 20px, 20px, 0);
+    clip: rect(10px, 20px, 20px, 0px);
     content: "";
+    display: inline-block;
     left: -10px;
+    position: absolute;
     z-index: 0;
 }
