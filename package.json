@@ -64,7 +64,6 @@
     "gulp-autoprefixer": "3.1.1",
     "gulp-concat": "2.6.0",
     "gulp-minify-css": "1.2.4",
-    "gulp-minify-html": "1.0.6",
     "gulp-nodemon": "2.2.1",
     "gulp-notify": "2.2.0",
     "gulp-rename": "1.2.2",

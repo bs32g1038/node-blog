@@ -10,7 +10,6 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),                              //- 对文件名加MD5后缀
     revCollector = require('gulp-rev-collector'),           //- 路径替换
     gutil = require("gulp-util"),                           //- gulp工具增强
-    minifyHTML = require('gulp-minify-html'),               //- html压缩
     minifycss = require('gulp-minify-css');                 //- css压缩
 
 var webpack = require("webpack"),
@@ -84,10 +83,6 @@ gulp.task('index-css', function () {
 gulp.task('rev', function () {
     return gulp.src(['web/rev/**/*.json', 'web/views/admin/header.ejs', 'web/views/admin/js.ejs'])
         .pipe(revCollector())
-        .pipe(minifyHTML({
-            empty: true,
-            spare: true
-        }))
         .pipe(gulp.dest('views/admin'));
 });
 
