@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-    devtool: '#source-map',
+    // devtool: '#source-map',
     entry: {
-        app: './web/src/client-entry.js',
+        app: './web/vue/client-entry.js',
         vendor: ['vue', 'vue-router', 'vuex', 'es6-promise', 'whatwg-fetch'],//'lru-cache';
     },
     output: {

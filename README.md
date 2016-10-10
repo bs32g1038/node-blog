@@ -23,7 +23,9 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，Run app**
 
->         node bin/www
+>         npm dev       // development mode
+
+>         npm build     // production mode
         
 **项目简介：**
 
@@ -48,7 +50,9 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，运行程序**
 
->         node bin/www
+>         npm dev       // 开发模式
+
+>         npm build     // 产品模式
                
 # License
 MIT
