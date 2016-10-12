@@ -1,6 +1,5 @@
 (function ($) {
     $(document).ready(function () {
-
         function TagInput(options) {
 
             var $el = $(options.el);

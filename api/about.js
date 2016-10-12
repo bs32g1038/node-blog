@@ -1,6 +1,6 @@
 "use strict";
 
-var config = require('../common/config');
+var config = require('../config');
 var Index = require('../dao/index');
 var aboutDao = Index.about;
 

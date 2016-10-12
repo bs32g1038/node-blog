@@ -1,9 +1,6 @@
-"use strict";
-
-var config = require('../common/config');
+var config = require('../config');
 var async = require("async");
-
-var Index = require('../dao/index');
+var Index = require("../dao/index");
 var categoryDao = Index.category;
 var linkDao = Index.link;
 var userDao = Index.user;

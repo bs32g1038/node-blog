@@ -4,7 +4,7 @@
  **************************************/
 "use strict";
 
-var config = require('../common/config');
+var config = require('../config');
 
 //post模型
 var postModel = require('../models/post');

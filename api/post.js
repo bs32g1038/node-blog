@@ -1,6 +1,3 @@
-"use strict";
-
-var _ = require('lodash');
 var tools = require('../common/tools');
 var validator = require('validator');
 var Index = require('../dao/index');
@@ -8,7 +5,7 @@ var postDao = Index.post;
 var categoryDao = Index.category;
 var commentDao = Index.comment;
 var async = require("async");
-var config = require('../common/config');
+var config = require('../config');
 
 
 exports.index = function (req, res) {

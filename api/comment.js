@@ -1,12 +1,9 @@
 "use strict";
 
-var _ = require('lodash');
 var validator = require('validator');
 var Index = require('../dao/index');
+
 var commentDao = Index.comment;
-var config = require('../common/config');
-var redis = require('../common/redis');
-var tools = require('../common/tools');
 
 exports.add = function (req, res) {
 

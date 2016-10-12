@@ -2,7 +2,7 @@ var multer = require('multer');
 var path = require('path');
 var utility = require('utility');
 var qn = require('qn');
-var config = require('./config');
+var config = require('../config');
 
 const isLocal = config.qn_access.accessKey == 'your access key';
 

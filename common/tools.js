@@ -1,5 +1,5 @@
 var moment = require('moment');
-var config = require('./config');
+var config = require('../config');
 exports.moment = moment;
 
 moment.locale('zh-cn'); // 使用中文

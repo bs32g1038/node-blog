@@ -7,7 +7,7 @@ module.exports = {
         vendor: ['vue', 'vue-router', 'vuex', 'es6-promise', 'whatwg-fetch'],//'lru-cache';
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '../../public/dist'),
         publicPath: '/dist/',
         filename: 'client-bundle.js'
     },

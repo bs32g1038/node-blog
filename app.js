@@ -4,15 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var apiRouter = require('./api_router'); //路由api接口
-var webRouter = require('./router'); //Web路由
-var vueServerRouter = require('./vue_server_router'); //Web路由
+var apiRouter = require('./routes/api_router'); //api接口路由
+var webRouter = require('./routes/web_router'); //web路由
+var vueServerRouter = require('./routes/vue_server_router'); //vue服务器渲染路由
 var csurf = require('csurf');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
-var config = require('./common/config');
+var config = require('./config');
+
 // var RateLimit = require('./middlewares/rate-limit');
 
 //初始化连接数据库
@@ -45,10 +46,6 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-if (process.env.NODE_ENV != 'production') {
-    app.use(express.static(path.join(__dirname, 'web/noncompressed')));
-}
 
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard());

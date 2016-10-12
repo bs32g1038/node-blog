@@ -1,8 +1,7 @@
 var tools = require('../common/tools');
 var validator = require('validator');
 var async = require("async");
-var config = require('../common/config');
-var redis = require('../common/redis');
+var config = require('../config');
 var Index = require('../dao/index');
 var guestbookDao = Index.guestbook;
 
