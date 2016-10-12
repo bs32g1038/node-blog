@@ -23,9 +23,8 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，Run app**
 
->         npm dev       // development mode
-
->         npm build     // production mode
+>         gulp          // development mode
+>         gulp help		// run help
         
 **项目简介：**
 
@@ -50,9 +49,8 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，运行程序**
 
->         npm dev       // 开发模式
-
->         npm build     // 产品模式
+>         gulp          // 开发模式
+>         gulp help		// 运行帮助
                
 # License
 MIT
