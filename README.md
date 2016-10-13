@@ -1,5 +1,9 @@
 # node-blog
 
+**Demo：**
+
+[http://45.32.90.159/](http://45.32.90.159/ "blog")
+
 **Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API。
