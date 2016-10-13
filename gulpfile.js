@@ -55,15 +55,15 @@ gulp.task('copy-public', function () {
 gulp.task('node', function () {
     nodemon({
         script: 'bin/www',
-        ext: 'js',
+        ext: 'js html css',
         env: {
             'NODE_ENV': process.env.INIT_ENV || 'development'
         },
-        // ignore: [
-        //     'public/',
-        //     'web/',
-        //     'views/'
-        // ],
+        ignore: [
+            'public/',
+            'web/',
+            'views/'
+        ],
     })
 })
 
@@ -78,14 +78,14 @@ gulp.task('watch', function () {
     gulp.watch('web/javascripts/*.js', ['sequence-all']);
     gulp.watch('web/libs/*.js', ['sequence-all']);
     gulp.watch('web/vue/**', ['sequence-all']);
-    
+
 });
 
 gulp.task('server', ['node']);
 
-gulp.task('-d', ['node', 'watch']);
+gulp.task('-d', gulpSequence('sequence-all', ['node', 'watch']));
 
-gulp.task('default', ['node', 'watch']);
+gulp.task('default', gulpSequence('sequence-all', ['node', 'watch']));
 
 gulp.task('help', function () {
     console.log('	gulp build			文件打包');

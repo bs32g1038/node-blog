@@ -1,4 +1,4 @@
-// //-css样式压缩和合并
+// //-js样式压缩和合并
 module.exports = function (gulp, plugins) {
 
     var inject = plugins.inject;

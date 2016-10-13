@@ -39,7 +39,6 @@
             <transition name="fade" mode="out-in" >
                 <ErrorMessage v-if="!success"></ErrorMessage>
                 <router-view class="view" v-else></router-view>
-                
             </transition>
         </div>
         <footer class="footer clearfix">
@@ -118,9 +117,6 @@
                 return this.$store.dispatch('loadSearchList', {
                     key: this.search_key
                 });
-            },
-            backTop() {
-
             }
         },
         computed: {

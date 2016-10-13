@@ -4,9 +4,8 @@ module.exports = function (gulp, plugins) {
     var inject = plugins.inject;
     var concat = plugins.concat;
     var rev = plugins.rev;
-    var minifyCss = plugins.minifyCss;
+    var cleanCss = plugins.cleanCss;
     var autoprefixer = plugins.autoprefixer;
-
 
     const isProd = process.env.INIT_ENV == 'production';
 
@@ -24,7 +23,7 @@ module.exports = function (gulp, plugins) {
 
 
         if (isProd) {
-            sources = sources.pipe(minifyCss({
+            sources = sources.pipe(cleanCss({
                     advanced: false,
                 }))
                 .pipe(concat('index.min.css'))

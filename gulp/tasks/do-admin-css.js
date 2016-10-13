@@ -4,7 +4,7 @@ module.exports = function (gulp, plugins) {
     var inject = plugins.inject;
     var concat = plugins.concat;
     var rev = plugins.rev;
-    var minifyCss = plugins.minifyCss;
+    var cleanCss = plugins.cleanCss;
     var autoprefixer = plugins.autoprefixer;
 
     const isProd = process.env.INIT_ENV == 'production';
@@ -25,7 +25,7 @@ module.exports = function (gulp, plugins) {
             .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'));
 
         if (isProd) {
-            sources = sources.pipe(minifyCss({
+            sources = sources.pipe(cleanCss({
                     advanced: false,
                 }))
                 .pipe(concat('admin.min.css'))

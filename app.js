@@ -21,6 +21,8 @@ require('./common/mongoose');
 
 var app = express();
 
+// app.use(helmet())
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -47,8 +49,6 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(helmet.hidePoweredBy());
-app.use(helmet.frameguard());
 
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',

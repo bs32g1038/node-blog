@@ -8,7 +8,7 @@ var about = require('../api/about');
 //请求速率控制
 var RateLimit = require('../middlewares/rate-limit');
 //配置文件
-var config = require('./config');
+var config = require('../config');
 
 var router = express.Router();
 
