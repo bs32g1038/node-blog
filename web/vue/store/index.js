@@ -23,7 +23,8 @@ export default new Vuex.Store({
         comments: [],
         success: true,
         error_msg: '',
-        about: {}
+        about: {},
+        err_count:0
     },
     actions: {
         loadPost({commit, dispatch }, id) {
@@ -76,6 +77,7 @@ export default new Vuex.Store({
             state.error_msg = error_msg;
         },
         set_postList(state, {success, error_msg, data}) {
+
             if (success) {
                 state.postList = data.docs;
                 state.curPage = data.curPage;
@@ -83,10 +85,10 @@ export default new Vuex.Store({
             }
             state.success = success;
             state.error_msg = error_msg;
+
         },
         set_initData(state, {success, error_msg, data}) {
-            state.success = success;
-            state.error_msg = error_msg;
+
             if (success) {
                 state.cats = data.cats;
                 state.user = data.user;
@@ -94,6 +96,8 @@ export default new Vuex.Store({
                 state.site = data.site;
                 state.init = true;
             }
+            state.success = success;
+            state.error_msg = error_msg;
         },
         set_guestbookList(state, {success, error_msg, data}) {
             if (success) {

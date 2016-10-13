@@ -1,3 +1,4 @@
+require('es6-promise').polyfill()
 const path = require('path')
 const webpack = require('webpack')
 const MFS = require('memory-fs')

@@ -28,7 +28,8 @@
             PathNav
         },
         data() {
-            return {}
+            return {
+            }
         },
         beforeMount() {
             this.fetchData(this.$store)
@@ -39,8 +40,8 @@
             }
         },
         methods: {
-            //   formatDate: local.parseTime,
             fetchData(store) {
+
                 var key = store.state.route.query.key;
                 if (key) {
                     return store.dispatch('loadSearchList', {
@@ -48,6 +49,7 @@
                     });
                 }
                 var category = store.state.route.params.category;
+
                 var page = store.state.route.params.page;
                 return store.dispatch('loadPostList', {
                     category: category,
@@ -76,24 +78,24 @@
                 var key = this.$route.query.key; //搜索关键词
                 var category = this.$route.params.category; //分类目录,非显示名称
                 var cats = this.$store.state.cats; //目录列表
-
                 if (key) {
                     paths[0].name = '搜索结果';
                 } else if (category) {
-                    for (var cat of cats) { //更改路径导航
-                        if (cat.alias == category) {
+
+                    for (var i = 0; i < cats.length; i++) { //更改路径导航
+                        if (cats[i].alias == category) {
                             paths = [{
                                 url: '/',
                                 name: '文章列表'
                             }, {
                                 url: '',
-                                name: cat.name
+                                name: cats[i].name
                             }];
                             break;
                         }
                     }
+                    
                 }
-
                 return paths;
             }
         },

@@ -27,8 +27,9 @@ export default {
             url = this.base_url + "/category/" + category + "/page/" + page;
         }
 
-        return fetch(url).then(res => res.json())
-            .then(data => data)
+        return fetch(url).then(function(res) {
+                return res.json();
+            }).then(data => data)
             .catch(e => console.log("uh error", e))
     },
 

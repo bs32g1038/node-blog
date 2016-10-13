@@ -59,11 +59,11 @@ gulp.task('node', function () {
         env: {
             'NODE_ENV': process.env.INIT_ENV || 'development'
         },
-        ignore: [
-            'public/',
-            'web/',
-            'views/'
-        ],
+        // ignore: [
+        //     'public/',
+        //     'web/',
+        //     'views/'
+        // ],
     })
 })
 
@@ -77,6 +77,8 @@ gulp.task('watch', function () {
     gulp.watch('web/stylesheets/*.css', ['sequence-all']);
     gulp.watch('web/javascripts/*.js', ['sequence-all']);
     gulp.watch('web/libs/*.js', ['sequence-all']);
+    gulp.watch('web/vue/**', ['sequence-all']);
+    
 });
 
 gulp.task('server', ['node']);
