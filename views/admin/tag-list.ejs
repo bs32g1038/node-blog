@@ -36,8 +36,8 @@
                 <td><%= tags[i].description %></td>
                 <td><%= tags[i].post_count %></td>
                 <td>
-                    <button class="btn btn-default btn-xs category_del" tag-id=<%= tags[i]._id %> title="修改"><i
-                                class="fa fa-edit"></i>&nbsp;修改
+                    <button class="btn btn-default btn-xs modify_tag" tag-id=<%= tags[i]._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
+                        <span class="fa fa-edit">&nbsp;</span>修改
                     </button>
                     <button class="btn btn-default btn-xs category_del" tag-id=<%= tags[i]._id %> title="删除"><i
                                 class="fa fa-trash-o"></i>&nbsp;删除
@@ -50,7 +50,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modify_dialog" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,13 +60,14 @@
                 <h4 class="modal-title" id="myModalLabel">修改标签描述</h4>
             </div>
             <div class="modal-body">
-                <form id="form" class="form-horizontal" action="/admin/tag/edit" method="post">
+                <form id="form" class="form-horizontal" action="" method="post">
                     <div class="form-group">
                         <label class="control-label col-sm-3">标签描述</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" name="description">
+                            <input type="text" id="tag_description" class="form-control input-sm" name="description">
                         </div>
                     </div>
+                    <input type='hidden' name='_csrf' value='<%= csrf %>'/>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -81,11 +82,8 @@
 
 <script>
     $(document).ready(function () {
-
         $('.category_del').on('click', function () {
-
             var tag_id = $(this).attr("tag-id");
-
             if (tag_id && confirm('确定要删除目录？')) {
                 $.post('/admin/tag/del', {
                     id: tag_id
@@ -101,6 +99,13 @@
 
         $('#add-submit').on('click', function () {
             $('#form').submit();
+        });
+
+        $('.modify_tag').on('click', function () {
+            var tag_id = $(this).attr("tag-id");
+            var tds = $(this).parent().parent().find('td');
+            $('#form').attr("action",'/admin/tag/edit/' + tag_id + '/do');
+            $('#tag_description').val(tds.eq(2).text())
         });
 
     });

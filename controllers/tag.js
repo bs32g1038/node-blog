@@ -25,22 +25,27 @@ exports.b_get_tag_list = function (req, res) {
 
 }
 
+exports.b_tag_edit_do = function (req, res) {
+
+    var id = req.params.id;
+    var description = req.body.description;
+
+    tagDao.updateById(id, {
+        description: description
+    }, function (err) {
+        if (err) {}
+        res.redirect('/admin/tag/list');
+    });
+
+}
+
 exports.b_tag_del = function (req, res) {
-
     var id = req.body.id;
-
     tagDao.deleteById(id, function (err) {
-
-        if (err) {
-
-        }
-
+        if (err) {}
         res.json({
             success: true,
             msg: '标签已经被删除'
         });
-
     })
-
-
 }

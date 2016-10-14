@@ -92,7 +92,7 @@ router.post('/admin/guestbook/del', guestbook.b_guestbook_del);
 
 router.get('/admin/tag/list', tag.b_get_tag_list);
 
-router.post('/admin/tag/del', tag.b_tag_del);
+router.post('/admin/tag/edit/:id/do', tag.b_tag_edit_do);
 
 router.post('/admin/tag/del', tag.b_tag_del);
 
@@ -101,6 +101,8 @@ router.post('/admin/tag/del', tag.b_tag_del);
 router.get('/admin/link/list', link.b_get_link_list);
 
 router.post('/admin/link/add', link.b_link_add);
+
+router.post('/admin/link/edit/:id/do', link.b_link_edit_do);
 
 router.post('/admin/link/del', link.b_link_del);
 

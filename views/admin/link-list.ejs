@@ -3,9 +3,7 @@
     <section class="page-header">
         <h1>控制台
             <small>友情链接管理</small>
-
         </h1>
-
     </section>
     <div class="panel">
         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
@@ -34,8 +32,8 @@
                 <td><%= links[i].name %></td>
                 <td><%= links[i].url %></td>
                 <td>
-                    <button class="btn btn-default btn-xs category_del" link-id=<%= links[i]._id %> title="修改"><i
-                                class="fa fa-edit"></i>&nbsp;修改
+                   <button class="btn btn-default btn-xs modify_link" link-id=<%= links[i]._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
+                        <span class="fa fa-edit">&nbsp;</span>修改
                     </button>
                     <button class="btn btn-default btn-xs link_del" link-id=<%= links[i]._id %> title="删除"><i
                                 class="fa fa-trash-o"></i>&nbsp;删除
@@ -48,7 +46,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modify_dialog" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,17 +56,17 @@
                 <h4 class="modal-title" id="myModalLabel">添加链接</h4>
             </div>
             <div class="modal-body">
-                <form id="form" class="form-horizontal" action="/admin/link/add" method="post">
+                <form id="form" class="form-horizontal" action="" method="post">
                     <div class="form-group">
                         <label class="control-label col-sm-3">名称</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" name="name">
+                            <input type="text" class="form-control input-sm" id="name" name="name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">链接</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" name="url">
+                            <input type="text" class="form-control input-sm" id="url" name="url">
                         </div>
                     </div>
                     <input type='hidden' name='_csrf' value='<%= csrf %>'/>
@@ -86,11 +84,8 @@
 
 <script>
     $(document).ready(function () {
-
         $('.link_del').on('click', function () {
-
             var link_id = $(this).attr("link-id");
-
             if (link_id && confirm('确定要删除该链接？')) {
                 $.post('/admin/link/del', {
                     id: link_id
@@ -103,11 +98,16 @@
                 });
             }
         });
-
         $('#add-submit').on('click', function () {
             $('#form').submit();
         });
-
+        $('.modify_link').on('click', function () {
+            var link_id = $(this).attr("link-id");
+            var tds = $(this).parent().parent().find('td');
+            $('#form').attr("action",'/admin/link/edit/' + link_id + '/do');
+            $('#name').val(tds.eq(1).text())
+            $('#url').val(tds.eq(2).text())
+        });
     });
 </script>
 </body>
