@@ -68,7 +68,7 @@ gulp.task('node', function () {
 })
 
 gulp.task('sequence-all', function (cb) {
-    if (Option.env == 'production') {
+    if (process.env.INIT_ENV == 'production') {
         gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
     } else {
         gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'copy-public', cb);
