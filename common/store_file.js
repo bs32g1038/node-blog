@@ -37,7 +37,7 @@ var uploadQn = function (req, res, callback) {
     if (err) {
       return callback(err)
     }
-    var filename = req.file.filename;
+    var filename = req.file.originalname;
     var key = utility.md5(filename + String((new Date()).getTime())) + path.extname(filename);
     qnClient.upload(req.file.buffer, {
       key: key

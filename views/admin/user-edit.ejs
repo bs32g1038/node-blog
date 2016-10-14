@@ -56,15 +56,15 @@
                     <input type="text" class="form-control input-sm" name="github" value="<%= user.github %>">
                 </div>
             </div>
-
-            <input type="hidden" value=<%= flag %> name="flag">
-
+            <input type='hidden' name='_csrf' value='<%= csrf %>'/>
             <div class="modal-footer">
                 <button id="save_draft" class="btn btn-default">保存</button>
             </div>
         </form>
     </div>
 
+    <%- include js %>
+    
     <script>
         $(document).ready(function () {
             $('#save_draft').on('click', function () {

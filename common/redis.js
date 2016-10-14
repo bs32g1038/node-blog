@@ -4,7 +4,9 @@ var logger = require('./logger');
 
 var client = redis.createClient(config.redis.port, config.redis.host, {});
 
-// client.auth('');
+if (config.redis.password) {
+    client.auth(config.redis.password);
+}
 
 client.on('error', function (err) {
     if (err) {

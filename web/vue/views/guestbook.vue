@@ -2,11 +2,9 @@
     <div>
         <PathNav :paths="[{url:'',name:'留言板'}]"></PathNav>
 
-        <div class="entries-box">
-            <ul class="guestbook-list">
-                <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
-            </ul>
-        </div>
+        <ul class="guestbook-list" v-if="guestbooks.length > 0">
+            <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
+        </ul>
 
         <PageNav url='/guestbook/'
                  :curPage="curPage"

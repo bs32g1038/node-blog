@@ -6,7 +6,9 @@ import 'whatwg-fetch';
 
 export default {
 
-    base_url: 'http://127.0.0.1/api',
+    base_url: 'http://45.32.90.159/api',
+
+   
 
     loadPost(id){
 

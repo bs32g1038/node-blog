@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "Simple, Fast & Light Node-Blog",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node bin/www"
+  },
   "dependencies": {
     "async": "2.0.1",
     "body-parser": "1.13.2",

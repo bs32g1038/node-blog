@@ -51,14 +51,15 @@
 		</footer>
 	</div>
 	</div>
-	</div>
-	<script>
-    $(document).ready(function () {
-        $('#reply-btn').on('click', function () {
-            $('#form').submit();
-        });
-    });
-	</script>
-	</body>
+</div>
+<%- include js %>
+<script>
+$(document).ready(function () {
+	$('#reply-btn').on('click', function () {
+		$('#form').submit();
+	});
+});
+</script>
+</body>
 
-	</html>
+</html>

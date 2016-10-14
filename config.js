@@ -17,7 +17,7 @@ var config = {
     },
     //用于初始化管理员数据，init data
     administrator: {
-        nick_name: '冷夜流星',
+        nick_name: '冷夜流星',           //管理员的昵称
         account: 'admin',               //不支持动态修改
         password: 'admin',              //不支持动态修改
         email: 'bs32g1038@163.com',
@@ -38,7 +38,7 @@ var config = {
         db: 0,
         cache_expired: "300", //秒
     },
-    // 7牛的access信息，用于文件上传
+    // 7牛的access信息，用于文件上传,不填写，则默认本地存储
     qn_access: {
         accessKey: 'your access key',
         secretKey: 'your secret key',

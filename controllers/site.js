@@ -45,12 +45,12 @@ exports.b_edit_do = function (req, res) {
     }
 
     siteDao.updateById(id, {
-        name,
-        logo,
-        icp,
-        url,
-        qr_code,
-        code_header
+        name: name,
+        logo: logo,
+        icp: icp,
+        url: url,
+        qr_code: qr_code,
+        code_header: code_header
     }, function (err) {
         res.redirect('/admin/site/edit');
     });

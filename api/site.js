@@ -4,6 +4,7 @@ var Index = require("../dao/index");
 var categoryDao = Index.category;
 var linkDao = Index.link;
 var userDao = Index.user;
+var siteDao = Index.site;
 
 exports.initData = function (req, res) {
 
@@ -19,7 +20,7 @@ exports.initData = function (req, res) {
         },
 
         site: function (callback) {
-            callback(null, config.site);
+            siteDao.getOneByQuery({ key: config.site.key }, '', null, callback);
         }
     }, function (err, data) {
         
