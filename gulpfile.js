@@ -68,7 +68,11 @@ gulp.task('node', function () {
 })
 
 gulp.task('sequence-all', function (cb) {
-    gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
+    if (Option.env == 'production') {
+        gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
+    } else {
+        gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'copy-public', cb);
+    }
 });
 
 gulp.task('build', ['sequence-all']);
@@ -78,12 +82,9 @@ gulp.task('watch', function () {
     gulp.watch('web/javascripts/*.js', ['sequence-all']);
     gulp.watch('web/libs/*.js', ['sequence-all']);
     gulp.watch('web/vue/**', ['sequence-all']);
-
 });
 
 gulp.task('server', ['node']);
-
-gulp.task('-d', gulpSequence('sequence-all', ['node', 'watch']));
 
 gulp.task('default', gulpSequence('sequence-all', ['node', 'watch']));
 
@@ -92,6 +93,6 @@ gulp.task('help', function () {
     console.log('	gulp watch			文件监控打包');
     console.log('	gulp help			gulp参数说明');
     console.log('	gulp server			测试server');
-    console.log('	gulp -d				开发环境（默认开发环境）');
+    console.log('	gulp                开发环境（默认开发环境）');
     console.log('	gulp xxxx --env production      生产模式下进行调试或者打包文件');
 });
