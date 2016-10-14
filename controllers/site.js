@@ -39,8 +39,7 @@ exports.b_edit_do = function (req, res) {
                 url,
                 qr_code,
                 code_header
-            },
-            flag: ''
+            }
         });
     }
 

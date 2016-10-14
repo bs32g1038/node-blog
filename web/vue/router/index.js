@@ -17,6 +17,14 @@ export default new VueRouter({
             component: require('../views/index.vue')
         },
         {
+            path: "/tag/:tag",
+            component: require('../views/index.vue')
+        },
+        {
+            path: "/tag/:tag/:page",
+            component: require('../views/index.vue')
+        },
+        {
             path: "/search",
             component: require('../views/index.vue')
         },

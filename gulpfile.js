@@ -14,6 +14,10 @@ var options = minimist(process.argv.slice(2), knownOptions);
 
 process.env.INIT_ENV = options.env;
 
+if (process.env.INIT_ENV == 'production') {
+    process.env.NODE_ENV = "production"
+}
+
 function getTask(name) {
     return require(`./gulp/tasks/${name}`)(gulp, plugins);
 }
@@ -69,6 +73,7 @@ gulp.task('node', function () {
 
 gulp.task('sequence-all', function (cb) {
     if (process.env.INIT_ENV == 'production') {
+        console.log("输入")
         gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
     } else {
         gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'copy-public', cb);

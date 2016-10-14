@@ -29,12 +29,14 @@ module.exports = (app) => {
 
     function createRenderer(bundle) {
         //开启服务器端渲染缓存
-        // return createBundleRenderer(bundle, {
-        //     cache: require('lru-cache')({
-        //         max: 1000,
-        //         maxAge: 1000 * 60 * 15
-        //     })
-        // })
+        if (isProd) {
+            return createBundleRenderer(bundle, {
+                cache: require('lru-cache')({
+                    max: 1000,
+                    maxAge: 1000 * 60 * 15
+                })
+            })
+        }
         return createBundleRenderer(bundle)
     }
 

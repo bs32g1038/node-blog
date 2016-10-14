@@ -6,9 +6,7 @@ import 'whatwg-fetch';
 
 export default {
 
-    base_url: 'http://45.32.90.159/api',
-
-   
+    base_url: 'http://127.0.0.1/api',
 
     loadPost(id){
 
@@ -19,7 +17,7 @@ export default {
             .catch(e => console.log("uh error", e))
 
     },
-    loadPostList ({category,page}) {
+    loadPostList ({category, tag, page}) {
 
         var page = page || 1;
 
@@ -27,6 +25,8 @@ export default {
 
         if (category) {
             url = this.base_url + "/category/" + category + "/page/" + page;
+        }else if(tag){
+            url = encodeURI(this.base_url + "/tag/" + tag + "/page/" + page);  
         }
 
         return fetch(url).then(function(res) {

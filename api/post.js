@@ -4,6 +4,7 @@ var Index = require('../dao/index');
 var postDao = Index.post;
 var categoryDao = Index.category;
 var commentDao = Index.comment;
+var tagDao = Index.tag;
 var async = require("async");
 var config = require('../config');
 
@@ -149,6 +150,42 @@ exports.getListByCategory = function (req, res) {
         function (err, data) {
             if (data.docs.length <= 0) {
                 return res.json({ success: false, error_msg: '该目录下没有文章！' });
+            }
+            if (err) {
+                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            }
+
+            res.json({ success: true, data: data });
+        });
+}
+
+
+exports.getListByTag = function (req, res) {
+
+    var page = tools.doPage(req.params.page);
+    var tag = String(req.params.tag);
+    var limit = config.list_post_count;             //列表显示数目
+
+    async.parallel({
+
+        docs: function (callback) {
+            postDao.getListByPage({ query: { tags: tag }, page: page }, callback);
+        },
+
+        pageCount: function (callback) {
+            postDao.getSumCountByQuery({ tags: tag }, function (err, sum) {
+                callback(err, Math.ceil(sum / limit));
+            });
+        },
+
+        curPage: function (callback) {
+            callback(null, page);
+        }
+
+    },
+        function (err, data) {
+            if (data.docs.length <= 0) {
+                return res.json({ success: false, error_msg: '该标签下没有文章！' });
             }
             if (err) {
                 return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });

@@ -48,11 +48,13 @@
                         key: key
                     });
                 }
-                var category = store.state.route.params.category;
+                var category = store.state.route.params.category;           //目录
+                var tag = store.state.route.params.tag;                     //标签
 
                 var page = store.state.route.params.page;
                 return store.dispatch('loadPostList', {
                     category: category,
+                    tag: tag,
                     page: page
                 })
             }
@@ -77,11 +79,11 @@
                 }];
                 var key = this.$route.query.key; //搜索关键词
                 var category = this.$route.params.category; //分类目录,非显示名称
+                var tag = this.$route.params.tag; //标签
                 var cats = this.$store.state.cats; //目录列表
                 if (key) {
                     paths[0].name = '搜索结果';
                 } else if (category) {
-
                     for (var i = 0; i < cats.length; i++) { //更改路径导航
                         if (cats[i].alias == category) {
                             paths = [{
@@ -94,7 +96,8 @@
                             break;
                         }
                     }
-                    
+                } else if(tag){
+                    paths = [{url: '/', name: '文章列表'},{url: '', name: '标签'}, {url: '', name: tag}];
                 }
                 return paths;
             }
