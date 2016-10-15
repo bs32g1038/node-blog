@@ -21,7 +21,9 @@ require('./common/mongoose');
 
 var app = express();
 
-// app.use(helmet())
+//删除header中的X-Powered-By标签
+app.use(helmet.hidePoweredBy());
+app.use(helmet.frameguard('sameorigin'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

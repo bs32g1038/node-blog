@@ -2,13 +2,11 @@
 
 import 'whatwg-fetch';
 
-//import fetch from 'isomorphic-fetch';
-
 export default {
 
     base_url: 'http://127.0.0.1/api',
 
-    loadPost(id){
+    loadPost(id) {
 
         let url = this.base_url + "/post/" + id;
 
@@ -17,7 +15,7 @@ export default {
             .catch(e => console.log("uh error", e))
 
     },
-    loadPostList ({category, tag, page}) {
+    loadPostList({ category, tag, page }) {
 
         var page = page || 1;
 
@@ -25,8 +23,8 @@ export default {
 
         if (category) {
             url = this.base_url + "/category/" + category + "/page/" + page;
-        }else if(tag){
-            url = encodeURI(this.base_url + "/tag/" + tag + "/page/" + page);  
+        } else if (tag) {
+            url = encodeURI(this.base_url + "/tag/" + tag + "/page/" + page);
         }
 
         return fetch(url).then(function(res) {
@@ -35,7 +33,7 @@ export default {
             .catch(e => console.log("uh error", e))
     },
 
-    loadInitData(){
+    loadInitData() {
 
         let url = this.base_url + "/init";
 
@@ -45,7 +43,7 @@ export default {
 
     },
 
-    loadGuestbookList({page}){
+    loadGuestbookList({ page }) {
 
         var page = page || 1;
 
@@ -57,7 +55,7 @@ export default {
 
     },
 
-    loadSearchList({key,page}){
+    loadSearchList({ key, page }) {
 
         var page = page || 1;
 
@@ -71,11 +69,10 @@ export default {
 
     },
 
-    loadAbout(){
+    loadAbout() {
         let url = this.base_url + "/about";
         return fetch(url).then(res => res.json())
             .then(data => data)
             .catch(e => console.log("uh error", e))
     }
 }
-
