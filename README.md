@@ -4,6 +4,10 @@
 
 [http://45.32.90.159/](http://45.32.90.159/ "blog")
 
+**Screenshot：**
+
+![](https://raw.githubusercontent.com/bs32g1038/node-blog/master/screenshot/site.gif)
+
 **Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API。
