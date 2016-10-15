@@ -6,7 +6,7 @@
 
 **Screenshot：**
 
-![](https://raw.githubusercontent.com/bs32g1038/node-blog/master/screenshot/site.gif)
+![](https://raw.githubusercontent.com/bs32g1038/node-blog/master/screenshot/site.png)
 
 **Project introduction：**
 
