@@ -1,24 +1,9 @@
 var validator = require('validator');
 var config = require('../config');
-
 var Index = require('../dao/index');
 var userDao = Index.user;
 
-exports.b_user_edit = function (req, res) {
-
-    var fields = '-__v -password -account';
-
-    userDao.getOneByAcount(config.administrator.account, fields, function (err, user) {
-
-        res.render('admin/user-edit', {
-            user: user,
-            flag: ''
-        });
-    })
-
-}
-
-exports.b_user_edit_do = function (req, res) {
+exports.b_user_edit_do = function(req, res) {
 
     // var ditError;
 
@@ -35,42 +20,20 @@ exports.b_user_edit_do = function (req, res) {
     if (!validator.isMongoId(id)) {
         res.status(400);
         return res.render('admin/user-edit', {
-            user: {
-                nick_name,
-                motto,
-                qq,
-                email,
-                img_url,
-                github
-            },
-            flag: ''
+            user: { nick_name, motto, qq, email, location, img_url, github }
         });
     }
-    // {
-    //     nick_name: nick_name,
-    //     location: location,
-    //     qq: qq,
-    //     email: email,
-    //     img_url: img_url,
-    //     motto: motto
-    // }
-    userDao.updateById(id, {
-        nick_name,
-        motto,
-        qq,
-        email,
-        img_url,
-        github
-    }, function (err) {
+
+    userDao.updateById(id, { nick_name, motto, qq, email, location, img_url, github }, function(err) {
         res.redirect('/admin/user/edit');
     });
 }
 
-exports.b_login = function (req, res) {
-    res.render('admin/login', {});
+exports.b_login = function(req, res) {
+    res.render('admin/user/login', {});
 }
 
-exports.b_loginDo = function (req, res) {
+exports.b_login_do = function(req, res) {
 
     var user = {
         username: req.body.account,
@@ -78,23 +41,23 @@ exports.b_loginDo = function (req, res) {
     }
 
     if (user.username === config.administrator.account && user.password === config.administrator.password) {
-
         req.session.user = user; //记住到session
-
-        res.redirect('doc-list');
-
+        res.redirect('/admin/doc/list');
     } else {
-
-        res.redirect('login');
-
+        res.redirect('/admin/user/login');
     }
-
 }
 
-exports.b_loginOut = function (req, res) {
-
+exports.b_login_out = function(req, res) {
     req.session.user = null;
+    res.redirect('/admin/user/login');
+}
 
-    res.redirect('login');
-
+exports.b_user_edit = function(req, res) {
+    userDao.getByAcount(config.administrator.account, function(err, user) {
+        res.render('admin/layout', {
+            user: user,
+            $body: 'user/edit.html'
+        });
+    })
 }

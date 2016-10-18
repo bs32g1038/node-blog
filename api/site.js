@@ -6,30 +6,25 @@ var linkDao = Index.link;
 var userDao = Index.user;
 var siteDao = Index.site;
 
-exports.initData = function (req, res) {
+exports.initData = function(req, res) {
 
     async.parallel({
-        cats: function (callback) {
-            categoryDao.getByQuery({}, null, { sort: { order: 1 } }, callback);
+        cats: function(callback) {
+            categoryDao.getList({ page: 1, limit: 30 }, callback);
         },
-        links: function (callback) {
-            linkDao.getByQuery({}, 'name url', { sort: { create_at: -1 } }, callback);
+        links: function(callback) {
+            linkDao.getList({ page: 1, limit: 10 }, callback);
         },
-        user: function (callback) {
-            userDao.getOneByAcount(config.administrator.account, 'nick_name email qq location github motto img_url', callback)
+        user: function(callback) {
+            userDao.getByAcount(config.administrator.account, callback)
         },
-
-        site: function (callback) {
-            siteDao.getOneByQuery({ key: config.site.key }, '', null, callback);
+        site: function(callback) {
+            siteDao.getByKey(config.site.key, callback);
         }
-    }, function (err, data) {
-        
+    }, function(err, data) {
         if (err) {
             return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
         }
-
         res.json({ success: true, data: data });
-
     });
-
 }

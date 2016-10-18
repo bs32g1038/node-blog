@@ -25,8 +25,11 @@ var app = express();
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
 
+// ejs引擎渲染html文件
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'html');
+app.engine('.html', require('ejs').renderFile);
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json({
@@ -48,6 +51,7 @@ app.use(session({
     saveUninitialized: false,
     secret: config.session_secret,
 }));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

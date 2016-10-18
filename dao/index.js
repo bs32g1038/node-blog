@@ -12,8 +12,6 @@ var postModel = require('../models/post');
 var labModel = require('../models/lab');
 //category模型
 var categoryModel = require('../models/category');
-//tag模型
-var tagModel = require('../models/tag');
 //comment模型
 var commentModel = require('../models/comment');
 //guestbook模型
@@ -26,24 +24,12 @@ var userModel = require('../models/user');
 var siteModel = require('../models/site');
 //about模型
 var aboutModel = require('../models/about');
-//var o = {};
-//o.map = function () {
-//    this.tags.forEach(function(z){  //z即是具体的某个tag了
-//        emit(z,1);                    //对某个tag出现一次就计数一次
-//    });
-//}
-//o.reduce = function (k, vals) { return vals.length}
-//postModel.mapReduce(o, function (err, results) {
-//    console.log(results)
-//})
 
 
 //文档操作类
 var DocDao = require('./DocDao');
 //目录操作类
 var CategoryDao = require('./CategoryDao');
-//标签操作类
-var TagDao = require('./TagDao');
 //评论操作类
 var CommentDao = require('./CommentDao');
 //留言操作类
@@ -69,8 +55,6 @@ exports.comment = new CommentDao(commentModel);
 
 exports.guestbook = new GuestbookDao(guestbookModel);
 
-exports.tag = new TagDao(tagModel);
-
 exports.link = new LinkDao(linkModel);
 
 
@@ -78,11 +62,10 @@ exports.link = new LinkDao(linkModel);
 
 var userDao = new UserDao(userModel);
 
-userDao.getOneByAcount(config.administrator.account, '', function (err, user) {
+userDao.getByAcount(config.administrator.account, function(err, user) {
     if (!user) {
-        return userDao.add(config.administrator, function (err) {
-            if (err) {
-            }
+        return userDao.add(config.administrator, function(err) {
+            if (err) {}
             console.log("init user info success!");
         })
     }
@@ -95,9 +78,9 @@ exports.user = userDao;
 
 var siteDao = new SiteDao(siteModel);
 
-siteDao.getOneByQuery({ key: config.site.key }, '', null, function (err, site) {
+siteDao.getByKey({ key: config.about.key }, function(err, site) {
     if (!site) {
-        return siteDao.add(config.site, function (err) {
+        return siteDao.add(config.site, function(err) {
             console.log("init site info success!")
         })
     }
@@ -110,9 +93,9 @@ exports.site = siteDao;
 
 var aboutDao = new AboutDao(aboutModel);
 
-aboutDao.getOneByQuery({ key: config.about.key }, '', null, function (err, about) {
+aboutDao.getByKey({ key: config.about.key }, function(err, about) {
     if (!about) {
-        return aboutDao.add(config.about, function (err) {
+        return aboutDao.add(config.about, function(err) {
             console.log("init about info success!")
         })
     }

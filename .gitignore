@@ -2,7 +2,7 @@ node_modules
 .idea
 .vscode
 logs
-/public
+public
 !public/uploads
 !public/favicon.ico
 views/admin/header.ejs

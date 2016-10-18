@@ -10,93 +10,69 @@ var BaseDao = require('./BaseDao');
 
 class DocDao extends BaseDao {
 
-    getByIdAndUpdateVisitCount(id, callback) {
+    getList(options, callback) {
 
-        this.model.findByIdAndUpdate({ _id: id }, { $inc: { visit_count: 1 } }, function (err, doc) {
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || -1;
 
-            if (err) {
-                return callback(err);
+        this.model.find({ is_deleted: false })
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
+    }
+
+    getTitleById(id, callback) {
+        this.model.findOne({ _id: id }, '-_id title', function(err, post) {
+            if (!post) {
+                return callback(err, '');
             }
-
-            callback(null, doc);
-
+            callback(err, post.title);
         });
-
     }
 
-    getPostsByCategoryId(category_id, pageIndex, pageSize, callback) {
+    getListByCategory(category, options, callback) {
 
-        this.model.find({ category_id: category_id })
-            .skip((page - 1) * config.page_num)
-            .limit(config.page_num)
-            .exec(function (err, docs) {
-                if (err) {
-                    callback(err);
-                }
-                return callback(null, docs);
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || -1;
 
-            });
+        this.model.find({ category: category })
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
     }
 
-    getArchivesByPage(page, callback) {
-
-        this.model.find({}, 'title create_at').sort({ "create_at": -1 })
-            .skip((page - 1) * config.page_num)
-            .limit(config.page_num)
-            .exec(function (err, docs) {
-                if (err) {
-                    callback(err);
-                }
-                return callback(null, docs);
-
-            });
+    getByIdAndUpdateVisitCount(id, callback) {
+        this.model.findByIdAndUpdate({ _id: id }, { $inc: { visit_count: 1 } }, callback);
     }
 
     incCommentCount(id, callback) {
-
-        this.model.update({ _id: id }, { $inc: { comment_count: 1 } }, function (err, raw) {
-
-            if (err) {
-                return callback(err);
-            }
-
-            return callback(null, raw);
-
-        });
+        this.model.update({ _id: id }, { $inc: { comment_count: 1 } }, callback);
     }
 
     decCommentCount(id, callback) {
-
-        this.model.update({ _id: id }, { $inc: { comment_count: -1 } }, function (err, raw) {
-
-            if (err) {
-                return callback(err);
-            }
-
-            return callback(null, raw);
-
-        });
+        this.model.update({ _id: id }, { $inc: { comment_count: -1 } }, callback);
     }
 
+    getSearchResult(key, options, callback) {
 
-    getSearchResult(title, page, callback) {
+        var page = options.page || 1,
+            page_size = options.page_size || 10,
+            order = options.order || -1;
 
-        this.model.find({ title: new RegExp(title) }).sort({ "create_at": -1 })
-            .skip((page - 1) * config.page_num)
-            .limit(config.page_num)
-            .exec(function (err, docs) {
-                if (err) {
-                    callback(err);
-                }
-                return callback(null, docs);
-
-            });
+        this.model.find({ title: { $regex: key } })
+            .sort({ create_at: order })
+            .skip((page - 1) * page_size)
+            .limit(page_size)
+            .exec(callback);
     }
 
-    getCountByLikeTitle(title, callback) {
+    getCountByLikeKey(key, callback) {
 
-        this.model.count({ title: new RegExp(title) }, function (err, sumCount) {
-
+        this.model.count({ title: { $regex: key } }, function(err, sumCount) {
             if (err) {
                 return callback(err);
             }
@@ -104,10 +80,21 @@ class DocDao extends BaseDao {
                 sum_count: sumCount,
                 page_count: Math.ceil(sumCount / config.page_num)
             });
-
         });
     }
 
+    getArchives(options, callback) {
+
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || -1;
+
+        this.model.find({}, 'title create_at')
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
+    }
 
 }
 module.exports = DocDao;

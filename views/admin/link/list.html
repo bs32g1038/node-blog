@@ -1,49 +1,46 @@
-<%- include header %>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-    <section class="page-header">
-        <h1>控制台
-            <small>友情链接管理</small>
-        </h1>
-    </section>
-    <div class="panel">
-        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
-            <span class="fa fa-plus-square">&nbsp;</span>
-            添加链接
-        </button>
-        <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
-                                                                                        aria-hidden="true">&nbsp;</span>批量删除
-        </button>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><input type="checkbox" class="mini" id="selectAll"></th>
-                <th>名称</th>
-                <th>链接</th>
-                <th>操作</th>
-            </tr>
+<section class="page-header">
+    <h1>控制台
+        <small>友情链接管理</small>
+    </h1>
+</section>
+<div class="panel">
+    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modify_dialog" id="add_link">
+        <span class="fa fa-plus-square">&nbsp;</span>
+        添加链接
+    </button>
+    <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
+                                                                                    aria-hidden="true">&nbsp;</span>批量删除
+    </button>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><input type="checkbox" class="mini" id="selectAll"></th>
+            <th>名称</th>
+            <th>链接</th>
+            <th>操作</th>
+        </tr>
 
-            </thead>
-            <tbody>
-            <% for(var i = 0 ; i < links.length; i++){ %>
-            <tr>
-                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
-                <td><%= links[i].name %></td>
-                <td><%= links[i].url %></td>
-                <td>
-                   <button class="btn btn-default btn-xs modify_link" link-id=<%= links[i]._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
-                        <span class="fa fa-edit">&nbsp;</span>修改
-                    </button>
-                    <button class="btn btn-default btn-xs link_del" link-id=<%= links[i]._id %> title="删除"><i
-                                class="fa fa-trash-o"></i>&nbsp;删除
-                    </button>
-                </td>
-            </tr>
-            <% } %>
-            </tbody>
-        </table>
-    </div>
+        </thead>
+        <tbody>
+        <% for(var i = 0 ; i < links.length; i++){ %>
+        <tr>
+            <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
+            <td><%= links[i].name %></td>
+            <td><%= links[i].url %></td>
+            <td>
+                <button class="btn btn-default btn-xs modify_link" link-id=<%= links[i]._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
+                    <span class="fa fa-edit">&nbsp;</span>修改
+                </button>
+                <button class="btn btn-default btn-xs link_del" link-id=<%= links[i]._id %> title="删除"><i
+                            class="fa fa-trash-o"></i>&nbsp;删除
+                </button>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
 </div>
 
 <div class="modal fade" id="modify_dialog" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -53,7 +50,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title" id="myModalLabel">添加链接</h4>
+                <h4 class="modal-title" id="link_modal_title"></h4>
             </div>
             <div class="modal-body">
                 <form id="form" class="form-horizontal" action="" method="post">
@@ -69,7 +66,7 @@
                             <input type="text" class="form-control input-sm" id="url" name="url">
                         </div>
                     </div>
-                    <input type='hidden' name='_csrf' value='<%= csrf %>'/>
+                    <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -80,18 +77,20 @@
     </div>
 </div>
 
-<%- include js %>
+<%- include('../js.html') %>
 
 <script>
     $(document).ready(function () {
         $('.link_del').on('click', function () {
             var link_id = $(this).attr("link-id");
+            var _csrf = $('#csrf').val();
             if (link_id && confirm('确定要删除该链接？')) {
                 $.post('/admin/link/del', {
-                    id: link_id
+                    id: link_id,
+                    _csrf: _csrf
                 }, function (res) {
                     if (!res.success) {
-                        alert(res.msg);
+                        alert(res.message);
                     } else {
                         location.href = '/admin/link/list';
                     }
@@ -101,15 +100,19 @@
         $('#add-submit').on('click', function () {
             $('#form').submit();
         });
+        $('#add_link').on('click', function () {
+            $('#link_modal_title').text('添加链接');
+            $('#form').attr("action",'/admin/link/add');
+            $('#name').val('');
+            $('#url').val('');
+        });
         $('.modify_link').on('click', function () {
             var link_id = $(this).attr("link-id");
             var tds = $(this).parent().parent().find('td');
             $('#form').attr("action",'/admin/link/edit/' + link_id + '/do');
             $('#name').val(tds.eq(1).text())
             $('#url').val(tds.eq(2).text())
+            $('#link_modal_title').text('编辑链接');            
         });
     });
 </script>
-</body>
-
-</html>

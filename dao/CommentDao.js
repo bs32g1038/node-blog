@@ -8,33 +8,35 @@ var BaseDao = require('./BaseDao');
 
 class CommentDao extends BaseDao {
 
-    getListLikePostId(post_id, isPass, callback) {
+    getList(options, callback) {
 
-        this.model.find({ post_id: post_id, pass: isPass }, function (err, docs) {
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || 1;
 
-            if (err) {
-                return callback(err);
+        this.model.find({})
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
+    }
+
+    getNickNameById(id, callback) {
+        this.model.findOne({ _id: id }, '-_id nick_name', function(err, comment) {
+            if (!comment) {
+                return callback(err, '');
             }
-            return callback(null, docs);
-
-
+            callback(err, comment.nick_name);
         });
+    }
+
+    getListLikePostId(post_id, isPass, callback) {
+        this.model.find({ post_id: post_id, pass: isPass },callback);
     }
 
     updatePassById(id, callback) {
-
-        this.model.update({ _id: id }, { $set: { pass: true } }, function (err, raw) {
-
-            if (err) {
-                return callback(err);
-            }
-
-            return callback(null, raw);
-
-        });
-
+        this.model.update({ _id: id }, { $set: { pass: true } },callback);
     }
-
 }
 
 module.exports = CommentDao;

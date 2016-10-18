@@ -8,40 +8,42 @@ var BaseDao = require('./BaseDao');
 
 class GuestbookDao extends BaseDao {
 
-    updateReplyContentById(id, reply_content, callback) {
+    getList(options, callback) {
 
-        this.model.update({ _id: id }, {
-            $set: {
-                reply_content: reply_content,
-                pass: true
-            }
-        }, function (err, raw) {
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || 1;
 
-            if (err) {
-                return callback(err);
-            }
-
-            callback(null, raw);
-
-        });
-
+        this.model.find({})
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
     }
 
-    updatePass(_id, callback) {
+    getPassList(options, callback) {
 
-        this.model.update({ _id: _id }, {
-            $set: {
-                pass: true
-            }
-        }, function (err, raw) {
+        var page = options.page,
+            limit = options.limit,
+            order = options.order || 1;
 
-            if (err) {
-                return callback(err);
-            }
+        this.model.find({ pass: true })
+            .sort({ create_at: order })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec(callback);
+    }
 
-            callback(null, raw);
+    getPassCount(callback) {
+        this.model.count({ pass: true }, callback);
+    }
 
-        });
+    updateReplyContentById(id, reply_content, callback) {
+        this.model.update({ _id: id }, { $set: { reply_content: reply_content, pass: true } }, callback);
+    }
+
+    updatePass(id, callback) {
+        this.model.update({ _id: id }, { $set: { pass: true } }, callback);
     }
 }
 

@@ -4,19 +4,18 @@ var Index = require('../dao/index');
 
 var siteDao = Index.site;
 
-exports.b_edit = function (req, res) {
-    siteDao.getOneByQuery(config.site.key, '', function (err, site) {
-        res.render('admin/site-edit', {
+exports.b_site_edit = function(req, res) {
+    siteDao.getByKey(config.site.key, function(err, site) {
+        res.render('admin/layout', {
             site: site,
-            flag: ''
+            $body: 'site/edit.html'
         });
     })
 }
 
-exports.b_edit_do = function (req, res) {
+exports.b_site_edit_do = function(req, res) {
 
     try {
-
         var id = req.params.id;
         var name = validator.trim(req.body.name);
         var logo = validator.trim(req.body.logo);
@@ -24,33 +23,26 @@ exports.b_edit_do = function (req, res) {
         var url = validator.trim(req.body.url);
         var qr_code = validator.trim(req.body.qr_code);
         var code_header = validator.trim(req.body.code_header);
-
     } catch (err) {
         console.log(err.name + ": " + err.message);
     }
 
     if (!validator.isMongoId(id)) {
         res.status(400);
-        return res.render('admin/site-edit', {
-            site: {
-                name,
-                logo,
-                icp,
-                url,
-                qr_code,
-                code_header
-            }
+        return res.render('admin/layout', {
+            site: { name, logo, icp, url, qr_code, code_header },
+            $body: 'site/edit.html'
         });
     }
 
     siteDao.updateById(id, {
-        name: name,
-        logo: logo,
-        icp: icp,
-        url: url,
-        qr_code: qr_code,
-        code_header: code_header
-    }, function (err) {
+        name,
+        logo,
+        icp,
+        url,
+        qr_code,
+        code_header,
+    }, function(err) {
         res.redirect('/admin/site/edit');
     });
 }

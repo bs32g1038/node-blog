@@ -3,16 +3,16 @@ var config = require('../config');
 var Index = require('../dao/index');
 var aboutDao = Index.about;
 
-exports.b_edit = function (req, res) {
-    aboutDao.getOneByQuery(config.about.key, '', function (err, about) {
-        res.render('admin/about-edit', {
+exports.b_about_edit = function(req, res) {
+    aboutDao.getByKey(config.about.key, function(err, about) {
+        res.render('admin/layout', {
             about: about,
-            flag: ''
+            $body: 'about/edit.html'
         });
     })
 }
 
-exports.b_edit_do = function (req, res) {
+exports.b_about_edit_do = function(req, res) {
 
     try {
         var id = req.params.id;
@@ -24,19 +24,19 @@ exports.b_edit_do = function (req, res) {
 
     if (!validator.isMongoId(id)) {
         res.status(400);
-        return res.render('admin/about-edit', {
+        return res.render('admin/layout', {
             about: {
                 title,
                 content
             },
-            flag: ''
+            $body: 'about/edit'
         });
     }
 
     aboutDao.updateById(id, {
         title,
         content
-    }, function (err) {
+    }, function(err) {
         res.redirect('/admin/about/edit');
     });
 }

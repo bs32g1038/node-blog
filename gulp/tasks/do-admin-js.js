@@ -10,7 +10,7 @@ module.exports = function (gulp, plugins) {
 
     return () => {
 
-        var target = gulp.src('./web/views/admin/js.ejs');
+        var target = gulp.src('./web/views/admin/js.html');
 
         var sources = gulp.src([
             'libs/jquery/jquery-1.12.4.js',
@@ -20,7 +20,6 @@ module.exports = function (gulp, plugins) {
             'libs/editor/marked.js',
             'libs/editor/ext.js',
             'javascripts/upload.images.js',
-            'javascripts/jquery-tag.js',
         ], {
             cwd: './web'
         })

@@ -1,122 +1,142 @@
-var co = require('co');
 var _ = require('lodash');
 var tools = require('../common/tools');
 var validator = require('validator');
 var Index = require('../dao/index');
-
+var async = require("async");
 var postDao = Index.post;
 var categoryDao = Index.category;
-var tagDao = Index.tag;
+var moment = require('moment');
+var config = require('../config')
 
 /**
  * 后台获取文章列表
  * @param req
  * @param res
  */
-exports.b_getDocList = function (req, res) {
+exports.b_doc_list = function(req, res) {
 
     var page = tools.getPage(req.params.page);
 
-    var start = new Date();
+    var limit = config.list_post_count;
 
-    co(function* () {
-
-        var res = yield {
-
-            docs: new Promise(function (resolve, reject) {
-
-                postDao.getListByPage({
-                    page: page
-                }, function (err, docs) {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(docs);
-
+    async.parallel({
+            docs: function(callback) {
+                postDao.getList({ page: page, limit: limit }, callback);
+            },
+            cats: function(callback) {
+                categoryDao.getAll(callback);
+            },
+            pageCount: function(callback) {
+                postDao.count(function(err, sum) {
+                    callback(err, Math.ceil(sum / limit));
                 });
-            }),
-            cats: new Promise(function (resolve, reject) {
+            },
+        },
+        function(err, data) {
 
-                categoryDao.getAll(function (err, cats) {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(cats);
+            var docs = data.docs.map(function(doc) {
+                doc = doc.toObject();
+                var cat = _.find(data.cats, {
+                    alias: doc.category
                 });
-            }),
-            pageCount: new Promise(function (resolve, reject) {
+                Object.assign(doc, {
+                    category_name: cat.name,
+                    create_at: moment(doc.create_at).format('YYYY-MM-DD HH:mm:ss')
+                })
+                return doc;
+            });
 
-                postDao.getSumCount(function (err, count) {
-
-                    if (err) {
-                        return reject(err)
-                    }
-
-                    return resolve(tools.getPageCount(count));
-
-                });
-
-            })
-        };
-
-        return res;
-
-    }).then(function (obj) {
-
-        var pageCount = obj.pageCount;
-
-        var docs = obj.docs.map(function (doc) {
-
-            var d = doc.toObject();
-
-            var cat = _.find(obj.cats, {alias: doc.category});
-
-            d.category_name = cat.name;
-
-            d.create_at = tools.formatDate(doc.create_at, false);
-
-            return d;
+            res.render('admin/layout', {
+                docs: docs,
+                pageCount: data.pageCount,
+                curPage: data.page,
+                $body: 'doc/list.html'
+            });
 
         });
-
-        console.log(new Date() - start);
-
-        res.render('admin/doc-list', {
-            docs: docs,
-            pageCount: pageCount,
-            curPage: page
-        });
-
-
-    }, function (err) {
-        console.error(err.stack);
-    });
 }
+
 /**
  * 后台文章发布请求
  * @param req
  * @param res
  */
-exports.b_doc_publish = function (req, res) {
+exports.b_doc_publish = function(req, res) {
 
-    console.log("输出")
-
-    categoryDao.getAll(function (err, cats) {
+    categoryDao.getAll(function(err, cats) {
 
         if (err) {
             return res.send('404');
         }
-        
-        res.render('admin/doc-publish', {
-            doc: {},
-            cats: cats
-        });
 
+        res.render('admin/layout', {
+            doc: {},
+            cats: cats,
+            $body: 'doc/edit.html'
+        });
     });
+}
+
+/**
+ * 文章发布处理
+ * @param req
+ * @param res
+ * @returns {*}
+ */
+exports.b_doc_publish_do = function(req, res) {
+
+    let editError; //用于验证
+
+    let { title, from, custom_url, img_url, category, is_draft, summary, content } = req.body;
+
+    var doc;
+
+    //去除无用空格
+    title = validator.trim(title);
+    from = validator.trim(from);
+    custom_url = validator.trim(custom_url);
+    img_url = validator.trim(img_url);
+    category = validator.trim(category);
+    is_draft = validator.trim(is_draft);
+    summary = validator.trim(summary);
+    content = validator.trim(content);
+
+    if (title === '') {
+        editError = '文章标题不能是空的。';
+    } else if (!validator.isInt(from, { min: 1, max: 2 })) {
+        editError = '警告，不要随意擅改页面数据！！';
+    } else if (custom_url !== '' && !validator.isURL(custom_url)) {
+        editError = 'URL填写不正确。';
+    }
+
+    is_draft = validator.equals(is_draft, "1");
+
+    doc = { title, from, custom_url, img_url, category, is_draft, summary, content };
+
+    if (editError) {
+        return categoryDao.getAll(function(err, cats) {
+            res.render('admin/doc/publish', {
+                doc: doc,
+                cats: cats,
+                editError: editError
+            });
+        });
+    }
+
+    async.parallel([
+            function(callback) {
+                postDao.add(doc, callback)
+            },
+            function(callback) {
+                categoryDao.incPostCountByAlias(category, callback)
+            }
+        ],
+        function(err) {
+            if (err) {
+                return res.send('404');
+            }
+            return res.redirect('/admin/doc/list');
+        });
 
 }
 
@@ -126,68 +146,41 @@ exports.b_doc_publish = function (req, res) {
  * @param req
  * @param res
  */
-exports.b_docEdit = function (req, res) {
+exports.b_doc_edit = function(req, res) {
 
-    req.session.flag = "lzc200";
+    var id = req.params.id;
 
-    co(function* () {
+    async.parallel({
+        doc: function(callback) {
+            postDao.getById(id, callback)
+        },
+        cats: function(callback) {
+            categoryDao.getAll(callback)
+        }
+    }, function(err, data) {
 
-        var res = yield {
+        req.session.POST_CATEGORY = data.doc.category;
 
-            doc: new Promise(function (resolve, reject) {
-
-
-                postDao.getById(req.params.id, function (err, doc) {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(doc);
-
-                });
-            }),
-            cats: new Promise(function (resolve, reject) {
-
-                categoryDao.getAll(function (err, cats) {
-
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(cats);
-                });
-            })
-        };
-
-        return res;
-
-    }).then(function (obj) {
-
-        req.session.doc_edit_category_id = obj.doc._id;
-
-        res.render('admin/doc-publish', {
-            doc: obj.doc,
-            cats: obj.cats,
+        res.render('admin/layout', {
+            doc: data.doc,
+            cats: data.cats,
             action: 'edit',
-            flag: req.session.flag
+            $body: 'doc/edit.html'
         });
 
-    }, function (err) {
-        console.error(err.stack);
     });
-
 }
 
-/***************************************文章编辑处理**********************************************/
-
-exports.b_doc_edit_do = function (req, res) {
+/**
+ * 文章编辑提交处理
+ */
+exports.b_doc_edit_do = function(req, res) {
 
     var id = req.params.id;
 
     var editError;
 
-    let { title, from, custom_url, img_url, category, is_draft, summary, content, tags } = req.body;
+    let { title, from, custom_url, img_url, category, is_draft, summary, content } = req.body;
 
     var doc;
 
@@ -200,13 +193,10 @@ exports.b_doc_edit_do = function (req, res) {
     is_draft = validator.trim(is_draft);
     summary = validator.trim(summary);
     content = validator.trim(content);
-    tags = validator.trim(tags);
 
     if (title === '') {
         editError = '文章标题不能是空的。';
-    } else if (tags === '') {
-        editError = '标签不能是空的。';
-    } else if (!validator.isInt(from, {min: 1, max: 2})) {
+    } else if (!validator.isInt(from, { min: 1, max: 2 })) {
         editError = '警告，不要随意擅改页面数据！！';
     } else if (custom_url !== '' && !validator.isURL(custom_url)) {
         editError = 'URL填写不正确。';
@@ -214,235 +204,89 @@ exports.b_doc_edit_do = function (req, res) {
 
     is_draft = validator.equals(is_draft, "1");
 
-    doc = {title, from, custom_url, img_url, category, is_draft, summary, content, tags};
+    doc = { title, from, custom_url, img_url, category, is_draft, summary, content };
 
     if (editError) {
-
-        return categoryDao.getAll(function (err, cats) {
-
+        return categoryDao.getAll(function(err, cats) {
             res.render('admin/doc-publish', {
                 doc: doc,
                 cats: cats,
                 action: 'edit',
                 editError: editError,
-                flag: req.session.flag
             });
-
         });
     }
 
-    console.log(doc.tags)
-
-    doc.tags = tags.split(',');
-
-    console.log(doc.tags)
-
-
-    postDao.updateById(id, doc, function (err) {
-
-            if (err) {
-
+    async.parallel([
+            function(callback) {
+                postDao.updateById(id, doc, callback)
+            },
+            function(callback) {
+                categoryDao.incPostCountByAlias(category, callback)
+            },
+            function(callback) {
+                categoryDao.decPostCountByAlias(req.session.POST_CATEGORY, callback);
             }
-
-            postDao.getById(id, function (err, doc) {
-
-                //目录文章数量自减
-                categoryDao.decPostCountByAlias(doc.category, function (err) {
-                });
-
-                //目录文章数量自增
-                categoryDao.incPostCountByAlias(category, function (err) {
-                });
-
-            });
-
-            doc.tags.map(function (name) {
-
-                tagDao.getOneByName(name, function (err, tag) {
-
-                    if (!tag) {
-
-                        tagDao.add({
-                            name: name,
-                            post_count: 1
-                        }, function (err) {
-
-                        })
-
-                    } else {
-                        tagDao.incPostCountByName(name);
-                    }
-                })
-            });
-
-        }
-    );
-
-    return res.redirect('/admin/doc-list');
-
-}
-
-/**
- * 文章发布处理
- * @param req
- * @param res
- * @returns {*}
- */
-exports.b_doc_publish_do = function (req, res) {
-
-    let editError;         //用于验证
-
-    let { title, from, custom_url, img_url, category, is_draft, summary, content, tags } = req.body;
-
-    var doc;
-
-    //去除无用空格
-    title = validator.trim(title);
-    from = validator.trim(from);
-    custom_url = validator.trim(custom_url);
-    img_url = validator.trim(img_url);
-    category = validator.trim(category);
-    is_draft = validator.trim(is_draft);
-    summary = validator.trim(summary);
-    content = validator.trim(content);
-    tags = validator.trim(tags);
-
-    if (title === '') {
-        editError = '文章标题不能是空的。';
-    } else if (tags === '') {
-        editError = '标签不能是空的。';
-    } else if (!validator.isInt(from, {min: 1, max: 2})) {
-        editError = '警告，不要随意擅改页面数据！！';
-    } else if (custom_url !== '' && !validator.isURL(custom_url)) {
-        editError = 'URL填写不正确。';
-    }
-
-    is_draft = validator.equals(is_draft, "1");
-
-    doc = {title, from, custom_url, img_url, category, is_draft, summary, content, tags};
-
-    if (editError) {
-        return categoryDao.getAll(function (err, cats) {
-            res.render('admin/doc-publish', {
-                doc: doc,
-                cats: cats,
-                editError: editError
-            });
+        ],
+        function(err) {
+            if (err) {
+                return res.send('404');
+            }
+            return res.redirect('/admin/doc/list');
         });
-    }
-
-    //划分标签
-    doc.tags = tags.split(',');
-
-    postDao.add(doc, function (err) {       ///保存数据
-
-        if (!is_draft) {
-
-            categoryDao.incPostCountByAlias(category, function (err) {
-            });     //目录文章数量自增
-
-            doc.tags.map(function (name) {
-
-                tagDao.getOneByName(name, function (err, tag) {
-
-                    if (!tag) {
-
-                        tagDao.add({
-                            name: name,
-                            post_count: 1
-                        }, function (err) {
-
-                        })
-
-                    } else {
-                        tagDao.incPostCountByName(name);
-                    }
-                })
-            })
-        }
-    });
-
-    return res.redirect('/admin/doc-list');
-
 }
-
-
 
 /**
  * 设置推荐
  * @param req
  * @param res
  */
-exports.b_doc_recommendDo = function (req, res) {
+exports.b_doc_recommend_do = function(req, res) {
 
     var id = req.body.id;
 
-    var is_recommend = req.body.is_recommend;
+    var is_recommend = validator.equals(req.body.is_recommend, "1")
 
-    if (validator.equals(is_recommend, "1")) {
+    postDao.updateById(id, { is_recommend: is_recommend }, function(err) {
 
-        postDao.updateById(id, {is_recommend: true}, function (err, raw) {
-
+        if (err) {
             return res.send({
                 success: true,
-                msg: '文章被设置为推荐'
+                message: '操作失败'
             });
+        }
 
+        return res.send({
+            success: true,
+            message: is_recommend ? '文章被设置为推荐' : '文章被设置为不推荐'
         });
 
-    } else {
-
-        postDao.updateById(id, {is_recommend: false}, function (err, raw) {
-            return res.send({
-                success: true,
-                msg: '文章被设置为不推荐'
-            });
-        });
-    }
-
+    });
 }
 
 /**
- * 删除文章
+ * 删除文章，采用软删除
  * @param req
  * @param res
  */
-exports.b_doc_Del = function (req, res) {
+exports.b_doc_del = function(req, res) {
+
+    //删除文章，分类目录post_count减1
 
     var id = req.body.id;
 
-    postDao.getById(id, function (err, doc) {
+    postDao.getById(id, function(err, doc) {
 
-        postDao.deleteById(id, function (err) {
+        categoryDao.decPostCountByAlias(doc.category);
 
+        doc.is_deleted = true;
+        doc.save(function(err) {
             if (err) {
-                return res.send('404');
+                return res.send({ success: false, message: err.message });
             }
-
-            //目录文章数量自减
-            categoryDao.decPostCountByAlias(doc.category, function () {
-            });
-
-            doc.tags.map(function (name) {
-
-                console.log(name + "：数量")
-
-                tagDao.decPostCountByName(name, function () {
-                });
-
-            });
-
-            return res.send({
-                success: true,
-                msg: '文章已经被成功删除'
-            });
-
+            return res.send({ success: true, message: '文章已经被成功删除' });
         });
 
     });
 
 }
-
-
-
-

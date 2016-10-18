@@ -1,24 +1,20 @@
-<%- include header %>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-    <section class="page-header">
-        <h1>控制台
-            <small>分类管理</small>
-
-        </h1>
-
-    </section>
-    <div class="panel">
-        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
-            <span class="fa fa-plus-square">&nbsp;</span>
-            添加分类
-        </button>
-        <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button"><span class="fa fa-fw fa-trash-o"
-                                                                                        aria-hidden="true">&nbsp;</span>批量删除
-        </button>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
+<section class="page-header">
+    <h1>控制台
+        <small>分类管理</small>
+    </h1>
+</section>
+<div class="panel">
+    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+        <span class="fa fa-plus-square">&nbsp;</span>
+        添加分类
+    </button>
+    <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button">
+        <span class="fa fa-fw fa-trash-o" aria-hidden="true">&nbsp;</span>批量删除
+    </button>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
             <tr>
                 <th><input type="checkbox" class="mini" id="selectAll"></th>
                 <th>分类名</th>
@@ -27,10 +23,9 @@
                 <th>分类的权重</th>
                 <th>操作</th>
             </tr>
-
-            </thead>
-            <tbody>
-            <% for(var i = 0 ; i < cats.length; i++){ %>
+        </thead>
+        <tbody>
+        <% for(var i = 0 ; i < cats.length; i++){ %>
             <tr>
                 <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
                 <td><%= cats[i].name %></td>
@@ -49,10 +44,9 @@
                     </button>
                 </td>
             </tr>
-            <% } %>
-            </tbody>
-        </table>
-    </div>
+        <% } %>
+        </tbody>
+    </table>
 </div>
 
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -65,7 +59,7 @@
                 <h4 class="modal-title" id="myModalLabel">添加分类</h4>
             </div>
             <div class="modal-body">
-                <form id="form" class="form-horizontal" action="/admin/category-add" method="post">
+                <form id="form" class="form-horizontal" action="/admin/category/add" method="post">
                     <div class="form-group">
                         <label class="control-label col-sm-3">分类名称</label>
                         <div class="col-sm-5">
@@ -78,7 +72,7 @@
                             <input type="text" class="form-control input-sm" name="alias">
                         </div>
                     </div>
-                    <input type='hidden' name='_csrf' value='<%= csrf %>'/>
+                    <input type='hidden' name='_csrf' value='<%= csrf %>' id="csrf"/>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -89,65 +83,53 @@
     </div>
 </div>
 
-<%- include js %>
+<%- include('../js.html') %>
 
 <script>
     $(document).ready(function () {
-
         $('.category_del').on('click', function () {
-
             var cat_id = $(this).attr("cat-id");
-
+            var _csrf = $('#csrf').val();
             if (cat_id && confirm('确定要删除目录？')) {
-                $.post('/admin/category-del', {
-                    id: cat_id
+                $.post('/admin/category/del', {
+                    id: cat_id,
+                    _csrf: _csrf
                 }, function (res) {
                     if (!res.success) {
-                        alert(res.msg);
+                        alert(res.message);
                     } else {
-                        location.href = 'category-list';
+                        location.href = '/admin/category/list';
                     }
                 });
             }
         });
-
         $('#add-submit').on('click', function () {
             $('#form').submit();
         });
-
         $('.category_up').on('click', function () {
-
             var cat_id = $(this).attr("cat-id");
-
-            $.post('/admin/category/up', {
-                id: cat_id
-            }, function (res) {
+            var _csrf = $('#csrf').val();
+            $.post('/admin/category/up', { id: cat_id,  _csrf: _csrf }, function (res) {
                 if (!res.success) {
-                    alert(res.msg);
+                    alert(res.message);
                 } else {
-                    location.href = 'category-list';
+                    location.href = '/admin/category/list';
                 }
             });
-
         });
-
         $('.category_down').on('click', function () {
-
             var cat_id = $(this).attr("cat-id");
-
+            var _csrf = $('#csrf').val();
             $.post('/admin/category/down', {
-                id: cat_id
+                id: cat_id,
+                 _csrf: _csrf
             }, function (res) {
                 if (!res.success) {
-                    alert(res.msg);
+                    alert(res.message);
                 } else {
-                    location.href = 'category-list';
+                    location.href = '/admin/category/list';
                 }
             });
-
         });
     });
 </script>
-</body>
-
-</html>

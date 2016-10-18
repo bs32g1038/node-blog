@@ -1,2 +1,0 @@
-<!-- inject:js -->
-<!-- endinject -->

@@ -3,88 +3,61 @@ var Index = require('../dao/index');
 
 var categoryDao = Index.category;
 
-exports.b_get_category_list = function (req, res) {
+exports.b_get_category_list = function(req, res) {
 
-    categoryDao.getByQuery({}, null, {sort: {order: 1}}, function (err, cats) {
+    categoryDao.getList({ page: 1, limit: 60 }, function(err, cats) {
 
-        res.render('admin/category-list', {
-            flag: "lzc200",
-            cats: cats
+        res.render('admin/layout', {
+            cats: cats,
+            $body: 'category/list.html'
         });
 
-    });
-
+    })
 }
 
-exports.b_category_add = function (req, res) {
+exports.b_category_add = function(req, res) {
 
     var name = validator.trim(req.body.name);
     var alias = validator.trim(req.body.alias);
 
-    categoryDao.add({
-        name: name,
-        alias: alias
-    }, function (err) {
-
-        return res.redirect('/admin/category-list');
+    categoryDao.add({ name: name, alias: alias }, function() {
+        return res.redirect('/admin/category/list');
     });
 
 }
 
-exports.b_category_Del = function (req, res) {
+exports.b_category_Del = function(req, res) {
 
     var id = validator.trim(req.body.id);
 
-    categoryDao.deleteById(id, function (err, raw) {
-
+    categoryDao.deleteById(id, function(err) {
         if (err) {
-            return res.send('404');
+            res.send({ success: false, message: '目录删除失败！' });
         }
-
-        return res.send({
-            success: true,
-            msg: '目录已经被成功删除'
-        });
-
+        return res.send({ success: true, message: '目录已经被成功删！' });
     });
 
 }
 
 //目录显示顺序的提升
-exports.b_category_up = function (req, res) {
+exports.b_category_up = function(req, res) {
 
     var id = req.body.id;
 
-    categoryDao.decOrderById(id, function (err) {
-
-        console.log(err)
-
+    categoryDao.decOrderById(id, function(err) {
         if (err) {
-            return res.send({
-                success: false,
-                msg: '目录已经处于顶级'
-            });
+            return res.send({ success: false, message: '目录已经处于顶级' });
         }
-
-        return res.send({
-            success: true,
-            msg: '目录已经被提升'
-        });
+        return res.send({ success: true, message: '目录已经被提升' });
     })
 }
 
 //目录显示顺序的下降
-exports.b_category_down = function (req, res) {
+exports.b_category_down = function(req, res) {
 
     var id = req.body.id;
 
-    categoryDao.incOrderById(id, function (err) {
-
-        console.log(err)
-
-        return res.send({
-            success: true,
-            msg: '目录已经被下降'
-        });
+    categoryDao.incOrderById(id, function() {
+        return res.send({ success: true, message: '目录已经被下降' });
     })
 }

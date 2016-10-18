@@ -11,7 +11,7 @@ module.exports = function (gulp, plugins) {
 
     return () => {
 
-        var target = gulp.src('./web/views/admin/header.ejs');
+        var target = gulp.src('./web/views/admin/layout.html');
 
         var sources = gulp.src([
                 'libs/bootstrap/css/bootstrap.css',

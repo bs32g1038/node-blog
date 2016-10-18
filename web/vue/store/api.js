@@ -1,5 +1,3 @@
-"use strict";
-
 import 'whatwg-fetch';
 
 export default {
@@ -15,18 +13,15 @@ export default {
             .catch(e => console.log("uh error", e))
 
     },
-    loadPostList({ category, tag, page }) {
+    loadPostList({ category, page }) {
 
-        var page = page || 1;
+        page = page || 1;
 
         let url = this.base_url + "/index/page/" + page;
 
         if (category) {
             url = this.base_url + "/category/" + category + "/page/" + page;
-        } else if (tag) {
-            url = encodeURI(this.base_url + "/tag/" + tag + "/page/" + page);
         }
-
         return fetch(url).then(function(res) {
                 return res.json();
             }).then(data => data)
@@ -45,7 +40,7 @@ export default {
 
     loadGuestbookList({ page }) {
 
-        var page = page || 1;
+        page = page || 1;
 
         let url = this.base_url + "/guestbook/page/" + page;
 
@@ -56,12 +51,9 @@ export default {
     },
 
     loadSearchList({ key, page }) {
-
-        var page = page || 1;
-
-        var key = key || '';
-
-        let url = this.base_url + "/post/search?" + 'key=' + key + '&page=' + page;
+        page = page || 1;
+        key = key || '';
+        let url = encodeURI(this.base_url + "/post/search?" + 'key=' + key + '&page=' + page);
 
         return fetch(url).then(res => res.json())
             .then(data => data)

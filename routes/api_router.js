@@ -38,10 +38,6 @@ router.get('/category/:category', post.getListByCategory);
 
 router.get('/category/:category/page/:page', post.getListByCategory);
 
-router.get('/tag/:tag', post.getListByTag);
-
-router.get('/tag/:tag/page/:page', post.getListByTag);
-
 /************************************留言列表**************************************/
 
 var guestbookLimit = new RateLimit({

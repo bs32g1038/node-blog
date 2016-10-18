@@ -37,7 +37,7 @@ exports.add = function (req, res) {
         email: email,
         content: content,
         reply_id: reply_id
-    }, function (err, info) {
+    }, function (err) {
         if (err) {
             return res.json({ success: false, error_msg: '提交评论失败！' });
         }

@@ -1,0 +1,70 @@
+<section class="page-header">
+    <h1>控制台
+        <small>用户基础信息更改</small>
+    </h1>
+</section>
+<div class="box-body">
+    <form class="form-horizontal" id="user_form" action="/admin/user/edit/<%= user._id %>/do" method="post">
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">昵称</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="nick_name" value="<%= user.nick_name %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">所在位置</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="location" value="<%= user.location %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">email</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="email" value="<%= user.email %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">QQ</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm"  name="qq" value="<%= user.qq %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">格言</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="motto" value="<%= user.motto %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">头像</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="img_url" value="<%= user.img_url %>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Github</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="github" value="<%= user.github %>">
+            </div>
+        </div>
+        <input type='hidden' name='_csrf' value='<%= csrf %>'/>
+        <div class="modal-footer">
+            <button id="save_draft" class="btn btn-default">保存</button>
+        </div>
+    </form>
+</div>
+<%- include('../js.html') %>
+<script>
+    $(document).ready(function () {
+        $('#save_draft').on('click', function () {
+            $('#user_form').submit();
+        });
+    });
+</script>
