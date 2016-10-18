@@ -11,9 +11,7 @@
 				</route-link>
 			</h1>
 			<div class="post-meta">
-				<time class="post-time">
-					{{ parseTime(post.create_at, 'm-d') }}
-				</time>
+				<span class="post-time">{{ parseTime(post.create_at, 'm-d') }}</span>
 			</div>
 		</header>
 	</article>

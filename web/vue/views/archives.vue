@@ -4,9 +4,7 @@
 	<div class="archive-wrap">
 		<section class="archive-inner">
 			<span class="archive-move-on"></span>
-			<span class="archive-page-counter">
-              非常好! 目前共计 {{ postCount }} 篇日志。 继续努力。
-            </span>
+			<span class="archive-page-counter">非常好! 目前共计 {{ postCount }} 篇日志。 继续努力。</span>
             <Item v-for="item in archives" :key="item._id" :item="item"></Item>
 		</section>
 	</div>
