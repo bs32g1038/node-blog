@@ -7,8 +7,7 @@ export default new VueRouter({
     //and if you use webpack-dev-server,add a html-loader to parse may be better
     mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
-    routes: [
-        {
+    routes: [{
             path: "/category/:category",
             component: require('../views/index.vue')
         },
@@ -35,6 +34,14 @@ export default new VueRouter({
         {
             path: "/list/:page",
             component: require('../views/index.vue')
+        },
+        {
+            path: "/archives/:page",
+            component: require('../views/archives.vue')
+        },
+        {
+            path: "/archives",
+            component: require('../views/archives.vue')
         },
         {
             path: "/post/search",

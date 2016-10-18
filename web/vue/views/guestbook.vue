@@ -11,7 +11,7 @@
                  :pageCount="pageCount"
         ></PageNav>
 
-        <p class="tc state"><i class="fc-lb fa fa-comment-o">共有{{ guestbook_count }}条留言，</i>在这里留下你的足迹</p>
+        <p class="tc state"><i class="fc-lb fa fa-comment-o">共有{{ guestbookCount }}条留言，</i>在这里留下你的足迹</p>
 
         <CommentBox url="/api/guestbook/add"></CommentBox>
 
@@ -56,8 +56,8 @@
             pageCount() {
                 return this.$store.state.pageCount
             },
-            guestbook_count() {
-                return this.$store.state.guestbook_count
+            guestbookCount() {
+                return this.$store.state.guestbookCount
             }
         },
         preFetch: function(store) {

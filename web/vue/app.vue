@@ -20,6 +20,9 @@
                         <router-link :to="'/'"><i class="fa fa-fw fa-home"></i>首页</router-link>
                     </li>
                     <li class="action">
+                        <router-link :to="'/archives'"><i class="fa fa-fw fa-archive"></i>归档</router-link>
+                    </li>
+                    <li class="action">
                         <router-link :to="'/guestbook'"><i class="fa fa-fw fa-edit"></i>留言</router-link>
                     </li>
                     <li class="action">

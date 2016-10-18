@@ -4,67 +4,51 @@ export default {
 
     base_url: 'http://127.0.0.1/api',
 
-    loadPost(id) {
-
-        let url = this.base_url + "/post/" + id;
-
+    fetchData(url) {
         return fetch(url).then(res => res.json())
             .then(data => data)
             .catch(e => console.log("uh error", e))
-
     },
+
+    loadPost(id) {
+        let url = this.base_url + "/post/" + id;
+        return this.fetchData(url);
+    },
+
     loadPostList({ category, page }) {
-
         page = page || 1;
-
         let url = this.base_url + "/index/page/" + page;
-
         if (category) {
             url = this.base_url + "/category/" + category + "/page/" + page;
         }
-        return fetch(url).then(function(res) {
-                return res.json();
-            }).then(data => data)
-            .catch(e => console.log("uh error", e))
+        return this.fetchData(url);
     },
 
     loadInitData() {
-
         let url = this.base_url + "/init";
-
-        return fetch(url).then(res => res.json())
-            .then(data => data)
-            .catch(e => console.log("uh error", e))
-
+        return this.fetchData(url);
     },
 
-    loadGuestbookList({ page }) {
-
+    loadArchives({ page }) {
         page = page || 1;
-
+        let url = this.base_url + "/archives/page/" + page;
+        return this.fetchData(url);
+    },
+    loadGuestbookList({ page }) {
+        page = page || 1;
         let url = this.base_url + "/guestbook/page/" + page;
-
-        return fetch(url).then(res => res.json())
-            .then(data => data)
-            .catch(e => console.log("uh error", e))
-
+        return this.fetchData(url);
     },
 
     loadSearchList({ key, page }) {
         page = page || 1;
         key = key || '';
         let url = encodeURI(this.base_url + "/post/search?" + 'key=' + key + '&page=' + page);
-
-        return fetch(url).then(res => res.json())
-            .then(data => data)
-            .catch(e => console.log("uh error", e))
-
+        return this.fetchData(url);
     },
 
     loadAbout() {
         let url = this.base_url + "/about";
-        return fetch(url).then(res => res.json())
-            .then(data => data)
-            .catch(e => console.log("uh error", e))
+        return this.fetchData(url);
     }
 }

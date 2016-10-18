@@ -6,7 +6,7 @@ var categoryDao = Index.category;
 var commentDao = Index.comment;
 var async = require("async");
 var config = require('../config');
-
+var moment = require('moment');
 
 exports.index = function(req, res) {
 
@@ -99,30 +99,29 @@ exports.getListByCategory = function(req, res) {
     var limit = config.list_post_count; //列表显示数目
 
     async.parallel({
-            docs: function(callback) {
-                postDao.getListByCategory(category, { page: page, limit: limit }, callback);
-            },
-            pageCount: function(callback) {
-                categoryDao.getPostCountByAlias(category, function(err, sum) {
-                    callback(err, Math.ceil(sum / limit));
-                });
-            },
-            curPage: function(callback) {
-                callback(null, page);
-            }
+        docs: function(callback) {
+            postDao.getListByCategory(category, { page: page, limit: limit }, callback);
         },
-        function(err, data) {
+        pageCount: function(callback) {
+            categoryDao.getPostCountByAlias(category, function(err, sum) {
+                callback(err, Math.ceil(sum / limit));
+            });
+        },
+        curPage: function(callback) {
+            callback(null, page);
+        }
+    }, function(err, data) {
 
-            console.log(data)
-            if (data.docs.length <= 0) {
-                return res.json({ success: false, error_msg: '该目录下没有文章！' });
-            }
-            if (err) {
-                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
-            }
+        console.log(data)
+        if (data.docs.length <= 0) {
+            return res.json({ success: false, error_msg: '该目录下没有文章！' });
+        }
+        if (err) {
+            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+        }
 
-            res.json({ success: true, data: data });
-        });
+        res.json({ success: true, data: data });
+    });
 }
 
 
@@ -156,4 +155,56 @@ exports.search = function(req, res) {
             }
             res.json({ success: true, data: data });
         });
+}
+
+exports.getArchives = function(req, res) {
+
+    var page = tools.doPage(req.query.page);
+    var limit = 30;
+
+    async.auto({
+        archives: function(callback) {
+            postDao.getArchives({ page: page, limit: limit }, function(err, archives) {
+                var results = [];
+                if (archives) {
+                    var len = archives.length;
+                    var curYear = moment(archives[0].create_at).year();
+                    var t = { year: curYear, posts: [] };
+                    for (var i = 0; i < len; i++) {
+                        if (curYear <= moment(archives[i].create_at).year()) {
+                            t.posts.push(archives[i]);
+                        } else {
+                            results.push(t);
+                            i--;
+                            curYear--;
+                            t = { year: curYear, posts: [] };
+                        }
+                    }
+                    if (t.posts) {
+                        results.push(t);
+                    }
+                }
+                callback(err, results);
+            })
+        },
+        count: function(callback) {
+            postDao.count(callback);
+        },
+        pageCount: ['count', function(data, callback) {
+            let count = parseInt(data.count) || 0;
+            callback(null, Math.ceil(count / limit));
+        }],
+        curPage: function(callback) {
+            callback(null, page);
+        }
+    }, function(err, data) {
+        if (data.archives.length <= 0) {
+            return res.json({ success: false, error_msg: '该页并没有数据存在，请重试！' });
+        }
+        if (err) {
+            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+        }
+        return res.json({ success: true, data: data });
+    });
+
 }
