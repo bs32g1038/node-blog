@@ -96,6 +96,8 @@ router.post('/admin/guestbook/del', guestbook.b_guestbook_del);
 
 router.get('/admin/link/list', link.b_get_link_list);
 
+router.get('/admin/link/list/page/:page', link.b_get_link_list);
+
 router.post('/admin/link/add', link.b_link_add);
 
 router.post('/admin/link/edit/:id/do', link.b_link_edit_do);

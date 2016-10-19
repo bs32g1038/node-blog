@@ -1,17 +1,30 @@
 var Index = require('../dao/index');
 var linkDao = Index.link;
+var async = require("async");
+var tools = require('../common/tools');
 
 exports.b_get_link_list = function(req, res) {
 
+    var page = tools.getPage(req.params.page);
     var limit = 50;
-    var page = 1;
 
-    linkDao.getList({ page: page, limit: limit }, function(err, links) {
+    async.parallel({
+        links: function(callback) {
+            linkDao.getList({ page: page, limit: limit }, callback)
+        },
+        pageCount: function(callback) {
+            linkDao.count(function(err, sum) {
+                return callback(err, Math.ceil(sum / limit));
+            })
+        }
+    }, function(err, data) {
         res.render('admin/layout', {
-            links: links,
+            links: data.links,
+            curPage: page,
+            pageCount: data.pageCount,
             $body: 'link/list.html'
         });
-    });
+    })
 }
 
 exports.b_link_add = function(req, res) {
