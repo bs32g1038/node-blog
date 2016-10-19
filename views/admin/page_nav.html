@@ -2,19 +2,19 @@
     <ul class="pagination">
         <% if(curPage - 1 > 0 ){ %>
             <li>
-                <a href="/admin/doc/list/page/<%= curPage - 1 %>" aria-label="Previous">
+                <a href="<%= url + '/' + (curPage - 1) %>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         <% } %>
         <% for (var i = 1; i <= pageCount; i++){ %>
             <li>
-                <a href="/admin/doc/list/page/<%= i %>"><%= i %></a>
+                <a href="<%= url + '/' + i %>"><%= i %></a>
             </li>
         <% } %>
         <% if(pageCount >= curPage + 1 ){ %>
             <li>
-                <a href="/admin/doc/list/page/<%= curPage + 1 %>" aria-label="Next">
+                <a href="<%= url + '/' + (curPage + 1) %>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

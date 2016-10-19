@@ -83,6 +83,12 @@
     </div>
 </div>
 
+<%- include('../page_nav.html',{ 
+	url: '/admin/category/list/page', 
+	curPage: curPage, 
+	pageCount: pageCount 
+}); %>
+
 <%- include('../js.html') %>
 
 <script>

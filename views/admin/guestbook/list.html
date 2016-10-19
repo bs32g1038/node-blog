@@ -52,6 +52,12 @@
     <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
 </div>
 
+<%- include('../page_nav.html',{ 
+	url: '/admin/guestbook/list/page', 
+	curPage: curPage, 
+	pageCount: pageCount 
+}); %>
+
 <%- include('../js.html') %>
 
 <script>

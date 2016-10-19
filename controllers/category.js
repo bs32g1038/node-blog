@@ -1,19 +1,33 @@
 var validator = require('validator');
 var Index = require('../dao/index');
-
+var tools = require('../common/tools');
 var categoryDao = Index.category;
+var async = require("async");
 
 exports.b_get_category_list = function(req, res) {
 
-    categoryDao.getList({ page: 1, limit: 60 }, function(err, cats) {
+    var page = tools.getPage(req.params.page);
+    var limit = 60;
 
+    async.parallel({
+        cats: function(callback) {
+            categoryDao.getList({ page: page, limit: limit }, callback)
+        },
+        pageCount: function(callback) {
+            categoryDao.count(function(err, sum) {
+                return callback(err, Math.ceil(sum / limit));
+            })
+        }
+    }, function(err, data) {
         res.render('admin/layout', {
-            cats: cats,
+            cats: data.cats,
+            curPage: page,
+            pageCount: data.pageCount,
             $body: 'category/list.html'
         });
-
     })
 }
+
 
 exports.b_category_add = function(req, res) {
 

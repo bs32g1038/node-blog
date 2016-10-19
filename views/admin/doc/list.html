@@ -118,10 +118,15 @@
 	<input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>' />
 </div>
 
-<%- include('../page_nav.html') %>
-	<%- include('../js.html') %>
+<%- include('../page_nav.html',{ 
+	url: '/admin/doc/list/page', 
+	curPage: curPage, 
+	pageCount: pageCount 
+}); %>
 
-		<script type="text/javascript">
+<%- include('../js.html') %>
+
+<script type="text/javascript">
     $(document).ready(function () {
         $('.doc_del').on('click', function () {
             var doc_id = $(this).attr("doc-id");

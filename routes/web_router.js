@@ -53,6 +53,8 @@ router.post('/admin/doc/del', post.b_doc_del);
 
 router.get('/admin/category/list', category.b_get_category_list);
 
+router.get('/admin/category/list/page/:page', category.b_get_category_list);
+
 router.post('/admin/category/del', category.b_category_Del);
 
 router.post('/admin/category/add', category.b_category_add);
@@ -64,6 +66,8 @@ router.post('/admin/category/down', category.b_category_down);
 /**************************评论管理**************************/
 
 router.get('/admin/comment/list', comment.b_get_comment_list);
+
+router.get('/admin/comment/list/page/:page', comment.b_get_comment_list);
 
 router.post('/admin/comment/pass/do', comment.b_comment_pass_do);
 

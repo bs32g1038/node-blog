@@ -76,6 +76,11 @@
         </div>
     </div>
 </div>
+<%- include('../page_nav.html',{ 
+	url: '/admin/link/list/page', 
+	curPage: curPage, 
+	pageCount: pageCount 
+}); %>
 
 <%- include('../js.html') %>
 
