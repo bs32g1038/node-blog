@@ -59,6 +59,14 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 >         gulp          // 开发模式
 >         gulp help		// 运行帮助
-               
+
+**Thank you：**
+
+If you think these contents are useful to you, please add a "Star" at the top right. This is the encouragement to me, thank you!
+
+**感谢：**
+
+如果你觉得这些内容对你有用，请在右上方点个”Star“，这是对我的鼓励，谢谢！。
+
 # License
 MIT
