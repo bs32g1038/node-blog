@@ -5,6 +5,6 @@ logs
 public
 !public/uploads
 !public/favicon.ico
-views/admin/header.ejs
-views/admin/js.ejs
+views/admin/layout.html
+views/admin/js.html
 views/web/index.html
