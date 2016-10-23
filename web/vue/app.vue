@@ -61,6 +61,9 @@
                     <div class="title"><i class="fa fa-user fa-fw"></i>个人信息</div>
                     <ul class="items">
                         <li class="item">
+                             <i class="fa fa-pencil fa-fw"></i>网名：{{ user.nick_name }}
+                        </li>
+                        <li class="item">
                             <i class="fa fa-map-marker fa-fw"></i>&nbsp;{{ user.location }}
                         </li>
                         <li class="item">
