@@ -17,6 +17,16 @@
 * Support the front and back end of the renderer by vue-server-renderer。
 * ......
 
+## TODO
+- [ ] Article tags (I not  think it is a very useful function,but you can realize it easily by yourself) 
+- [x] Writing new article in browser
+- [x] Comments
+- [x] Archive by time
+- [x] Markdown support
+- [x] Guestbook support
+- [x] Search support
+- [x] Other support ...
+
 **Checkout and Run：**
 
 First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
@@ -42,6 +52,16 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 * 使用webpack构建vue2.0。
 * 支持前后端同构渲染，通过vue2.0的特性。
 * 等等
+
+## TODO
+- [ ] 文章标签 (我不认为它是一个非常有用的功能，但你很容易实现它) 
+- [x] 在线写作文章
+- [x] 评论
+- [x] 文章归档
+- [x] Markdown 支持
+- [x] 留言板支持
+- [x] 搜索支持
+- [x] 还有其他支持等等
 
 **检查和运行：**
 
