@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 
 export default {
 
-    base_url: 'http://127.0.0.1/api',
+    base_url: typeof window === "undefined" ? "http://127.0.0.1/api" : '/api',//判断是nodejs端还是浏览器端
 
     fetchData(url) {
         return fetch(url).then(res => res.json())
