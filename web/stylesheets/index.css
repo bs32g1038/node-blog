@@ -364,9 +364,9 @@ ul {
 /******************上面定义通用**************************/
 
 .container {
-    width: 960px;
+    width: 860px;
     position: relative;
-    margin: 40px auto 50px auto;
+    margin: 0 auto;
     padding: 30px;
     border-radius: 3px;
 }
