@@ -273,20 +273,33 @@ exports.b_doc_del = function(req, res) {
 
     //删除文章，分类目录post_count减1
 
-    var id = req.body.id;
+    var id = req.body.id;               //单个删除
+    var ids = req.body.ids;             //批量删除
 
-    postDao.getById(id, function(err, doc) {
-
-        categoryDao.decPostCountByAlias(doc.category);
-
-        doc.is_deleted = true;
-        doc.save(function(err) {
+    if (req.body.id) {
+        postDao.getById(id, function(err, doc) {
+            categoryDao.decPostCountByAlias(doc.category);
+            doc.is_deleted = true;
+            doc.save(function(err) {
+                if (err) {
+                    return res.send({ success: false, message: err.message });
+                }
+                return res.send({ success: true, message: '文章已经被成功删除' });
+            });
+        });
+    } else if (ids) {
+        async.map(ids, function(id, callback) {
+            postDao.getById(id, function(err, doc) {
+                categoryDao.decPostCountByAlias(doc.category);
+                doc.is_deleted = true;
+                doc.save(callback);
+            });
+        }, function(err) {
             if (err) {
                 return res.send({ success: false, message: err.message });
             }
             return res.send({ success: true, message: '文章已经被成功删除' });
-        });
-
-    });
+        })
+    }
 
 }

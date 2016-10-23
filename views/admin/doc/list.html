@@ -8,8 +8,8 @@
 	<a class="btn btn-primary btn-sm" type="button" href="/admin/doc/publish">
 		<span class="fa fa-plus-square">&nbsp;</span> 添加文档
 	</a>
-	<button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button">
-        <span class="fa fa-fw fa-trash-o" aria-hidden="true">&nbsp;</span>
+	<button class="btn btn-danger btn-sm" id="btnListDel">
+        <span class="fa fa-fw fa-trash-o">&nbsp;</span>
         批量删除
     </button>
 	<div class="pull-right">
@@ -161,5 +161,35 @@
             });
             return false;
         });
+		$('#selectAll').on('click', function(){
+		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
+		});
+		$("input[name='listItem']").on('click',function(){
+			$('#selectAll').prop("checked",false)
+		});
+		$('#btnListDel').on('click', function(){
+			var _csrf = $('#csrf').val();
+			var ids = [];
+			$("input[name='listItem']").each(function(){ 
+				if (true == $(this).prop("checked")) { 
+					ids.push($(this).prop('value'));
+				}
+			})
+			if(ids.length <= 0){
+				return alert("请在要删除的文章前面打勾");
+			}
+			if (confirm('确定要删除这些文章吗？')) {
+                $.post('/admin/doc/del', {
+                    ids: ids,
+                    _csrf: _csrf
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.message);
+                    } else {
+                        location.href = '/admin/doc/list';
+                    }
+                });
+            }
+		});
     });
 </script>
