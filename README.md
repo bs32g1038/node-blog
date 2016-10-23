@@ -8,6 +8,10 @@
 
 ![](https://raw.githubusercontent.com/bs32g1038/node-blog/master/screenshot/site.png)
 
+**Mobile terminal gif：**
+
+![](https://raw.githubusercontent.com/bs32g1038/node-blog/master/screenshot/mobile.gif)
+
 **Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API。
