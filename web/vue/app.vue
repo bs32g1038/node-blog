@@ -48,7 +48,7 @@
             <div class="back-top" title="返回顶部" id="backTop">
                 <i class="fa fa-long-arrow-up"></i>
             </div>
-            <ul class="footer-nav float-left">
+            <ul class="footer-nav">
                 <li>
                     <div class="title"><i class="fa fa-folder-o fa-fw"></i>文章分类</div>
                     <ul class="actions category">
@@ -90,7 +90,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="footer-side float-right">
+            <div class="footer-side">
                 <span> 快速扫描二维码打开网站</span>
                 <div class="qr-code">
                     <img v-bind:src="site.qr_code" alt="">

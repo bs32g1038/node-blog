@@ -778,6 +778,10 @@ ul {
     font-size: 12px;
 }
 
+.footer-nav {
+    float: left
+}
+
 .footer-nav>li {
     padding: 8px 16px 8px 0;
     font-size: 14px;
@@ -810,6 +814,7 @@ ul {
 
 .footer-side {
     padding-top: 8px;
+    float: right
 }
 
 .qr-code {
@@ -1061,6 +1066,7 @@ ul {
     border: 1px solid #ccc;
 }
 
+
 /*文章*/
 
 .post-title-link {
@@ -1272,7 +1278,7 @@ pre {
     word-wrap: normal;
     color: #383937;
     background: #fff;
-    border: 1px solid #e8e9e7
+    border: 1px solid #e8e9e7;
 }
 
 pre,
@@ -1462,4 +1468,89 @@ pre .val {
 .fade-enter,
 .fade-leave-active {
     opacity: 0
+}
+
+
+/********************************响应式************************/
+
+@media screen and (max-width:860px) {
+    body {
+        font: 12px/24px Hiragino Sans GB, Microsoft Yahei, SimSun, Helvetica, Arial, Sans-serif;
+    }
+    pre {
+        word-break: break-all;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        padding-left: 10px;
+    }
+    .jshl-linenum {
+        display: none
+    }
+    .container {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px
+    }
+    .header-nav {
+        padding-left: 0;
+        background-color: #fff;
+    }
+    .header-nav a {
+        color: #333;
+        font-size: 12px;
+    }
+    .box-nav {
+        display: none
+    }
+    .entry {
+        position: relative;
+    }
+    .entry-screenshot {
+        width: 100%;
+        float: none
+    }
+    .entry-screenshot .entry-screenshot-img {
+        margin: 0 auto
+    }
+    .entry-info {
+        float: none;
+        width: 100%;
+        text-align: center
+    }
+    .entry-link {
+        text-align: center
+    }
+    .entry .entry-meta {
+        text-align: center;
+        float: none;
+    }
+    .archive-inner {
+        margin-left: 0
+    }
+    .archive-item .item-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .archive-item .item-title a {
+        font-size: 12px;
+    }
+    /***留言******/
+    .ds-post-main {
+        font-size: 12px
+    }
+    .ds-comment-body .content {
+        font-size: 12px;
+    }
+    /************底部******/
+    .footer-nav {
+        float: none
+    }
+    .footer-side {
+        float: none
+    }
+    /**error***/
+    .error .error-message .error-issue {
+        font-size: 12px
+    }
 }
