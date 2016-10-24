@@ -38,7 +38,7 @@ class DocDao extends BaseDao {
             limit = options.limit,
             order = options.order || -1;
 
-        this.model.find({ category: category })
+        this.model.find({ category: category, is_deleted: false })
             .sort({ create_at: order })
             .skip((page - 1) * limit)
             .limit(limit)
@@ -63,7 +63,7 @@ class DocDao extends BaseDao {
             page_size = options.page_size || 10,
             order = options.order || -1;
 
-        this.model.find({ title: { $regex: key } })
+        this.model.find({ title: { $regex: key }, is_deleted: false })
             .sort({ create_at: order })
             .skip((page - 1) * page_size)
             .limit(page_size)
@@ -72,7 +72,7 @@ class DocDao extends BaseDao {
 
     getCountByLikeKey(key, callback) {
 
-        this.model.count({ title: { $regex: key } }, function(err, sumCount) {
+        this.model.count({ title: { $regex: key }, is_deleted: false }, function(err, sumCount) {
             if (err) {
                 return callback(err);
             }
@@ -89,12 +89,15 @@ class DocDao extends BaseDao {
             limit = options.limit,
             order = options.order || -1;
 
-        this.model.find({}, 'title create_at')
+        this.model.find({ is_deleted: false }, 'title create_at')
             .sort({ create_at: order })
             .skip((page - 1) * limit)
             .limit(limit)
             .exec(callback);
     }
 
+    count(callback) {
+        this.model.count({ is_deleted: false }, callback);
+    }
 }
 module.exports = DocDao;
