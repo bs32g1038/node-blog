@@ -49,11 +49,11 @@ class DocDao extends BaseDao {
         this.model.findByIdAndUpdate({ _id: id }, { $inc: { visit_count: 1 } }, callback);
     }
 
-    incCommentCount(id, callback) {
+    incCommentCount(id, callback = function() {}) {
         this.model.update({ _id: id }, { $inc: { comment_count: 1 } }, callback);
     }
 
-    decCommentCount(id, callback) {
+    decCommentCount(id, callback = function() {}) {
         this.model.update({ _id: id }, { $inc: { comment_count: -1 } }, callback);
     }
 

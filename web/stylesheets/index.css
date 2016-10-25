@@ -1470,7 +1470,8 @@ pre .val {
 
 @media screen and (max-width:860px) {
     body {
-        font: 12px/24px Hiragino Sans GB, Microsoft Yahei, SimSun, Helvetica, Arial, Sans-serif;
+        font-size: 12px;
+        line-height: 24px;
     }
     pre {
         word-break: break-all;

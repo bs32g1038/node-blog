@@ -53,12 +53,15 @@ exports.b_comment_pass_do = function(req, res) {
 
     var id = req.body.id;
 
-    commentDao.updatePassById(id, function(err) {
-        if (err) {
-            res.json({ success: false, message: '操作失败！' });
-        }
-        res.json({ success: true, message: '评论已经通过审核！' });
-    })
+    commentDao.getById(id, function(err, comment) {
+        postDao.incCommentCount(comment.post_id);
+        commentDao.updatePassById(id, function(err) {
+            if (err) {
+                res.json({ success: false, message: '操作失败！' });
+            }
+            res.json({ success: true, message: '评论已经通过审核！' });
+        })
+    });
 }
 
 exports.b_comment_reply = function(req, res) {
@@ -106,14 +109,33 @@ exports.b_comment_reply_do = function(req, res) {
 exports.b_comment_del = function(req, res) {
 
     var id = req.body.id;
-    var post_id = req.body.post_id;
+    var ids = req.body.ids; //批量删除
 
-    commentDao.deleteById(id, function(err) {
-        if (err) {
-            return res.send('404');
-        }
-        postDao.decCommentCount(post_id, function() { //评论删除，文章评论数量-1
+    if (req.body.id) {
+        commentDao.getById(id, function(err, comment) {
+            if (comment.pass) {
+                postDao.decCommentCount(comment.post_id);
+            }
+            commentDao.deleteById(id, function(err) {
+                if (err) {
+                    return res.send({ success: false, message: err.message });
+                }
+                return res.send({ success: true, message: '评论删除成功！' });
+            });
+        })
+    } else if (ids) {
+        async.map(ids, function(id, callback) {
+            commentDao.getById(id, function(err, comment) {
+                if (comment.pass) {
+                    postDao.decCommentCount(comment.post_id);
+                }
+                commentDao.deleteById(id, callback);
+            })
+        }, function(err) {
+            if (err) {
+                return res.send({ success: false, message: err.message });
+            }
             return res.send({ success: true, message: '评论删除成功！' });
-        });
-    });
+        })
+    }
 }

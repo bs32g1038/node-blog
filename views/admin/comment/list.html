@@ -4,8 +4,9 @@
     </h1>
 </section>
 <div class="panel">
-    <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button">
-        <span class="fa fa-fw fa-trash-o" aria-hidden="true">&nbsp;</span>批量删除
+	<button class="btn btn-danger btn-sm" id="btnListDel">
+        <span class="fa fa-fw fa-trash-o">&nbsp;</span>
+        批量删除
     </button>
 </div>
 <div class="box-body table-responsive no-padding">
@@ -26,7 +27,7 @@
         <tbody>
         <% comments.forEach(function(comment){ %>
             <tr>
-                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
+                <td><input type="checkbox" name="listItem" class="mini" value="<%= comment._id %>"></td>
                 <td><%= comment.post_title %></td>
                 <td><%= comment.nick_name %></td>
                 <td><%= comment.content %></td>
@@ -95,5 +96,35 @@
                 });
             }
         });
+        $('#selectAll').on('click', function(){
+		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
+		});
+		$("input[name='listItem']").on('click',function(){
+			$('#selectAll').prop("checked",false)
+		});
+		$('#btnListDel').on('click', function(){
+			var _csrf = $('#csrf').val();
+			var ids = [];
+			$("input[name='listItem']").each(function(){ 
+				if (true == $(this).prop("checked")) { 
+					ids.push($(this).prop('value'));
+				}
+			})
+			if(ids.length <= 0){
+				return alert("请在要删除的文章前面打勾");
+			}
+			if (confirm('确定要删除这些文章吗？')) {
+                $.post('/admin/comment/del', {
+                    ids: ids,
+                    _csrf: _csrf
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.message);
+                    } else {
+                        location.href = '/admin/comment/list';
+                    }
+                });
+            }
+		});
     });
 </script>
