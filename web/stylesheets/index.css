@@ -1078,11 +1078,6 @@ ul {
     color: #999;
 }
 
-.markdown {
-    font-size: 14px;
-    line-height: 28px;
-}
-
 .markdown h1,
 .markdown h2,
 .markdown h3,
@@ -1532,15 +1527,13 @@ pre .val {
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .archive-item .item-title a {
-        font-size: 12px;
-    }
     /***留言******/
-    .ds-post-main {
+    .archive-item .item-title a,
+    .ds-post-main,
+    .ds-comment-body .content,
+    .markdown p,
+    .error .error-message .error-issue {
         font-size: 12px
-    }
-    .ds-comment-body .content {
-        font-size: 12px;
     }
     /************底部******/
     .footer-nav {
@@ -1548,9 +1541,5 @@ pre .val {
     }
     .footer-side {
         float: none
-    }
-    /**error***/
-    .error .error-message .error-issue {
-        font-size: 12px
     }
 }
