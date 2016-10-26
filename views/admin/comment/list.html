@@ -111,9 +111,9 @@
 				}
 			})
 			if(ids.length <= 0){
-				return alert("请在要删除的文章前面打勾");
+				return alert("请在要删除的评论前面打勾");
 			}
-			if (confirm('确定要删除这些文章吗？')) {
+			if (confirm('确定要删除这些评论吗？')) {
                 $.post('/admin/comment/del', {
                     ids: ids,
                     _csrf: _csrf

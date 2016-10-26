@@ -51,8 +51,23 @@ exports.b_link_edit_do = function(req, res) {
 exports.b_link_del = function(req, res) {
 
     var id = req.body.id;
+    var ids = req.body.ids; //批量删除
 
-    linkDao.deleteById(id, function(err) {
-        return res.json({ success: true, message: '链接已经被成功删除' });
-    });
+    if (id) {
+        linkDao.deleteById(id, function(err) {
+            if (err) {
+                return res.send({ success: false, message: '链接删除失败！' });
+            }
+            return res.json({ success: true, message: '链接已经被成功删除' });
+        });
+    } else if (ids) {
+        async.map(ids, function(id, callback) {
+            linkDao.deleteById(id, callback);
+        }, function(err) {
+            if (err) {
+                return res.send({ success: false, message: '链接删除失败！' });
+            }
+            return res.json({ success: true, message: '链接已经被成功删除' });
+        })
+    }
 }

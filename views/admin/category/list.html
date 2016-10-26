@@ -8,8 +8,9 @@
         <span class="fa fa-plus-square">&nbsp;</span>
         添加分类
     </button>
-    <button class="btn btn-danger btn-sm" ng-click="batchDel()" role="button">
-        <span class="fa fa-fw fa-trash-o" aria-hidden="true">&nbsp;</span>批量删除
+	<button class="btn btn-danger btn-sm" id="btnListDel">
+        <span class="fa fa-fw fa-trash-o">&nbsp;</span>
+        批量删除
     </button>
 </div>
 <div class="table-responsive">
@@ -25,26 +26,26 @@
             </tr>
         </thead>
         <tbody>
-        <% for(var i = 0 ; i < cats.length; i++){ %>
+       <% cats.forEach(function(cat){ %>
             <tr>
-                <td><input type="checkbox" name="listItem" class="mini" value="E16c5io4x"></td>
-                <td><%= cats[i].name %></td>
-                <td><%= cats[i].alias %></td>
-                <td><%= cats[i].post_count %></td>
-                <th><%= cats[i].order %></th>
+                <td><input type="checkbox" name="listItem" class="mini" value="<%= cat._id %>"></td>
+                <td><%= cat.name %></td>
+                <td><%= cat.alias %></td>
+                <td><%= cat.post_count %></td>
+                <th><%= cat.order %></th>
                 <td>
-                    <button class="btn btn-default btn-xs category_del" cat-id=<%= cats[i]._id %> title="删除"><i
+                    <button class="btn btn-default btn-xs category_del" cat-id=<%= cat._id %> title="删除"><i
                                 class="fa fa-trash-o"></i>&nbsp;删除
                     </button>
-                    <button class="btn btn-default btn-xs category_up" cat-id=<%= cats[i]._id %> title="提升目录的位置"><i
+                    <button class="btn btn-default btn-xs category_up" cat-id=<%= cat._id %> title="提升目录的位置"><i
                                 class="fa fa-arrow-up"></i>&nbsp;提升
                     </button>
-                    <button class="btn btn-default btn-xs category_down" cat-id=<%= cats[i]._id %> title="降低目录的位置"><i
+                    <button class="btn btn-default btn-xs category_down" cat-id=<%= cat._id %> title="降低目录的位置"><i
                                 class="fa fa-arrow-down"></i>&nbsp;下降
                     </button>
                 </td>
             </tr>
-        <% } %>
+       <% }) %>
         </tbody>
     </table>
 </div>
@@ -96,7 +97,7 @@
         $('.category_del').on('click', function () {
             var cat_id = $(this).attr("cat-id");
             var _csrf = $('#csrf').val();
-            if (cat_id && confirm('确定要删除目录？')) {
+            if (cat_id && confirm('确定要删除分类？')) {
                 $.post('/admin/category/del', {
                     id: cat_id,
                     _csrf: _csrf
@@ -137,5 +138,35 @@
                 }
             });
         });
+        $('#selectAll').on('click', function(){
+		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
+		});
+		$("input[name='listItem']").on('click',function(){
+			$('#selectAll').prop("checked",false)
+		});
+		$('#btnListDel').on('click', function(){
+			var _csrf = $('#csrf').val();
+			var ids = [];
+			$("input[name='listItem']").each(function(){ 
+				if (true == $(this).prop("checked")) { 
+					ids.push($(this).prop('value'));
+				}
+			})
+			if(ids.length <= 0){
+				return alert("请在要删除的分类前面打勾");
+			}
+			if (confirm('确定要删除这些分类吗？')) {
+                $.post('/admin/category/del', {
+                    ids: ids,
+                    _csrf: _csrf
+                }, function (res) {
+                    if (!res.success) {
+                        alert(res.message);
+                    } else {
+                        location.href = '/admin/category/list';
+                    }
+                });
+            }
+		});
     });
 </script>

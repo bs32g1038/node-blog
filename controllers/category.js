@@ -42,14 +42,26 @@ exports.b_category_add = function(req, res) {
 
 exports.b_category_Del = function(req, res) {
 
-    var id = validator.trim(req.body.id);
+    var id = req.body.id;
+    var ids = req.body.ids; //批量删除
 
-    categoryDao.deleteById(id, function(err) {
-        if (err) {
-            res.send({ success: false, message: '目录删除失败！' });
-        }
-        return res.send({ success: true, message: '目录已经被成功删！' });
-    });
+    if (id) {
+        categoryDao.deleteById(id, function(err) {
+            if (err) {
+                res.send({ success: false, message: '目录删除失败！' });
+            }
+            return res.send({ success: true, message: '目录已经被成功删！' });
+        });
+    } else if (ids) {
+        async.map(ids, function(id, callback) {
+            categoryDao.deleteById(id, callback);
+        }, function(err) {
+            if (err) {
+                res.send({ success: false, message: '目录删除失败！' });
+            }
+            return res.send({ success: true, message: '目录已经被成功删！' });
+        })
+    }
 
 }
 

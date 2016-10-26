@@ -82,11 +82,23 @@ exports.b_guestbook_reply_do = function(req, res) {
 exports.b_guestbook_del = function(req, res) {
 
     var id = req.body.id;
+    var ids = req.body.ids; //批量删除
 
-    guestbookDao.deleteById(id, function(err) {
-        if (err) {
-            return res.send({ success: false, message: '留言删除失败！' });
-        }
-        return res.send({ success: true, message: '留言删除成功过！' });
-    })
+    if (id) {
+        guestbookDao.deleteById(id, function(err) {
+            if (err) {
+                return res.send({ success: false, message: '留言删除失败！' });
+            }
+            return res.send({ success: true, message: '留言删除成功过！' });
+        })
+    } else if (ids) {
+        async.map(ids, function(id, callback) {
+            guestbookDao.deleteById(id, callback)
+        }, function(err) {
+            if (err) {
+                return res.send({ success: false, message: '留言删除失败！' });
+            }
+            return res.send({ success: true, message: '留言删除成功过！' });
+        })
+    }
 }
