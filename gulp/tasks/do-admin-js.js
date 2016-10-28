@@ -1,5 +1,5 @@
 // //-js样式压缩和合并
-module.exports = function (gulp, plugins) {
+module.exports = function(gulp, plugins) {
 
     var inject = plugins.inject;
     var concat = plugins.concat;
@@ -19,6 +19,7 @@ module.exports = function (gulp, plugins) {
             'libs/editor/editor.js',
             'libs/editor/marked.js',
             'libs/editor/ext.js',
+            'libs/mini-alert/mini-alert.js',            
             'javascripts/upload.images.js',
         ], {
             cwd: './web'
