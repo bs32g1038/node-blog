@@ -41,13 +41,15 @@ router.get('/admin/doc/publish', post.b_doc_publish);
 
 router.post('/admin/doc/publish/do', post.b_doc_publish_do);
 //
-router.get('/admin/doc/edit/:id', post.b_doc_edit);
+router.get('/admin/doc/:id/edit', post.b_doc_edit);
 //
-router.post('/admin/doc/edit/:id/do', post.b_doc_edit_do);
+router.post('/admin/doc/:id/edit/do', post.b_doc_edit_do);
 
-router.post('/admin/doc/recommend/do', post.b_doc_recommend_do);
+router.post('/admin/doc/:id/recommend/do', post.b_doc_recommend_do);
 
-router.post('/admin/doc/del', post.b_doc_del);
+router.post('/admin/doc/:id/del', post.b_doc_del);
+
+router.post('/admin/doc/del', post.b_doc_batch_del);
 
 /**************************目录管理**************************/
 
@@ -55,13 +57,15 @@ router.get('/admin/category/list', category.b_get_category_list);
 
 router.get('/admin/category/list/page/:page', category.b_get_category_list);
 
-router.post('/admin/category/del', category.b_category_Del);
+router.post('/admin/category/:id/del', category.b_category_del);
+
+router.post('/admin/category/del', category.b_category_batch_del);
 
 router.post('/admin/category/add', category.b_category_add);
 
-router.post('/admin/category/up', category.b_category_up);
+router.post('/admin/category/:id/up', category.b_category_up);
 
-router.post('/admin/category/down', category.b_category_down);
+router.post('/admin/category/:id/down', category.b_category_down);
 
 /**************************评论管理**************************/
 

@@ -7,7 +7,7 @@
 <div class="box-body">
 
 <% if (typeof(action) !== 'undefined' && action == "edit"){ %>
-    <form class="form-horizontal" id="doc_form" action="/admin/doc/edit/<%= doc._id %>/do" method="post">
+    <form class="form-horizontal" id="doc_form" action="/admin/doc/<%= doc._id %>/edit/do" method="post">
 <% }else { %>
     <form class="form-horizontal" id="doc_form" action="/admin/doc/publish/do" method="post">
 <% } %>

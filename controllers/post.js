@@ -243,7 +243,9 @@ exports.b_doc_edit_do = function(req, res) {
  */
 exports.b_doc_recommend_do = function(req, res) {
 
-    var id = req.body.id;
+    console.log("测试")
+
+    var id = req.params.id;
 
     var is_recommend = validator.equals(req.body.is_recommend, "1")
 
@@ -273,33 +275,36 @@ exports.b_doc_del = function(req, res) {
 
     //删除文章，分类目录post_count减1
 
-    var id = req.body.id;               //单个删除
-    var ids = req.body.ids;             //批量删除
+    var id = req.params.id; //单个删除
 
-    if (req.body.id) {
-        postDao.getById(id, function(err, doc) {
-            categoryDao.decPostCountByAlias(doc.category);
-            doc.is_deleted = true;
-            doc.save(function(err) {
-                if (err) {
-                    return res.send({ success: false, message: err.message });
-                }
-                return res.send({ success: true, message: '文章已经被成功删除' });
-            });
-        });
-    } else if (ids) {
-        async.map(ids, function(id, callback) {
-            postDao.getById(id, function(err, doc) {
-                categoryDao.decPostCountByAlias(doc.category);
-                doc.is_deleted = true;
-                doc.save(callback);
-            });
-        }, function(err) {
+    postDao.getById(id, function(err, doc) {
+        categoryDao.decPostCountByAlias(doc.category);
+        doc.is_deleted = true;
+        doc.save(function(err) {
             if (err) {
                 return res.send({ success: false, message: err.message });
             }
             return res.send({ success: true, message: '文章已经被成功删除' });
-        })
-    }
+        });
+    });
+
+}
+
+exports.b_doc_batch_del = function(req, res) {
+
+    var ids = req.body.ids; //批量删除
+
+    async.map(ids, function(id, callback) {
+        postDao.getById(id, function(err, doc) {
+            categoryDao.decPostCountByAlias(doc.category);
+            doc.is_deleted = true;
+            doc.save(callback);
+        });
+    }, function(err) {
+        if (err) {
+            return res.send({ success: false, message: err.message });
+        }
+        return res.send({ success: true, message: '文章已经被成功删除' });
+    });
 
 }
