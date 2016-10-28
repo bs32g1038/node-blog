@@ -12,6 +12,11 @@
         <span class="fa fa-fw fa-trash-o">&nbsp;</span>
         批量删除
     </button>
+    <div class="alert alert-danger hide" role="alert" id="editError">
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">  
+            <span aria-disabled="true">×</span>
+      </button>
+    </div>
 </div>
 <div class="table-responsive">
     <table class="table table-striped">
@@ -34,13 +39,13 @@
                 <td><%= cat.post_count %></td>
                 <th><%= cat.order %></th>
                 <td>
-                    <button class="btn btn-default btn-xs category_del" cat-id=<%= cat._id %> title="删除"><i
+                    <button class="btn btn-default btn-xs category_del" data-id=<%= cat._id %> title="删除"><i
                                 class="fa fa-trash-o"></i>&nbsp;删除
                     </button>
-                    <button class="btn btn-default btn-xs category_up" cat-id=<%= cat._id %> title="提升目录的位置"><i
+                    <button class="btn btn-default btn-xs category_up" data-id=<%= cat._id %> title="提升目录的位置"><i
                                 class="fa fa-arrow-up"></i>&nbsp;提升
                     </button>
-                    <button class="btn btn-default btn-xs category_down" cat-id=<%= cat._id %> title="降低目录的位置"><i
+                    <button class="btn btn-default btn-xs category_down" data-id=<%= cat._id %> title="降低目录的位置"><i
                                 class="fa fa-arrow-down"></i>&nbsp;下降
                     </button>
                 </td>
@@ -53,14 +58,14 @@
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">添加分类</h4>
-            </div>
-            <div class="modal-body">
-                <form id="form" class="form-horizontal" action="/admin/category/add" method="post">
+            <form id="form" class="form-horizontal" action="/admin/category/add" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">添加分类</h4>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label col-sm-3">分类名称</label>
                         <div class="col-sm-5">
@@ -74,12 +79,12 @@
                         </div>
                     </div>
                     <input type='hidden' name='_csrf' value='<%= csrf %>' id="csrf"/>
-                </form>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="add-submit">提交</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -92,81 +97,4 @@
 
 <%- include('../js.html') %>
 
-<script>
-    $(document).ready(function () {
-        $('.category_del').on('click', function () {
-            var cat_id = $(this).attr("cat-id");
-            var _csrf = $('#csrf').val();
-            if (cat_id && confirm('确定要删除分类？')) {
-                $.post('/admin/category/del', {
-                    id: cat_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/category/list';
-                    }
-                });
-            }
-        });
-        $('#add-submit').on('click', function () {
-            $('#form').submit();
-        });
-        $('.category_up').on('click', function () {
-            var cat_id = $(this).attr("cat-id");
-            var _csrf = $('#csrf').val();
-            $.post('/admin/category/up', { id: cat_id,  _csrf: _csrf }, function (res) {
-                if (!res.success) {
-                    alert(res.message);
-                } else {
-                    location.href = '/admin/category/list';
-                }
-            });
-        });
-        $('.category_down').on('click', function () {
-            var cat_id = $(this).attr("cat-id");
-            var _csrf = $('#csrf').val();
-            $.post('/admin/category/down', {
-                id: cat_id,
-                 _csrf: _csrf
-            }, function (res) {
-                if (!res.success) {
-                    alert(res.message);
-                } else {
-                    location.href = '/admin/category/list';
-                }
-            });
-        });
-        $('#selectAll').on('click', function(){
-		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
-		});
-		$("input[name='listItem']").on('click',function(){
-			$('#selectAll').prop("checked",false)
-		});
-		$('#btnListDel').on('click', function(){
-			var _csrf = $('#csrf').val();
-			var ids = [];
-			$("input[name='listItem']").each(function(){ 
-				if (true == $(this).prop("checked")) { 
-					ids.push($(this).prop('value'));
-				}
-			})
-			if(ids.length <= 0){
-				return alert("请在要删除的分类前面打勾");
-			}
-			if (confirm('确定要删除这些分类吗？')) {
-                $.post('/admin/category/del', {
-                    ids: ids,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/category/list';
-                    }
-                });
-            }
-		});
-    });
-</script>
+<script src="/dist/category-list.js"></script>
