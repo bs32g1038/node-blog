@@ -19,7 +19,7 @@ if (process.env.INIT_ENV == 'production') {
 }
 
 function getTask(name) {
-    return require(`./gulp/tasks/${name}`)(gulp, plugins);
+    return require(`./web/gulp/tasks/${name}`)(gulp, plugins);
 }
 
 gulp.task("vue-webpack", getTask('vue-webpack'));
@@ -29,11 +29,13 @@ gulp.task("do-admin-js", getTask('do-admin-js'));
 
 
 //- 删除public目录下文件
-gulp.task('del-public', function(cb) {
+gulp.task('del-public', function (cb) {
     del([
         'public/**',
         '!public',
         '!public/favicon.ico',
+        '!public/home',
+        '!public/home/js',
         '!public/uploads/**',
     ]).then(() => {
         return cb()
@@ -41,26 +43,25 @@ gulp.task('del-public', function(cb) {
 });
 
 //- 复制文件到public下
-gulp.task('copy-public', function() {
-    gulp.src([
+gulp.task('copy-public', function () {
+    return gulp.src([
             './web/libs/bootstrap/fonts/**',
             './web/libs/editor/fonts/**',
             './web/libs/font-awesome/fonts/**',
             './web/libs/webuploader/Uploader.swf',
-            './web/images/**'
+            './web/admin/images/**',
+            './web/home/images/**',
+            './web/admin/js/**',
         ], {
             base: './web'
         })
         .pipe(gulp.dest('./public'));
 
-    return gulp.src([
-        './web/javascripts/**'
-    ]).pipe(gulp.dest('./public/dist'));
 });
 
 
 //- node服务器启动，支持动态检测重启
-gulp.task('node', function() {
+gulp.task('node', function () {
     nodemon({
         script: 'bin/www',
         ext: 'js html css',
@@ -75,7 +76,7 @@ gulp.task('node', function() {
     })
 })
 
-gulp.task('sequence-all', function(cb) {
+gulp.task('sequence-all', function (cb) {
     if (process.env.INIT_ENV == 'production') {
         gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
     } else {
@@ -85,9 +86,9 @@ gulp.task('sequence-all', function(cb) {
 
 gulp.task('build', ['sequence-all']);
 
-gulp.task('watch', function() {
-    gulp.watch('web/stylesheets/*.css', ['sequence-all']);
-    gulp.watch('web/javascripts/**', ['sequence-all']);
+gulp.task('watch', function () {
+    gulp.watch('web/admin/**', ['sequence-all']);
+    gulp.watch('web/home/**', ['sequence-all']);
     gulp.watch('web/libs/*.js', ['sequence-all']);
     gulp.watch('web/vue/**', ['sequence-all']);
 });
@@ -96,7 +97,7 @@ gulp.task('server', ['node']);
 
 gulp.task('default', gulpSequence('sequence-all', ['node', 'watch']));
 
-gulp.task('help', function() {
+gulp.task('help', function () {
     console.log('	gulp build			文件打包');
     console.log('	gulp watch			文件监控打包');
     console.log('	gulp help			gulp参数说明');

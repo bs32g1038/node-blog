@@ -7,4 +7,4 @@ public
 !public/favicon.ico
 views/admin/layout.html
 views/admin/js.html
-views/web/index.html
+views/home/index.html

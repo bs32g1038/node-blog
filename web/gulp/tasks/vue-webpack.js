@@ -1,6 +1,6 @@
 var webpack = require("webpack"),
-    webpackClient = require("../../web/build/webpack.client.config"),
-    webpackServer = require("../../web/build/webpack.server.config");
+    webpackClient = require("../../build/webpack.client.config"),
+    webpackServer = require("../../build/webpack.server.config");
 
 module.exports = function (gulp, plugins) {
 

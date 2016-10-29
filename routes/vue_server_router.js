@@ -18,7 +18,7 @@ module.exports = (app) => {
 
     // parse index.html template
     const html = (() => {
-        const template = fs.readFileSync(resolve('../views/web/index.html'), 'utf-8');
+        const template = fs.readFileSync(resolve('../views/home/index.html'), 'utf-8');
         const s = template.indexOf('{{ APP }}');
         const title = 'node-blog';
         return {
@@ -45,7 +45,7 @@ module.exports = (app) => {
 
     if (isProd) {
         // create server renderer from real fs
-        const bundlePath = resolve('../public/dist/server-bundle.js')
+        const bundlePath = resolve('../public/home/js/server-bundle.js')
 
         renderer = createRenderer(fs.readFileSync(bundlePath, 'utf-8'))
 

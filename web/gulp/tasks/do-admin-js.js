@@ -10,7 +10,7 @@ module.exports = function(gulp, plugins) {
 
     return () => {
 
-        var target = gulp.src('./web/views/admin/js.html');
+        var target = gulp.src('./web/admin/js.html');
 
         var sources = gulp.src([
             'libs/jquery/jquery-1.12.4.js',
@@ -20,18 +20,18 @@ module.exports = function(gulp, plugins) {
             'libs/editor/marked.js',
             'libs/editor/ext.js',
             'libs/mini-alert/mini-alert.js',            
-            'javascripts/upload.images.js',
+            'admin/js/upload.images.js',
         ], {
             cwd: './web'
         })
 
         if (isProd) {
             sources = sources.pipe(uglify())
-                .pipe(concat('admin.min.js'))
+                .pipe(concat('admin.js'))
                 .pipe(rev())
         }
 
-        sources = sources.pipe(gulp.dest('./public/dist'));
+        sources = sources.pipe(gulp.dest('./public/admin/js'));
 
         return target.pipe(inject(sources, {
                 ignorePath: 'public'
