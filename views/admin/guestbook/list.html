@@ -38,11 +38,11 @@
                     <a href="/admin/guestbook/<%= guestbook._id %>/reply" class="btn btn-primary btn-xs"><span
                                 class="fa fa-fw fa-mail-reply"></span>回复</a>
                     <% }else{ %>
-                    <button class="btn btn-primary btn-xs btn-pass" guestbook-id="<%= guestbook._id %>" >
+                    <button class="btn btn-primary btn-xs btn-pass" data-id="<%= guestbook._id %>" >
                         <span class="fa fa-fw fa-eye"></span>通过
                     </button>
                     <% } %>
-                    <button class="btn btn-default btn-xs guestbook_del" guestbook-id=<%= guestbook._id %>>
+                    <button class="btn btn-default btn-xs guestbook_del" data-id=<%= guestbook._id %>>
                         <span class="fa fa-fw fa-trash-o"></span>删除
                     </button>
                 </td>
@@ -61,70 +61,4 @@
 
 <%- include('../js.html') %>
 
-<script>
-    $(document).ready(function () {
-
-        $('.guestbook_del').on('click', function () {
-            var guestbook_id = $(this).attr("guestbook-id");
-            var _csrf = $('#csrf').val();
-            if (guestbook_id && confirm('确定要删除该评论吗？')) {
-                $.post('/admin/guestbook/del', {
-                    id: guestbook_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        window.location.href = '/admin/guestbook/list';
-                    }
-                });
-            }
-        });
-        $('.btn-pass').on('click', function () {
-            var guestbook_id = $(this).attr("guestbook-id");
-            var _csrf = $('#csrf').val();
-            if (guestbook_id && confirm('确定要通过该留言吗？')) {
-                $.post('/admin/guestbook/pass/do', {
-                    id: guestbook_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        window.location.href = '/admin/guestbook/list';
-                    }
-                });
-            }
-        });
-        $('#selectAll').on('click', function(){
-		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
-		});
-		$("input[name='listItem']").on('click',function(){
-			$('#selectAll').prop("checked",false)
-		});
-		$('#btnListDel').on('click', function(){
-			var _csrf = $('#csrf').val();
-			var ids = [];
-			$("input[name='listItem']").each(function(){ 
-				if (true == $(this).prop("checked")) { 
-					ids.push($(this).prop('value'));
-				}
-			})
-			if(ids.length <= 0){
-				return alert("请在要删除的留言前面打勾");
-			}
-			if (confirm('确定要删除这些留言吗？')) {
-                $.post('/admin/guestbook/del', {
-                    ids: ids,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        window.location.href = '/admin/guestbook/list';
-                    }
-                });
-            }
-		});
-    });
-</script>
+<script src="/admin/js/guestbook/list.js"></script>

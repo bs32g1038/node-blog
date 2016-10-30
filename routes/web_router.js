@@ -90,13 +90,16 @@ router.get('/admin/guestbook/list', guestbook.b_get_guestbook_list);
 
 router.get('/admin/guestbook/list/page/:page', guestbook.b_get_guestbook_list);
 
-router.post('/admin/guestbook/pass/do', guestbook.b_guestbook_pass_do);
+router.post('/admin/guestbook/:id/pass/do', guestbook.b_guestbook_pass_do);
 
 router.get('/admin/guestbook/:id/reply', guestbook.b_guestbook_reply);
 
 router.post('/admin/guestbook/:id/reply/do', guestbook.b_guestbook_reply_do);
 
-router.post('/admin/guestbook/del', guestbook.b_guestbook_del);
+router.post('/admin/guestbook/:id/del', guestbook.b_guestbook_del);
+
+router.post('/admin/guestbook/del', guestbook.b_guestbook_batch_del);
+
 
 
 /**************************友情链接管理**************************/

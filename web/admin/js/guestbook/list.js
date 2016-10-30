@@ -7,40 +7,39 @@ $(document).ready(function () {
             text: res.message,
         }, function () {
             if (res.success) {
-                location.href = '/admin/comment/list';
+                location.href = '/admin/guestbook/list';
             }
         });
     };
 
-    $('.comment_del').on('click', function () {
+    $('.guestbook_del').on('click', function () {
 
         var id = $(this).data("id");
-        var post_id = $(this).data("post-id");
         var params = {
-            post_id: post_id,
             _csrf: _csrf
         };
 
         miniAlert({
-            text: "确定要删除该评论？",
+            text: "确定要删除该留言？",
             showCancelBtn: true
         }, function () {
-            $.post('/admin/comment/' + id + '/del', params, resFn);
-        })
+            $.post('/admin/guestbook/' + id + '/del', params, resFn);
+        });
+
     });
     $('.btn-pass').on('click', function () {
-
         var id = $(this).data("id");
         var params = {
             _csrf: _csrf
         };
 
         miniAlert({
-            text: "确定要通过该评论？",
+            text: "确定要通过该留言吗？",
             showCancelBtn: true
         }, function () {
-            $.post('/admin/comment/' + id + '/pass/do', params, resFn);
+            $.post('/admin/guestbook/' + id + '/pass/do', params, resFn);
         });
+
     });
     $('#selectAll').on('click', function () {
         $("input[name='listItem']").prop("checked", $(this).prop("checked"));
@@ -49,13 +48,14 @@ $(document).ready(function () {
         $('#selectAll').prop("checked", false)
     });
     $('#btnListDel').on('click', function () {
-        var _csrf = $('#csrf').val();
+
         var ids = [];
+
         $("input[name='listItem']").each(function () {
             if (true == $(this).prop("checked")) {
                 ids.push($(this).prop('value'));
             }
-        });
+        })
 
         var params = {
             ids: ids,
@@ -63,13 +63,13 @@ $(document).ready(function () {
         };
 
         if (ids.length <= 0) {
-            return miniAlert({text: "请在要删除的评论前面打勾"});
+            return miniAlert({text: "请在要删除的留言前面打勾"});
         }
         miniAlert({
-            text: "确定要删除这些评论？",
+            text: "确定要删除这些留言？",
             showCancelBtn: true
         }, function () {
-            $.post('/admin/comment/del', params, resFn);
+            $.post('/admin/guestbook/del', params, resFn);
         });
 
     });
