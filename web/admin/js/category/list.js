@@ -55,7 +55,7 @@ $(document).ready(function() {
             _csrf: _csrf
         };
         if (ids.length <= 0) {
-            return miniAlert({ text: "请在要删除的分类前面打勾", });
+            return miniAlert({ text: "请在要删除的分类前面打勾"});
         }
         miniAlert({
             text: "确定要删除这些分类？",

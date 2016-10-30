@@ -112,7 +112,9 @@ router.post('/admin/link/add', link.b_link_add);
 
 router.post('/admin/link/edit/:id/do', link.b_link_edit_do);
 
-router.post('/admin/link/del', link.b_link_del);
+router.post('/admin/link/:id/del', link.b_link_del);
+
+router.post('/admin/link/del', link.b_link_batch_del);
 
 /**************************用户信息管理**************************/
 

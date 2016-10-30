@@ -31,11 +31,11 @@
             <td><%= link.name %></td>
             <td><%= link.url %></td>
             <td>
-                <button class="btn btn-default btn-xs modify_link" link-id=<%= link._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
+                <button class="btn btn-default btn-xs modify_link" data-id=<%= link._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
                     <span class="fa fa-edit">&nbsp;</span>修改
                 </button>
-                <button class="btn btn-default btn-xs link_del" link-id=<%= link._id %> title="删除"><i
-                            class="fa fa-trash-o"></i>&nbsp;删除
+                <button class="btn btn-default btn-xs link_del" data-id=<%= link._id %> title="删除">
+                    <i class="fa fa-trash-o"></i>&nbsp;删除
                 </button>
             </td>
         </tr>
@@ -47,33 +47,33 @@
 <div class="modal fade" id="modify_dialog" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="link_modal_title"></h4>
-            </div>
-            <div class="modal-body">
-                <form id="form" class="form-horizontal" action="" method="post">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">名称</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" id="name" name="name">
+            <form id="form" class="form-horizontal" action="" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="link_modal_title"></h4>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">名称</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm" id="name" name="name">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">链接</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" id="url" name="url">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">链接</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm" id="url" name="url">
+                            </div>
                         </div>
-                    </div>
-                    <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
-                </form>
+                        <input type='hidden' id="csrf" name='_csrf' value='<%= csrf %>'/>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="add-submit">提交</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -85,70 +85,4 @@
 
 <%- include('../js.html') %>
 
-<script>
-    $(document).ready(function () {
-        $('.link_del').on('click', function () {
-            var link_id = $(this).attr("link-id");
-            var _csrf = $('#csrf').val();
-            if (link_id && confirm('确定要删除该链接？')) {
-                $.post('/admin/link/del', {
-                    id: link_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/link/list';
-                    }
-                });
-            }
-        });
-        $('#add-submit').on('click', function () {
-            $('#form').submit();
-        });
-        $('#add_link').on('click', function () {
-            $('#link_modal_title').text('添加链接');
-            $('#form').attr("action",'/admin/link/add');
-            $('#name').val('');
-            $('#url').val('');
-        });
-        $('.modify_link').on('click', function () {
-            var link_id = $(this).attr("link-id");
-            var tds = $(this).parent().parent().find('td');
-            $('#form').attr("action",'/admin/link/edit/' + link_id + '/do');
-            $('#name').val(tds.eq(1).text())
-            $('#url').val(tds.eq(2).text())
-            $('#link_modal_title').text('编辑链接');            
-        });
-        $('#selectAll').on('click', function(){
-		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
-		});
-		$("input[name='listItem']").on('click',function(){
-			$('#selectAll').prop("checked",false)
-		});
-		$('#btnListDel').on('click', function(){
-			var _csrf = $('#csrf').val();
-			var ids = [];
-			$("input[name='listItem']").each(function(){ 
-				if (true == $(this).prop("checked")) { 
-					ids.push($(this).prop('value'));
-				}
-			})
-			if(ids.length <= 0){
-				return alert("请在要删除的链接前面打勾");
-			}
-			if (confirm('确定要删除这些链接吗？')) {
-                $.post('/admin/link/del', {
-                    ids: ids,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/link/list';
-                    }
-                });
-            }
-		});
-    });
-</script>
+<script src="/admin/js/link/list.js"></script>
