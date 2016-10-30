@@ -73,13 +73,16 @@ router.get('/admin/comment/list', comment.b_get_comment_list);
 
 router.get('/admin/comment/list/page/:page', comment.b_get_comment_list);
 
-router.post('/admin/comment/pass/do', comment.b_comment_pass_do);
+router.post('/admin/comment/:id/pass/do', comment.b_comment_pass_do);
 
 router.get('/admin/comment/:id/reply', comment.b_comment_reply);
 
 router.post('/admin/comment/:id/reply/do', comment.b_comment_reply_do);
 
-router.post('/admin/comment/del', comment.b_comment_del);
+router.post('/admin/comment/:id/del', comment.b_comment_del);
+
+router.post('/admin/comment/del', comment.b_comment_batch_del);
+
 
 /**************************留言管理**************************/
 
