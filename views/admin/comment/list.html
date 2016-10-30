@@ -40,11 +40,11 @@
                         <a href="/admin/comment/<%= comment._id %>/reply" class="btn btn-primary btn-xs">
                         <span class="fa fa-fw fa-mail-reply"></span>回复</a>
                     <% } else { %>
-                    <button class="btn btn-primary btn-xs btn-pass" comment-id="<%= comment._id %>">
+                    <button class="btn btn-primary btn-xs btn-pass" data-id="<%= comment._id %>">
                         <span class="fa fa-fw fa-eye"></span>通过
-                    </a>
+                    </button>
                     <% } %>
-                    <button class="btn btn-default btn-xs comment_del" comment-id="<%= comment._id %>" post-id="<%= comment.post_id %>" >
+                    <button class="btn btn-default btn-xs comment_del" data-id="<%= comment._id %>" data-post-id="<%= comment.post_id %>" >
                             <span class="fa fa-fw fa-trash-o"></span>删除
                     </button>
                 </td>
@@ -60,71 +60,5 @@
 	pageCount: pageCount 
 }); %>
 <%- include('../js.html') %>
-<script>
-    $(document).ready(function () {
-        $('.comment_del').on('click', function () {
-            var comment_id = $(this).attr("comment-id");
-            var post_id = $(this).attr("post-id");
-            var _csrf = $('#csrf').val();
-            if (comment_id && post_id && confirm('确定要删除该评论吗？')) {
-                $.post('/admin/comment/del', {
-                    id: comment_id,
-                    post_id: post_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/comment/list';
-                    }
-                });
-            }
-        });
-        $('.btn-pass').on('click', function () {
-            var comment_id = $(this).attr("comment-id");
-            var _csrf = $('#csrf').val();
-            if (comment_id && confirm('确定要通过该评论吗？')) {
-                $.post('/admin/comment/pass/do', {
-                    id: comment_id,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/comment/list';
-                    }
-                });
-            }
-        });
-        $('#selectAll').on('click', function(){
-		 	$("input[name='listItem']").prop("checked",$(this).prop("checked"));
-		});
-		$("input[name='listItem']").on('click',function(){
-			$('#selectAll').prop("checked",false)
-		});
-		$('#btnListDel').on('click', function(){
-			var _csrf = $('#csrf').val();
-			var ids = [];
-			$("input[name='listItem']").each(function(){ 
-				if (true == $(this).prop("checked")) { 
-					ids.push($(this).prop('value'));
-				}
-			})
-			if(ids.length <= 0){
-				return alert("请在要删除的评论前面打勾");
-			}
-			if (confirm('确定要删除这些评论吗？')) {
-                $.post('/admin/comment/del', {
-                    ids: ids,
-                    _csrf: _csrf
-                }, function (res) {
-                    if (!res.success) {
-                        alert(res.message);
-                    } else {
-                        location.href = '/admin/comment/list';
-                    }
-                });
-            }
-		});
-    });
-</script>
+
+<script src="/admin/js/comment/list.js"></script>
