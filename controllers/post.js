@@ -13,28 +13,28 @@ var config = require('../config')
  * @param req
  * @param res
  */
-exports.b_doc_list = function(req, res) {
+exports.b_doc_list = function (req, res) {
 
     var page = tools.getPage(req.params.page);
 
     var limit = config.list_post_count;
 
     async.parallel({
-            docs: function(callback) {
-                postDao.getList({ page: page, limit: limit }, callback);
+            docs: function (callback) {
+                postDao.getList({page: page, limit: limit}, callback);
             },
-            cats: function(callback) {
+            cats: function (callback) {
                 categoryDao.getAll(callback);
             },
-            pageCount: function(callback) {
-                postDao.count(function(err, sum) {
+            pageCount: function (callback) {
+                postDao.count(function (err, sum) {
                     callback(err, Math.ceil(sum / limit));
                 });
             },
         },
-        function(err, data) {
+        function (err, data) {
 
-            var docs = data.docs.map(function(doc) {
+            var docs = data.docs.map(function (doc) {
                 doc = doc.toObject();
                 var cat = _.find(data.cats, {
                     alias: doc.category
@@ -61,9 +61,9 @@ exports.b_doc_list = function(req, res) {
  * @param req
  * @param res
  */
-exports.b_doc_publish = function(req, res) {
+exports.b_doc_publish = function (req, res) {
 
-    categoryDao.getAll(function(err, cats) {
+    categoryDao.getAll(function (err, cats) {
 
         if (err) {
             return res.send('404');
@@ -83,7 +83,7 @@ exports.b_doc_publish = function(req, res) {
  * @param res
  * @returns {*}
  */
-exports.b_doc_publish_do = function(req, res) {
+exports.b_doc_publish_do = function (req, res) {
 
     let editError; //用于验证
 
@@ -103,7 +103,7 @@ exports.b_doc_publish_do = function(req, res) {
 
     if (title === '') {
         editError = '文章标题不能是空的。';
-    } else if (!validator.isInt(from, { min: 1, max: 2 })) {
+    } else if (!validator.isInt(from, {min: 1, max: 2})) {
         editError = '警告，不要随意擅改页面数据！！';
     } else if (custom_url !== '' && !validator.isURL(custom_url)) {
         editError = 'URL填写不正确。';
@@ -111,10 +111,10 @@ exports.b_doc_publish_do = function(req, res) {
 
     is_draft = validator.equals(is_draft, "1");
 
-    doc = { title, from, custom_url, img_url, category, is_draft, summary, content };
+    doc = {title, from, custom_url, img_url, category, is_draft, summary, content};
 
     if (editError) {
-        return categoryDao.getAll(function(err, cats) {
+        return categoryDao.getAll(function (err, cats) {
             res.render('admin/doc/publish', {
                 doc: doc,
                 cats: cats,
@@ -124,14 +124,14 @@ exports.b_doc_publish_do = function(req, res) {
     }
 
     async.parallel([
-            function(callback) {
+            function (callback) {
                 postDao.add(doc, callback)
             },
-            function(callback) {
+            function (callback) {
                 categoryDao.incPostCountByAlias(category, callback)
             }
         ],
-        function(err) {
+        function (err) {
             if (err) {
                 return res.send('404');
             }
@@ -146,18 +146,22 @@ exports.b_doc_publish_do = function(req, res) {
  * @param req
  * @param res
  */
-exports.b_doc_edit = function(req, res) {
+exports.b_doc_edit = function (req, res) {
 
     var id = req.params.id;
 
+    if (!validator.isMongoId(id)) {
+        return res.render404('此文章不存在或已被删除。');
+    }
+
     async.parallel({
-        doc: function(callback) {
+        doc: function (callback) {
             postDao.getById(id, callback)
         },
-        cats: function(callback) {
+        cats: function (callback) {
             categoryDao.getAll(callback)
         }
-    }, function(err, data) {
+    }, function (err, data) {
 
         req.session.POST_CATEGORY = data.doc.category;
 
@@ -174,7 +178,7 @@ exports.b_doc_edit = function(req, res) {
 /**
  * 文章编辑提交处理
  */
-exports.b_doc_edit_do = function(req, res) {
+exports.b_doc_edit_do = function (req, res) {
 
     var id = req.params.id;
 
@@ -194,9 +198,12 @@ exports.b_doc_edit_do = function(req, res) {
     summary = validator.trim(summary);
     content = validator.trim(content);
 
-    if (title === '') {
+    if (!validator.isMongoId(id)) {
+        res.status(400);
+        editError = '此文章不存在或已被删除。';
+    } else if (title === '') {
         editError = '文章标题不能是空的。';
-    } else if (!validator.isInt(from, { min: 1, max: 2 })) {
+    } else if (!validator.isInt(from, {min: 1, max: 2})) {
         editError = '警告，不要随意擅改页面数据！！';
     } else if (custom_url !== '' && !validator.isURL(custom_url)) {
         editError = 'URL填写不正确。';
@@ -204,10 +211,10 @@ exports.b_doc_edit_do = function(req, res) {
 
     is_draft = validator.equals(is_draft, "1");
 
-    doc = { title, from, custom_url, img_url, category, is_draft, summary, content };
+    doc = {title, from, custom_url, img_url, category, is_draft, summary, content};
 
     if (editError) {
-        return categoryDao.getAll(function(err, cats) {
+        return categoryDao.getAll(function (err, cats) {
             res.render('admin/doc-publish', {
                 doc: doc,
                 cats: cats,
@@ -218,17 +225,17 @@ exports.b_doc_edit_do = function(req, res) {
     }
 
     async.parallel([
-            function(callback) {
+            function (callback) {
                 postDao.updateById(id, doc, callback)
             },
-            function(callback) {
+            function (callback) {
                 categoryDao.incPostCountByAlias(category, callback)
             },
-            function(callback) {
+            function (callback) {
                 categoryDao.decPostCountByAlias(req.session.POST_CATEGORY, callback);
             }
         ],
-        function(err) {
+        function (err) {
             if (err) {
                 return res.send('404');
             }
@@ -241,24 +248,27 @@ exports.b_doc_edit_do = function(req, res) {
  * @param req
  * @param res
  */
-exports.b_doc_recommend_do = function(req, res) {
-
-    console.log("测试")
+exports.b_doc_recommend_do = function (req, res) {
 
     var id = req.params.id;
 
+    if (!validator.isMongoId(id)) {
+        res.status(400);
+        return res.json({success: false, message: '此文章不存在或已被删除。'});
+    }
+
     var is_recommend = validator.equals(req.body.is_recommend, "1")
 
-    postDao.updateById(id, { is_recommend: is_recommend }, function(err) {
+    postDao.updateById(id, {is_recommend: is_recommend}, function (err) {
 
         if (err) {
-            return res.send({
-                success: true,
+            return res.json({
+                success: false,
                 message: '操作失败'
             });
         }
 
-        return res.send({
+        return res.json({
             success: true,
             message: is_recommend ? '文章被设置为推荐' : '文章被设置为不推荐'
         });
@@ -271,40 +281,55 @@ exports.b_doc_recommend_do = function(req, res) {
  * @param req
  * @param res
  */
-exports.b_doc_del = function(req, res) {
+exports.b_doc_del = function (req, res) {
 
     //删除文章，分类目录post_count减1
 
     var id = req.params.id; //单个删除
 
-    postDao.getById(id, function(err, doc) {
+    if (!validator.isMongoId(id)) {
+        res.status(400);
+        return res.json({success: false, message: '此文章不存在或已被删除。'});
+    }
+
+    postDao.getById(id, function (err, doc) {
+        if (!doc) {
+            return res.send({success: false, message: '此文章不存在或已被删除。'});
+        }
         categoryDao.decPostCountByAlias(doc.category);
         doc.is_deleted = true;
-        doc.save(function(err) {
+        doc.save(function (err) {
             if (err) {
-                return res.send({ success: false, message: err.message });
+                return res.send({success: false, message: err.message});
             }
-            return res.send({ success: true, message: '文章已经被成功删除' });
+            return res.send({success: true, message: '文章已经被成功删除'});
         });
     });
 
 }
 
-exports.b_doc_batch_del = function(req, res) {
+exports.b_doc_batch_del = function (req, res) {
 
     var ids = req.body.ids; //批量删除
 
-    async.map(ids, function(id, callback) {
-        postDao.getById(id, function(err, doc) {
+    async.map(ids, function (id, callback) {
+        if (!validator.isMongoId(id)) {
+            res.status(400);
+            return res.json({success: false, message: '此文章不存在或已被删除。'});
+        }
+        postDao.getById(id, function (err, doc) {
+            if (!doc) {
+                callback({success: false, message: '此文章不存在或已被删除。'})
+            }
             categoryDao.decPostCountByAlias(doc.category);
             doc.is_deleted = true;
             doc.save(callback);
         });
-    }, function(err) {
+    }, function (err) {
         if (err) {
-            return res.send({ success: false, message: err.message });
+            return res.json({success: false, message: err.message});
         }
-        return res.send({ success: true, message: '文章已经被成功删除' });
+        return res.json({success: true, message: '文章已经被成功删除'});
     });
 
 }

@@ -13,6 +13,8 @@ var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./config');
+var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
+var _ = require('lodash');
 
 // var RateLimit = require('./middlewares/rate-limit');
 
@@ -55,7 +57,11 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+_.extend(app.locals, {
+    config: config
+});
 
+app.use(errorPageMiddleware.errorPage);
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',
 //     limitCount: config.max_open_per_day,

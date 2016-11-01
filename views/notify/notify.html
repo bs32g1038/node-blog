@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>李志成的个人网站</title>
+</head>
+<body>
+<div id='content'>
+    <div class='panel'>
+        <div class='header'>
+            <ul class='breadcrumb'>
+                <li><a href='/'>主页</a><span class='divider'>/</span></li>
+                <li class='active'>通知</li>
+            </ul>
+        </div>
+        <div class='inner'>
+            <% if(typeof(error) !== 'undefined' && error){ %>
+            <div class="alert alert-error">
+                <strong><%= error %></strong>
+            </div>
+            <% } %>
+            <% if(typeof(success) !== 'undefined' && success){ %>
+            <div class="alert alert-success">
+                <strong><%= success %></strong>
+            </div>
+            <% } %>
+            <a href="<%- typeof(referer) !== 'undefined' ? referer : '/' %>"><span class="span-common">返回</span></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

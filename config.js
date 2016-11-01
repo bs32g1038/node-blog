@@ -8,10 +8,10 @@ var config = {
     site: {
         key: 'site-info', //关键词用于检索数据
         name: '个人博客',
-        logo: '/web/src/asset/logo.jpg',
+        logo: '/home/images/logo.jpg',
         icp: '',
         url: 'http://127.0.0.1',
-        qr_code: '/web/src/asset/qr-code.png',
+        qr_code: '/home/images/qr-code.png',
         code_header: '',
         code_footer: ''
     },
