@@ -19,7 +19,7 @@ exports.initData = function(req, res) {
             userDao.getByAcount(config.administrator.account, callback)
         },
         site: function(callback) {
-            optionDao.getByKey(config.site.key, callback);
+            optionDao.getSiteData(callback);
         }
     }, function(err, data) {
         if (err) {

@@ -1,11 +1,11 @@
 var validator = require('validator');
 var config = require('../config');
 var Index = require('../dao/index');
-
+var _ = require('lodash');
 var optionDao = Index.option;
 
-exports.b_option_edit = function (req, res) {
-    optionDao.getByKey(config.option.key, function (err, option) {
+exports.b_option_edit = function(req, res) {
+    optionDao.getById(config.option.key, function(err, option) {
         res.render('admin/layout', {
             option: option,
             $body: 'option/edit.html'
@@ -13,7 +13,7 @@ exports.b_option_edit = function (req, res) {
     })
 }
 
-exports.b_option_edit_do = function (req, res) {
+exports.b_option_edit_do = function(req, res) {
 
     var editError;
 
@@ -48,17 +48,17 @@ exports.b_option_edit_do = function (req, res) {
         site_description = validator.trim(site_description);
         site_header_code = validator.trim(site_header_code);
 
-        if (!validator.isInt(list_post_count, {min: 1, max: 50})) {
+        if (!validator.isInt(list_post_count, { min: 1, max: 50 })) {
             editError = '文章列表显示的数量，最小值为1，最大值为50';
-        } else if (!validator.isInt(list_comment_count, {min: 1, max: 100})) {
+        } else if (!validator.isInt(list_comment_count, { min: 1, max: 100 })) {
             editError = '评论列表显示的数量，最小值为1，最大值为100';
-        } else if (!validator.isInt(list_guestbook_count, {min: 1, max: 50})) {
+        } else if (!validator.isInt(list_guestbook_count, { min: 1, max: 50 })) {
             editError = '留言列表显示的数量，最小值为1，最大值为50';
-        } else if (!validator.isInt(max_open_per_day, {min: 200})) {
+        } else if (!validator.isInt(max_open_per_day, { min: 200 })) {
             editError = '游客每天最大访问次数，最小值为200';
-        } else if (!validator.isInt(max_comment_per_day, {min: 50})) {
+        } else if (!validator.isInt(max_comment_per_day, { min: 50 })) {
             editError = '游客每天最大评论次数，最小值为50';
-        } else if (!validator.isInt(max_guestbook_per_day, {min: 50})) {
+        } else if (!validator.isInt(max_guestbook_per_day, { min: 50 })) {
             editError = '游客每天最大留言次数，最小值为50';
         }
 
@@ -103,7 +103,16 @@ exports.b_option_edit_do = function (req, res) {
         list_post_count: list_post_count,
         list_comment_count: list_comment_count,
         list_guestbook_count: list_guestbook_count
-    }, function (err) {
+    }, function(err) {
+        _.extend(req.app.locals, {
+            site_name: site_name,
+            site_logo: site_logo,
+            site_icp: site_icp,
+            site_domain: site_domain,
+            site_keywords: site_keywords,
+            site_description: site_description
+        });
+        console.log(req.app.locals)
         res.redirect('/admin/option/edit');
     });
 }

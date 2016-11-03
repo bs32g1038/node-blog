@@ -1,12 +1,12 @@
 //基础类
 var BaseDao = require('./BaseDao');
+var config = require('../config');
 
 class OptionDao extends BaseDao {
 
-    getByKey(key, callback) {
-        this.model.findOne({_id: key}, callback);
+    getSiteData(callback) {
+        this.model.findOne(config.option.key, 'site_name site_logo site_icp site_domain', callback);
     }
-
 }
 
 module.exports = OptionDao;

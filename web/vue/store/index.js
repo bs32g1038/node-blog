@@ -98,6 +98,7 @@ export default new Vuex.Store({
                 state.user = data.user;
                 state.links = data.links;
                 state.site = data.site;
+                console.log(data.site)
                 state.init = true;
             }
             state.success = success;

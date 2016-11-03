@@ -54,7 +54,9 @@ module.exports = (app) => {
         }
 
         res.render('home/index', function (err, html) {
-
+            if(err){
+                console.log(err)
+            }
             const s = html.indexOf('{{ APP }}');
             head = html.slice(0, s);
             tail = html.slice(s + '{{ APP }}'.length);

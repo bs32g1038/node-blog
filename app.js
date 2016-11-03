@@ -14,13 +14,10 @@ var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./config');
 var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
-var _ = require('lodash');
 
 // var RateLimit = require('./middlewares/rate-limit');
-
-//初始化连接数据库
-require('./common/mongoose');
-
+var initSite = require('./common/init_site');
+var auth = require('./middlewares/auth');
 var app = express();
 
 //删除header中的X-Powered-By标签
@@ -57,19 +54,17 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-_.extend(app.locals, {
-    config: {
-        site: config.option
-    }
-});
 
+initSite(app);          //初始化静态配置数据
+
+app.use(auth.authUser);         //校验用户
 app.use(errorPageMiddleware.errorPage);
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',
 //     limitCount: config.max_open_per_day,
 //     expired: 24 * 60 * 60
 // }));
-//app.use('/api', apiRouter);
+app.use('/api', apiRouter);
 app.use(csurf()); //防止跨站请求伪造
 app.use(function (req, res, next) {
     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
@@ -77,6 +72,6 @@ app.use(function (req, res, next) {
 });
 app.use('/', webRouter); //自定义
 
-//app.get('*', vueServerRouter(app)); //找不到的页面直接在前端显示，暂时这样处理，没完善
+app.get('*', vueServerRouter(app)); //找不到的页面直接在前端显示，暂时这样处理，没完善
 
 module.exports = app;

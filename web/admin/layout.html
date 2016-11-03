@@ -3,13 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>冷夜流星博客后台</title>
+	<title><%= site_name %>后台</title>
 	<!-- inject:css -->
-	<link rel="stylesheet" href="/dist/bootstrap.css">
-	<link rel="stylesheet" href="/dist/editor.css">
-	<link rel="stylesheet" href="/dist/webuploader.css">
-	<link rel="stylesheet" href="/dist/font-awesome.css">
-	<link rel="stylesheet" href="/dist/admin.css">
 	<!-- endinject -->
 </head>
 
@@ -24,20 +19,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-				<a class="navbar-brand" href="#">冷夜流星博客后台</a>
+				<a class="navbar-brand" href="#"><%= site_name %>后台</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown notifications-menu">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<a href="/admin/doc/list">
 							<i class="fa fa-bell-o"></i> 通知
 							<span class="label label-warning">6</span>
 						</a>
 					</li>
 					<li class="user user-menu">
-						<a href="#">
-							<img src="/images/logo.jpg" class="user-image">
-							<span class="hidden-xs">冷夜流星-博主</span>
+						<a href="/admin/doc/list">
+							<img src="<%= current_user.img_url %>" class="user-image">
+							<span class="hidden-xs"><%= current_user.nick_name %>-博主</span>
 						</a>
 					</li>
 					<li class="user user-menu">
@@ -84,7 +79,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
             	<%- include($body) %>
 				<footer class="main-footer">
-					<strong>Copyright © 2016 <a href="https://www.icoolstar.com" target="_blank">冷夜流星后台</a>.</strong> All rights reserved.
+					<strong>Copyright © 2016 <a href="<%= site_domain %>" target="_blank"><%= site_name %>后台</a>.</strong> All rights reserved.
 				</footer>
 			</div>
 		</div>

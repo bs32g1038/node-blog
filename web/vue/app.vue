@@ -3,13 +3,13 @@
         <header class="header">
             <div class="site-music">
                 <div class="m-music">
-                    <img v-bind:src="site.logo" title="嗨一下" class="music-wrap"/>
+                    <img v-bind:src="site.site_logo" title="嗨一下" class="music-wrap"/>
                 </div>
             </div>
             <div class="site-meta">
                 <div class="site-logo">
                     <div class="brand">
-                        <span class="site-title">{{ site.name }}</span>
+                        <span class="site-title">{{ site.site_name }}</span>
                     </div>
                 </div>
                 <p class="site-description">{{ user.motto }}</p>
@@ -85,15 +85,15 @@
                 <li>
                     <div class="title"><i class="fa fa-html5 fa-fw"></i>网站声明</div>
                     <div class="footer-text">
-                        Copyright © <a v-bind:href="site.domain">{{ site.name }}</a>
-                        &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;{{ site.icp }}
+                        Copyright © <a v-bind:href="site.site_domain">{{ site.site_name }}</a>
+                        &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;{{ site.site_icp }}
                     </div>
                 </li>
             </ul>
             <div class="footer-side">
                 <span> 快速扫描二维码打开网站</span>
                 <div class="qr-code">
-                    <img v-bind:src="site.qr_code" alt="">
+                    <img src="/" alt="">
                 </div>
             </div>
         </footer>
