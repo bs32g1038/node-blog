@@ -58,7 +58,9 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 _.extend(app.locals, {
-    config: config
+    config: {
+        site: config.option
+    }
 });
 
 app.use(errorPageMiddleware.errorPage);
@@ -67,7 +69,7 @@ app.use(errorPageMiddleware.errorPage);
 //     limitCount: config.max_open_per_day,
 //     expired: 24 * 60 * 60
 // }));
-app.use('/api', apiRouter);
+//app.use('/api', apiRouter);
 app.use(csurf()); //防止跨站请求伪造
 app.use(function (req, res, next) {
     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
@@ -75,6 +77,6 @@ app.use(function (req, res, next) {
 });
 app.use('/', webRouter); //自定义
 
-app.get('*', vueServerRouter(app)); //找不到的页面直接在前端显示，暂时这样处理，没完善
+//app.get('*', vueServerRouter(app)); //找不到的页面直接在前端显示，暂时这样处理，没完善
 
 module.exports = app;

@@ -4,60 +4,88 @@
     </h1>
 </section>
 <div class="box-body">
-    <form class="form-horizontal" id="site_form" action="/admin/option/edit/<%= site._id %>/do" method="post">
-
+    <% if(typeof(editError) !== 'undefined' && editError){ %>
+    <div class="alert alert-warning text-center" role="alert">
+        <%= editError %>
+    </div>
+    <% } %>
+    <form class="form-horizontal" action="/admin/option/edit/<%= option._id %>/do" method="post">
         <div class="form-group">
             <label class="control-label col-sm-3">网站名称</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" name="name" value="<%= option.site_name %>">
+                <input type="text" class="form-control input-sm" name="site_name" value="<%= option.site_name %>">
             </div>
         </div>
-
         <div class="form-group">
             <label class="control-label col-sm-3">网站logo</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" name="logo" value="<%= option.site_logo %>">
+                <input type="text" class="form-control input-sm" name="site_logo" value="<%= option.site_logo %>">
             </div>
         </div>
-
         <div class="form-group">
             <label class="control-label col-sm-3">网站链接</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" name="url" value="<%= option.site_domain %>">
+                <input type="text" class="form-control input-sm" name="site_domain" value="<%= option.site_domain %>">
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-3">网站二维码</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" name="qr_code">
-            </div>
-        </div>
-
         <div class="form-group">
             <label class="control-label col-sm-3">备案号icp</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm"  name="icp" value="<%= option.site_icp %>">
+                <input type="text" class="form-control input-sm"  name="site_icp" value="<%= option.site_icp %>">
             </div>
         </div>
         <hr />
         <div class="form-group">
+            <label class="control-label col-sm-3">游客每天最大访问次数</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="max_open_per_day" value="<%= option.max_open_per_day %>">
+            </div>
+            <label class="control-label col-sm-2">游客每天最大评论次数</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="max_comment_per_day" value="<%= option.max_comment_per_day %>">
+            </div>
+            <label class="control-label col-sm-2">游客每天最大留言次数</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="max_guestbook_per_day" value="<%= option.max_guestbook_per_day %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">文章列表显示的数量</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="list_post_count" value="<%= option.list_post_count %>">
+            </div>
+            <label class="control-label col-sm-2">留言列表显示的数量</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="list_guestbook_count" value="<%= option.list_guestbook_count %>">
+            </div>
+            <label class="control-label col-sm-2">评论列表显示的数量</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control input-sm"  name="list_comment_count" value="<%= option.list_comment_count %>">
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-sm-3">网站关键词</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm" name="site_keywords" value="<%= option.site_keywords %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">网站描述</label>
+            <div class="col-sm-6">
+                <textarea class="form-control input-sm"  name="site_description" cols="30" rows="6"><%= option.site_description %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-3">代码顶部</label>
             <div class="col-sm-6">
-                <textarea class="form-control input-sm"  name="code_header" cols="30" rows="6"><%= option.header_code %></textarea>
+                <textarea class="form-control input-sm"  name="site_header_code" cols="30" rows="6"><%= option.site_header_code %></textarea>
             </div>
         </div>
         <input type='hidden' name='_csrf' value='<%= csrf %>'/>
         <div class="modal-footer">
-            <button id="save_draft" class="btn btn-default">保存</button>
+            <button type="submit" class="btn btn-default">保存</button>
         </div>
     </form>
 </div>
 <%- include('../js.html') %>
-<script>
-    $(document).ready(function () {
-        $('#save_draft').on('click', function () {
-            $('#site_form').submit();
-        });
-    });
-</script>

@@ -5,6 +5,8 @@
  * vue server renderer
  */
 
+var ejs = require('ejs');
+
 module.exports = (app) => {
     process.env.VUE_ENV = 'server';
     const path = require('path');
@@ -15,17 +17,6 @@ module.exports = (app) => {
 
     // https://github.com/vuejs/vue/blob/next/packages/vue-server-renderer/README.md#why-use-bundlerenderer
     const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
-
-    // parse index.html template
-    const html = (() => {
-        const template = fs.readFileSync(resolve('../views/home/index.html'), 'utf-8');
-        const s = template.indexOf('{{ APP }}');
-        const title = 'node-blog';
-        return {
-            head: template.slice(0, s).replace('{{ TITLE }}', title),
-            tail: template.slice(s + '{{ APP }}'.length)
-        }
-    })()
 
     function createRenderer(bundle) {
         //开启服务器端渲染缓存
@@ -62,34 +53,43 @@ module.exports = (app) => {
             return res.end('waiting for compilation...')
         }
 
-        const context = {
-            url: req.url
-        }
-        const renderStream = renderer.renderToStream(context)
-        let firstChunk = true;
+        res.render('home/index', function (err, html) {
 
-        res.write(html.head) //写入html的头部
+            const s = html.indexOf('{{ APP }}');
+            head = html.slice(0, s);
+            tail = html.slice(s + '{{ APP }}'.length);
 
-        renderStream.on('data', chunk => {
-            if (firstChunk) {
-                // embed initial store state
-                if (context.initialState) {
-                    res.write(
-                        `<script>window.__INITIAL_STATE__=${
-                        serialize(context.initialState, { isJSON: true })
-                        }</script>`
-                    )
-                }
-                firstChunk = false
+            const context = {
+                url: req.url
             }
-            res.write(chunk)
-        })
-        renderStream.on('end', () => {
-            res.end(html.tail) //写入html的尾部
-        })
-        renderStream.on('error', err => {
-            throw err
-        })
+            const renderStream = renderer.renderToStream(context)
+            let firstChunk = true;
+
+            res.write(head) //写入html的头部
+
+            renderStream.on('data', chunk => {
+                if (firstChunk) {
+                    // embed initial store state
+                    if (context.initialState) {
+                        res.write(
+                            `<script>window.__INITIAL_STATE__=${
+                                serialize(context.initialState, {isJSON: true})
+                                }</script>`
+                        )
+                    }
+                    firstChunk = false
+                }
+                res.write(chunk)
+            })
+            renderStream.on('end', () => {
+                res.end(tail) //写入html的尾部
+            })
+            renderStream.on('error', err => {
+                throw err
+            })
+
+        });
+
     }
 
     return initVueServer;

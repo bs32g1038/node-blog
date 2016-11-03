@@ -4,7 +4,7 @@ var Index = require("../dao/index");
 var categoryDao = Index.category;
 var linkDao = Index.link;
 var userDao = Index.user;
-var siteDao = Index.site;
+var optionDao = Index.option;
 
 exports.initData = function(req, res) {
 
@@ -19,7 +19,7 @@ exports.initData = function(req, res) {
             userDao.getByAcount(config.administrator.account, callback)
         },
         site: function(callback) {
-            siteDao.getByKey(config.site.key, callback);
+            optionDao.getByKey(config.site.key, callback);
         }
     }, function(err, data) {
         if (err) {

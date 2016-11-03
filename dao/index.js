@@ -21,7 +21,7 @@ var linkModel = require('../models/link');
 //user模型
 var userModel = require('../models/user');
 //site模型
-var siteModel = require('../models/site');
+var optionModel = require('../models/option');
 //about模型
 var aboutModel = require('../models/about');
 
@@ -39,7 +39,7 @@ var LinkDao = require('./LinkDao');
 //用户操作类
 var UserDao = require('./UserDao');
 //网站操作类
-var SiteDao = require('./SiteDao');
+var OptionDao = require('./OptionDao');
 //关于页面操作类
 var AboutDao = require('./AboutDao');
 
@@ -62,10 +62,11 @@ exports.link = new LinkDao(linkModel);
 
 var userDao = new UserDao(userModel);
 
-userDao.getByAcount(config.administrator.account, function(err, user) {
+userDao.getByAcount(config.administrator.account, function (err, user) {
     if (!user) {
-        return userDao.add(config.administrator, function(err) {
-            if (err) {}
+        return userDao.add(config.administrator, function (err) {
+            if (err) {
+            }
             console.log("init user info success!");
         })
     }
@@ -76,26 +77,26 @@ exports.user = userDao;
 
 /*************************初始化网站数据*******************************/
 
-var siteDao = new SiteDao(siteModel);
+var optionDao = new OptionDao(optionModel);
 
-siteDao.getByKey({ key: config.about.key }, function(err, site) {
-    if (!site) {
-        return siteDao.add(config.site, function(err) {
-            console.log("init site info success!")
+optionDao.getById('options', function (err, option) {
+    if (!option) {
+        return optionDao.add({}, function (err) {
+            console.log("init option info success!")
         })
     }
-    console.log("----------site info already exists,it can be used normally!--------------");
+    console.log("----------site option already exists,it can be used normally!--------------");
 });
 
-exports.site = siteDao;
+exports.option = optionDao;
 
 /*************************初始化关于页面数据*******************************/
 
 var aboutDao = new AboutDao(aboutModel);
 
-aboutDao.getByKey({ key: config.about.key }, function(err, about) {
+aboutDao.getByKey({key: config.about.key}, function (err, about) {
     if (!about) {
-        return aboutDao.add(config.about, function(err) {
+        return aboutDao.add(config.about, function (err) {
             console.log("init about info success!")
         })
     }

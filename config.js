@@ -3,21 +3,21 @@ var config = {
     max_comment_per_day: 100,           //每个访问者一天可以发的评论数
     max_guestbook_per_day: 100,         //每个访问者一天可以发的留言数
     max_open_per_day: 1000,             //每个访问者一天可以打开网站的次数，主要用于防止循环攻击
-    db: 'mongodb://127.0.0.1/test',     
+    db: 'mongodb://127.0.0.1/test',
     session_secret: '_secret', // 务必修改
-    site: {
-        key: 'site-info', //关键词用于检索数据
+    option: {
+        key: 'options',
         name: '个人博客',
+        description: '这是一个个人网站！',                       //网站描述
+        keywords: 'nodejs, node, express, mongoose',         //网站关键词
         logo: '/home/images/logo.jpg',
-        icp: '',
-        url: 'http://127.0.0.1',
-        qr_code: '/home/images/qr-code.png',
-        code_header: '',
-        code_footer: ''
+        icp: '',                                             //备案号
+        domain: 'http://127.0.0.1',
+        header_code: ''
     },
     //用于初始化管理员数据，init data
     administrator: {
-        nick_name: '冷夜流星',           //管理员的昵称
+        nick_name: '冷夜流星',            //管理员的昵称
         account: 'admin',               //不支持动态修改
         password: 'admin',              //不支持动态修改
         email: 'bs32g1038@163.com',

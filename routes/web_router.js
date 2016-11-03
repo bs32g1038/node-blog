@@ -1,5 +1,5 @@
 var express = require('express');
-var site = require('../controllers/site');
+var option = require('../controllers/option');
 var post = require('../controllers/post');
 var comment = require('../controllers/comment');
 var guestbook = require('../controllers/guestbook');
@@ -130,9 +130,9 @@ router.post('/admin/about/edit/:id/do', about.b_about_edit_do);
 
 /**************************网站信息管理**************************/
 
-router.get('/admin/site/edit', site.b_site_edit);
+router.get('/admin/option/edit', option.b_option_edit);
 
-router.post('/admin/site/edit/:id/do', site.b_site_edit_do);
+router.post('/admin/option/edit/:id/do', option.b_option_edit_do);
 
 /**************************图片上传实现**************************/
 

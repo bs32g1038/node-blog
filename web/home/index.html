@@ -3,10 +3,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>{{ TITLE }}</title>
+	<meta name="keywords" content="<%= config.site.keywords %>">
+	<meta name="description" content="<%= config.site.description %>">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	<!-- inject:css -->
 	<!-- endinject -->
+	<%= config.site.header_code %>
+	<title><%= config.site.name %></title>
 </head>
 
 <body>
