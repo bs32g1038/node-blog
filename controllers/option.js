@@ -2,10 +2,10 @@ var validator = require('validator');
 var config = require('../config');
 var Index = require('../dao/index');
 
-var siteDao = Index.site;
+var optionDao = Index.option;
 
 exports.b_site_edit = function(req, res) {
-    siteDao.getByKey(config.site.key, function(err, site) {
+    optionDao.getByKey(config.site.key, function(err, site) {
         res.render('admin/layout', {
             site: site,
             $body: 'site/edit.html'
@@ -35,7 +35,7 @@ exports.b_site_edit_do = function(req, res) {
         });
     }
 
-    siteDao.updateById(id, {
+    optionDao.updateById(id, {
         name,
         logo,
         icp,
