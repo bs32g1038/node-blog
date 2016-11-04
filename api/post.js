@@ -7,6 +7,7 @@ var commentDao = Index.comment;
 var async = require("async");
 var config = require('../config');
 var moment = require('moment');
+var _ = require('lodash');
 
 exports.index = function(req, res) {
 
@@ -32,7 +33,19 @@ exports.index = function(req, res) {
         if (err) {
             return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
         }
-        return res.json({ success: true, data: data });
+        async.map(data.docs, function(doc, callback) {
+            doc = doc.toObject();
+            categoryDao.getNameByAlias(doc.category, function(err, category) {
+                _.extend(doc, { category_name: category.name });
+                return callback(null, doc);
+            });
+        }, function(err, docs) {
+            if (err) {
+                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            }
+            _.extend(data, { docs: docs });
+            return res.json({ success: true, data: data });
+        });
     });
 
 }
@@ -77,13 +90,13 @@ exports.detail = function(req, res) {
                 });
             });
         }
-    }, function(err, results) {
+    }, function(err, data) {
         if (err) {
             return res.json({ success: false, error_msg: '文章数据错误，可能已经丢失！' });
         }
-        let post = results.post.toObject();
-        let category = results.category;
-        let comments = results.comments;
+        let post = data.post.toObject();
+        let category = data.category;
+        let comments = data.comments;
         Object.assign(post, {
             category_name: category.name,
         });
