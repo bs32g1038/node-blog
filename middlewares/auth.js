@@ -7,6 +7,7 @@ exports.authUser = function(req, res, next) {
     if (req.session.user) {
         userDao.getByAcount(req.session.user.account, function(err, user) {
             res.locals.current_user = user;
+            console.log(res.locals.current_user)
             next();
         })
     } else {

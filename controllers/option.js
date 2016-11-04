@@ -5,7 +5,7 @@ var _ = require('lodash');
 var optionDao = Index.option;
 
 exports.b_option_edit = function(req, res) {
-    optionDao.getById(config.option.key, function(err, option) {
+    optionDao.getOption(function(err, option) {
         res.render('admin/layout', {
             option: option,
             $body: 'option/edit.html'
@@ -89,7 +89,7 @@ exports.b_option_edit_do = function(req, res) {
         console.log(err.name + ": " + err.message);
     }
 
-    optionDao.updateById(id, {
+    var option = {
         site_name: site_name,
         site_logo: site_logo,
         site_icp: site_icp,
@@ -103,15 +103,9 @@ exports.b_option_edit_do = function(req, res) {
         list_post_count: list_post_count,
         list_comment_count: list_comment_count,
         list_guestbook_count: list_guestbook_count
-    }, function(err) {
-        _.extend(req.app.locals, {
-            site_name: site_name,
-            site_logo: site_logo,
-            site_icp: site_icp,
-            site_domain: site_domain,
-            site_keywords: site_keywords,
-            site_description: site_description
-        });
+    };
+    optionDao.updateById(id, option, function(err) {
+        _.extend(req.app.locals.option, option);
         console.log(req.app.locals)
         res.redirect('/admin/option/edit');
     });

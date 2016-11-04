@@ -5,16 +5,6 @@ var config = {
     max_open_per_day: 1000,             //每个访问者一天可以打开网站的次数，主要用于防止循环攻击
     db: 'mongodb://127.0.0.1/test',
     session_secret: '_secret', // 务必修改
-    option: {
-        key: 'options',
-        name: '个人博客',
-        description: '这是一个个人网站！',                       //网站描述
-        keywords: 'nodejs, node, express, mongoose',         //网站关键词
-        logo: '/home/images/logo.jpg',
-        icp: '',                                             //备案号
-        domain: 'http://127.0.0.1',
-        header_code: ''
-    },
     //用于初始化管理员数据，init data
     administrator: {
         nick_name: '冷夜流星',            //管理员的昵称

@@ -21,7 +21,7 @@ var linkModel = require('../models/link');
 //user模型
 var userModel = require('../models/user');
 //site模型
-var optionModel = require('../models/option');
+var OptionModel = require('../models/Option');
 //about模型
 var aboutModel = require('../models/about');
 
@@ -62,11 +62,10 @@ exports.link = new LinkDao(linkModel);
 
 var userDao = new UserDao(userModel);
 
-userDao.getByAcount(config.administrator.account, function (err, user) {
+userDao.getByAcount(config.administrator.account, function(err, user) {
     if (!user) {
-        return userDao.add(config.administrator, function (err) {
-            if (err) {
-            }
+        return userDao.add(config.administrator, function(err) {
+            if (err) {}
             console.log("init user info success!");
         })
     }
@@ -77,15 +76,15 @@ exports.user = userDao;
 
 /*************************初始化网站数据*******************************/
 
-var optionDao = new OptionDao(optionModel);
+var optionDao = new OptionDao(OptionModel);
 
-optionDao.getById('options', function (err, option) {
+optionDao.getOption(function(err, option) {
     if (!option) {
-        return optionDao.add({}, function (err) {
-            console.log("init option info success!")
+        return optionDao.add({}, function(err) {
+            console.log("init Option info success!")
         })
     }
-    console.log("----------site option already exists,it can be used normally!--------------");
+    console.log("----------site Option already exists,it can be used normally!--------------");
 });
 
 exports.option = optionDao;
@@ -94,9 +93,9 @@ exports.option = optionDao;
 
 var aboutDao = new AboutDao(aboutModel);
 
-aboutDao.getByKey({key: config.about.key}, function (err, about) {
+aboutDao.getByKey({ key: config.about.key }, function(err, about) {
     if (!about) {
-        return aboutDao.add(config.about, function (err) {
+        return aboutDao.add(config.about, function(err) {
             console.log("init about info success!")
         })
     }

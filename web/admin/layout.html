@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title><%= site_name %>后台</title>
+	<title><%= option.site_name %>后台</title>
 	<!-- inject:css -->
 	<!-- endinject -->
 </head>
@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-				<a class="navbar-brand" href="#"><%= site_name %>后台</a>
+				<a class="navbar-brand" href="#"><%= option.site_name %>后台</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -79,7 +79,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
             	<%- include($body) %>
 				<footer class="main-footer">
-					<strong>Copyright © 2016 <a href="<%= site_domain %>" target="_blank"><%= site_name %>后台</a>.</strong> All rights reserved.
+					<strong>Copyright © 2016 <a href="<%= option.site_domain %>" target="_blank"><%= option.site_name %>后台</a>.</strong> All rights reserved.
 				</footer>
 			</div>
 		</div>

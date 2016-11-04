@@ -11,8 +11,8 @@ var _ = require('lodash');
 
 exports.index = function(req, res) {
 
-    var page = tools.doPage(req.params.page); //处理页码
-    var limit = config.list_post_count; //列表显示数目
+    var page = tools.doPage(req.params.page);       //处理页码
+    var limit = req.app.locals.list_post_count;     //列表显示数目
 
     async.parallel({
         docs: function(callback) {
