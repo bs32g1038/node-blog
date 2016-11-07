@@ -7,7 +7,7 @@
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
         </transition>
-        <PageNav url='/category/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        <PageNav :url="pageNavUrl" :curPage="curPage" :pageCount="pageCount"></PageNav>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -75,6 +75,11 @@
                     }
                 }
                 return [];
+            },
+            pageNavUrl(){
+                var category = this.$route.params.category;
+                var baseUrl = '/category/';
+                return category ?  baseUrl + category + '/' : baseUrl; 
             }
         },
         preFetch: function (store) {

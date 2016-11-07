@@ -730,6 +730,10 @@ ul {
     color: #bbb;
 }
 
+.page-nav .text{
+    font-size: 12px;
+}
+
 .page-nav .action {
     text-align: center;
     font-size: 14px;
@@ -737,7 +741,7 @@ ul {
     cursor: pointer;
     display: inline-block;
     margin: 0 3px 0;
-    width: 10px;
+    width: 18px;
     height: 20px;
 }
 

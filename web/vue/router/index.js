@@ -16,7 +16,11 @@ export default new VueRouter({
             component: require('../views/search.vue')
         },
         {
-            path: "/:page(\\d+)?",
+            path: "/",
+            component: require('../views/index.vue')
+        },
+        {
+            path: "/posts/:page(\\d+)?",
             component: require('../views/index.vue')
         },
         {

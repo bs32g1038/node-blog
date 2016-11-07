@@ -114,7 +114,7 @@ exports.getListByCategory = function (req, res) {
     var page = tools.doPage(req.params.page);
     var category = String(req.params.category);
     var limit = req.app.locals.option.list_post_count; //列表显示数目
-
+    limit = 1;
     async.parallel({
         docs: function (callback) {
             postDao.getListByCategory(category, {page: page, limit: limit}, callback);
@@ -128,14 +128,12 @@ exports.getListByCategory = function (req, res) {
             callback(null, page);
         }
     }, function (err, data) {
-
-        if (data.docs.length <= 0) {
-            return res.json({success: false, error_msg: '该目录下没有文章！'});
-        }
         if (err) {
             return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
         }
-
+        if (data.docs.length <= 0) {
+            return res.json({success: false, error_msg: '该目录下没有文章！'});
+        }
         async.map(data.docs, function (doc, callback) {
             doc = doc.toObject();
             categoryDao.getNameByAlias(doc.category, function (err, category) {
@@ -176,11 +174,11 @@ exports.search = function (req, res) {
             }
         },
         function (err, data) {
-            if (data.docs.length <= 0) {
-                return res.json({success: false, error_msg: '没有该关键词的搜索结果！'});
-            }
             if (err) {
                 return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+            }
+            if (data.docs.length <= 0) {
+                return res.json({success: false, error_msg: '没有该关键词的搜索结果！'});
             }
             async.map(data.docs, function (doc, callback) {
                 doc = doc.toObject();

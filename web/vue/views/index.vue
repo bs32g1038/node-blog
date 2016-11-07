@@ -7,7 +7,7 @@
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
         </transition>
-        <PageNav url='/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        <PageNav url='/posts/' :curPage="curPage" :pageCount="pageCount"></PageNav>
     </div>
 </template>
 <script type="text/ecmascript-6">

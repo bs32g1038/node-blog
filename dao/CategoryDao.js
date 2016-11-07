@@ -73,11 +73,13 @@ class CategoryDao extends BaseDao {
      * @memberOf CategoryDao
      */
     getPostCountByAlias(alias, callback) {
-        this.model.findOne({ alias: alias }, '-_id post_count', function(err, post_count) {
+        this.model.findOne({ alias: alias }, '-_id post_count', function(err, category) {
             if (err) {
                 return callback(err);
             }
-            callback(null, parseInt(post_count, 10) || 0);
+            
+            console.log(category)
+            callback(null, parseInt(category.post_count, 10) || 0);
         });
     }
 
