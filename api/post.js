@@ -198,9 +198,9 @@ exports.search = function (req, res) {
 
 exports.getArchives = function (req, res) {
 
-    var page = tools.doPage(req.query.page);
+    var page = tools.doPage(req.params.page);
     var limit = config.list_archives_count;
-
+    console.log(page)
     async.auto({
         archives: function (callback) {
             postDao.getArchives({page: page, limit: limit}, function (err, archives) {
@@ -237,11 +237,11 @@ exports.getArchives = function (req, res) {
             callback(null, page);
         }
     }, function (err, data) {
-        if (data.archives.length <= 0) {
-            return res.json({success: false, error_msg: '该页并没有数据存在，请重试！'});
-        }
         if (err) {
             return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+        }
+        if (data.archives.length <= 0) {
+            return res.json({success: false, error_msg: '该页并没有数据存在，请重试！'});
         }
         return res.json({success: true, data: data});
     });

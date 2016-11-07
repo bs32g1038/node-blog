@@ -1,5 +1,6 @@
 <template>
     <div>
+        <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
         <Post :post="post"></Post>
         <p class="comment-list-tip">华丽分割线</p>
@@ -8,12 +9,13 @@
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import JSHL from '../lib/code-prettify';
     import Post from '../components/Post.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
     import CommentList from '../components/CommentList.vue'
+    import Spinner from '../components/Spinner.vue'
 
     export default {
         components: {
@@ -21,6 +23,7 @@
             PathNav,
             CommentBox,
             CommentList,
+            Spinner
         },
         data() {
             return {
@@ -40,6 +43,9 @@
         methods: {
             fetchData(store) {
                 return store.dispatch('loadPost', store.state.route.params.id)
+                        .then(() => {
+                            this.loading = false;
+                        });
             }
         },
         computed: {
@@ -48,7 +54,7 @@
             },
             paths() {
                 return [{
-                    url: '/',
+                    url: '/posts',
                     name: '文章列表'
                 }, {
                     url: '',
@@ -59,7 +65,7 @@
                 return this.$store.state.comments
             }
         },
-        preFetch: function(store) {
+        preFetch: function (store) {
             return this.methods.fetchData(store);
         }
     }

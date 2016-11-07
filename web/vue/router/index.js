@@ -5,7 +5,7 @@ export default new VueRouter({
     //if you use history mode, remember to config history-api fallback to index.html on server,nginx or whatever
     //and if you use webpack-dev-server,add a html-loader to parse may be better
     mode: 'history',
-    scrollBehavior: () => ({y: 180}),
+    scrollBehavior: () => ({y: 0}),
     routes: [
         {
             path: "/category/:category/:page(\\d+)?",

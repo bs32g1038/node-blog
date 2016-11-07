@@ -1129,6 +1129,7 @@ blockquote {
     margin-left: 5px;
     padding-bottom: 30px;
     box-sizing: border-box;
+    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .archive-inner {

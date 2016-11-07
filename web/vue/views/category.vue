@@ -28,7 +28,7 @@
         data() {
             return {
                 loading: false,
-                transition: 'slide-left',
+                transition: 'slide-left'
             }
         },
         beforeMount() {
