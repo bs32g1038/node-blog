@@ -27,7 +27,8 @@
         },
         data() {
             return {
-                comment_nums: []
+                comment_nums: [],
+                loading: false
             }
         },
         watch: {
@@ -42,6 +43,7 @@
         },
         methods: {
             fetchData(store) {
+                this.loading = true;
                 return store.dispatch('loadPost', store.state.route.params.id)
                         .then(() => {
                             this.loading = false;
