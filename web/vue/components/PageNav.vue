@@ -53,7 +53,7 @@
                  return this.curPage >= this.groups + 1;
              },
              showLast(){
-                 return (this.curPage +  this.groups) <= this.pageCount;
+                 return (this.curPage +  this.groups) < this.pageCount;
              }
         }
 

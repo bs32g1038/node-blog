@@ -11,7 +11,7 @@ var _ = require('lodash');
 
 exports.index = function (req, res) {
 
-    var limit = req.app.locals.option.list_post_count;                     //列表显示数目
+    var limit = config.list_post_count;                     //列表显示数目
     var page = tools.doPage(req.params.page);               //处理页码
 
     async.parallel({
@@ -113,8 +113,8 @@ exports.getListByCategory = function (req, res) {
 
     var page = tools.doPage(req.params.page);
     var category = String(req.params.category);
-    var limit = req.app.locals.option.list_post_count; //列表显示数目
-    limit = 1;
+    var limit = config.list_post_count; //列表显示数目
+
     async.parallel({
         docs: function (callback) {
             postDao.getListByCategory(category, {page: page, limit: limit}, callback);
@@ -157,7 +157,7 @@ exports.getListByCategory = function (req, res) {
 exports.search = function (req, res) {
 
     var key = req.query.key;
-    var limit = req.app.locals.option.list_post_count; //列表显示数目
+    var limit = config.list_post_count; //列表显示数目
     var page = tools.doPage(req.query.page);
 
     async.parallel({
@@ -199,7 +199,7 @@ exports.search = function (req, res) {
 exports.getArchives = function (req, res) {
 
     var page = tools.doPage(req.query.page);
-    var limit = 30;
+    var limit = config.list_archives_count;
 
     async.auto({
         archives: function (callback) {

@@ -8,7 +8,7 @@ var _ = require('lodash');
 
 exports.index = function (req, res) {
 
-    var limit = req.app.locals.option.list_guestbook_count;             //列表显示数目
+    var limit = config.list_guestbook_count;             //列表显示数目
     var page = tools.doPage(req.params.page);
 
     async.auto({
