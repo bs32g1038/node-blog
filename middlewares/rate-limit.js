@@ -1,4 +1,6 @@
 var cache = require('../common/redis');
+var _ = require('lodash');
+
 
 /**
  * 限制访问速度，默认通过ip记录

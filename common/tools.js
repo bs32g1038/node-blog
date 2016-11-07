@@ -63,12 +63,8 @@ exports.getClientIP = function (req) {
     return ipAddress;
 }
 
-exports.getPageCount = function (count) {
-    return Math.ceil(count / config.page_num);
-}
-
-exports.getPage = function (page) {
-    return (parseInt(page, 10) || 1) > 0 ? page : 1;
+exports.getOptionByAppLocals = function (req) {
+    return req.app.locals.option;
 }
 
 //处理路径提交的页码

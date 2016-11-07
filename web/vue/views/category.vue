@@ -7,14 +7,16 @@
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
         </transition>
-        <PageNav url='/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        <PageNav url='/category/' :curPage="curPage" :pageCount="pageCount"></PageNav>
     </div>
 </template>
 <script type="text/ecmascript-6">
+
     import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
     import Spinner from '../components/Spinner.vue'
+
     export default {
 
         components: {
@@ -27,7 +29,6 @@
             return {
                 loading: false,
                 transition: 'slide-left',
-                paths: [{url: '', name: '文章列表'}]
             }
         },
         beforeMount() {
@@ -41,8 +42,10 @@
         methods: {
             fetchData(store, to = 1, from = -1) {
                 this.loading = true;
+                var category = store.state.route.params.category;
                 var page = store.state.route.params.page;
                 return store.dispatch('loadPostList', {
+                    category: category,
                     page: page
                 }).then(() => {
                     this.transition = to > from ? 'slide-left' : 'slide-right'
@@ -59,6 +62,19 @@
             },
             pageCount() {
                 return this.$store.state.pageCount;
+            },
+            paths() {
+                var category = this.$route.params.category;
+                var cats = this.$store.state.cats;
+                for (var i = 0; i < cats.length; i++) {
+                    if (cats[i].alias == category) {
+                        return [
+                            {url: '', name: '分类'},
+                            {url: '', name: cats[i].name}
+                        ];
+                    }
+                }
+                return [];
             }
         },
         preFetch: function (store) {

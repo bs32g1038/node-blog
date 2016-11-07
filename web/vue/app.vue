@@ -39,9 +39,9 @@
             </nav>
         </header>
         <div class="main">
-            <transition name="fade" mode="out-in" >
+            <transition name="fade" mode="out-in">
                 <ErrorMessage v-if="!success"></ErrorMessage>
-                <router-view class="view" v-else></router-view>
+                <router-view v-else></router-view>
             </transition>
         </div>
         <footer class="footer clearfix">
@@ -61,7 +61,7 @@
                     <div class="title"><i class="fa fa-user fa-fw"></i>个人信息</div>
                     <ul class="items">
                         <li class="item">
-                             <i class="fa fa-pencil fa-fw"></i>网名：{{ user.nick_name }}
+                            <i class="fa fa-pencil fa-fw"></i>网名：{{ user.nick_name }}
                         </li>
                         <li class="item">
                             <i class="fa fa-map-marker fa-fw"></i>&nbsp;{{ user.location }}
@@ -113,7 +113,7 @@
             }
         },
         watch: {
-            '$route': function() {
+            '$route': function () {
                 return this.$store.dispatch('closeErrorMsg');
             }
         },

@@ -51,9 +51,7 @@ app.use(session({
     secret: config.session_secret,
 }));
 
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 initSite(app);          //初始化静态配置数据
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><%= site_name %>后台登陆</title>
+    <title><%= option.site_name %>后台登陆</title>
     <style type="text/css">
         body {
             background-color: #eee;
@@ -134,7 +134,7 @@
 <body>
 <div class="content">
     <form action='/admin/login/do' method="post" class="login-form">
-        <p class="login-title"><%= site_name %>后台登陆</p>
+        <p class="login-title"><%= option.site_name %>后台登陆</p>
         <div class="username">
             <input type="text" name="account" placeholder="enter your account" autocomplete="on"/>
             <span class="user-icon icon">u</span>

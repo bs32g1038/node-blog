@@ -11,7 +11,6 @@
             <p><span class="text-blue">Reply：</span>{{ item.reply_content }}</p>
         </div>
     </li>
-
 </template>
 
 

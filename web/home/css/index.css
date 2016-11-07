@@ -245,7 +245,6 @@ textarea {
     color: #888;
 }
 
-
 /***********************基础初始化*****************************/
 
 body {
@@ -289,7 +288,6 @@ ul {
     margin: 0;
     list-style: none;
 }
-
 
 /*清除浮动*/
 
@@ -360,7 +358,6 @@ ul {
     color: #7594b3;
 }
 
-
 /******************上面定义通用**************************/
 
 .container {
@@ -388,7 +385,6 @@ ul {
     clear: both;
 }
 
-
 /*.actions {
     display: inline-block;
     white-space: nowrap;
@@ -397,7 +393,6 @@ ul {
 .active {
     color: #0088cc;
 }
-
 
 /***********************S头部**********************************/
 
@@ -487,7 +482,6 @@ ul {
     font-size: 13px;
 }
 
-
 /*播放器S*/
 
 .site-music {
@@ -555,14 +549,12 @@ ul {
     -o-animation: 9.5s linear 0s normal none infinite rotate;
 }
 
-
 /*播放器E*/
-
 
 /*************************************S头部S*********************************/
 
-.main {}
-
+.main {
+}
 
 /*************************************S路径导航S*********************************/
 
@@ -581,7 +573,7 @@ ul {
 }
 
 .box-nav .actions,
-.box-nav .actions>.action,
+.box-nav .actions > .action,
 .box-nav .box-tip {
     font-size: 12px;
 }
@@ -599,9 +591,7 @@ ul {
     color: #999
 }
 
-
 /*************************************E路径导航E*********************************/
-
 
 /*文章入口*/
 
@@ -610,6 +600,7 @@ ul {
     -webkit-transition: background-color .3s;
     transition: background-color .3s;
     border-radius: 4px;
+    position: relative;
 }
 
 .entry:hover {
@@ -618,6 +609,10 @@ ul {
 
 .entry-container {
     cursor: pointer;
+}
+
+.entries-box {
+    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .entry-screenshot {
@@ -727,7 +722,6 @@ ul {
     border-radius: 50%;
 }
 
-
 /*页导航*/
 
 .page-nav {
@@ -747,12 +741,9 @@ ul {
     height: 20px;
 }
 
-
 /*页导航*/
 
-
 /*页面底部*/
-
 
 /*返回顶部按钮样式*/
 
@@ -782,7 +773,7 @@ ul {
     float: left
 }
 
-.footer-nav>li {
+.footer-nav > li {
     padding: 8px 16px 8px 0;
     font-size: 14px;
     line-height: 26px;
@@ -800,7 +791,7 @@ ul {
     display: block;
 }
 
-.footer-nav .actions>.action {
+.footer-nav .actions > .action {
     display: inline-block;
     margin-right: 10px;
 }
@@ -826,14 +817,13 @@ ul {
     height: 160px;
 }
 
-
 /*E页面底部*/
-
 
 /*******************S留言****************************/
 
 .guestbook-list {
     border: 1px dashed #ccc;
+    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .guestbook-list .time {
@@ -919,9 +909,7 @@ ul {
     color: #909090;
 }
 
-
 /******************E留言***********************/
-
 
 /*********************************通用评论框编写****************/
 
@@ -974,8 +962,7 @@ ul {
 .comment-wrap button[type="submit"] {
     cursor: pointer;
     border: none;
-    background: #ffd99b;
-    ;
+    background: #ffd99b;;
     padding: 8px;
     font-size: 15px;
     color: #555;
@@ -1007,7 +994,6 @@ ul {
         margin-bottom: 5px;
     }
 }
-
 
 /***评论列表****/
 
@@ -1065,7 +1051,6 @@ ul {
     margin-bottom: 10px;
     border: 1px solid #ccc;
 }
-
 
 /*文章*/
 
@@ -1132,7 +1117,6 @@ blockquote {
     margin-right: 5px;
     color: #787977;
 }
-
 
 /*****************************************S归档*********************************/
 
@@ -1255,9 +1239,7 @@ blockquote {
     top: 5px;
 }
 
-
 /*****************************************E归档*********************************/
-
 
 /*****************S代码高亮*****************/
 
@@ -1334,12 +1316,11 @@ pre .val {
     color: #0086b3
 }
 
-
 /*****************E代码高亮*****************/
 
 .example-enter {
     opacity: 0.01;
-    transition: opacity .5s ease-in;
+    transition: opacity 10s ease;
 }
 
 .example-enter.example-enter-active {
@@ -1348,13 +1329,12 @@ pre .val {
 
 .example-leave {
     opacity: 1;
-    transition: opacity .5s ease-in;
+    transition: opacity 10s ease;
 }
 
 .example-leave.example-leave-active {
     opacity: 0.01;
 }
-
 
 /*****************S模态框 modal*****************/
 
@@ -1409,9 +1389,7 @@ pre .val {
     background-color: #e6e6e6;
 }
 
-
 /*****************E模态框 modal*****************/
-
 
 /*********************S404页面*************************/
 
@@ -1442,7 +1420,6 @@ pre .val {
     color: #0088cc;
 }
 
-
 /*********************E404页面*************************/
 
 .alert {
@@ -1455,79 +1432,105 @@ pre .val {
     border-radius: 4px;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active, .fade-leave-active {
     transition: all .2s ease
 }
 
-.fade-enter,
-.fade-leave-active {
+.fade-enter, .fade-leave-active {
     opacity: 0
 }
 
-
 /********************************响应式************************/
 
-@media screen and (max-width:860px) {
+@media screen and (max-width: 860px) {
     body {
         font-size: 12px;
         line-height: 24px;
     }
+
     pre {
         word-break: break-all;
         word-wrap: break-word;
         white-space: pre-wrap;
         padding-left: 10px;
     }
+
     .jshl-linenum {
         display: none
     }
+
     .container {
         width: 100%;
         padding-left: 20px;
         padding-right: 20px
     }
+
     .header-nav {
         padding-left: 0;
         background-color: #fff;
     }
+
     .header-nav a {
         color: #333;
         font-size: 12px;
     }
+
     .box-nav {
         display: none
     }
+
     .entry {
         position: relative;
     }
-    .entry-screenshot {
-        width: 100%;
-        float: none
-    }
+
     .entry-screenshot .entry-screenshot-img {
-        margin: 0 auto
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
     }
-    .entry-info {
-        float: none;
-        width: 100%;
-        text-align: center
+
+    .entry-screenshot {
+        margin-right: 0
     }
+
     .entry-link {
-        text-align: center
+        font-size: 14px;
     }
+
     .entry .entry-meta {
-        text-align: center;
-        float: none;
+        display: none;
     }
+
+    .entry-info {
+        width: auto;
+        float: none;
+        padding-left: 60px;
+        padding-top: 6px;
+    }
+
+    .tags .tag {
+        margin-right: 2px
+    }
+
+    .tag {
+        padding: 2px;
+    }
+
     .archive-inner {
         margin-left: 0
     }
+
+    .entry {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
     .archive-item .item-title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     /***留言******/
     .archive-item .item-title a,
     .ds-post-main,
@@ -1536,11 +1539,104 @@ pre .val {
     .error .error-message .error-issue {
         font-size: 12px
     }
+
     /************底部******/
     .footer-nav {
         float: none
     }
+
     .footer-side {
         float: none
+    }
+}
+
+/*****************************************进度*/
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+    }
+
+    40% {
+        -webkit-transform: scale(1.0);
+    }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
+.slide-left-enter {
+    opacity: 0;
+    transform: translate(30px);
+}
+
+.slide-left-leave-active {
+    display: none;
+}
+
+.slide-right-leave-active {
+    display: none;
+
+}
+
+.slide-right-enter {
+    opacity: 0;
+    transform: translate(-30px);
+}
+
+
+.spinner {
+    position: fixed;
+    z-index: 999;
+    right: 15px;
+    bottom: 15px;
+    opacity: 0;
+    transition: opacity .15s ease;
+    animation: rotator 1.4s linear infinite;
+    animation-play-state: paused
+}
+
+.spinner.show {
+    opacity: 1;
+    animation-play-state: running
+}
+
+.spinner .path {
+    stroke: #1ab394;
+    stroke-dasharray: 126;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    animation: dash 1.4s ease-in-out infinite
+}
+
+@keyframes rotator {
+    0% {
+        transform: scale(.5) rotate(0deg)
+    }
+    to {
+        transform: scale(.5) rotate(270deg)
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 126
+    }
+    50% {
+        stroke-dashoffset: 63;
+        transform: rotate(135deg)
+    }
+    to {
+        stroke-dashoffset: 126;
+        transform: rotate(450deg)
     }
 }

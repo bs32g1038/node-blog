@@ -9,75 +9,79 @@ var config = require('../config');
 var moment = require('moment');
 var _ = require('lodash');
 
-exports.index = function(req, res) {
+exports.index = function (req, res) {
 
-    var page = tools.doPage(req.params.page);       //处理页码
-    var limit = req.app.locals.list_post_count;     //列表显示数目
+    var limit = req.app.locals.option.list_post_count;                     //列表显示数目
+    var page = tools.doPage(req.params.page);               //处理页码
 
     async.parallel({
-        docs: function(callback) {
-            postDao.getList({ page: page, limit: limit }, callback);
+        docs: function (callback) {
+            var option = {page: page, limit: limit}
+
+            postDao.getList(option, callback);
         },
-        pageCount: function(callback) {
-            postDao.count(function(err, sum) {
+        pageCount: function (callback) {
+            postDao.count(function (err, sum) {
                 callback(err, Math.ceil(sum / limit));
             });
         },
-        curPage: function(callback) {
+        curPage: function (callback) {
             callback(null, page);
         }
-    }, function(err, data) {
-        if (data.docs.length <= 0) {
-            return res.json({ success: false, error_msg: '该页并没有数据存在，请重试！' });
-        }
+    }, function (err, data) {
+
         if (err) {
-            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            console.log(err)
+            return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
         }
-        async.map(data.docs, function(doc, callback) {
+        if (data.docs && data.docs.length <= 0) {
+            return res.json({success: false, error_msg: '该页并没有数据存在，请重试！'});
+        }
+        async.map(data.docs, function (doc, callback) {
             doc = doc.toObject();
-            categoryDao.getNameByAlias(doc.category, function(err, category) {
-                _.extend(doc, { category_name: category.name });
+            categoryDao.getNameByAlias(doc.category, function (err, category) {
+                _.extend(doc, {category_name: category.name});
                 return callback(null, doc);
             });
-        }, function(err, docs) {
+        }, function (err, docs) {
             if (err) {
-                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+                return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
             }
-            _.extend(data, { docs: docs });
-            return res.json({ success: true, data: data });
+            _.extend(data, {docs: docs});
+            return res.json({success: true, data: data});
         });
     });
 
 }
 
 
-exports.detail = function(req, res) {
+exports.detail = function (req, res) {
 
     var postId = String(req.params.id);
 
     if (!validator.isMongoId(postId)) {
         res.status(400);
-        return res.json({ success: false, error_msg: '此文章不存在或已被删除。' });
+        return res.json({success: false, error_msg: '此文章不存在或已被删除。'});
     }
 
     async.auto({
-        post: function(callback) {
+        post: function (callback) {
             postDao.getByIdAndUpdateVisitCount(postId, callback); //由于重构会导致浏览次数每次多增加1
         },
-        category: ['post', function(results, callback) {
+        category: ['post', function (results, callback) {
             if (!results.post) {
                 res.status(404);
-                return res.send({ success: false, error_msg: '此文章不存在或已被删除。' });
+                return res.send({success: false, error_msg: '此文章不存在或已被删除。'});
             }
             var post = results.post;
-            categoryDao.getNameByAlias(post.category, function(err, category) {
+            categoryDao.getNameByAlias(post.category, function (err, category) {
                 callback(err, category);
             });
         }],
-        comments: function(callback) {
-            commentDao.getListLikePostId(postId, true, function(err, comments) {
-                async.map(comments, function(cmt, callback) {
-                    commentDao.getById(cmt.reply_id, function(err, result) {
+        comments: function (callback) {
+            commentDao.getListLikePostId(postId, true, function (err, comments) {
+                async.map(comments, function (cmt, callback) {
+                    commentDao.getById(cmt.reply_id, function (err, result) {
                         if (result) {
                             cmt.reply = result;
                         } else {
@@ -85,14 +89,14 @@ exports.detail = function(req, res) {
                         }
                         return callback(null, cmt);
                     });
-                }, function(err, results) {
+                }, function (err, results) {
                     callback(err, results);
                 });
             });
         }
-    }, function(err, data) {
+    }, function (err, data) {
         if (err) {
-            return res.json({ success: false, error_msg: '文章数据错误，可能已经丢失！' });
+            return res.json({success: false, error_msg: '文章数据错误，可能已经丢失！'});
         }
         let post = data.post.toObject();
         let category = data.category;
@@ -100,89 +104,113 @@ exports.detail = function(req, res) {
         Object.assign(post, {
             category_name: category.name,
         });
-        res.json({ success: true, data: { post: post, comments: comments } });
+        res.json({success: true, data: {post: post, comments: comments}});
     });
 }
 
 
-exports.getListByCategory = function(req, res) {
+exports.getListByCategory = function (req, res) {
 
     var page = tools.doPage(req.params.page);
     var category = String(req.params.category);
-    var limit = config.list_post_count; //列表显示数目
+    var limit = req.app.locals.option.list_post_count; //列表显示数目
 
     async.parallel({
-        docs: function(callback) {
-            postDao.getListByCategory(category, { page: page, limit: limit }, callback);
+        docs: function (callback) {
+            postDao.getListByCategory(category, {page: page, limit: limit}, callback);
         },
-        pageCount: function(callback) {
-            categoryDao.getPostCountByAlias(category, function(err, sum) {
+        pageCount: function (callback) {
+            categoryDao.getPostCountByAlias(category, function (err, sum) {
                 callback(err, Math.ceil(sum / limit));
             });
         },
-        curPage: function(callback) {
+        curPage: function (callback) {
             callback(null, page);
         }
-    }, function(err, data) {
+    }, function (err, data) {
 
-        console.log(data)
         if (data.docs.length <= 0) {
-            return res.json({ success: false, error_msg: '该目录下没有文章！' });
+            return res.json({success: false, error_msg: '该目录下没有文章！'});
         }
         if (err) {
-            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
         }
 
-        res.json({ success: true, data: data });
+        async.map(data.docs, function (doc, callback) {
+            doc = doc.toObject();
+            categoryDao.getNameByAlias(doc.category, function (err, category) {
+                _.extend(doc, {category_name: category.name});
+                return callback(null, doc);
+            });
+        }, function (err, docs) {
+            if (err) {
+                return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+            }
+            _.extend(data, {docs: docs});
+            return res.json({success: true, data: data});
+        });
+
     });
 }
 
 
 /*****************************文章搜索*****************************************/
 
-exports.search = function(req, res) {
+exports.search = function (req, res) {
 
     var key = req.query.key;
-    var limit = config.list_post_count; //列表显示数目
+    var limit = req.app.locals.option.list_post_count; //列表显示数目
     var page = tools.doPage(req.query.page);
 
     async.parallel({
-            docs: function(callback) {
-                postDao.getSearchResult(key, { page: page, limit: limit }, callback);
+            docs: function (callback) {
+                postDao.getSearchResult(key, {page: page, limit: limit}, callback);
             },
-            pageCount: function(callback) {
-                postDao.getCountByLikeKey(key, function(err, sum) {
+            pageCount: function (callback) {
+                postDao.getCountByLikeKey(key, function (err, sum) {
                     callback(err, Math.ceil(sum / limit));
                 });
             },
-            curPage: function(callback) {
+            curPage: function (callback) {
                 callback(null, page);
             }
         },
-        function(err, data) {
+        function (err, data) {
             if (data.docs.length <= 0) {
-                return res.json({ success: false, error_msg: '没有该关键词的搜索结果！' });
+                return res.json({success: false, error_msg: '没有该关键词的搜索结果！'});
             }
             if (err) {
-                return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+                return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
             }
-            res.json({ success: true, data: data });
+            async.map(data.docs, function (doc, callback) {
+                doc = doc.toObject();
+                categoryDao.getNameByAlias(doc.category, function (err, category) {
+                    _.extend(doc, {category_name: category.name});
+                    return callback(null, doc);
+                });
+            }, function (err, docs) {
+                if (err) {
+                    return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
+                }
+                _.extend(data, {docs: docs});
+                return res.json({success: true, data: data});
+            });
         });
 }
 
-exports.getArchives = function(req, res) {
+exports.getArchives = function (req, res) {
 
     var page = tools.doPage(req.query.page);
     var limit = 30;
 
     async.auto({
-        archives: function(callback) {
-            postDao.getArchives({ page: page, limit: limit }, function(err, archives) {
+        archives: function (callback) {
+            postDao.getArchives({page: page, limit: limit}, function (err, archives) {
                 var results = [];
                 if (archives) {
                     var len = archives.length;
                     var curYear = moment(archives[0].create_at).year();
-                    var t = { year: curYear, posts: [] };
+                    var t = {year: curYear, posts: []};
                     for (var i = 0; i < len; i++) {
                         if (curYear <= moment(archives[i].create_at).year()) {
                             t.posts.push(archives[i]);
@@ -190,7 +218,7 @@ exports.getArchives = function(req, res) {
                             results.push(t);
                             i--;
                             curYear--;
-                            t = { year: curYear, posts: [] };
+                            t = {year: curYear, posts: []};
                         }
                     }
                     if (t.posts) {
@@ -200,24 +228,24 @@ exports.getArchives = function(req, res) {
                 callback(err, results);
             })
         },
-        count: function(callback) {
+        count: function (callback) {
             postDao.count(callback);
         },
-        pageCount: ['count', function(data, callback) {
+        pageCount: ['count', function (data, callback) {
             let count = parseInt(data.count) || 0;
             callback(null, Math.ceil(count / limit));
         }],
-        curPage: function(callback) {
+        curPage: function (callback) {
             callback(null, page);
         }
-    }, function(err, data) {
+    }, function (err, data) {
         if (data.archives.length <= 0) {
-            return res.json({ success: false, error_msg: '该页并没有数据存在，请重试！' });
+            return res.json({success: false, error_msg: '该页并没有数据存在，请重试！'});
         }
         if (err) {
-            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
         }
-        return res.json({ success: true, data: data });
+        return res.json({success: true, data: data});
     });
 
 }

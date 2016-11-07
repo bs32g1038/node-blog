@@ -26,7 +26,8 @@ export default new Vuex.Store({
         success: true,
         error_msg: '',
         about: {},
-        err_count: 0
+        err_count: 0,
+        load_list: true
     },
     actions: {
         loadPost({ commit, dispatch }, id) {
@@ -98,7 +99,6 @@ export default new Vuex.Store({
                 state.user = data.user;
                 state.links = data.links;
                 state.site = data.site;
-                console.log(data.site)
                 state.init = true;
             }
             state.success = success;
@@ -124,6 +124,7 @@ export default new Vuex.Store({
             }
             state.success = true;
             state.error_msg = error_msg;
+            state.load_list = false
         },
         set_about(state, { success, error_msg, data }) {
             if (success) {

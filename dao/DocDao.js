@@ -16,6 +16,7 @@ class DocDao extends BaseDao {
             limit = options.limit,
             order = options.order || -1;
 
+
         this.model.find({ is_deleted: false })
             .sort({ create_at: order })
             .skip((page - 1) * limit)
