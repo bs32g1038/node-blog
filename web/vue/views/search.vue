@@ -7,7 +7,7 @@
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
         </transition>
-        <PageNav url='/search/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        <PageNav :url='pageNavUrl' :curPage="curPage" :pageCount="pageCount"></PageNav>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -28,6 +28,8 @@
             return {
                 loading: false,
                 transition: 'slide-left',
+                paths: [{url: '', name: '搜索结果'}],
+                pageNavUrl : ''
             }
         },
         beforeMount() {
@@ -42,9 +44,14 @@
             fetchData(store, to = 1, from = -1) {
                 this.loading = true;
                 var key = store.state.route.query.key;
+                var page = store.state.route.query.page;                
                 return store.dispatch('loadSearchList', {
-                    key: key
+                    key: key,
+                    page: page
                 }).then(() => {
+                    page = page || 1;
+                    console.log(page)
+                    this.pageNavUrl = '/search?key=' + key + '&page=';
                     this.transition = to > from ? 'slide-left' : 'slide-right'
                     this.loading = false;
                 });
@@ -59,9 +66,6 @@
             },
             pageCount() {
                 return this.$store.state.pageCount;
-            },
-            paths() {
-                return [{url: '', name: '搜索结果'}];
             }
         },
         preFetch: function (store) {

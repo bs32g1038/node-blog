@@ -53,6 +53,7 @@ module.exports = (app) => {
             return res.end('waiting for compilation...')
         }
 
+        // parse index.html template
         res.render('home/index', function (err, html) {
             if(err){
                 console.log(err)

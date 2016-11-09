@@ -1,7 +1,7 @@
 <template>
     <div>
         <Spinner :show="loading"></Spinner>
-        <PathNav :paths="[{url:'',name:'留言板'}]"></PathNav>
+        <PathNav :paths="paths"></PathNav>
         <transition :name="transition">
             <ul class="guestbook-list" v-if="guestbooks.length > 0" :key="$route.fullPath">
                 <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
@@ -37,22 +37,24 @@
             return {
                 loading: false,
                 transition: 'slide-left',
+                paths: [{url:'',name:'留言板'}]
             }
         },
         watch: {
-            '$route': function () {
-                this.fetchData(this.$store);
+            '$route': function (newRoute, oldRoute) {
+                this.fetchData(this.$store, newRoute.params.page, oldRoute.params.page)
             }
         },
         beforeMount() {
             this.fetchData(this.$store)
         },
         methods: {
-            fetchData(store) {
+            fetchData(store, to = 1, from = -1) {
                 this.loading = true;
                 store.dispatch('loadGuestbookList', {
                     page: store.state.route.params.page
                 }).then(() => {
+                    this.transition = to > from ? 'slide-left' : 'slide-right'
                     this.loading = false;
                 });
             }

@@ -10,7 +10,7 @@
         <PageNav :url="pageNavUrl" :curPage="curPage" :pageCount="pageCount"></PageNav>
     </div>
 </template>
-<script type="text/ecmascript-6">
+<script>
 
     import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'

@@ -60,28 +60,19 @@ class DocDao extends BaseDao {
 
     getSearchResult(key, options, callback) {
 
-        var page = options.page || 1,
-            page_size = options.page_size || 10,
+        var page = options.page,
+            limit = options.limit,
             order = options.order || -1;
 
         this.model.find({ title: { $regex: key }, is_deleted: false })
             .sort({ create_at: order })
-            .skip((page - 1) * page_size)
-            .limit(page_size)
+            .skip((page - 1) * limit)
+            .limit(limit)
             .exec(callback);
     }
 
     getCountByLikeKey(key, callback) {
-
-        this.model.count({ title: { $regex: key }, is_deleted: false }, function(err, sumCount) {
-            if (err) {
-                return callback(err);
-            }
-            return callback(null, {
-                sum_count: sumCount,
-                page_count: Math.ceil(sumCount / config.page_num)
-            });
-        });
+        this.model.count({ title: { $regex: key }, is_deleted: false }, callback);
     }
 
     getArchives(options, callback) {

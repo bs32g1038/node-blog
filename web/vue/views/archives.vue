@@ -15,7 +15,7 @@
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     import PathNav from '../components/PathNav.vue'
     import Item from '../components/ArchivesItem.vue'
     import PageNav from '../components/PageNav.vue'
@@ -31,24 +31,26 @@
         data() {
             return {
                 loading: false,
-                transition: 'slide-left'
+                transition: 'slide-left',
+                paths: [{url: '', name: '归档'}]
             }
         },
         beforeMount() {
             this.fetchData(this.$store)
         },
         watch: {
-            '$route': function () {
-                this.fetchData(this.$store);
+            '$route': function (newRoute, oldRoute) {
+                this.fetchData(this.$store, newRoute.params.page, oldRoute.params.page)
             }
         },
         methods: {
-            fetchData(store) {
+            fetchData(store, to = 1, from = -1) {
                 this.loading = true;
                 var page = store.state.route.params.page;
                 return store.dispatch('loadArchives', {
                     page: page
                 }).then(() => {
+                    this.transition = to > from ? 'slide-left' : 'slide-right';
                     this.loading = false;
                 })
             }
@@ -65,10 +67,6 @@
             },
             pageCount() {
                 return this.$store.state.pageCount;
-            },
-            paths() {
-                var paths = [{url: '', name: '归档'}];
-                return paths;
             }
         },
         preFetch: function (store) {
