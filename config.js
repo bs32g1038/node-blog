@@ -2,6 +2,8 @@ var config = {
     // debug 为 true 时，用于本地调试
     debug: true,
 
+    server_port: 80,
+    
     list_post_count: 10,                //文章列表显示数量
     list_guestbook_count: 10,           //留言列表显示数量
     list_archives_count: 30,            //文章归档列表显示数量

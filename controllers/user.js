@@ -48,13 +48,13 @@ exports.b_login_do = function(req, res) {
         res.redirect('/admin/doc/list');
         
     } else {
-        res.redirect('/admin/user/login');
+        res.redirect('/admin/login');
     }
 }
 
 exports.b_login_out = function(req, res) {
     req.session.user = null;
-    res.redirect('/admin/user/login');
+    res.redirect('/admin/login');
 }
 
 exports.b_user_edit = function(req, res) {
