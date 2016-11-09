@@ -21,7 +21,7 @@ var linkModel = require('../models/link');
 //user模型
 var userModel = require('../models/user');
 //site模型
-var OptionModel = require('../models/Option');
+var OptionModel = require('../models/option');
 //about模型
 var aboutModel = require('../models/about');
 
@@ -79,6 +79,7 @@ exports.user = userDao;
 var optionDao = new OptionDao(OptionModel);
 
 optionDao.getOption(function(err, option) {
+
     if (!option) {
         return optionDao.add({}, function(err) {
             console.log("init Option info success!")

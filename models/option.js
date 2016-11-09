@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OptionSchema = new Schema({
-    _id: {type: String, default: 'options'},
+    _id: {type: String, default: 'site_option'},
     site_name: {type: String, default: '个人博客'},                                // 网站名称
     site_description: {type: String, default: '这是一个个人网站！'},                 // 网站描述
     site_keywords: {type: String, default: 'nodejs, node, express, mongoose'},    // 网站关键词
