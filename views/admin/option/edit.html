@@ -11,45 +11,45 @@
     <% } %>
     <form class="form-horizontal" action="/admin/option/edit/<%= option._id %>/do" method="post">
         <div class="form-group">
-            <label class="control-label col-sm-3">网站名称</label>
+            <label class="control-label col-sm-2">网站名称</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control input-sm" name="site_name" value="<%= option.site_name %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">网站logo</label>
+            <label class="control-label col-sm-2">网站logo</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control input-sm" name="site_logo" value="<%= option.site_logo %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">网站链接</label>
+            <label class="control-label col-sm-2">网站链接</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control input-sm" name="site_domain" value="<%= option.site_domain %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">备案号icp</label>
+            <label class="control-label col-sm-2">备案号icp</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control input-sm"  name="site_icp" value="<%= option.site_icp %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">网站关键词</label>
+            <label class="control-label col-sm-2">网站关键词</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control input-sm" name="site_keywords" value="<%= option.site_keywords %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">网站描述</label>
+            <label class="control-label col-sm-2">网站描述</label>
             <div class="col-sm-6">
                 <textarea class="form-control input-sm"  name="site_description" cols="30" rows="6"><%= option.site_description %></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">代码顶部</label>
-            <div class="col-sm-6">
-                <textarea class="form-control input-sm"  name="site_header_code" cols="30" rows="6"><%= option.site_header_code %></textarea>
+            <label class="control-label col-sm-2">代码顶部</label>
+            <div class="col-sm-8">
+                <textarea class="form-control input-sm"  name="site_header_code" cols="30" rows="8"><%= option.site_header_code %></textarea>
             </div>
         </div>
         <input type='hidden' name='_csrf' value='<%= csrf %>'/>
