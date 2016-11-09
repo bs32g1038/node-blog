@@ -1,15 +1,15 @@
 var config = {
+    // debug 为 true 时，用于本地调试
+    debug: true,
+
     list_post_count: 10,                //文章列表显示数量
     list_guestbook_count: 10,           //留言列表显示数量
-    list_archives_count: 5,            //文章归档列表显示数量
+    list_archives_count: 30,            //文章归档列表显示数量
     max_comment_per_day: 100,           //每个访问者一天可以发的评论数
     max_guestbook_per_day: 100,         //每个访问者一天可以发的留言数
     max_open_per_day: 1000,             //每个访问者一天可以打开网站的次数，主要用于防止循环攻击
     db: 'mongodb://127.0.0.1/test',
     session_secret: '_secret', // 务必修改
-    cache_key: {
-        site_option: 'site:option'
-    },
     //用于初始化管理员数据，init data
     administrator: {
         nick_name: '冷夜流星',            //管理员的昵称

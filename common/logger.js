@@ -1,4 +1,7 @@
 var log4js = require('log4js');
+var config = require('../config');
+
+var env = process.env.NODE_ENV || "development"
 
 log4js.configure({
     appenders: [
@@ -8,6 +11,7 @@ log4js.configure({
 });
 
 var logger = log4js.getLogger('cheese');
-logger.setLevel('ERROR')
+
+logger.setLevel(config.debug && env !== 'production' ? 'DEBUG' : 'ERROR')
 
 module.exports = logger;

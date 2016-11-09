@@ -12,7 +12,7 @@ export default new VueRouter({
             component: require('../views/category.vue')
         },
         {
-            path: "/search/:page(\\d+)?",
+            path: "/search",
             component: require('../views/search.vue')
         },
         {

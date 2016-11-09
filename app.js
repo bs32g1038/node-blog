@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var apiRouter = require('./routes/api_router'); //api接口路由
 var webRouter = require('./routes/web_router'); //web路由
-var vueServerRouter = require('./routes/vue_server_router'); //vue服务器渲染路由
 var csurf = require('csurf');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
@@ -53,7 +52,7 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-initSite(app);          //初始化静态配置数据
+initSite(app);          //初始化静态配置数据,包括数据库连接
 
 app.use(auth.authUser);         //校验用户
 app.use(errorPageMiddleware.errorPage);
@@ -63,13 +62,11 @@ app.use(errorPageMiddleware.errorPage);
 //     expired: 24 * 60 * 60
 // }));
 app.use('/api', apiRouter);
-app.use(csurf()); //防止跨站请求伪造
+app.use(csurf());                                           //防止跨站请求伪造
 app.use(function (req, res, next) {
     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
     next();
 });
-app.use('/', webRouter); //自定义
-
-app.get('*', vueServerRouter(app)); //找不到的页面直接在前端显示，暂时这样处理，没完善
+app.use('/', webRouter);
 
 module.exports = app;

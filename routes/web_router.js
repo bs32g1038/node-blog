@@ -13,6 +13,29 @@ var uploadSingle = require('../common/store_file');
 
 var router = express.Router();
 
+var vueServerRender = require('./vue_server_render')(router); //vue服务器渲染路由
+
+/***************************前台请求处理***********************/
+
+/**
+ * 备份前端vue框架路由，更细化处理路由路径
+ */
+
+router.get('/', vueServerRender);
+
+router.get('/posts/:page(\\d+)?', vueServerRender);
+
+router.get('/post/:id', vueServerRender);
+
+router.get('/category/:category/:page(\\d+)?', vueServerRender);
+
+router.get('/archives/:page(\\d+)?', vueServerRender);
+
+router.get('/guestbook/:page(\\d+)?', vueServerRender);
+
+router.get('/about', vueServerRender);
+
+router.get('/search', vueServerRender);
 
 /***************************后台请求处理***********************/
 
