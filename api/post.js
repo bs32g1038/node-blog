@@ -159,8 +159,6 @@ exports.search = function (req, res) {
     var key = req.query.key;
     var limit = config.list_post_count; //列表显示数目
     var page = tools.doPage(req.query.page);
-    limit = 2;
-    console.log("sssssss")
     async.parallel({
             docs: function (callback) {
                 postDao.getSearchResult(key, {page: page, limit: limit}, callback);
@@ -201,7 +199,6 @@ exports.getArchives = function (req, res) {
 
     var page = tools.doPage(req.params.page);
     var limit = config.list_archives_count;
-    console.log(page)
     async.auto({
         archives: function (callback) {
             postDao.getArchives({page: page, limit: limit}, function (err, archives) {
