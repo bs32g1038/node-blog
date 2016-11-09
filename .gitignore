@@ -8,3 +8,4 @@ public
 views/admin/layout.html
 views/admin/js.html
 views/home/index.html
+production-config
