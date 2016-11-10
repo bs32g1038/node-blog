@@ -44,6 +44,20 @@ gulp.task('del-public', function (cb) {
 
 //- 复制文件到public下
 gulp.task('copy-public', function () {
+
+    var sources = gulp.src([
+        './web/admin/js/**',
+        '!./web/admin/js/*.js'
+    ], {
+        base: './web'
+    });
+
+    if (process.env.INIT_ENV == 'production') {
+        sources.pipe(plugins.uglify())
+    }
+
+    sources.pipe(gulp.dest('./public'));
+
     return gulp.src([
             './web/libs/bootstrap/fonts/**',
             './web/libs/editor/fonts/**',
@@ -51,7 +65,6 @@ gulp.task('copy-public', function () {
             './web/libs/webuploader/Uploader.swf',
             './web/admin/images/**',
             './web/home/images/**',
-            './web/admin/js/**',
         ], {
             base: './web'
         })

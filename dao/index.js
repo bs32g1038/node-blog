@@ -57,50 +57,8 @@ exports.guestbook = new GuestbookDao(guestbookModel);
 
 exports.link = new LinkDao(linkModel);
 
+exports.user =  new UserDao(userModel);
 
-/***********************初始化管理员数据*******************************/
+exports.option = new OptionDao(OptionModel);
 
-var userDao = new UserDao(userModel);
-
-userDao.getByAcount(config.administrator.account, function(err, user) {
-    if (!user) {
-        return userDao.add(config.administrator, function(err) {
-            if (err) {}
-            console.log("init user info success!");
-        })
-    }
-    console.log("----------user info already exists,it can be used normally!----------------");
-});
-
-exports.user = userDao;
-
-/*************************初始化网站数据*******************************/
-
-var optionDao = new OptionDao(OptionModel);
-
-optionDao.getOption(function(err, option) {
-
-    if (!option) {
-        return optionDao.add({}, function(err) {
-            console.log("init Option info success!")
-        })
-    }
-    console.log("----------site Option already exists,it can be used normally!--------------");
-});
-
-exports.option = optionDao;
-
-/*************************初始化关于页面数据*******************************/
-
-var aboutDao = new AboutDao(aboutModel);
-
-aboutDao.getByKey({ key: config.about.key }, function(err, about) {
-    if (!about) {
-        return aboutDao.add(config.about, function(err) {
-            console.log("init about info success!")
-        })
-    }
-    console.log("----------about info already exists,it can be used normally!--------------");
-});
-
-exports.about = aboutDao;
+exports.about = new AboutDao(aboutModel);
