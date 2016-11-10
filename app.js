@@ -45,7 +45,7 @@ app.use(session({
         port: config.redis.port,
         pass: config.redis.password,
     }),
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     secret: config.session_secret,
 }));
