@@ -40,6 +40,17 @@ exports.b_category_add = function(req, res) {
 
 }
 
+exports.b_category_edit_do = function(req, res) {
+
+    var id = req.params.id;
+    var name = validator.trim(req.body.name);
+
+    categoryDao.updateById(id, { name: name }, function(err) {
+        return res.redirect('/admin/category/list');
+    });
+
+}
+
 exports.b_category_del = function(req, res) {
 
     var id = req.params.id;

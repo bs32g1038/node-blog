@@ -4,7 +4,7 @@
     </h1>
 </section>
 <div class="panel">
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+    <button class="btn btn-primary btn-sm" id="add_category">
         <span class="fa fa-plus-square">&nbsp;</span>
         添加分类
     </button>
@@ -39,13 +39,16 @@
                 <td><%= cat.post_count %></td>
                 <th><%= cat.order %></th>
                 <td>
-                    <button class="btn btn-default btn-xs category_del" data-id=<%= cat._id %> title="删除"><i
+                    <button class="btn btn-default btn-xs modify_category" data-id="<%= cat._id %>" title="修改">
+                        <span class="fa fa-edit">&nbsp;</span>修改
+                    </button>
+                    <button class="btn btn-default btn-xs category_del" data-id="<%= cat._id %>" title="删除"><i
                                 class="fa fa-trash-o"></i>&nbsp;删除
                     </button>
-                    <button class="btn btn-default btn-xs category_up" data-id=<%= cat._id %> title="提升目录的位置"><i
+                    <button class="btn btn-default btn-xs category_up" data-id="<%= cat._id %>" title="提升目录的位置"><i
                                 class="fa fa-arrow-up"></i>&nbsp;提升
                     </button>
-                    <button class="btn btn-default btn-xs category_down" data-id=<%= cat._id %> title="降低目录的位置"><i
+                    <button class="btn btn-default btn-xs category_down" data-id="<%= cat._id %>" title="降低目录的位置"><i
                                 class="fa fa-arrow-down"></i>&nbsp;下降
                     </button>
                 </td>
@@ -55,27 +58,27 @@
     </table>
 </div>
 
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modify_dialog" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="form" class="form-horizontal" action="/admin/category/add" method="post">
+            <form id="form" class="form-horizontal" action="" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">添加分类</h4>
+                    <h4 class="modal-title" id="category_modal_title">添加分类</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label col-sm-3">分类名称</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" name="name">
+                            <input type="text" class="form-control input-sm" name="name" id="name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">分类别名</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm" name="alias">
+                            <input type="text" class="form-control input-sm" name="alias" id="alias">
                         </div>
                     </div>
                     <input type='hidden' name='_csrf' value='<%= csrf %>' id="csrf"/>

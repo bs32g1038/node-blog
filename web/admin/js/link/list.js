@@ -11,7 +11,6 @@ $(document).ready(function () {
             }
         });
     };
-
     $('.link_del').on('click', function () {
 
         var id = $(this).data("id");
@@ -27,20 +26,21 @@ $(document).ready(function () {
         });
 
     });
-
     $('#add_link').on('click', function () {
         $('#link_modal_title').text('添加链接');
         $('#form').attr("action", '/admin/link/add');
         $('#name').val('');
         $('#url').val('');
+        $('#modify_dialog').modal();
     });
     $('.modify_link').on('click', function () {
         var link_id = $(this).data("id");
         var tds = $(this).parent().parent().find('td');
-        $('#form').attr("action", '/admin/link/edit/' + link_id + '/do');
+        $('#form').attr("action", '/admin/link/' + link_id + '/edit/do');
         $('#name').val(tds.eq(1).text())
         $('#url').val(tds.eq(2).text())
         $('#link_modal_title').text('编辑链接');
+        $('#modify_dialog').modal();
     });
     $('#selectAll').on('click', function () {
         $("input[name='listItem']").prop("checked", $(this).prop("checked"));

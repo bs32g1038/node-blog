@@ -86,6 +86,8 @@ router.post('/admin/category/del', category.b_category_batch_del);
 
 router.post('/admin/category/add', category.b_category_add);
 
+router.post('/admin/category/:id/edit/do', category.b_category_edit_do);
+
 router.post('/admin/category/:id/up', category.b_category_up);
 
 router.post('/admin/category/:id/down', category.b_category_down);
@@ -133,7 +135,7 @@ router.get('/admin/link/list/page/:page', link.b_get_link_list);
 
 router.post('/admin/link/add', link.b_link_add);
 
-router.post('/admin/link/edit/:id/do', link.b_link_edit_do);
+router.post('/admin/link/:id/edit/do', link.b_link_edit_do);
 
 router.post('/admin/link/:id/del', link.b_link_del);
 

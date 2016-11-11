@@ -4,7 +4,7 @@
     </h1>
 </section>
 <div class="panel">
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modify_dialog" id="add_link">
+    <button class="btn btn-primary btn-sm" id="add_link">
         <span class="fa fa-plus-square">&nbsp;</span>
         添加链接
     </button>
@@ -31,10 +31,10 @@
             <td><%= link.name %></td>
             <td><%= link.url %></td>
             <td>
-                <button class="btn btn-default btn-xs modify_link" data-id=<%= link._id %> data-toggle="modal" data-target="#modify_dialog" title="修改">
+                <button class="btn btn-default btn-xs modify_link" data-id="<%= link._id %>"  title="修改">
                     <span class="fa fa-edit">&nbsp;</span>修改
                 </button>
-                <button class="btn btn-default btn-xs link_del" data-id=<%= link._id %> title="删除">
+                <button class="btn btn-default btn-xs link_del" data-id="<%= link._id %>" title="删除">
                     <i class="fa fa-trash-o"></i>&nbsp;删除
                 </button>
             </td>
@@ -44,7 +44,7 @@
     </table>
 </div>
 
-<div class="modal fade" id="modify_dialog" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modify_dialog" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="form" class="form-horizontal" action="" method="post">
