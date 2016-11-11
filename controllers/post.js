@@ -115,10 +115,11 @@ exports.b_doc_publish_do = function (req, res) {
 
     if (editError) {
         return categoryDao.getAll(function (err, cats) {
-            res.render('admin/doc/publish', {
+            res.render('admin/layout', {
                 doc: doc,
                 cats: cats,
-                editError: editError
+                editError: editError,
+                $body: 'doc/edit.html'
             });
         });
     }
