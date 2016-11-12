@@ -24,6 +24,15 @@ class DocDao extends BaseDao {
             .exec(callback);
     }
 
+    /**
+     * 获取文章标题
+     * 
+     * @param {any} id
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+    
+     */
     getTitleById(id, callback) {
         this.model.findOne({ _id: id }, '-_id title', function(err, post) {
             if (!post) {
@@ -33,6 +42,15 @@ class DocDao extends BaseDao {
         });
     }
 
+    /**
+     * 获取文章列表通过分类进行筛选
+     * 
+     * @param {any} category
+     * @param {any} options
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+     */
     getListByCategory(category, options, callback) {
 
         var page = options.page,
@@ -58,6 +76,16 @@ class DocDao extends BaseDao {
         this.model.update({ _id: id }, { $inc: { comment_count: -1 } }, callback);
     }
 
+    /**
+     * 获取搜索结果
+     * 
+     * @param {any} key
+     * @param {any} options
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+    
+     */
     getSearchResult(key, options, callback) {
 
         var page = options.page,
@@ -71,10 +99,27 @@ class DocDao extends BaseDao {
             .exec(callback);
     }
 
+    /**
+     * 获取文章标题包含key的总数目
+     * 
+     * @param {any} key
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+     */
     getCountByLikeKey(key, callback) {
         this.model.count({ title: { $regex: key }, is_deleted: false }, callback);
     }
-
+    
+    /**
+     * 获取归档用到的数据
+     * 
+     * @param {any} options
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+    
+     */
     getArchives(options, callback) {
 
         var page = options.page,
@@ -88,6 +133,13 @@ class DocDao extends BaseDao {
             .exec(callback);
     }
 
+    /**
+     * 获取文章数量
+     * 
+     * @param {any} callback
+     * 
+     * @memberOf DocDao
+     */
     count(callback) {
         this.model.count({ is_deleted: false }, callback);
     }
