@@ -356,6 +356,7 @@ ul {
 
 .fc-lb {
     color: #7594b3;
+        color: #08c;
 }
 
 /******************上面定义通用**************************/
@@ -1035,10 +1036,6 @@ ul {
     margin-top: 20px;
 }
 
-.comment-list-wrap i {
-    font-style: normal;
-}
-
 .comment-list-inner {
     border-bottom: 1px dashed #ccc;
     border: 1px solid #ccc;
@@ -1046,14 +1043,28 @@ ul {
     margin-bottom: 10px;
 }
 
-.comment-list-inner .author {
-    color: #7594b3;
+.comment-list-inner .reply-author {
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.comment-list-inner .reply-time{
+    font-size: 11px;
+    color: #08c;   
+}
+
+.comment-list-inner .reply-content{
+    padding-left: 10px;
 }
 
 .comment-list-inner .m-quote {
     padding: 5px 20px 5px 20px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    margin-left: 10px;    
+    border-left: 5px solid #ccc;
+    border-right: 5px solid #ccc;
+    background-color: #fcf8e3;
 }
 
 /*文章*/

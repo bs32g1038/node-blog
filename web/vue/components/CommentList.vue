@@ -1,23 +1,17 @@
 <template>
     <ul class="comment-list-wrap">
         <li class="comment-list-inner" v-for="(item, index) in comments" :key="index">
-            <span><i class="fa fa-fw fa-user fc-lb"></i>{{ item.nick_name }}</span>
+            <span class="reply-author"><i class="fa fa-fw fa-user"></i>{{ item.nick_name }}</span>
+            <span class="reply-time ml-10">{{ index + 1 }}楼 • {{ timeAgo(item.create_at,"m-d h:i") }}</span>
             <span class="float-right fs-12">
-                    <i>#{{ index + 1 }}F</i>
-                    <i class="fc-grey-x1 ml05 mr05"> | </i>
-                    <i> {{ timeAgo(item.create_at,"m-d h:i") }} </i>
-                </span>
-            <p>
-                {{ item.content }}
-                <a href="#" class="fc-lb ml-10" @click.prevent="comment_num == index? (comment_num = -1): (comment_num = index)">回复</a>
-            </p>
+                <a href="#" class="fc-lb ml-10 fa fa-reply" @click.prevent="comment_num == index? (comment_num = -1): (comment_num = index)"></a>
+            </span>
             <div class="m-quote" v-if="item.reply">
-                <span><i class="fa fa-fw fa-user fc-lb"></i>{{ item.reply.nick_name }}</span>
-                <span class="ml-10 fs-12"><i>{{ timeAgo(item.reply.create_at,"m-d h:i") }}</i></span>
-                <p>
-                    <span class="reply-content"></span>{{ item.reply.content }}
-                </p>
+                <span class="reply-author"><i class="fa fa-fw fa-user"></i>{{ item.reply.nick_name }}</span>
+                <span class="ml-10 fs-12">{{ timeAgo(item.reply.create_at,"m-d h:i") }}</span>
+                <div class="reply-content">{{ item.reply.content }}</div>
             </div>
+            <div class="reply-content">{{ item.content }}</div>
             <div class="m-replay-write-box" id="m-replay-write-box">
                 <CommentBox url="/api/post/comment/add" v-if="comment_num == index" :post_id="post_id" :reply_id="item._id"></CommentBox>
             </div>
