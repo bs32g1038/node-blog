@@ -93,7 +93,7 @@
             <div class="footer-side">
                 <span> 快速扫描二维码打开网站</span>
                 <div class="qr-code">
-                    <img src="/" alt="">
+                    <img src="/home/images/qr-code.png" :alt="site.site_name">
                 </div>
             </div>
         </footer>
