@@ -74,24 +74,21 @@ exports.detail = function (req, res) {
                 return res.send({success: false, error_msg: '此文章不存在或已被删除。'});
             }
             var post = results.post;
-            categoryDao.getNameByAlias(post.category, function (err, category) {
-                callback(err, category);
-            });
+            categoryDao.getNameByAlias(post.category, callback);
         }],
         comments: function (callback) {
             commentDao.getPassListLikePostId(postId, function (err, comments) {
                 async.map(comments, function (cmt, callback) {
+                    cmt = cmt.toObject();
                     commentDao.getById(cmt.reply_id, function (err, result) {
                         if (result) {
-                            cmt.reply = result;
+                            _.extend(cmt, {reply: result})
                         } else {
-                            cmt.reply = "";
+                            _.extend(cmt, {reply: ''})
                         }
                         return callback(null, cmt);
                     });
-                }, function (err, results) {
-                    callback(err, results);
-                });
+                }, callback);
             });
         }
     }, function (err, data) {
@@ -101,9 +98,7 @@ exports.detail = function (req, res) {
         let post = data.post.toObject();
         let category = data.category;
         let comments = data.comments;
-        Object.assign(post, {
-            category_name: category.name,
-        });
+        _.extend(post, {category_name: category.name});
         res.json({success: true, data: {post: post, comments: comments}});
     });
 }
@@ -150,7 +145,6 @@ exports.getListByCategory = function (req, res) {
 
     });
 }
-
 
 /*****************************文章搜索*****************************************/
 
