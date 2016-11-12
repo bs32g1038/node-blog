@@ -79,7 +79,7 @@ exports.detail = function (req, res) {
             });
         }],
         comments: function (callback) {
-            commentDao.getListLikePostId(postId, true, function (err, comments) {
+            commentDao.getPassListLikePostId(postId, function (err, comments) {
                 async.map(comments, function (cmt, callback) {
                     commentDao.getById(cmt.reply_id, function (err, result) {
                         if (result) {

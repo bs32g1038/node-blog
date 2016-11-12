@@ -8,6 +8,15 @@ var BaseDao = require('./BaseDao');
 
 class CommentDao extends BaseDao {
 
+    /**
+     * 获取评论列表，附带分页，排序，限制条目数
+     * 
+     * @param {any} options
+     * @param {any} callback
+     * 
+     * @memberOf CommentDao
+    
+     */
     getList(options, callback) {
 
         var page = options.page,
@@ -21,6 +30,14 @@ class CommentDao extends BaseDao {
             .exec(callback);
     }
 
+    /**
+     * 获取评论者的昵称
+     * 
+     * @param {any} id
+     * @param {any} callback
+     * 
+     * @memberOf CommentDao
+     */
     getNickNameById(id, callback) {
         this.model.findOne({ _id: id }, '-_id nick_name', function(err, comment) {
             if (!comment) {
@@ -30,12 +47,30 @@ class CommentDao extends BaseDao {
         });
     }
 
-    getListLikePostId(post_id, isPass, callback) {
-        this.model.find({ post_id: post_id, pass: isPass },callback);
+    /**
+     * 获取某个文章id下的所有已审核通过的评论
+     * 
+     * @param {any} post_id
+     * @param {any} isPass
+     * @param {any} callback
+     * 
+     * @memberOf CommentDao
+    
+     */
+    getPassListLikePostId(post_id, callback) {
+        this.model.find({ post_id: post_id, pass: true }, callback);
     }
 
+    /**
+     * 设置评论通过审核
+     * 
+     * @param {String} id            评论id
+     * @param {function} callback    回调函数
+     * 
+     * @memberOf CommentDao
+     */
     updatePassById(id, callback) {
-        this.model.update({ _id: id }, { $set: { pass: true } },callback);
+        this.model.update({ _id: id }, { $set: { pass: true } }, callback);
     }
 }
 
