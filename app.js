@@ -12,7 +12,7 @@ var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./config');
-var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
+// var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
 
 // var RateLimit = require('./middlewares/rate-limit');
 var initSite = require('./common/init_site');
@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 initSite(app);          //初始化静态配置数据,包括数据库连接
 
 app.use(auth.authUser);         //校验用户
-app.use(errorPageMiddleware.errorPage);
+// app.use(errorPageMiddleware.errorPage);
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请联系管理员解除限制，或者在24时后再访问！',
 //     limitCount: config.max_open_per_day,

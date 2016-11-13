@@ -31,7 +31,6 @@ exports.index = function (req, res) {
     }, function (err, data) {
 
         if (err) {
-            console.log(err)
             return res.json({success: false, error_msg: '页面获取数据错误，请重试！'});
         }
         if (data.docs && data.docs.length <= 0) {

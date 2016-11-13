@@ -35,15 +35,13 @@ exports.b_login = function(req, res) {
 
 exports.b_login_do = function(req, res) {
 
-    var user = {
-        account: req.body.account,
-        password: req.body.password
-    }
+    var account = req.body.account;
+    var password = req.body.password;
 
-    if (validator.equals(user.account, config.administrator.account) &&
-        validator.equals(user.password, config.administrator.password)
+    if (validator.equals(account, config.administrator.account) &&
+        validator.equals(password, config.administrator.password)
     ) {
-        req.session.user = user; //记住到session
+        req.session.user = {account: account}; //记住到session
         
         res.redirect('/admin/doc/list');
         

@@ -50,7 +50,6 @@
                     page: page
                 }).then(() => {
                     page = page || 1;
-                    console.log(page)
                     this.pageNavUrl = '/search?key=' + key + '&page=';
                     this.transition = to > from ? 'slide-left' : 'slide-right'
                     this.loading = false;
