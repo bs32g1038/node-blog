@@ -2,31 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>李志成的个人网站</title>
+    <title><%= option.site_name %></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            padding-top: 50px;
+            font: 14px/26px Hiragino Sans GB, Microsoft Yahei, SimSun, Helvetica, Arial, Sans-serif;
+            color: #333
+        }
+
+        .error {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .error .wrap {
+            border: 1px solid #ccc;
+            padding: 10px 0 10px 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .error .btn {
+            border: 1px solid #ccc;
+            width: 40px;
+            padding: 2px 5px;
+            margin: 0 auto;
+            display: block;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center
+        }
+
+    </style>
 </head>
 <body>
-<div id='content'>
-    <div class='panel'>
-        <div class='header'>
-            <ul class='breadcrumb'>
-                <li><a href='/'>主页</a><span class='divider'>/</span></li>
-                <li class='active'>通知</li>
-            </ul>
-        </div>
-        <div class='inner'>
-            <% if(typeof(error) !== 'undefined' && error){ %>
-            <div class="alert alert-error">
-                <strong><%= error %></strong>
-            </div>
-            <% } %>
-            <% if(typeof(success) !== 'undefined' && success){ %>
-            <div class="alert alert-success">
-                <strong><%= success %></strong>
-            </div>
-            <% } %>
-            <a href="<%- typeof(referer) !== 'undefined' ? referer : '/' %>"><span class="span-common">返回</span></a>
-        </div>
+<div class='error'>
+    <% if(typeof(error) !== 'undefined' && error){ %>
+    <div class="wrap">
+        <div class="content"><%= error %></div>
     </div>
+    <a class="btn" href="javascript:;" onClick="javascript :history.back(-1);">返回</a>
+    <% } %>
+    <% if(typeof(success) !== 'undefined' && success){ %>
+    <div class="wrap">
+        <div class="content"><%= success %></div>
+    </div>
+    <a href="<%- typeof(referer) !== 'undefined' ? referer : '/' %>">返回</a>
+    <% } %>
 </div>
 </body>
 </html>

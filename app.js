@@ -57,7 +57,7 @@ initSite(app);          //初始化静态配置数据,包括数据库连接
 app.use(auth.authUser);         //校验用户
 app.use(errorPageMiddleware.errorPage);
 // app.use(new RateLimit({
-//     errorMsg: '你的ip存在异常，请在 {{ expired }} 小时后再尝试！',
+//     errorMsg: '你的ip存在异常，请联系管理员解除限制，或者在24时后再访问！',
 //     limitCount: config.max_open_per_day,
 //     expired: 24 * 60 * 60
 // }));

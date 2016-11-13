@@ -21,7 +21,8 @@ router.get('/init', site.initData);
 var commentLimit = new RateLimit({
     errorMsg: '你今天已经到达最大的评论次数，谢谢你对本博客的支持！',
     limitCount: config.max_comment_per_day,
-    expired: 24 * 60 * 60
+    expired: 24 * 60 * 60,
+    showJson: true
 });
 
 router.get('/index', post.index);
@@ -50,7 +51,8 @@ router.get('/archives/page/:page', post.getArchives);
 var guestbookLimit = new RateLimit({
     errorMsg: '你今天已经到达最大的留言次数，谢谢你对本博客的支持！',
     limitCount: config.max_guestbook_per_day,
-    expired: 24 * 60 * 60
+    expired: 24 * 60 * 60,
+    showJson: true
 });
 
 
