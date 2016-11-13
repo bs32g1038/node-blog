@@ -1,79 +1,53 @@
 var cache = require('../common/redis');
 var _ = require('lodash');
 
+var SEPARATOR = '☆@☆';
 
-/**
- * 限制访问速度，默认通过ip记录
- * @param {Object} options
- * @returns
- */
-function RateLimit (options) {
-  var expired = options.expired || 60 * 60;
-  var limitCount = options.limitCount || 150;
-  var errorMsg = options.errorMsg || 'There is an exception to your IP, please try again later.';
-  var statusCode = options.statusCode || 429;
+function RateLimit(options) {
 
-  //默认ip键值
-  var keyGenerator = options.keyGenerator || function (req) {
-    var ipAddress;
-    var headers = req.headers;
-    var forwardedIpsStr = headers['x-real-ip'] || headers['x-forwarded-for'];
-    forwardedIpsStr ? ipAddress = forwardedIpsStr : ipAddress = null;
-    if (!ipAddress) {
-      ipAddress = req.connection.remoteAddress;
-    }
-    return ipAddress;
-  }
-
-  //处理频率过快的结果
-  var handler = function (req, res /*, next*/ ) {
-    var key = keyGenerator(req, res);
-    cache.ttl(key, function (err, expired) {
-      var h = parseInt(expired / 60 / 60);
-      var m = parseInt(expired / 60 % 60);
-      var s = parseInt(expired % 60);
-
-      function zfill(num) {
-        if (num < 10) {
-          return '0' + num;
+    var defaultOptions = {
+        expired: 60 * 60 * 24,
+        limitCount: 150,
+        errorMsg: 'There is an exception to your IP, please try again later.',
+        status: 429,
+        showJson: false,
+        name: 'rate-limit',
+        keyGenerator: function(req) {
+            var ipAddress;
+            var headers = req.headers;
+            var forwardedIpsStr = headers['x-real-ip'] || headers['x-forwarded-for'];
+            forwardedIpsStr ? ipAddress = forwardedIpsStr : ipAddress = null;
+            if (!ipAddress) {
+                ipAddress = req.connection.remoteAddress;
+            }
+            return ipAddress;
         }
-        return num;
-      }
-      const pos = errorMsg.indexOf('{{ expired }}') + '{{ expired }}'.length;
-      var error = errorMsg.slice(0, pos).replace('{{ expired }}', zfill(h) + ":" + zfill(m) + ":" + zfill(s)) + errorMsg.slice(pos);
-      res.status(statusCode).render('notify/notify', {
-        error: error
-      });
-    });
-  }
+    }
+    options = _.extend(defaultOptions, options);
+    const { keyGenerator, limitCount, expired, status, errorMsg, name, showJson } = options;
 
-  function rateLimit(req, res, next) {
-    var key = keyGenerator(req, res);
-    cache.get(key, function (err, count) {
-      if (err) {
-        return next(err);
-      }
-      count = count || 0;
-      if (count < limitCount) {
-        count += 1;
-        cache.set(key, count, expired);
-        res.set('X-RateLimit-Limit', limitCount);
-        res.set('X-RateLimit-Remaining', limitCount - count);
-        next();
-      } else {
-        return handler(req, res, next);
-      }
-    })
-  }
-
-  return rateLimit;
-
+    return function(req, res, next) {
+        var key = name + SEPARATOR + keyGenerator(req, res) + SEPARATOR + limitCount;
+        cache.get(key, function(err, count) {
+            if (err) {
+                return next(err);
+            }
+            count = count || 0;
+            if (count < limitCount) {
+                count += 1;
+                cache.set(key, count, expired);
+                res.set('X-RateLimit-Limit', limitCount);
+                res.set('X-RateLimit-Remaining', limitCount - count);
+                next();
+            } else {
+                res.status(status);
+                if (showJson) {
+                    res.send({ success: false, error_msg: errorMsg });
+                } else {
+                    res.render('notify/notify', { error: errorMsg });
+                }
+            }
+        })
+    }
 }
-
-// exports.peripperday = new RateLimit({
-//   errorMsg: 'There is an exception to your IP, please try again in 24 hours later.',
-//   limitCount: 100,
-//   expired: 24 * 60 * 60
-// });
-
 module.exports = RateLimit;
