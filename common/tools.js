@@ -63,10 +63,6 @@ exports.getClientIP = function (req) {
     return ipAddress;
 }
 
-exports.getOptionByAppLocals = function (req) {
-    return req.app.locals.option;
-}
-
 //处理路径提交的页码
 exports.doPage = function (page) {
 
