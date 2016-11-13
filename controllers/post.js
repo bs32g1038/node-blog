@@ -63,11 +63,9 @@ exports.b_doc_list = function (req, res) {
 exports.b_doc_publish = function (req, res) {
 
     categoryDao.getAll(function (err, cats) {
-
         if (err) {
             return res.send('404');
         }
-
         res.render('admin/layout', {
             doc: {},
             cats: cats,
