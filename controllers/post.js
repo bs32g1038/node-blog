@@ -164,8 +164,6 @@ exports.b_doc_edit = function (req, res) {
         }
     }, function (err, data) {
 
-        req.session.POST_CATEGORY = data.doc.category;
-
         res.render('admin/layout', {
             doc: data.doc,
             cats: data.cats,
@@ -225,23 +223,32 @@ exports.b_doc_edit_do = function (req, res) {
         });
     }
 
-    async.parallel([
-            function (callback) {
-                postDao.updateById(id, doc, callback)
-            },
-            function (callback) {
-                categoryDao.incPostCountByAlias(category, callback)
-            },
-            function (callback) {
-                categoryDao.decPostCountByAlias(req.session.POST_CATEGORY, callback);
-            }
-        ],
-        function (err) {
-            if (err) {
-                return res.send('404');
-            }
-            return res.redirect('/admin/doc/list');
-        });
+    postDao.getById(id, function (err, post) {
+        if (err) {
+            return res.send('404');
+        }
+        if (!post) {
+            return res.json({success: false, message: '警告，不要随意修改id！'});
+        }
+        var old_category = post.category;
+        async.parallel([
+                function (callback) {
+                    postDao.updateById(id, doc, callback)
+                },
+                function (callback) {
+                    categoryDao.incPostCountByAlias(category, callback)
+                },
+                function (callback) {
+                    categoryDao.decPostCountByAlias(old_category, callback);
+                }
+            ],
+            function (err) {
+                if (err) {
+                    return res.send('404');
+                }
+                return res.redirect('/admin/doc/list');
+            });
+    });
 }
 
 /**
