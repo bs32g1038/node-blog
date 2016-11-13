@@ -16,7 +16,6 @@ var config = require('../config')
 exports.b_doc_list = function (req, res) {
 
     var page = tools.doPage(req.params.page);
-
     var limit = config.list_post_count;
 
     async.parallel({

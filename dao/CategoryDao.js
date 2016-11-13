@@ -6,7 +6,6 @@
 //基础类
 var BaseDao = require('./BaseDao');
 
-
 /**
  * 文章分类数据库操作类
  *
@@ -82,7 +81,6 @@ class CategoryDao extends BaseDao {
             callback(null, parseInt(category.post_count, 10) || 0);
         });
     }
-
 
     /**
      * 提升分类权重，用于控制分类排序位置
