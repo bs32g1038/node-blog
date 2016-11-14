@@ -7,9 +7,7 @@ var PostSchema = new Schema({
     content: {type: String, default: ''},                   //正文
     summary: {type: String, default: ''},                   //摘要
     img_url: {type: String, default: '/uploads/default.jpg'},                   //缩略图
-    custom_url: {type: String, default: ''},                //自定义url
     category: {type: String},                               //分类(非显示名称,目录别名alias)
-    tags: {type: [String]},                                 //标签
     from: {type: Number, defaut: 0},                        //0转载 1为原创
     is_recommend: {type: Boolean, default: false},          //推荐?
     comment_count: {type: Number, default: 0},              //评论数量

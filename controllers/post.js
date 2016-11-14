@@ -84,14 +84,13 @@ exports.b_doc_publish_do = function (req, res) {
 
     let editError; //用于验证
 
-    let { title, from, custom_url, img_url, category, is_draft, summary, content } = req.body;
+    let { title, from, img_url, category, is_draft, summary, content } = req.body;
 
     var doc;
 
     //去除无用空格
     title = validator.trim(title);
     from = validator.trim(from);
-    custom_url = validator.trim(custom_url);
     img_url = validator.trim(img_url);
     category = validator.trim(category);
     is_draft = validator.trim(is_draft);
@@ -102,13 +101,11 @@ exports.b_doc_publish_do = function (req, res) {
         editError = '文章标题不能是空的。';
     } else if (!validator.isInt(from, {min: 1, max: 2})) {
         editError = '警告，不要随意擅改页面数据！！';
-    } else if (custom_url !== '' && !validator.isURL(custom_url)) {
-        editError = 'URL填写不正确。';
     }
 
     is_draft = validator.equals(is_draft, "1");
 
-    doc = {title, from, custom_url, img_url, category, is_draft, summary, content};
+    doc = {title, from, img_url, category, is_draft, summary, content};
 
     if (editError) {
         return categoryDao.getAll(function (err, cats) {
@@ -180,14 +177,13 @@ exports.b_doc_edit_do = function (req, res) {
 
     var editError;
 
-    let { title, from, custom_url, img_url, category, is_draft, summary, content } = req.body;
+    let { title, from, img_url, category, is_draft, summary, content } = req.body;
 
     var doc;
 
     //去除无用空格
     title = validator.trim(title);
     from = validator.trim(from);
-    custom_url = validator.trim(custom_url);
     img_url = validator.trim(img_url);
     category = validator.trim(category);
     is_draft = validator.trim(is_draft);
@@ -201,13 +197,11 @@ exports.b_doc_edit_do = function (req, res) {
         editError = '文章标题不能是空的。';
     } else if (!validator.isInt(from, {min: 1, max: 2})) {
         editError = '警告，不要随意擅改页面数据！！';
-    } else if (custom_url !== '' && !validator.isURL(custom_url)) {
-        editError = 'URL填写不正确。';
     }
 
     is_draft = validator.equals(is_draft, "1");
 
-    doc = {title, from, custom_url, img_url, category, is_draft, summary, content};
+    doc = {title, from, img_url, category, is_draft, summary, content};
 
     if (editError) {
         return categoryDao.getAll(function (err, cats) {
