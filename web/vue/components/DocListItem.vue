@@ -22,10 +22,10 @@
             <div class="entry-meta">
                 <div class="actions">
                     <div class="action">
-                        <i class="fa fa-fire"></i><span>{{ item.visit_count }}</span>
+                        <i class="fa fa-fire fa-fw"></i><span>{{ item.visit_count }}</span>
                     </div>
                     <div class="action">
-                        <i class="fa fa-comment-o"></i><span>{{ item.comment_count }}</span>
+                        <i class="fa fa-comment-o fa-fw"></i><span>{{ item.comment_count }}</span>
                     </div>
                 </div>
             </div>
