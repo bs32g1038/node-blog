@@ -3,7 +3,7 @@
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
         <div class="about" v-if="about">
-            <h2 class="text-center">{{ about.title }}</h2>
+            <h2 class="about-title">{{ about.title }}</h2>
             <div class="markdown" v-html="compileMarkdown(about.content || '')"></div>
         </div>
     </div>

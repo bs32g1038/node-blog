@@ -15,7 +15,7 @@
                 <p class="site-description">{{ user.motto }}</p>
             </div>
             <nav class="header-nav clearfix">
-                <ul class="actions float-left">
+                <ul class="actions">
                     <li class="action">
                         <router-link :to="'/'"><i class="fa fa-fw fa-home"></i>首页</router-link>
                     </li>
@@ -32,7 +32,7 @@
                         <a v-bind:href="user.github" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                     </li>
                 </ul>
-                <div class="actions float-right search">
+                <div class="actions search">
                     <i class="fa fa-fw fa-search"></i>
                     <input type="text" placeholder="请输入搜索的关键词..." v-model="search_key" @keyup.enter="search">
                 </div>
