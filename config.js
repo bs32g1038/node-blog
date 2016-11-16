@@ -24,11 +24,6 @@ var config = {
         motto: 'yourmotoo你的个人格言',
         github: 'https://github.com/bs32g1038/node-blog'
     },
-    about: {
-        key: 'about', //关键词用于检索数据
-        title: '关于我',
-        content: '内容为空'
-    },
     redis: {
         host: '127.0.0.1',
         port: 6379,
@@ -43,7 +38,9 @@ var config = {
         origin: 'http://your qiniu domain',
         // if your app outside of China, please set `uploadURL` to `http://up.qiniug.com/`
         //uploadURL: 'http://xxxxxxxx',
-    }
-
+    },
+    b_category_limits: [20, 40, 60, 80],
+    b_commment_limits: [10, 20, 40, 60],
+    b_guestbook_limits: [10, 20, 40, 60]
 }
 module.exports = config;

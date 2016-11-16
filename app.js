@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var apiRouter = require('./routes/api_router'); //api接口路由
@@ -12,11 +12,12 @@ var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./config');
-// var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
-
+var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
+var errorhandler = require('errorhandler');
 // var RateLimit = require('./middlewares/rate-limit');
 var initSite = require('./common/init_site');
 var auth = require('./middlewares/auth');
+var logger = require('./common/logger');
 var app = express();
 
 //删除header中的X-Powered-By标签
@@ -29,7 +30,11 @@ app.set('view engine', 'html');
 app.engine('.html', require('ejs').renderFile);
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+if(config.debug){
+    app.use(morgan('dev'));
+}
+
 app.use(bodyParser.json({
     limit: '1mb'
 }));
@@ -55,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 initSite(app);          //初始化静态配置数据,包括数据库连接
 
 app.use(auth.authUser);         //校验用户
-// app.use(errorPageMiddleware.errorPage);
+app.use(errorPageMiddleware.errorPage);
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请联系管理员解除限制，或者在24时后再访问！',
 //     limitCount: config.max_open_per_day,
@@ -69,4 +74,12 @@ app.use(function (req, res, next) {
 });
 app.use('/', webRouter);
 
+if (config.debug) {
+    app.use(errorhandler());
+} else {
+    app.use(function (err, req, res, next) {
+        logger.error(err);
+        return res.status(500).send('500 status');
+    });
+}
 module.exports = app;

@@ -17,9 +17,9 @@ userDao.getByAcount(config.administrator.account, function(err, user) {
     console.log("----------user info already exists,it can be used normally!----------------");
 });
 
-aboutDao.getByKey({ key: config.about.key }, function(err, about) {
+aboutDao.getById(config.administrator.account, function(err, about) {
     if (!about) {
-        return aboutDao.add(config.about, function(err) {
+        return aboutDao.add({ _id: config.administrator.account }, function(err) {
             console.log("init about info success!")
         })
     }

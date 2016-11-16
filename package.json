@@ -17,6 +17,7 @@
     "csurf": "1.9.0",
     "debug": "2.2.0",
     "ejs": "2.5.1",
+    "errorhandler": "^1.4.3",
     "es6-promise": "3.2.1",
     "exports-loader": "0.6.3",
     "express": "4.13.1",
