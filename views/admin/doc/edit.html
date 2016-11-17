@@ -17,14 +17,14 @@
         </div>
         <% } %>
         <div class="form-group">
-            <label class="control-label col-sm-3">文章标题</label>
+            <label class="control-label col-sm-2">文章标题</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" id="title" name="title"
+                <input type="text" class="form-control" id="title" name="title"
                         value="<%= typeof(doc.title) !== 'undefined' && doc.title || '' %>">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">来源</label>
+            <label class="control-label col-sm-2">来源</label>
             <div class="radio col-sm-4">
                 <label>
                     <input type="radio" checked="" class="mini" name="from" value="1">原创&nbsp;
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">文章类别</label>
+            <label class="control-label col-sm-2">文章类别</label>
             <div class="col-sm-2">
                 <select class="form-control" id="category" name="category">
 
@@ -56,8 +56,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">缩略图</label>
-            <div class="col-sm-3">
+            <label class="control-label col-sm-2">缩略图</label>
+            <div class="col-sm-2">
                 <div>
                     <div id="uploader" class="uploader">
                         <div id="picker">上传图片</div>
@@ -73,16 +73,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">内容摘要</label>
+            <label class="control-label col-sm-2">内容摘要</label>
             <div class="col-sm-6">
-            <textarea class="form-control input-sm" id="summary" name="summary" cols="30"
+            <textarea class="form-control" id="summary" name="summary" cols="30"
                         rows="6"><%= typeof( doc.summary) !== 'undefined' && doc.summary || '' %></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">文章详情</label>
-            <div class="col-sm-6">
-                <textarea class="form-control input-sm" id="content" name="content" cols="30"
+            <label class="control-label col-sm-2">文章详情</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" id="content" name="content" cols="30"
                             rows="30"><%= typeof( doc.content) !== 'undefined' && doc.content || '' %></textarea>
             </div>
         </div>

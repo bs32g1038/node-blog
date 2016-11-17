@@ -417,11 +417,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
     line-height: 28px;
 }
 
-.editor-preview ul{
-    list-style: none
-}
-
-.editor-preview h1, .editor-preview h2, .editor-preview h3, .editor-preview h4 {
+.editor-preview h1,
+.editor-preview h2,
+.editor-preview h3,
+.editor-preview h4 {
     min-height: 26px;
     line-height: 26px;
     margin: 20px 0;
@@ -440,38 +439,52 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
     line-height: 30px;
 }
 
-.editor-preview p img {
+.editor-preview img {
     max-width: 100%;
 }
 
 blockquote {
+    border-left: 4px solid #DDD;
     margin: 20px 0;
-    border-left: 3px solid #6bc30d;
-    min-height: 26px;
-    line-height: 26px;
-    padding: 2px;
-    background-color: #f8f9f7;
-    font-weight: 400;
-    color: #585957;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
-    clear: both;
+    padding: 5px 20px;
+    color: #777;
+    background-color: #f9f9f9;
+    font-style: italic
 }
 
-.editor-preview blockquote p {
-    font-size: 16px;
+blockquote> :first-child {
+    margin-top: 0px;
 }
 
+blockquote> :last-child {
+    margin-bottom: 0px;
+}
+
+.editor-preview ul,
 .editor-preview ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    padding-left: 32px;
 }
 
-.editor-preview li:before {
-    content: "☆";
-    margin-right: 5px;
-    color: #787977;
+.editor-preview ul {
+    list-style-type: circle
 }
+
+.editor-preview ul li> :first-child,
+.editor-preview ol li> :first-child,
+.editor-preview ul li ul:first-of-type,
+.editor-preview ol li ol:first-of-type,
+.editor-preview ul li ol:first-of-type,
+.editor-preview ol li ul:first-of-type {
+    margin-top: 0px;
+}
+
+.editor-preview ul ul,
+.editor-preview ul ol,
+.editor-preview ol ol,
+.editor-preview ol ul {
+    margin-bottom: 0;
+}
+
 
 pre {
     display: block;

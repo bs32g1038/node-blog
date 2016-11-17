@@ -3,9 +3,7 @@ var config = require('../config');
 var Index = require('../dao/index');
 var userDao = Index.user;
 
-exports.b_user_edit_do = function(req, res) {
-
-    // var ditError;
+exports.b_user_edit_do = function(req, res, next) {
 
     var id = req.params.id;
 
@@ -17,15 +15,11 @@ exports.b_user_edit_do = function(req, res) {
     var img_url = validator.trim(req.body.img_url);
     var github = validator.trim(req.body.github);
 
-    if (!validator.isMongoId(id)) {
-        res.status(400);
-        return res.render('admin/user-edit', {
-            user: { nick_name, motto, qq, email, location, img_url, github }
-        });
-    }
-
     userDao.updateById(id, { nick_name, motto, qq, email, location, img_url, github }, function(err) {
-        res.redirect('/admin/user/edit');
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/admin/user/edit');
     });
 }
 
@@ -41,23 +35,26 @@ exports.b_login_do = function(req, res) {
     if (validator.equals(account, config.administrator.account) &&
         validator.equals(password, config.administrator.password)
     ) {
-        req.session.user = {account: account}; //记住到session
-        
-        res.redirect('/admin/doc/list');
-        
+        req.session.user = { account: account }; //记住到session
+
+        return res.redirect('/admin/doc/list');
+
     } else {
-        res.redirect('/admin/login');
+        return res.redirect('/admin/login');
     }
 }
 
-exports.b_login_out = function(req, res) {
+exports.b_login_out = function(req, res, next) {
     req.session.user = null;
     res.redirect('/admin/login');
 }
 
-exports.b_user_edit = function(req, res) {
+exports.b_user_edit = function(req, res, next) {
     userDao.getByAcount(config.administrator.account, function(err, user) {
-        res.render('admin/layout', {
+        if (err) {
+            return next(err);
+        }
+        return res.render('admin/layout', {
             user: user,
             $body: 'user/edit.html'
         });

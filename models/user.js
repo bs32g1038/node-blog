@@ -22,6 +22,7 @@ var UserSchema = new Schema({
 UserSchema.index({create_at: -1});
 UserSchema.index({update_at: -1});
 UserSchema.index({email: 1}, {unique: true});
+UserSchema.index({account: 1}, {unique: true});
 
 var userModel = mongoose.model('user', UserSchema, 'user');
 

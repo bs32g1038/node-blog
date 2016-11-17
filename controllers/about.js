@@ -3,7 +3,7 @@ var config = require('../config');
 var Index = require('../dao/index');
 var aboutDao = Index.about;
 
-exports.b_about_edit = function(req, res) {
+exports.b_about_edit = function(req, res, next) {
     aboutDao.getById(config.administrator.account, function(err, about) {
         if (err) {
             return next(err);

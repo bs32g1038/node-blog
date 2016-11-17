@@ -39,8 +39,10 @@ var config = {
         // if your app outside of China, please set `uploadURL` to `http://up.qiniug.com/`
         //uploadURL: 'http://xxxxxxxx',
     },
+    b_post_limits: [10, 20, 30, 40],
     b_category_limits: [20, 40, 60, 80],
     b_commment_limits: [10, 20, 40, 60],
-    b_guestbook_limits: [10, 20, 40, 60]
+    b_guestbook_limits: [10, 20, 40, 60],
+    b_link_limits: [10, 20, 30, 40] 
 }
 module.exports = config;
