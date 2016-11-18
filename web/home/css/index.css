@@ -356,12 +356,6 @@ ul {
     margin-right: 10px;
 }
 
-.fc-lb {
-    color: #7594b3;
-    color: #08c;
-}
-
-
 /******************上面定义通用**************************/
 
 .container {
@@ -370,9 +364,6 @@ ul {
     margin: 0 auto;
     padding: 30px;
     border-radius: 3px;
-}
-
-.container {
     background-color: #fff;
 }
 
@@ -415,17 +406,25 @@ ul {
 }
 
 .site-meta {
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-.brand {
-    position: relative;
-    display: inline-block;
-    padding: 0 40px;
-    border-bottom: none;
+.site-logo-wrap {
+    width: 34px;
+    height: 34px;
+    display: block;
+    margin: 0 auto;
+}
+
+.site-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
 }
 
 .site-title {
+    margin-top: 10px;
     display: inline-block;
     vertical-align: top;
     line-height: 36px;
@@ -469,8 +468,8 @@ ul {
 
 .header-nav .search {
     color: #666;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     margin-right: 20px;
     background-color: #fff;
     padding: 0 5px;
@@ -490,79 +489,7 @@ ul {
 }
 
 
-/*播放器S*/
-
-.site-music {
-    padding: 10px;
-}
-
-.m-music {
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-}
-
-.music-wrap {
-    position: relative;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@-moz-keyframes rotate {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(360deg);
-    }
-}
-
-@-o-keyframes rotate {
-    from {
-        -o-transform: rotate(0deg);
-    }
-    to {
-        -o-transform: rotate(360deg);
-    }
-}
-
-.music-wrap.play {
-    animation: 9.5s linear 0s normal none infinite rotate;
-    -webkit-animation: 9.5s linear 0s normal none infinite rotate;
-    -moz-animation: 9.5s linear 0s normal none infinite rotate;
-    -o-animation: 9.5s linear 0s normal none infinite rotate;
-}
-
-
-/*播放器E*/
-
-
 /*************************************S头部S*********************************/
-
 
 
 /*************************************S路径导航S*********************************/
@@ -734,7 +661,7 @@ ul {
 }
 
 
-/*页导航*/
+/**************************S页导航************************************/
 
 .page-nav {
     padding-top: 10px;
@@ -758,10 +685,10 @@ ul {
 }
 
 
-/*页导航*/
+/**************************E页导航************************************/
 
 
-/*页面底部*/
+/**************************页面底部***********************************/
 
 
 /*返回顶部按钮样式*/
@@ -837,10 +764,10 @@ ul {
 }
 
 
-/*E页面底部*/
+/**************************E页面底部***********************************/
 
 
-/*******************S留言****************************/
+/****************************S留言************************************/
 
 .guestbook-list {
     border: 1px dashed #ccc;
@@ -931,20 +858,21 @@ ul {
 }
 
 
-/******************E留言***********************/
+/****************************E留言************************************/
 
 
 
-/******************S关于***********************/
+/****************************S关于************************************/
 
 .about-title {
     text-align: center
 }
 
-/******************E关于***********************/
+
+/*****************************E关于***********************************/
 
 
-/*********************************通用评论框编写****************/
+/*********************************通用评论框编写************************/
 
 .comment-wrap {
     width: 100%;
@@ -1092,9 +1020,9 @@ ul {
     padding: 5px 20px 5px 20px;
     margin-bottom: 10px;
     margin-left: 10px;
-    border-left: 5px solid #ccc;
-    border-right: 5px solid #ccc;
-    background-color: #fcf8e3;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background-color: #fafafa;
 }
 
 

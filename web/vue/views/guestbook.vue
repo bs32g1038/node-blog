@@ -11,7 +11,7 @@
                  :curPage="curPage"
                  :pageCount="pageCount"
         ></PageNav>
-        <p class="tc state"><i class="fc-lb fa fa-comment-o">共有{{ guestbookCount }}条留言，</i>在这里留下你的足迹</p>
+        <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ guestbookCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
         <CommentBox url="/api/guestbook/add"></CommentBox>
     </div>
 </template>

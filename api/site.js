@@ -6,7 +6,7 @@ var linkDao = Index.link;
 var userDao = Index.user;
 var optionDao = Index.option;
 
-exports.initData = function(req, res) {
+exports.initData = function(req, res, next) {
 
     async.parallel({
         cats: function(callback) {
@@ -23,7 +23,7 @@ exports.initData = function(req, res) {
         }
     }, function(err, data) {
         if (err) {
-            return res.json({ success: false, error_msg: '页面获取数据错误，请重试！' });
+            return next(err)
         }
         res.json({ success: true, data: data });
     });

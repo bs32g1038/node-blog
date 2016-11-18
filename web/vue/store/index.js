@@ -26,8 +26,7 @@ export default new Vuex.Store({
         success: true,
         error_msg: '',
         about: {},
-        err_count: 0,
-        load_list: true
+        err_count: 0
     },
     actions: {
         loadPost({ commit, dispatch }, id) {
@@ -122,9 +121,8 @@ export default new Vuex.Store({
                 state.pageCount = data.pageCount;
                 state.guestbookCount = data.count
             }
-            state.success = true;
+            state.success = success;
             state.error_msg = error_msg;
-            state.load_list = false
         },
         set_about(state, { success, error_msg, data }) {
             if (success) {

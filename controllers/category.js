@@ -88,7 +88,7 @@ exports.b_category_batch_del = function(req, res, next) {
     })
 }
 
-//目录显示顺序的提升
+// 目录显示顺序的提升
 exports.b_category_up = function(req, res, next) {
 
     var id = req.params.id;
@@ -101,7 +101,7 @@ exports.b_category_up = function(req, res, next) {
     })
 }
 
-//目录显示顺序的下降
+// 目录显示顺序的下降
 exports.b_category_down = function(req, res, next) {
 
     var id = req.params.id;

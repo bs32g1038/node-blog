@@ -1,5 +1,4 @@
 var validator = require('validator');
-var config = require('../config');
 var Index = require('../dao/index');
 var _ = require('lodash');
 var optionDao = Index.option;

@@ -89,8 +89,11 @@ exports.b_comment_reply = function(req, res, next) {
             return res.json({ success: false, message: '该评论可能已经被删了！' });
         }
         postDao.getById(comment.post_id, function(err, post) {
+            if (err) {
+                return next(err)
+            }
             comment.post_title = post && post.title;
-            res.render('admin/layout', {
+            return res.render('admin/layout', {
                 comment: comment,
                 $body: 'comment/reply.html'
             });
@@ -122,6 +125,9 @@ exports.b_comment_reply_do = function(req, res, next) {
             return next(err)
         }
         postDao.incCommentCount(post_id, function(err) { //评论增加，文章评论数量1
+            if (err) {
+                return next(err)
+            }
             return res.redirect('/admin/comment/list');
         });
     });
@@ -152,7 +158,7 @@ exports.b_comment_del = function(req, res, next) {
 
 }
 
-exports.b_comment_batch_del = function(req, res, next){
+exports.b_comment_batch_del = function(req, res, next) {
 
     var ids = req.body.ids; //批量删除
 

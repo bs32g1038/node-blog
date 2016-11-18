@@ -46,7 +46,6 @@ exports.b_doc_list = function(req, res, next) {
                 })
                 return doc;
             });
-
             return res.render('admin/layout', {
                 docs: docs,
                 pageCount: data.pageCount,
@@ -292,6 +291,9 @@ exports.b_doc_batch_del = function(req, res, next) {
 
     async.map(ids, function(id, callback) {
         postDao.getById(id, function(err, doc) {
+            if (err) {
+                return next(err)
+            }
             if (!doc) {
                 callback({ success: false, message: '此文章不存在或已被删除。' })
             }

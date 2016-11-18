@@ -44,7 +44,7 @@ exports.b_login_do = function(req, res) {
     }
 }
 
-exports.b_login_out = function(req, res, next) {
+exports.b_login_out = function(req, res) {
     req.session.user = null;
     res.redirect('/admin/login');
 }

@@ -1,17 +1,11 @@
 <template>
     <div class="container" id="app">
         <header class="header">
-            <div class="site-music">
-                <div class="m-music">
-                    <img v-bind:src="site.site_logo" title="嗨一下" class="music-wrap"/>
-                </div>
-            </div>
             <div class="site-meta">
-                <div class="site-logo">
-                    <div class="brand">
-                        <span class="site-title">{{ site.site_name }}</span>
-                    </div>
+                <div class="site-logo-wrap">
+                    <img v-bind:src="site.site_logo" title="嗨一下" class="site-logo"/>
                 </div>
+                <h1 class="site-title">{{ site.site_name }}</h1>
                 <p class="site-description">{{ user.motto }}</p>
             </div>
             <nav class="header-nav clearfix">

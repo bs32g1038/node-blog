@@ -12,7 +12,6 @@ var RedisStore = require('connect-redis')(session);
 var compression = require('compression');
 var helmet = require('helmet');
 var config = require('./config');
-var errorPageMiddleware = require('./middlewares/error-page');  //错误页面中间件
 var errorhandler = require('errorhandler');
 // var RateLimit = require('./middlewares/rate-limit');
 var initSite = require('./common/init_site');
@@ -20,7 +19,7 @@ var auth = require('./middlewares/auth');
 var logger = require('./common/logger');
 var app = express();
 
-//删除header中的X-Powered-By标签
+// 删除header中的X-Powered-By标签
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
 
@@ -31,7 +30,7 @@ app.engine('.html', require('ejs').renderFile);
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-if(config.debug){
+if (config.debug) {
     app.use(morgan('dev'));
 }
 
@@ -57,18 +56,19 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-initSite(app);          //初始化静态配置数据,包括数据库连接
+// 初始化静态配置数据,包括数据库连接
+initSite(app);
 
-app.use(auth.authUser);         //校验用户
-app.use(errorPageMiddleware.errorPage);
+// 校验用户
+app.use(auth.authUser);
 // app.use(new RateLimit({
 //     errorMsg: '你的ip存在异常，请联系管理员解除限制，或者在24时后再访问！',
 //     limitCount: config.max_open_per_day,
 //     expired: 24 * 60 * 60
 // }));
 app.use('/api', apiRouter);
-app.use(csurf());                                           //防止跨站请求伪造
-app.use(function (req, res, next) {
+app.use(csurf()); //防止跨站请求伪造
+app.use(function(req, res, next) {
     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
     next();
 });
@@ -77,9 +77,12 @@ app.use('/', webRouter);
 if (config.debug) {
     app.use(errorhandler());
 } else {
-    app.use(function (err, req, res, next) {
+    app.use(function(err, req, res) {
         logger.error(err);
-        return res.status(500).send('500 status');
+        if (req.path.indexOf('api') != -1) {
+            return res.status(500).json({ success: false, error_msg: '服务器错误！无法处理，请等待管理员修复' });
+        }
+        return res.status(500).render('notify/notify', { error: '服务器错误！无法处理，请等待管理员修复' });
     });
 }
 module.exports = app;

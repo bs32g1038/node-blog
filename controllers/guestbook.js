@@ -33,14 +33,12 @@ exports.b_get_guestbook_list = function(req, res, next) {
             })
             return guestbook;
         })
-
         return res.render('admin/layout', {
             guestbooks: guestbooks,
             pageCount: data.pageCount,
             curPage: page,
             $body: 'guestbook/list.html'
         });
-
     });
 }
 
