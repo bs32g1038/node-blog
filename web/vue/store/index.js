@@ -111,7 +111,7 @@ export default new Vuex.Store({
                 state.pageCount = data.pageCount;
                 state.postCount = data.count;
             }
-            state.success = true;
+            state.success = success;
             state.error_msg = error_msg;
         },
         set_guestbookList(state, { success, error_msg, data }) {
