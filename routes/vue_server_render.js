@@ -5,8 +5,6 @@
  * vue server renderer
  */
 
-var ejs = require('ejs');
-
 module.exports = (app) => {
     process.env.VUE_ENV = 'server';
     const path = require('path');
@@ -59,8 +57,8 @@ module.exports = (app) => {
                 console.log(err)
             }
             const s = html.indexOf('{{ APP }}');
-            head = html.slice(0, s);
-            tail = html.slice(s + '{{ APP }}'.length);
+            var head = html.slice(0, s);
+            var tail = html.slice(s + '{{ APP }}'.length);
 
             const context = {
                 url: req.url
