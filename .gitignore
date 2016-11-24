@@ -3,6 +3,7 @@ node_modules
 .vscode
 logs
 public
+!public/media
 !public/favicon.ico
 views/admin/layout.html
 views/admin/js.html
