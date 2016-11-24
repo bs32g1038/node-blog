@@ -65,7 +65,6 @@ exports.b_user_edit = function(req, res, next) {
 }
 
 exports.b_clean_useless_images = function(req, res, next) {
-
     mediaDao.getNullQuoteList(function(err, mediaList) {
         if (err) {
             return next(err)
@@ -76,13 +75,10 @@ exports.b_clean_useless_images = function(req, res, next) {
                 fs.unlinkSync(p);
             }
         });
-
         mediaDao.removeAllNullQuoteItem(function(err) {
-            
             if (err) {
                 return next(err);
             }
-
             return res.json({ success: true, message: '清除无用图片成功！' });
         })
     })

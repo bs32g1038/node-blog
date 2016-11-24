@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <%
-                var img_url = typeof(doc.img_url) !== 'undefined' && doc.img_url || '/uploads/default.jpg';
+                var img_url = typeof(doc.img_url) !== 'undefined' && doc.img_url || '/media/default/default.jpg';
                 %>
                 <input type="hidden" value=<%= img_url %> name="img_url" id="img_url">
                 <img src=<%= img_url %> width="121" height="170" class="img-thumbnail" id="show_img">
