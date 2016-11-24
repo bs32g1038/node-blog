@@ -2,6 +2,9 @@ var validator = require('validator');
 var config = require('../config');
 var Index = require('../dao/index');
 var userDao = Index.user;
+var mediaDao = Index.media;
+var fs = require('fs');
+var path = require("path");
 
 exports.b_user_edit_do = function(req, res, next) {
 
@@ -59,4 +62,29 @@ exports.b_user_edit = function(req, res, next) {
             $body: 'user/edit.html'
         });
     })
+}
+
+exports.b_clean_useless_images = function(req, res, next) {
+
+    mediaDao.getNullQuoteList(function(err, mediaList) {
+        if (err) {
+            return next(err)
+        }
+        mediaList.map(function(media) {
+            var p = path.resolve(__dirname, '../public/' + media.src);
+            if (fs.existsSync(p)) {
+                fs.unlinkSync(p);
+            }
+        });
+
+        mediaDao.removeAllNullQuoteItem(function(err) {
+            
+            if (err) {
+                return next(err);
+            }
+
+            return res.json({ success: true, message: '清除无用图片成功！' });
+        })
+    })
+
 }

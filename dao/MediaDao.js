@@ -23,6 +23,13 @@ class MediaDao extends BaseDao {
     updateAllQuoteByFileName(file_name, post_id, callback = function() {}) {
         this.model.update({ file_name: file_name }, { quote: post_id }, { multi: true }, callback);
     }
+
+    getNullQuoteList(callback) {
+        this.model.find({ quote: null }, callback);
+    }
+    removeAllNullQuoteItem(callback) {
+        this.model.remove({ quote: null }, callback);
+    }
 }
 
 module.exports = MediaDao;

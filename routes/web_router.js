@@ -163,4 +163,8 @@ router.post('/admin/option/edit/:id/do', option.b_option_edit_do);
 
 router.post('/admin/upload', uploadSingle);
 
+/**************************清除无用实现**************************/
+
+router.post('/admin/clean/images/do', user.b_clean_useless_images);
+
 module.exports = router;
