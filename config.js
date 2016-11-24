@@ -35,7 +35,8 @@ var config = {
         db: 0,
         cache_expired: "300", //秒
     },
-    // 7牛的access信息，用于文件上传,不填写，则默认本地存储
+    // 7牛的access信息，用于文件上传,qn_on: false，则默认本地存储
+    qn_on: false,
     qn_access: {
         accessKey: 'your access key',
         secretKey: 'your secret key',

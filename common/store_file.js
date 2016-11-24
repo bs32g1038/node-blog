@@ -8,7 +8,7 @@ var moment = require('moment');
 var mediaDao = require('../dao/index').media;
 
 
-const isLocal = config.qn_access.accessKey == 'your access key';
+const isLocal = config.qn_on === false;
 
 var storage; //记录存储方式
 var qnClient;
