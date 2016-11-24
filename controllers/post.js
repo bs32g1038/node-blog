@@ -5,8 +5,10 @@ var Index = require('../dao/index');
 var async = require("async");
 var postDao = Index.post;
 var categoryDao = Index.category;
+var mediaDao = Index.media;
 var moment = require('moment');
 var config = require('../config')
+var path = require('path');
 
 /**
  * 后台获取文章列表
@@ -106,6 +108,12 @@ exports.b_doc_publish_do = function(req, res, next) {
 
     is_draft = validator.equals(is_draft, "1");
 
+    var regLink = /!\[([^\]<>]+)\]\(([^ \)<>]+)("[^\(\)\"]+")?\)/g;
+    var stra, media = [path.basename(img_url)];
+    while ((stra = regLink.exec(content)) !== null) {
+        media.push(path.basename(stra[2]));
+    }
+
     doc = { title, from, img_url, category, is_draft, summary, content };
 
     if (editError) {
@@ -121,7 +129,14 @@ exports.b_doc_publish_do = function(req, res, next) {
 
     async.parallel([
             function(callback) {
-                postDao.add(doc, callback)
+                postDao.add(doc, function(err, post) {
+                    if (err) {
+                        return callback(err);
+                    }
+                    async.map(media, function(media_name, callback) {
+                        mediaDao.updateAllQuoteByFileName(media_name, post._id, callback)
+                    }, callback);
+                })
             },
             function(callback) {
                 categoryDao.incPostCountByAlias(category, callback)
@@ -187,6 +202,12 @@ exports.b_doc_edit_do = function(req, res, next) {
 
     is_draft = validator.equals(is_draft, "1");
 
+    var regLink = /!\[([^\]<>]+)\]\(([^ \)<>]+)("[^\(\)\"]+")?\)/g;
+    var stra, media = [path.basename(img_url)];
+    while ((stra = regLink.exec(content)) !== null) {
+        media.push(path.basename(stra[2]));
+    }
+ 
     doc = { title, from, img_url, category, is_draft, summary, content };
 
     if (editError) {
@@ -200,32 +221,45 @@ exports.b_doc_edit_do = function(req, res, next) {
         });
     }
 
-    postDao.getById(id, function(err, post) {
+    mediaDao.updateAllQuoteToNull(id, function(err) {
         if (err) {
             return next(err);
         }
-        if (!post) {
-            return res.json({ success: false, message: '警告，不要随意修改id！' });
-        }
-        var old_category = post.category;
-        async.parallel([
-                function(callback) {
-                    postDao.updateById(id, doc, callback)
-                },
-                function(callback) {
-                    categoryDao.incPostCountByAlias(category, callback)
-                },
-                function(callback) {
-                    categoryDao.decPostCountByAlias(old_category, callback);
-                }
-            ],
-            function(err) {
-                if (err) {
-                    return next(err);
-                }
-                return res.redirect('/admin/doc/list');
-            });
+        postDao.getById(id, function(err, post) {
+            if (err) {
+                return next(err);
+            }
+            if (!post) {
+                return res.json({ success: false, message: '警告，不要随意修改id！' });
+            }
+            var old_category = post.category;
+            async.parallel([
+                    function(callback) {
+                        postDao.updateById(id, doc, function(err) {
+                            if (err) {
+                                return callback(err);
+                            }
+                            async.map(media, function(media_name, callback) {
+                                mediaDao.updateAllQuoteByFileName(media_name, id, callback)
+                            }, callback);
+                        })
+                    },
+                    function(callback) {
+                        categoryDao.incPostCountByAlias(category, callback)
+                    },
+                    function(callback) {
+                        categoryDao.decPostCountByAlias(old_category, callback);
+                    }
+                ],
+                function(err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    return res.redirect('/admin/doc/list');
+                });
+        });
     });
+
 }
 
 /**

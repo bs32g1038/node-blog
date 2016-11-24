@@ -36,7 +36,7 @@ gulp.task('del-public', function (cb) {
         '!public/favicon.ico',
         '!public/home',
         '!public/home/js',
-        '!public/uploads/**',
+        '!public/media/**'
     ]).then(() => {
         return cb()
     });

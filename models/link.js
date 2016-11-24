@@ -1,9 +1,5 @@
-/*!
- * tag model
- */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
 
 var LinkSchema = new Schema({
     name: {type: String},

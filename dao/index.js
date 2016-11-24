@@ -2,9 +2,6 @@
  * 数据库核心操作控制
  * 2016-7-25
  **************************************/
-"use strict";
-
-var config = require('../config');
 
 //post模型
 var postModel = require('../models/post');
@@ -24,7 +21,8 @@ var userModel = require('../models/user');
 var OptionModel = require('../models/option');
 //about模型
 var aboutModel = require('../models/about');
-
+//media模型
+var mediaModel = require('../models/media');
 
 //文档操作类
 var DocDao = require('./DocDao');
@@ -42,6 +40,8 @@ var UserDao = require('./UserDao');
 var OptionDao = require('./OptionDao');
 //关于页面操作类
 var AboutDao = require('./AboutDao');
+//媒体页面操作类
+var MediaDao = require('./MediaDao');
 
 //暴露接口
 
@@ -62,3 +62,5 @@ exports.user =  new UserDao(userModel);
 exports.option = new OptionDao(OptionModel);
 
 exports.about = new AboutDao(aboutModel);
+
+exports.media = new MediaDao(mediaModel);

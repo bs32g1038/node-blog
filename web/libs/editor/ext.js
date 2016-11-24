@@ -101,7 +101,7 @@
         });
 
         this.$uploadBtn = this.$upload.find('.button').css({
-            width: 86,
+            width: 90,
             height: 40,
             margin: '0 auto'
         });

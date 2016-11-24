@@ -161,22 +161,6 @@ router.post('/admin/option/edit/:id/do', option.b_option_edit_do);
 
 /**************************图片上传实现**************************/
 
-router.post('/admin/upload', function(req, res, next) {
-
-    uploadSingle(req, res, function(err, url) {
-        //添加错误处理
-        if (err) {
-            return res.json({
-                success: false,
-                error_msg: '上传失败！'
-            });
-        }
-        return res.json({
-            url: url,
-            success: true
-        });
-    });
-
-});
+router.post('/admin/upload', uploadSingle);
 
 module.exports = router;

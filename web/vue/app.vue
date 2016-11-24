@@ -80,7 +80,8 @@
                     <div class="title"><i class="fa fa-html5 fa-fw"></i>网站声明</div>
                     <div class="footer-text">
                         Copyright © <a v-bind:href="site.site_domain">{{ site.site_name }}</a>
-                        &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;{{ site.site_icp }}
+                        &nbsp; 文章供学习交流，转载请保留出处,谢谢合作&nbsp;
+                        <a href="http://www.miitbeian.gov.cn/" target="_blank">{{ site.site_icp }}</a>
                     </div>
                 </li>
             </ul>

@@ -6,7 +6,7 @@ var PostSchema = new Schema({
     title: {type: String},                                  //标题
     content: {type: String, default: ''},                   //正文
     summary: {type: String, default: ''},                   //摘要
-    img_url: {type: String, default: '/uploads/default.jpg'},                   //缩略图
+    img_url: {type: String, default: '/media/default/default.jpg'},                   //缩略图
     category: {type: String},                               //分类(非显示名称,目录别名alias)
     from: {type: Number, defaut: 0},                        //0转载 1为原创
     is_recommend: {type: Boolean, default: false},          //推荐?
