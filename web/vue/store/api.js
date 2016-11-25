@@ -1,8 +1,8 @@
 import 'whatwg-fetch';
-
+import config from '../config.js';
 export default {
 
-    base_url: typeof window === "undefined" ? "http://127.0.0.1/api" : '/api',//判断是nodejs端还是浏览器端
+    base_url: config.api_host,
 
     fetchData(url) {
         return fetch(url).then(res => res.json())

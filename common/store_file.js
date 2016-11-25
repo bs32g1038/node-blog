@@ -58,7 +58,7 @@ var uploadQn = function(req, res, callback) {
 var uploadLocal = function(req, res, next) {
     uploadSingle(req, res, function(err) {
         if (err) {
-            next(err)
+            return next(err)
         }
         var type = req.file.mimetype;
         var filename = req.file.filename;
@@ -69,7 +69,7 @@ var uploadLocal = function(req, res, next) {
             size: size
         }, function(err) {
             if (err) {
-                next(err)
+                return next(err)
             }
             var site_domain = req.app.locals.option.site_domain;
             var url = site_domain + '/media/' + moment().format("YYYY") + '/' + req.file.filename;
