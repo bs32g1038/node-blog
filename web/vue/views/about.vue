@@ -2,21 +2,26 @@
     <div>
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
-        <div class="about" v-if="about">
-            <h2 class="about-title">{{ about.title }}</h2>
-            <div class="markdown" v-html="compileMarkdown(about.content || '')"></div>
+        <div v-if="success && about">
+            <div class="about">
+                <h2 class="about-title">{{ about.title }}</h2>
+                <div class="markdown" v-html="compileMarkdown(about.content || '')"></div>
+            </div>
         </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
     import marked from 'marked';
     import PathNav from '../components/PathNav.vue'
     import Spinner from '../components/Spinner.vue'
+    import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
         components: {
             PathNav,
-            Spinner
+            Spinner,
+            ErrorMessage
         },
         data() {
             return {
@@ -39,6 +44,12 @@
         computed: {
             about() {
                 return this.$store.state.about
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function(store) {

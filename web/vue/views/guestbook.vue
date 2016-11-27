@@ -2,27 +2,24 @@
     <div>
         <Spinner :show="loading"></Spinner>
         <PathNav :paths="paths"></PathNav>
-        <transition :name="transition">
-            <ul class="guestbook-list" v-if="guestbooks.length > 0" :key="$route.fullPath">
+        <div v-if="success">
+            <ul class="guestbook-list" v-if="success && guestbooks.length > 0" :key="$route.fullPath">
                 <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
             </ul>
-        </transition>
-        <PageNav url='/guestbook/'
-                 :curPage="curPage"
-                 :pageCount="pageCount"
-        ></PageNav>
-        <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ guestbookCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
-        <CommentBox url="/api/guestbook/add"></CommentBox>
+            <PageNav url='/guestbook/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ guestbookCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
+            <CommentBox url="/api/guestbook/add"></CommentBox>
+        </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
-    "use strict"
     import Item from '../components/GuestbookItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
     import Spinner from '../components/Spinner.vue'
-
+    import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
 
@@ -31,7 +28,8 @@
             PageNav,
             PathNav,
             CommentBox,
-            Spinner
+            Spinner,
+            ErrorMessage
         },
         data() {
             return {
@@ -71,6 +69,12 @@
             },
             guestbookCount() {
                 return this.$store.state.guestbookCount
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function (store) {

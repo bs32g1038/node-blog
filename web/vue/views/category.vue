@@ -2,12 +2,13 @@
     <div>
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
-        <transition :name="transition">
-            <ul class="entries-box" v-if="postList.length > 0" :key="$route.fullPath">
+        <div v-if="success">
+            <ul class="entries-box" v-if="postList.length > 0">
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
-        </transition>
-        <PageNav :url="pageNavUrl" :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav :url="pageNavUrl" :curPage="curPage" :pageCount="pageCount"></PageNav>
+        </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
@@ -16,6 +17,7 @@
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
     import Spinner from '../components/Spinner.vue'
+    import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
 
@@ -23,7 +25,8 @@
             Item,
             PageNav,
             PathNav,
-            Spinner
+            Spinner,
+            ErrorMessage
         },
         data() {
             return {
@@ -80,6 +83,12 @@
                 var category = this.$route.params.category;
                 var baseUrl = '/category/';
                 return category ?  baseUrl + category + '/' : baseUrl; 
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function (store) {

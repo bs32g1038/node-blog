@@ -2,26 +2,30 @@
     <div>
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
-        <transition :name="transition">
+        <div v-if="success">
             <ul class="entries-box" v-if="postList.length > 0" :key="$route.fullPath">
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
-        </transition>
-        <PageNav url='/posts/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav url='/posts/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
-<script type="text/ecmascript-6">
+<script>
     import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'
     import PathNav from '../components/PathNav.vue'
     import Spinner from '../components/Spinner.vue'
+    import ErrorMessage from '../components/ErrorMessage.vue'
+
     export default {
 
         components: {
             Item,
             PageNav,
             PathNav,
-            Spinner
+            Spinner,
+            ErrorMessage
         },
         data() {
             return {
@@ -59,6 +63,12 @@
             },
             pageCount() {
                 return this.$store.state.pageCount;
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function (store) {

@@ -356,6 +356,7 @@ ul {
     margin-right: 10px;
 }
 
+
 /******************上面定义通用**************************/
 
 .container {
@@ -547,10 +548,6 @@ ul {
 
 .entry-container {
     cursor: pointer;
-}
-
-.entries-box {
-    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .entry-screenshot {
@@ -771,7 +768,6 @@ ul {
 
 .guestbook-list {
     border: 1px dashed #ccc;
-    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .guestbook-list .time {
@@ -859,7 +855,6 @@ ul {
 
 
 /****************************E留言************************************/
-
 
 
 /****************************S关于************************************/
@@ -1113,7 +1108,6 @@ blockquote> :last-child {
     margin-left: 5px;
     padding-bottom: 30px;
     box-sizing: border-box;
-    transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .archive-inner {
@@ -1390,7 +1384,7 @@ pre .val {
 
 .error {
     text-align: center;
-    line-height: normal
+    line-height: normal;
 }
 
 .error .error-message .error-type {
@@ -1440,48 +1434,6 @@ pre .val {
 
 
 /*****************************************进度*/
-
-@-webkit-keyframes sk-bouncedelay {
-    0%,
-    80%,
-    100% {
-        -webkit-transform: scale(0);
-    }
-    40% {
-        -webkit-transform: scale(1.0);
-    }
-}
-
-@keyframes sk-bouncedelay {
-    0%,
-    80%,
-    100% {
-        -webkit-transform: scale(0);
-        transform: scale(0);
-    }
-    40% {
-        -webkit-transform: scale(1.0);
-        transform: scale(1.0);
-    }
-}
-
-.slide-left-enter {
-    opacity: 0;
-    transform: translate(30px);
-}
-
-.slide-left-leave-active {
-    display: none;
-}
-
-.slide-right-leave-active {
-    display: none;
-}
-
-.slide-right-enter {
-    opacity: 0;
-    transform: translate(-30px);
-}
 
 .spinner {
     position: fixed;

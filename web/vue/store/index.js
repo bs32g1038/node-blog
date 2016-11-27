@@ -77,7 +77,7 @@ export default new Vuex.Store({
             if (success) {
                 state.post = data.post;
                 state.comments = data.comments;
-            }
+            } 
             state.success = success;
             state.error_msg = error_msg;
         },
@@ -87,28 +87,21 @@ export default new Vuex.Store({
                 state.postList = data.docs;
                 state.curPage = data.curPage;
                 state.pageCount = data.pageCount;
-            }
+            } 
             state.success = success;
             state.error_msg = error_msg;
         },
-        set_initData(state, { success, error_msg, data }) {
-
-            if (success) {
-                state.cats = data.cats;
-                state.user = data.user;
-                state.links = data.links;
-                state.site = data.site;
-                state.init = true;
-            }
-            state.success = success;
-            state.error_msg = error_msg;
+        set_initData(state, { data }) {
+            state.cats = data.cats;
+            state.user = data.user;
+            state.links = data.links;
+            state.site = data.site;
         },
         set_archives(state, { success, error_msg, data }) {
-
             if (success) {
                 state.archives = data.archives;
-                state.curPage = data.curPage;
-                state.pageCount = data.pageCount;
+                state.curPage = 1;
+                state.pageCount = 0;
                 state.postCount = data.count;
             }
             state.success = success;
@@ -138,7 +131,7 @@ export default new Vuex.Store({
     getters: {
         post: (state) => state.post,
         postList: (state) => state.postList,
-        postCount:(state) => state.post_count,
+        postCount: (state) => state.post_count,
         archives: (state) => state.archives,
         guestbooks: (state) => state.guestbooks,
         curPage: (state) => state.curPage,

@@ -2,7 +2,7 @@
     <div>
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
-        <transition :name="transition">
+        <div v-if="success">
             <div class="archive-wrap" v-if="archives.length > 0 " :key="$route.fullPath">
                 <section class="archive-inner">
                     <span class="archive-move-on"></span>
@@ -10,8 +10,9 @@
                     <Item v-for="item in archives" :key="item.year" :item="item"></Item>
                 </section>
             </div>
-        </transition>
-        <PageNav url='/archives/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav url='/archives/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+        </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 
@@ -20,13 +21,16 @@
     import Item from '../components/ArchivesItem.vue'
     import PageNav from '../components/PageNav.vue'
     import Spinner from '../components/Spinner.vue'
+    import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
         components: {
             PathNav,
             Item,
             PageNav,
-            Spinner
+            Spinner,
+            ErrorMessage
+
         },
         data() {
             return {
@@ -67,6 +71,12 @@
             },
             pageCount() {
                 return this.$store.state.pageCount;
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function (store) {

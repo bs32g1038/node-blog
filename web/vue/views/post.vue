@@ -2,22 +2,24 @@
     <div>
         <spinner :show="loading"></spinner>
         <PathNav :paths="paths"></PathNav>
-        <div v-if="post">
+        <div v-if="success && post">
             <Post :post="post"></Post>
             <p class="comment-list-tip">华丽分割线</p>
             <CommentList :comments="comments" :post_id="post._id"></CommentList>
-            <CommentBox url="/api/post/comment/add" :post_id="post._id"></CommentBox>    
-        </div>    
+            <CommentBox url="/api/post/comment/add" :post_id="post._id"></CommentBox>
+        </div>
+        <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     import JSHL from '../lib/code-prettify';
     import Post from '../components/Post.vue'
     import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
     import CommentList from '../components/CommentList.vue'
     import Spinner from '../components/Spinner.vue'
+    import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
         components: {
@@ -25,7 +27,8 @@
             PathNav,
             CommentBox,
             CommentList,
-            Spinner
+            Spinner,
+            ErrorMessage
         },
         data() {
             return {
@@ -67,6 +70,12 @@
             },
             comments() {
                 return this.$store.state.comments
+            },
+            success() {
+                return this.$store.state.success
+            },
+            errorMsg() {
+                return this.$store.state.error_msg;
             }
         },
         preFetch: function (store) {
