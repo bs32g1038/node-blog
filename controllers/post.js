@@ -207,8 +207,10 @@ exports.b_doc_edit_do = function(req, res, next) {
     while ((stra = regLink.exec(content)) !== null) {
         media.push(path.basename(stra[2]));
     }
- 
-    doc = { title, from, img_url, category, is_draft, summary, content };
+
+    var update_at = Date.now();
+
+    doc = { title, from, img_url, category, is_draft, summary, content, update_at };
 
     if (editError) {
         return categoryDao.getAll(function(err, cats) {
