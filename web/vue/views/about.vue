@@ -1,7 +1,6 @@
 <template>
     <div>
         <spinner :show="loading"></spinner>
-        <PathNav :paths="paths"></PathNav>
         <div v-if="success && about">
             <div class="about">
                 <h2 class="about-title">{{ about.title }}</h2>
@@ -13,19 +12,16 @@
 </template>
 <script>
     import marked from 'marked';
-    import PathNav from '../components/PathNav.vue'
     import Spinner from '../components/Spinner.vue'
     import ErrorMessage from '../components/ErrorMessage.vue'
 
     export default {
         components: {
-            PathNav,
             Spinner,
             ErrorMessage
         },
         data() {
             return {
-                paths: [{url: '',name: '关于'}],
                 loading: false
             }
         },
@@ -54,6 +50,9 @@
         },
         preFetch: function(store) {
             return this.methods.fetchData(store);
+        },
+        created() {
+            this.$store.dispatch('loadMenuId', 3)
         }
     }
 </script>

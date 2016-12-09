@@ -11,16 +11,16 @@
             <nav class="header-nav clearfix">
                 <ul class="actions">
                     <li class="action">
-                        <router-link :to="'/'"><i class="fa fa-fw fa-home"></i>首页</router-link>
+                        <router-link :to="'/'" :class="menuId == 1 && 'item-active'"><i class="fa fa-fw fa-home"></i>首页</router-link>
                     </li>
-                    <li class="action">
+                    <!--<li class="action">
                         <router-link :to="'/archives'"><i class="fa fa-fw fa-archive"></i>归档</router-link>
+                    </li>-->
+                    <li class="action">
+                        <router-link :to="'/guestbook'" :class="menuId == 2 && 'item-active'"><i class="fa fa-fw fa-edit"></i>留言</router-link>
                     </li>
                     <li class="action">
-                        <router-link :to="'/guestbook'"><i class="fa fa-fw fa-edit"></i>留言</router-link>
-                    </li>
-                    <li class="action">
-                        <router-link :to="'/about'"><i class="fa fa-fw fa-user"></i>关于</router-link>
+                        <router-link :to="'/about'" :class="menuId == 3 && 'item-active'"><i class="fa fa-fw fa-user"></i>关于</router-link>
                     </li>
                     <li class="action">
                         <a v-bind:href="user.github" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
@@ -34,7 +34,7 @@
         </header>
         <div class="main">
             <transition name="fade" mode="out-in">
-                <router-view class="view" key="router-view"></router-view>
+                <router-view class="view w-740" key="router-view"></router-view>
             </transition>
         </div>
         <footer class="footer clearfix">
@@ -42,14 +42,6 @@
                 <i class="fa fa-long-arrow-up"></i>
             </div>
             <ul class="footer-nav">
-                <li>
-                    <div class="title"><i class="fa fa-folder-o fa-fw"></i>文章分类</div>
-                    <ul class="actions category">
-                        <li class="action" v-for="item in cats" :key="item.id" :item="item">
-                            <router-link :to="'/category/' + item.alias">{{ item.name }}</router-link>
-                        </li>
-                    </ul>
-                </li>
                 <li>
                     <div class="title"><i class="fa fa-user fa-fw"></i>个人信息</div>
                     <ul class="items">
@@ -111,9 +103,6 @@
             }
         },
         computed: {
-            cats() {
-                return this.$store.state.cats
-            },
             user() {
                 return this.$store.state.user
             },
@@ -122,12 +111,18 @@
             },
             site() {
                 return this.$store.state.site
+            },
+            menuId() {
+                return this.$store.state.menuId
             }
         },
         mounted() {
             new GoTop({
                 el: 'backTop',
             })
+        },
+        created() {
+            this.search_key = this.$route.query.key || ''
         }
     }
 </script>

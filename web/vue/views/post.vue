@@ -1,7 +1,6 @@
 <template>
     <div>
         <spinner :show="loading"></spinner>
-        <PathNav :paths="paths"></PathNav>
         <div v-if="success && post">
             <Post :post="post"></Post>
             <p class="comment-list-tip">华丽分割线</p>
@@ -15,7 +14,6 @@
 <script>
     import JSHL from '../lib/code-prettify';
     import Post from '../components/Post.vue'
-    import PathNav from '../components/PathNav.vue'
     import CommentBox from '../components/CommentBox.vue'
     import CommentList from '../components/CommentList.vue'
     import Spinner from '../components/Spinner.vue'
@@ -24,7 +22,6 @@
     export default {
         components: {
             Post,
-            PathNav,
             CommentBox,
             CommentList,
             Spinner,
@@ -37,8 +34,8 @@
             }
         },
         watch: {
-            '$store.state.post': function () {
-                this.$nextTick(function () {
+            '$store.state.post': function() {
+                this.$nextTick(function() {
                     JSHL();
                 })
             },
@@ -50,23 +47,14 @@
             fetchData(store) {
                 this.loading = true;
                 return store.dispatch('loadPost', store.state.route.params.id)
-                        .then(() => {
-                            this.loading = false;
-                        });
+                    .then(() => {
+                        this.loading = false;
+                    });
             }
         },
         computed: {
             post() {
                 return this.$store.state.post
-            },
-            paths() {
-                return [{
-                    url: '/posts',
-                    name: '文章列表'
-                }, {
-                    url: '',
-                    name: this.$store.state.post.title
-                }]
             },
             comments() {
                 return this.$store.state.comments
@@ -75,11 +63,14 @@
                 return this.$store.state.success
             },
             errorMsg() {
-                return this.$store.state.error_msg;
+                return this.$store.state.error_msg
             }
         },
-        preFetch: function (store) {
-            return this.methods.fetchData(store);
+        preFetch: function(store) {
+            return this.methods.fetchData(store)
+        },
+        created() {
+            this.$store.dispatch('loadMenuId', 1)
         }
     }
 </script>

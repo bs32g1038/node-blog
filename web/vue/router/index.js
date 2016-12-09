@@ -5,27 +5,27 @@ export default new VueRouter({
     //if you use history mode, remember to config history-api fallback to index.html on server,nginx or whatever
     //and if you use webpack-dev-server,add a html-loader to parse may be better
     mode: 'history',
-    scrollBehavior: () => ({y: 0}),
-    routes: [
-        {
-            path: "/category/:category/:page(\\d+)?",
-            component: require('../views/category.vue')
-        },
-        {
+    scrollBehavior: () => ({ y: 0 }),
+    routes: [{
             path: "/search",
             component: require('../views/search.vue')
         },
         {
             path: "/",
-            component: require('../views/index.vue')
-        },
-        {
-            path: "/posts/:page(\\d+)?",
-            component: require('../views/index.vue')
-        },
-        {
-            path: "/archives/:page(\\d+)?",
-            component: require('../views/archives.vue')
+            component: require('../views/index.vue'),
+            children: [{
+                    path: "/category/:category/:page(\\d+)?",
+                    component: require('../views/category.vue')
+                },
+                {
+                    path: '',
+                    component: require('../views/post_list.vue')
+                },
+                {
+                    path: "/posts/:page(\\d+)?",
+                    component: require('../views/post_list.vue')
+                }
+            ]
         },
         {
             path: "/post/:id",

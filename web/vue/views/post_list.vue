@@ -1,21 +1,18 @@
 <template>
     <div>
-        <Spinner :show="loading"></Spinner>
+        <spinner :show="loading"></spinner>
         <div v-if="success">
-            <ul class="guestbook-list" v-if="success && guestbooks.length > 0" :key="$route.fullPath">
-                <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
+            <ul class="entries-box clearfix" v-if="postList.length > 0" :key="$route.fullPath">
+                <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
-            <PageNav url='/guestbook/' :curPage="curPage" :pageCount="pageCount"></PageNav>
-            <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ guestbookCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
-            <CommentBox url="/api/guestbook/add"></CommentBox>
+            <PageNav url='/posts/' :curPage="curPage" :pageCount="pageCount"></PageNav>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
-    import Item from '../components/GuestbookItem.vue'
+    import Item from '../components/DocListItem.vue'
     import PageNav from '../components/PageNav.vue'
-    import CommentBox from '../components/CommentBox.vue'
     import Spinner from '../components/Spinner.vue'
     import ErrorMessage from '../components/ErrorMessage.vue'
 
@@ -24,7 +21,6 @@
         components: {
             Item,
             PageNav,
-            CommentBox,
             Spinner,
             ErrorMessage
         },
@@ -44,25 +40,23 @@
         methods: {
             fetchData(store) {
                 this.loading = true;
-                store.dispatch('loadGuestbookList', {
-                    page: store.state.route.params.page
+                var page = store.state.route.params.page;
+                return store.dispatch('loadPostList', {
+                    page: page
                 }).then(() => {
                     this.loading = false;
-                });
+                })
             }
         },
         computed: {
-            guestbooks() {
-                return this.$store.state.guestbooks
+            postList() {
+                return this.$store.state.postList;
             },
             curPage() {
-                return this.$store.state.curPage
+                return this.$store.state.curPage;
             },
             pageCount() {
-                return this.$store.state.pageCount
-            },
-            guestbookCount() {
-                return this.$store.state.guestbookCount
+                return this.$store.state.pageCount;
             },
             success() {
                 return this.$store.state.success
@@ -73,9 +67,6 @@
         },
         preFetch: function(store) {
             return this.methods.fetchData(store);
-        },
-        created() {
-            this.$store.dispatch('loadMenuId', 2)
         }
     }
 </script>

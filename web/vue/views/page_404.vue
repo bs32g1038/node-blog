@@ -1,6 +1,5 @@
 <template>
     <div>
-        <PathNav :paths="paths"></PathNav>
         <section class="error">
             <div class="error-message">
                 <div class="error-type">404</div>
@@ -13,20 +12,7 @@
 </template>
 
 <script>
-    import PathNav from '../components/PathNav.vue'
-
     export default {
-        components: {
-            PathNav
-        },
-        data() {
-            return {
-                paths: [{
-                    url: '',
-                    name: '错误404页面'
-                }]
-            }
-        },
         beforeMount() {
             this.fetchData(this.$store)
         },
