@@ -34,7 +34,7 @@
         </header>
         <div class="main">
             <transition name="fade" mode="out-in">
-                <router-view class="view w-740" key="router-view"></router-view>
+                <router-view class="view" key="router-view"></router-view>
             </transition>
         </div>
         <footer class="footer clearfix">
