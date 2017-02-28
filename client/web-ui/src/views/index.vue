@@ -20,7 +20,7 @@
         },
         computed: {
             cats() {
-                return this.$store.state.cats
+                return this.$store.state.categories
             }
         }
     }

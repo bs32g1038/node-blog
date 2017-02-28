@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-28 14:15:44
+ * @Last Modified time: 2017-02-28 21:49:31
  */
 
 import * as express from 'express';
@@ -13,6 +13,7 @@ import IRouterRequest from '../middlewares/IRouterRequest';
 /**
  * api 模块部分
  */
+import homeApi from '../api/home';
 import linkApi from '../api/link';
 import settingApi from '../api/setting';
 import userApi from '../api/user';
@@ -24,6 +25,7 @@ import aboutApi from '../api/about';
 
 router.get('/api/articles', articleApi.getArticleList);
 
+router.get('/api/init', homeApi.init);
 
 
 /**********************************************************************

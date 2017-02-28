@@ -18,10 +18,9 @@ export default {
         let url = '/articles';
         return this.fetchData(url);
     },
-    // loadInitData() {
-    //     let url = this.base_url + "/init";
-    //     return this.fetchData(url);
-    // },
+    loadInitData() {
+        return this.fetchData('/init');
+    },
     // loadGuestbookList({ page }) {
     //     page = page || 1;
     //     let url = this.base_url + "/guestbook/page/" + page;

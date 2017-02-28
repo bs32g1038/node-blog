@@ -79,7 +79,7 @@
             <div class="footer-side">
                 <span> 快速扫描二维码打开网站</span>
                 <div class="qr-code">
-                    <img src="/home/images/qr-code.png" :alt="site.site_name">
+                    <img src="/public/images/qr-code.png" :alt="site.site_name">
                 </div>
             </div>
         </footer>
@@ -104,14 +104,13 @@
         },
         computed: {
             user() {
-                return {}
+                return this.$store.getters.user
             },
             links() {
-                return []
+               return this.$store.getters.links
             },
             site() {
-                // return this.$store.state.site
-                return {}
+                return this.$store.state.site
             },
             menuId() {
                 return this.$store.state.menuId

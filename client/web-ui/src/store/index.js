@@ -30,16 +30,16 @@ export default new Vuex.Store({
         loadPostList({ commit, dispatch }, params) {
             return api.loadPostList(params).then((data) => {
                 commit('SET_LIST', data)
-            });
+            }).then(() => dispatch('LOAD_INIT_DATA'));
         },
-        // loadInitData({ commit, state }) {
-        //     if (state.init) {
-        //         return Promise.resolve();
-        //     }
-        //     return api.loadInitData().then((data) => {
-        //         commit('set_initData', data)
-        //     })
-        // },
+        LOAD_INIT_DATA({ commit, state }) {
+            if (state.init.existed) {
+                return Promise.resolve();
+            }
+            return api.loadInitData().then((data) => {
+                commit('SET_INIT', data)
+            })
+        },
         // loadGuestbookList({ commit, dispatch }, params) {
         //     return api.loadGuestbookList(params).then((data) => {
         //         commit('set_guestbookList', data);
@@ -81,11 +81,11 @@ export default new Vuex.Store({
             state.list.total_count = data.total_count;
             state.list.items = data.items;
         },
-        set_initData(state, { data }) {
-            state.cats = data.cats;
+        SET_INIT(state, data) {
+            state.categories = data.categories;
             state.user = data.user;
             state.links = data.links;
-            state.site = data.site;
+            state.site = data.setting;
         },
         set_guestbookList(state, { success, error_msg, data }) {
             if (success) {
