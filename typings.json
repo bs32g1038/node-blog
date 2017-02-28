@@ -1,0 +1,7 @@
+{
+  "globalDependencies": {},
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20161015015725",
+    "mongoose": "registry:npm/mongoose#4.3.5+20160628072220"
+  }
+}

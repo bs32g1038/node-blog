@@ -1,0 +1,175 @@
+ /*.App {
+  text-align: center;
+}
+
+
+#root{
+  height: 100%;
+  width: 100%
+}
+
+.ant-layout{
+  height: 100%;
+  width: 100%;
+}
+
+
+/************
+   基础样式
+**********/
+ /*
+.fr{
+  float: right
+}
+
+.tr {
+ text-align: right
+}
+
+#components-layout-demo-side .logo {
+  height: 32px;
+  background: #333;
+  border-radius: 6px;
+  margin: 16px;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+}
+
+#components-layout-demo-side .ant-layout-sider-collapsed .anticon {
+  font-size: 16px;
+}
+
+#components-layout-demo-side .ant-layout-sider-collapsed .nav-text {
+  display: none;
+}
+
+.minHeight{
+  height: 100%
+}*/
+ 
+ .pale-red {
+     color: #FF3030
+ }
+ 
+ .fr {
+     float: right
+ }
+ 
+ .ant-layout-header {
+     position: fixed;
+     top: 0;
+     right: 0;
+     left: 0;
+     height: 54px;
+     z-index: 100;
+     background: #3C8DBC;
+     line-height: 54px;
+ }
+ 
+ .navbar-nav ul {
+     margin: 0;
+     list-style: none;
+     padding: 0
+ }
+ 
+ .navbar-nav ul li {
+     float: left
+ }
+ 
+ .navbar-nav ul li a {
+     color: #fff;
+     font-size: 14px;
+     padding: 0 15px;
+     display: block
+ }
+ 
+ .navbar-nav ul>li>a:hover {
+     background-color: rgba(0, 0, 0, .1);
+ }
+ 
+ .user-menu .user-image {
+     float: left;
+     width: 25px;
+     height: 25px;
+     border-radius: 50%;
+     margin-right: 10px;
+     margin-top: 15px;
+ }
+ 
+ img {
+     vertical-align: middle;
+ }
+ 
+ .ant-layout-sider {
+     position: fixed;
+     top: 54px;
+     bottom: 0;
+     left: 0;
+     width: 200px
+ }
+ 
+ .ant-layout-sider .ant-menu {
+     background: #f5f5f5
+ }
+ 
+ .ant-menu-root {
+     height: 100%
+ }
+ 
+ .ant-layout-content {
+     margin-top: 54px;
+     background-color: #fff;
+     margin-left: 200px;
+     padding: 15px
+ }
+ 
+ .ant-menu-root .fa {
+     margin-right: 8px;
+ }
+ 
+ .ant-menu-inline,
+ .ant-menu-inline .ant-menu-item {
+     border-right-width: 1px;
+ }
+ 
+ .mr8 {
+     margin-right: 8px;
+ }
+ 
+ .logo {
+     color: #fff;
+     font-size: 20px;
+ }
+ 
+ .ant-breadcrumb {
+     background-color: #fff;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #ddd;
+     color: inherit;
+     font-size: 14px;
+ }
+ 
+ .panel {
+     margin: 15px 15px 6px 0;
+     background-color: #fff;
+     border-radius: 4px;
+ }
+ 
+ .panel>button {
+     margin-right: 10px;
+ }
+ /********************************编辑器************************/
+ 
+ .ReactCodeMirror {
+     border: 1px solid #ccc;
+ }
+ 
+ @import "../node_modules/codemirror/lib/codemirror.css";
+ /*@import '../node_modules/normalize.css/normalize.css';*/
+ /*@import '../node_modules/font-awesome/css/font-awesome.css';*/
+ 
+ @import '../node_modules/react-mde/lib/styles/react-mde.css';
+ @import '../node_modules/react-mde/lib/styles/react-mde-command-styles.css';
+ @import '../node_modules/react-mde/lib/styles/markdown-default-theme.css';
+ /*@import './styles/demo.scss';*/

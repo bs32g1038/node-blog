@@ -4,85 +4,39 @@ var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var apiRouter = require('./routes/api_router'); //api接口路由
-var webRouter = require('./routes/web_router'); //web路由
-var csurf = require('csurf');
+var cors = require('cors')
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
-var compression = require('compression');
-var helmet = require('helmet');
-var config = require('./config');
-var errorhandler = require('errorhandler');
-// var RateLimit = require('./middlewares/rate-limit');
-var initSite = require('./common/init_site');
-var auth = require('./middlewares/auth');
-var logger = require('./common/logger');
+var config = require('./config/config');
+var router = require('./app/router').default;
+
 var app = express();
 
-// 删除header中的X-Powered-By标签
-app.use(helmet.hidePoweredBy());
-app.use(helmet.frameguard('sameorigin'));
-
-// ejs引擎渲染html文件
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.engine('.html', require('ejs').renderFile);
-
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-if (config.debug) {
-    app.use(morgan('dev'));
-}
+app.use(morgan('dev'));
 
 app.use(bodyParser.json({
     limit: '1mb'
 }));
+
 app.use(bodyParser.urlencoded({
     extended: true,
     limit: '1mb'
 }));
-app.use(cookieParser(config.session_secret));
-app.use(compression());
+app.use(cookieParser("node-blog"));
+
 app.use(session({
     store: new RedisStore({
         host: config.redis.host,
-        port: config.redis.port,
-        pass: config.redis.password,
+        port: config.redis.port
     }),
     resave: false,
     saveUninitialized: false,
-    secret: config.session_secret,
+    secret: "node-blog",
 }));
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(cors())
+router(app);
 
-// 初始化静态配置数据,包括数据库连接
-initSite(app);
-
-// 校验用户
-app.use(auth.authUser);
-// app.use(new RateLimit({
-//     errorMsg: '你的ip存在异常，请联系管理员解除限制，或者在24时后再访问！',
-//     limitCount: config.max_open_per_day,
-//     expired: 24 * 60 * 60
-// }));
-app.use('/api', apiRouter);
-app.use(csurf()); //防止跨站请求伪造
-app.use(function(req, res, next) {
-    res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
-    next();
-});
-app.use('/', webRouter);
-
-if (config.debug) {
-    app.use(errorhandler());
-} else {
-    app.use(function(err, req, res) {
-        logger.error(err);
-        if (req.path.indexOf('api') != -1) {
-            return res.status(500).json({ success: false, error_msg: '服务器错误！无法处理，请等待管理员修复' });
-        }
-        return res.status(500).render('notify/notify', { error: '服务器错误！无法处理，请等待管理员修复' });
-    });
-}
 module.exports = app;

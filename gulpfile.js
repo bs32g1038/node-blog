@@ -1,120 +1,136 @@
+// const gulp = require('gulp');
+// const clean = require('gulp-clean');
+// const replace = require('gulp-replace');
+// const changed = require('gulp-changed');
+// const uglify = require('gulp-uglify');
+// const filter = require('gulp-filter');
+// const cleanCSS = require('gulp-clean-css');                     //- 压缩CSS为一行；
+// const qn = require('gulp-qn');
+// const rev = require('gulp-rev');                                  //- 对文件名加MD5后缀
+// const revCollector = require('gulp-rev-collector');
+// const runSequence = require('run-sequence');//控制task顺序
+// const qiniu_options = {
+//     accessKey: 'XXX',
+//     secretKey: 'XXX',
+//     bucket: 'XXX',
+//     domain: 'http://XXXX.bkt.clouddn.com'
+// };
+
+// gulp.task('clean', function () {
+
+//     return gulp.src('dist', {read: false})
+
+//         .pipe(clean())
+
+// });
+
+// gulp.task('build-js', function () {
+
+//     return gulp.src(['public/**/*.js'])
+
+//         //压缩js
+//         .pipe(uglify())
+//         .pipe(rev())
+//         .pipe(gulp.dest('dist'))
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest('dist/rev/js'));
+
+// });
+
+// gulp.task('build-css', function () {
+
+//     return gulp.src(['public/**/*.css'])
+
+//         //压缩css
+//         .pipe(cleanCSS())
+//         .pipe(rev())
+//         .pipe(gulp.dest('dist'))
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest('dist/rev/css'));
+
+// });
+
+// gulp.task('upload-cdn-js', function () {
+
+//     return gulp.src(['dist/**/*.js'])
+//         .pipe(qn({
+//             qiniu: qiniu_options,
+//             prefix: 'javascript'
+//         }))
+
+// });
+
+// gulp.task('upload-cdn-css', function () {
+
+//     return gulp.src(['dist/**/*.css'])
+//         .pipe(qn({
+//             qiniu: qiniu_options,
+//             prefix: 'stylesheets'
+//         }))
+
+// });
+
+// gulp.task('upload-cdn-srcimages', function () {
+
+//     return gulp.src(['public/**/*.png','public/**/*.jpg','public/**/*.gif'])
+//         .pipe(qn({
+//             qiniu: qiniu_options,
+//             prefix: 'images'
+//         }))
+
+// });
+
+// gulp.task('build-upload', function (callback) {
+//     runSequence(['build-js', 'build-css'],
+//         ['upload-cdn-js', 'upload-cdn-css', 'upload-cdn-srcimages'],
+//         callback);
+// });
+
+// gulp.task('build-ejs', function () {
+//     return gulp.src(['dist/rev/**/*.json', 'views-ejs/*.ejs'])
+//         .pipe(revCollector({
+//             replaceReved: false,
+//             dirReplacements: {}
+//         }))
+//         .pipe(replace(/(\/stylesheets\/|\/javascript\/|\/images\/)/g, qiniu_options.domain+'$1'))
+//         .pipe(gulp.dest('dist'));
+// });
+
+// gulp.task('default', function (callback) {
+//     runSequence(
+//         'clean',
+//         ['build-upload'],
+//         'build-ejs',
+//         callback);
+// });
+
+
 var gulp = require('gulp');
-var nodemon = require('gulp-nodemon'); //- 启动node
-var gulpSequence = require('gulp-sequence'); //- 任务序列
-var del = require('del'); //- 删除文件
-var plugins = require('gulp-load-plugins')();
-var minimist = require('minimist');
-var knownOptions = {
-    string: 'env',
-    default: {
-        env: process.env.NODE_ENV || 'development'
-    }
-};
-var options = minimist(process.argv.slice(2), knownOptions);
+var ts = require('gulp-typescript');
+var sourcemaps = require('gulp-sourcemaps');
+var nodemon = require('gulp-nodemon');
+var tsProject = ts.createProject('tsconfig.json');
 
-process.env.INIT_ENV = options.env;
-
-if (process.env.INIT_ENV == 'production') {
-    process.env.NODE_ENV = "production"
-}
-
-function getTask(name) {
-    return require(`./web/gulp/tasks/${name}`)(gulp, plugins);
-}
-
-gulp.task("vue-webpack", getTask('vue-webpack'));
-gulp.task("do-admin-css", getTask('do-admin-css'));
-gulp.task("do-index-css", getTask('do-index-css'));
-gulp.task("do-admin-js", getTask('do-admin-js'));
-
-
-//- 删除public目录下文件
-gulp.task('del-public', function (cb) {
-    del([
-        'public/**',
-        '!public',
-        '!public/favicon.ico',
-        '!public/home',
-        '!public/home/js',
-        '!public/media/**'
-    ]).then(() => {
-        return cb()
-    });
+gulp.task('compile', function () {
+    return tsProject.src()
+        // 注意顺序
+        // .pipe(sourcemaps.init())
+        .pipe(tsProject())
+        // .pipe(sourcemaps.write())
+        .pipe(gulp.dest('app'));
 });
 
-//- 复制文件到public下
-gulp.task('copy-public', function () {
-
-    var sources = gulp.src([
-        './web/admin/js/**',
-        '!./web/admin/js/*.js'
-    ], {
-        base: './web'
-    });
-
-    if (process.env.INIT_ENV == 'production') {
-        sources.pipe(plugins.uglify())
-    }
-
-    sources.pipe(gulp.dest('./public'));
-
-    return gulp.src([
-            './web/libs/bootstrap/fonts/**',
-            './web/libs/editor/fonts/**',
-            './web/libs/font-awesome/fonts/**',
-            './web/libs/webuploader/Uploader.swf',
-            './web/admin/images/**',
-            './web/home/images/**',
-        ], {
-            base: './web'
-        })
-        .pipe(gulp.dest('./public'));
-
-});
-
-
-//- node服务器启动，支持动态检测重启
-gulp.task('node', function () {
-    nodemon({
-        script: 'bin/www',
-        ext: 'js html css',
+gulp.task('watch', ['compile'], function () {
+    return nodemon({
+        script: './bin/www',  // 服务的启动文件
+        watch: './core-ts',    // 源代码目录
+        tasks: ['compile'], // 在重启服务前需要执行的任务
+        ext: 'js ts', // 监听.ts结尾的文件 必须
+        // 设置环境
         env: {
-            'NODE_ENV': process.env.INIT_ENV || 'development'
+            'NODE_ENV': 'development'
         },
-        ignore: [
-            'public/',
-            'web/',
-            'views/'
-        ],
-    })
-})
-
-gulp.task('sequence-all', function (cb) {
-    if (process.env.INIT_ENV == 'production') {
-        gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'vue-webpack', 'copy-public', cb);
-    } else {
-        gulpSequence('del-public', 'do-admin-css', 'do-admin-js', 'do-index-css', 'copy-public', cb);
-    }
-});
-
-gulp.task('build', ['sequence-all']);
-
-gulp.task('watch', function () {
-    gulp.watch('web/admin/**', ['sequence-all']);
-    gulp.watch('web/home/**', ['sequence-all']);
-    gulp.watch('web/libs/*.js', ['sequence-all']);
-    gulp.watch('web/vue/**', ['sequence-all']);
-});
-
-gulp.task('server', ['node']);
-
-gulp.task('default', gulpSequence('sequence-all', ['node', 'watch']));
-
-gulp.task('help', function () {
-    console.log('	gulp build			文件打包');
-    console.log('	gulp watch			文件监控打包');
-    console.log('	gulp help			gulp参数说明');
-    console.log('	gulp server			测试server');
-    console.log('	gulp                开发环境（默认开发环境）');
-    console.log('	gulp xxxx --env production      生产模式下进行调试或者打包文件');
+        // 必须开启debug模式
+        // exec: 'node --debug'
+    });
 });
