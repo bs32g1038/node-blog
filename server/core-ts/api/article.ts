@@ -2,12 +2,14 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-25 09:42:44
+ * @Last Modified time: 2017-03-01 15:44:56
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
+import ICategoryEntity from '../models/entity/ICategoryEntity';
 import IBaseListOption from '../models/option/IBaseListOption';
 import ArticleService from '../service/ArticleService';
+import CategoryService from '../service/CategoryService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
@@ -17,9 +19,19 @@ export default class ArticleApiController {
 
     let
       page: number = Number(req.query.page) || 1,
-      per_page: number = Number(req.query.per_page) || 10,
+      per_page: number = Number(req.query.per_page) || 2,
+      category_alias: string = req.query.category || 'all',
       query: IArticleEntity = { is_deleted: false },
       opt: IBaseListOption = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
+    console.log(category_alias)
+
+    let categoryService = new CategoryService();
+    if (category_alias !== 'all') {
+      let category: ICategoryEntity = await categoryService.getByAlias(category_alias);
+      query.category = category._id;
+    }
+
+    console.log(query)
 
     let articleService = new ArticleService();
     let result = await articleService.getList(query, opt);
