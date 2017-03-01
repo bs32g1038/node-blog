@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-25 09:46:51
+ * @Last Modified time: 2017-03-01 18:07:28
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import ICommentEntity from '../models/entity/ICommentEntity';
@@ -27,25 +27,25 @@ export default class CommentApiController {
     }
     static async save(req, res, next) {
         let doc: ICommentEntity = {
-            nick_name: '冷夜流星',
-            email: 'bs32g1038@163.com',
-            content: req.request.body.content,
-            reply: req.request.body.reply_id,
-            article: req.request.body.article_id,
+            nick_name: req.body.nick_name,
+            email: req.body.email,
+            content: req.body.content,
+            reply: req.body.reply_id,
+            article: req.body.article_id,
         }
         let commentService = new CommentService();
         let comment = await commentService.create(doc);
         comment = await comment
             .populate('article')
             .populate('reply').execPopulate();
-        req.status(HttpStatusCode.HTTP_CREATED).json(comment);
+        res.status(HttpStatusCode.HTTP_CREATED).json(comment);
     }
 
     static async updatePass(req, res, next) {
-        console.log(req.request.body)
+        console.log(req.body)
         let id = req.params.id;
         let doc: ICommentEntity = {
-            pass: req.request.body.pass,
+            pass: req.body.pass,
         }
         let commentService = new CommentService();
         await commentService.updateById(id, doc);

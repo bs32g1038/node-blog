@@ -42,21 +42,21 @@ export default new Vuex.Store({
                 commit('SET_INIT', data)
             })
         },
-        // loadGuestbookList({ commit, dispatch }, params) {
-        //     return api.loadGuestbookList(params).then((data) => {
-        //         commit('set_guestbookList', data);
-        //     }).then(() => dispatch('loadInitData'));
-        // },
+        LOAD_GUESTBOOK_LIST({ commit, dispatch }, params) {
+            return api.loadGuestbookList(params).then((data) => {
+                commit('SET_LIST', data);
+            }).then(() => dispatch('LOAD_INIT_DATA'));
+        },
         // loadSearchList({ commit, dispatch }, params) {
         //     return api.loadSearchList(params).then((data) => {
         //         commit('set_postList', data)
         //     }).then(() => dispatch('loadInitData'));
         // },
-        // loadAbout({ commit, dispatch }) {
-        //     return api.loadAbout().then((data) => {
-        //         commit('set_about', data)
-        //     }).then(() => dispatch('loadInitData'));
-        // },
+        LOAD_ABOUT({ commit, dispatch }) {
+            return api.loadAbout().then((data) => {
+                commit('SET_ITEM', data)
+            }).then(() => dispatch('loadInitData'));
+        },
         // closeErrorMsg({ commit }) {
         //     commit('set_errorMsg');
         //     return Promise.resolve();
@@ -74,32 +74,11 @@ export default new Vuex.Store({
         SET_ITEM(state, data) {
             state.item = data;
         },
-        set_postList(state, data) {
-            state.list.total_count = data.total_count;
-            state.list.items = data.items;
-        },
         SET_INIT(state, data) {
             state.categories = data.categories;
             state.user = data.user;
             state.links = data.links;
             state.site = data.setting;
-        },
-        set_guestbookList(state, { success, error_msg, data }) {
-            if (success) {
-                state.guestbooks = data.guestbooks;
-                state.curPage = data.curPage;
-                state.pageCount = data.pageCount;
-                state.guestbookCount = data.count
-            }
-            state.success = success;
-            state.error_msg = error_msg;
-        },
-        set_about(state, { success, error_msg, data }) {
-            if (success) {
-                state.about = data.about;
-            }
-            state.success = success;
-            state.error_msg = error_msg;
         },
         set_errorMsg(state) {
             state.success = true;

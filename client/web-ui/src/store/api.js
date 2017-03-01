@@ -22,19 +22,17 @@ export default {
     loadInitData() {
         return this.fetchData('/init');
     },
-    // loadGuestbookList({ page }) {
-    //     page = page || 1;
-    //     let url = this.base_url + "/guestbook/page/" + page;
-    //     return this.fetchData(url);
-    // },
+    loadGuestbookList({ page }) {
+        let url = '/guestbooks'
+        return this.fetchData(url);
+    },
     // loadSearchList({ key, page }) {
     //     page = page || 1;
     //     key = key || '';
     //     let url = encodeURI(this.base_url + "/post/search?" + 'key=' + key + '&page=' + page);
     //     return this.fetchData(url);
     // },
-    // loadAbout() {
-    //     let url = this.base_url + "/about";
-    //     return this.fetchData(url);
-    // }
+    loadAbout() {
+        return this.fetchData('/abouts/admin');
+    }
 }

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-28 22:58:29
+ * @Last Modified time: 2017-03-01 18:02:31
  */
 
 import * as express from 'express';
@@ -30,6 +30,21 @@ import aboutApi from '../api/about';
 router.get('/api/articles/:id', articleApi.getFullArticle);
 router.get('/api/articles', articleApi.getArticleList);
 router.get('/api/init', homeApi.init);
+router.post('/api/comments', commentApi.save);
+
+
+/**
+ * 留言路由
+ */
+router.get('/api/guestbooks', guestbookApi.getGuestbookList);
+
+
+/**
+ * 关于路由
+ */
+
+router.get('/api/abouts/admin', aboutApi.getAbout);
+
 
 /**********************************************************************
  * 

@@ -22,6 +22,7 @@
     var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     import ModalInfoDialog from './ModalInfoDialog.vue'
+    import axios from 'axios';
 
     export default {
         props: ['url', 'article_id', 'reply_id'],
@@ -67,30 +68,19 @@
                 var self = this;
 
                 if (this.validate()) {
-                    fetch(this.url, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            nick_name: this.nick_name,
-                            email: this.email,
-                            content: this.content,
-                            article_id: this.article_id,
-                            reply_id: this.reply_id
-                        })
+                    axios.post(this.url, {
+                        nick_name: this.nick_name,
+                        email: this.email,
+                        content: this.content,
+                        article_id: this.article_id,
+                        reply_id: this.reply_id
                     }).then(function(response) {
-                        return response.json()
+                        return response.data
                     }).then(function(json) {
-                        if (json.success) {
-                            self.nick_name = "";
-                            self.email = "";
-                            self.content = "";
-                            self.showInfoDialog("提交成功，审核通过后将会显示到页面！感谢你的来访！");
-                        } else {
-                            self.showInfoDialog(json.error_msg);
-                        }
+                        self.nick_name = "";
+                        self.email = "";
+                        self.content = "";
+                        self.showInfoDialog("提交成功，审核通过后将会显示到页面！感谢你的来访！");
                     }).catch(function(ex) {
                         console.log('parsing failed', ex)
                     })

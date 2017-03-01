@@ -44,7 +44,7 @@
         methods: {
             fetchData(store) {
                 this.loading = true;
-                store.dispatch('loadGuestbookList', {
+                store.dispatch('LOAD_GUESTBOOK_LIST', {
                     page: store.state.route.params.page
                 }).then(() => {
                     this.loading = false;
@@ -53,19 +53,21 @@
         },
         computed: {
             guestbooks() {
-                return this.$store.state.guestbooks
+                return this.$store.state.items
             },
             curPage() {
-                return this.$store.state.curPage
+                return 1
+                // return this.$store.state.curPage
             },
             pageCount() {
                 return this.$store.state.pageCount
             },
             guestbookCount() {
-                return this.$store.state.guestbookCount
+                return this.$store.state.total_count
             },
             success() {
-                return this.$store.state.success
+                return true;
+                // return this.$store.state.success
             },
             errorMsg() {
                 return this.$store.state.error_msg;

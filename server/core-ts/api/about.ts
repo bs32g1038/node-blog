@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-25 09:38:58
+ * @Last Modified time: 2017-03-01 17:52:16
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -17,7 +17,7 @@ export default class AboutApiController {
 
     static async getAbout(req, res, next) {
         let aboutService = new AboutService();
-        const about = await aboutService.getById(req.params.id);
+        const about = await aboutService.getById('admin');
         res.json(about);
     }
 

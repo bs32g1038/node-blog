@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-01 15:44:56
+ * @Last Modified time: 2017-03-01 18:22:36
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -10,6 +10,7 @@ import ICategoryEntity from '../models/entity/ICategoryEntity';
 import IBaseListOption from '../models/option/IBaseListOption';
 import ArticleService from '../service/ArticleService';
 import CategoryService from '../service/CategoryService';
+import CommentService from '../service/CommentService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
@@ -26,14 +27,13 @@ export default class ArticleApiController {
     console.log(category_alias)
 
     let categoryService = new CategoryService();
+    let articleService = new ArticleService();
+
     if (category_alias !== 'all') {
       let category: ICategoryEntity = await categoryService.getByAlias(category_alias);
       query.category = category._id;
     }
 
-    console.log(query)
-
-    let articleService = new ArticleService();
     let result = await articleService.getList(query, opt);
     // req.setHeaderLink({
     //   next: 'http://127.0.0.1/api/admin/articles?page=1',
@@ -47,13 +47,18 @@ export default class ArticleApiController {
 
   static async getFullArticle(req, res, next) {
     let articleService = new ArticleService();
-    let article = await articleService.getFullById(req.params.id);
+    let article: IArticleEntity = await articleService.getFullById(req.params.id);
+
+    let commentService = new CommentService();
+    let cmtRes = await commentService.getFullList({ article: article._id, pass: true }, {});
+    article.comments = cmtRes.items;
+
     res.json(article);
   }
 
   static async getArticle(req, res, next) {
     let articleService = new ArticleService();
-    const article = await articleService.getFullById(req.params.id);
+    const article: IArticleEntity = await articleService.getFullById(req.params.id);
     res.json(article);
   }
 

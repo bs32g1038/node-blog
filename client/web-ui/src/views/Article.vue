@@ -5,7 +5,7 @@
             <ArticleItem :post="article"></ArticleItem>
             <p class="comment-list-tip">华丽分割线</p>
             <CommentList :comments="article.comments" :article_id="article._id"></CommentList>
-            <CommentBox url="/api/comments" :article_id="article._id"></CommentBox>
+            <CommentBox url="/comments" :article_id="article._id"></CommentBox>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>

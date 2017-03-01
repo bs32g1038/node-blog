@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-    import marked from 'marked';
+    import marked from '../lib/marked';
     import Spinner from '../components/Spinner.vue'
     import ErrorMessage from '../components/ErrorMessage.vue'
 
@@ -32,17 +32,18 @@
             compileMarkdown: marked,
             fetchData(store) {
                 this.loading = true;
-                return store.dispatch('loadAbout').then(() => {
+                return store.dispatch('LOAD_ABOUT').then(() => {
                     this.loading = false;
                 });
             }
         },
         computed: {
             about() {
-                return this.$store.state.about
+                return this.$store.state.item
             },
             success() {
-                return this.$store.state.success
+                // return this.$store.state.success
+                return true
             },
             errorMsg() {
                 return this.$store.state.error_msg;

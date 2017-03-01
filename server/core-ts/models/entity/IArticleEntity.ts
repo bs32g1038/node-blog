@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-03 23:34:05 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-04 22:14:39
+ * @Last Modified time: 2017-03-01 18:19:27
  */
 
 interface Article {
@@ -17,6 +17,7 @@ interface Article {
     is_deleted?: boolean;
     is_draft?: boolean;
     is_html?: boolean;
+    comments?: any[];
 }
 
-export default  Article
+export default Article

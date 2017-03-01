@@ -39,14 +39,14 @@ export default new VueRouter({
             name: 'article',
             component: require('../views/Article.vue')
         },
-        // {
-        //     path: "/guestbook/:page(\\d+)?",
-        //     component: require('../views/guestbook.vue')
-        // },
-        // {
-        //     path: "/about",
-        //     component: require('../views/about.vue')
-        // },
+        {
+            path: "/guestbooks",
+            component: require('../views/Guestbook.vue')
+        },
+        {
+            path: "/about",
+            component: require('../views/About.vue')
+        },
         // {
         //     path: "*",
         //     component: require('../views/page_404.vue')

@@ -15,7 +15,7 @@
 
                 <span class="post-category">&nbsp; | &nbsp;
                         <i class="fa fa-fw fa-folder-o"></i>分类于
-                        <router-link :to=" '/category/' + post.category">{{ post.category_name }}</router-link>
+                        <router-link :to=" '/category/' + post.category.alias">{{ post.category.alias }}</router-link>
                     </span>
 
                 <span class="post-comments-count">&nbsp; | &nbsp;

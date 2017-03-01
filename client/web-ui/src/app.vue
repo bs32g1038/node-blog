@@ -17,7 +17,7 @@
                         <router-link :to="'/archives'"><i class="fa fa-fw fa-archive"></i>归档</router-link>
                     </li>-->
                     <li class="action">
-                        <router-link :to="'/guestbook'" :class="menuId == 2 && 'item-active'"><i class="fa fa-fw fa-edit"></i>留言</router-link>
+                        <router-link :to="'/guestbooks'" :class="menuId == 2 && 'item-active'"><i class="fa fa-fw fa-edit"></i>留言</router-link>
                     </li>
                     <li class="action">
                         <router-link :to="'/about'" :class="menuId == 3 && 'item-active'"><i class="fa fa-fw fa-user"></i>关于</router-link>
