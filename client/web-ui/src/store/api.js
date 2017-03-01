@@ -14,9 +14,10 @@ export default {
         let url = '/articles/' + id;
         return this.fetchData(url);
     },
-    loadArticleList({ category, page }) {
-        let url = '/articles';
-        return this.fetchData(url);
+    loadArticleList({ category = 'all', page = 1 }) {
+        let filter = '?category=' + category + '&page=' + page
+        let url = '/articles' + filter;
+        return this.fetchData(encodeURI(url));
     },
     loadInitData() {
         return this.fetchData('/init');

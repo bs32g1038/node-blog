@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    strict: process.env.NODE_ENV !== 'production',
     state: {
         total_count: 0,
         items: [],
@@ -111,8 +112,18 @@ export default new Vuex.Store({
         postList: (state) => state.postList,
         postCount: (state) => state.post_count,
         guestbooks: (state) => state.guestbooks,
-        curPage: (state) => state.curPage,
-        pageCount: (state) => state.pageCount,
+        // curPage: (state) => {
+        //    cur_page = state.curPage
+        // },
+        pageCount: (state) => {
+            let len = state.items.length;
+            let per_page = 1
+            if (len >= 0) {
+                per_page = len;
+            }
+            console.log(per_page)
+            return Math.ceil(state.total_count / per_page)
+        },
         cats: (state) => state.cats,
         user: (state) => state.user,
         links: (state) => state.links,
