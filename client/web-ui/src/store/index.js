@@ -22,13 +22,13 @@ export default new Vuex.Store({
         error_msg: '' // 记录错误信息
     },
     actions: {
-        // loadPost({ commit, dispatch }, id) {
-        //     return api.loadPost(id).then((data) => {
-        //         commit('set_post', data)
-        //     }).then(() => dispatch('loadInitData'));
-        // },
-        loadPostList({ commit, dispatch }, params) {
-            return api.loadPostList(params).then((data) => {
+        LOAD_ARTICLE({ commit, dispatch }, id) {
+            return api.loadArticle(id).then((data) => {
+                commit('SET_ITEM', data)
+            }).then(() => dispatch('LOAD_INIT_DATA'));
+        },
+        LOAD_ARTICLE_LIST({ commit, dispatch }, params) {
+            return api.loadArticleList(params).then((data) => {
                 commit('SET_LIST', data)
             }).then(() => dispatch('LOAD_INIT_DATA'));
         },
@@ -36,6 +36,7 @@ export default new Vuex.Store({
             if (state.init.existed) {
                 return Promise.resolve();
             }
+            state.init.existed = true;
             return api.loadInitData().then((data) => {
                 commit('SET_INIT', data)
             })
@@ -69,13 +70,8 @@ export default new Vuex.Store({
             state.total_count = data.total_count;
             state.items = data.items;
         },
-        set_post(state, { success, error_msg, data }) {
-            if (success) {
-                state.post = data.post;
-                state.comments = data.comments;
-            }
-            state.success = success;
-            state.error_msg = error_msg;
+        SET_ITEM(state, data) {
+            state.item = data;
         },
         set_postList(state, data) {
             state.list.total_count = data.total_count;

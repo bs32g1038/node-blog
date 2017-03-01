@@ -13,7 +13,7 @@
             </div>
             <div class="reply-content">{{ item.content }}</div>
             <div class="m-replay-write-box" id="m-replay-write-box">
-                <CommentBox url="/api/post/comment/add" v-if="comment_num == index" :post_id="post_id" :reply_id="item._id"></CommentBox>
+                <CommentBox url="/api/post/comment/add" v-if="comment_num == index" :article_id="article_id" :reply_id="item._id"></CommentBox>
             </div>
         </li>
     </ul>
@@ -21,14 +21,14 @@
 
 <script>
 
-    import CommentBox from '../components/CommentBox.vue'
+    import CommentBox from '../common/CommentBox.vue'
 
     export default{
         components: {
             CommentBox,
         },
         name: 'docs-item',
-        props: ['comments', 'post_id'],
+        props: ['comments', 'article_id'],
         data(){
             return {
                 comment_num: -1

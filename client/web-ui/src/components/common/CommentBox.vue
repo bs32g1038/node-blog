@@ -5,16 +5,16 @@
             <div>
                 <div class="form-group">
                     <i class="fa fa-user"></i>
-                    <input placeholder="输入你的昵称" type="text" v-model="nick_name"/>
+                    <input placeholder="输入你的昵称" type="text" v-model="nick_name" />
                 </div>
                 <div class="form-group">
                     <i class="fa  fa-envelope"></i>
-                    <input placeholder="输入你的email" type="text" v-model="email"/>
+                    <input placeholder="输入你的email" type="text" v-model="email" />
                 </div>
                 <button type="submit" class="float-left">提交</button>
             </div>
         </form>
-        <ModalInfoDialog ref="infoDialog"" :modal-options.sync="modal"></ModalInfoDialog>
+        <ModalInfoDialog ref="infoDialog" :modal-options.sync="modal"></ModalInfoDialog>
     </div>
 </template>
 
@@ -24,7 +24,7 @@
     import ModalInfoDialog from './ModalInfoDialog.vue'
 
     export default {
-        props: ['url', 'post_id', 'reply_id'],
+        props: ['url', 'article_id', 'reply_id'],
         components: {
             ModalInfoDialog
         },
@@ -50,7 +50,7 @@
 
                 var nick_name = this.nick_name.trim() || '';
                 var content = this.content.trim() || '';
-    
+
                 if (nick_name.length <= 0) {
                     this.showInfoDialog('昵称不能为空！');
                     return false;
@@ -77,7 +77,7 @@
                             nick_name: this.nick_name,
                             email: this.email,
                             content: this.content,
-                            post_id: this.post_id,
+                            article_id: this.article_id,
                             reply_id: this.reply_id
                         })
                     }).then(function(response) {
@@ -88,7 +88,7 @@
                             self.email = "";
                             self.content = "";
                             self.showInfoDialog("提交成功，审核通过后将会显示到页面！感谢你的来访！");
-                        }else{
+                        } else {
                             self.showInfoDialog(json.error_msg);
                         }
                     }).catch(function(ex) {

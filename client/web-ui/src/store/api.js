@@ -10,11 +10,11 @@ export default {
             .then(data => data)
             .catch(e => console.log("uh error", e))
     },
-    // loadPost(id) {
-    //     let url = this.base_url + "/post/" + id;
-    //     return this.fetchData(url);
-    // },
-    loadPostList({ category, page }) {
+    loadArticle(id) {
+        let url = '/articles/' + id;
+        return this.fetchData(url);
+    },
+    loadArticleList({ category, page }) {
         let url = '/articles';
         return this.fetchData(url);
     },

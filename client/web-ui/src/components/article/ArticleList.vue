@@ -2,19 +2,19 @@
     <div>
         <spinner :show="loading"></spinner>
         <div v-if="success">
-            <ul class="entries-box clearfix" v-if="postList.length > 0" :key="$route.fullPath">
-                <item v-for="item in postList" :key="item._id" :item="item"></item>
+            <ul class="entries-box clearfix" v-if="articles.length > 0" :key="$route.fullPath">
+                <item v-for="item in articles" :key="item._id" :item="item"></item>
             </ul>
-            <PageNav url='/posts/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav url='/articles/' :curPage="curPage" :pageCount="pageCount"></PageNav>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
-    import Item from '../components/DocListItem.vue'
-    import PageNav from '../components/PageNav.vue'
-    import Spinner from '../components/Spinner.vue'
-    import ErrorMessage from '../components/ErrorMessage.vue'
+    import Item from './ArticleListItem.vue'
+    import PageNav from '../common/PageNav.vue'
+    import Spinner from '../common/Spinner.vue'
+    import ErrorMessage from '../common/ErrorMessage.vue'
 
     export default {
 
@@ -41,7 +41,7 @@
             fetchData(store) {
                 this.loading = true;
                 var page = store.state.route.params.page;
-                return store.dispatch('loadPostList', {
+                return store.dispatch('LOAD_ARTICLE_LIST', {
                     page: page
                 }).then(() => {
                     this.loading = false;
@@ -49,7 +49,7 @@
             }
         },
         computed: {
-            postList() {
+            articles() {
                 return this.$store.state.items;
             },
             curPage() {

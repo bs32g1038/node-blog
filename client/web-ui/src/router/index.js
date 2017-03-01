@@ -13,25 +13,27 @@ export default new VueRouter({
         // },
         {
             path: "/",
-            component: require('../views/index.vue'),
-            children: [{
-                    path: "/category/:category/:page(\\d+)?",
-                    component: require('../views/category.vue')
-                },
+            component: require('../components/index.vue'),
+            children: [
+                // {
+                //     path: "/category/:category/:page(\\d+)?",
+                //     component: require('../views/category.vue')
+                // },
                 {
                     path: '',
-                    component: require('../views/PostList.vue')
+                    component: require('../components/article/ArticleList.vue')
                 },
                 // {
                 //     path: "/posts/:page(\\d+)?",
-                //     component: require('../views/post_list.vue')
+                //     component: require('../views/ArticleList.vue')
                 // }
             ]
         },
-        // {
-        //     path: "/post/:id",
-        //     component: require('../views/post.vue')
-        // },
+        {
+            path: "/articles/:id",
+            name: 'article',
+            component: require('../components/article/Article.vue')
+        },
         // {
         //     path: "/guestbook/:page(\\d+)?",
         //     component: require('../views/guestbook.vue')
