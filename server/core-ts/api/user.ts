@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-26 10:25:51
+ * @Last Modified time: 2017-03-03 08:59:39
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -17,8 +17,12 @@ export default class UserApiController {
 
     static async getUserByAccount(req, res, next) {
         let userService = new UserService();
-        const user = await userService.getByAccount(req.params.account);
-        res.json(user);
+        try {
+            const user = await userService.getByAccount(req.params.account);
+            res.json(user);
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async update(req, res, next) {
@@ -33,9 +37,13 @@ export default class UserApiController {
             github: req.body.github
         }
         let userService = new UserService();
-        await userService.updateByAccount(account, doc);
-        let user = await userService.getByAccount(account);
-        res.json(user);
+        try {
+            await userService.updateByAccount(account, doc);
+            let user = await userService.getByAccount(account);
+            res.json(user);
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async login(req, res, next) {

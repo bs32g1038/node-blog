@@ -14,11 +14,15 @@ export default class CategoryApiController {
 
     static async getAllCategory(req, res, next) {
         let categoryService = new CategoryService();
-        let results = await categoryService.getList({}, { sort: { order: 1 } });
-        res.json({
-            total_count: results.totalItems,
-            items: results.items
-        })
+        try {
+            let results = await categoryService.getList({}, { sort: { order: 1 } });
+            res.json({
+                total_count: results.totalItems,
+                items: results.items
+            })
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async save(req, res, next) {
@@ -27,27 +31,39 @@ export default class CategoryApiController {
             alias: req.body.alias
         }
         let categoryService = new CategoryService();
-        let category = await categoryService.create(doc);
-        req.status(HttpStatusCode.HTTP_CREATED).json(category);
+        try {
+            let category = await categoryService.create(doc);
+            req.status(HttpStatusCode.HTTP_CREATED).json(category);
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async update(req, res, next) {
         let id = req.params.id;
         let doc: ICategoryEntity = {
-            name: req.request.body.name,
-            alias: req.request.body.alias
+            name: req.body.name,
+            alias: req.body.alias
         }
         let categoryService = new CategoryService();
-        await categoryService.updateById(id, doc);
-        let category = await categoryService.getById(id);
-        //  响应数据
-        res.json(category);
+        try {
+            await categoryService.updateById(id, doc);
+            let category = await categoryService.getById(id);
+            //  响应数据
+            res.json(category);
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async hardDelete(req, res, next) {
         let categoryService = new CategoryService();
-        await categoryService.deleteById(req.params.id);
-        res.status(HttpStatusCode.HTTP_NO_CONTENT);
+        try {
+            await categoryService.deleteById(req.params.id);
+            res.status(HttpStatusCode.HTTP_NO_CONTENT);
+        } catch (error) {
+            return next(error)
+        }
     }
 
 }

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-01 18:02:31
+ * @Last Modified time: 2017-03-03 09:11:09
  */
 
 import * as express from 'express';
@@ -58,14 +58,14 @@ router.get('/api/abouts/admin', aboutApi.getAbout);
  */
 router.post('/api/admin/sessions', userApi.login);
 
-router.use(function (req: IRouterRequest, res, next) {
-    var url = req.originalUrl;
-    console.log(req.session.user)
-    if (url != "/api/admin/create-session" && !req.session.user && (url.indexOf('admin') != -1)) {
-        return res.json({ code: '', message: '你没有权限！' });
-    }
-    next();
-});
+// router.use(function (req: IRouterRequest, res, next) {
+//     var url = req.originalUrl;
+//     console.log(req.session.user)
+//     if (url != "/api/admin/create-session" && !req.session.user && (url.indexOf('admin') != -1)) {
+//         return res.json({ code: '', message: '你没有权限！' });
+//     }
+//     next();
+// });
 
 router.delete('/api/admin/sessions/user', userApi.deleteSession);
 router.get('/api/admin/users/:account', userApi.getUserByAccount);

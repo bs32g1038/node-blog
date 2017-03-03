@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-28 22:10:49
+ * @Last Modified time: 2017-03-03 09:02:11
  */
 
 import * as  _ from 'lodash';
@@ -19,23 +19,26 @@ export default class HomeApiController {
         let userService = new UserService();
         let linkService = new LinkService();
         let categoryService = new CategoryService();
+        try {
+            let user: IUserEntity = await userService.getByAccount('bs32g1038');
 
-        let user: IUserEntity = await userService.getByAccount('bs32g1038');
+            let init = {
+                links: await linkService.getAll(),
+                user: {
+                    email: user.email,
+                    github: user.github,
+                    img_url: user.img_url,
+                    location: user.location,
+                    motto: user.motto,
+                    nick_name: user.nick_name,
+                    qq: user.qq
+                },
+                setting: await settingService.getById('setting'),
+                categories: await categoryService.getAll()
+            }
+            res.json(init);
+        } catch (error) {
 
-        let init = {
-            links: await linkService.getAll(),
-            user: {
-                email: user.email,
-                github: user.github,
-                img_url: user.img_url,
-                location: user.location,
-                motto: user.motto,
-                nick_name: user.nick_name,
-                qq: user.qq
-            },
-            setting: await settingService.getById('setting'),
-            categories: await categoryService.getAll()
         }
-        res.json(init);
     }
 }

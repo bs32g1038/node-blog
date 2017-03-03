@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-28 21:56:53
+ * @Last Modified time: 2017-03-03 09:00:28
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -17,8 +17,12 @@ export default class SettingApiController {
 
     static async getSetting(req, res, next) {
         let settingService = new SettingService();
-        const setting = await settingService.getById('setting');
-        res.json(setting);
+        try {
+            const setting = await settingService.getById('setting');
+            res.json(setting);
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async update(req, res, next) {
@@ -33,9 +37,12 @@ export default class SettingApiController {
             site_header_code: req.body.site_header_code,
         }
         let settingService = new SettingService();
-        await settingService.updateById(id, doc);
-        let setting = await settingService.getById(id);
-        //  响应数据
-        res.json(setting);
+        try {
+            await settingService.updateById(id, doc);
+            let setting = await settingService.getById(id);
+            res.json(setting);
+        } catch (error) {
+            return next(error)
+        }
     }
 }

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-01 17:52:16
+ * @Last Modified time: 2017-03-03 08:57:57
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -17,8 +17,14 @@ export default class AboutApiController {
 
     static async getAbout(req, res, next) {
         let aboutService = new AboutService();
-        const about = await aboutService.getById('admin');
-        res.json(about);
+        try {
+
+            const about = await aboutService.getById('admin');
+            res.json(about);
+
+        } catch (error) {
+            return next(error)
+        }
     }
 
     static async update(req, res, next) {
@@ -28,9 +34,12 @@ export default class AboutApiController {
             content: req.body.content
         }
         let aboutService = new AboutService();
-        await aboutService.updateById(id, doc);
-        let about = await aboutService.getById(id);
-        //  响应数据
-        res.json(about);
+        try {
+            await aboutService.updateById(id, doc);
+            let about = await aboutService.getById(id);
+            res.json(about);
+        } catch (error) {
+            return next(error)
+        }
     }
 }

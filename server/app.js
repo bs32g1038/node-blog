@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors')
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var assert = require('assert');
 var config = require('./config/config');
 var router = require('./app/router').default;
 
@@ -41,8 +42,11 @@ router(app);
 
 
 app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('服务器异常！');
+    console.error(err);
+    if (err.name, 'ValidationError') {
+        return res.status(422).json({ "message": err.message, errors: err.errors })
+    }
+    return res.status(500).send('服务器异常！');
 });
 
 module.exports = app;

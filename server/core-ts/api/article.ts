@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-01 23:03:41
+ * @Last Modified time: 2017-03-03 09:03:56
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -88,12 +88,12 @@ export default class ArticleApiController {
     static async update(req, res, next) {
         let _id: string = req.params.id;
         let doc: IArticleEntity = {
-            title: req.request.body.title,
-            content: req.request.body.content,
-            category: req.request.body.category,
-            from: req.request.body.from,
-            summary: req.request.body.summary,
-            img_url: req.request.body.img_url,
+            title: req.body.title,
+            content: req.body.content,
+            category: req.body.category,
+            from: req.body.from,
+            summary: req.body.summary,
+            img_url: req.body.img_url,
         }
         let articleService = new ArticleService();
         try {

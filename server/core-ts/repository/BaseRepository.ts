@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-03 22:30:20 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-22 10:04:33
+ * @Last Modified time: 2017-03-03 09:18:53
  */
 
 import IBaseRepository from './IBaseRepository';
@@ -37,7 +37,7 @@ export default class BaseRepository<T, O> implements IBaseRepository<T, O> {
     };
 
     updateById(_id: string, item: T): Promise<any> {
-        return this._model.update({ _id: _id }, item).exec();
+        return this._model.update({ _id: _id }, item, { runValidators: true }).exec();
     };
 
     deleteById(_id: string): Promise<any> {
