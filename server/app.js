@@ -39,4 +39,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(cors())
 router(app);
 
+
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('服务器异常！');
+});
+
 module.exports = app;
