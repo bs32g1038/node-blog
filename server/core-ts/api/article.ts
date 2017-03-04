@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:03:56
+ * @Last Modified time: 2017-03-04 19:20:41
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -111,6 +111,24 @@ export default class ArticleApiController {
             await articleService.softDeleteById(req.params.id);
             let article = await articleService.getById(req.params.id);
             res.status(HttpStatusCode.HTTP_NO_CONTENT);
+        } catch (error) {
+            return next(error)
+        }
+    }
+
+    static async search(req, res, next) {
+        let key: string = req.query.key,
+            page: number = Number(req.query.page) || 1;
+
+        let query = { title: { $regex: key }, is_deleted: false }
+
+        let articleService = new ArticleService();
+        try {
+            let result = await articleService.getList(query, {});
+            res.json({
+                total_count: result.totalItems,
+                items: result.items
+            });
         } catch (error) {
             return next(error)
         }

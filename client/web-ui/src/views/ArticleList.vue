@@ -5,7 +5,13 @@
             <ul class="entries-box clearfix" v-if="articles.length > 0" :key="$route.fullPath">
                 <item v-for="item in articles" :key="item._id" :item="item"></item>
             </ul>
-            <PageNav url='/articles/' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav
+                :total="pageCount"
+                :pageSize="2"
+                :current="curPage"
+                @on-change="changePage"
+                >
+            </PageNav>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
@@ -27,6 +33,7 @@
         data() {
             return {
                 loading: false,
+                curPage: 1
             }
         },
         watch: {
@@ -40,19 +47,30 @@
         methods: {
             fetchData(store) {
                 let query = store.state.route.query;
-                this.loading = true;
+                this.loading = true;                
                 return store.dispatch('LOAD_ARTICLE_LIST', query || {}).then(() => {
                     this.loading = false;
+                })
+            },
+
+            changePage(page) {
+                let query = this.$store.state.route.query;
+                if (query) {
+                    query = {
+                        category: query.category,
+                        page: page
+                    }
+                }
+                this.$router.push({ name: 'articles', query: query })
+                return this.$store.dispatch('LOAD_ARTICLE_LIST', query || {}).then(() => {
+                    this.loading = false;
+                    this.curPage = page;
                 })
             }
         },
         computed: {
             articles() {
                 return this.$store.state.items;
-            },
-            curPage() {
-                // return this.$store.state.curPage;
-                return 1
             },
             pageCount() {
                 return this.$store.state.total_count;

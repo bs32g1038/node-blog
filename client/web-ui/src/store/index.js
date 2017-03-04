@@ -37,7 +37,6 @@ export default new Vuex.Store({
             if (state.init.existed) {
                 return Promise.resolve();
             }
-            state.init.existed = true;
             return api.loadInitData().then((data) => {
                 commit('SET_INIT', data)
             })
@@ -47,22 +46,18 @@ export default new Vuex.Store({
                 commit('SET_LIST', data);
             }).then(() => dispatch('LOAD_INIT_DATA'));
         },
-        // loadSearchList({ commit, dispatch }, params) {
-        //     return api.loadSearchList(params).then((data) => {
-        //         commit('set_postList', data)
-        //     }).then(() => dispatch('loadInitData'));
-        // },
+        LOAD_SEARCHE_LIST({ commit, dispatch }, params) {
+            return api.loadSearchList(params).then((data) => {
+                commit('SET_LIST', data)
+            }).then(() => dispatch('LOAD_INIT_DATA'));
+        },
         LOAD_ABOUT({ commit, dispatch }) {
             return api.loadAbout().then((data) => {
                 commit('SET_ITEM', data)
-            }).then(() => dispatch('loadInitData'));
+            }).then(() => dispatch('LOAD_INIT_DATA'));
         },
-        // closeErrorMsg({ commit }) {
-        //     commit('set_errorMsg');
-        //     return Promise.resolve();
-        // },
-        loadMenuId({ commit }, menuId) {
-            commit('set_menuId', menuId);
+        LOAD_MENU_ID({ commit }, menuId) {
+            commit('SET_MENU_ID', menuId);
             return Promise.resolve();
         }
     },
@@ -75,43 +70,24 @@ export default new Vuex.Store({
             state.item = data;
         },
         SET_INIT(state, data) {
-            state.categories = data.categories;
-            state.user = data.user;
-            state.links = data.links;
-            state.site = data.setting;
+            state.init.existed = true;            
+            state.init.categories = data.categories;
+            state.init.user = data.user;
+            state.init.links = data.links;
+            state.init.site = data.setting;
         },
-        set_errorMsg(state) {
-            state.success = true;
-        },
-        set_menuId(state, menuId) {
+        SET_MENU_ID(state, menuId) {
             state.menuId = menuId;
         }
     },
     getters: {
-        postList: (state) => state.postList,
-        postCount: (state) => state.post_count,
-        guestbooks: (state) => state.guestbooks,
-        // curPage: (state) => {
-        //    cur_page = state.curPage
-        // },
         pageCount: (state) => {
             let len = state.items.length;
             let per_page = 1
             if (len >= 0) {
                 per_page = len;
             }
-            console.log(per_page)
             return Math.ceil(state.total_count / per_page)
         },
-        cats: (state) => state.cats,
-        user: (state) => state.user,
-        links: (state) => state.links,
-        site: (state) => state.site,
-        comments: (state) => state.comments,
-        error_msg: (state) => state.error_msg,
-        success: (state) => state.success,
-        init: (state) => state.init,
-        about: (state) => state.about,
-        menuId: (state) => state.menuId
     }
 })

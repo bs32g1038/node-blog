@@ -5,13 +5,17 @@
             <ul class="entries-box" v-if="postList.length > 0" :key="$route.fullPath">
                 <item v-for="item in postList" :key="item._id" :item="item"></item>
             </ul>
-            <PageNav :url='pageNavUrl' :curPage="curPage" :pageCount="pageCount"></PageNav>
+            <PageNav 
+                :current="curPage" 
+                :total="totalCount"
+                @on-change="changePage"
+            ></PageNav>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
     </div>
 </template>
 <script>
-    import Item from '../components/DocListItem.vue'
+    import Item from '../components/ArticleListItem.vue'
     import PageNav from '../components/PageNav.vue'
     import Spinner from '../components/Spinner.vue'
     import ErrorMessage from '../components/ErrorMessage.vue'
@@ -27,7 +31,7 @@
         data() {
             return {
                 loading: false,
-                pageNavUrl: ''
+                curPage: 1
             }
         },
         beforeMount() {
@@ -36,29 +40,30 @@
         methods: {
             fetchData(store) {
                 this.loading = true;
-                var key = store.state.route.query.key;
-                var page = store.state.route.query.page;
-                return store.dispatch('loadSearchList', {
-                    key: key,
-                    page: page
-                }).then(() => {
-                    this.pageNavUrl = '/search?key=' + key + '&page=';
+                let query = store.state.route.query;
+                return store.dispatch('LOAD_SEARCHE_LIST', query).then(() => {
                     this.loading = false;
+                });
+            },
+            changePage(page) {
+                this.loading = true;
+                let query = this.$store.state.route.query;
+                query && (query.page = page)
+                return this.$store.dispatch('LOAD_SEARCHE_LIST', query).then(() => {
+                    this.loading = false;
+                    this.curPage = page
                 });
             }
         },
         computed: {
             postList() {
-                return this.$store.state.postList
+                return this.$store.state.items
             },
-            curPage() {
-                return this.$store.state.curPage
-            },
-            pageCount() {
-                return this.$store.state.pageCount
+            totalCount() {
+                return this.$store.state.total_count
             },
             success() {
-                return this.$store.state.success
+                return true
             },
             errorMsg() {
                 return this.$store.state.error_msg
@@ -68,7 +73,7 @@
             return this.methods.fetchData(store);
         },
         created() {
-            this.$store.dispatch('loadMenuId', 1)
+            this.$store.dispatch('LOAD_MENU_ID', 1)
         }
     }
 </script>

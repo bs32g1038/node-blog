@@ -5,8 +5,12 @@
             <ul class="guestbook-list" v-if="success && guestbooks.length > 0" :key="$route.fullPath">
                 <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
             </ul>
-            <PageNav url='/guestbook/' :curPage="curPage" :pageCount="pageCount"></PageNav>
-            <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ guestbookCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
+            <PageNav 
+                :current="curPage" 
+                :total="totalCount"
+                @on-change="changePage"
+            ></PageNav>
+            <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">&nbsp;{{ totalCount }}&nbsp;</strong>条留言，在这里留下你的足迹</p>
             <CommentBox url="/api/guestbook/add"></CommentBox>
         </div>
         <ErrorMessage :error="errorMsg" key="error" v-else></ErrorMessage>
@@ -31,6 +35,7 @@
         data() {
             return {
                 loading: false,
+                curPage: 1
             }
         },
         watch: {
@@ -49,20 +54,24 @@
                 }).then(() => {
                     this.loading = false;
                 });
+            },
+            changePage(page) {
+                return this.$store.dispatch('LOAD_GUESTBOOK_LIST', {
+                    page: page
+                }).then(() => {
+                    this.loading = false;
+                    this.curPage = page;
+                });
             }
         },
         computed: {
             guestbooks() {
                 return this.$store.state.items
             },
-            curPage() {
-                return 1
-                // return this.$store.state.curPage
+            pageSize() {
+                return this.$store.state.items.length
             },
-            pageCount() {
-                return this.$store.state.pageCount
-            },
-            guestbookCount() {
+            totalCount() {
                 return this.$store.state.total_count
             },
             success() {
@@ -77,7 +86,7 @@
             return this.methods.fetchData(store);
         },
         created() {
-            this.$store.dispatch('loadMenuId', 2)
+            this.$store.dispatch('LOAD_MENU_ID', 2)
         }
     }
 </script>

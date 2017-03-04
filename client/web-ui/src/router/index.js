@@ -7,31 +7,23 @@ export default new VueRouter({
     mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: [
-        // {
-        //     path: "/search",
-        //     component: require('../views/search.vue')
-        // },
+        {
+            path: "/search",
+            component: require('../views/Search.vue')
+        },
         {
             path: "/",
             component: require('../views/index.vue'),
             children: [
-                // {
-                //     path: "/category/:category/:page(\\d+)?",
-                //     component: require('../views/category.vue')
-                // },
                 {
                     path: '',
                     component: require('../views/ArticleList.vue')
                 },
                 {
                     path: '/articles',
-                    name: 'article-list',
+                    name: 'articles',
                     component: require('../views/ArticleList.vue')
                 },
-                // {
-                //     path: "/posts/:page(\\d+)?",
-                //     component: require('../views/ArticleList.vue')
-                // }
             ]
         },
         {
@@ -51,6 +43,5 @@ export default new VueRouter({
         //     path: "*",
         //     component: require('../views/page_404.vue')
         // }
-
     ]
 })

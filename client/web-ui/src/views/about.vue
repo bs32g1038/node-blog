@@ -53,7 +53,7 @@
             return this.methods.fetchData(store);
         },
         created() {
-            this.$store.dispatch('loadMenuId', 3)
+            this.$store.dispatch('LOAD_MENU_ID', 3)
         }
     }
 </script>

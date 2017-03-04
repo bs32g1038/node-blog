@@ -68,7 +68,7 @@
             return this.methods.fetchData(store)
         },
         created() {
-            this.$store.dispatch('loadMenuId', 1)
+            this.$store.dispatch('LOAD_MENU_ID', 1)
         }
     }
 </script>

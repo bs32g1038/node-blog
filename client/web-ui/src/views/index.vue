@@ -1,12 +1,12 @@
 <template>
     <div class="clearfix">
         <ul class="actions category">
-            <li :class="$route.params.category ? 'action' :  'action a'">
+            <li :class="$route.query.category ? 'action' :  'action a'">
                 <router-link :to="'/'">全部</router-link>
             </li>
-            <li v-for="item in cats" :key="item.id" :item="item" :class="$route.params.category == item.alias  ? 'action a' :  'action'">
+            <li class="action" v-for="item in cats" :key="item.id" :item="item" :class="$route.query.category == item.alias  ? 'a' :  ''">
                 <span class="subforum_pipe">|</span>
-                <router-link :to='{ name: "article-list", query: { category: item.alias }}'>{{ item.name }}
+                <router-link :to='{ name: "articles", query: { category: item.alias }}'>{{ item.name }}
                 </router-link>
             </li>
         </ul>
@@ -16,11 +16,11 @@
 <script>
     export default {
         created() {
-            this.$store.dispatch('loadMenuId', 1);
+            this.$store.dispatch('LOAD_MENU_ID', 1);
         },
         computed: {
             cats() {
-                return this.$store.state.categories
+                return this.$store.state.init.categories
             }
         }
     }

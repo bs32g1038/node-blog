@@ -26,12 +26,11 @@ export default {
         let url = '/guestbooks'
         return this.fetchData(url);
     },
-    // loadSearchList({ key, page }) {
-    //     page = page || 1;
-    //     key = key || '';
-    //     let url = encodeURI(this.base_url + "/post/search?" + 'key=' + key + '&page=' + page);
-    //     return this.fetchData(url);
-    // },
+    loadSearchList({ key = '', page = 1 }) {
+        console.log(key)
+        let url = encodeURI("/search?key=" + key + '&page=' + page);
+        return this.fetchData(url);
+    },
     loadAbout() {
         return this.fetchData('/abouts/admin');
     }

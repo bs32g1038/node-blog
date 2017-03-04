@@ -641,7 +641,7 @@ ul {
     border: none;
     -ms-flex-align: center;
     -ms-grid-row-align: center;
-        align-items: center;
+    align-items: center;
     margin: 0 .25em;
     padding: 0 9px;
     height: 25px;
@@ -677,7 +677,21 @@ ul {
     padding-top: 10px;
     padding-bottom: 10px;
     color: #bbb;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
 }
+
+.page-nav li {
+    display: inline;
+    line-height: 25px
+}
+
+
+/*.page-nav li a{
+    border: 1px solid #ccc
+} */
 
 .page-nav .text {
     font-size: 12px;
@@ -686,12 +700,17 @@ ul {
 .page-nav .action {
     text-align: center;
     font-size: 14px;
-    line-height: 25px;
     cursor: pointer;
     display: inline-block;
-    margin: 0 3px 0;
-    width: 18px;
-    height: 20px;
+    height: 24px;
+    line-height: 24px;
+    min-width: 24px;
+    border-radius: 3px;
+}
+
+.page-nav .active {
+    background-color: #39f;
+    color: #fff
 }
 
 

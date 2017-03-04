@@ -97,20 +97,17 @@
         methods: {
             search() {
                 this.$router.push('/search?key=' + this.search_key);
-                return this.$store.dispatch('loadSearchList', {
-                    key: this.search_key
-                });
             }
         },
         computed: {
             user() {
-                return this.$store.getters.user
+                return this.$store.state.init.user
             },
             links() {
-               return this.$store.getters.links
+               return this.$store.state.init.links
             },
             site() {
-                return this.$store.state.site
+                return this.$store.state.init.site
             },
             menuId() {
                 return this.$store.state.menuId
