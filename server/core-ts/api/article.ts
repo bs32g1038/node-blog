@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-04 19:20:41
+ * @Last Modified time: 2017-03-05 19:16:59
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -19,7 +19,7 @@ export default class ArticleApiController {
     static async getArticleList(req, res, next) {
         let
             page: number = Number(req.query.page) || 1,
-            per_page: number = Number(req.query.per_page) || 2,
+            per_page: number = Number(req.query.per_page) || 10,
             category_alias: string = String(req.query.category) || 'all',
             query: IArticleEntity = { is_deleted: false },
             opt: IBaseListOption = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
@@ -28,8 +28,11 @@ export default class ArticleApiController {
             if (category_alias !== 'all') {
                 let categoryService = new CategoryService();
                 let category: ICategoryEntity = await categoryService.getByAlias(category_alias);
-                query.category = category._id;
+                if(category){
+                    query.category = category._id;
+                }
             }
+            console.log(query)
             let result = await articleService.getList(query, opt);
             // req.setHeaderLink({
             //   next: 'http://127.0.0.1/api/admin/articles?page=1',
@@ -48,10 +51,14 @@ export default class ArticleApiController {
         try {
             let articleService = new ArticleService();
             let article: IArticleEntity = await articleService.getFullById(req.params.id);
-            let commentService = new CommentService();
-            let cmtRes = await commentService.getFullList({ article: article._id, pass: true }, {});
-            article.comments = cmtRes.items;
-            res.json(article);
+            if (article) {
+                let commentService = new CommentService();
+                let cmtRes = await commentService.getFullList({ article: article._id, pass: true }, {});
+                article.comments = cmtRes.items;
+                res.json(article);
+            }else{
+                next();
+            }
         } catch (error) {
             return next(error)
         }

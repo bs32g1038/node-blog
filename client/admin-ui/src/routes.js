@@ -14,18 +14,19 @@ export default [{
     path: '/admin/user/login',
     component: UserLogin
 }, {
-    path: '/',
+    path: '/admin',
     component: Main,
     indexRoute: { component: ArticleList },
     childRoutes: [
-        { path: "admin/article/:id/edit", component: ArticleEdit },
-        { path: "admin/article/add", component: ArticleEdit },
-        { path: "admin/category/list", component: CategoryList },
-        { path: "admin/comment/list", component: CommentList },
-        { path: "admin/guestbook/list", component: GuestbookList },
-        { path: "admin/user/:account", component: UesrBaseInfoEdit },
-        { path: "admin/about/:id", component: AboutEdit },
-        { path: "admin/setting/:id", component: BaseSettingEdit },
-        { path: "admin/link/list", component: LinkList },
+        { path: "articles", component: ArticleList },        
+        { path: "article/:id/edit", component: ArticleEdit },
+        { path: "article/add", component: ArticleEdit },
+        { path: "category/list", component: CategoryList },
+        { path: "comment/list", component: CommentList },
+        { path: "guestbook/list", component: GuestbookList },
+        { path: "user/:account", component: UesrBaseInfoEdit },
+        { path: "about/:id", component: AboutEdit },
+        { path: "setting/:id", component: BaseSettingEdit },
+        { path: "link/list", component: LinkList },
     ]
 }]

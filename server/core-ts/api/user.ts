@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 08:59:39
+ * @Last Modified time: 2017-03-05 19:03:27
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -53,9 +53,7 @@ export default class UserApiController {
         }
         if (user.account === 'bs32g1038' && user.password === 'admin') {
             req.session.user = user;
-            res.status(HttpStatusCode.HTTP_CREATED);
-            return res.json()
-            // await next();
+            return res.status(HttpStatusCode.HTTP_CREATED).json()
         }
         res.json({ code: '10000', message: '登录失败' })
     }

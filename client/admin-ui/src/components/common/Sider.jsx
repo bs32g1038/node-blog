@@ -56,7 +56,7 @@ const sider = React.createClass({
                     <SubMenu key="sub1" title={<span> <i className="fa fa-edit fa-fw" />
                         <span className="nav-text">文章管理</span></span>}>
                         <Menu.Item key="1">
-                            <Link to="/"><i className="fa fa-file fa-fw" />文章列表</Link>
+                            <Link to="/admin/articles"><i className="fa fa-file fa-fw" />文章列表</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
                             <Link to="/admin/category/list"> <i className="fa fa-folder fa-fw" />分类列表</Link>

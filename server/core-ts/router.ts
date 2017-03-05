@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-01-17 15:48:46 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-25 08:47:53
+ * @Last Modified time: 2017-03-05 13:44:14
  */
 
 // import logUtil = require('./helpers/log_util');
@@ -22,8 +22,8 @@ import indexRoute from './routes/index';
 // const comment = require('./routes/comment');
 // import JsonResponse from './middlewares/JsonResponse';
 // import ResponsePaginationLink from './middlewares/ResponsePaginationLink'
-// import GlobalResponseHeader from './middlewares/GlobalResponseHeader';
+import GlobalResponseHeader from './middlewares/GlobalResponseHeader';
 export default function (app) {
-
+  app.use(GlobalResponseHeader)
   app.use(indexRoute);
 }

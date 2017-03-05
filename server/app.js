@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cors = require('cors')
+var cors = require('cors');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var assert = require('assert');
@@ -12,6 +12,8 @@ var config = require('./config/config');
 var router = require('./app/router').default;
 
 var app = express();
+
+app.set('json spaces', 2);//调整json数据格式，开发使用
 
 app.use(morgan('dev'));
 
@@ -40,6 +42,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(cors())
 router(app);
 
+/**
+ * 处理404错误
+ */
+app.use(function(req, res, next) {
+    res.status(404).json({
+        message: 'Not Found'
+    });
+});
 
 app.use(function(err, req, res, next) {
     console.error(err);

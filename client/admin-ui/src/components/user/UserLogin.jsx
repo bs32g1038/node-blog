@@ -29,7 +29,7 @@ const UserBaseInfoForm = Form.create()(React.createClass({
                                 message: '操作提示',
                                 description: '登录成功！',
                             });
-                            self.props.router.push('/');
+                            self.props.router.push('/admin');
                         }
                     })
                     .catch(function (error) {

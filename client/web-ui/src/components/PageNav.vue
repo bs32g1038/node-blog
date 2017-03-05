@@ -27,7 +27,7 @@
             },
             pageSize: {            // 每页显示条数
                 type: Number,
-                default: 2
+                default: 10
             },
             current: {            // 当前页码
                 type: Number,

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:03:19
+ * @Last Modified time: 2017-03-05 14:23:49
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -16,11 +16,13 @@ import HttpStatusCode from '../helpers/HttpStatusCode';
 export default class GuestbookApiController {
 
     static async getGuestbookList(req, res, next) {
+        let
+            page: number = Number(req.query.page) || 1,
+            per_page: number = Number(req.query.per_page) || 10,
+            opt: IGuestbookListOption = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
         let guestbookService = new GuestbookService();
         try {
-
-
-            let results = await guestbookService.getList({}, { sort: { create_at: -1 } });
+            let results = await guestbookService.getList({}, opt);
             res.json({
                 total_count: results.totalItems,
                 items: results.items
