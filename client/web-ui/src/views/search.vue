@@ -4,7 +4,7 @@
     <ul class="entries-box" v-if="articles && articles.length > 0" :key="$route.fullPath">
       <item v-for="item in articles" :key="item._id" :item="item"></item>
     </ul>
-    <PageNav v-if="pageSize > 0" :current="curPage" :total="totalCount" @on-change="changePage"></PageNav>
+    <PageNav v-if="articles && articles.length > 0" :current="curPage" :total="totalCount" @on-change="changePage"></PageNav>
     <InfoTip v-if="articles && articles.length === 0"></InfoTip>
   </div>
 </template>
@@ -55,9 +55,6 @@
       },
       totalCount() {
         return this.$store.state.total_count
-      },
-      pageSize() {
-        return this.$store.state.items.length
       }
     },
     preFetch: function (store) {

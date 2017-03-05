@@ -1,10 +1,10 @@
 <template>
   <div>
     <spinner :show="loading"></spinner>
-    <ul class="entries-box clearfix" v-if="articles || articles.length > 0" :key="$route.fullPath">
+    <ul class="entries-box clearfix" v-if="articles && articles.length > 0" :key="$route.fullPath">
       <item v-for="item in articles" :key="item._id" :item="item"></item>
     </ul>
-    <PageNav v-if="pageSize > 0" :total="totalCount" :pageSize="pageSize" :current="curPage"
+    <PageNav v-if="articles && articles.length > 0" :total="totalCount" :current="curPage"
       @on-change="changePage"></PageNav>
     <InfoTip v-if="articles && articles.length === 0"></InfoTip>
   </div>
@@ -39,28 +39,37 @@
     },
     methods: {
       fetchData(store) {
-        let query = store.state.route.query;
+        let page = store.state.route.query.page;
+        let category = store.state.route.params.category;
         this.loading = true;
-        return store.dispatch('LOAD_ARTICLE_LIST', query || {}).then(() => {
+        return store.dispatch('LOAD_ARTICLE_LIST', {
+          category: category,
+          page: page
+        }).then(() => {
           this.loading = false;
+          this.curPage = page;          
         })
       },
       changePage(page) {
-        let query = this.$store.state.route.query;
-        if (query) {
-          query = {
-            category: query.category,
-            page: page
-          }
+        let category = this.$store.state.route.params.category;
+        if (category) {
+          this.$router.push({
+            name: 'category-articles',
+            params: {
+              category: category
+            },
+            query: {
+              page: page
+            }
+          })
+        } else {
+          this.$router.push({
+            name: 'articles',
+            query: {
+              page: page
+            }
+          })
         }
-        this.$router.push({
-          name: 'articles',
-          query: query
-        })
-        return this.$store.dispatch('LOAD_ARTICLE_LIST', query || {}).then(() => {
-          this.loading = false;
-          this.curPage = page;
-        })
       }
     },
     computed: {
@@ -69,9 +78,6 @@
       },
       totalCount() {
         return this.$store.state.total_count;
-      },
-      pageSize() {
-        return this.$store.state.items.length
       }
     },
     preFetch: function (store) {

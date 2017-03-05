@@ -1,7 +1,7 @@
 <template>
   <div>
     <spinner :show="loading"></spinner>
-    <ArticleItem v-if="article" :post="article"></ArticleItem>
+    <ArticleItem v-if="article" :item="article"></ArticleItem>
     <p v-if="article" class="comment-list-tip">华丽分割线</p>
     <CommentList v-if="article" :comments="article.comments" :article_id="article._id"></CommentList>
     <CommentBox v-if="article" url="/comments" :article_id="article._id"></CommentBox>

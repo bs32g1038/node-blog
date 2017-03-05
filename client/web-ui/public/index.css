@@ -1406,40 +1406,7 @@ pre .val {
 .info-tip {
     padding: 10px
 }
-
-
-
-/*********************S404页面*************************/
-
-.error {
-    text-align: center;
-    line-height: normal;
-}
-
-.error .error-message .error-type {
-    color: #333;
-    font-size: 90px;
-    font-family: wow, Blizzard, sans-serif;
-}
-
-.error .error-message .error-issue {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.error .error-button {
-    padding: 4px 20px;
-    text-decoration: none;
-    color: #666;
-}
-
-.error .error-button:hover {
-    color: #0088cc;
-}
-
-
-/*********************E404页面*************************/
+/*********************E信息*************************/
 
 .alert {
     padding: 8px 35px 8px 14px;
@@ -1599,9 +1566,6 @@ pre .val {
     .ds-post-main,
     .ds-comment-body .content,
     .markdown p,
-    .error .error-message .error-issue {
-        font-size: 12px
-    }
     .about-title {
         font-size: 14px
     }

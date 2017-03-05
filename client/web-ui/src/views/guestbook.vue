@@ -42,28 +42,27 @@
     },
     methods: {
       fetchData(store) {
+        let page = store.state.route.query.page;
         this.loading = true;
         store.dispatch('LOAD_GUESTBOOK_LIST', {
-          page: store.state.route.params.page
-        }).then(() => {
-          this.loading = false;
-        });
-      },
-      changePage(page) {
-        return this.$store.dispatch('LOAD_GUESTBOOK_LIST', {
           page: page
         }).then(() => {
           this.loading = false;
-          this.curPage = page;
+          this.curPage = page
         });
+      },
+      changePage(page) {
+        this.$router.push({
+          name: 'guestbooks',
+          query: {
+            page: page
+          }
+        })
       }
     },
     computed: {
       guestbooks() {
         return this.$store.state.items
-      },
-      pageSize() {
-        return this.$store.state.items.length
       },
       totalCount() {
         return this.$store.state.total_count

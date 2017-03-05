@@ -24,6 +24,11 @@ export default new VueRouter({
                     name: 'articles',
                     component: require('../views/ArticleList.vue')
                 },
+                {
+                    path: '/category/:category/articles',
+                    name: 'category-articles',
+                    component: require('../views/ArticleList.vue')
+                },
             ]
         },
         {
@@ -33,6 +38,7 @@ export default new VueRouter({
         },
         {
             path: "/guestbooks",
+            name: "guestbooks",
             component: require('../views/Guestbook.vue')
         },
         {
