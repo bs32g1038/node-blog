@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-05 18:57:52
+ * @Last Modified time: 2017-03-06 15:24:57
  */
 
 import * as express from 'express';
@@ -37,6 +37,7 @@ router.get('/api/search', articleApi.search);
  * 留言路由
  */
 router.get('/api/guestbooks', guestbookApi.getGuestbookList);
+router.post('/api/guestbooks', guestbookApi.save);
 
 
 /**

@@ -27,7 +27,6 @@ export default {
         return this.fetchData(url);
     },
     loadSearchList({ key = '', page = 1, per_page = 10 }) {
-        console.log(key)
         let url = encodeURI("/search?key=" + key + '&page=' + page + '&per_page=' + per_page);
         return this.fetchData(url);
     },

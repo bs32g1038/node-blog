@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-05 14:23:49
+ * @Last Modified time: 2017-03-06 15:23:12
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -57,6 +57,21 @@ export default class GuestbookApiController {
             await guestbookService.updateById(id, doc);
             let guestbook = await guestbookService.getById(id);
             res.json(guestbook);
+        } catch (error) {
+            return next(error)
+        }
+    }
+
+    static async save(req, res, next) {
+        let doc: IGuestbookEntity = {
+            nick_name: req.body.nick_name,
+            content: req.body.content,
+            email: req.body.email
+        }
+        let guestbookService = new GuestbookService();
+        try {
+            let guestbook = await guestbookService.create(doc);
+            res.status(HttpStatusCode.HTTP_CREATED).json(guestbook);
         } catch (error) {
             return next(error)
         }

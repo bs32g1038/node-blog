@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-05 19:16:59
+ * @Last Modified time: 2017-03-06 15:33:24
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -28,7 +28,7 @@ export default class ArticleApiController {
             if (category_alias !== 'all') {
                 let categoryService = new CategoryService();
                 let category: ICategoryEntity = await categoryService.getByAlias(category_alias);
-                if(category){
+                if (category) {
                     query.category = category._id;
                 }
             }
@@ -56,7 +56,7 @@ export default class ArticleApiController {
                 let cmtRes = await commentService.getFullList({ article: article._id, pass: true }, {});
                 article.comments = cmtRes.items;
                 res.json(article);
-            }else{
+            } else {
                 next();
             }
         } catch (error) {
@@ -127,11 +127,13 @@ export default class ArticleApiController {
         let key: string = req.query.key,
             page: number = Number(req.query.page) || 1;
 
-        let query = { title: { $regex: key }, is_deleted: false }
+        let query = { title: { $regex: key }, is_deleted: false },
+            per_page: number = Number(req.query.per_page) || 10,
+            opt: IBaseListOption = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
 
         let articleService = new ArticleService();
         try {
-            let result = await articleService.getList(query, {});
+            let result = await articleService.getList(query, opt);
             res.json({
                 total_count: result.totalItems,
                 items: result.items

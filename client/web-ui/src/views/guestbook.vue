@@ -4,7 +4,7 @@
     <ul class="guestbook-list" v-if="guestbooks && guestbooks.length > 0" :key="$route.fullPath">
       <item v-for="item in guestbooks" :key="item._id" :item="item"></item>
     </ul>
-    <PageNav v-if="pageSize > 0" :current="curPage" :total="totalCount" @on-change="changePage"></PageNav>
+    <PageNav v-if="guestbooks && guestbooks.length > 0" :current="curPage" :total="totalCount" @on-change="changePage"></PageNav>
     <InfoTip v-if="guestbooks && guestbooks.length === 0"></InfoTip>
     <p class="tc state"><i class="fa fa-comment fa-fw"></i>共有<strong class="text-blue">{{ totalCount }}</strong>条留言，在这里留下你的足迹</p>
     <CommentBox url="/guestbooks"></CommentBox>
