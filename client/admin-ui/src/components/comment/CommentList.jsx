@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router'
-import { Layout, Breadcrumb, Table, Button, Form, Popconfirm, notification } from 'antd';
-const FormItem = Form.Item;
+import { Layout, Breadcrumb, Table, Button, Popconfirm, notification } from 'antd';
 const { Content } = Layout;
 import axios from '../../utils/axios.js';
 import ReplyCommentModal from './ReplyCommentModal';
@@ -135,7 +133,7 @@ const content = React.createClass({
             if (err) {
                 return;
             }
-            let base_url = 'http://127.0.0.1/api/admin/comments';
+            let base_url = '/api/admin/comments';
             axios.post(base_url, values).then((res) => {
                 form.resetFields();
                 let oldData = this.state.data;

@@ -24,7 +24,6 @@ export default [{
         { path: "category/list", component: CategoryList },
         { path: "comment/list", component: CommentList },
         { path: "guestbook/list", component: GuestbookList },
-        { path: "user/:account", component: UesrBaseInfoEdit },
         { path: "about/:id", component: AboutEdit },
         { path: "setting/:id", component: BaseSettingEdit },
         { path: "link/list", component: LinkList },

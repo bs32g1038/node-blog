@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-06 15:24:57
+ * @Last Modified time: 2017-03-07 14:42:57
  */
 
 import * as express from 'express';
@@ -23,6 +23,8 @@ import commentApi from '../api/comment';
 import guestbookApi from '../api/guestbook';
 import aboutApi from '../api/about';
 
+//存储文件接口（包括七牛和本地上传）
+import uploadSingle from '../helpers/StoreFile';
 
 /**
  * 文章路由
@@ -49,7 +51,7 @@ router.get('/api/abouts/admin', aboutApi.getAbout);
 
 /**********************************************************************
  * 
- * 后台api路由控制
+ * 后台路由控制
  * 
  ***********************************************************************/
 
@@ -57,15 +59,28 @@ router.get('/api/abouts/admin', aboutApi.getAbout);
 /**
  * 用户路由，控制过滤非法登入
  */
+
+router.get('/admin/user/login', function (req, res, next) {
+    res.render('admin', {});
+})
+
 router.post('/api/admin/sessions', userApi.login);
 
 router.use(function (req: IRouterRequest, res, next) {
     var url = req.originalUrl;
-    if (url != "/api/admin/create-session" && !req.session.user && (url.indexOf('admin') != -1)) {
+    if (!req.session.user && (url.indexOf('/api/admin') != -1)) {
         return res.json({ code: '', message: '你没有权限！' });
+    }
+    if (!req.session.user && (url.indexOf('/admin') != -1)) {
+        // return res.json({ code: '', message: '你没有权限！' });
+        return res.redirect('/admin/user/login');
     }
     next();
 });
+
+router.use('/admin', function (req, res, next) {
+    res.render('admin', {});
+})
 
 router.delete('/api/admin/sessions/user', userApi.deleteSession);
 router.get('/api/admin/users/:account', userApi.getUserByAccount);
@@ -123,5 +138,10 @@ router.put('/api/admin/settings/:id', settingApi.update);
  */
 router.get('/api/admin/abouts/:id', aboutApi.getAbout);
 router.put('/api/admin/abouts/:id', aboutApi.update);
+
+/**
+ * 图片上传路由
+ */
+router.post('/api/admin/medias', uploadSingle);
 
 export default router;

@@ -10,3 +10,5 @@ app
 nginx-1.10.3
 .vscode
 文档.md
+./client/admin-ui/build
+./client/web-ui/dist

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-06 15:33:24
+ * @Last Modified time: 2017-03-07 10:21:19
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -81,7 +81,7 @@ export default class ArticleApiController {
             category: req.body.category,
             from: req.body.from,
             summary: req.body.summary,
-            img_url: req.body.img_url,
+            img_url: req.body.images[0].url,
         }
         let articleService = new ArticleService();
         try {
@@ -100,7 +100,7 @@ export default class ArticleApiController {
             category: req.body.category,
             from: req.body.from,
             summary: req.body.summary,
-            img_url: req.body.img_url,
+            img_url: req.body.images[0].url,
         }
         let articleService = new ArticleService();
         try {

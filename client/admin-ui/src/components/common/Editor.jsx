@@ -23,8 +23,6 @@ export default class Editor extends Component {
     }
 
     render() {
-        console.log(this.props)
-
         // get the default commands, you can pick individual commands if you like, or add your own
         let commands = ReactMdeCommands.getDefaultCommands()
         return (

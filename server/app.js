@@ -13,6 +13,10 @@ var router = require('./app/router').default;
 
 var app = express();
 
+// ejs引擎渲染html文件
+app.set('views', path.join(__dirname, 'views-ejs'));
+app.set('view engine', 'html');
+app.engine('.html', require('ejs').renderFile);
 app.set('json spaces', 2);//调整json数据格式，开发使用
 
 app.use(morgan('dev'));

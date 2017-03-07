@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Layout, Breadcrumb, Radio, Select, Upload, notification } from 'antd';
+import { Form, Input, Button, message, Layout, Breadcrumb, Radio, Select, Upload, notification } from 'antd';
 const FormItem = Form.Item;
 const { Content } = Layout;
 const RadioGroup = Radio.Group;
@@ -21,11 +21,11 @@ const RegistrationForm = Form.create()(React.createClass({
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             //  打印日志，注意清除
-            console.log(err)            
+            console.log(err)
             console.log(values)
             if (!err) {
                 let method = "post";
-                let base_url = 'http://127.0.0.1/api/admin/articles';
+                let base_url = '/api/admin/articles';
                 if (this.props.params.id) {
                     method = "put";
                     base_url += '/' + this.props.params.id;
@@ -61,13 +61,60 @@ const RegistrationForm = Form.create()(React.createClass({
     componentDidMount() {
         this.fetch(this.props.params);
     },
+    handleUpload(info) {
+        let fileList = info.fileList;
+        fileList = fileList.slice(-1);
+        fileList = fileList.map((file) => {
+            if (file.response) {
+                file.url = file.response.url;
+            }
+            return file;
+        });
+        if (info.file.status === 'done') {
+            return message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            return message.error(`${info.file.name} file upload failed.`);
+        }
+        return fileList;
+    },
+    normFile(e) {
+        if (Array.isArray(e)) {
+            return e;
+        }
+        let fileList = e.fileList;
+        fileList = fileList.slice(-1);
+        fileList = fileList.map((file) => {
+            if (file.response) {
+                file.url = file.response.url;
+            }
+            return file;
+        });
+        if (e.file.status === 'done') {
+            message.success(`${e.file.name} file uploaded successfully`);
+        } else if (e.file.status === 'error') {
+            message.error(`${e.file.name} file upload failed.`);
+        }
+        return fileList;
+    },
     render() {
+        let upload = {
+            name: "file",
+            action: "/api/admin/medias",
+            listType: "picture",
+            multiple: false
+        }
+        let fileList = [{
+            uid: -1,
+            name: 'xxx.png',
+            status: 'done',
+            url: this.state.article.img_url,
+        }];
         const { getFieldDecorator } = this.props.form;
         const article = this.state.article || {};
         const category = article.category || {};
         const categoryOptions = this.state.categoryItems.map(category => <Option key={category._id}>{category.name}</Option>);
         return (
-            <Content>
+            <Content >
                 <Breadcrumb>
                     <Breadcrumb.Item>首页</Breadcrumb.Item>
                     <Breadcrumb.Item>文章管理</Breadcrumb.Item>
@@ -125,13 +172,13 @@ const RegistrationForm = Form.create()(React.createClass({
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 4 }}
                     >
-                        {getFieldDecorator('img_url', {
+                        {getFieldDecorator('images', {
+                            initialValue: fileList,
                             valuePropName: 'fileList',
-                            normalize: this.normFile,
+                            getValueFromEvent: this.normFile,
                         })(
-                            <Upload name="logo" action="/upload.do" listType="picture" onChange={this.handleUpload}>
+                            <Upload {...upload}>
                                 <Button><i className="fa fa-arrow-up"></i>点击上传</Button>
-                                <img src={article.img_url} alt="" style={{ height: '120px', width: '170px' }} />
                             </Upload>
                             )}
                     </FormItem>
@@ -166,7 +213,7 @@ const RegistrationForm = Form.create()(React.createClass({
                         <Button type="primary" htmlType="submit" size="large">提交</Button>
                     </FormItem>
                 </Form>
-            </Content>
+            </Content >
         );
     },
 }));

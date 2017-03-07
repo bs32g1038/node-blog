@@ -22,7 +22,7 @@ const UserBaseInfoForm = Form.create()(React.createClass({
             console.log(err)
             console.log(values)
             if (!err) {
-                let base_url = 'http://127.0.0.1/api/admin/abouts/' + this.props.params.id;
+                let base_url = '/api/admin/abouts/' + this.props.params.id;
                 axios.put(base_url, values)
                     .then(function (res) {
                         if (res.status === 200 || res.status === 201) {

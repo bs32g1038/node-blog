@@ -89,7 +89,7 @@ const content = React.createClass({
             if (err) {
                 return;
             }
-            let base_url = 'http://127.0.0.1/api/admin/categories';
+            let base_url = '/api/admin/categories';
             if (values.id) {
                 base_url += ('/' + values.id)
                 axios.put(base_url, values).then((res) => {
