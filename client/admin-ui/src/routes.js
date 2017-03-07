@@ -19,13 +19,14 @@ export default [{
     indexRoute: { component: ArticleList },
     childRoutes: [
         { path: "articles", component: ArticleList },        
-        { path: "article/:id/edit", component: ArticleEdit },
-        { path: "article/add", component: ArticleEdit },
-        { path: "category/list", component: CategoryList },
-        { path: "comment/list", component: CommentList },
-        { path: "guestbook/list", component: GuestbookList },
-        { path: "about/:id", component: AboutEdit },
-        { path: "setting/:id", component: BaseSettingEdit },
-        { path: "link/list", component: LinkList },
+        { path: "articles/:id/edit", component: ArticleEdit },
+        { path: "articles/add", component: ArticleEdit },
+        { path: "categorys", component: CategoryList },
+        { path: "comments", component: CommentList },
+        { path: "guestbooks", component: GuestbookList },
+        { path: "users/:account/edit", component: UesrBaseInfoEdit },        
+        { path: "abouts/:id/edit", component: AboutEdit },
+        { path: "settings/:id/edit", component: BaseSettingEdit },
+        { path: "links", component: LinkList },
     ]
 }]

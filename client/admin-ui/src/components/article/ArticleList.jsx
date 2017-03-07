@@ -56,7 +56,7 @@ const columns = [{
         <span>
             <a href="#"><i className="fa fa fa-thumbs-o-up fa-fw"></i>推荐</a>
             <span className="ant-divider" />
-            <Link to={'/admin/article/' + record._id + '/edit'}><i className="fa fa-edit fa-fw"></i>修改</Link>
+            <Link to={'/admin/articles/' + record._id + '/edit'}><i className="fa fa-edit fa-fw"></i>修改</Link>
             <span className="ant-divider" />
             <a href="#"><i className="fa fa-trash-o fa-fw"></i>删除</a>
         </span>

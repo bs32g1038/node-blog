@@ -59,10 +59,10 @@ const sider = React.createClass({
                             <Link to="/admin/articles"><i className="fa fa-file fa-fw" />文章列表</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Link to="/admin/category/list"> <i className="fa fa-folder fa-fw" />分类列表</Link>
+                            <Link to="/admin/categorys"> <i className="fa fa-folder fa-fw" />分类列表</Link>
                         </Menu.Item>
                         <Menu.Item key="3">
-                            <Link to="/admin/comment/list"><i className="fa fa-comment fa-fw" />评论列表</Link>
+                            <Link to="/admin/comments"><i className="fa fa-comment fa-fw" />评论列表</Link>
                         </Menu.Item>
                         <Menu.Item key="4">
                             <i className="fa fa-trash-o fa-fw" />
@@ -72,18 +72,18 @@ const sider = React.createClass({
                     <SubMenu key="sub2" title={<span><i className="fa fa-book fa-fw" />
                         <span className="nav-text">留言管理</span></span>}>
                         <Menu.Item key="5">
-                            <Link to="/admin/guestbook/list"><i className="fa fa-envelope fa-fw" />留言列表</Link>
+                            <Link to="/admin/guestbooks"><i className="fa fa-envelope fa-fw" />留言列表</Link>
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub3" title={<span><i className="fa fa-user fa-fw" />
                         <span className="nav-text">博主信息</span></span>}>
                         <Menu.Item key="6">
-                            <Link to="/admin/user/bs32g1038">
+                            <Link to="/admin/users/bs32g1038/edit">
                                 <i className="fa fa-info-circle fa-fw" />基础信息
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="7">
-                            <Link to="/admin/about/admin">
+                            <Link to="/admin/abouts/admin/edit">
                                 <i className="fa fa-mortar-board fa-fw" />关于我
                             </Link>
                         </Menu.Item>
@@ -91,7 +91,7 @@ const sider = React.createClass({
                     <SubMenu key="sub4" title={<span><i className="fa fa-globe fa-fw" />
                         <span className="nav-text">友情链接</span></span>}>
                         <Menu.Item key="8">
-                            <Link to="/admin/link/list">
+                            <Link to="/admin/links">
                                 <i className="fa fa-link fa-fw" />友情链接列表
                             </Link>
                         </Menu.Item>
@@ -99,7 +99,7 @@ const sider = React.createClass({
                     <SubMenu key="sub5" title={<span><i className="fa fa-cogs fa-fw" />
                         <span className="nav-text">系统配置</span></span>}>
                         <Menu.Item key="9">
-                            <Link to="/admin/setting/setting">
+                            <Link to="/admin/settings/setting/edit">
                                 <i className="fa fa-cog fa-fw" />基础配置
                             </Link>
                         </Menu.Item>
