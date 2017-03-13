@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-05 19:03:27
+ * @Last Modified time: 2017-03-12 21:10:04
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -61,5 +61,15 @@ export default class UserApiController {
     static deleteSession(req, res, next) {
         req.session.user = null;
         res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
+    }
+
+    static async loginUserInfo(req, res, next) {
+        let userService = new UserService();
+        try {
+            const user = await userService.getByAccount(req.session.user.account);
+            res.json(user);
+        } catch (error) {
+            return next(error)
+        }
     }
 }

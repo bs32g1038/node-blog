@@ -3,6 +3,9 @@ import { Layout, Breadcrumb, Table, Button, notification, Popconfirm } from 'ant
 const { Content } = Layout;
 import axios from '../../utils/axios.js';
 import AddCategoryModal from './AddCategoryModal';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as categoryActions from '../../redux/modules/category'
 const content = React.createClass({
     getInitialState() {
         const columns = [{
@@ -31,7 +34,7 @@ const content = React.createClass({
                     {/*<Button onClick={this.showModal}></Button>*/}
                     <a onClick={() => this.showModal(record._id, record.name, record.alias)}><i className="fa fa-edit fa-fw"></i>修改</a>
                     <span className="ant-divider" />
-                    <Popconfirm title="确定要删除？" onConfirm={() => this.deleteConfirm(record._id, index)} onCancel={() => { }} okText="Yes" cancelText="No">
+                    <Popconfirm title="确定要删除？" onConfirm={() => this.props.action.deleteCategory(record._id)} onCancel={() => { }} okText="Yes" cancelText="No">
                         <a href="#"><i className="fa fa-trash-o fa-fw"></i>删除</a>
                     </Popconfirm>
                 </span>
@@ -41,42 +44,15 @@ const content = React.createClass({
             selectedRowKeys: [],  // Check here to configure the default column
             loading: false,
             data: [],
-            visible: false,
             columns: columns,
             categoryId: '',
             categoryName: '',
             categoryAlias: ''
         };
     },
-    deleteConfirm(id, index) {
-        let base_url = '/api/admin/categories/' + id;
-        axios.delete(base_url).then((res) => {
-            let oldData = this.state.data;
-            oldData.splice(index, 1);
-            this.setState({
-                data: oldData,
-                visible: false
-            });
-            notification.success({
-                message: '操作提示',
-                description: '内容已删除成功！',
-            });
-        });
-    },
     onSelectChange(selectedRowKeys) {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
-    },
-    showModal(_id, name, alias) {
-        this.setState({
-            visible: true,
-            categoryId: _id,
-            categoryName: name,
-            categoryAlias: alias
-        });
-    },
-    handleCancel() {
-        this.setState({ visible: false });
     },
     /**
      * 提交模式对话框中的表单数据 
@@ -84,66 +60,32 @@ const content = React.createClass({
      */
     handleCreate() {
         const form = this.form;
+        const { saveCategory, handleCancel } = this.props.action;
+        console.log(this.props)
         form.validateFields((err, values) => {
             console.log('Received values of form: ', values);
             if (err) {
                 return;
             }
-            let base_url = '/api/admin/categories';
-            if (values.id) {
-                base_url += ('/' + values.id)
-                axios.put(base_url, values).then((res) => {
-                    form.resetFields();
-                    let oldData = this.state.data;
-                    let data = oldData.map(function (item) {
-                        if (item._id === values.id) {
-                            item.name = res.data.name;
-                            item.alias = res.data.alias;
-                        }
-                        return item;
-                    })
-                    this.setState({
-                        data: data,
-                        visible: false
-                    });
-                });
-            } else {
-                axios.post(base_url, values).then((res) => {
-                    form.resetFields();
-                    let oldData = this.state.data;
-                    oldData.unshift(res.data)
-                    this.setState({
-                        data: oldData,
-                        visible: false
-                    });
-                });
-            }
+            let id = values.id;
+            saveCategory(id, values);
+            return handleCancel();
         });
     },
     saveFormRef(form) {
         this.form = form;
     },
-    fetch(params) {
-        this.setState({ loading: true });
-        let base_url = '/api/admin/categories';
-        axios.get(base_url).then((res) => {
-            this.setState({
-                loading: false,
-                data: res.data.items
-            });
-        });
-    },
     componentDidMount() {
-        this.fetch();
+        this.props.action.loadCategories();
     },
     render() {
-        console.log(this.props.router)
-        const { loading, data, selectedRowKeys } = this.state;
+        const { loading, selectedRowKeys } = this.state;
+        const { items, visible } = this.props.categories;
+        const { showModal, handleCancel } = this.props.action;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
         };
-        const hasSelected = selectedRowKeys.length > 0;
         return (
             <Content>
                 <Breadcrumb>
@@ -152,11 +94,11 @@ const content = React.createClass({
                     <Breadcrumb.Item>分类列表</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className='panel'>
-                    <Button type="primary" onClick={() => (this.showModal())}><i className="fa fa-plus-square fa-fw"></i>&nbsp;&nbsp;添加分类</Button>
+                    <Button type="primary" onClick={() => (showModal())}><i className="fa fa-plus-square fa-fw"></i>&nbsp;&nbsp;添加分类</Button>
                     <AddCategoryModal
                         ref={this.saveFormRef}
-                        visible={this.state.visible}
-                        onCancel={this.handleCancel}
+                        visible={visible}
+                        onCancel={handleCancel}
                         onCreate={this.handleCreate}
                         categoryId={this.state.categoryId}
                         categoryName={this.state.categoryName}
@@ -164,11 +106,25 @@ const content = React.createClass({
                     ></AddCategoryModal>
                     <Button type="danger"><i className="fa fa-trash-o fa-fw"></i>&nbsp;&nbsp;批量删除</Button>
                 </div>
-                <Table pagination={false} rowSelection={rowSelection} columns={this.state.columns} dataSource={data} loading={loading} />
+                <Table
+                    rowKey={(record) => (record._id)}
+                    pagination={false}
+                    rowSelection={rowSelection}
+                    columns={this.state.columns}
+                    dataSource={items}
+                    loading={loading} />
             </Content >
         );
     }
 
 })
 
-export default content;
+export default connect(
+    (state) => {
+        console.log(state.categories);
+        return { categories: state.categories };
+    },
+    (dispatch) => ({
+        action: bindActionCreators(categoryActions, dispatch)
+    })
+)(content);

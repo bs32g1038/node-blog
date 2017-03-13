@@ -33,7 +33,7 @@ export default class CategoryApiController {
         let categoryService = new CategoryService();
         try {
             let category = await categoryService.create(doc);
-            req.status(HttpStatusCode.HTTP_CREATED).json(category);
+            res.status(HttpStatusCode.HTTP_CREATED).json(category);
         } catch (error) {
             return next(error)
         }
@@ -60,7 +60,7 @@ export default class CategoryApiController {
         let categoryService = new CategoryService();
         try {
             await categoryService.deleteById(req.params.id);
-            res.status(HttpStatusCode.HTTP_NO_CONTENT);
+            res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
         } catch (error) {
             return next(error)
         }

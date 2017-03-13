@@ -3,7 +3,6 @@ import { Form, Input, Button, Layout, Breadcrumb, notification } from 'antd';
 const FormItem = Form.Item;
 const { Content } = Layout;
 import axios from '../../utils/axios.js';
-import Editor from '../common/Editor';
 
 const UserBaseInfoForm = Form.create()(React.createClass({
     getInitialState() {
@@ -22,7 +21,7 @@ const UserBaseInfoForm = Form.create()(React.createClass({
             console.log(err)
             console.log(values)
             if (!err) {
-                let base_url = 'http://127.0.0.1/api/admin/settings/' + this.props.params.id;
+                let base_url = '/api/admin/users/' + this.props.params.account;
                 axios.put(base_url, values)
                     .then(function (res) {
                         if (res.status === 200 || res.status === 201) {
@@ -43,7 +42,7 @@ const UserBaseInfoForm = Form.create()(React.createClass({
     },
     fetch(params = {}) {
         let self = this;
-        axios.get('/api/admin/settings/' + params.id).then((res) => {
+        axios.get('/api/admin/users/' + params.account).then((res) => {
             self.setState({
                 user: res.data,
             })
@@ -54,110 +53,99 @@ const UserBaseInfoForm = Form.create()(React.createClass({
     },
     render() {
         const { getFieldDecorator } = this.props.form;
-        const setting = this.state.user || {};
+        const user = this.state.user || {};
         return (
             <Content>
                 <Breadcrumb>
                     <Breadcrumb.Item>首页</Breadcrumb.Item>
-                    <Breadcrumb.Item>博客配置管理</Breadcrumb.Item>
-                    <Breadcrumb.Item>基础配置信息编辑</Breadcrumb.Item>
+                    <Breadcrumb.Item>用户管理</Breadcrumb.Item>
+                    <Breadcrumb.Item>用户基础信息编辑</Breadcrumb.Item>
                 </Breadcrumb>
 
                 <Form onSubmit={this.handleSubmit} style={{ marginTop: '20px' }}>
                     <FormItem
-                        label="网站名称"
+                        label="昵称"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_name', {
-                            rules: [{ required: true, message: '网站名称不能为空！', }],
-                            initialValue: setting.site_name
+                        {getFieldDecorator('nick_name', {
+                            rules: [{ required: true, message: '昵称不能为空！', }],
+                            initialValue: user.nick_name
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网站描述"
+                        label="邮箱"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_description', {
+                        {getFieldDecorator('email', {
                             rules: [
-                                { required: true, message: '请填写内容!' },
+                                { required: true, message: '请填写邮箱!' },
                             ],
-                            initialValue: setting.site_description
+                            initialValue: user.email
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网站关键词"
+                        label="位置"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_keywords', {
+                        {getFieldDecorator('location', {
                             rules: [
-                                { required: true, message: '请填写关键词!' },
+                                { required: true, message: '位置不能为空!' },
                             ],
-                            initialValue: setting.site_keywords
+                            initialValue: user.location
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网站Logo"
+                        label="QQ"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_logo', {
-                            rules: [
-                                { required: true, message: '请填写Logo!' },
-                            ],
-                            initialValue: setting.site_logo
+                        {getFieldDecorator('qq', {
+                            initialValue: user.qq
+
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网站备案icp"
+                        label="头像"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_icp', {
-                            rules: [
-                                { required: true, message: '请填写网站备案icp!' },
-                            ],
-                            initialValue: setting.site_icp
+                        {getFieldDecorator('img_url', {
+                            initialValue: user.img_url
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网站域名"
+                        label="格言"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_domain', {
-                            rules: [
-                                { required: true, message: '请填写网站域名!' },
-                            ],
-                            initialValue: setting.site_domain
+                        {getFieldDecorator('motto', {
+                            initialValue: user.motto
                         })(
                             <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem
-                        label="网页头部代码信息"
+                        label="Github"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        {getFieldDecorator('site_header_code', {
-                            rules: [
-                                { required: true, message: '请填写网页头部代码信息!' },
-                            ],
-                            initialValue: setting.site_header_code
+                        {getFieldDecorator('github', {
+                            initialValue: user.github
                         })(
-                            <Input type="textarea" autosize={{ minRows: 6, maxRows: 8 }} />
+                            <Input type="text" />
                             )}
                     </FormItem>
                     <FormItem

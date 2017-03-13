@@ -46,9 +46,10 @@ const AddCategory = Form.create()(
                     >
                         {getFieldDecorator('alias', {
                             rules: [{ required: true, message: '请输入分类别称!' }],
-                            initialValue: categoryAlias
+                            initialValue: categoryAlias,
+
                         })(
-                            <Input />
+                            <Input  />
                             )}
                     </FormItem>
                 </Form>

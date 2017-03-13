@@ -1,52 +1,62 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../../redux/modules/article'
 import { Link } from 'react-router'
 import { Layout, Breadcrumb, Table, Button, Form } from 'antd';
 const FormItem = Form.Item;
 const { Content } = Layout;
-import axios from '../../utils/axios.js';
 
 const columns = [{
     title: "缩略图",
-    key: 'pic',
+    key: 'img_url',
     render: (text, record) => (
-        <img style={{ width: '121px', maxWidth: '100%', height: 'auto' }} src={record.img_url} />
+        <img style={{ width: '121px', maxWidth: '100%', height: 'auto' }} src={record.img_url} alt="" />
     ),
 }, {
     title: '标题',
+    key: 'title',
     dataIndex: 'title',
     render: (text, record) => (<a href={'article/' + record._id} target="_blank">{text}</a>),
 }, {
     title: '发布时间',
+    key: 'create_at',
     dataIndex: 'create_at',
 }, {
     title: '推荐',
+    key: 'recommend',
     dataIndex: 'recommend',
     render: (text, record) => (
         <span>{record.is_recommend ? '是' : '否'}</span>
     )
 }, {
     title: '状态',
+    key: 'state',
     dataIndex: 'state',
     render: (text, record) => (
         <span>{record.state ? '已发布' : '草稿'}</span>
     )
 }, {
     title: '分类',
+    key: 'category',
     dataIndex: 'category',
     render: (text, record) => (
         <span>{record.category && record.category.name}</span>
     )
 }, {
     title: '来源',
+    key: 'from',
     dataIndex: 'from',
     render: (text, record) => (
         <span>{record.from === 1 ? '原创' : '转载'}</span>
     )
 }, {
     title: '浏览',
+    key: 'visit_count',
     dataIndex: 'visit_count',
 }, {
     title: '评论',
+    key: 'comment_count',
     dataIndex: 'comment_count',
 },
 {
@@ -64,66 +74,17 @@ const columns = [{
 }];
 
 const content = React.createClass({
-    getInitialState() {
-        return {
-            selectedRowKeys: [],  // Check here to configure the default column
-            loading: false,
-            data: [],
-            pagination: {}
-        };
-    },
-    start() {
-        this.setState({ loading: true });
-        // ajax request after empty completing
-        setTimeout(() => {
-            this.setState({
-                selectedRowKeys: [],
-                loading: false,
-            });
-        }, 1000);
-    },
-    onSelectChange(selectedRowKeys) {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys });
-    },
-    handleTableChange(pagination, filters, sorter) {
-        const pager = this.state.pagination;
-        pager.current = pagination.current;
-        this.setState({
-            pagination: pager,
-        });
-        this.fetch({
-            per_page: pagination.pageSize,
-            page: pagination.current
-        });
-    },
-    fetch(params) {
-        this.setState({ loading: true });
-        let base_url = '/api/admin/articles';
-        if (params) {
-            base_url += ('?page=' + params.page + '&per_page=' + params.per_page);
-        }
-        var pagination = this.state.pagination;
-        axios.get(base_url).then((res) => {
-            console.log(res.data)
-            pagination.total = res.data.total_count;
-            this.setState({
-                loading: false,
-                data: res.data.items,
-                pagination,
-            });
-        });
-    },
     componentDidMount() {
-        this.fetch();
+        this.props.action.loadArticles();
     },
     render() {
-        const { loading, selectedRowKeys } = this.state;
+        const { loading, items, pagination, selectedRowKeys } = this.props.articles;
+        const { handleTableChange, onSelectChange } = this.props.action;
         const rowSelection = {
             selectedRowKeys,
-            onChange: this.onSelectChange,
+            onChange: onSelectChange,
         };
-        const hasSelected = selectedRowKeys.length > 0;
+        // const hasSelected = selectedRowKeys.length > 0;
         return (
             <Content>
                 <Breadcrumb>
@@ -132,7 +93,7 @@ const content = React.createClass({
                     <Breadcrumb.Item>文章列表</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className='panel'>
-                    <Link to={'admin/article/add'} className="ant-btn ant-btn-primary"><i className="fa fa-plus-square fa-fw"></i>&nbsp;&nbsp;添加文章</Link>
+                    <Link to={'/admin/articles/add'} className="ant-btn ant-btn-primary"><i className="fa fa-plus-square fa-fw"></i>&nbsp;&nbsp;添加文章</Link>
                     <Button type="danger"><i className="fa fa-trash-o fa-fw"></i>&nbsp;&nbsp;批量删除</Button>
                     <div className="fr">
                         <Form inline onSubmit={this.handleSubmit}>
@@ -143,14 +104,26 @@ const content = React.createClass({
                         </Form>
                     </div>
                 </div>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.data}
+                <Table
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={items}
+                    rowKey={(record) => (record._id)}
                     loading={loading}
-                    pagination={this.state.pagination}
-                    onChange={this.handleTableChange} />
+                    pagination={pagination}
+                    onChange={handleTableChange} />
             </Content>
         );
     }
 
 })
 
-export default content;
+export default connect(
+    (state) => {
+        console.log(state.articles);
+        return { articles: state.articles };
+    },
+    (dispatch) => ({
+        action: bindActionCreators(actions, dispatch)
+    })
+)(content);

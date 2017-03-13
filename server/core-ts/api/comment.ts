@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 08:56:28
+ * @Last Modified time: 2017-03-12 20:48:59
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import ICommentEntity from '../models/entity/ICommentEntity';
@@ -30,13 +30,26 @@ export default class CommentApiController {
         }
     }
     static async save(req, res, next) {
-        let doc: ICommentEntity = {
-            nick_name: req.body.nick_name,
-            email: req.body.email,
-            content: req.body.content,
-            reply: req.body.reply_id,
-            article: req.body.article_id,
+        let doc: ICommentEntity;
+        if (req.query.admin) {
+            doc = {
+                nick_name: '冷夜流星',
+                email: 'bs32g1038@163.com',
+                identity: 1,
+                content: req.body.content,
+                reply: req.body.reply_id,
+                article: req.body.article_id,
+            }
+        } else {
+            doc = {
+                nick_name: req.body.nick_name,
+                email: req.body.email,
+                content: req.body.content,
+                reply: req.body.reply_id,
+                article: req.body.article_id,
+            }
         }
+
         let commentService = new CommentService();
         try {
             let comment = await commentService.create(doc);
@@ -68,7 +81,7 @@ export default class CommentApiController {
         let commentService = new CommentService();
         try {
             await commentService.deleteById(req.params.id);
-            res.status(HttpStatusCode.HTTP_NO_CONTENT);
+            res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
         } catch (error) {
             return next(error)
         }

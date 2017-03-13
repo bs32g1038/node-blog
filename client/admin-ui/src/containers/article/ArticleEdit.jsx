@@ -4,80 +4,28 @@ const FormItem = Form.Item;
 const { Content } = Layout;
 const RadioGroup = Radio.Group;
 import Editor from '../common/Editor';
-import axios from '../../utils/axios.js';
-
-const RegistrationForm = Form.create()(React.createClass({
-    getInitialState() {
-        notification.config({
-            top: 60,
-            duration: 4,
-        });
-        return {
-            article: {},
-            categoryItems: []
-        };
-    },
+import * as actions from '../../redux/modules/article'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+const Option = Select.Option;
+const ArticleEdit = Form.create()(React.createClass({
     handleSubmit(e) {
         e.preventDefault();
+        const { saveArticle } = this.props.action;
         this.props.form.validateFieldsAndScroll((err, values) => {
-            //  打印日志，注意清除
-            console.log(err)
-            console.log(values)
             if (!err) {
-                let method = "post";
-                let base_url = '/api/admin/articles';
-                if (this.props.params.id) {
-                    method = "put";
-                    base_url += '/' + this.props.params.id;
-                }
-                axios[method](base_url, values)
-                    .then(function (response) {
-                        if (response.status === 200 || response.status === 201) {
-                            notification['success']({
-                                message: '操作提示',
-                                description: '内容已提交成功！',
-                            });
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                saveArticle(this.props.params.id, values);
             }
-        });
-    },
-    fetch(params = {}) {
-        let self = this;
-        axios.get('/api/admin/articles/' + params.id).then((res) => {
-            var article = res.data;
-            axios.get('/api/admin/categories').then((res) => {
-                let categoryItems = res.data.items;
-                self.setState({
-                    article: article,
-                    categoryItems: categoryItems,
-                })
-            })
         });
     },
     componentDidMount() {
-        this.fetch(this.props.params);
-    },
-    handleUpload(info) {
-        let fileList = info.fileList;
-        fileList = fileList.slice(-1);
-        fileList = fileList.map((file) => {
-            if (file.response) {
-                file.url = file.response.url;
-            }
-            return file;
-        });
-        if (info.file.status === 'done') {
-            return message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            return message.error(`${info.file.name} file upload failed.`);
+        let id = this.props.params.id;
+        if (id) {
+            this.props.action.loadArticle(id);
         }
-        return fileList;
+        this.props.action.loadCategories();
     },
-    normFile(e) {
+    handleUpload(e) {
         if (Array.isArray(e)) {
             return e;
         }
@@ -97,22 +45,24 @@ const RegistrationForm = Form.create()(React.createClass({
         return fileList;
     },
     render() {
+        const { getFieldDecorator } = this.props.form;
+        let { item, categories } = this.props.articles;
+        const article = item || {};
+        categories = categories || [];
         let upload = {
             name: "file",
             action: "/api/admin/medias",
             listType: "picture",
-            multiple: false
+            multiple: false,
+            onRemove: () => false
         }
         let fileList = [{
             uid: -1,
-            name: 'xxx.png',
             status: 'done',
-            url: this.state.article.img_url,
+            url: article.img_url,
         }];
-        const { getFieldDecorator } = this.props.form;
-        const article = this.state.article || {};
         const category = article.category || {};
-        const categoryOptions = this.state.categoryItems.map(category => <Option key={category._id}>{category.name}</Option>);
+        const categoryOptions = categories.map(category => <Option key={category._id}>{category.name}</Option>);
         return (
             <Content >
                 <Breadcrumb>
@@ -175,7 +125,7 @@ const RegistrationForm = Form.create()(React.createClass({
                         {getFieldDecorator('images', {
                             initialValue: fileList,
                             valuePropName: 'fileList',
-                            getValueFromEvent: this.normFile,
+                            getValueFromEvent: this.handleUpload,
                         })(
                             <Upload {...upload}>
                                 <Button><i className="fa fa-arrow-up"></i>点击上传</Button>
@@ -218,4 +168,12 @@ const RegistrationForm = Form.create()(React.createClass({
     },
 }));
 
-export default RegistrationForm
+export default connect(
+    (state) => {
+        console.log(state.articles)
+        return { articles: state.articles };
+    },
+    (dispatch) => ({
+        action: bindActionCreators(actions, dispatch)
+    })
+)(ArticleEdit);

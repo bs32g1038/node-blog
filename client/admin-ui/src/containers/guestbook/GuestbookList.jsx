@@ -39,7 +39,7 @@ const content = React.createClass({
             width: 76,
             render: (text, record, index) => (
                 <span>
-                    <a href="#" onClick={() => this.handlePass(record._id, !record.pass)} > <i className="fa fa fa-eye fa-fw"></i>{record.pass ? '未审核' : '已审核'}</a>
+                    <a href="#" onClick={() => this.handlePass(record._id, !record.pass)} > <i className="fa fa fa-eye fa-fw"></i>{record.pass ? '已审核' : '未审核'}</a>
                     <br />
                     <a href="#" onClick={() => { this.showModal(record) }}><i className="fa fa-reply fa-fw"></i>回复</a>
                     <br />
@@ -113,7 +113,7 @@ const content = React.createClass({
             if (err) {
                 return;
             }
-            let base_url = 'http://127.0.0.1/api/admin/guestbooks/' + values.id + '/reply_content';
+            let base_url = '/api/admin/guestbooks/' + values.id + '/reply_content';
             axios.put(base_url, values).then((res) => {
                 form.resetFields();
                 let items = this.state.data;
@@ -193,7 +193,11 @@ const content = React.createClass({
                 >
 
                 </ReplyGuestbookModal>
-                <Table rowSelection={rowSelection} columns={this.state.columns} dataSource={this.state.data}
+                <Table
+                    rowSelection={rowSelection}
+                    rowKey={(record) => (record._id)}
+                    columns={this.state.columns}
+                    dataSource={this.state.data}
                     loading={loading}
                     pagination={this.state.pagination}
                     onChange={this.handleTableChange} />

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-24 22:10:13 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-07 14:42:57
+ * @Last Modified time: 2017-03-12 21:10:54
  */
 
 import * as express from 'express';
@@ -85,6 +85,7 @@ router.use('/admin', function (req, res, next) {
 router.delete('/api/admin/sessions/user', userApi.deleteSession);
 router.get('/api/admin/users/:account', userApi.getUserByAccount);
 router.put('/api/admin/users/:account', userApi.update);
+router.get('/api/admin/login-user', userApi.loginUserInfo);
 
 /**
  * 文章路由

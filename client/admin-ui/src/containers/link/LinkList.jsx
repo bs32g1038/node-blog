@@ -69,7 +69,7 @@ const content = React.createClass({
             if (err) {
                 return;
             }
-            let base_url = 'http://127.0.0.1/api/admin/links';
+            let base_url = '/api/admin/links';
             if (values.id) {
                 base_url += ('/' + values.id)
                 axios.put(base_url, values).then((res) => {
@@ -157,7 +157,11 @@ const content = React.createClass({
                     link={this.state.link}
                 >
                 </LinkEditModal>
-                <Table rowSelection={rowSelection} columns={this.state.columns} dataSource={this.state.data}
+                <Table
+                    rowKey={(record) => (record._id)}
+                    rowSelection={rowSelection}
+                    columns={this.state.columns}
+                    dataSource={this.state.data}
                     loading={loading}
                     pagination={false}
                 />

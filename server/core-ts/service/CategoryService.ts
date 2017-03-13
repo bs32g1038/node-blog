@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-03 23:48:19 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-01 15:35:46
+ * @Last Modified time: 2017-03-12 12:45:49
  */
 
 import IBaseService from './IBaseService';
@@ -11,7 +11,7 @@ import ICategoryEntity from '../models/entity/ICategoryEntity';
 import CategoryRepository from '../repository/CategoryRepository';
 
 
-export default class ArticleService implements IBaseService<ICategoryEntity, ICatetgoryListOption> {
+export default class CategoryService implements IBaseService<ICategoryEntity, ICatetgoryListOption> {
 
     private _categoryRepository: CategoryRepository;
 

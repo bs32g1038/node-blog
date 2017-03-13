@@ -2,32 +2,42 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-07 16:52:27 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-26 10:32:10
+ * @Last Modified time: 2017-03-12 21:18:46
  */
 
 import { Layout } from 'antd';
 import React from 'react';
 import axios from 'axios';
 
-const { Header  } = Layout;
+const { Header } = Layout;
 
 
 class header extends React.Component {
+    state = {
+        user: {}
+    }
+    componentDidMount() {
+        axios.get('/api/admin/login-user').then(function (res) {
+            console.log(res)
+            this.setState({ user: res.data });
+            // console.log(this.state)
+        })
+    }
 
     render() {
         return (
             <Header className="header" style={{ backgroundColor: '#404040' }}>
-                <a href="/" className="logo">冷夜流星博客管理</a>
+                <a href="/" className="logo">博客后台管理</a>
                 <div className="fr navbar-nav">
                     <ul>
                         <li className="user-menu">
                             <a href="/admin/doc/list">
-                                <img src="https://www.lizc.me/home/images/logo.jpg" className="user-image" alt=""/>
-                                <span className="hidden-xs">冷夜流星-博主</span>
+                                <img src="https://www.lizc.me/home/images/logo.jpg" className="user-image" alt="" />
+                                <span className="hidden-xs">{this.state.user.nick_name}-博主</span>
                             </a>
                         </li>
                         <li>
-                            <a  onClick={()=>(this.handleSignOut())}><i className="fa fa-power-off fa-fw" ></i>注销</a>
+                            <a onClick={() => (this.handleSignOut())}><i className="fa fa-power-off fa-fw" ></i>注销</a>
                         </li>
                     </ul>
                 </div>

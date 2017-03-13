@@ -3,33 +3,24 @@ import { Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 const ReplyComment = Form.create()(
     (props) => {
-        const { visible, onCancel, onCreate, form, comment } = props;
+        const { visible, onCancel, onSubmit, form, guestbook } = props;
         const { getFieldDecorator } = form;
         return (
             <Modal
                 visible={visible}
-                title="回复评论"
+                title="回复留言"
                 okText="提交"
                 onCancel={onCancel}
-                onOk={onCreate}
+                onOk={onSubmit}
             >
                 <Form>
                     <FormItem
                         style={{ display: 'none' }}
                     >
-                        {getFieldDecorator('reply_id', {
-                            initialValue: comment.id
+                        {getFieldDecorator('id', {
+                            initialValue: guestbook.id
                         })(
-                            <Input disabled="true"/>
-                            )}
-                    </FormItem>
-                    <FormItem
-                        style={{ display: 'none' }}
-                    >
-                        {getFieldDecorator('article_id', {
-                            initialValue: comment.article_id
-                        })(
-                            <Input disabled="true"/>
+                            <Input disabled={true}/>
                             )}
                     </FormItem>
                     <FormItem
@@ -37,23 +28,25 @@ const ReplyComment = Form.create()(
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 10 }}
                     >
-                        <Input disabled="true" value={comment.nick_name} />
+                        <Input disabled={true}value={guestbook.nick_name} />
                     </FormItem>
                     <FormItem
                         label="内容"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 16 }}
                     >
-                        <Input value={comment.content} type="textarea" disabled="true" autosize={{ minRows: 1, maxRows: 6 }} />
+                        <Input value={guestbook.content} type="textarea" disabled={true}autosize={{ minRows: 1, maxRows: 6 }} />
                     </FormItem>
                     <FormItem
                         label="回复内容"
                         labelCol={{ span: 4 }}
                         wrapperCol={{ span: 16 }}
                     >
-                        {getFieldDecorator('content')(
+                        {getFieldDecorator('reply_content', {
+                            initialValue: guestbook.reply_content
+                        })(
                             <Input type="textarea" autosize={{ minRows: 6, maxRows: 8 }} />
-                        )}
+                            )}
                     </FormItem>
                 </Form>
             </Modal >
