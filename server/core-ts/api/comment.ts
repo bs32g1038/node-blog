@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-12 20:48:59
+ * @Last Modified time: 2017-03-14 15:34:14
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import ICommentEntity from '../models/entity/ICommentEntity';
@@ -32,6 +32,8 @@ export default class CommentApiController {
     static async save(req, res, next) {
         let doc: ICommentEntity;
         if (req.query.admin) {
+        console.log(req.body)
+            
             doc = {
                 nick_name: '冷夜流星',
                 email: 'bs32g1038@163.com',

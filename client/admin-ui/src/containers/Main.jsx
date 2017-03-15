@@ -1,9 +1,8 @@
 import React from 'react';
 import '../App.css'
 import { Layout } from 'antd';
-import Header from './common/Header';
-import Sider from './common/Sider';
-// import Footer from '../common/Footer';
+import Header from '../components/Header';
+import Sider from '../components/Sider';
 
 const main = React.createClass({
   render() {
@@ -12,7 +11,6 @@ const main = React.createClass({
         <Header></Header>
         <Sider></Sider>
         {this.props.children}
-        {/*<Footer></Footer>*/}
       </Layout>
     );
   }

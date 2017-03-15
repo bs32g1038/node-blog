@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:04:25
+ * @Last Modified time: 2017-03-15 15:23:29
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -46,7 +46,7 @@ export default class LinkApiController {
         let linkService = new LinkService();
         try {
             let link = await linkService.create(doc);
-            req.status(HttpStatusCode.HTTP_CREATED).json(link);
+            res.status(HttpStatusCode.HTTP_CREATED).json(link);
         } catch (error) {
             return next(error)
         }
@@ -72,7 +72,7 @@ export default class LinkApiController {
         let linkService = new LinkService();
         try {
             await linkService.deleteById(req.params.id);
-            res.status(HttpStatusCode.HTTP_NO_CONTENT);
+            res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
         } catch (error) {
             return next(error)
         }

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-09 11:03:35
+ * @Last Modified time: 2017-03-14 13:32:57
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
@@ -117,7 +117,7 @@ export default class ArticleApiController {
         try {
             await articleService.softDeleteById(req.params.id);
             let article = await articleService.getById(req.params.id);
-            res.status(HttpStatusCode.HTTP_NO_CONTENT);
+            res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
         } catch (error) {
             return next(error)
         }
