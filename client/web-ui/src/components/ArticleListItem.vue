@@ -14,7 +14,7 @@
           <div style="color:#d9534f;" class="tag no-pointer" v-if="item.is_recommend">推荐</div>
           <div class="tag no-pointer">{{ item.from == 1 ? '原创' : '转载' }}</div>
           <router-link :to="{ name: 'category-articles', params: { category: item.category && item.category.alias  }}"
-            class="tag">{{ item.category.name }}</router-link>
+            class="tag">{{item.category && item.category.name }}</router-link>
           <div class="tag clean no-pointer">{{ parseTime(item.create_at,"y年m月d日") }}</div>
         </div>
       </div>
@@ -32,9 +32,10 @@
   </li>
 </template>
 
+
 <script>
   export default {
-    name: 'docs-item',
+    // name: 'docs-item',
     props: ['item']
   }
 

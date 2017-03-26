@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:02:11
+ * @Last Modified time: 2017-03-26 15:00:05
  */
 
 import * as  _ from 'lodash';
@@ -11,6 +11,7 @@ import LinkService from '../service/LinkService';
 import CategoryService from '../service/CategoryService';
 import UserService from '../service/UserService';
 import IUserEntity from '../models/entity/IUserEntity';
+import config from '../config';
 
 export default class HomeApiController {
 
@@ -20,7 +21,7 @@ export default class HomeApiController {
         let linkService = new LinkService();
         let categoryService = new CategoryService();
         try {
-            let user: IUserEntity = await userService.getByAccount('bs32g1038');
+            let user: IUserEntity = await userService.getByAccount(config.admin_role.account);
 
             let init = {
                 links: await linkService.getAll(),
@@ -36,6 +37,7 @@ export default class HomeApiController {
                 setting: await settingService.getById('setting'),
                 categories: await categoryService.getAll()
             }
+            console.log(init)
             res.json(init);
         } catch (error) {
 
