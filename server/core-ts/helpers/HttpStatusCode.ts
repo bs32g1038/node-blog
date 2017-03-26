@@ -14,14 +14,12 @@ export default class HttpStatusCode {
     static HTTP_MOVED_PERM = 301;
     static HTTP_MOVED_TEMP = 302;
     static HTTP_BAD_REQUEST = 400;
+    // 用户没有登录
+    static HTTP_UNAUTHORIZED = 401;
     // 没有找到
     static HTTP_NOT_FOUND = 404;
     // 无法处理的请求实体
     static HTTP_UNPROCESSABLE_ENTITY = 422;
     // 内部错误
     static HTTP_INTERNAL_ERROR = 500;
-
 }
-
-
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, notification } from 'antd';
 const FormItem = Form.Item;
-import axios from '../utils/axios.js';
+import axios from 'axios';
 
 const UserBaseInfoForm = Form.create()(React.createClass({
     getInitialState() {
@@ -17,9 +17,6 @@ const UserBaseInfoForm = Form.create()(React.createClass({
         e.preventDefault();
         var self = this;
         this.props.form.validateFieldsAndScroll((err, values) => {
-            //  打印日志，注意清除
-            console.log(err)
-            console.log(values)
             if (!err) {
                 let base_url = '/api/admin/sessions';
                 axios.post(base_url, values)

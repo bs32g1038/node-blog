@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-03 23:48:19 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-23 23:32:01
+ * @Last Modified time: 2017-03-25 23:12:33
  */
 
 import IBaseService from './IBaseService';
@@ -29,6 +29,10 @@ export default class UserService implements IBaseService<IUserEntity, IUserListO
 
     getByAccount(account: string) {
         return this._userRepository.getByAccount(account);
+    }
+
+    checkUser(account: string, password: string) {
+        return this._userRepository.checkUser(account, password);
     }
 
     getById(_id: string) {

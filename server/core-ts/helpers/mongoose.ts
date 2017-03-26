@@ -1,24 +1,18 @@
+/*
+ * @Author: bs32g1038@163.com 
+ * @Date: 2017-03-25 09:24:27 
+ * @Last Modified by: bs32g1038@163.com
+ * @Last Modified time: 2017-03-25 18:32:10
+ */
+
 import * as mongoose from 'mongoose';
-import mongoodbConfig from '../config/mongoodb_config';
-// import logUtil = require('./log_util');
-
-// const mongodb = process.env.NODE_ENV === 'production' ? mongoodbConfig.blog_db :
- const mongodb =  mongoodbConfig.test_db;
-
-//mongodb.user_name + ':' + mongodb.password + '@'
-
-const db = 'mongodb://' +
-  mongodb.host + ":" + mongodb.port + '/' + mongodb.database;
-
-mongoose.connect(db, {
-  server: {
-    poolSize: 20
-  }
-}, function (err) {
-  if (err) {
-    // logUtil.logSys(err);
-    // process.exit(1);
-  }
+import config from '../config';
+import logger from './logger';
+mongoose.connect(config.db.uri, { server: { poolSize: 20 } }, function (err) {
+    if (err) {
+        logger.error(err);
+        process.exit(1);
+    }
 });
 
-export default db;
+

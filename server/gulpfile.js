@@ -122,7 +122,7 @@ gulp.task('compile', function () {
 
 gulp.task('watch', ['compile'], function () {
     return nodemon({
-        script: './bin/www',  // 服务的启动文件
+        script: './app',  // 服务的启动文件
         watch: './core-ts',    // 源代码目录
         tasks: ['compile'], // 在重启服务前需要执行的任务
         ext: 'js ts', // 监听.ts结尾的文件 必须

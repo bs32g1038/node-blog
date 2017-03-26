@@ -36,9 +36,8 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 >         npm install
 
 **3，Run app**
-
->         gulp          // development mode
->         gulp help		// run help
+>         npm run init    // init data must  
+>         npm run dev    // development mode
         
 **项目简介：**
 
@@ -73,8 +72,8 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，运行程序**
 
->         gulp          // 开发模式
->         gulp help		// 运行帮助
+>         npm run init    // 初始化数据必须 
+>         npm run dev    // 开发模式
 
 **Thank you：**
 

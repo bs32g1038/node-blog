@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-12 21:10:04
+ * @Last Modified time: 2017-03-26 13:44:27
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -12,6 +12,7 @@ import UserService from '../service/UserService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
+import { md5 } from '../helpers/util';
 
 export default class UserApiController {
 
@@ -47,20 +48,28 @@ export default class UserApiController {
     }
 
     static async login(req, res, next) {
-        let user: IUserEntity = {
-            account: req.body.account,
-            password: req.body.password
+        let userService = new UserService();
+        try {
+            let user: any = await userService.checkUser(req.body.account, md5(req.body.password));
+            if (!user) {
+                return res.status(401).json({
+                    message: '用户名或密码错误'
+                });
+            }
+            req.session.user = { account: user.account };
+            return res.status(HttpStatusCode.HTTP_CREATED).end()
+        } catch (error) {
+            return next(error)
         }
-        if (user.account === 'bs32g1038' && user.password === 'admin') {
-            req.session.user = user;
-            return res.status(HttpStatusCode.HTTP_CREATED).json()
-        }
-        res.json({ code: '10000', message: '登录失败' })
     }
 
     static deleteSession(req, res, next) {
-        req.session.user = null;
-        res.status(HttpStatusCode.HTTP_NO_CONTENT).json();
+        req.session.destroy(function (err) {
+            if (err) {
+                return next(err)
+            }
+            res.status(HttpStatusCode.HTTP_NO_CONTENT).end();
+        })
     }
 
     static async loginUserInfo(req, res, next) {
@@ -72,4 +81,17 @@ export default class UserApiController {
             return next(error)
         }
     }
+
+    static async checkLogin(req, res, next) {
+        if (req.session.user) {
+            return next()
+        }
+        if (req.path.indexOf('/api') === -1) {
+            return res.redirect('/admin/user/login');
+        }
+        res.status(HttpStatusCode.HTTP_UNAUTHORIZED).json({
+            message: '你还没有登录，请登录后操作！'
+        });
+    }
+
 }
