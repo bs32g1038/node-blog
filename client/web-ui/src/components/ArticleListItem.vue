@@ -35,7 +35,6 @@
 
 <script>
   export default {
-    // name: 'docs-item',
     props: ['item']
   }
 

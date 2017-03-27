@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-01-17 15:48:46 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 13:59:14
+ * @Last Modified time: 2017-03-27 21:34:02
  */
 
 const express = require('express');
@@ -23,7 +23,7 @@ import webRouter from './routes/web';
 
 const app = express();
 
-app.set('views', path.join(__dirname, '../views-ejs'));        // ejs引擎渲染html文件
+app.set('views', path.join(__dirname, '../views'));        // ejs引擎渲染html文件
 app.set('view engine', 'html');
 app.engine('.html', require('ejs').renderFile);
 app.use(bodyParser.json({

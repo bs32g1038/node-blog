@@ -18,7 +18,7 @@ app.get('*', function(req, res) {
     res.end();
 });
 
-const port = 6000
+const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`server started at localhost:${port}`)
 })

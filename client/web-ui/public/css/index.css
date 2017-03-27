@@ -251,7 +251,7 @@ textarea {
 body {
     position: relative;
     color: #333;
-    background: url(/public/images/body_repeat.png);
+    background: url(/web/images/body_repeat.png);
     font: 14px/26px Hiragino Sans GB, Microsoft Yahei, SimSun, Helvetica, Arial, Sans-serif;
 }
 
