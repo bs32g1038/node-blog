@@ -1,14 +1,9 @@
 *.log
-npm-debug.log*
-# Dependency directories
 node_modules
 dist
-.idea
-app
-nginx-1.10.3
 .vscode
-文档.md
 /client/admin-ui/dist
 /client/web-ui/dist
 /server/public/media/*
 !/server/public/media/default
+npm-debug.log
