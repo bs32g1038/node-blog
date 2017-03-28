@@ -13,6 +13,14 @@
 * Support the front and back end of the renderer by vue-server-renderer。
 * ......
 
+**目录介绍：**
+
+* client/admin backstage ui，independent project
+* client/web   frontend ui，independent project
+* server       express resetful api
+* nginx-1.10.3 proxy
+* docs         development docs
+
 ## TODO
 - [ ] Article tags (I not  think it is a very useful function,but you can realize it easily by yourself) 
 - [x] Writing new article in browser
@@ -36,8 +44,10 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 >         npm install
 
 **3，Run app**
+>         cd /nginx-?? && start nginx     //start proxy
 >         npm run init    // init data must  
->         npm run dev    // development mode
+>         npm run dev     // development mode
+>         npm run build   // production mode
         
 **项目简介：**
 
@@ -47,6 +57,14 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 * 使用webpack构建vue2.0。
 * 支持前后端同构渲染，通过vue2.0的特性。
 * 等等
+
+**目录介绍：**
+
+* client/admin 网站后台ui，独立项目
+* client/web   网站前台ui，独立项目
+* server       网站服务器，提供resetful api， 结合客户端client使用，独立项目
+* nginx-1.10.3 代理服务器，用来解决开发过程中的跨域请求
+* docs         网站相关文档，有待完善
 
 ## TODO
 - [ ] 文章标签 (我不认为它是一个非常有用的功能，但你很容易实现它) 
@@ -72,8 +90,11 @@ First ，Assume you installed Mongodb，Redis and Nodejs in your OS。
 
 **3，运行程序**
 
->         npm run init    // 初始化数据必须 
->         npm run dev    // 开发模式
+
+>         cd /nginx-?? && start nginx     //开启代理，处理跨域请求，前提条件
+>         npm run init    // 初始化数据必须，仅在server端要使用该命令
+>         npm run dev     // 开发模式
+>         npm run build   // 生产线上文件
 
 **Thank you：**
 
