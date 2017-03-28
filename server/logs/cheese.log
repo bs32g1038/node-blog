@@ -1,0 +1,1553 @@
+[2017-03-25 14:31:44.589] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:31:44.661] [INFO] cheese - Completed 304 (73ms)
+[2017-03-25 14:40:52.161] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:40:52.234] [INFO] cheese - Completed 200 (74ms)
+[2017-03-25 14:41:02.686] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:41:02.713] [INFO] cheese - Completed 304 (27ms)
+[2017-03-25 14:41:06.037] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:41:06.053] [INFO] cheese - Completed 304 (16ms)
+[2017-03-25 14:41:09.125] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:41:09.149] [INFO] cheese - Completed 304 (24ms)
+[2017-03-25 14:45:55.284] [INFO] cheese - NodeClub listening on port 8080
+[2017-03-25 14:45:55.290] [INFO] cheese - God bless love....
+[2017-03-25 14:45:55.293] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:45:55.294] [INFO] cheese - 
+[2017-03-25 14:46:49.472] [INFO] cheese - NodeClub listening on port 8080
+[2017-03-25 14:46:49.478] [INFO] cheese - God bless love....
+[2017-03-25 14:46:49.481] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:46:49.483] [INFO] cheese - 
+[2017-03-25 14:47:04.489] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:47:04.496] [INFO] cheese - God bless love....
+[2017-03-25 14:47:04.499] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:47:04.500] [INFO] cheese - 
+[2017-03-25 14:52:39.894] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:52:39.903] [INFO] cheese - God bless love....
+[2017-03-25 14:52:39.906] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:52:39.907] [INFO] cheese - 
+[2017-03-25 14:52:46.478] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:52:46.485] [INFO] cheese - God bless love....
+[2017-03-25 14:52:46.488] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:52:46.489] [INFO] cheese - 
+[2017-03-25 14:55:32.098] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:55:32.111] [INFO] cheese - God bless love....
+[2017-03-25 14:55:32.114] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:55:32.115] [INFO] cheese - 
+[2017-03-25 14:55:57.372] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:55:57.378] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:56:44.117] [INFO] cheese - NodeBlog listening on port 8080 Success!
+[2017-03-25 14:56:44.124] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:57:45.588] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:57:45.595] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:59:07.598] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:59:07.606] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:59:47.302] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:59:47.310] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:59:55.976] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 14:59:55.982] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 14:59:56.606] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 14:59:56.674] [INFO] cheese - Completed 304 (68ms)
+[2017-03-25 15:08:50.864] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:08:50.870] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:09:22.580] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:09:22.588] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:09:42.131] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:09:42.137] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:15:46.562] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:15:46.568] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:18:25.461] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:18:25.469] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:18:39.195] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:18:39.204] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:18:53.687] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:18:53.694] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:21:21.007] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:21:21.014] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:22:56.895] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:22:56.900] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:23:19.556] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:23:19.563] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:24:47.251] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:24:47.259] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:25:12.817] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:25:12.845] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:26:32.023] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:26:32.033] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:27:40.034] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:27:40.040] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:28:40.284] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:28:40.290] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:30:05.975] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:30:05.982] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:30:52.198] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:30:52.204] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:31:05.900] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:31:05.906] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:36:55.992] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:36:55.999] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:37:27.129] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:37:27.137] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:41:32.732] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:41:32.741] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:41:50.308] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:41:50.316] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:42:04.636] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:42:04.645] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:42:21.233] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:42:21.245] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:42:35.648] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:42:35.656] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 15:42:42.284] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 15:42:42.293] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 17:31:43.413] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 17:31:43.419] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 17:32:04.323] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 17:32:04.329] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 17:32:47.124] [INFO] cheese - Started GET /5464 ::ffff:127.0.0.1
+[2017-03-25 17:32:47.240] [INFO] cheese - Completed 404 (116ms)
+[2017-03-25 17:32:51.113] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 17:32:51.369] [INFO] cheese - Completed 200 (257ms)
+[2017-03-25 18:17:06.055] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:17:06.065] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:30:10.484] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:30:10.490] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:30:45.374] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:30:45.381] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:31:25.549] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:31:25.558] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:31:56.796] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:31:56.802] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:32:23.384] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:32:23.390] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:33:20.361] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:33:20.368] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:33:43.097] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:33:43.103] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:35:58.528] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:35:58.536] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:36:05.312] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:36:05.320] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:36:22.186] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:36:22.192] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:37:15.974] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:37:15.982] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:37:22.934] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:37:22.940] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:38:55.880] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:38:55.900] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:39:03.434] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:39:03.440] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:39:27.893] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:39:27.903] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:40:30.838] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:40:30.845] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:41:52.161] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:41:52.169] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:43:05.297] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:43:05.307] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:43:19.436] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:43:19.442] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:43:33.533] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:43:33.539] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:44:29.003] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:44:29.011] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:44:36.021] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:44:36.029] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:44:57.777] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:44:57.785] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:45:04.207] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:45:04.213] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:46:05.263] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:46:05.269] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:46:13.107] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:46:13.117] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:46:26.062] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:46:26.069] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:48:41.459] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:48:41.465] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:48:55.803] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:48:55.820] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:49:02.266] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:49:02.273] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:49:34.838] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-25 18:49:34.879] [INFO] cheese - Completed 304 (43ms)
+[2017-03-25 18:56:00.710] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:56:00.717] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 18:56:47.647] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 18:56:47.653] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:24:30.866] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:24:30.877] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:25:20.579] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:25:20.586] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:28:33.086] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:28:33.093] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:43:00.080] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:43:00.088] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:47:22.653] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:47:22.661] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:47:58.844] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:47:58.850] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:49:03.043] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:49:03.052] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:49:18.141] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:49:18.147] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:51:22.322] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:51:22.327] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:57:17.077] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:57:17.086] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:57:58.839] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:57:58.848] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:58:04.778] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:58:04.784] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:58:32.258] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:58:32.265] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:59:24.216] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:59:24.225] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 21:59:36.255] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 21:59:36.262] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:00:49.717] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:00:49.724] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:01:07.617] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:01:07.626] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:01:20.905] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:01:20.912] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:02:39.253] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:02:39.276] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:02:51.744] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:02:51.750] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:03:36.364] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:03:36.371] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:04:28.674] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:04:28.680] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:47:17.456] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:47:17.465] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:47:24.768] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:47:24.776] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 22:48:13.640] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 22:48:13.647] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:05:34.712] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:05:34.719] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:09:37.514] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:09:37.527] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:09:44.436] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:09:44.442] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:12:50.393] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:12:50.399] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:13:16.684] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:13:16.693] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:13:30.675] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:13:30.683] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:14:31.121] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:14:31.127] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:16:30.573] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:16:30.581] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:16:37.594] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:16:37.600] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:16:58.560] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:16:58.568] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:17:13.318] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:17:13.325] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:17:36.037] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:17:36.048] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:22:06.867] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:22:06.874] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:23:33.016] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:23:33.022] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:25:00.053] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:25:00.062] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:25:18.858] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:25:18.864] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:25:36.979] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:25:36.986] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:25:58.500] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:25:58.509] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:28:16.999] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-25 23:28:17.008] [ERROR] cheese - TypeError: Data must be a string or a buffer
+    at TypeError (native)
+    at Hash.update (crypto.js:74:16)
+    at hash (G:\gulp-koa2\server\app\helpers\util.js:5:9)
+    at Object.exports.md5 (G:\gulp-koa2\server\app\helpers\util.js:10:12)
+    at G:\gulp-koa2\server\app\api\user.js:59:81
+    at next (native)
+    at G:\gulp-koa2\server\app\api\user.js:13:71
+    at __awaiter (G:\gulp-koa2\server\app\api\user.js:9:12)
+    at login (G:\gulp-koa2\server\app\api\user.js:56:16)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (G:\gulp-koa2\server\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:277:22
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:330:12)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:271:10)
+[2017-03-25 23:28:17.031] [INFO] cheese - Completed 422 (33ms)
+[2017-03-25 23:30:07.767] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:30:07.774] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:30:14.285] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-25 23:30:14.292] [ERROR] cheese - TypeError: Data must be a string or a buffer
+    at TypeError (native)
+    at Hash.update (crypto.js:74:16)
+    at hash (G:\gulp-koa2\server\app\helpers\util.js:5:9)
+    at Object.exports.md5 (G:\gulp-koa2\server\app\helpers\util.js:10:12)
+    at G:\gulp-koa2\server\app\api\user.js:60:81
+    at next (native)
+    at G:\gulp-koa2\server\app\api\user.js:13:71
+    at __awaiter (G:\gulp-koa2\server\app\api\user.js:9:12)
+    at login (G:\gulp-koa2\server\app\api\user.js:56:16)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\route.js:131:13)
+    at Route.dispatch (G:\gulp-koa2\server\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:277:22
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:330:12)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:271:10)
+[2017-03-25 23:30:14.308] [INFO] cheese - Completed 422 (23ms)
+[2017-03-25 23:30:44.213] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-25 23:30:44.253] [INFO] cheese - Completed 201 (40ms)
+[2017-03-25 23:31:06.881] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:31:06.889] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:31:08.881] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-25 23:31:08.911] [INFO] cheese - Completed 401 (31ms)
+[2017-03-25 23:31:13.272] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-25 23:31:13.279] [INFO] cheese - Completed 401 (7ms)
+[2017-03-25 23:37:15.104] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:37:15.111] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:37:15.438] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:37:15.454] [INFO] cheese - Completed 200 (16ms)
+[2017-03-25 23:37:53.108] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:37:53.114] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:37:53.406] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:37:53.423] [INFO] cheese - Completed 200 (18ms)
+[2017-03-25 23:39:12.385] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:39:12.520] [INFO] cheese - Completed 302 (135ms)
+[2017-03-25 23:39:12.548] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:39:12.558] [INFO] cheese - Completed 200 (10ms)
+[2017-03-25 23:39:13.897] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:39:13.899] [INFO] cheese - Completed 302 (2ms)
+[2017-03-25 23:39:13.903] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:39:13.905] [INFO] cheese - Completed 200 (2ms)
+[2017-03-25 23:39:35.410] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:39:35.413] [INFO] cheese - Completed 302 (3ms)
+[2017-03-25 23:39:35.422] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:39:35.425] [INFO] cheese - Completed 200 (3ms)
+[2017-03-25 23:40:24.608] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:40:24.612] [INFO] cheese - Completed 302 (5ms)
+[2017-03-25 23:40:24.617] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:40:24.620] [INFO] cheese - Completed 200 (3ms)
+[2017-03-25 23:40:49.027] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:40:49.034] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:40:49.932] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:40:49.945] [INFO] cheese - Completed 302 (14ms)
+[2017-03-25 23:40:49.953] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:40:49.963] [INFO] cheese - Completed 200 (10ms)
+[2017-03-25 23:40:52.740] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:40:52.745] [INFO] cheese - Completed 302 (5ms)
+[2017-03-25 23:40:52.749] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:40:52.752] [INFO] cheese - Completed 200 (3ms)
+[2017-03-25 23:41:28.419] [INFO] cheese - Started POST /admin ::ffff:127.0.0.1
+[2017-03-25 23:41:28.423] [INFO] cheese - Completed 302 (4ms)
+[2017-03-25 23:41:28.429] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-25 23:41:28.433] [INFO] cheese - Completed 200 (4ms)
+[2017-03-25 23:42:20.803] [INFO] cheese - Started POST /api/admin ::ffff:127.0.0.1
+[2017-03-25 23:42:20.807] [INFO] cheese - Completed 200 (4ms)
+[2017-03-25 23:43:22.540] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:43:22.547] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:43:28.995] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:43:29.003] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:46:04.521] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:46:04.529] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-25 23:46:27.786] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-25 23:46:27.792] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:26:35.787] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:26:35.796] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:26:46.217] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:26:46.226] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:27:17.336] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-26 09:27:17.448] [INFO] cheese - Completed 401 (112ms)
+[2017-03-26 09:27:31.576] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:27:31.685] [INFO] cheese - Completed 302 (109ms)
+[2017-03-26 09:27:31.692] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-26 09:27:31.707] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 09:28:03.972] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:28:03.975] [INFO] cheese - Completed 302 (4ms)
+[2017-03-26 09:28:03.986] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-26 09:28:03.990] [INFO] cheese - Completed 200 (4ms)
+[2017-03-26 09:33:55.358] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:33:55.366] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:34:04.957] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:34:04.973] [INFO] cheese - Completed 302 (16ms)
+[2017-03-26 09:34:04.984] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-26 09:34:04.994] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 09:34:41.007] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:34:41.015] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:34:48.384] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:34:48.390] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:36:40.867] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:36:40.873] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:38:59.580] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:38:59.586] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:39:21.533] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:39:21.543] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:39:35.335] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:39:35.340] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:39:42.218] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:39:42.225] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:40:18.267] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:40:18.275] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:41:46.479] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:41:46.485] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:42:47.531] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:42:47.538] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:43:08.214] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:43:08.222] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:49:14.166] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:49:14.173] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:50:41.238] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:50:41.247] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:50:48.397] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:50:48.411] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:51:06.425] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:51:06.431] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:51:24.374] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:51:24.381] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:51:39.749] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:51:39.755] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:52:27.997] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:52:28.002] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:52:52.436] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:52:52.443] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:52:59.494] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:52:59.502] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:53:00.482] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:53:00.499] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 09:53:02.294] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:53:02.299] [INFO] cheese - Completed 200 (5ms)
+[2017-03-26 09:53:20.317] [INFO] cheese - Started GET /api/admin/articles ::ffff:127.0.0.1
+[2017-03-26 09:53:20.322] [INFO] cheese - Completed 401 (5ms)
+[2017-03-26 09:53:59.525] [INFO] cheese - Started GET /api/admin/articles ::ffff:127.0.0.1
+[2017-03-26 09:53:59.529] [INFO] cheese - Completed 401 (4ms)
+[2017-03-26 09:54:03.296] [INFO] cheese - Started GET /api/admin ::ffff:127.0.0.1
+[2017-03-26 09:54:03.299] [INFO] cheese - Completed 404 (3ms)
+[2017-03-26 09:54:14.878] [INFO] cheese - Started GET /api ::ffff:127.0.0.1
+[2017-03-26 09:54:14.881] [INFO] cheese - Completed 404 (3ms)
+[2017-03-26 09:54:21.316] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:54:21.319] [INFO] cheese - Completed 200 (3ms)
+[2017-03-26 09:55:15.940] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:55:15.947] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 09:55:22.047] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:55:22.058] [INFO] cheese - Completed 401 (12ms)
+[2017-03-26 09:55:23.455] [INFO] cheese - Started GET /admin ::ffff:127.0.0.1
+[2017-03-26 09:55:23.459] [INFO] cheese - Completed 401 (4ms)
+[2017-03-26 09:55:27.759] [INFO] cheese - Started GET /admin/132 ::ffff:127.0.0.1
+[2017-03-26 09:55:27.766] [INFO] cheese - Completed 200 (7ms)
+[2017-03-26 09:55:30.769] [INFO] cheese - Started GET /admin/132 ::ffff:127.0.0.1
+[2017-03-26 09:55:30.774] [INFO] cheese - Completed 200 (4ms)
+[2017-03-26 09:57:18.034] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 09:57:18.041] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 10:06:06.809] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 10:06:06.843] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 10:06:06.938] [INFO] cheese - Started GET /admin/132 ::ffff:127.0.0.1
+[2017-03-26 10:06:06.961] [INFO] cheese - Completed 200 (24ms)
+[2017-03-26 10:06:09.840] [INFO] cheese - Started GET /admin/132 ::ffff:127.0.0.1
+[2017-03-26 10:06:09.846] [INFO] cheese - Completed 200 (7ms)
+[2017-03-26 10:06:14.756] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 10:06:14.766] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 10:06:16.291] [INFO] cheese - Started GET /admin/132 ::ffff:127.0.0.1
+[2017-03-26 10:06:16.316] [INFO] cheese - Completed 200 (26ms)
+[2017-03-26 14:02:25.316] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:02:25.323] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:02:38.710] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:02:38.724] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:02:45.980] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:02:45.989] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:03:01.144] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:03:01.153] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:03:21.006] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:03:21.012] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:07:18.398] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:07:18.405] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:08:50.351] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:08:50.358] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:10:37.170] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:10:37.178] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:12:19.191] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:12:19.208] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:38:46.202] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:38:46.210] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:38:52.925] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:38:52.931] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:38:53.496] [INFO] cheese - Started GET /api/articles ::ffff:127.0.0.1
+[2017-03-26 14:38:53.792] [INFO] cheese - Completed 200 (297ms)
+[2017-03-26 14:38:56.707] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:38:56.719] [ERROR] cheese - { Error: Cannot find module 'vue-server-renderer'
+    at Function.Module._resolveFilename (module.js:469:15)
+    at Function.Module._load (module.js:417:25)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at createRenderer (G:\gulp-koa2\server\app\controllers\main.js:24:24)
+    at G:\gulp-koa2\server\app\controllers\main.js:21:28
+    at tryRender (G:\gulp-koa2\server\node_modules\express\lib\application.js:641:5)
+    at EventEmitter.render (G:\gulp-koa2\server\node_modules\express\lib\application.js:591:3)
+    at ServerResponse.render (G:\gulp-koa2\server\node_modules\express\lib\response.js:960:7)
+    at HomeMain (G:\gulp-koa2\server\app\controllers\main.js:20:13)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:312:13)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:280:7
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:349:14)
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:365:14)
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:410:3) code: 'MODULE_NOT_FOUND' }
+[2017-03-26 14:38:56.729] [INFO] cheese - Completed 422 (22ms)
+[2017-03-26 14:39:00.367] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:39:00.372] [ERROR] cheese - { Error: Cannot find module 'vue-server-renderer'
+    at Function.Module._resolveFilename (module.js:469:15)
+    at Function.Module._load (module.js:417:25)
+    at Module.require (module.js:497:17)
+    at require (internal/module.js:20:19)
+    at createRenderer (G:\gulp-koa2\server\app\controllers\main.js:24:24)
+    at G:\gulp-koa2\server\app\controllers\main.js:21:28
+    at tryRender (G:\gulp-koa2\server\node_modules\express\lib\application.js:641:5)
+    at EventEmitter.render (G:\gulp-koa2\server\node_modules\express\lib\application.js:591:3)
+    at ServerResponse.render (G:\gulp-koa2\server\node_modules\express\lib\response.js:960:7)
+    at HomeMain (G:\gulp-koa2\server\app\controllers\main.js:20:13)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:312:13)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:280:7
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:349:14)
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:365:14)
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:410:3) code: 'MODULE_NOT_FOUND' }
+[2017-03-26 14:39:00.377] [INFO] cheese - Completed 422 (11ms)
+[2017-03-26 14:39:55.879] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:39:55.982] [INFO] cheese - Completed 500 (103ms)
+[2017-03-26 14:40:41.902] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:40:42.222] [INFO] cheese - Completed 500 (321ms)
+[2017-03-26 14:40:43.368] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:40:43.389] [INFO] cheese - Completed 500 (21ms)
+[2017-03-26 14:41:56.349] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:41:57.428] [INFO] cheese - Completed 500 (1079ms)
+[2017-03-26 14:42:47.895] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:42:47.902] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:43:23.539] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:43:24.756] [INFO] cheese - Completed 500 (1217ms)
+[2017-03-26 14:43:55.101] [INFO] cheese - NodeBlog listening on port 80
+[2017-03-26 14:43:55.107] [INFO] cheese - You can debug your app with http://localhost:80
+[2017-03-26 14:44:09.357] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:44:09.566] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:44:09.622] [INFO] cheese - Completed 200 (57ms)
+[2017-03-26 14:44:09.635] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:44:09.772] [INFO] cheese - Completed 200 (137ms)
+[2017-03-26 14:44:09.829] [INFO] cheese - Completed 500 (472ms)
+[2017-03-26 14:44:28.662] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:44:28.703] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:44:28.717] [INFO] cheese - Completed 200 (14ms)
+[2017-03-26 14:44:28.724] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:44:28.734] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 14:44:28.760] [INFO] cheese - Completed 500 (99ms)
+[2017-03-26 14:45:17.795] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 14:45:17.815] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:45:17.830] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 14:45:17.834] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:45:17.843] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:45:17.866] [INFO] cheese - Completed 500 (71ms)
+[2017-03-26 14:46:03.996] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:46:04.006] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:46:41.336] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:46:41.396] [INFO] cheese - Completed 200 (61ms)
+[2017-03-26 14:46:41.415] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:46:41.430] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 14:46:59.211] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:46:59.223] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 14:46:59.227] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:46:59.235] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 14:47:21.597] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:47:21.607] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 14:47:21.618] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:47:21.627] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:47:36.887] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:47:36.903] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 14:47:36.909] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:47:36.918] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:48:28.808] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:48:28.824] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 14:49:47.267] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:49:47.277] [INFO] cheese - Completed 304 (10ms)
+[2017-03-26 14:49:49.452] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:49:49.460] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 14:49:49.466] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:49:49.476] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:50:04.967] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:50:04.978] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:50:04.985] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:50:04.994] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:52:06.112] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:52:06.123] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:52:06.128] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:52:06.137] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:52:07.131] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:52:07.143] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 14:52:07.148] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:52:07.159] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:52:07.467] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:52:07.488] [INFO] cheese - Completed 200 (21ms)
+[2017-03-26 14:52:07.492] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:52:07.505] [INFO] cheese - Completed 200 (13ms)
+[2017-03-26 14:52:39.701] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:52:39.708] [INFO] cheese - Completed 200 (7ms)
+[2017-03-26 14:52:39.715] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:52:39.725] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 14:53:02.421] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:53:02.428] [INFO] cheese - Completed 200 (7ms)
+[2017-03-26 14:53:02.450] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:53:02.458] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 14:55:32.275] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:55:32.281] [INFO] cheese - Completed 200 (6ms)
+[2017-03-26 14:55:32.288] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:55:32.296] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 14:55:52.691] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:55:52.701] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 14:55:52.717] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:55:52.727] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:57:29.993] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:57:30.005] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 14:57:30.010] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:57:30.019] [INFO] cheese - Completed 200 (9ms)
+[2017-03-26 14:59:24.205] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 14:59:24.212] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 14:59:32.370] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:59:32.428] [INFO] cheese - Completed 200 (59ms)
+[2017-03-26 14:59:32.436] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:59:32.453] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 14:59:34.232] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 14:59:34.243] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 14:59:34.249] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 14:59:34.259] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 15:00:20.578] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 15:00:20.587] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 15:00:38.588] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:00:38.650] [INFO] cheese - Completed 200 (63ms)
+[2017-03-26 15:00:38.664] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:00:38.687] [INFO] cheese - Completed 200 (24ms)
+[2017-03-26 15:03:40.089] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:03:40.108] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 15:03:40.119] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:03:40.137] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 15:03:41.114] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:03:41.124] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 15:03:41.128] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:03:41.144] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 15:03:41.457] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:03:41.473] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 15:03:41.480] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:03:41.500] [INFO] cheese - Completed 200 (20ms)
+[2017-03-26 15:04:04.811] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:04:04.821] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 15:04:04.833] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:04:04.851] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 15:04:36.751] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:04:36.759] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 15:04:36.766] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:04:36.784] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 15:04:37.477] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:04:37.502] [INFO] cheese - Completed 200 (25ms)
+[2017-03-26 15:04:39.573] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e2a3b0 ::ffff:127.0.0.1
+[2017-03-26 15:04:39.757] [INFO] cheese - Completed 200 (184ms)
+[2017-03-26 15:04:39.770] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:04:39.799] [INFO] cheese - Completed 200 (29ms)
+[2017-03-26 15:04:40.160] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e2a3b0 ::ffff:127.0.0.1
+[2017-03-26 15:04:40.175] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 15:04:46.663] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c23e4a3be ::ffff:127.0.0.1
+[2017-03-26 15:04:46.672] [INFO] cheese - Completed 200 (10ms)
+[2017-03-26 15:04:46.676] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:04:46.691] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 15:04:46.994] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c23e4a3be ::ffff:127.0.0.1
+[2017-03-26 15:04:47.018] [INFO] cheese - Completed 200 (24ms)
+[2017-03-26 15:05:22.778] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e2a3b0 ::ffff:127.0.0.1
+[2017-03-26 15:05:22.789] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 15:05:22.805] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:05:22.824] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 15:05:23.154] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e2a3b0 ::ffff:127.0.0.1
+[2017-03-26 15:05:23.176] [INFO] cheese - Completed 304 (22ms)
+[2017-03-26 15:06:50.220] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:06:50.306] [INFO] cheese - Completed 200 (86ms)
+[2017-03-26 15:06:50.322] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:06:50.340] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 15:06:51.145] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:06:51.158] [INFO] cheese - Completed 200 (13ms)
+[2017-03-26 15:07:08.266] [INFO] cheese - Started GET /api/articles?category=frontend&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:07:08.282] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 15:10:59.604] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 15:10:59.611] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 15:11:09.962] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 15:11:11.212] [INFO] cheese - Completed 500 (1251ms)
+[2017-03-26 15:15:26.622] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 15:15:26.631] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 15:15:29.436] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 15:15:30.645] [INFO] cheese - Completed 500 (1210ms)
+[2017-03-26 15:16:28.932] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 15:16:28.967] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.014] [INFO] cheese - Completed 200 (47ms)
+[2017-03-26 15:16:29.030] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:16:29.052] [INFO] cheese - Completed 200 (22ms)
+[2017-03-26 15:16:29.129] [INFO] cheese - Completed 200 (198ms)
+[2017-03-26 15:16:29.291] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.298] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.325] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.357] [INFO] cheese - Completed 200 (67ms)
+[2017-03-26 15:16:29.360] [INFO] cheese - Completed 200 (62ms)
+[2017-03-26 15:16:29.369] [INFO] cheese - Completed 200 (44ms)
+[2017-03-26 15:16:29.385] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:16:29.389] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:16:29.395] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:16:29.423] [INFO] cheese - Completed 200 (38ms)
+[2017-03-26 15:16:29.434] [INFO] cheese - Completed 200 (45ms)
+[2017-03-26 15:16:29.549] [INFO] cheese - Completed 200 (154ms)
+[2017-03-26 15:16:29.632] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.646] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 15:16:29.655] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 15:16:29.678] [INFO] cheese - Completed 200 (23ms)
+[2017-03-26 15:16:29.758] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 15:16:29.771] [INFO] cheese - Completed 200 (13ms)
+[2017-03-26 17:10:49.800] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 17:10:49.806] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 17:13:41.461] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:13:41.557] [ERROR] cheese - { Error: ENOENT: no such file or directory, open 'G:\gulp-koa2\server\public\dist\server-bundle.js'
+    at Error (native)
+    at Object.fs.openSync (fs.js:640:18)
+    at Object.fs.readFileSync (fs.js:508:33)
+    at G:\gulp-koa2\server\app\controllers\main.js:21:46
+    at tryRender (G:\gulp-koa2\server\node_modules\express\lib\application.js:641:5)
+    at EventEmitter.render (G:\gulp-koa2\server\node_modules\express\lib\application.js:591:3)
+    at ServerResponse.render (G:\gulp-koa2\server\node_modules\express\lib\response.js:960:7)
+    at HomeMain (G:\gulp-koa2\server\app\controllers\main.js:20:13)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:312:13)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:280:7
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:349:14)
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:365:14)
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:410:3)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:271:10)
+    at Function.handle (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:176:3)
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'G:\\gulp-koa2\\server\\public\\dist\\server-bundle.js' }
+[2017-03-26 17:13:41.578] [INFO] cheese - Completed 422 (117ms)
+[2017-03-26 17:14:27.935] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 17:14:27.941] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 17:14:29.206] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:14:29.217] [ERROR] cheese - { Error: ENOENT: no such file or directory, open 'G:\gulp-koa2\server\public\home\dist\server-bundle.js'
+    at Error (native)
+    at Object.fs.openSync (fs.js:640:18)
+    at Object.fs.readFileSync (fs.js:508:33)
+    at G:\gulp-koa2\server\app\controllers\main.js:21:46
+    at tryRender (G:\gulp-koa2\server\node_modules\express\lib\application.js:641:5)
+    at EventEmitter.render (G:\gulp-koa2\server\node_modules\express\lib\application.js:591:3)
+    at ServerResponse.render (G:\gulp-koa2\server\node_modules\express\lib\response.js:960:7)
+    at HomeMain (G:\gulp-koa2\server\app\controllers\main.js:20:13)
+    at Layer.handle [as handle_request] (G:\gulp-koa2\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:312:13)
+    at G:\gulp-koa2\server\node_modules\express\lib\router\index.js:280:7
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:349:14)
+    at param (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:365:14)
+    at Function.process_params (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:410:3)
+    at next (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:271:10)
+    at Function.handle (G:\gulp-koa2\server\node_modules\express\lib\router\index.js:176:3)
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'G:\\gulp-koa2\\server\\public\\home\\dist\\server-bundle.js' }
+[2017-03-26 17:14:29.241] [INFO] cheese - Completed 422 (35ms)
+[2017-03-26 17:14:58.575] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-26 17:14:58.582] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-26 17:15:01.345] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:15:02.755] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.098] [INFO] cheese - Completed 200 (344ms)
+[2017-03-26 17:15:03.121] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.269] [INFO] cheese - Completed 200 (148ms)
+[2017-03-26 17:15:03.351] [INFO] cheese - Completed 200 (2006ms)
+[2017-03-26 17:15:03.585] [INFO] cheese - Started GET /dist/vendor.807d892f64eb384a7295.js ::ffff:127.0.0.1
+[2017-03-26 17:15:03.600] [INFO] cheese - Started GET /dist/app.ed3e7b1859a147c433b7.js ::ffff:127.0.0.1
+[2017-03-26 17:15:03.622] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.633] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.637] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.641] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.645] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:03.663] [INFO] cheese - Completed 200 (41ms)
+[2017-03-26 17:15:03.689] [INFO] cheese - Completed 200 (56ms)
+[2017-03-26 17:15:03.693] [INFO] cheese - Completed 200 (57ms)
+[2017-03-26 17:15:03.700] [INFO] cheese - Completed 200 (59ms)
+[2017-03-26 17:15:03.704] [INFO] cheese - Completed 200 (59ms)
+[2017-03-26 17:15:03.715] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.723] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.726] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.733] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.735] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:03.754] [INFO] cheese - Completed 200 (39ms)
+[2017-03-26 17:15:03.817] [INFO] cheese - Completed 200 (94ms)
+[2017-03-26 17:15:03.818] [INFO] cheese - Completed 200 (92ms)
+[2017-03-26 17:15:03.835] [INFO] cheese - Completed 200 (102ms)
+[2017-03-26 17:15:03.836] [INFO] cheese - Completed 200 (101ms)
+[2017-03-26 17:15:03.963] [INFO] cheese - Completed 200 (378ms)
+[2017-03-26 17:15:03.994] [INFO] cheese - Completed 200 (394ms)
+[2017-03-26 17:15:04.027] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:04.043] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:15:04.074] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:04.090] [INFO] cheese - Completed 200 (29ms)
+[2017-03-26 17:15:17.778] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:17.788] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:17.794] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:15:17.807] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 17:15:17.817] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:17.827] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:17.843] [INFO] cheese - Completed 200 (27ms)
+[2017-03-26 17:15:17.907] [INFO] cheese - Completed 200 (80ms)
+[2017-03-26 17:15:19.969] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:19.981] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 17:15:19.987] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.005] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 17:15:20.178] [INFO] cheese - Started GET /dist/vendor.807d892f64eb384a7295.js ::ffff:127.0.0.1
+[2017-03-26 17:15:20.194] [INFO] cheese - Started GET /dist/app.ed3e7b1859a147c433b7.js ::ffff:127.0.0.1
+[2017-03-26 17:15:20.213] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.222] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.249] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.255] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.260] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.269] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:15:20.280] [INFO] cheese - Completed 200 (67ms)
+[2017-03-26 17:15:20.301] [INFO] cheese - Completed 200 (79ms)
+[2017-03-26 17:15:20.304] [INFO] cheese - Completed 200 (55ms)
+[2017-03-26 17:15:20.308] [INFO] cheese - Completed 200 (53ms)
+[2017-03-26 17:15:20.311] [INFO] cheese - Completed 200 (52ms)
+[2017-03-26 17:15:20.317] [INFO] cheese - Completed 200 (49ms)
+[2017-03-26 17:15:20.324] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.333] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.337] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.342] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.347] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.352] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:15:20.366] [INFO] cheese - Completed 200 (42ms)
+[2017-03-26 17:15:20.421] [INFO] cheese - Completed 200 (88ms)
+[2017-03-26 17:15:20.422] [INFO] cheese - Completed 200 (85ms)
+[2017-03-26 17:15:20.431] [INFO] cheese - Completed 200 (89ms)
+[2017-03-26 17:15:20.514] [INFO] cheese - Completed 200 (167ms)
+[2017-03-26 17:15:20.552] [INFO] cheese - Completed 200 (200ms)
+[2017-03-26 17:17:54.884] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:17:54.923] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:54.938] [INFO] cheese - Completed 200 (14ms)
+[2017-03-26 17:17:54.947] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:17:54.962] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:17:54.996] [INFO] cheese - Completed 200 (112ms)
+[2017-03-26 17:17:55.183] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:55.204] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:55.218] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:55.225] [INFO] cheese - Completed 200 (43ms)
+[2017-03-26 17:17:55.240] [INFO] cheese - Completed 200 (36ms)
+[2017-03-26 17:17:55.257] [INFO] cheese - Completed 200 (39ms)
+[2017-03-26 17:17:55.260] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:17:55.273] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:17:55.307] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:17:55.324] [INFO] cheese - Completed 200 (64ms)
+[2017-03-26 17:17:55.332] [INFO] cheese - Completed 200 (59ms)
+[2017-03-26 17:17:55.421] [INFO] cheese - Completed 200 (115ms)
+[2017-03-26 17:17:55.505] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:55.516] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 17:17:55.523] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:17:55.551] [INFO] cheese - Completed 200 (28ms)
+[2017-03-26 17:17:55.644] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:17:55.656] [INFO] cheese - Completed 304 (12ms)
+[2017-03-26 17:18:10.149] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:18:10.170] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:10.184] [INFO] cheese - Completed 200 (14ms)
+[2017-03-26 17:18:10.190] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:10.211] [INFO] cheese - Completed 200 (21ms)
+[2017-03-26 17:18:10.244] [INFO] cheese - Completed 200 (96ms)
+[2017-03-26 17:18:10.380] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:10.384] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:10.399] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 17:18:10.402] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 17:18:10.411] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:10.432] [INFO] cheese - Completed 200 (21ms)
+[2017-03-26 17:18:10.471] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:10.521] [INFO] cheese - Completed 200 (50ms)
+[2017-03-26 17:18:10.558] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:10.572] [INFO] cheese - Completed 200 (14ms)
+[2017-03-26 17:18:10.581] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:10.597] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 17:18:10.681] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:10.695] [INFO] cheese - Completed 304 (14ms)
+[2017-03-26 17:18:24.118] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:18:24.162] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:24.186] [INFO] cheese - Completed 200 (24ms)
+[2017-03-26 17:18:24.207] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:24.232] [INFO] cheese - Completed 200 (25ms)
+[2017-03-26 17:18:24.287] [INFO] cheese - Completed 200 (169ms)
+[2017-03-26 17:18:24.453] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:24.491] [INFO] cheese - Completed 200 (38ms)
+[2017-03-26 17:18:24.501] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:24.518] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 17:18:24.524] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:24.550] [INFO] cheese - Completed 200 (26ms)
+[2017-03-26 17:18:24.622] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:24.652] [INFO] cheese - Completed 200 (30ms)
+[2017-03-26 17:18:24.889] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:24.925] [INFO] cheese - Completed 304 (36ms)
+[2017-03-26 17:18:24.933] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:24.947] [INFO] cheese - Completed 200 (14ms)
+[2017-03-26 17:18:24.965] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:24.983] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 17:18:36.411] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:36.422] [INFO] cheese - Completed 200 (11ms)
+[2017-03-26 17:18:36.429] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:36.447] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 17:18:36.595] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:36.602] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:36.613] [INFO] cheese - Completed 200 (18ms)
+[2017-03-26 17:18:36.623] [INFO] cheese - Completed 200 (22ms)
+[2017-03-26 17:18:36.630] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:36.651] [INFO] cheese - Completed 200 (22ms)
+[2017-03-26 17:18:36.704] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:36.758] [INFO] cheese - Completed 200 (55ms)
+[2017-03-26 17:18:36.807] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:36.819] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 17:18:36.829] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:36.849] [INFO] cheese - Completed 200 (20ms)
+[2017-03-26 17:18:54.029] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:54.046] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 17:18:54.055] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:54.071] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:18:54.232] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:54.243] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:54.257] [INFO] cheese - Completed 200 (25ms)
+[2017-03-26 17:18:54.268] [INFO] cheese - Completed 200 (25ms)
+[2017-03-26 17:18:54.282] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:54.293] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:54.309] [INFO] cheese - Completed 200 (28ms)
+[2017-03-26 17:18:54.388] [INFO] cheese - Completed 200 (95ms)
+[2017-03-26 17:18:54.436] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:18:54.451] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 17:18:54.459] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:18:54.479] [INFO] cheese - Completed 200 (20ms)
+[2017-03-26 17:19:31.994] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-26 17:19:32.030] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:32.042] [INFO] cheese - Completed 200 (12ms)
+[2017-03-26 17:19:32.049] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:32.068] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 17:19:32.097] [INFO] cheese - Completed 200 (103ms)
+[2017-03-26 17:19:32.221] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:32.232] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:32.237] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:19:32.253] [INFO] cheese - Completed 200 (21ms)
+[2017-03-26 17:19:32.266] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:32.289] [INFO] cheese - Completed 200 (23ms)
+[2017-03-26 17:19:32.328] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:32.343] [INFO] cheese - Completed 200 (15ms)
+[2017-03-26 17:19:32.448] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:32.462] [INFO] cheese - Completed 304 (14ms)
+[2017-03-26 17:19:35.027] [INFO] cheese - Started GET /articles/58c77210da54842280dcbf24 ::ffff:127.0.0.1
+[2017-03-26 17:19:35.047] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:35.055] [INFO] cheese - Completed 200 (8ms)
+[2017-03-26 17:19:35.062] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:35.078] [INFO] cheese - Completed 200 (16ms)
+[2017-03-26 17:19:35.111] [INFO] cheese - Completed 200 (84ms)
+[2017-03-26 17:19:35.217] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:35.221] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:19:35.236] [INFO] cheese - Completed 200 (19ms)
+[2017-03-26 17:19:35.238] [INFO] cheese - Completed 200 (17ms)
+[2017-03-26 17:19:35.265] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:35.275] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-26 17:19:35.299] [INFO] cheese - Completed 200 (34ms)
+[2017-03-26 17:19:35.363] [INFO] cheese - Completed 200 (88ms)
+[2017-03-26 17:31:28.156] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-26 17:31:28.162] [INFO] cheese - Completed 401 (7ms)
+[2017-03-26 17:31:28.166] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-26 17:31:28.169] [INFO] cheese - Completed 401 (3ms)
+[2017-03-27 21:00:47.789] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-27 21:00:47.800] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-27 21:01:23.355] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-27 21:01:24.550] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:24.885] [INFO] cheese - Completed 200 (336ms)
+[2017-03-27 21:01:24.899] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:25.097] [INFO] cheese - Completed 200 (198ms)
+[2017-03-27 21:01:25.198] [INFO] cheese - Completed 200 (1843ms)
+[2017-03-27 21:01:25.394] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:25.400] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:25.416] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:25.445] [INFO] cheese - Completed 200 (51ms)
+[2017-03-27 21:01:25.453] [INFO] cheese - Completed 200 (54ms)
+[2017-03-27 21:01:25.462] [INFO] cheese - Completed 200 (47ms)
+[2017-03-27 21:01:25.474] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:25.482] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:25.491] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:25.512] [INFO] cheese - Completed 200 (38ms)
+[2017-03-27 21:01:25.518] [INFO] cheese - Completed 200 (36ms)
+[2017-03-27 21:01:25.626] [INFO] cheese - Completed 200 (135ms)
+[2017-03-27 21:01:25.712] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:25.725] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:01:25.733] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:25.746] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:01:25.826] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:25.835] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:01:33.889] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:33.908] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:01:33.918] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:33.932] [INFO] cheese - Completed 200 (14ms)
+[2017-03-27 21:01:34.086] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:34.093] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:34.099] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:34.107] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:01:34.124] [INFO] cheese - Completed 200 (38ms)
+[2017-03-27 21:01:34.128] [INFO] cheese - Completed 200 (35ms)
+[2017-03-27 21:01:34.132] [INFO] cheese - Completed 200 (33ms)
+[2017-03-27 21:01:34.138] [INFO] cheese - Completed 200 (31ms)
+[2017-03-27 21:01:34.147] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:34.149] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:34.153] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:34.157] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:01:34.183] [INFO] cheese - Completed 200 (36ms)
+[2017-03-27 21:01:34.191] [INFO] cheese - Completed 200 (41ms)
+[2017-03-27 21:01:34.192] [INFO] cheese - Completed 200 (39ms)
+[2017-03-27 21:01:34.221] [INFO] cheese - Completed 200 (64ms)
+[2017-03-27 21:02:41.619] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-27 21:02:41.665] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:02:41.679] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:02:41.693] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:02:41.711] [INFO] cheese - Completed 200 (18ms)
+[2017-03-27 21:02:41.765] [INFO] cheese - Completed 200 (146ms)
+[2017-03-27 21:02:41.979] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:02:42.007] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:02:42.028] [INFO] cheese - Completed 200 (21ms)
+[2017-03-27 21:02:42.041] [INFO] cheese - Completed 200 (62ms)
+[2017-03-27 21:02:42.060] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:02:42.064] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:02:42.099] [INFO] cheese - Completed 200 (39ms)
+[2017-03-27 21:02:42.115] [INFO] cheese - Completed 200 (51ms)
+[2017-03-27 21:02:42.481] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:02:42.530] [INFO] cheese - Completed 304 (49ms)
+[2017-03-27 21:02:42.551] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:02:42.566] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:02:42.579] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:02:42.606] [INFO] cheese - Completed 200 (27ms)
+[2017-03-27 21:04:38.114] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-27 21:04:38.194] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:38.264] [INFO] cheese - Completed 200 (70ms)
+[2017-03-27 21:04:38.276] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:38.295] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:04:38.355] [INFO] cheese - Completed 200 (242ms)
+[2017-03-27 21:04:38.541] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:38.548] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:38.577] [INFO] cheese - Completed 200 (36ms)
+[2017-03-27 21:04:38.584] [INFO] cheese - Completed 200 (36ms)
+[2017-03-27 21:04:38.597] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:38.616] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:38.632] [INFO] cheese - Completed 200 (35ms)
+[2017-03-27 21:04:38.698] [INFO] cheese - Completed 200 (83ms)
+[2017-03-27 21:04:38.877] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:38.910] [INFO] cheese - Completed 304 (33ms)
+[2017-03-27 21:04:38.916] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:38.932] [INFO] cheese - Completed 200 (16ms)
+[2017-03-27 21:04:38.962] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:38.981] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:04:40.009] [INFO] cheese - Started GET /articles/57daab98fcf33d5c27e4b3be ::ffff:127.0.0.1
+[2017-03-27 21:04:40.034] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:40.045] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:04:40.055] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:40.073] [INFO] cheese - Completed 200 (18ms)
+[2017-03-27 21:04:40.113] [INFO] cheese - Completed 200 (104ms)
+[2017-03-27 21:04:40.249] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:40.257] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:40.274] [INFO] cheese - Completed 200 (25ms)
+[2017-03-27 21:04:40.278] [INFO] cheese - Completed 200 (22ms)
+[2017-03-27 21:04:40.289] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:40.294] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:40.322] [INFO] cheese - Completed 200 (33ms)
+[2017-03-27 21:04:40.328] [INFO] cheese - Completed 200 (34ms)
+[2017-03-27 21:04:40.481] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:40.493] [INFO] cheese - Completed 200 (12ms)
+[2017-03-27 21:04:40.503] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:40.519] [INFO] cheese - Completed 200 (16ms)
+[2017-03-27 21:04:42.958] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:42.998] [INFO] cheese - Completed 200 (40ms)
+[2017-03-27 21:04:46.375] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:46.385] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:46.402] [INFO] cheese - Completed 200 (27ms)
+[2017-03-27 21:04:46.406] [INFO] cheese - Completed 200 (21ms)
+[2017-03-27 21:04:46.425] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:46.440] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:04:46.442] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:04:46.502] [INFO] cheese - Completed 200 (60ms)
+[2017-03-27 21:04:49.913] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:04:49.949] [INFO] cheese - Completed 304 (36ms)
+[2017-03-27 21:06:47.782] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-27 21:06:47.814] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:06:47.828] [INFO] cheese - Completed 200 (14ms)
+[2017-03-27 21:06:47.836] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:06:47.847] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:06:47.881] [INFO] cheese - Completed 200 (100ms)
+[2017-03-27 21:06:48.115] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:06:48.129] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:06:48.135] [INFO] cheese - Completed 200 (20ms)
+[2017-03-27 21:06:48.148] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:06:48.150] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:06:48.169] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:06:48.222] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:06:48.236] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:06:48.302] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:06:48.332] [INFO] cheese - Completed 304 (30ms)
+[2017-03-27 21:06:48.336] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:06:48.347] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:06:48.355] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:06:48.368] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:06:51.635] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-27 21:06:51.725] [INFO] cheese - Completed 302 (90ms)
+[2017-03-27 21:06:51.736] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-27 21:06:51.741] [INFO] cheese - Completed 200 (5ms)
+[2017-03-27 21:06:52.348] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:06:52.352] [INFO] cheese - Completed 200 (4ms)
+[2017-03-27 21:07:00.953] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-27 21:07:00.975] [INFO] cheese - Completed 201 (23ms)
+[2017-03-27 21:07:01.101] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-27 21:07:01.108] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:07:01.120] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:07:01.129] [INFO] cheese - Completed 200 (21ms)
+[2017-03-27 21:07:01.206] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:07:01.210] [INFO] cheese - Completed 304 (4ms)
+[2017-03-27 21:07:13.606] [INFO] cheese - Started GET /api/admin/categories ::ffff:127.0.0.1
+[2017-03-27 21:07:13.699] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:07:13.707] [INFO] cheese - Completed 304 (8ms)
+[2017-03-27 21:07:13.715] [INFO] cheese - Completed 200 (109ms)
+[2017-03-27 21:07:17.008] [INFO] cheese - Started GET /api/admin/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:07:17.035] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:07:17.041] [INFO] cheese - Completed 304 (6ms)
+[2017-03-27 21:07:17.149] [INFO] cheese - Completed 200 (141ms)
+[2017-03-27 21:33:30.497] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-27 21:33:30.502] [INFO] cheese - Completed 200 (5ms)
+[2017-03-27 21:33:31.178] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-27 21:33:31.183] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:33:31.198] [INFO] cheese - Completed 304 (20ms)
+[2017-03-27 21:33:31.201] [INFO] cheese - Completed 304 (18ms)
+[2017-03-27 21:33:31.608] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:33:31.612] [INFO] cheese - Completed 304 (4ms)
+[2017-03-27 21:33:38.349] [INFO] cheese - Started GET /api/admin/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:33:38.376] [INFO] cheese - Completed 200 (27ms)
+[2017-03-27 21:33:42.336] [INFO] cheese - Started DELETE /api/admin/sessions/user ::ffff:127.0.0.1
+[2017-03-27 21:33:42.374] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:33:42.385] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:33:42.396] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:33:42.416] [INFO] cheese - Completed 200 (20ms)
+[2017-03-27 21:33:42.451] [INFO] cheese - Completed 200 (115ms)
+[2017-03-27 21:33:42.470] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-27 21:33:42.474] [INFO] cheese - Completed 304 (4ms)
+[2017-03-27 21:33:43.092] [INFO] cheese - Started GET /admin/favicon.ico ::ffff:127.0.0.1
+[2017-03-27 21:33:43.095] [INFO] cheese - Completed 304 (4ms)
+[2017-03-27 21:34:25.774] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-27 21:34:25.785] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-27 21:34:31.649] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-27 21:34:31.855] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:34:31.908] [INFO] cheese - Completed 200 (53ms)
+[2017-03-27 21:34:31.921] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:34:31.940] [INFO] cheese - Completed 200 (19ms)
+[2017-03-27 21:34:32.009] [INFO] cheese - Completed 200 (361ms)
+[2017-03-27 21:34:32.183] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:34:32.194] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:34:32.205] [INFO] cheese - Completed 200 (23ms)
+[2017-03-27 21:34:32.214] [INFO] cheese - Completed 200 (20ms)
+[2017-03-27 21:34:32.219] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:34:32.231] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:34:32.242] [INFO] cheese - Completed 200 (23ms)
+[2017-03-27 21:34:32.329] [INFO] cheese - Completed 200 (98ms)
+[2017-03-27 21:34:32.435] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:34:32.466] [INFO] cheese - Completed 304 (31ms)
+[2017-03-27 21:34:32.473] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:34:32.484] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:34:32.490] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:34:32.503] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:38:03.425] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:38:03.438] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:38:03.449] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:38:03.465] [INFO] cheese - Completed 200 (16ms)
+[2017-03-27 21:38:18.052] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:38:18.061] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:38:18.067] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:38:18.084] [INFO] cheese - Completed 200 (17ms)
+[2017-03-27 21:38:21.340] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:38:21.350] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:38:21.356] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:38:21.371] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:38:54.627] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:38:54.637] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:38:54.642] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:38:54.656] [INFO] cheese - Completed 200 (14ms)
+[2017-03-27 21:42:13.963] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:13.978] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:42:13.999] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:42:14.031] [INFO] cheese - Completed 200 (32ms)
+[2017-03-27 21:42:23.475] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:23.488] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:42:23.494] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:42:23.509] [INFO] cheese - Completed 200 (15ms)
+[2017-03-27 21:42:28.377] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:28.389] [INFO] cheese - Completed 200 (12ms)
+[2017-03-27 21:42:28.396] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:42:28.409] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:42:56.290] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:56.301] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:42:56.306] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:42:56.315] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:42:56.969] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:56.980] [INFO] cheese - Completed 200 (11ms)
+[2017-03-27 21:42:57.647] [INFO] cheese - Started GET /api/articles?category=%E5%B0%8F%E5%BC%9F%E4%B8%8D%E6%89%8D&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:57.655] [INFO] cheese - Completed 200 (8ms)
+[2017-03-27 21:42:57.662] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:42:57.672] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:42:58.026] [INFO] cheese - Started GET /api/articles?category=%E5%B0%8F%E5%BC%9F%E4%B8%8D%E6%89%8D&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:42:58.035] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:44:45.887] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-27 21:44:45.947] [INFO] cheese - Completed 200 (60ms)
+[2017-03-27 21:44:45.955] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:44:45.964] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:44:46.309] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-27 21:44:46.323] [INFO] cheese - Completed 200 (14ms)
+[2017-03-27 21:46:08.252] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:46:08.264] [INFO] cheese - Completed 200 (12ms)
+[2017-03-27 21:46:08.270] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:46:08.279] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:46:08.885] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:46:08.908] [INFO] cheese - Completed 304 (23ms)
+[2017-03-27 21:46:14.035] [INFO] cheese - Started GET /api/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:46:14.043] [INFO] cheese - Completed 200 (8ms)
+[2017-03-27 21:58:36.071] [INFO] cheese - Started GET /api/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:58:36.080] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:58:36.109] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:58:36.135] [INFO] cheese - Completed 200 (26ms)
+[2017-03-27 21:58:36.465] [INFO] cheese - Started GET /api/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:58:36.481] [INFO] cheese - Completed 304 (16ms)
+[2017-03-27 21:58:36.544] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:58:36.558] [INFO] cheese - Completed 200 (14ms)
+[2017-03-27 21:58:38.615] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:58:38.626] [INFO] cheese - Completed 304 (11ms)
+[2017-03-27 21:58:39.804] [INFO] cheese - Started GET /api/articles?category=frontend&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:58:39.817] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:58:39.831] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:58:39.841] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:58:40.158] [INFO] cheese - Started GET /api/articles?category=frontend&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-27 21:58:40.171] [INFO] cheese - Completed 200 (13ms)
+[2017-03-27 21:58:40.798] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e4b3be ::ffff:127.0.0.1
+[2017-03-27 21:58:40.808] [INFO] cheese - Completed 200 (9ms)
+[2017-03-27 21:58:40.815] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-27 21:58:40.825] [INFO] cheese - Completed 200 (10ms)
+[2017-03-27 21:58:41.135] [INFO] cheese - Started GET /api/articles/57daab98fcf33d5c27e4b3be ::ffff:127.0.0.1
+[2017-03-27 21:58:41.148] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:31:42.782] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-28 15:31:42.791] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-28 15:32:28.337] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-28 15:32:29.740] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:30.008] [INFO] cheese - Completed 200 (270ms)
+[2017-03-28 15:32:30.034] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:30.176] [INFO] cheese - Completed 200 (142ms)
+[2017-03-28 15:32:30.282] [INFO] cheese - Completed 200 (1945ms)
+[2017-03-28 15:32:30.457] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:32:30.560] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:30.580] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:30.590] [INFO] cheese - Completed 200 (31ms)
+[2017-03-28 15:32:30.607] [INFO] cheese - Completed 200 (27ms)
+[2017-03-28 15:32:30.614] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:30.633] [INFO] cheese - Completed 200 (19ms)
+[2017-03-28 15:32:30.685] [INFO] cheese - Completed 200 (228ms)
+[2017-03-28 15:32:30.694] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:30.724] [INFO] cheese - Completed 200 (30ms)
+[2017-03-28 15:32:30.868] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:30.886] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:32:30.904] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:30.926] [INFO] cheese - Completed 200 (22ms)
+[2017-03-28 15:32:31.011] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:31.014] [INFO] cheese - Started GET /web/images/body_repeat.png ::ffff:127.0.0.1
+[2017-03-28 15:32:31.045] [INFO] cheese - Completed 200 (34ms)
+[2017-03-28 15:32:31.054] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:31.068] [INFO] cheese - Completed 200 (15ms)
+[2017-03-28 15:32:31.087] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:31.102] [INFO] cheese - Completed 200 (15ms)
+[2017-03-28 15:32:31.152] [INFO] cheese - Completed 200 (138ms)
+[2017-03-28 15:32:35.133] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:35.146] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:32:37.797] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:32:37.836] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:37.854] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:32:37.864] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:37.878] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:32:37.929] [INFO] cheese - Completed 200 (132ms)
+[2017-03-28 15:32:40.443] [INFO] cheese - Started GET /web/images/body_repeat.png ::ffff:127.0.0.1
+[2017-03-28 15:32:40.469] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:40.479] [INFO] cheese - Completed 200 (10ms)
+[2017-03-28 15:32:40.485] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:40.496] [INFO] cheese - Completed 200 (12ms)
+[2017-03-28 15:32:40.525] [INFO] cheese - Completed 200 (82ms)
+[2017-03-28 15:32:40.586] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:32:40.642] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:40.647] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:40.651] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:40.670] [INFO] cheese - Completed 200 (28ms)
+[2017-03-28 15:32:40.677] [INFO] cheese - Completed 200 (30ms)
+[2017-03-28 15:32:40.680] [INFO] cheese - Completed 200 (29ms)
+[2017-03-28 15:32:40.692] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:40.695] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:40.699] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:40.718] [INFO] cheese - Completed 200 (26ms)
+[2017-03-28 15:32:40.723] [INFO] cheese - Completed 200 (28ms)
+[2017-03-28 15:32:40.752] [INFO] cheese - Completed 200 (167ms)
+[2017-03-28 15:32:40.798] [INFO] cheese - Completed 200 (99ms)
+[2017-03-28 15:32:40.876] [INFO] cheese - Started GET /web/images/body_repeat.png ::ffff:127.0.0.1
+[2017-03-28 15:32:40.898] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:32:40.912] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:32:40.928] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:32:40.942] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:32:40.979] [INFO] cheese - Completed 200 (103ms)
+[2017-03-28 15:33:15.920] [INFO] cheese - Started GET /articles?page=2 ::ffff:127.0.0.1
+[2017-03-28 15:33:15.942] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:15.960] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:33:15.970] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:15.986] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:33:16.017] [INFO] cheese - Completed 200 (97ms)
+[2017-03-28 15:33:16.126] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:33:16.197] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:16.204] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:16.221] [INFO] cheese - Completed 200 (24ms)
+[2017-03-28 15:33:16.225] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:33:16.252] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:16.256] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:16.282] [INFO] cheese - Completed 200 (31ms)
+[2017-03-28 15:33:16.288] [INFO] cheese - Completed 200 (32ms)
+[2017-03-28 15:33:16.379] [INFO] cheese - Completed 200 (253ms)
+[2017-03-28 15:33:16.408] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:16.421] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:33:16.427] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:16.443] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:33:16.556] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:16.571] [INFO] cheese - Completed 304 (15ms)
+[2017-03-28 15:33:21.720] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:33:21.736] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:21.743] [INFO] cheese - Completed 200 (7ms)
+[2017-03-28 15:33:21.750] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:21.760] [INFO] cheese - Completed 200 (10ms)
+[2017-03-28 15:33:21.787] [INFO] cheese - Completed 200 (67ms)
+[2017-03-28 15:33:21.853] [INFO] cheese - Started GET /web/font-awesome/css/font-awesome.min.css ::ffff:127.0.0.1
+[2017-03-28 15:33:21.920] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:21.925] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:21.938] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:21.956] [INFO] cheese - Completed 200 (36ms)
+[2017-03-28 15:33:21.959] [INFO] cheese - Completed 200 (34ms)
+[2017-03-28 15:33:21.965] [INFO] cheese - Completed 200 (28ms)
+[2017-03-28 15:33:21.980] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:21.985] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:22.000] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:22.024] [INFO] cheese - Completed 200 (44ms)
+[2017-03-28 15:33:22.025] [INFO] cheese - Completed 200 (40ms)
+[2017-03-28 15:33:22.059] [INFO] cheese - Completed 200 (206ms)
+[2017-03-28 15:33:22.110] [INFO] cheese - Completed 200 (110ms)
+[2017-03-28 15:33:51.107] [INFO] cheese - Started GET /?page=2 ::ffff:127.0.0.1
+[2017-03-28 15:33:51.132] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:51.146] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:33:51.153] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:51.171] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:33:51.190] [INFO] cheese - Completed 200 (84ms)
+[2017-03-28 15:33:51.354] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:51.367] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:51.379] [INFO] cheese - Completed 200 (24ms)
+[2017-03-28 15:33:51.388] [INFO] cheese - Completed 200 (21ms)
+[2017-03-28 15:33:51.395] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:51.417] [INFO] cheese - Completed 200 (22ms)
+[2017-03-28 15:33:51.462] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:33:51.481] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:33:51.649] [INFO] cheese - Started GET /api/articles?category=all&page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:51.660] [INFO] cheese - Completed 304 (11ms)
+[2017-03-28 15:33:59.369] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:33:59.380] [INFO] cheese - Completed 304 (11ms)
+[2017-03-28 15:34:06.939] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:34:07.040] [INFO] cheese - Completed 302 (101ms)
+[2017-03-28 15:34:07.056] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-28 15:34:07.061] [INFO] cheese - Completed 200 (5ms)
+[2017-03-28 15:34:16.173] [INFO] cheese - Started POST /api/admin/sessions ::ffff:127.0.0.1
+[2017-03-28 15:34:16.197] [INFO] cheese - Completed 201 (24ms)
+[2017-03-28 15:34:16.340] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:34:16.344] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:34:16.373] [INFO] cheese - Completed 200 (33ms)
+[2017-03-28 15:34:16.380] [INFO] cheese - Completed 200 (36ms)
+[2017-03-28 15:34:20.691] [INFO] cheese - Started GET /api/admin/categories ::ffff:127.0.0.1
+[2017-03-28 15:34:20.722] [INFO] cheese - Completed 200 (31ms)
+[2017-03-28 15:34:22.132] [INFO] cheese - Started GET /api/admin/comments?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:34:22.438] [INFO] cheese - Completed 200 (306ms)
+[2017-03-28 15:34:25.554] [INFO] cheese - Started GET /api/admin/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:34:25.689] [INFO] cheese - Completed 200 (136ms)
+[2017-03-28 15:34:28.605] [INFO] cheese - Started GET /api/admin/guestbooks?page=2&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:34:28.613] [INFO] cheese - Completed 200 (8ms)
+[2017-03-28 15:35:02.179] [INFO] cheese - Started DELETE /api/admin/sessions/user ::ffff:127.0.0.1
+[2017-03-28 15:35:02.204] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:02.212] [INFO] cheese - Completed 200 (8ms)
+[2017-03-28 15:35:02.220] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:35:02.233] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:35:02.264] [INFO] cheese - Completed 200 (85ms)
+[2017-03-28 15:35:02.279] [INFO] cheese - Started GET /admin/user/login ::ffff:127.0.0.1
+[2017-03-28 15:35:02.284] [INFO] cheese - Completed 304 (5ms)
+[2017-03-28 15:35:07.213] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-28 15:35:07.228] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:07.240] [INFO] cheese - Completed 200 (12ms)
+[2017-03-28 15:35:07.247] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:35:07.257] [INFO] cheese - Completed 200 (10ms)
+[2017-03-28 15:35:07.285] [INFO] cheese - Completed 200 (72ms)
+[2017-03-28 15:35:07.387] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:07.407] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:35:07.409] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:07.425] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:35:07.430] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:35:07.440] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:35:07.451] [INFO] cheese - Completed 200 (21ms)
+[2017-03-28 15:35:07.494] [INFO] cheese - Completed 200 (54ms)
+[2017-03-28 15:35:07.605] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:07.620] [INFO] cheese - Completed 304 (15ms)
+[2017-03-28 15:35:11.253] [INFO] cheese - Started GET /articles/57daab98fcf33d5c23e4a3be ::ffff:127.0.0.1
+[2017-03-28 15:35:11.274] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:11.285] [INFO] cheese - Completed 200 (12ms)
+[2017-03-28 15:35:11.295] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:35:11.312] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:35:15.086] [INFO] cheese - Started GET /api/abouts/admin ::ffff:127.0.0.1
+[2017-03-28 15:35:15.165] [INFO] cheese - Completed 200 (79ms)
+[2017-03-28 15:35:17.593] [INFO] cheese - Started GET /api/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:35:17.602] [INFO] cheese - Completed 200 (9ms)
+[2017-03-28 15:36:51.077] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:36:51.096] [INFO] cheese - Completed 304 (19ms)
+[2017-03-28 15:36:51.913] [INFO] cheese - Started GET /articles/57daab98fcf33d5c27e4b3be ::ffff:127.0.0.1
+[2017-03-28 15:36:51.943] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:36:51.950] [INFO] cheese - Completed 200 (8ms)
+[2017-03-28 15:36:51.958] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:36:51.972] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:36:52.007] [INFO] cheese - Completed 200 (95ms)
+[2017-03-28 15:36:52.121] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:36:52.129] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:36:52.135] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:36:52.149] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:36:52.160] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:36:52.171] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:36:52.183] [INFO] cheese - Completed 200 (24ms)
+[2017-03-28 15:36:52.237] [INFO] cheese - Completed 200 (68ms)
+[2017-03-28 15:37:00.866] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:37:00.871] [INFO] cheese - Completed 200 (5ms)
+[2017-03-28 15:37:01.439] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:37:01.445] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:37:01.448] [INFO] cheese - Completed 304 (9ms)
+[2017-03-28 15:37:01.459] [INFO] cheese - Completed 304 (14ms)
+[2017-03-28 15:37:06.603] [INFO] cheese - Started GET /admin/article/58c77210da54842280dcbf24 ::ffff:127.0.0.1
+[2017-03-28 15:37:06.608] [INFO] cheese - Completed 200 (5ms)
+[2017-03-28 15:37:07.972] [INFO] cheese - Started GET /api/admin/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-28 15:37:07.991] [INFO] cheese - Started GET /api/admin/categories ::ffff:127.0.0.1
+[2017-03-28 15:37:07.997] [INFO] cheese - Completed 200 (25ms)
+[2017-03-28 15:37:08.014] [INFO] cheese - Completed 304 (23ms)
+[2017-03-28 15:37:18.139] [INFO] cheese - Started POST /api/admin/medias ::ffff:127.0.0.1
+[2017-03-28 15:37:18.445] [INFO] cheese - Completed 200 (306ms)
+[2017-03-28 15:37:25.201] [INFO] cheese - Started PUT /api/admin/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-28 15:37:25.298] [INFO] cheese - Completed 200 (97ms)
+[2017-03-28 15:37:28.660] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:37:28.665] [INFO] cheese - Completed 304 (5ms)
+[2017-03-28 15:37:29.183] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:37:29.189] [INFO] cheese - Completed 304 (6ms)
+[2017-03-28 15:37:29.191] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:37:29.205] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:37:29.374] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:37:29.388] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:37:29.398] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:37:29.414] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:37:34.081] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:37:34.094] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:37:34.104] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:37:34.121] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:37:34.249] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:37:34.257] [INFO] cheese - Completed 200 (9ms)
+[2017-03-28 15:37:34.265] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:37:34.277] [INFO] cheese - Completed 200 (12ms)
+[2017-03-28 15:38:14.308] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:38:14.323] [INFO] cheese - Completed 304 (15ms)
+[2017-03-28 15:38:24.006] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-28 15:38:24.021] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-28 15:38:24.690] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:38:24.712] [INFO] cheese - Completed 304 (23ms)
+[2017-03-28 15:38:25.543] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:38:25.580] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:38:25.594] [INFO] cheese - Completed 304 (51ms)
+[2017-03-28 15:38:25.636] [INFO] cheese - Completed 304 (56ms)
+[2017-03-28 15:38:26.194] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:38:26.213] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:38:26.233] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:38:26.257] [INFO] cheese - Completed 200 (24ms)
+[2017-03-28 15:38:31.531] [INFO] cheese - NodeBlog listening on port 8080
+[2017-03-28 15:38:31.542] [INFO] cheese - You can debug your app with http://localhost:8080
+[2017-03-28 15:38:48.600] [INFO] cheese - Started GET /api/admin/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-28 15:38:48.645] [INFO] cheese - Started GET /api/admin/categories ::ffff:127.0.0.1
+[2017-03-28 15:38:48.703] [INFO] cheese - Completed 200 (104ms)
+[2017-03-28 15:38:48.709] [INFO] cheese - Completed 304 (64ms)
+[2017-03-28 15:38:49.109] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:38:49.146] [INFO] cheese - Completed 200 (37ms)
+[2017-03-28 15:38:49.167] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:38:49.198] [INFO] cheese - Completed 200 (31ms)
+[2017-03-28 15:38:55.112] [INFO] cheese - Started POST /api/admin/medias ::ffff:127.0.0.1
+[2017-03-28 15:38:55.187] [INFO] cheese - Completed 200 (75ms)
+[2017-03-28 15:38:58.511] [INFO] cheese - Started PUT /api/admin/articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-28 15:38:58.561] [INFO] cheese - Completed 200 (51ms)
+[2017-03-28 15:39:00.578] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:39:00.587] [INFO] cheese - Completed 304 (9ms)
+[2017-03-28 15:39:01.228] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:39:01.236] [INFO] cheese - Completed 304 (8ms)
+[2017-03-28 15:39:01.242] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:39:01.256] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:40:38.206] [INFO] cheese - Started GET /media/2017/188a6e51a49848e04a58e3148eddf685.JPG ::ffff:127.0.0.1
+[2017-03-28 15:40:38.240] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:40:38.255] [INFO] cheese - Completed 200 (15ms)
+[2017-03-28 15:40:38.264] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:40:38.285] [INFO] cheese - Completed 200 (21ms)
+[2017-03-28 15:40:38.337] [INFO] cheese - Completed 200 (131ms)
+[2017-03-28 15:40:57.352] [INFO] cheese - Started GET /media/2017/188a6e51a49848e04a58e3148eddf685.JPG ::ffff:127.0.0.1
+[2017-03-28 15:40:57.378] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:40:57.395] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:40:57.404] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:40:57.423] [INFO] cheese - Completed 200 (19ms)
+[2017-03-28 15:40:57.489] [INFO] cheese - Completed 200 (137ms)
+[2017-03-28 15:40:58.710] [INFO] cheese - Started GET /media/2017/188a6e51a49848e04a58e3148eddf685.JPG ::ffff:127.0.0.1
+[2017-03-28 15:40:58.732] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:40:58.746] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:40:58.755] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:40:58.772] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:40:58.814] [INFO] cheese - Completed 200 (104ms)
+[2017-03-28 15:41:10.112] [INFO] cheese - Started GET /admin/ ::ffff:127.0.0.1
+[2017-03-28 15:41:10.122] [INFO] cheese - Completed 304 (10ms)
+[2017-03-28 15:41:10.842] [INFO] cheese - Started GET /api/admin/login-user ::ffff:127.0.0.1
+[2017-03-28 15:41:10.852] [INFO] cheese - Started GET /api/admin/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:41:10.857] [INFO] cheese - Completed 304 (15ms)
+[2017-03-28 15:41:10.869] [INFO] cheese - Completed 304 (17ms)
+[2017-03-28 15:42:31.933] [INFO] cheese - Started GET /api/admin/categories ::ffff:127.0.0.1
+[2017-03-28 15:42:31.944] [INFO] cheese - Completed 304 (11ms)
+[2017-03-28 15:42:34.703] [INFO] cheese - Started GET /api/admin/comments?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:42:34.727] [INFO] cheese - Completed 304 (24ms)
+[2017-03-28 15:42:39.470] [INFO] cheese - Started GET /api/admin/guestbooks?page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:42:39.478] [INFO] cheese - Completed 304 (8ms)
+[2017-03-28 15:43:13.550] [INFO] cheese - Started GET / ::ffff:127.0.0.1
+[2017-03-28 15:43:13.580] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:13.593] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:43:13.601] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:13.614] [INFO] cheese - Completed 200 (13ms)
+[2017-03-28 15:43:13.654] [INFO] cheese - Completed 200 (104ms)
+[2017-03-28 15:43:13.822] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:13.836] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:13.846] [INFO] cheese - Completed 200 (24ms)
+[2017-03-28 15:43:13.862] [INFO] cheese - Completed 200 (26ms)
+[2017-03-28 15:43:13.872] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:13.898] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:13.907] [INFO] cheese - Completed 200 (35ms)
+[2017-03-28 15:43:13.962] [INFO] cheese - Completed 200 (64ms)
+[2017-03-28 15:43:14.041] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:14.063] [INFO] cheese - Completed 200 (22ms)
+[2017-03-28 15:43:19.681] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:19.697] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:43:19.707] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:19.724] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:43:19.916] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:19.933] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:43:19.941] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:43:19.951] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:19.962] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:43:19.990] [INFO] cheese - Completed 200 (40ms)
+[2017-03-28 15:43:19.992] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:43:20.075] [INFO] cheese - Completed 200 (83ms)
