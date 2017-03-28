@@ -13,11 +13,7 @@
 * Support the front and back end of the renderer by vue-server-renderer。
 * ......
 
-<<<<<<< HEAD
 **category：**
-=======
-**目录介绍：**
->>>>>>> 139e65c93abf78a229b656fd14045c8cc0f15655
 
 * client/admin backstage ui，independent project
 * client/web   frontend ui，independent project
