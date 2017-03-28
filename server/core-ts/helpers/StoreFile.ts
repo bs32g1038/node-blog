@@ -44,7 +44,7 @@ var uploadLocal = function (req, res, next) {
             });
             // var site_domain = req.app.locals.option.site_domain;
             var site_domain = 'http://127.0.0.1';
-            var url = site_domain + '/public/media/' + moment().format("YYYY") + '/' + req.file.filename;
+            var url = site_domain + '/media/' + moment().format("YYYY") + '/' + req.file.filename;
             console.log({ url: url })
             return res.json({ url: url });
         } catch (error) {
