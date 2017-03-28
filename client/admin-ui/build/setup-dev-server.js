@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const clientConfig = require('./webpack.client.config')
+const merge = require('webpack-merge')
 process.env.NODE_ENV = 'development';
 
 module.exports = function setupDevServer(app, opts) {

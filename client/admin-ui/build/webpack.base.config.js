@@ -1,7 +1,11 @@
 var path = require('path');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-    devtool: 'source-map',
+    devtool: isProd ?
+        false : '#cheap-module-eval-source-map',
     entry: {
         app: path.resolve(__dirname, '../src/index'),
         vendor: [
@@ -53,5 +57,12 @@ module.exports = {
             path.resolve(__dirname, "../src")
         ],
         extensions: ['.js', '.json', '.jsx']
-    }
+    },
+    performance: {
+        maxEntrypointSize: 300000,
+        hints: isProd ? 'warning' : false
+    },
+    plugins: isProd ? [] : [
+        new FriendlyErrorsPlugin()
+    ]
 }

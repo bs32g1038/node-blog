@@ -1,5 +1,5 @@
 require('es6-promise').polyfill()
-
+import '../public/css/index.css'
 import { app, store } from './app'
 
 // prime the store with server-initialized state.

@@ -1,31 +1,33 @@
 var path = require('path');
 var webpack = require('webpack');
+const merge = require('webpack-merge')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var postcss = require('postcss');
 const HTMLPlugin = require('html-webpack-plugin')
 const base = require('./webpack.base.config')
 
-const config = Object.assign({}, base, {
-    plugins: (base.plugins || []).concat([
-        // strip comments in Vue code
+const config = merge(base, {
+    plugins: [
+        // strip dev-only code in Vue source
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-            'process.env.VUE_ENV': '"client"'
+            'process.env.REACT_ENV': '"client"'
         }),
         // extract vendor chunks for better caching
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
+            name: ['vendor']
         }),
         // generate output HTML
         new HTMLPlugin({
-            template: 'src/index.template.html'
+            template: 'src/index.template.html',
+            projectPath: '/admin'
         })
-    ])
+    ]
 })
 
 if (process.env.NODE_ENV === 'production') {
-    base.module.rules.push({
+    config.module.rules.push({
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
             loader: 'css-loader',
@@ -51,7 +53,7 @@ if (process.env.NODE_ENV === 'production') {
         })
     )
 } else {
-    base.module.rules.push({
+    config.module.rules.push({
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
     });

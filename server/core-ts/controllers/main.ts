@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-26 13:50:25 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-27 20:58:54
+ * @Last Modified time: 2017-03-28 15:07:52
  */
 const fs = require('fs');
 const path = require('path');
@@ -22,7 +22,7 @@ export default class MainController {
     // 前台home入口，配合vue使用
     static HomeMain(req, res, next) {
         
-        res.render('index', {}, function (err, html) {
+        res.render('web', {}, function (err, html) {
             let renderer = createRenderer(fs.readFileSync(resolve('../../public/web/server-bundle.js'), 'utf-8'))
             let indexHTML = parseIndex(html)
             function createRenderer(bundle) {
