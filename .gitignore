@@ -2,8 +2,8 @@
 node_modules
 dist
 .vscode
-/client/admin-ui/dist
-/client/web-ui/dist
 /server/public/media/*
 !/server/public/media/default
 npm-debug.log
+public/media
+!public/media/default

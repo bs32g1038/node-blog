@@ -78,7 +78,7 @@ class ArticleList extends Component {
                     <Button className="ant-btn ant-btn-primary" onClick={() => (this.showModal())}><i className="fa fa-plus-square fa-fw"></i>&nbsp;&nbsp;添加文章</Button>
                     <Button type="danger"><i className="fa fa-trash-o fa-fw"></i>&nbsp;&nbsp;批量删除</Button>
                     <div className="fr">
-                        <Form inline onSubmit={this.handleSubmit}>
+                        <Form layout='inline' onSubmit={this.handleSubmit}>
                             <FormItem>
                                 <input type="input" placeholder="请输入搜索关键字" className="ant-input" />
                             </FormItem>

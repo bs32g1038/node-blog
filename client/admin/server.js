@@ -10,7 +10,6 @@ require('./build/setup-dev-server')(app, {
     }
 })
 
-console.log(path.join(__dirname, './public'))
 app.use('/admin', express.static(path.join(__dirname, './public')))
 
 app.get('*', function(req, res) {
