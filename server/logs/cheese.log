@@ -1551,3 +1551,45 @@
 [2017-03-28 15:43:19.990] [INFO] cheese - Completed 200 (40ms)
 [2017-03-28 15:43:19.992] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
 [2017-03-28 15:43:20.075] [INFO] cheese - Completed 200 (83ms)
+[2017-03-28 15:58:59.328] [INFO] cheese - Started GET /category/%E5%B0%8F%E5%BC%9F%E4%B8%8D%E6%89%8D/articles ::ffff:127.0.0.1
+[2017-03-28 15:58:59.360] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:58:59.374] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:58:59.381] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:58:59.396] [INFO] cheese - Completed 200 (15ms)
+[2017-03-28 15:58:59.430] [INFO] cheese - Completed 200 (102ms)
+[2017-03-28 15:58:59.550] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:58:59.560] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:58:59.564] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:58:59.578] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:58:59.589] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:58:59.606] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:58:59.656] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:58:59.674] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:58:59.889] [INFO] cheese - Started GET /articles/57daab98fcf33d5c27e4a334 ::ffff:127.0.0.1
+[2017-03-28 15:58:59.907] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:58:59.915] [INFO] cheese - Completed 200 (8ms)
+[2017-03-28 15:58:59.920] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:58:59.931] [INFO] cheese - Completed 200 (11ms)
+[2017-03-28 15:58:59.965] [INFO] cheese - Completed 200 (76ms)
+[2017-03-28 15:59:00.076] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.092] [INFO] cheese - Completed 200 (16ms)
+[2017-03-28 15:59:00.093] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.107] [INFO] cheese - Completed 200 (14ms)
+[2017-03-28 15:59:00.109] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:59:00.136] [INFO] cheese - Completed 200 (27ms)
+[2017-03-28 15:59:00.183] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:59:00.200] [INFO] cheese - Completed 200 (18ms)
+[2017-03-28 15:59:00.697] [INFO] cheese - Started GET /articles/58c77210da54842280dcbf24 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.718] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.728] [INFO] cheese - Completed 200 (10ms)
+[2017-03-28 15:59:00.734] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:59:00.749] [INFO] cheese - Completed 200 (15ms)
+[2017-03-28 15:59:00.778] [INFO] cheese - Completed 200 (81ms)
+[2017-03-28 15:59:00.902] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.922] [INFO] cheese - Completed 200 (20ms)
+[2017-03-28 15:59:00.927] [INFO] cheese - Started GET /api/articles?category=all&page=1&per_page=10 ::ffff:127.0.0.1
+[2017-03-28 15:59:00.937] [INFO] cheese - Completed 200 (10ms)
+[2017-03-28 15:59:00.939] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:59:00.955] [INFO] cheese - Completed 200 (17ms)
+[2017-03-28 15:59:01.000] [INFO] cheese - Started GET /api/init ::ffff:127.0.0.1
+[2017-03-28 15:59:01.023] [INFO] cheese - Completed 200 (23ms)
