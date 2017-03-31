@@ -17,7 +17,7 @@ export default class BaseRepository<T, O> implements IBaseRepository<T, O> {
     }
 
     getList(query: T, opt: O): Promise<Object> {
-        return this._model.find(query, null, opt).lean().exec();
+        return this._model.find(query, '', opt).lean().exec();
     };
 
     getOne(query: T): Promise<Object> {

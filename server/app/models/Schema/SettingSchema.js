@@ -8,7 +8,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const mongoose_1 = require("mongoose");
 let setting = new mongoose_1.Schema({
-    _id: { type: String, default: 'site_option' },
     site_name: { type: String, default: '个人博客' },
     site_description: { type: String, default: '这是一个个人网站！' },
     site_keywords: { type: String, default: 'nodejs, node, express, mongoose' },

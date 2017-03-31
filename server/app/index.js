@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:48:46
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-28 14:54:44
+ * @Last Modified time: 2017-03-30 20:49:45
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -21,6 +21,7 @@ const logger_1 = require("./helpers/logger");
 const RequestLog_1 = require("./middlewares/RequestLog");
 const api_1 = require("./routes/api");
 const web_1 = require("./routes/web");
+require("./helpers/loadDataToCache");
 const app = express();
 app.set('views', path.join(__dirname, '../views')); // ejs引擎渲染html文件
 app.set('view engine', 'html');

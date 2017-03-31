@@ -25,7 +25,6 @@ class ArticleApiController {
                         query.category = category._id;
                     }
                 }
-                console.log(query);
                 let result = yield articleService.getList(query, opt);
                 // req.setHeaderLink({
                 //   next: 'http://127.0.0.1/api/admin/articles?page=1',

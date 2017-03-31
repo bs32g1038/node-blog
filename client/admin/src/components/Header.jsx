@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-07 16:52:27 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-15 15:42:17
+ * @Last Modified time: 2017-03-28 23:00:21
  */
 
 import { Layout } from 'antd';
@@ -26,7 +26,9 @@ class header extends React.Component {
     render() {
         return (
             <Header className="header">
-                <a href="/" className="logo">博客后台管理</a>
+                <a href="/" className="logo">
+                    <img src="/admin/images/logo.png" alt="博客"/>博客后台管理
+                </a>
                 <div className="fr navbar-nav">
                     <ul>
                         <li className="user-menu">

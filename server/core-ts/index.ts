@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-01-17 15:48:46 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-28 14:54:44
+ * @Last Modified time: 2017-03-30 20:49:45
  */
 
 const express = require('express');
@@ -20,6 +20,7 @@ import logger from './helpers/logger';
 import RequestLog from './middlewares/RequestLog';
 import apiRouter from './routes/api';
 import webRouter from './routes/web';
+import './helpers/loadDataToCache';
 
 const app = express();
 

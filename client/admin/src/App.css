@@ -140,6 +140,15 @@
  .logo {
      color: #fff;
      font-size: 20px;
+     display: block;
+     float: left
+ }
+
+ .logo img{
+     margin-top: 15px;
+     height: 30px;
+     padding-right: 10px;
+     float: left;
  }
  
  .ant-breadcrumb {

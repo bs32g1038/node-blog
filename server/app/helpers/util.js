@@ -1,10 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
-function hash(method, str, format) {
+function hash(method, s, format) {
     var sum = crypto.createHash(method);
-    sum.update(str, 'utf8');
-    return sum.digest(format);
+    var isBuffer = Buffer.isBuffer(s);
+    if (!isBuffer && typeof s === 'object') {
+        s = JSON.stringify(s);
+    }
+    let input_encoding = isBuffer ? 'binary' : 'utf8';
+    sum.update(s, input_encoding);
+    return sum.digest(format || 'hex');
 }
 ;
 exports.md5 = function (str, format = 'hex') {

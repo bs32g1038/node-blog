@@ -2,26 +2,34 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-26 13:50:25 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-28 15:07:52
+ * @Last Modified time: 2017-03-28 22:02:46
  */
 const fs = require('fs');
 const path = require('path');
 const serialize = require('serialize-javascript')
 const resolve = file => path.resolve(__dirname, file);
 
+import SettingService from '../service/SettingService';
+import ISettingEntity from '../models/entity/ISettingEntity';
 
 const isProd = process.env.NODE_ENV === 'production'
 
 export default class MainController {
 
     // 后台admin入口,配合react单页应用
-    static AdminMain(req, res, next) {
-        res.render('admin', {});
+    static async AdminMain(req, res, next) {
+        let settingService = new SettingService();
+        try {
+            const setting: ISettingEntity = await settingService.getById('setting');
+            res.render('admin', { site_name: setting.site_name });
+        } catch (error) {
+            return next(error)
+        }
     }
 
     // 前台home入口，配合vue使用
     static HomeMain(req, res, next) {
-        
+
         res.render('web', {}, function (err, html) {
             let renderer = createRenderer(fs.readFileSync(resolve('../../public/web/server-bundle.js'), 'utf-8'))
             let indexHTML = parseIndex(html)
@@ -45,7 +53,12 @@ export default class MainController {
                 return res.end('waiting for compilation... refresh in a moment.')
             }
             var s = Date.now()
-            const context = { url: req.url }
+
+            const context: {
+                url: string,
+                initialState?: {}
+            } = { url: req.url };
+
             const renderStream = renderer.renderToStream(context)
 
             renderStream.once('data', () => {

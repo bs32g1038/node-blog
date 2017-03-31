@@ -12,7 +12,7 @@ class BaseRepository {
         this._model = schemaModel;
     }
     getList(query, opt) {
-        return this._model.find(query, null, opt).lean().exec();
+        return this._model.find(query, '', opt).lean().exec();
     }
     ;
     getOne(query) {

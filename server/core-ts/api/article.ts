@@ -32,7 +32,6 @@ export default class ArticleApiController {
                     query.category = category._id;
                 }
             }
-            console.log(query)
             let result = await articleService.getList(query, opt);
             // req.setHeaderLink({
             //   next: 'http://127.0.0.1/api/admin/articles?page=1',
@@ -127,7 +126,7 @@ export default class ArticleApiController {
         let key: string = req.query.key,
             page: number = Number(req.query.page) || 1;
 
-        let query = { title: { $regex: key }, is_deleted: false },
+        let query: any = { title: { $regex: key }, is_deleted: false },
             per_page: number = Number(req.query.per_page) || 10,
             opt: IBaseListOption = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
 

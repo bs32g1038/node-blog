@@ -20,9 +20,11 @@ exports.default = (req, res, next) => __awaiter(this, void 0, void 0, function* 
         //   <https://api.github.com/user/repos?page=3&per_page=100>; rel="next",
         //   <https://api.github.com/user/repos?page=50&per_page=100>; rel="last"
         let links = [];
+        let str = '';
         for (var key of Object.keys(link)) {
+            str = '<' + link[key] + '>;rel="' + key + '"';
             if (link[key]) {
-                links.push('<' + link[key] + '>;rel="' + key + '"');
+                links.push(str);
             }
         }
         let Link = links.join(',');

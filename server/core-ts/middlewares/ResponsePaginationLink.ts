@@ -18,10 +18,12 @@ export default async (req, res, next) => {
         //   生成的头部链接信息
         //   <https://api.github.com/user/repos?page=3&per_page=100>; rel="next",
         //   <https://api.github.com/user/repos?page=50&per_page=100>; rel="last"
-        let links = [];
+        let links: Array<string> = [];
+        let str: string = '';
         for (var key of Object.keys(link)) {
+            str = '<' + link[key] + '>;rel="' + key + '"'
             if (link[key]) {
-                links.push('<' + link[key] + '>;rel="' + key + '"');
+                links.push(str);
             }
         }
         let Link = links.join(',');
