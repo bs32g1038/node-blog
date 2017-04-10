@@ -1,4 +1,5 @@
-import Main from './containers/Main.jsx'
+import Main from './containers/Main'
+import Dashboard from './containers/Dashboard'
 import ArticleList from './containers/ArticleList'
 import CategoryList from './containers/CategoryList'
 import CommentList from './containers/CommentList'
@@ -15,7 +16,7 @@ export default [{
 }, {
     path: '/admin',
     component: Main,
-    indexRoute: { component: ArticleList },
+    indexRoute: { component: Dashboard },
     childRoutes: [
         { path: "articles", component: ArticleList },
         { path: "categorys", component: CategoryList },

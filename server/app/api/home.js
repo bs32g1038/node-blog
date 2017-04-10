@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-28 22:05:58
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 15:00:05
+ * @Last Modified time: 2017-03-31 18:52:03
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -39,7 +39,7 @@ class HomeApiController {
                         nick_name: user.nick_name,
                         qq: user.qq
                     },
-                    setting: yield settingService.getById('setting'),
+                    setting: yield settingService.getById(config_1.default.site_setting._id),
                     categories: yield categoryService.getAll()
                 };
                 console.log(init);

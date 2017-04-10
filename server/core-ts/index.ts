@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-01-17 15:48:46 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-30 20:49:45
+ * @Last Modified time: 2017-03-31 18:33:52
  */
 
 const express = require('express');
@@ -14,10 +14,11 @@ const cors = require('cors');
 const session = require('express-session');
 const assert = require('assert');
 const RedisStore = require('connect-redis')(session);
-import GlobalResponseHeader from './middlewares/GlobalResponseHeader';
 import config from './config';
 import logger from './helpers/logger';
+import GlobalResponseHeader from './middlewares/GlobalResponseHeader';
 import RequestLog from './middlewares/RequestLog';
+import RenderVueServer from './middlewares/RenderVueServer';
 import apiRouter from './routes/api';
 import webRouter from './routes/web';
 import './helpers/loadDataToCache';
@@ -52,6 +53,7 @@ app.use(session({
  */
 app.use(RequestLog)
 app.use(GlobalResponseHeader);
+app.use(RenderVueServer);
 app.use(apiRouter);
 app.use(webRouter);
 

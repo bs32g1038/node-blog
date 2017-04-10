@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:48:46
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-30 20:49:45
+ * @Last Modified time: 2017-03-31 18:33:52
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -15,10 +15,11 @@ const cors = require('cors');
 const session = require('express-session');
 const assert = require('assert');
 const RedisStore = require('connect-redis')(session);
-const GlobalResponseHeader_1 = require("./middlewares/GlobalResponseHeader");
 const config_1 = require("./config");
 const logger_1 = require("./helpers/logger");
+const GlobalResponseHeader_1 = require("./middlewares/GlobalResponseHeader");
 const RequestLog_1 = require("./middlewares/RequestLog");
+const RenderVueServer_1 = require("./middlewares/RenderVueServer");
 const api_1 = require("./routes/api");
 const web_1 = require("./routes/web");
 require("./helpers/loadDataToCache");
@@ -50,6 +51,7 @@ app.use(session({
  */
 app.use(RequestLog_1.default);
 app.use(GlobalResponseHeader_1.default);
+app.use(RenderVueServer_1.default);
 app.use(api_1.default);
 app.use(web_1.default);
 /**

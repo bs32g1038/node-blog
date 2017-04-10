@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 15:00:05
+ * @Last Modified time: 2017-03-31 18:52:03
  */
 
 import * as  _ from 'lodash';
@@ -34,7 +34,7 @@ export default class HomeApiController {
                     nick_name: user.nick_name,
                     qq: user.qq
                 },
-                setting: await settingService.getById('setting'),
+                setting: await settingService.getById(config.site_setting._id),
                 categories: await categoryService.getAll()
             }
             console.log(init)

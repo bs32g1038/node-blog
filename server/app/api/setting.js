@@ -15,12 +15,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SettingService_1 = require("../service/SettingService");
+const config_1 = require("../config");
 class SettingApiController {
     static getSetting(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             let settingService = new SettingService_1.default();
             try {
-                const setting = yield settingService.getById('setting');
+                const setting = yield settingService.getById(config_1.default.site_setting._id);
                 res.json(setting);
             }
             catch (error) {
@@ -30,7 +31,8 @@ class SettingApiController {
     }
     static update(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let id = req.params.id;
+            // let id = req.params.id;
+            let id = config_1.default.site_setting._id;
             let doc = {
                 site_name: req.body.site_name,
                 site_description: req.body.site_description,

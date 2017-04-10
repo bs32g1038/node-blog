@@ -49,8 +49,7 @@ const sider = React.createClass({
                     <SubMenu key="sub0" title={<span><i className="fa fa-home fa-fw" />
                         <span className="nav-text">管理首页</span></span>}>
                         <Menu.Item key="0">
-                            <i className="fa fa-eye fa-fw" />
-                            <span className="nav-text">首页导航</span>
+                            <Link to="/admin"><i className="fa fa-dashboard fa-fw" />控制面板</Link>
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub1" title={<span> <i className="fa fa-edit fa-fw" />
@@ -99,7 +98,7 @@ const sider = React.createClass({
                     <SubMenu key="sub5" title={<span><i className="fa fa-cogs fa-fw" />
                         <span className="nav-text">系统配置</span></span>}>
                         <Menu.Item key="9">
-                            <Link to="/admin/settings/setting/edit">
+                            <Link to="/admin/settings/base/edit">
                                 <i className="fa fa-cog fa-fw" />基础配置
                             </Link>
                         </Menu.Item>

@@ -13,74 +13,62 @@ client.on('error', function (err) {
         process.exit(1);
     }
 });
-/*****
- * 设置缓存
- * @param key   缓存key
- * @param field 缓存field
- * @param value 缓存value
- * @param expired   缓存有效时长
- * @param callback  回调函数，返回增加后的结果
- */
-const hincrby = function (key, field, value, expired, callback) {
-    client.exists(key, function (err, res) {
-        client.hincrby(key, field, value, function (err, num) {
-            if (res == 0 && expired) {
-                client.expire(key, expired);
+// const hincrby = function (key, field, value, expired, callback) {
+//     client.exists(key, function (err, res) {
+//         if (err) {
+//             return callback(err)
+//         }
+//         client.hincrby(key, field, value, function (err, num) {
+//             if (res == 0 && expired) {
+//                 client.expire(key, expired);
+//             }
+//             callback(null, num);
+//         });
+//     });
+// }
+const set = function (key, value) {
+    return new Promise(function (resolve, reject) {
+        value = JSON.stringify(value);
+        client.set(key, value, function (err) {
+            if (err) {
+                return reject(err);
             }
-            callback(null, num);
+            resolve();
         });
     });
 };
-exports.hincrby = hincrby;
-/**
- * 设置缓存
- * @param key 缓存key
- * @param value 缓存value
- * @param expired 缓存有效时长
- * @param callback 回调函数
- */
-const set = function (key, value, expired, callback) {
-    if (typeof expired === 'function') {
-        callback = expired;
-        expired = null;
-    }
-    value = JSON.stringify(value);
-    if (!expired) {
-        client.set(key, value, callback);
-    }
-    else {
-        client.setex(key, expired, value, callback);
-    }
-};
 exports.set = set;
-/**
- * 获取缓存
- * @param key 缓存key
- * @param callback 回调函数
- */
-const get = function (key, callback) {
-    client.get(key, function (err, data) {
-        if (err) {
-            return callback(err);
-        }
-        if (!data) {
-            return callback();
-        }
-        data = JSON.parse(data);
-        callback(null, data);
+const setx = function (key, value, expired) {
+    return new Promise(function (resolve, reject) {
+        client.setex(key, expired, value, function (err) {
+            if (err) {
+                return reject(err);
+            }
+            resolve();
+        });
+    });
+};
+exports.setx = setx;
+const get = function (key) {
+    return new Promise(function (resolve, reject) {
+        client.get(key, function (err, data) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(JSON.parse(data || ''));
+        });
     });
 };
 exports.get = get;
-/**
- * 移除缓存
- * @param key 缓存key
- * @param callback 回调函数
- */
-const remove = function (key, callback) {
-    client.del(key, callback);
+const remove = function (key) {
+    return new Promise(function (resolve, reject) {
+        client.del(key, function (err) {
+            if (err) {
+                return reject(err);
+            }
+            resolve();
+        });
+    });
 };
 exports.remove = remove;
-const ttl = function (key, callback) {
-    client.ttl(key, callback);
-};
 exports.default = client;

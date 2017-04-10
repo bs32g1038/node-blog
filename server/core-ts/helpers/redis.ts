@@ -1,3 +1,5 @@
+import { resolve4, resolve6 } from 'dns';
+import { resolve } from 'url';
 import config from '../config';
 import redis = require("redis");
 import logger from './logger';
@@ -15,81 +17,68 @@ client.on('error', function (err) {
     }
 })
 
-/*****
- * 设置缓存
- * @param key   缓存key
- * @param field 缓存field
- * @param value 缓存value
- * @param expired   缓存有效时长
- * @param callback  回调函数，返回增加后的结果
- */
-const hincrby = function (key, field, value, expired, callback) {
-    client.exists(key, function (err, res) {
-        client.hincrby(key, field, value, function (err, num) {
-            if (res == 0 && expired) {
-                client.expire(key, expired);
+// const hincrby = function (key, field, value, expired, callback) {
+//     client.exists(key, function (err, res) {
+//         if (err) {
+//             return callback(err)
+//         }
+//         client.hincrby(key, field, value, function (err, num) {
+//             if (res == 0 && expired) {
+//                 client.expire(key, expired);
+//             }
+//             callback(null, num);
+//         });
+//     });
+// }
+
+const set = function (key: string, value: string | Object) {
+    return new Promise(function (resolve, reject) {
+        value = JSON.stringify(value);
+        client.set(key, value, function (err) {
+            if (err) {
+                return reject(err)
             }
-            callback(null, num);
+            resolve();
         });
     });
-}
-
-/**
- * 设置缓存
- * @param key 缓存key
- * @param value 缓存value
- * @param expired 缓存有效时长
- * @param callback 回调函数
- */
-const set = function (key: string, value: string | Object, expired?: Function | number | null, callback?: Function) {
-    if (typeof expired === 'function') {
-        callback = expired;
-        expired = null;
-    }
-    value = JSON.stringify(value);
-    if (!expired) {
-        client.set(key, value, callback);
-    } else {
-        client.setex(key, expired, value, callback);
-    }
 };
 
+const setx = function (key: string, value: string | Object, expired: number) {
+    return new Promise(function (resolve, reject) {
+        client.setex(key, expired, value, function (err) {
+            if (err) {
+                return reject(err)
+            }
+            resolve();
+        });
+    })
+}
 
-/**
- * 获取缓存
- * @param key 缓存key
- * @param callback 回调函数
- */
-const get = function (key: string, callback: Function) {
-    client.get(key, function (err, data) {
-        if (err) {
-            return callback(err);
-        }
-        if (!data) {
-            return callback();
-        }
-        data = JSON.parse(data);
-        callback(null, data);
+const get = function (key: string) {
+    return new Promise(function (resolve, reject) {
+        client.get(key, function (err, data) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(JSON.parse(data || ''));
+        });
     });
-
 };
 
-/**
- * 移除缓存
- * @param key 缓存key
- * @param callback 回调函数
- */
-const remove = function (key: string, callback: Function) {
-    client.del(key, callback);
+const remove = function (key: string) {
+    return new Promise(function (resolve, reject) {
+        client.del(key, function (err) {
+            if (err) {
+                return reject(err);
+            }
+            resolve();
+        });
+    })
 };
-
-const ttl = function (key: string, callback: Function) {
-    client.ttl(key, callback);
-}
 
 export {
-    hincrby,
     set,
+    setx,
     get,
     remove
 }

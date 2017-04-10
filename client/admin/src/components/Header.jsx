@@ -32,7 +32,7 @@ class header extends React.Component {
                 <div className="fr navbar-nav">
                     <ul>
                         <li className="user-menu">
-                            <a href="/admin/doc/list">
+                            <a href="/admin/articles">
                                 <img src="https://www.lizc.me/home/images/logo.jpg" className="user-image" alt="" />
                                 <span className="hidden-xs">{this.state.user.nick_name}-博主</span>
                             </a>

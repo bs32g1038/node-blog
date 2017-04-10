@@ -12,13 +12,14 @@ import SettingService from '../service/SettingService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
+import config from '../config';
 
 export default class SettingApiController {
 
     static async getSetting(req, res, next) {
         let settingService = new SettingService();
         try {
-            const setting = await settingService.getById('setting');
+            const setting = await settingService.getById(config.site_setting._id);
             res.json(setting);
         } catch (error) {
             return next(error)
@@ -26,7 +27,8 @@ export default class SettingApiController {
     }
 
     static async update(req, res, next) {
-        let id = req.params.id;
+        // let id = req.params.id;
+        let id = config.site_setting._id;
         let doc: ISettingEntity = {
             site_name: req.body.site_name,          // 网站名称
             site_description: req.body.site_description,   // 网站描述
