@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-14 15:04:45 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-14 15:17:28
+ * @Last Modified time: 2017-04-10 23:08:16
  */
 
 import commentApi from '../api/comment';
@@ -75,18 +75,6 @@ export const deleteComment = (id) => {
                 description: '内容已删除成功！',
             });
             return dispatch(deleteCommentAction(id))
-        });
-    }
-}
-
-export const handlePass = (id, pass) => {
-    return dispatch => {
-        commentApi.handlePass(id, pass).then((res) => {
-            notification.success({
-                message: '操作提示',
-                description: (pass ? '内容已设置为审核通过！' : '内容已设置为审核未通过'),
-            });
-            return dispatch(updateCommentPassAction(id, pass));
         });
     }
 }

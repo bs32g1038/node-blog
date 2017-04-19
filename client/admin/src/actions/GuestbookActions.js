@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-14 15:04:45 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-15 12:57:31
+ * @Last Modified time: 2017-04-10 23:08:24
  */
 
 import guestbookApi from '../api/guestbook';
@@ -76,18 +76,6 @@ export const updateGuestbookReplyContent = (id, reply_content) => {
                 description: '内容已提交成功！',
             });
             return dispatch(updateReplyContentAction(id, reply_content))
-        });
-    }
-}
-
-export const handlePass = (id, pass) => {
-    return dispatch => {
-        guestbookApi.handlePass(id, pass).then((res) => {
-            notification.success({
-                message: '操作提示',
-                description: (pass ? '内容已设置为审核通过！' : '内容已设置为审核未通过'),
-            });
-            return dispatch(updateGuestbookPassAction(id, pass));
         });
     }
 }

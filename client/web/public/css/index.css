@@ -251,7 +251,7 @@ textarea {
 body {
     position: relative;
     color: #333;
-    background: url(/web/images/body_repeat.png);
+    background: url(/web/images/body_repeat.jpg) 0% 0% / cover fixed;;
     font: 14px/26px Hiragino Sans GB, Microsoft Yahei, SimSun, Helvetica, Arial, Sans-serif;
 }
 
@@ -368,7 +368,7 @@ ul {
     position: relative;
     margin: 0 auto;
     border-radius: 3px;
-    background-color: #fff;
+    background-color:  rgba(255,255,255,0.8);
     background-size: 100%;
     height: 100%;
     min-height: 100%;

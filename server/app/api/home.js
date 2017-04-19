@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-28 22:05:58
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:52:03
+ * @Last Modified time: 2017-04-10 23:14:31
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -42,10 +42,10 @@ class HomeApiController {
                     setting: yield settingService.getById(config_1.default.site_setting._id),
                     categories: yield categoryService.getAll()
                 };
-                console.log(init);
                 res.json(init);
             }
             catch (error) {
+                next(error);
             }
         });
     }

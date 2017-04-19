@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Popconfirm } from 'antd';
+import { parseTime } from '../libs/parse-time';
 const { Column } = Table;
 
 class CategoryListItem extends Component {
@@ -30,7 +31,7 @@ class CategoryListItem extends Component {
                 <Column
                     title='创建时间'
                     dataIndex='create_at'
-                    render={text => <span style={{ color: 'green' }}>{text}</span>}
+                    render={(text, record) => (parseTime(text))}
                 />
                 <Column
                     title='文章数量'

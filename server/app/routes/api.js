@@ -20,6 +20,7 @@ const category_1 = require("../api/category");
 const comment_1 = require("../api/comment");
 const guestbook_1 = require("../api/guestbook");
 const about_1 = require("../api/about");
+const dashboard_1 = require("../api/dashboard");
 //存储文件接口（包括七牛和本地上传）
 const StoreFile_1 = require("../helpers/StoreFile");
 /**
@@ -50,6 +51,10 @@ router.get('/api/abouts/admin', about_1.default.getAbout);
  */
 router.post('/api/admin/sessions', user_1.default.login);
 router.all('/api/admin/*', user_1.default.checkLogin);
+/**
+ * 仪表盘
+ */
+router.get('/api/admin/dashboard', dashboard_1.default.main);
 /**
  * 用户api路由
  */

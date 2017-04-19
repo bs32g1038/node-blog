@@ -7,6 +7,7 @@
 
 import IBaseRepository from './IBaseRepository';
 import * as mongoose from "mongoose";
+import * as cache from '../helpers/cache';
 
 export default class BaseRepository<T, O> implements IBaseRepository<T, O> {
 
@@ -44,8 +45,15 @@ export default class BaseRepository<T, O> implements IBaseRepository<T, O> {
         return this._model.remove({ _id: _id }).exec();
     };
 
-    count(query: T) {
-        return this._model.count(query).lean().exec();
+    async count(query: T) {
+        let key: string = this._model.modelName + '_record_count_' + (query ? JSON.stringify(query) : '{}');
+        let count = <number>await cache.get(key)
+        if (count) {
+            return Promise.resolve(count);
+        }
+        count = <number>await this._model.count(query).lean().exec();
+        await cache.setx(key, count, 60 * 60 * 1)
+        return Promise.resolve(count);
     }
 
     private toObjectId(_id: string): mongoose.Types.ObjectId {

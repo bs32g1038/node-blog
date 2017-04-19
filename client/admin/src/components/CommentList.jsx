@@ -3,7 +3,7 @@ import { Layout, Breadcrumb, Button, } from 'antd';
 const { Content } = Layout;
 import CommentListItem from './CommentListItem';
 import CommentReplyModal from './CommentReplyModal'
-import { loadComments, saveComment, deleteComment, handlePass } from '../actions/CommentActions';
+import { loadComments, saveComment, deleteComment } from '../actions/CommentActions';
 
 class CommentList extends Component {
     constructor(props) {
@@ -31,10 +31,6 @@ class CommentList extends Component {
     }
     saveFormRef = (form) => {
         this.form = form;
-    }
-    handleCommentPass = (id, pass) => {
-        const { dispatch } = this.props;
-        dispatch(handlePass(id, pass))
     }
     deleteComment = (id) => {
         const { dispatch } = this.props;

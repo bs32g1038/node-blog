@@ -47,7 +47,7 @@
           page: page
         }).then(() => {
           this.loading = false;
-          this.curPage = page;   
+          this.curPage = Number(page) || 1;   
         })
       },
       changePage(page) {

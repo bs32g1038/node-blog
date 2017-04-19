@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Popconfirm } from 'antd';
+import { parseTime } from '../libs/parse-time';
 const { Column } = Table;
 
 class ArticleListItem extends Component {
@@ -18,7 +19,7 @@ class ArticleListItem extends Component {
                     title="缩略图"
                     key='img_url'
                     render={(text, record) => (
-                        <img style={{ width: '121px', maxWidth: '100%', height: 'auto' }} src={record.img_url} alt="" />
+                        <img style={{ width: 100, height: 70}} src={record.img_url} alt="" />
                     )}
                 />
                 <Column
@@ -31,6 +32,7 @@ class ArticleListItem extends Component {
                     title='发布时间'
                     key='create_at'
                     dataIndex='create_at'
+                    render={(text, record) => (parseTime(text))}
                 />
                 <Column
                     title='推荐'

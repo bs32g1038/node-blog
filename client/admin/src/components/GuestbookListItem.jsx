@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Popconfirm } from 'antd';
+import { parseTime } from '../libs/parse-time';
 const { Column } = Table;
 
 class GuestbookListItem extends Component {
     render() {
-        const { dataSource, pagination, rowSelection, loading, onChange, handlePass, replyGuestbook, deleteGuestbook } = this.props;
+        const { dataSource, pagination, rowSelection, loading, onChange, replyGuestbook, deleteGuestbook } = this.props;
         return (
             <Table
                 dataSource={dataSource}
@@ -21,6 +22,7 @@ class GuestbookListItem extends Component {
                 <Column
                     title='创建时间'
                     dataIndex='create_at'
+                    render={(text, record) => (parseTime(text))}
                 />
                 <Column
                     title='内容'
@@ -30,13 +32,6 @@ class GuestbookListItem extends Component {
                 <Column
                     title='邮箱'
                     dataIndex='email'
-                />
-                <Column
-                    title='审核'
-                    dataIndex='pass'
-                    render={(text, record) => (
-                        <span>{record.pass ? '通过' : '不通过'}</span>
-                    )}
                 />
                 <Column
                     title='管理员回复的内容'
@@ -49,8 +44,6 @@ class GuestbookListItem extends Component {
                     width={76}
                     render={(text, record, index) => (
                         <span>
-                            <a href="#" onClick={() => handlePass(record._id, !record.pass)} > <i className="fa fa fa-eye fa-fw"></i>{record.pass ? '已审核' : '未审核'}</a>
-                            <br />
                             <a href="#" onClick={() => { replyGuestbook(record) }}><i className="fa fa-reply fa-fw"></i>回复</a>
                             <br />
                             <Popconfirm title="确定要删除？" onConfirm={() => deleteGuestbook(record._id)} onCancel={() => { }} okText="Yes" cancelText="No">

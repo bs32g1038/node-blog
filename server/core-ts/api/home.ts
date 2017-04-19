@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:52:03
+ * @Last Modified time: 2017-04-10 23:14:31
  */
 
 import * as  _ from 'lodash';
@@ -22,7 +22,6 @@ export default class HomeApiController {
         let categoryService = new CategoryService();
         try {
             let user: IUserEntity = await userService.getByAccount(config.admin_role.account);
-
             let init = {
                 links: await linkService.getAll(),
                 user: {
@@ -37,10 +36,9 @@ export default class HomeApiController {
                 setting: await settingService.getById(config.site_setting._id),
                 categories: await categoryService.getAll()
             }
-            console.log(init)
             res.json(init);
         } catch (error) {
-
-        }
+            next(error)
+        }   
     }
 }

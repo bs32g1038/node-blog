@@ -12,9 +12,5 @@ export default {
     updateReplyContent(id, reply) {
         let base_url = '/api/admin/guestbooks/' + id + '/reply_content';
         return axios.put(base_url, { reply_content: reply })
-    },
-    handlePass(id, pass) {
-        let base_url = '/api/admin/guestbooks/' + id + '/pass';
-        return axios.put(base_url, { pass: pass })
     }
 }

@@ -22,6 +22,7 @@ import categoryApi from '../api/category';
 import commentApi from '../api/comment';
 import guestbookApi from '../api/guestbook';
 import aboutApi from '../api/about';
+import dashboardApi from '../api/dashboard';
 
 //存储文件接口（包括七牛和本地上传）
 import uploadSingle from '../helpers/StoreFile';
@@ -61,6 +62,11 @@ router.get('/api/abouts/admin', aboutApi.getAbout);
  */
 router.post('/api/admin/sessions', userApi.login);
 router.all('/api/admin/*', userApi.checkLogin);
+
+/**
+ * 仪表盘
+ */
+router.get('/api/admin/dashboard', dashboardApi.main);
 
 /**
  * 用户api路由

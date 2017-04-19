@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { parseTime } from '../libs/parse-time';
 import { Table, Popconfirm } from 'antd';
 const { Column } = Table;
 class CommentListItem extends Component {
     render() {
-        const { dataSource, pagination, rowSelection, loading, onChange, handlePass, replyComment, deleteComment } = this.props;
+        const { dataSource, pagination, rowSelection, loading, onChange, replyComment, deleteComment } = this.props;
         return (
             <Table
                 dataSource={dataSource}
@@ -21,6 +22,7 @@ class CommentListItem extends Component {
                 <Column
                     title='创建时间'
                     dataIndex='create_at'
+                    render={(text, record) => (parseTime(text))}
                 />
                 <Column
                     title='昵称'
@@ -43,26 +45,9 @@ class CommentListItem extends Component {
                     dataIndex='email'
                 />
                 <Column
-                    title='审核'
-                    dataIndex='pass'
-                    render={(text, record) => (
-                        <span>{record.pass ? '通过' : '不通过'}</span>
-                    )}
-                />
-                <Column
                     title='回复给(谁)'
                     dataIndex='reply'
-                    width={250}
-                    render={(text, record) => (<span>
-                        <span className="pale-red ">作者：</span>
-                        {record.reply && record.reply.nick_name}
-                        <br />
-                        <span className="pale-red ">内容：</span>
-                        {record.reply && record.reply.content}
-                        <br />
-                        <span className="pale-red ">创建时间：</span>
-                        {record.reply && record.reply.create_at}
-                    </span>)}
+                    render={(text, record) => (record.reply && record.reply.nick_name)}
                 />
                 <Column
                     title='操作'
@@ -70,8 +55,6 @@ class CommentListItem extends Component {
                     width={70}
                     render={(text, record) => (
                         <span>
-                            <a href="#" onClick={() => { handlePass(record._id, !record.pass) }}> <i className="fa fa fa-eye fa-fw"></i>{record.pass ? '已审核' : '未审核'}</a>
-                            <br />
                             <a href="#" onClick={() => { replyComment(record) }}><i className="fa fa-reply fa-fw"></i>回复</a>
                             <br />
                             <Popconfirm title="确定要删除？" onConfirm={() => deleteComment(record._id)} onCancel={() => { }} okText="Yes" cancelText="No">

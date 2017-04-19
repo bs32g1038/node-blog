@@ -80,7 +80,7 @@
                         self.nick_name = "";
                         self.email = "";
                         self.content = "";
-                        self.showInfoDialog("提交成功，审核通过后将会显示到页面！感谢你的来访！");
+                        self.showInfoDialog("提交成功，刷新后将会显示到页面！感谢你的来访！");
                     }).catch(function(ex) {
                         console.log('parsing failed', ex)
                     })

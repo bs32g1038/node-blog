@@ -2,11 +2,11 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-26 13:50:25 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 19:41:47
+ * @Last Modified time: 2017-04-10 23:19:40
  */
 import SettingService from '../service/SettingService';
 import ISettingEntity from '../models/entity/ISettingEntity';
-import * as redisClient from '../helpers/redis';
+import * as cache from '../helpers/cache';
 
 import config from '../config';
 
@@ -16,7 +16,7 @@ export default class MainController {
     static async AdminMain(req, res, next) {
         let settingService = new SettingService();
         try {
-            let setting: ISettingEntity = await redisClient.get(config.site_setting._id);
+            let setting: ISettingEntity = await cache.get(config.site_setting._id);
             res.render('admin', { site_name: setting.site_name });
         } catch (error) {
             return next(error)
@@ -27,8 +27,7 @@ export default class MainController {
     static async HomeMain(req, res, next) {
         let settingService = new SettingService();
         try {
-            let setting: ISettingEntity = await redisClient.get(config.site_setting._id);
-            console.log("输出")
+            let setting: ISettingEntity = await cache.get(config.site_setting._id);
             res.renderVueServer('web', { title: setting.site_name });
         } catch (error) {
             return next(error)

@@ -17,9 +17,5 @@ export default {
     saveComment(data) {
         let base_url = '/api/admin/comments?admin=true';
         return axios.post(base_url, data)
-    },
-    handlePass(id, pass) {
-        let base_url = '/api/admin/comments/' + id + '/pass';
-        return axios.put(base_url, { pass: pass })
     }
 }

@@ -206,3 +206,17 @@ img {
 .dashboard-comment-list .user-info p {
     margin-bottom: 10px
 }
+
+#m-user-edit-avatar .ant-upload-list-item {
+    height: 96px;
+    width: 96px
+}
+
+#m-user-edit-avatar .ant-upload-list-picture .ant-upload-list-item-thumbnail img {
+    height: 78px;
+    width: 78px
+}
+
+#m-user-edit-avatar .ant-upload-list-item:hover .anticon-cross {
+    display: none
+}

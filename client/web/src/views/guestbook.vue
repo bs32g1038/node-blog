@@ -48,7 +48,7 @@
           page: page
         }).then(() => {
           this.loading = false;
-          this.curPage = page
+          this.curPage = page || 1
         });
       },
       changePage(page) {

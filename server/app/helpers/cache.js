@@ -1,22 +1,18 @@
-import { resolve4, resolve6 } from 'dns';
-import { resolve } from 'url';
-import config from '../config';
-import redis = require("redis");
-import logger from './logger';
-
-var client = redis.createClient(config.redis.port, config.redis.host, {});
-
-if (config.redis.password) {
-    client.auth(config.redis.password);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const config_1 = require("../config");
+const redis = require("redis");
+const logger_1 = require("./logger");
+var client = redis.createClient(config_1.default.redis.port, config_1.default.redis.host, {});
+if (config_1.default.redis.password) {
+    client.auth(config_1.default.redis.password);
 }
-
 client.on('error', function (err) {
     if (err) {
-        logger.error('connect to %s error: ', err.message);
+        logger_1.default.error('connect to %s error: ', err.message);
         process.exit(1);
     }
-})
-
+});
 // const hincrby = function (key, field, value, expired, callback) {
 //     client.exists(key, function (err, res) {
 //         if (err) {
@@ -30,42 +26,41 @@ client.on('error', function (err) {
 //         });
 //     });
 // }
-
-const set = function (key: string, value: string | Object) {
+const set = function (key, value) {
     return new Promise(function (resolve, reject) {
         value = JSON.stringify(value);
         client.set(key, value, function (err) {
             if (err) {
-                return reject(err)
+                return reject(err);
             }
             resolve();
         });
     });
 };
-
-const setx = function (key: string, value: string | Object, expired: number) {
+exports.set = set;
+const setx = function (key, value, expired) {
     return new Promise(function (resolve, reject) {
         client.setex(key, expired, value, function (err) {
             if (err) {
-                return reject(err)
+                return reject(err);
             }
             resolve();
         });
-    })
-}
-
-const get = function (key: string) {
+    });
+};
+exports.setx = setx;
+const get = function (key) {
     return new Promise(function (resolve, reject) {
         client.get(key, function (err, data) {
             if (err) {
                 return reject(err);
             }
-            resolve(JSON.parse(data || ''));
+            resolve(data ? JSON.parse(data) : '');
         });
     });
 };
-
-const remove = function (key: string) {
+exports.get = get;
+const remove = function (key) {
     return new Promise(function (resolve, reject) {
         client.del(key, function (err) {
             if (err) {
@@ -73,14 +68,7 @@ const remove = function (key: string) {
             }
             resolve();
         });
-    })
+    });
 };
-
-export {
-    set,
-    setx,
-    get,
-    remove
-}
-
-export default client;
+exports.remove = remove;
+exports.default = client;

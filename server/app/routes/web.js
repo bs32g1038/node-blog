@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-03-26 13:43:20
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 19:29:57
+ * @Last Modified time: 2017-04-10 23:19:34
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -21,5 +21,5 @@ router.use('/admin', main_1.default.AdminMain);
  * 前台web控制器
  */
 router.get('/articles/:id', article_1.default.getArticle);
-router.use('*', main_1.default.HomeMain);
+router.all('*', main_1.default.HomeMain);
 exports.default = router;

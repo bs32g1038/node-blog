@@ -12,10 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @Author: bs32g1038@163.com
  * @Date: 2017-03-26 13:50:25
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 19:41:47
+ * @Last Modified time: 2017-04-10 23:19:40
  */
 const SettingService_1 = require("../service/SettingService");
-const redisClient = require("../helpers/redis");
+const cache = require("../helpers/cache");
 const config_1 = require("../config");
 class MainController {
     // 后台admin入口,配合react单页应用
@@ -23,7 +23,7 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             let settingService = new SettingService_1.default();
             try {
-                let setting = yield redisClient.get(config_1.default.site_setting._id);
+                let setting = yield cache.get(config_1.default.site_setting._id);
                 res.render('admin', { site_name: setting.site_name });
             }
             catch (error) {
@@ -36,8 +36,7 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             let settingService = new SettingService_1.default();
             try {
-                let setting = yield redisClient.get(config_1.default.site_setting._id);
-                console.log("输出");
+                let setting = yield cache.get(config_1.default.site_setting._id);
                 res.renderVueServer('web', { title: setting.site_name });
             }
             catch (error) {

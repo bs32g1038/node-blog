@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Layout, Breadcrumb, notification } from 'antd';
+import { Form, Input, Button, Layout, Breadcrumb, notification, Upload, message } from 'antd';
 const FormItem = Form.Item;
 const { Content } = Layout;
 import axios from 'axios';
@@ -14,6 +14,25 @@ class UserBaseInfoForm extends Component {
         this.state = {
             user: {}
         }
+    }
+    handleUpload(e) {
+        if (Array.isArray(e)) {
+            return e;
+        }
+        let fileList = e.fileList;
+        fileList = fileList.slice(-1);
+        fileList = fileList.map((file) => {
+            if (file.response) {
+                file.url = file.response.url;
+            }
+            return file;
+        });
+        if (e.file.status === 'done') {
+            message.success(`${e.file.name} file uploaded successfully`);
+        } else if (e.file.status === 'error') {
+            message.error(`${e.file.name} file upload failed.`);
+        }
+        return fileList;
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -53,6 +72,18 @@ class UserBaseInfoForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { user } = this.state;
+        let upload = {
+            name: "file",
+            action: "/api/admin/medias",
+            listType: "picture",
+            multiple: false,
+            onRemove: () => false
+        }
+        let fileList = [{
+            uid: -1,
+            status: 'done',
+            url: user.img_url,
+        }];
         return (
             <Content>
                 <Breadcrumb>
@@ -96,13 +127,20 @@ class UserBaseInfoForm extends Component {
                             <Input type="text" />
                             )}
                     </FormItem>
-                    <FormItem label="头像" labelCol={{ span: 4 }} wrapperCol={{ span: 10 }}>
-                        {getFieldDecorator('img_url', {
-                            initialValue: user.img_url
-                        })(
-                            <Input type="text" />
-                            )}
-                    </FormItem>
+                    <div id="m-user-edit-avatar">
+                        <FormItem label="头像" labelCol={{ span: 4 }} wrapperCol={{ span: 3 }}>
+                            {getFieldDecorator('images', {
+                                initialValue: fileList,
+                                valuePropName: 'fileList',
+                                getValueFromEvent: this.handleUpload,
+                            })(
+                                <Upload {...upload}>
+                                    <Button><i className="fa fa-arrow-up"></i>点击上传</Button>
+                                </Upload>
+                                )}
+                        </FormItem>
+                    </div>
+
                     <FormItem label="格言" labelCol={{ span: 4 }} wrapperCol={{ span: 10 }}>
                         {getFieldDecorator('motto', {
                             initialValue: user.motto

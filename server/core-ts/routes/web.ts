@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-26 13:43:20 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 19:29:57
+ * @Last Modified time: 2017-04-10 23:19:34
  */
 
 import * as express from 'express';
@@ -24,6 +24,6 @@ router.use('/admin', mainController.AdminMain);
  */
 
 router.get('/articles/:id', articleController.getArticle);
-router.use('*', mainController.HomeMain);
+router.all('*', mainController.HomeMain);
 
 export default router;

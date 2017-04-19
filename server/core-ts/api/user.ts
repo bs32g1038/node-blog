@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 13:44:27
+ * @Last Modified time: 2017-04-10 23:04:48
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -13,13 +13,14 @@ import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
 import { md5 } from '../helpers/util';
+import config from '../config';
 
 export default class UserApiController {
 
     static async getUserByAccount(req, res, next) {
         let userService = new UserService();
         try {
-            const user = await userService.getByAccount(req.params.account);
+            const user = await userService.getByAccount(config.admin_role.account);
             res.json(user);
         } catch (error) {
             return next(error)
@@ -27,13 +28,13 @@ export default class UserApiController {
     }
 
     static async update(req, res, next) {
-        let account = req.params.account;
+        let account = config.admin_role.account;
         let doc: IUserEntity = {
             nick_name: req.body.nick_name,
             email: req.body.email,
             location: req.body.location,
             qq: req.body.qq,
-            img_url: req.body.img_url,
+            img_url: req.body.images[0].url,
             motto: req.body.motto,
             github: req.body.github
         }

@@ -33,10 +33,6 @@ class GuestbookList extends Component {
     saveFormRef = (form) => {
         this.form = form;
     }
-    handleGuestbookPass = (id, pass) => {
-        const { dispatch } = this.props;
-        dispatch(handlePass(id, pass))
-    }
     deleteGuestbook = (id) => {
         const { dispatch } = this.props;
         dispatch(deleteGuestbook(id))

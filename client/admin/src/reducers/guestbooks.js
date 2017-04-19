@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-14 15:05:12 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-15 12:57:40
+ * @Last Modified time: 2017-04-10 23:07:09
  */
 import * as types from '../constants/ActionTypes';
 
@@ -35,15 +35,6 @@ export default function(state = initialState, action) {
             guestbooks.items = guestbooks.items.filter((item) => (item._id !== action.id));
             guestbooks.total_count--;
             return guestbooks;
-        case types.UPDATE_GUESTBOOK_PASS:
-            guestbooks = { ...state };
-            guestbooks.items = guestbooks.items.map(function(item) {
-                if (action.id === item._id) {
-                    item.pass = action.pass
-                }
-                return item;
-            })
-            return guestbooks
         case types.REQUEST_GUESTBOOKS:
             return Object.assign({}, state, {
                 loading: true

@@ -12,8 +12,6 @@ const sider = React.createClass({
         };
     },
     handleClick(e) {
-        console.log('Clicked: ', e);
-
         this.setState({ current: e.key });
     },
     onOpenChange(openKeys) {

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-23 22:15:51
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 13:44:27
+ * @Last Modified time: 2017-04-10 23:04:48
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -17,12 +17,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const UserService_1 = require("../service/UserService");
 const HttpStatusCode_1 = require("../helpers/HttpStatusCode");
 const util_1 = require("../helpers/util");
+const config_1 = require("../config");
 class UserApiController {
     static getUserByAccount(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             let userService = new UserService_1.default();
             try {
-                const user = yield userService.getByAccount(req.params.account);
+                const user = yield userService.getByAccount(config_1.default.admin_role.account);
                 res.json(user);
             }
             catch (error) {
@@ -32,13 +33,13 @@ class UserApiController {
     }
     static update(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let account = req.params.account;
+            let account = config_1.default.admin_role.account;
             let doc = {
                 nick_name: req.body.nick_name,
                 email: req.body.email,
                 location: req.body.location,
                 qq: req.body.qq,
-                img_url: req.body.img_url,
+                img_url: req.body.images[0].url,
                 motto: req.body.motto,
                 github: req.body.github
             };

@@ -2,7 +2,7 @@
  * @Author =bs32g1038@163.com 
  * @Date =2017-03-13 14:33:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-15 13:29:35
+ * @Last Modified time: 2017-04-10 23:08:58
  */
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
@@ -40,7 +40,6 @@ export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const REPLY_COMMENT = 'REPLY_COMMENT';
-export const UPDATE_COMMENT_PASS = 'UPDATE_COMMENT_PASS'
 
 /**
  * 留言
@@ -49,8 +48,6 @@ export const REQUEST_GUESTBOOKS = 'REQUEST_GUESTBOOKS';
 export const RECEIVE_GUESTBOOKS = 'RECEIVE_GUESTBOOKS';
 export const REPLY_GUESTBOOK = 'REPLY_GUESTBOOK'
 export const DELETE_GUESTBOOK = 'DELETE_GUESTBOOK';
-export const UPDATE_GUESTBOOK_PASS = 'UPDATE_GUESTBOOK_PASS';
-
 
 /**
  * 链接
