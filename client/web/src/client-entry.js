@@ -1,4 +1,5 @@
 require('es6-promise').polyfill()
+import '../public/css/base.css'
 import '../public/css/index.css'
 import { app, store } from './app'
 

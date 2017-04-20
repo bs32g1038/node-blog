@@ -1,8 +1,7 @@
 <template>
     <nav>
         <ul class="page-nav">
-            <li><i class="fa fa-map-signs"></i><span class="text">Page：1 of {{ pageCount }}</span></li>
-            <li><a class="action" @click="prev"><i class="fa fa-angle-left"></i></a></li>
+            <li><a class="action" @click="prev">Prev</a></li>
             <li v-if="pageCount > 1">
                 <a class="action" :class="{ active: current === 1 }" @click="changePage(1)">1</a>
             </li>
@@ -12,7 +11,7 @@
             </li>
             <li v-if="showNextMore">...</li>
             <li><a :class="{ 'action':true,'active':pageCount==current }" @click="changePage(pageCount)">{{ pageCount }}</a></li>
-            <li><a class="action" @click="next"><i class="fa fa-angle-right"></i></a></li>            
+            <li><a class="action" @click="next">Next</a></li>            
         </ul>
     </nav>
 </template>

@@ -12,13 +12,14 @@ export default new Vuex.Store({
         total_count: 0,
         items: [],
         item: {},
-        menuId: 0,
+        menuId: 1,
         init: {
             existed: false, // 判断数据是否初始化
             site: {},
             user: {},
             links: [],
-            categories: []
+            categories: [],
+            brief: {}
         },
         error_msg: '' // 记录错误信息
     },
@@ -70,11 +71,12 @@ export default new Vuex.Store({
             state.item = data;
         },
         SET_INIT(state, data) {
-            state.init.existed = true;            
+            state.init.existed = true;
             state.init.categories = data.categories;
             state.init.user = data.user;
             state.init.links = data.links;
             state.init.site = data.setting;
+            state.init.brief = data.brief;
         },
         SET_MENU_ID(state, menuId) {
             state.menuId = menuId;

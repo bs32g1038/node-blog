@@ -6,31 +6,25 @@ export default new VueRouter({
     //and if you use webpack-dev-server,add a html-loader to parse may be better
     mode: 'history',
     scrollBehavior: () => ({ y: 0 }),
-    routes: [
-        {
+    routes: [{
             path: "/search",
             name: 'search-list',
             component: require('../views/Search.vue')
         },
         {
             path: "/",
-            component: require('../views/index.vue'),
-            children: [
-                {
-                    path: '',
-                    component: require('../views/ArticleList.vue')
-                },
-                {
-                    path: '/articles',
-                    name: 'articles',
-                    component: require('../views/ArticleList.vue')
-                },
-                {
-                    path: '/category/:category/articles',
-                    name: 'category-articles',
-                    component: require('../views/ArticleList.vue')
-                },
-            ]
+            name: 'home',
+            component: require('../views/ArticleList.vue')
+        },
+        {
+            path: '/articles',
+            name: 'articles',
+            component: require('../views/ArticleList.vue')
+        },
+        {
+            path: '/category/:category/articles',
+            name: 'category-articles',
+            component: require('../views/ArticleList.vue')
         },
         {
             path: "/articles/:id",
@@ -44,6 +38,7 @@ export default new VueRouter({
         },
         {
             path: "/about",
+            name: "about",
             component: require('../views/About.vue')
         },
         // {
