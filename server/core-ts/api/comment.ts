@@ -10,7 +10,6 @@ import IUserEntity from '../models/entity/IUserEntity';
 import ICommentListOption from '../models/option/ICommentListOption';
 import HttpStatusCode from '../helpers/HttpStatusCode';
 import config from '../config';
-
 import Service from '../service';
 
 const
