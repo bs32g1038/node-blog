@@ -38,7 +38,6 @@ module.exports = {
                     // This is a feature of `babel-loader` for webpack (not Babel itself).
                     // It enables caching results in ./node_modules/.cache/babel-loader/
                     // directory for faster rebuilds.
-                    cacheDirectory: true
                 }
             },
             {
@@ -48,7 +47,8 @@ module.exports = {
                     limit: 10000,
                     name: '[name].[ext]?[hash]'
                 }
-            }
+            },
+            { test: /\.(eot|woff|ttf)$/, loader: 'file-loader' }
         ]
     },
     resolve: {

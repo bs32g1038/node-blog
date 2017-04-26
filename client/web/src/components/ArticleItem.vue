@@ -15,7 +15,7 @@
                 <span>&nbsp; | &nbsp; <i class="fa fa-eye fa-fw"></i> <span>阅读次数&nbsp;{{ item.visit_count }}</span> </span>
             </div>
         </header>
-       <div class="markdown" v-html="compileMarkdown(item.content || '')"></div>
+       <div class="markdown" v-html="item.content || ''"></div>
     </article>
 </template>
 <script>

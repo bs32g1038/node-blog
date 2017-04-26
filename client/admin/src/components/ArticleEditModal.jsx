@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-13 22:14:11 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-14 13:15:56
+ * @Last Modified time: 2017-04-22 22:17:26
  */
 
 import React, { Component } from 'react';
@@ -58,10 +58,11 @@ class ArticleEditForm extends Component {
                 visible={visible}
                 title={article._id ? '编辑文章' : '添加文章'}
                 okText="提交"
-                width={820}
+                width={960}
                 onOk={onOk}
                 onCancel={onCancel}
                 confirmLoading={confirmLoading}
+                maskClosable={false}
             >
                 <Form>
                     <FormItem label="标题" labelCol={{ span: 3 }} wrapperCol={{ span: 10 }}>
@@ -108,11 +109,11 @@ class ArticleEditForm extends Component {
                             </Upload>
                             )}
                     </FormItem>
-                    <FormItem label="文章摘要" labelCol={{ span: 3 }} wrapperCol={{ span: 10 }}>
+                    <FormItem label="文章摘要" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
                         {getFieldDecorator('summary', {
                             initialValue: article.summary
                         })(
-                            <Input type="textarea" rows={4} />
+                            <Input type="textarea" rows={6} />
                             )}
                     </FormItem>
                     <FormItem label="文章内容" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>

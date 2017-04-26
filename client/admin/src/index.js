@@ -7,7 +7,8 @@ import { Provider } from 'react-redux'
 import store from './store/index';
 import { syncHistoryWithStore } from 'react-router-redux';
 const history = syncHistoryWithStore(browserHistory, store)
-
+import './App.css'
+import './quill.snow.css'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history} routes={routes} />

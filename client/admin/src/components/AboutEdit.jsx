@@ -18,6 +18,7 @@ class AboutForm extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        var self = this;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let base_url = '/api/admin/abouts/' + this.props.params.id;
@@ -28,7 +29,7 @@ class AboutForm extends Component {
                                 message: '操作提示',
                                 description: '内容已提交成功！',
                             });
-                            this.setState({
+                            self.setState({
                                 about: res.data,
                             })
                         }

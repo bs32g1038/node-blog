@@ -19,6 +19,7 @@ class ArticleList extends Component {
         };
     }
     showModal = (id) => {
+        this.form.resetFields();        
         const { dispatch } = this.props;
         if (id) {
             dispatch(loadArticle(id))

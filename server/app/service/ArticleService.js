@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-03 23:48:19
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-23 09:05:42
+ * @Last Modified time: 2017-04-22 21:27:02
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -21,6 +21,11 @@ class ArticleService {
     }
     getList(query, opt) {
         return __awaiter(this, void 0, void 0, function* () {
+            var p = Promise.all([
+                this._articleRepository.getList(query, opt),
+                this._articleRepository.count(query)
+            ]);
+            console.log(p);
             let list = yield this._articleRepository.getList(query, opt);
             let count = yield this._articleRepository.count(query);
             return {

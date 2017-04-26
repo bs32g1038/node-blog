@@ -4,9 +4,6 @@
             <aside class="sidebar">
                 <div class="sidebar-inner">
                     <div class="sidebar-widget-box">
-                        <div class="title">
-                            <i class="fa fa-search fa-fw"></i>快速搜索
-                        </div>
                         <form class="search-wrap">
                             <input type="text" name="key" class="search-input" placeholder="搜索文章" autocomplete="off">
                             <i class="fa fa-search fa-fw search-icon"></i>

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-03 23:48:19 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-02-23 09:05:42
+ * @Last Modified time: 2017-04-22 21:27:02
  */
 
 import IBaseService from './IBaseService';
@@ -13,13 +13,14 @@ import ArticleRepository from '../repository/ArticleRepository';
 
 export default class ArticleService implements IBaseService<IArticleEntity, IBaseListOption> {
 
-    private _articleRepository: ArticleRepository;
-
-    constructor() {
-        this._articleRepository = new ArticleRepository();
-    }
+    private _articleRepository: ArticleRepository = new ArticleRepository();
 
     async getList(query: IArticleEntity, opt: IBaseListOption) {
+       var p =  Promise.all([
+            this._articleRepository.getList(query, opt),
+            this._articleRepository.count(query)
+        ])
+        console.log(p)
         let list = <IArticleEntity[]>await this._articleRepository.getList(query, opt)
         let count = <number>await this._articleRepository.count(query);
         return {

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css'
 import { Layout } from 'antd';
 import Header from '../components/Header';
 import Sider from '../components/Sider';

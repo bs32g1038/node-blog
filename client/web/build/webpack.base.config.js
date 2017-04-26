@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         app: './src/client-entry.js',
         vendor: [
-            'es6-promise',
+            'es6-promise/auto',
             'vue',
             'vue-router',
             'vuex',
