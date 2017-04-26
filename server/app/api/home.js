@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-28 22:05:58
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-20 16:08:08
+ * @Last Modified time: 2017-04-26 21:37:43
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,24 +14,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SettingService_1 = require("../service/SettingService");
-const LinkService_1 = require("../service/LinkService");
-const CommentService_1 = require("../service/CommentService");
-const CategoryService_1 = require("../service/CategoryService");
-const GuestbookService_1 = require("../service/GuestbookService");
-const UserService_1 = require("../service/UserService");
-const ArticleService_1 = require("../service/ArticleService");
 const config_1 = require("../config");
+const service_1 = require("../service");
+const articleService = service_1.default.article, linkService = service_1.default.link, settingService = service_1.default.setting, categoryService = service_1.default.category, commentService = service_1.default.comment, guestbookService = service_1.default.guestbook, userService = service_1.default.user;
 class HomeApiController {
     static init(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let settingService = new SettingService_1.default();
-            let userService = new UserService_1.default();
-            let linkService = new LinkService_1.default();
-            let categoryService = new CategoryService_1.default();
-            let articleService = new ArticleService_1.default();
-            let commentService = new CommentService_1.default();
-            let guestbookService = new GuestbookService_1.default();
             try {
                 var results = yield Promise.all([
                     userService.getByAccount(config_1.default.admin_role.account),

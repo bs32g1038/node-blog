@@ -1,25 +1,46 @@
-/**
- * Created by liaoyunda on 16/11/23.
+/*
+ * @Author: bs32g1038@163.com 
+ * @Date: 2017-04-26 21:14:23 
+ * @Last Modified by:   bs32g1038@163.com 
+ * @Last Modified time: 2017-04-26 21:14:23 
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
 import ICategoryEntity from '../models/entity/ICategoryEntity';
 import IBaseListOption from '../models/option/IBaseListOption';
-import CategoryService from '../service/CategoryService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
 
+import Service from '../service';
+
+const
+    categoryService = Service.category;
+
 export default class CategoryApiController {
 
+    /**
+     * 获取所有的分类条目
+     * 
+     * @static
+     * @param {any} req 
+     * @param {any} res 
+     * @param {any} next 
+     * @returns 
+     * 
+     * @memberOf CategoryApiController
+     */
     static async getAllCategory(req, res, next) {
-        let categoryService = new CategoryService();
         try {
-            let results = await categoryService.getList({}, { sort: { order: 1 } });
+            let query = {};
+            let result = await Promise.all([
+                categoryService.getList(query, { sort: { order: 1 } }),
+                categoryService.count(query)
+            ]);
             res.json({
-                total_count: results.totalItems,
-                items: results.items
-            })
+                items: result[0],
+                total_count: result[1]
+            });
         } catch (error) {
             return next(error)
         }
@@ -30,7 +51,6 @@ export default class CategoryApiController {
             name: req.body.name,
             alias: req.body.alias
         }
-        let categoryService = new CategoryService();
         try {
             let category = await categoryService.create(doc);
             res.status(HttpStatusCode.HTTP_CREATED).json(category);
@@ -45,7 +65,6 @@ export default class CategoryApiController {
             name: req.body.name,
             alias: req.body.alias
         }
-        let categoryService = new CategoryService();
         try {
             await categoryService.updateById(id, doc);
             let category = await categoryService.getById(id);
@@ -57,7 +76,6 @@ export default class CategoryApiController {
     }
 
     static async hardDelete(req, res, next) {
-        let categoryService = new CategoryService();
         try {
             await categoryService.deleteById(req.params.id);
             res.status(HttpStatusCode.HTTP_NO_CONTENT).json();

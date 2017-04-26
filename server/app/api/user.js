@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-23 22:15:51
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-10 23:04:48
+ * @Last Modified time: 2017-04-26 21:40:07
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,14 +14,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserService_1 = require("../service/UserService");
 const HttpStatusCode_1 = require("../helpers/HttpStatusCode");
 const util_1 = require("../helpers/util");
 const config_1 = require("../config");
+const service_1 = require("../service");
+const userService = service_1.default.user;
 class UserApiController {
     static getUserByAccount(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let userService = new UserService_1.default();
             try {
                 const user = yield userService.getByAccount(config_1.default.admin_role.account);
                 res.json(user);
@@ -43,7 +43,6 @@ class UserApiController {
                 motto: req.body.motto,
                 github: req.body.github
             };
-            let userService = new UserService_1.default();
             try {
                 yield userService.updateByAccount(account, doc);
                 let user = yield userService.getByAccount(account);
@@ -56,7 +55,6 @@ class UserApiController {
     }
     static login(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let userService = new UserService_1.default();
             try {
                 let user = yield userService.checkUser(req.body.account, util_1.md5(req.body.password));
                 if (!user) {
@@ -82,7 +80,6 @@ class UserApiController {
     }
     static loginUserInfo(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let userService = new UserService_1.default();
             try {
                 const user = yield userService.getByAccount(req.session.user.account);
                 res.json(user);

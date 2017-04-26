@@ -3,8 +3,7 @@ var path = require('path');
 var utility = require('utility');
 var fs = require('fs');
 var moment = require('moment');
-import MediaService from '../service/MediaService';
-const mediaService = new MediaService();
+import Service from '../service';
 
 var storage; //记录存储方式
 storage = multer.diskStorage({
@@ -37,11 +36,6 @@ var uploadLocal = function (req, res, next) {
         var filename = req.file.filename;
         var size = req.file.size;
         try {
-            await mediaService.create({
-                type: type,
-                file_name: filename,
-                size: size
-            });
             // var site_domain = req.app.locals.option.site_domain;
             var site_domain = 'http://127.0.0.1';
             var url = site_domain + '/media/' + moment().format("YYYY") + '/' + req.file.filename;

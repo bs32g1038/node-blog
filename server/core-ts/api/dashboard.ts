@@ -2,26 +2,39 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:52:03
+ * @Last Modified time: 2017-04-26 22:19:18
  */
 
 import * as  _ from 'lodash';
+
 import ArticleService from '../service/ArticleService';
 import CommentService from '../service/CommentService';
 import CategoryService from '../service/CategoryService';
 import GuestbookService from '../service/GuestbookService';
 import UserService from '../service/UserService';
+
 import config from '../config';
+import Service from '../service';
+
+const
+    articleService = Service.article,
+    categoryService = Service.category,
+    commentService = Service.comment,
+    guestbookService = Service.guestbook,
+    userService = Service.user;
 
 export default class DashboardApiController {
 
     static async main(req, res, next) {
-        let articleService = new ArticleService();
-        let commentService = new CommentService();
-        let guestbookService = new GuestbookService();
-        let categoryService = new CategoryService();
-        let userService = new UserService();
-        let opt = { sort: { create_at: -1 }, skip: 0, limit: 10 };
+        let
+            opt = { sort: { create_at: -1 }, skip: 0, limit: 10 },
+            query = {};
+
+        let result = await Promise.all([
+            commentService.getFullList(query, opt),
+            commentService.count(query)
+        ]);
+
         try {
             let main = {
                 brief: {
@@ -31,7 +44,10 @@ export default class DashboardApiController {
                     category_count: await categoryService.count({})
                 },
                 user: await userService.getByAccount(req.session.user && req.session.user.account),
-                comments: await commentService.getFullList({}, opt)
+                comments: {
+                    items: result[0],
+                    total_count: result[1]
+                }
             }
             res.json(main);
         } catch (error) {

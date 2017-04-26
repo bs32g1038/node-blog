@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:00:28
+ * @Last Modified time: 2017-04-26 21:39:22
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
@@ -14,10 +14,15 @@ import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
 import config from '../config';
 
+
+import Service from '../service';
+
+const
+    settingService = Service.setting;
+
 export default class SettingApiController {
 
     static async getSetting(req, res, next) {
-        let settingService = new SettingService();
         try {
             const setting = await settingService.getById(config.site_setting._id);
             res.json(setting);
@@ -38,7 +43,6 @@ export default class SettingApiController {
             site_domain: req.body.site_domain,       // 域名
             site_header_code: req.body.site_header_code,
         }
-        let settingService = new SettingService();
         try {
             await settingService.updateById(id, doc);
             let setting = await settingService.getById(id);

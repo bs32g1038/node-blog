@@ -1,5 +1,8 @@
-/**
- * Created by liaoyunda on 16/11/23.
+/*
+ * @Author: bs32g1038@163.com
+ * @Date: 2017-04-26 21:14:23
+ * @Last Modified by:   bs32g1038@163.com
+ * @Last Modified time: 2017-04-26 21:14:23
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -11,17 +14,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CategoryService_1 = require("../service/CategoryService");
 const HttpStatusCode_1 = require("../helpers/HttpStatusCode");
+const service_1 = require("../service");
+const categoryService = service_1.default.category;
 class CategoryApiController {
+    /**
+     * 获取所有的分类条目
+     *
+     * @static
+     * @param {any} req
+     * @param {any} res
+     * @param {any} next
+     * @returns
+     *
+     * @memberOf CategoryApiController
+     */
     static getAllCategory(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let categoryService = new CategoryService_1.default();
             try {
-                let results = yield categoryService.getList({}, { sort: { order: 1 } });
+                let query = {};
+                let result = yield Promise.all([
+                    categoryService.getList(query, { sort: { order: 1 } }),
+                    categoryService.count(query)
+                ]);
                 res.json({
-                    total_count: results.totalItems,
-                    items: results.items
+                    items: result[0],
+                    total_count: result[1]
                 });
             }
             catch (error) {
@@ -35,7 +53,6 @@ class CategoryApiController {
                 name: req.body.name,
                 alias: req.body.alias
             };
-            let categoryService = new CategoryService_1.default();
             try {
                 let category = yield categoryService.create(doc);
                 res.status(HttpStatusCode_1.default.HTTP_CREATED).json(category);
@@ -52,7 +69,6 @@ class CategoryApiController {
                 name: req.body.name,
                 alias: req.body.alias
             };
-            let categoryService = new CategoryService_1.default();
             try {
                 yield categoryService.updateById(id, doc);
                 let category = yield categoryService.getById(id);
@@ -66,7 +82,6 @@ class CategoryApiController {
     }
     static hardDelete(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let categoryService = new CategoryService_1.default();
             try {
                 yield categoryService.deleteById(req.params.id);
                 res.status(HttpStatusCode_1.default.HTTP_NO_CONTENT).json();

@@ -2,19 +2,19 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-25 18:31:07 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 15:05:51
+ * @Last Modified time: 2017-04-26 21:42:30
  */
 import config from '../config';
 import { md5 } from '../helpers/util';
-import { UserModel, SettingModel } from '../models/main';
+import { userModel, settingModel } from '../models/main';
 
 var userPromise = new Promise(function (resolve, reject) {
-    UserModel.findOne({ account: config.admin_role.account }, function (err, data) {
+    userModel.findOne({ account: config.admin_role.account }, function (err, data) {
         if (err) {
             reject(err)
         }
         if (!data) {
-            UserModel.create({
+            userModel.create({
                 account: config.admin_role.account,
                 password: md5(config.admin_role.password)
             })
@@ -24,12 +24,12 @@ var userPromise = new Promise(function (resolve, reject) {
 });
 
 var settingPromise = new Promise(function (resolve, reject) {
-    SettingModel.findOne({ _id: config.site_setting._id }, function (err, data) {
+    settingModel.findOne({ _id: config.site_setting._id }, function (err, data) {
         if (err) {
             reject(err)
         }
         if (!data) {
-            SettingModel.create(config.site_setting)
+            settingModel.create(config.site_setting)
         }
         resolve("初始配置数据完毕...");
     })

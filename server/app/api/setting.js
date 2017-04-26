@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-23 22:15:51
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 09:00:28
+ * @Last Modified time: 2017-04-26 21:39:22
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,12 +14,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SettingService_1 = require("../service/SettingService");
 const config_1 = require("../config");
+const service_1 = require("../service");
+const settingService = service_1.default.setting;
 class SettingApiController {
     static getSetting(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let settingService = new SettingService_1.default();
             try {
                 const setting = yield settingService.getById(config_1.default.site_setting._id);
                 res.json(setting);
@@ -42,7 +42,6 @@ class SettingApiController {
                 site_domain: req.body.site_domain,
                 site_header_code: req.body.site_header_code,
             };
-            let settingService = new SettingService_1.default();
             try {
                 yield settingService.updateById(id, doc);
                 let setting = yield settingService.getById(id);

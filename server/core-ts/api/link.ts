@@ -2,34 +2,44 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-23 22:15:51 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-15 15:23:29
+ * @Last Modified time: 2017-04-26 21:38:55
  */
 
 import IRouterRequest from '../middlewares/IRouterRequest';
 import ILinkEntity from '../models/entity/ILinkEntity';
 import IBaseListOption from '../models/option/IBaseListOption';
-import LinkService from '../service/LinkService';
 import * as  _ from 'lodash';
 import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
 
+import Service from '../service';
+
+const
+    linkService = Service.link;
+
 export default class LinkApiController {
 
     static async getAllLink(req, res, next) {
-        let linkService = new LinkService();
         try {
-            let results = await linkService.getList({}, { sort: { create_at: -1 } });
+            let
+                query = {},
+                opt = { sort: { create_at: -1 } };
+
+            let result = await Promise.all([
+                linkService.getList(query, opt),
+                linkService.count(query)
+            ]);
+
             res.json({
-                total_count: results.totalItems,
-                items: results.items
-            })
+                items: result[0],
+                total_count: result[1]
+            });
         } catch (error) {
             return next(error)
         }
     }
 
     static async getLink(req, res, next) {
-        let linkService = new LinkService();
         try {
             const link = await linkService.getById(req.params.id);
             res.json(link);
@@ -43,7 +53,6 @@ export default class LinkApiController {
             name: req.body.name,
             url: req.body.url
         }
-        let linkService = new LinkService();
         try {
             let link = await linkService.create(doc);
             res.status(HttpStatusCode.HTTP_CREATED).json(link);
@@ -58,7 +67,6 @@ export default class LinkApiController {
             name: req.body.name,
             url: req.body.url
         }
-        let linkService = new LinkService();
         try {
             await linkService.updateById(id, doc);
             let link = await linkService.getById(id);
@@ -69,7 +77,6 @@ export default class LinkApiController {
     }
 
     static async hardDelete(req, res, next) {
-        let linkService = new LinkService();
         try {
             await linkService.deleteById(req.params.id);
             res.status(HttpStatusCode.HTTP_NO_CONTENT).json();

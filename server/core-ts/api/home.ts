@@ -2,31 +2,27 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-20 16:08:08
+ * @Last Modified time: 2017-04-26 21:37:43
  */
 
 import * as  _ from 'lodash';
-import SettingService from '../service/SettingService';
-import LinkService from '../service/LinkService';
-import CommentService from '../service/CommentService';
-import CategoryService from '../service/CategoryService';
-import GuestbookService from '../service/GuestbookService';
-import UserService from '../service/UserService';
 import IUserEntity from '../models/entity/IUserEntity';
-import ArticleService from '../service/ArticleService';
-
 import config from '../config';
+
+import Service from '../service';
+
+const
+    articleService = Service.article,
+    linkService = Service.link,
+    settingService = Service.setting,
+    categoryService = Service.category,
+    commentService = Service.comment,
+    guestbookService = Service.guestbook,
+    userService = Service.user;
 
 export default class HomeApiController {
 
     static async init(req, res, next) {
-        let settingService = new SettingService();
-        let userService = new UserService();
-        let linkService = new LinkService();
-        let categoryService = new CategoryService();
-        let articleService = new ArticleService();
-        let commentService = new CommentService();
-        let guestbookService = new GuestbookService();
 
         try {
             var results = await Promise.all([

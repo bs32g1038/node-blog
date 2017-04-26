@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-23 22:15:51
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-03 08:57:57
+ * @Last Modified time: 2017-04-26 21:19:20
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,11 +14,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const AboutService_1 = require("../service/AboutService");
+const service_1 = require("../service");
+const aboutService = service_1.default.about;
 class AboutApiController {
     static getAbout(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let aboutService = new AboutService_1.default();
             try {
                 const about = yield aboutService.getById('admin');
                 res.json(about);
@@ -35,7 +35,6 @@ class AboutApiController {
                 title: req.body.title,
                 content: req.body.content
             };
-            let aboutService = new AboutService_1.default();
             try {
                 yield aboutService.updateById(id, doc);
                 let about = yield aboutService.getById(id);

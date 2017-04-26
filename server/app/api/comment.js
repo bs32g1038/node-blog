@@ -8,19 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CommentService_1 = require("../service/CommentService");
 const HttpStatusCode_1 = require("../helpers/HttpStatusCode");
+const config_1 = require("../config");
+const service_1 = require("../service");
+const userService = service_1.default.user, categoryService = service_1.default.category, commentService = service_1.default.comment;
 class CommentApiController {
+    /**
+     * 获取所有的评论
+     *
+     * @static
+     * @param {any} req
+     * @param {any} res
+     * @param {any} next
+     * @returns
+     *
+     * @memberOf CommentApiController
+     */
     static getAllCommentList(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let page = Number(req.query.page) || 1, per_page = Number(req.query.per_page) || 10;
-            let commentService = new CommentService_1.default();
-            let opt = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
+            let page = Number(req.query.page) || 1, per_page = Number(req.query.per_page) || 10, opt = { sort: { create_at: -1 }, skip: (page - 1) * per_page, limit: per_page };
             try {
-                let results = yield commentService.getFullList({}, opt);
+                let query = {};
+                let result = yield Promise.all([
+                    commentService.getFullList(query, opt),
+                    commentService.count(query)
+                ]);
                 res.json({
-                    total_count: results.totalItems,
-                    items: results.items
+                    items: result[0],
+                    total_count: result[1]
                 });
             }
             catch (error) {
@@ -32,10 +47,10 @@ class CommentApiController {
         return __awaiter(this, void 0, void 0, function* () {
             let doc;
             if (req.query.admin) {
-                console.log(req.body);
+                let user = yield userService.getByAccount(config_1.default.admin_role.account);
                 doc = {
-                    nick_name: '冷夜流星',
-                    email: 'bs32g1038@163.com',
+                    nick_name: user.nick_name,
+                    email: user.email,
                     identity: 1,
                     content: req.body.content,
                     reply: req.body.reply_id,
@@ -51,7 +66,6 @@ class CommentApiController {
                     article: req.body.article_id,
                 };
             }
-            let commentService = new CommentService_1.default();
             try {
                 let comment = yield commentService.create(doc);
                 comment = yield comment
@@ -70,7 +84,6 @@ class CommentApiController {
             let doc = {
                 pass: req.body.pass,
             };
-            let commentService = new CommentService_1.default();
             try {
                 yield commentService.updateById(id, doc);
                 let comment = yield commentService.getById(id);
@@ -83,7 +96,6 @@ class CommentApiController {
     }
     static hardDelete(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let commentService = new CommentService_1.default();
             try {
                 yield commentService.deleteById(req.params.id);
                 res.status(HttpStatusCode_1.default.HTTP_NO_CONTENT).json();

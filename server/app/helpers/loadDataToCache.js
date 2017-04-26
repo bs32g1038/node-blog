@@ -10,8 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const cache = require("./cache");
 const config_1 = require("../config");
-const SettingService_1 = require("../service/SettingService");
-let settingService = new SettingService_1.default();
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
         let setting = yield cache.get(config_1.default.site_setting._id);

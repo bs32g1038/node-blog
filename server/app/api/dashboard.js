@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-28 22:05:58
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:52:03
+ * @Last Modified time: 2017-04-26 22:19:18
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,20 +14,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ArticleService_1 = require("../service/ArticleService");
-const CommentService_1 = require("../service/CommentService");
-const CategoryService_1 = require("../service/CategoryService");
-const GuestbookService_1 = require("../service/GuestbookService");
-const UserService_1 = require("../service/UserService");
+const service_1 = require("../service");
+const articleService = service_1.default.article, categoryService = service_1.default.category, commentService = service_1.default.comment, guestbookService = service_1.default.guestbook, userService = service_1.default.user;
 class DashboardApiController {
     static main(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let articleService = new ArticleService_1.default();
-            let commentService = new CommentService_1.default();
-            let guestbookService = new GuestbookService_1.default();
-            let categoryService = new CategoryService_1.default();
-            let userService = new UserService_1.default();
-            let opt = { sort: { create_at: -1 }, skip: 0, limit: 10 };
+            let opt = { sort: { create_at: -1 }, skip: 0, limit: 10 }, query = {};
+            let result = yield Promise.all([
+                commentService.getFullList(query, opt),
+                commentService.count(query)
+            ]);
             try {
                 let main = {
                     brief: {
@@ -37,7 +33,10 @@ class DashboardApiController {
                         category_count: yield categoryService.count({})
                     },
                     user: yield userService.getByAccount(req.session.user && req.session.user.account),
-                    comments: yield commentService.getFullList({}, opt)
+                    comments: {
+                        items: result[0],
+                        total_count: result[1]
+                    }
                 };
                 res.json(main);
             }
