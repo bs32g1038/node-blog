@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-24 22:10:13
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-26 13:44:20
+ * @Last Modified time: 2017-04-26 23:56:14
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -21,21 +21,37 @@ const comment_1 = require("../api/comment");
 const guestbook_1 = require("../api/guestbook");
 const about_1 = require("../api/about");
 const dashboard_1 = require("../api/dashboard");
-//存储文件接口（包括七牛和本地上传）
+// 存储文件接口（包括七牛和本地上传）
 const StoreFile_1 = require("../helpers/StoreFile");
+// 请求速率控制
+const RateLimit_1 = require("../middlewares/RateLimit");
+const config_1 = require("../config");
 /**
  * 文章api路由
  */
 router.get('/api/articles/:id', article_1.default.getFullArticle);
 router.get('/api/articles', article_1.default.getArticleList);
 router.get('/api/init', home_1.default.init);
-router.post('/api/comments', comment_1.default.save);
+// 评论api路由
+var commentLimit = RateLimit_1.default({
+    errorMsg: '你今天已经到达最大的评论次数，谢谢你对本博客的支持！',
+    limitCount: config_1.default.max_comment_per_day,
+    expired: 12 * 60 * 60,
+    showJson: true
+});
+router.post('/api/comments', commentLimit, comment_1.default.save);
 router.get('/api/search', article_1.default.search);
 /**
  * 留言api路由
  */
+var guestbookLimit = RateLimit_1.default({
+    errorMsg: '你今天已经到达最大的留言次数，谢谢你对本博客的支持！',
+    limitCount: config_1.default.max_guestbook_per_day,
+    expired: 12 * 60 * 60,
+    showJson: true
+});
 router.get('/api/guestbooks', guestbook_1.default.getGuestbookList);
-router.post('/api/guestbooks', guestbook_1.default.save);
+router.post('/api/guestbooks', guestbookLimit, guestbook_1.default.save);
 /**
  * 关于api路由
  */

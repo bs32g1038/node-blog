@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-03-15 21:36:48 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-25 14:46:34
+ * @Last Modified time: 2017-04-26 23:54:55
  */
 
 export default {
@@ -35,5 +35,9 @@ export default {
         site_keywords: "nodejs, node, express, mongoose",
         site_description: "这是一个个人网站！",
         site_name: "个人博客",
-    }
+    },
+    // 每个访问者一天可以发的评论数
+    max_comment_per_day: 100,
+    // 每个访问者一天可以发的留言数
+    max_guestbook_per_day: 100,
 }

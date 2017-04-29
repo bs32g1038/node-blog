@@ -22,13 +22,13 @@ class ArticleApiController {
                         query.category = category._id;
                     }
                 }
-                var result = yield Promise.all([
+                let [items, total_count] = yield Promise.all([
                     articleService.getList(query, opt),
                     articleService.count(query)
                 ]);
                 res.json({
-                    items: result[0],
-                    total_count: result[1]
+                    items: items,
+                    total_count: total_count
                 });
             }
             catch (error) {

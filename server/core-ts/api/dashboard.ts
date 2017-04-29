@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-02-28 22:05:58 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-26 22:22:18
+ * @Last Modified time: 2017-04-26 22:47:40
  */
 
 import * as  _ from 'lodash';
@@ -19,32 +19,37 @@ const
 export default class DashboardApiController {
 
     static async main(req, res, next) {
-        let
-            opt = { sort: { create_at: -1 }, skip: 0, limit: 10 },
-            query = {};
-
-        let result = await Promise.all([
-            commentService.getFullList(query, opt),
-            commentService.count(query)
-        ]);
-
-        try {
+        Promise.all([
+            articleService.count({}),
+            commentService.count({}),
+            guestbookService.count({}),
+            categoryService.count({}),
+            commentService.getFullList({}, { sort: { create_at: -1 }, skip: 0, limit: 10 }),
+            userService.getByAccount(req.session.user && req.session.user.account)
+        ]).then(function ([
+            article_count,
+            comment_count,
+            guestbook_count,
+            category_count,
+            commentItems,
+            user
+        ]) {
             let main = {
                 brief: {
-                    article_count: await articleService.count({}),
-                    comment_count: await commentService.count({}),
-                    guestbook_count: await guestbookService.count({}),
-                    category_count: await categoryService.count({})
+                    article_count,
+                    comment_count,
+                    guestbook_count,
+                    category_count,
                 },
-                user: await userService.getByAccount(req.session.user && req.session.user.account),
+                user,
                 comments: {
-                    items: result[0],
-                    total_count: result[1]
+                    items: commentItems,
+                    total_count: comment_count
                 }
             }
             res.json(main);
-        } catch (error) {
+        }).catch(function (error) {
             next(error)
-        }
+        })
     }
 }

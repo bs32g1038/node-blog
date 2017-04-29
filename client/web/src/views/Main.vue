@@ -4,10 +4,10 @@
             <aside class="sidebar">
                 <div class="sidebar-inner">
                     <div class="sidebar-widget-box">
-                        <form class="search-wrap">
-                            <input type="text" name="key" class="search-input" placeholder="搜索文章" autocomplete="off">
-                            <i class="fa fa-search fa-fw search-icon"></i>
-                        </form>
+                        <div class="search-wrap">
+                            <input type="text" name="key" class="search-input" placeholder="搜索文章" autocomplete="off" v-model="search_key" @keyup.enter="search">
+                            <i class="fa fa-search fa-fw search-icon" @click="search"></i>
+                        </div>
                     </div>
                     <section class="m-brief sidebar-widget-box">
                         <div class="title"><i class="fa fa-flag-o fa-fw"></i>站点信息</div>
@@ -68,6 +68,22 @@
 </template>
 <script>
 export default {
-    props: ['init']
+    props: ['init'],
+    data() {
+        return {
+            search_key: ''
+        }
+    },
+    methods: {
+        search() {            
+            if (this.search_key.replace(/(^\s+)|(\s+$)/g, "") !== "") {
+                console.log(this.search_key)
+                this.$router.push('/search?key=' + this.search_key);
+            }
+        }
+    },
+    created() {
+        this.search_key = this.$route.query.key || ''
+    }
 }
 </script>

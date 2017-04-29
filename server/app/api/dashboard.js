@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-02-28 22:05:58
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-26 22:22:18
+ * @Last Modified time: 2017-04-26 22:47:40
  */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -19,30 +19,31 @@ const articleService = service_1.default.article, categoryService = service_1.de
 class DashboardApiController {
     static main(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            let opt = { sort: { create_at: -1 }, skip: 0, limit: 10 }, query = {};
-            let result = yield Promise.all([
-                commentService.getFullList(query, opt),
-                commentService.count(query)
-            ]);
-            try {
+            Promise.all([
+                articleService.count({}),
+                commentService.count({}),
+                guestbookService.count({}),
+                categoryService.count({}),
+                commentService.getFullList({}, { sort: { create_at: -1 }, skip: 0, limit: 10 }),
+                userService.getByAccount(req.session.user && req.session.user.account)
+            ]).then(function ([article_count, comment_count, guestbook_count, category_count, commentItems, user]) {
                 let main = {
                     brief: {
-                        article_count: yield articleService.count({}),
-                        comment_count: yield commentService.count({}),
-                        guestbook_count: yield guestbookService.count({}),
-                        category_count: yield categoryService.count({})
+                        article_count,
+                        comment_count,
+                        guestbook_count,
+                        category_count,
                     },
-                    user: yield userService.getByAccount(req.session.user && req.session.user.account),
+                    user,
                     comments: {
-                        items: result[0],
-                        total_count: result[1]
+                        items: commentItems,
+                        total_count: comment_count
                     }
                 };
                 res.json(main);
-            }
-            catch (error) {
+            }).catch(function (error) {
                 next(error);
-            }
+            });
         });
     }
 }

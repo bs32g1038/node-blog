@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com 
  * @Date: 2017-01-17 15:48:46 
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:33:52
+ * @Last Modified time: 2017-04-26 23:40:16
  */
 
 const express = require('express');
@@ -21,6 +21,10 @@ import RequestLog from './middlewares/RequestLog';
 import RenderVueServer from './middlewares/RenderVueServer';
 import apiRouter from './routes/api';
 import webRouter from './routes/web';
+
+/**
+ * 加载网站必须数据到缓存
+ */
 import './helpers/loadDataToCache';
 
 const app = express();

@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:48:46
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-03-31 18:33:52
+ * @Last Modified time: 2017-04-26 23:40:16
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -22,6 +22,9 @@ const RequestLog_1 = require("./middlewares/RequestLog");
 const RenderVueServer_1 = require("./middlewares/RenderVueServer");
 const api_1 = require("./routes/api");
 const web_1 = require("./routes/web");
+/**
+ * 加载网站必须数据到缓存
+ */
 require("./helpers/loadDataToCache");
 const app = express();
 app.set('views', path.join(__dirname, '../views')); // ejs引擎渲染html文件

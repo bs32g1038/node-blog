@@ -2,15 +2,13 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-01-17 15:34:15
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-04-26 21:19:44
+ * @Last Modified time: 2017-04-26 23:09:42
  */
 import IRouterRequest from '../middlewares/IRouterRequest';
 import IArticleEntity from '../models/entity/IArticleEntity';
 import ICategoryEntity from '../models/entity/ICategoryEntity';
 import ICommentEntity from '../models/entity/ICommentEntity';
 import IBaseListOption from '../models/option/IBaseListOption';
-import * as  _ from 'lodash';
-import moment = require('moment');
 import HttpStatusCode from '../helpers/HttpStatusCode';
 import Service from '../service';
 
@@ -37,13 +35,13 @@ export default class ArticleApiController {
                     query.category = category._id;
                 }
             }
-            var result = await Promise.all([
+            let [items, total_count] = await Promise.all([
                 articleService.getList(query, opt),
                 articleService.count(query)
             ]);
             res.json({
-                items: result[0],
-                total_count: result[1]
+                items: items,
+                total_count: total_count
             });
         } catch (error) {
             return next(error)
@@ -124,7 +122,7 @@ export default class ArticleApiController {
             summary: req.body.summary,
             img_url: req.body.images[0].url,
         }
-        
+
         try {
             await articleService.updateById(_id, doc);
             let article = await articleService.getById(_id);

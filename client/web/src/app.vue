@@ -18,16 +18,6 @@ export default {
         BlogMain,
         BlogFooter
     },
-    data() {
-        return {
-            search_key: ''
-        }
-    },
-    methods: {
-        search() {
-            this.$router.push('/search?key=' + this.search_key);
-        }
-    },
     computed: {
         init() {
             return this.$store.state.init
@@ -46,9 +36,6 @@ export default {
         new GoTop({
             el: 'backTop',
         })
-    },
-    created() {
-        this.search_key = this.$route.query.key || ''
     }
 }
 </script>
