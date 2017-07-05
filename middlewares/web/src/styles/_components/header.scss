@@ -1,0 +1,150 @@
+/*
+ * @Author: bs32g1038@163.com 
+ * @Date: 2017-06-15 21:48:21 
+ * @Last Modified by: bs32g1038@163.com
+ * @Last Modified time: 2017-06-18 22:02:23
+ */
+
+.header {
+    background-color: #393D49;
+    background-color: #61B3E6;
+    background-color: #fff;
+    z-index: 999;
+    flex: 0 0 auto;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 340px;
+    right: 0;
+}
+
+.header__inner {
+    max-width: 800px;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.site-title {
+    color: #71777c;
+    line-height: 24px;
+    transition: color .15s ease;
+    display: inline-block;
+    font-weight: 300;
+    letter-spacing: 0.9px;
+    margin-right: 22px;
+    font-size: 14px;
+    display: block;
+    &.router-link-active {
+        color: #71777c
+    }
+}
+
+.header__nav {
+    flex: 1 0 auto;
+}
+
+.header__nav-list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+}
+
+.header__nav-list-main {
+    display: flex;
+    flex: 1 0 auto
+}
+
+.header__nav-list-main a {
+    color: #71777c;
+    transition: color .15s ease;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    margin-right: 20px;
+    font-size: 14px;
+    &:hover {
+        color: #61B3E6
+    }
+    &:nth-child(10) {
+        margin-right: 0;
+    }
+}
+
+.header__nav-item {
+    color: #71777c;
+    transition: color .15s ease;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    margin-right: 20px;
+    font-size: 14px;
+    &:hover {
+        color: #61B3E6
+    }
+    &:nth-child(10) {
+        margin-right: 0;
+    }
+}
+
+.header__search {
+    display: flex;
+    color: #71777c;
+    padding: 0 18px;
+    font-size: 16px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex: 1 1 auto;
+}
+
+.search-form {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid hsla(0, 0%, 59%, .2);
+    background-color: rgba(227, 231, 236, .2);
+    display: flex;
+    align-items: center;
+}
+
+.search-form--active {
+    background-color: #fff
+}
+
+.search-form__icon {
+    cursor: pointer;
+    fill: #aeb6c0;
+    margin: 0 10px;
+}
+
+.search-form__input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: #aeb6c0;
+    background-color: transparent;
+    font-size: 12px;
+    padding: 7px 12px;
+    width: 180px;
+}
+
+.github-corner {
+    border-bottom: 0;
+    position: fixed;
+    right: 0;
+    text-decoration: none;
+    top: 40px;
+    z-index: 99999;
+}
+
+.github-corner svg {
+    color: #fff;
+    fill: #42b983;
+    fill: var(--theme-color, #42b983);
+    height: 80px;
+    width: 80px;
+}

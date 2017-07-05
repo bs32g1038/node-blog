@@ -1,0 +1,45 @@
+{
+  "extends": "eslint:recommended",
+  "root": true,
+  "rules": {
+    //禁止使用console
+    "no-console": "off",
+    //块语句中的内容不能为空
+    "no-empty": 0,
+    //禁止修改const声明的变量
+    "no-const-assign": 2,
+    //在创建对象字面量时不允许键重复 {a:1,a:1}
+    "no-dupe-keys": 2,
+    //禁止重复声明变量
+    "no-redeclare": 2,
+    //不能有无法执行的代码
+    "no-unreachable": 2,
+    //未定义前不能使用
+    "no-use-before-define": 2,
+    // 要求使用 isNaN() 检查 NaN
+    "use-isnan": 2,
+    //不能有未定义的变量
+    "no-undef": 1,
+    // 强制 typeof 表达式与有效的字符串进行比较
+    // typeof foo === "undefimed" 错误
+    "valid-typeof": 2,
+    "no-var": 2,
+    // 要求在注释周围有空行 ( 要求在块级注释之前有一空行)
+    "lines-around-comment": [1,{"beforeBlockComment":true}]
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "parser": "babel-eslint"  
+}
+// {
+//   "extends": "airbnb-base",
+//   "rules": {
+//     "no-underscore-dangle": "off"    
+//   }
+// }

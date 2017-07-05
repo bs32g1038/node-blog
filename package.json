@@ -1,0 +1,123 @@
+{
+  "name": "node-blog",
+  "version": "2.0.0",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --watch *.js --ignore middlewares/* app.js",
+    "init": "node app/scripts/init",
+    "web": "cross-env APP_ENV=web npm run dev",
+    "admin": "cross-env APP_ENV=admin npm run dev",
+    "all": "cross-env APP_ENV=all npm run dev",
+    "test": "ava",
+    "start": "cross-env NODE_ENV=production node app",
+    "build": "rimraf views/web/dist && rimraf views/admin/dist && npm run build:webclient && npm run build:webserver && npm run build:adminclient",
+    "build:webclient": "cross-env NODE_ENV=production webpack --config views/web/build/webpack.client.config.js --progress --hide-modules",
+    "build:webserver": "cross-env NODE_ENV=production webpack --config views/web/build/webpack.server.config.js --progress --hide-modules",
+    "build:adminclient": "cross-env NODE_ENV=production webpack --config views/admin/build/webpack.client.config.js --progress --hide-modules"
+  },
+  "dependencies": {
+    "antd": "^2.11.2",
+    "axios": "^0.16.1",
+    "body-parser": "^1.16.1",
+    "classnames": "^2.2.5",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
+    "cross-env": "^5.0.0",
+    "debug": "^2.2.0",
+    "ejs": "^2.5.2",
+    "es6-promise": "^4.1.0",
+    "express": "^4.15.3",
+    "express-graphql": "^0.6.6",
+    "github-markdown-css": "^2.8.0",
+    "graphql": "^0.10.3",
+    "graphql-date": "^1.0.3",
+    "highlight.js": "^9.12.0",
+    "lodash": "^4.17.4",
+    "log4js": "^1.1.0",
+    "lru-cache": "^4.0.2",
+    "marked": "^0.3.6",
+    "moment": "^2.17.1",
+    "mongoose": "^4.8.4",
+    "multer": "^1.3.0",
+    "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-codemirror": "^1.0.0",
+    "react-dom": "^15.5.4",
+    "react-markdown": "^2.5.0",
+    "react-quill": "^1.0.0-rc.2",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^4.1.0",
+    "serve-favicon": "^2.4.1",
+    "shortid": "^2.2.8",
+    "sqlite3": "^3.1.8",
+    "validator": "^7.0.0",
+    "vue": "^2.3.3",
+    "vue-router": "^2.5.0",
+    "vue-server-renderer": "^2.3.2",
+    "vuex": "^2.3.1",
+    "vuex-router-sync": "^4.1.2",
+    "webpack-merge": "^4.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "ava": "^0.18.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-import": "^1.1.1",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react-app": "^2.2.0",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "glob": "^7.1.1",
+    "html-webpack-plugin": "^2.24.1",
+    "node-sass": "^4.5.3",
+    "nodemon": "^1.11.0",
+    "postcss-loader": "^2.0.5",
+    "react-hot-loader": "^1.3.1",
+    "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.0",
+    "sw-precache-webpack-plugin": "^0.11.3",
+    "url-loader": "^0.5.8",
+    "vue-loader": "^12.0.2",
+    "vue-style-loader": "^3.0.0",
+    "vue-template-compiler": "^2.3.2",
+    "webpack": "^2.4.1",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.17.1",
+    "webpack-merge": "^4.0.0",
+    "webpack-node-externals": "^1.5.4"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "failFast": true,
+    "tap": true,
+    "require": [
+      "babel-register"
+    ],
+    "babel": {
+      "presets": [
+        "@ava/stage-4",
+        "@ava/transform-test-files"
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
+}

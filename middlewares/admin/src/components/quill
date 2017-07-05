@@ -1,0 +1,42 @@
+// import ReactQuill, { Quill } from 'react-quill'
+// let Block = Quill.import('blots/block');
+
+
+// const CustomButton = () => <i className="fa fa-header"><sub>2</sub></i>
+
+// function insertH() {
+//     this.quill.format('H', true);
+
+// }
+
+// class BlockH extends Block {
+//     static create(value) {
+//         let node = super.create();
+//         console.log(node)
+//         return node;
+//     }
+//     static formats(node) {
+//         console.log(node)
+//         return BlockH.tagName.indexOf(node.tagName) + 1;
+//     }
+// }
+// BlockH.blotName = 'H';
+// BlockH.tagName = 'h2';
+// Quill.register(BlockH);
+
+// const CustomToolbar = () => (
+//     <div id="toolbar">
+//         <button className="ql-bold"></button>
+//         <button className="ql-italic"></button>
+//         <button className="ql-link"></button>
+//         <button className="ql-blockquote"></button>
+//         <button className="ql-code-block"></button>
+//         <button className="ql-list" value="ordered"></button>
+//         <button className="ql-list" value="bullet"></button>
+//         <button className="ql-video"></button>
+//         <button className="ql-image"></button>
+//         <button className="ql-H">
+//             <CustomButton />
+//         </button>
+//     </div>
+// )

@@ -1,0 +1,88 @@
+@keyframes load-loop {
+    0% {
+        transform: rotate(0);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes color-flash {
+    0% {
+        background-color: #fff
+    }
+    50% {
+        background-color: rgb(255, 187, 187)
+    }
+    100% {
+        background-color: #fff
+    }
+}
+
+$animation-time: .3s !default;
+$transition-time: .2s !default;
+$ease-in-out: ease-in-out !default;
+@mixin motion-common() {
+    animation-duration: $animation-time;
+    animation-fill-mode: both;
+}
+
+@mixin make-motion($className, $keyframeName) {
+    .#{$className}-enter-active,
+    .#{$className}-appear {
+        @include motion-common ();
+        animation-play-state: paused;
+    }
+    .#{$className}-leave-active {
+        @include motion-common ();
+        animation-play-state: paused;
+    }
+    .#{$className}-enter-active,
+    .#{$className}-appear {
+        animation-name: #{$keyframeName}In;
+        animation-play-state: running;
+    }
+    .#{$className}-leave-active {
+        animation-name: #{$keyframeName}Out;
+        animation-play-state: running;
+    }
+}
+
+
+/**
+  fade动画
+ */
+
+@mixin fade-motion($className, $keyframeName) {
+    @include make-motion($className, $keyframeName);
+    .#{$className}-enter-active,
+    .#{$className}-appear {
+        opacity: 0;
+        animation-timing-function: linear;
+    }
+    .#{$className}-leave-active {
+        animation-timing-function: linear;
+    }
+}
+
+@include fade-motion('fade', 'Fade');
+@keyframes FadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes FadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

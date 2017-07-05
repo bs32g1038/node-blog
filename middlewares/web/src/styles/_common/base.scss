@@ -1,0 +1,130 @@
+* {
+    outline: 0;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-size: $rem-baseline;
+}
+
+body {
+    font: 14px/1.5 "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; // background-color: lighten(#eceef1, 3%);
+    color: #34495e;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    font-size: 14px;
+    max-width: 1366px;
+}
+
+a {
+    color: #34495e;
+    text-decoration: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+button {
+    font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+
+//*********************** 侧栏 *********************************/
+.sidebar {
+    width: 240px;
+    box-shadow: none;
+    margin-top: 50px;
+}
+
+.sidebar__widget-box {
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    border-radius: 2px; // position: absolute;
+    left: 0;
+    top: 20px;
+    right: 0;
+    color: #fff
+}
+
+.sidebar__widget-title {
+    font-size: 14px;
+    padding: 12px 20px;
+}
+
+.sidebar__author-info {
+    text-align: center
+}
+
+.sidebar__author-pic {
+    display: block;
+    padding: 2px;
+    margin-right: 10px;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.sidebar__author-name {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sidebar__author-description {
+    margin-top: 0;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.sidebar__site-state {
+    text-align: center;
+    overflow: hidden;
+    line-height: 1.4;
+    white-space: nowrap;
+    padding-bottom: 20px;
+}
+
+.site-state-item {
+    display: inline-block;
+    padding: 0 15px;
+    border-left: 1px solid #ccc;
+}
+
+.site-state-item:first-child {
+    border-left: none;
+}
+
+.site-state-item__count {
+    display: block;
+    text-align: center;
+    color: inherit;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.site-state-item__name {
+    font-size: 13px;
+    color: #999;
+}
+
+.view{
+    margin-top: 40px;
+}
+
+.router-link-active {
+    color: #61B3E6!important;
+}
+
+.load-loop {
+    animation: load-loop 1s linear infinite;
+}
