@@ -28,6 +28,7 @@
     "es6-promise": "^4.1.0",
     "express": "^4.15.3",
     "express-graphql": "^0.6.6",
+    "express-session": "^1.15.3",
     "github-markdown-css": "^2.8.0",
     "graphql": "^0.10.3",
     "graphql-date": "^1.0.3",

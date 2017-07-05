@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-03-15 21:36:48
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-07-05 19:08:04
+ * @Last Modified time: 2017-07-05 20:21:55
  */
 
 const data = require('./data');
@@ -24,4 +24,6 @@ module.exports = {
 
   // 分类
   categories: data.categories,
+
+  session_secret: '_secret', // 务必修改
 };

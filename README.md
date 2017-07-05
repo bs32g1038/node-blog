@@ -8,7 +8,6 @@
 
 * Node-blog through Nodejs and express provide the Restful API。
 * Data stored in Sqlite，Driven by Sequelize。
-* 无需安装数据库，没有额外的其他依赖，完整的app功能
 * no need database, no need additional dependence, full app performance in blog
 * Front-End use of the VUE。
 * Use powerful webpack to build projects。

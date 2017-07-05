@@ -2,7 +2,7 @@
  * @Author: bs32g1038@163.com
  * @Date: 2017-05-02 09:18:11
  * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-07-01 23:17:56
+ * @Last Modified time: 2017-07-05 20:39:12
  */
 const graphql = require('graphql');
 const Article = require('../type/Article');
@@ -18,7 +18,6 @@ const LRU = require('lru-cache'),
   options = {
     max: 500,
     length: function(n, key) { 
-      console.log(n , key)
       return n * 2 + key.length 
     },
     maxAge: 12 * 60 * 60
@@ -40,7 +39,7 @@ const RootMutationType = new graphql.GraphQLObjectType({
         }
       },
       resolve: (root, { article }) => {
-        // authorize(root);
+        authorize(root);
         return articleService.create(article);
       }
     },
@@ -59,7 +58,7 @@ const RootMutationType = new graphql.GraphQLObjectType({
         }
       },
       resolve: (root, { id, article }) => {
-        // authorize(root);
+        authorize(root);
         return articleService.getByIdAndUpdate(id, article);
       }
     },
@@ -91,8 +90,6 @@ const RootMutationType = new graphql.GraphQLObjectType({
         }
       },
       resolve: (root, { comment }) => {
-          console.log(comment.identity, comment.identity=== 1,'ss')
-        
         if (comment.identity === 1) {
           let user = config.admin_role;
           comment = _.assign(comment, { email: user.email, nick_name: user.nick_name })
@@ -100,8 +97,6 @@ const RootMutationType = new graphql.GraphQLObjectType({
         if (comment.reply_id === '') {
           comment = _.omit(comment, 'reply_id')
         }
-          console.log('ss00')
-        
         const SEPARATOR = '☆@☆';
         const limitCount = 30;
         let key = 'add-comment-limit' + SEPARATOR + util.getIpAddress(root.req) + SEPARATOR + limitCount;
@@ -126,7 +121,7 @@ const RootMutationType = new graphql.GraphQLObjectType({
         }
       },
       resolve: (root, { id }) => {
-        // authorize(root);
+        authorize(root);
         return commentService.deleteById(id);
       }
     }

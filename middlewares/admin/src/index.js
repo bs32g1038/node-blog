@@ -12,7 +12,9 @@ import './quill.snow.css'
 import './md.css'
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history} routes={routes} />
+    <Router history={history} >
+      { routes() }
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
