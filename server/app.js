@@ -52,22 +52,22 @@ app.use(cors())
 //     next();
 // });
 app.use(render)
+require('./core/api');
+require('./core/admin');
+app.use(ReqRouter.init())
+app.post('/admin/api/upload', uploadLocal);
 if (process.env.NODE_ENV === "production") {
     app.use('/blog/admin', function(req, res, next) {
         let content = fs.readFileSync(path.resolve(__dirname, '../static/app/admin.html'), 'utf-8');
         let rs = content.replace('<!-- name -->', config.site.name + "后台");
         res.end(rs);
     })
-    app.use('/blog', function(req, res, next) {
+    app.use(function(req, res, next) {
         let content = fs.readFileSync(path.resolve(__dirname, '../static/app/index.html'), 'utf-8');
         let rs = content.replace('<!-- name -->', config.site.name + "博客");
         res.end(rs);
     })
 }
-require('./core/api');
-require('./core/admin');
-app.use(ReqRouter.init())
-app.post('/admin/api/upload', uploadLocal);
 // 处理页面404错误
 app.use((req, res) => {
     res.status(404).json({
