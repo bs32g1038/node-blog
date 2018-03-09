@@ -1,0 +1,23 @@
+<nav>
+    <ul class="pagination">
+        <% if(curPage - 1 > 0 ){ %>
+            <li>
+                <a href="<%= url + '/' + (curPage - 1) %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <% } %>
+        <% for (var i = 1; i <= pageCount; i++){ %>
+            <li>
+                <a href="<%= url + '/' + i %>"><%= i %></a>
+            </li>
+        <% } %>
+        <% if(pageCount >= curPage + 1 ){ %>
+            <li>
+                <a href="<%= url + '/' + (curPage + 1) %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+</nav>

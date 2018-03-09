@@ -1,0 +1,53 @@
+<section class="page-header">
+	<h1>控制台
+		<small>留言管理</small>
+	</h1>
+</section>
+<div class="box-body">
+	<form id="form" class="form-horizontal" method="post" action="/admin/guestbook/<%= guestbook._id %>/reply/do">
+		<div class="form-group">
+			<label class="control-label col-sm-3">昵称</label>
+			<div class="col-sm-5">
+				<div class="form-control">
+					<%= guestbook.nick_name %>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">邮箱</label>
+			<div class="col-sm-5">
+				<div class="form-control">
+					<%= guestbook.email %>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">留言内容</label>
+			<div class="col-sm-5">
+				<div class="form-control" style="word-wrap: break-word;height:auto;">
+					<%= guestbook.content %>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">回复：</label>
+			<div class="col-sm-6">
+				<textarea class="form-control" name="reply" cols="30" rows="6"><%= guestbook.reply_content %></textarea>
+			</div>
+		</div>
+		<input type='hidden' name='_csrf' value='<%= csrf %>'/>
+	</form>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary">返回</button>
+		<button type="button" class="btn btn-primary" id="reply-btn">回复</button>
+	</div>
+</div>
+</div>
+<%- include('../js.html') %>
+<script>
+	$(document).ready(function () {
+		$('#reply-btn').on('click', function () {
+			$('#form').submit();
+		});
+	});
+</script>

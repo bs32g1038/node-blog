@@ -1,0 +1,159 @@
+<div class="article view">
+  <article class="inner">
+    <div class="header">
+      <h2 class="title">
+        <a class="title-link" href="'/blog/articles/' + article.id"><%= article.title %></a>
+      </h2>
+      <div class="meta">
+        <span>发表于<%= parseTime(article.createdAt) %></span>
+        <span v-if="article.category">&nbsp; | &nbsp;
+        <span>分类于
+          <a href="/blog/articles?cid=<%= article.category._id %>"><%= article.category.name %></a>
+        </span>
+        </span>
+        <span>&nbsp; | &nbsp;<%= article.commentCount %>条评论</span>
+        <span>&nbsp; | &nbsp;阅读次数&nbsp;<%= article.viewsCount %></span>
+      </div>
+    </div>
+    <div class="markdown-body"><%- article.content %></div>
+    <ul class="post-copyright">
+      <li class="post-copyright-author">
+        <strong>本文作者：</strong> IIssNan
+      </li>
+      <li class="post-copyright-link">
+        <strong>本文链接：</strong>
+        <a href="http://notes.iissnan.com/2016/next-documentations-reload/" title="NexT Documentations Reload">http://notes.iissnan.com/2016/next-documentations-reload/</a>
+      </li>
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank" se_prerender_url="complete">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
+      </li>
+    </ul>
+    <div class="comments">
+      <h3 class="tip"><i class="fa fa-flag fa-fw"></i>既然来了，就说点什么吧~</h3>
+      <form class="comment-form" id="reply-form" action="/blog/articles/<%= article._id %>/reply" method="post">
+        <div class="form-group">
+          <label class="label">昵称</label>
+          <input id="nickName" name="nickName" placeholder="输入你的昵称" type="text" class="comment-form__input" />
+        </div>
+        <div class="form-group">
+          <label class="label">邮箱</label>
+          <input id="email" name="email" placeholder="输入你的email" type="text" class="comment-form__input" />
+        </div>
+        <div class="form-group">
+          <textarea id="content" name="content" rows="3" placeholder="留点空白给你说~" class="comment-form__textarea"></textarea>
+        </div>
+        <div class="footer">
+          <button id="submit" type="submit" class="submit">提 交</button>
+        </div>
+      </form>
+      <ul class="comments-list">
+        <% for(const item of comments){ %>
+          <li class="comments-list__item">
+            <div class="comments-list__info">
+              <span class="comments-list__info-author"><i class="fa fa-fw fa-user"></i><%= item.nickName %> 说：
+            <!-- <span style="color: #fff;background-color: #6ba44e;padding: 2px;font-size: 12px;" >博主</span> -->
+              </span>
+              <div style="float: right;font-size: 12px;">
+                <span class="comments-list__info-time"><%= parseTime(item.createdAt) %> | </span>
+                <a href="javascript:;" comment-id="<%= item.id %>">回复</a>
+              </div>
+            </div>
+            <% if(item.reply) { %>
+              <div class="comments-list__quote">
+                <span class="comments-list__info-author"><i class="fa fa-fw fa-user"></i><%= item.reply.nickName %>
+              <!-- <span style="color: #fff;background-color: #6ba44e;padding: 2px;font-size: 12px;" >博主</span> -->
+                </span>
+                <span class="comments-list__info-time"><%= timeAgo(item.reply.createdAt) %>前</span>
+                <div class="comments-list__item-content">
+                  <%= item.reply.content %>
+                </div>
+              </div>
+              <% } %>
+                <div class="comments-list__item-content">
+                  <%= item.content %>
+                </div>
+                <div class="comments-list__replay-box"></div>
+          </li>
+          <% } %>
+        <form class="comment-form" style="display: none" id="reply-form-2" action="/blog/articles/<%= article.id %>/reply" method="post">
+          <div class="form-group">
+            <label class="label">昵称</label>
+            <input id="nickName" name="nickName" placeholder="输入你的昵称" type="text" class="comment-form__input" />
+          </div>
+          <div class="form-group">
+            <label class="label">邮箱</label>
+            <input id="email" name="email" placeholder="输入你的email" type="text" class="comment-form__input" />
+          </div>
+          <div class="form-group">
+            <textarea id="content" name="content" rows="3" placeholder="留点空白给你说~" class="comment-form__textarea"></textarea>
+          </div>
+          <input type="hidden" name="commentId" value=""/>
+          <div class="footer">
+            <button id="comment-reply-btn" type="submit" class="submit">提 交</button>
+          </div>
+        </form>
+      </ul>
+    </div>
+  </article>
+</div>
+<script>
+(function() {
+  var form = document.getElementById('reply-form');
+  var submitBtn = document.getElementById('submit');
+  var form2 = document.getElementById('reply-form-2');
+  var replyBtn = document.getElementById('comment-reply-btn');
+
+  function flash(el) {
+    let count = 1;
+    let intervalID = setInterval(function() {
+      if (count % 2 == 0) {
+        el.style = 'background-color: #ffdab9';
+      } else {
+        el.style = 'background-color: #fff'
+      }
+      count++;
+      if (count >= 8) {
+        clearInterval(intervalID);
+      }
+    }, 140);
+  }
+
+  function check(form) {
+    var nick_name = form.elements[0].value;
+    var email = form.elements[1].value;
+    var content = form.elements[2].value;
+    if (!nick_name) {
+      flash(form.elements[0]);
+      return false;
+    }
+    if (!/^[0-9|A-z|_]{1,17}[@][0-9|A-z]{1,3}.(com)$/.test(email))　　 {
+      flash(form.elements[1]);
+      return false;
+    }
+    if (!content) {
+      flash(form.elements[2]);
+      return false;
+    }
+  }
+  submitBtn.onclick = function() {
+    check(form)
+  };
+  replyBtn.onclick = function() {
+    check(form2)
+  }
+  document.querySelector('.comments-list').onclick = function(ev) {　
+    var ev = ev || window.event;　
+    var target = ev.target || ev.srcElement;
+    if (target.nodeName.toLowerCase() == 'a') {　
+      var commentId = target.getAttribute("comment-id");　　
+      while (target.className.indexOf('comments-list__item') === -1) {
+        target = target.parentNode;
+      }
+      target.querySelector('.comments-list__replay-box').appendChild(form2);
+      form2.style = "display: block";
+      console.log(commentId)
+      form2.elements[3].value = commentId;
+    }
+  }
+}());
+</script>

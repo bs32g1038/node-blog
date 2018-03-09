@@ -1,0 +1,78 @@
+.about {
+    display: flex;
+    flex: 1 0 auto;
+    background-color: #fff;
+    padding: 0 28px 20px;
+}
+
+.resume {
+    text-align: center;
+    font-size: 24px;
+}
+
+.about-header {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 5px solid #31AEFB;
+    .person-base {
+        .name {
+            color: #31AEFB;
+            font-size: 20px;
+        }
+        .aim {
+            color: #31AEFB;
+            font-size: 12px;
+        }
+    }
+    .person-info {
+        flex: 1 0 auto;
+        padding: 5px;
+        li {
+            font-size: 12px;
+            padding: 5px;
+        }
+        i {
+            color: #31AEFB;
+        }
+    }
+    .person-img {
+        flex: 1 0 auto;
+        text-align: right;
+        img {
+            width: 90px;
+            height: 90px;
+        }
+    }
+}
+
+.about-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-main-item {
+    display: flex;
+    flex: 1 0 auto;
+    padding-top: 20px;
+    .about-main-title{
+        width: 120px;
+        flex: 0 0 auto;
+        color: #31AEFB;
+    }
+    .about-main-content{
+        font-size: 14px;
+        line-height: 26px;
+        border-top: 3px solid #31AEFB;
+        border-left: 3px dashed #31AEFB;
+        padding: 10px;
+
+        h4{
+            margin:  0;
+        }
+
+        p{
+            margin: 5px 0;
+        }
+    }
+}

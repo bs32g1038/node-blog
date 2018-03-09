@@ -1,0 +1,15 @@
+version: '3'
+services:
+  node:
+    image: "node:8.9.4-alpine"
+    working_dir: "/code"
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    stdin_open: true
+    tty: true
+  mongodb:
+    image: mongo:3.2

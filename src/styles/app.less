@@ -1,0 +1,310 @@
+/*
+ * @Author: bs32g1038@163.com
+ * @Date: 2017-05-23 11:28:16
+ * @Last Modified by: bs32g1038@163.com
+ * @Last Modified time: 2017-07-20 22:41:22
+ */
+
+.app {
+    height: 100%;
+    width: 820px;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+}
+
+.app-github {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: .375rem;
+    text-decoration: none;
+    transition: all .2s;
+    color: #525251;
+    cursor: pointer;
+    i {
+        font-size: 25px;
+    } // border-bottom: 0;
+    // position: absolute;
+    // right: 0;
+    // text-decoration: none;
+    // top: 0;
+    // z-index: 99999;
+    // svg {
+    //     color: #fff;
+    //     fill: #42b983;
+    //     height: 50px;
+    //     width: 50px;
+    // }
+}
+
+.app-cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 1024;
+    width: 200px;
+    display: flex;
+    background-color: #fff;
+    flex-direction: column;
+    box-shadow: 0 0 2px 0 rgba(204, 208, 213, 0.75);
+    color: #fff;
+    &-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: -100;
+        background: url(/static/images/cover.jpg) 50% 50% / cover no-repeat;
+    }
+    &-info {
+        display: flex;
+        width: 100%;
+    }
+}
+
+.app-card {
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    border-radius: 2px; // position: absolute;
+    left: 0;
+    top: 20px;
+    right: 0;
+    color: #fff;
+    position: absolute;
+    &-title {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+}
+
+.app-author {
+    text-align: center;
+    &-pic {
+        display: block;
+        padding: 2px;
+        margin-right: 10px;
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+    &-name {
+        margin: 0;
+        font-weight: 500;
+        font-size: 16px;
+    }
+    &-description {
+        margin-top: 0;
+        line-height: 1.6;
+        font-size: 13px;
+    }
+}
+
+.app-state {
+    text-align: center;
+    overflow: hidden;
+    line-height: 1.4;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    &-item {
+        display: inline-block;
+        padding: 0 15px;
+        border-left: 1px solid #ccc;
+        &:first-child {
+            border-left: none;
+        }
+    }
+    &-count {
+        display: block;
+        text-align: center;
+        color: inherit;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    &-name {
+        font-size: 13px;
+        color: #999;
+    }
+}
+
+
+/* 主布局 */
+
+.app-content {
+    margin-top: 40px;
+    position: relative;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+}
+
+
+/* 头部布局 */
+
+.app-header {
+    background-color: #fff;
+    z-index: 999;
+    flex: 0 0 auto;
+    padding: 5px 20px;
+    // box-shadow: 0 2px 2px rgba(0, 0, 0, .05), 0 1px 0 rgba(0, 0, 0, .05);
+    background-color: #303643;
+    width: 100%;
+    max-width: 980px;
+    align-items: center;
+    display: flex;
+    &-title {
+        color: #71777c;
+        transition: color .15s ease; // font-weight: 300;
+        letter-spacing: 0.9px;
+        margin-right: 22px;
+        font-size: 14px;
+        a{
+            color: #fff
+        }
+    }
+    &-nav {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        flex: 1 0 auto;
+    }
+    &-main {
+        flex: 1 0 auto;
+        a {
+            color: #71777c;
+            color: rgba(255,255,255,0.8);
+            transition: color .15s ease;
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 300;
+            letter-spacing: 1.2px;
+            margin-right: 20px;
+            font-size: 14px;
+            &:hover {
+                color: #61B3E6
+            }
+            &:nth-child(10) {
+                margin-right: 0;
+            }
+        }
+    }
+    &-search {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 1px solid hsla(0, 0%, 59%, .2);
+        background-color: rgba(227, 231, 236, .2);
+        display: flex;
+        align-items: center;
+        &-icon {
+            cursor: pointer;
+            fill: #aeb6c0;
+            margin: 0 10px;
+        }
+        &-input {
+            border: none;
+            box-shadow: none;
+            outline: none;
+            color: #aeb6c0;
+            background-color: transparent;
+            font-size: 12px;
+            padding: 7px 12px;
+            width: 180px;
+        }
+    }
+}
+
+/* 动态内容主要显示区域 */
+
+.app-main {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+}
+
+.app-sidebar {
+    display: flex;
+    width: 260px;
+    background-color: #fff;
+    padding-top: 10px;
+    flex-direction: column
+}
+
+.app-widget {
+    overflow: hidden;
+    width: 100%;
+    &-header {
+        padding: 5px 10px;
+        font-size: 14px;
+        color: #969696;
+        font-weight: 400;
+    }
+    &-article-list {
+        padding: 0 20px;
+    }
+    &-article-item {
+        position: relative;
+        padding: 6px 0;
+    }
+    &-category-list {
+        padding-left: 16px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        span {
+            font-family: Georgia, serif;
+        }
+    }
+    &-category-item {
+        padding: 4px 0;
+        >a {
+            padding: 5px 8px;
+        }
+    }
+    &-comment-list {
+        padding: 0 20px;
+    }
+    &-comment-item {
+        padding-bottom: 20px;
+    }
+    &-comment-info {
+        margin-bottom: 5px;
+        border-left: 5px solid #ccc;
+        margin-left: -6px;
+        padding-left: 5px;
+    }
+    &-comment-content {
+        border-left: 2px solid #ccc;
+        padding-left: 8px;
+    }
+}
+
+
+/* 底部 */
+
+.app-footer {
+    position: relative;
+    text-align: center;
+    flex: 0 0 auto;
+    padding: 8px 0 10px 20px;
+    border-top: 1px dashed #d9d9d9;
+    color: #999;
+    box-sizing: border-box;
+    font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    background-color: #fff;
+    p {
+        margin: 0;
+        line-height: 20px;
+    }
+}

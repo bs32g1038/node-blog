@@ -1,0 +1,26 @@
+<div class="app-sidebar">
+  <div class="app-widget">
+    <div class="app-widget-header"> 文章速览 </div>
+    <ul class="app-widget-article-list">
+      <% for(const item of recentArticles) { %>
+        <li class="app-widget-article-item">
+          <a href="/blog/articles/<%= item.id %>"><%= item.title %></a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+  <div class="app-widget">
+    <div class="app-widget-header">最新评论</div>
+    <ul class="app-widget-comment-list">
+      <% for(const item of recentComments) { %>
+      <li class="app-widget-comment-item">
+        <div class="app-widget-comment-info">
+          <span><strong><%= item.nick_name %></strong> · <%= timeAgo(item.created_at) %></span>
+        </div>
+        <p>在《<a href="/blog/articles/<%= item.article_id %>"><strong>跨界歌王</strong></a>》中说道：</p>
+        <div class="app-widget-comment-content"><%= item.content && item.content.substring(0,80) %><strong>......</strong></div>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</div>

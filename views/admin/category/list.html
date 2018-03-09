@@ -1,0 +1,103 @@
+<section class="page-header">
+    <h1>控制台
+        <small>分类管理</small>
+    </h1>
+</section>
+<div class="panel">
+    <button class="btn btn-primary btn-sm" id="add_category">
+        <span class="fa fa-plus-square">&nbsp;</span>
+        添加分类
+    </button>
+	<button class="btn btn-danger btn-sm" id="btnListDel">
+        <span class="fa fa-fw fa-trash-o">&nbsp;</span>
+        批量删除
+    </button>
+    <div class="alert alert-danger hide" role="alert" id="editError">
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">  
+            <span aria-disabled="true">×</span>
+      </button>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><input type="checkbox" class="mini" id="selectAll"></th>
+                <th>分类名</th>
+                <th>分类别名(提示：用于路径显示且不能修改)</th>
+                <th>文章数量</th>
+                <th>分类的权重</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+       <% cats.forEach(function(cat){ %>
+            <tr>
+                <td><input type="checkbox" name="listItem" class="mini" value="<%= cat._id %>"></td>
+                <td><%= cat.name %></td>
+                <td><%= cat.alias %></td>
+                <td><%= cat.post_count %></td>
+                <th><%= cat.order %></th>
+                <td>
+                    <button class="btn btn-default btn-xs modify_category" data-id="<%= cat._id %>" title="修改">
+                        <span class="fa fa-edit">&nbsp;</span>修改
+                    </button>
+                    <button class="btn btn-default btn-xs category_del" data-id="<%= cat._id %>" title="删除"><i
+                                class="fa fa-trash-o"></i>&nbsp;删除
+                    </button>
+                    <button class="btn btn-default btn-xs category_up" data-id="<%= cat._id %>" title="提升目录的位置"><i
+                                class="fa fa-arrow-up"></i>&nbsp;提升
+                    </button>
+                    <button class="btn btn-default btn-xs category_down" data-id="<%= cat._id %>" title="降低目录的位置"><i
+                                class="fa fa-arrow-down"></i>&nbsp;下降
+                    </button>
+                </td>
+            </tr>
+       <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="modify_dialog" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="form" class="form-horizontal" action="" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="category_modal_title">添加分类</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">分类名称</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control input-sm" name="name" id="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">分类别名</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control input-sm" name="alias" id="alias">
+                        </div>
+                    </div>
+                    <input type='hidden' name='_csrf' value='<%= csrf %>' id="csrf"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../page_nav.html',{ 
+	url: '/admin/category/list/page', 
+	curPage: curPage, 
+	pageCount: pageCount 
+}); %>
+
+<%- include('../js.html') %>
+
+<script src="/admin/js/category/list.js"></script>

@@ -1,7 +1,4 @@
-*.log
-node_modules
 dist
-.vscode 
-npm-debug.log
-public/media
-test
+.cache
+node_modules
+.vscode

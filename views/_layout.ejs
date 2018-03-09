@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app/css/index.css">
+  <title>
+    <%= site.name %>
+  </title>
+</head>
+
+<body>
+  <div id="app" class="app">
+    <%- include("_base/header") %>
+      <div class="app-main">
+        <ul class="app-category-list">
+          <li class="app-category-item">
+            <i class="fa fa-book fa-fw"></i>分类</li>
+          </li>
+          <% for(const item of categories) { %>
+            <li class="app-category-item">
+              <a href="/blog/articles?cid=<%= item.id %>">
+                <%= item.name %><span>(<%= item.articleCount %>)</span>
+              </a>
+            </li>
+            <% } %>
+        </ul>
+        <%- body %>
+        <%- include("_base/footer") %>
+      </div>
+  </div>
+</body>
+
+</html>

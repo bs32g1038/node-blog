@@ -1,0 +1,116 @@
+.article {
+    display: flex;
+    flex: 1 0 auto;
+    padding-bottom: 20px;
+    background-color: #fff;
+}
+
+.article__inner {
+    margin-top: 10px;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 720px;
+    background-color: #fff;
+    border-right: 1px dashed #ccc;
+    padding: 10px 28px 0 28px;
+}
+
+.article__header {
+    margin-bottom: 20px;
+    text-align: center
+}
+
+.article__title {
+    font-size: 19px;
+    word-break: break-word;
+    margin: 10px 0;
+}
+
+.article__title-link {
+    display: inline-block;
+    position: relative;
+    color: rgb(85, 85, 85);
+    border-bottom: none;
+    vertical-align: top;
+}
+
+.article__meta {
+    margin: 3px 0px 6px;
+    color: rgb(153, 153, 153);
+    font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 12px;
+}
+
+.markdown {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+    min-height: 26px;
+    line-height: 26px;
+    margin: 20px 0;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    border-left: 3px solid #82c83c;
+    color: #585957;
+    background-color: #f9f9f9;
+    text-shadow: 0 2px 1px rgba(255, 255, 255, .5);
+}
+
+.markdown p {
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.markdown img {
+    max-width: 100%;
+}
+
+blockquote {
+    border-left: 4px solid #DDD;
+    margin: 20px 0;
+    padding: 5px 20px;
+    color: #777;
+    background-color: #f9f9f9;
+    font-style: italic
+}
+
+blockquote> :first-child {
+    margin-top: 0px;
+}
+
+blockquote> :last-child {
+    margin-bottom: 0px;
+}
+
+.markdown ul,
+.markdown ol {
+    padding-left: 32px;
+}
+
+.markdown ul {
+    list-style-type: circle
+}
+
+.markdown ul li> :first-child,
+.markdown ol li> :first-child,
+.markdown ul li ul:first-of-type,
+.markdown ol li ol:first-of-type,
+.markdown ul li ol:first-of-type,
+.markdown ol li ul:first-of-type {
+    margin-top: 0px;
+}
+
+.markdown ul ul,
+.markdown ul ol,
+.markdown ol ol,
+.markdown ol ul {
+    margin-bottom: 0;
+}

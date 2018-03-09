@@ -1,0 +1,38 @@
+<section class="page-header">
+    <h1>控制台
+        <small>关于文章修改</small>
+    </h1>
+</section>
+<div class="box-body">
+    <form class="form-horizontal" id="about_form" action="/admin/about/edit/<%= about._id %>/do" method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2">标题</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control input-sm"  name="title" value="<%= about.title %>">
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-sm-2">内容</label>
+            <div class="col-sm-8">
+                <textarea class="form-control input-sm"  name="content" cols="30" rows="30"><%= about.content %></textarea>
+            </div>
+        </div>
+        <input type='hidden' name='_csrf' value='<%= csrf %>'/>
+        <div class="modal-footer">
+            <button id="save_draft" class="btn btn-default">保存</button>
+        </div>
+    </form>
+</div>
+<%- include('../js.html') %>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#save_draft').on('click', function () {
+            $('#about_form').submit();
+        });
+        var editor = new Editor({
+            element: document.getElementById('content'),
+        });
+        editor.render();
+    });
+</script>

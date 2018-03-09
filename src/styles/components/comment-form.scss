@@ -1,0 +1,115 @@
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  .form-inline {
+    display: flex
+  }
+  .form-group {
+    display: flex;
+    flex: 1 0 auto;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  label {
+    color: #9e9e9e;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    padding: 3px 10px;
+    border: 1px solid #d3d3d3;
+    align-items: center;
+  }
+  input {
+    border: 1px solid #d3d3d3;
+    margin-left: -1px;
+    padding: 3px 10px;
+    flex: 1 0 auto;
+    color: #515151;
+    font: 400 14px/16px "Lobster Two", "Monda", "PingFang SC", "Microsoft YaHei", sans-serif;
+    &:focus {
+      outline: none;
+    }
+  }
+  textarea {
+    flex: 1 0 auto;
+    border: 1px solid #d3d3d3;
+    font: 400 14px/16px "Lobster Two", "Monda", "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding: 3px 16px;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .submit {
+    cursor: pointer;
+    border: none;
+    background-color: rgba(2, 117, 216, 0.5);
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+    border-radius: 3px;
+    text-align: center;
+    width: 100px;
+  }
+}
+
+.comments-list {
+  margin-top: 15px;
+}
+
+.comments-list__wrap {
+  padding-left: 50px;
+}
+
+.comments-list__item {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: rem(16px);
+  margin-bottom: rem(16px);
+  &:lash-child {
+    border-bottom: none
+  }
+}
+
+.comments-list__info {
+  font-size: 14px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.comments-list__info-author {
+  color: #d95059;
+}
+
+.comments-list__info-time {
+  color: #9e9e9e;
+  margin-left: rem(8px);
+  font-size: 12px;
+}
+
+.comments-list__info-reply {
+  float: right;
+}
+
+.comments-list__item-content {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.comments-list__quote {
+  padding: 5px 20px 5px 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  background-color: #edd4d4;
+  font-size: 12px;
+}
+
+.comments-list__replay-box {
+  margin-top: 10px;
+}

@@ -1,0 +1,27 @@
+<ul class="articles view">
+  <% for(const item of articles) { %>
+    <li class="article-item">
+      <div class="article-header">
+        <div class="article-brief">
+          <div class="article-meta">
+            <strong>TIME</strong>
+            <em>·</em>
+            <%= parseTime(item.createdAt) %>
+          </div>
+          <a class="article-title" href="/blog/articles/<%= item._id %>"><%= item.title %></a>
+          <div class="article-meta">
+            <a href="#">评论：<%= item.commentCount %></a> <em>·</em>
+            <a href="#">阅读：<%= item.viewsCount %></a>
+            <em>·</em>
+            <span>分类：<%= item.category.name %></span>
+          </div>
+        </div>
+        <div class="article-thumb">
+          <a style="background-image:url(<%= item.screenshot %>)" alt="<%= item.title %>"></a>
+        </div>
+      </div>
+      <div class="article-summary">
+        <%= item.summary %></div>
+    </li>
+    <% } %>
+</ul>

@@ -1,0 +1,124 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: $size-100;
+  text-rendering: optimizeLegibility;
+  font-size: $font-size-base;
+}
+
+body {
+  height: $size-100;
+  font-family: $font-family-base;
+  font-size: 1rem; // background-image: $body-image;
+  color: $body-color;
+  line-height: $line-height-base; // background-color: rgb(255,251,232);
+  // background: #f5f7f9;
+  // background-color: #D8DCA1;
+  background-color: #f4f5f5; // background-color: #fff;
+  // background-image: url(/static/images/bg.jpg)
+}
+
+a {
+  color: #34495e;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #409eff;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.app {
+  height: 100%;
+  width: 700px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; // height: 100%;
+  // min-height: 100%;
+  // background-color: #fff;
+  // margin-top: 50px;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  // margin-left: 220px;
+}
+
+.tip {
+  font-size: 1rem;
+  color: #333;
+  // border-left: 4px solid green;
+  // background-color: rgba(225, 204, 204, 0.3);
+  padding: 5px;
+  //   background: radial-gradient(transparent 0px, transparent 4px, #fff 4px, #fefefe);
+  //   /*径向渐变，改变了背景块的一个角*/
+  //   background-size: 15px 15px;
+  //   /*背景大小，repeat*/
+  //   background-position: -10px -10px;
+  //   text-align: center;
+  //   /*垂直居中图片*/
+  color: #fff;
+  text-align: center;
+  background-image: url(/static/images/tip.jpg)
+}
+
+.app-category-list {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 42px;
+  display: flex; // background-color: rgb(255,251,232);
+  align-items: center; // justify-content: center;
+  li:first-child {
+    // flex: 1 0 auto;
+  }
+  li:last-child {
+    flex: 1 0 auto;
+  }
+  li {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 14px;
+  }
+  a {
+    color: #90979c;
+    font-size: 12px;
+  }
+}
+
+.page-list-nav {
+  font-size: 14px;
+  padding: 20px 40px;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  a {
+    margin: 0 1em;
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(79, 118, 228)
+  }
+  span {
+    font-weight: 600;
+  }
+  .disabled {
+    color: #ccc
+  }
+}
