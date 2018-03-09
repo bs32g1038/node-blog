@@ -7,7 +7,7 @@ let config = {
         port: isDev ? '8080' : '80'
     },
     db: {
-        uri: 'mongodb://localhost:27017/dev',
+        uri: isDev ? 'mongodb://localhost:27017/dev' : 'mongodb://db:27017/blog',
         options: {
             user: '',
             pass: '',

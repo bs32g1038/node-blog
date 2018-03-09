@@ -5,8 +5,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - mongodb
+      - db
     stdin_open: true
     tty: true
-  mongodb:
+  db:
     image: mongo:3.2
