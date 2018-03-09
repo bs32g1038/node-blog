@@ -1,12 +1,9 @@
 version: '3'
 services:
   node:
-    image: "node:8.9.4-alpine"
-    working_dir: "/code"
-    volumes:
-      - .:/code
+    build: .
     ports:
-      - "8080:8080"
+      - "80:80"
     depends_on:
       - mongodb
     stdin_open: true
