@@ -54,6 +54,6 @@
     "dev:web": "webpack-dev-server --open --config ./build/webpack.dev.js",
     "dev:server": "nodemon --watch server/* server/app.js",
     "build": "rimraf ./static/app && webpack --config ./build/webpack.prod.js",
-    "start": "pm2 start ./server/app.js"
+    "start": "cross-env NODE_ENV=production pm2 start ./server/app.js"
   }
 }

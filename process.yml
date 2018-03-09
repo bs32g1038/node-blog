@@ -1,0 +1,9 @@
+apps:
+  - script   : app.js
+    instances: 4
+    exec_mode: cluster
+  - script : worker.js
+    watch  : true
+   env :  
+      "NODE_ENV": "production"
+  
