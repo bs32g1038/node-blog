@@ -24,7 +24,7 @@ let config = {
         domain: 'http://wwww.lizc.me',
         author: {
             nick_name: '冷夜流星',
-            email: 'bs32g1038 @1631.com',
+            email: '845177026@qq.com',
             location: '广东 广州',
             qq: '845177026',
             motto: '时间是一切财富中最宝贵的财富。—— 德奥弗拉斯多',

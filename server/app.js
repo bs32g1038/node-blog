@@ -52,16 +52,18 @@ app.use(cors())
 //     next();
 // });
 app.use(render)
-// app.use(function(req,res,next){
-    
-//     Axios.get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&&ip=' + "14.147.77.54").then((r )=>{
-//         console.log(r.data.city)
-//     return res.send(r.data)
-        
-//     })
-
-    
-// })
+if (process.env.NODE_ENV === "production") {
+    app.use('/blog/admin', function(req, res, next) {
+        let content = fs.readFileSync(path.resolve(__dirname, '../static/app/admin.html'), 'utf-8');
+        let rs = content.replace('<!-- name -->', config.site.name + "后台");
+        res.end(rs);
+    })
+    app.use('/blog', function(req, res, next) {
+        let content = fs.readFileSync(path.resolve(__dirname, '../static/app/index.html'), 'utf-8');
+        let rs = content.replace('<!-- name -->', config.site.name + "博客");
+        res.end(rs);
+    })
+}
 require('./core/api');
 require('./core/admin');
 app.use(ReqRouter.init())
