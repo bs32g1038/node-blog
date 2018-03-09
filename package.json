@@ -1,11 +1,7 @@
 {
-  "name": "parse-server-example",
-  "version": "1.4.0",
-  "description": "An example Parse API server using the parse-server module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ParsePlatform/parse-server-example"
-  },
+  "name": "react-blog",
+  "version": "1.0.0",
+  "description": "A simple and whole react blog",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
