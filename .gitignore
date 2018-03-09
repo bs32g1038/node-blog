@@ -2,4 +2,4 @@ dist
 .cache
 node_modules
 .vscode
-./static/app
+static/app/*

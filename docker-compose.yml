@@ -2,6 +2,8 @@ version: '3'
 services:
   node:
     build: .
+    volumes:
+      - "./static/images:/code/static/images"
     command: "npm run start"
     ports:
       - "80:80"
@@ -9,10 +11,5 @@ services:
       - db
     stdin_open: true
     tty: true
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
   db:
     image: mongo:3.2

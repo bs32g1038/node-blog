@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import axios from '../utils/axios';
 
 class CommentForm extends React.Component {
