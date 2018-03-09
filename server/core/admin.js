@@ -8,39 +8,7 @@ const pageSchema = {
     page: Joi.number().integer().min(1).default(1),
 };
 
-
 class Admin {
-
-    @ReqRouter.route('/blog/admin', ReqRouter.type.GET)
-    static async getArticleList(req, res, next) {
-        const pageInfo = Joi.validate(req.query, pageSchema);
-        const { cid } = req.query;
-        console.log(cid)
-        const filter = { isDeleted: false };
-        cid ? Object.assign(filter, { category: cid }) : null;
-        res.render('admin/articleList', {
-            articles: await models.Article.find(filter, '-content', {
-                skip: (pageInfo.value.page - 1) * pageInfo.value.limit,
-                limit: pageInfo.value.limit
-            }).populate('category')
-        });
-    }
-
-
-    // @ReqRouter.route('/api/admin/upload', ReqRouter.type.POST)
-    // static async upload(req, res, next) {
-    //     const pageInfo = Joi.validate(req.query, pageSchema);
-    //     const { cid } = req.query;
-    //     console.log(cid)
-    //     const filter = { isDeleted: false };
-    //     cid ? Object.assign(filter, { category: cid }) : null;
-    //     res.render('admin/articleList', {
-    //         articles: await models.Article.find(filter, '-content', {
-    //             skip: (pageInfo.value.page - 1) * pageInfo.value.limit,
-    //             limit: pageInfo.value.limit
-    //         }).populate('category')
-    //     });
-    // }
 
     // 文章列表
     @ReqRouter.route('/admin/api/articles', ReqRouter.type.GET)
