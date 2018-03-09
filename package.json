@@ -17,8 +17,7 @@
     "lru-cache": "^4.1.1",
     "moment": "^2.21.0",
     "mongoose": "^5.0.6",
-    "multer": "^1.3.0",
-    "pm2": "^2.10.1",
+    "multer": "^1.3.0", 
     "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -55,7 +54,6 @@
     "dev:web": "webpack-dev-server --open --config ./build/webpack.dev.js",
     "dev:server": "nodemon --watch server/* server/app.js",
     "build": "rimraf ./static/app && webpack --config ./build/webpack.prod.js",
-    "start": "pm2 start ./server/app.js",
-    "list": "pm2 list"
+    "start": "pm2 start ./server/app.js"
   }
 }

@@ -66,6 +66,7 @@ export default class Article extends React.Component {
         });
     }
     render() {
+        console.log(this.props)
         const { article } = this.state;
         return (
             <div className="article view">
@@ -90,15 +91,15 @@ export default class Article extends React.Component {
                     }}></div>
                     <ul className="post-copyright">
                         <li className="post-copyright-author">
-                            <strong>本文作者：</strong> IIssNan
-      </li>
+                            <strong>本文作者：</strong> {config.site.author.nick_name}
+                        </li>
                         <li className="post-copyright-link">
                             <strong>本文链接：</strong>
-                            <a href="http://notes.iissnan.com/2016/next-documentations-reload/" title="NexT Documentations Reload">http://notes.iissnan.com/2016/next-documentations-reload/</a>
+                            <a href={'http://www.lizc.me' + this.props.location.pathname}>{'http://www.lizc.me' + this.props.location.pathname}</a>
                         </li>
                         <li className="post-copyright-license">
-                            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank" se_prerender_url="complete">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
-      </li>
+                            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
+                        </li>
                     </ul>
                     <div className="comments">
                         <h3 className="tip"><i className="fa fa-flag fa-fw"></i>既然来了，就说点什么吧~</h3>

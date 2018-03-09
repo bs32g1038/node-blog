@@ -2,6 +2,7 @@ version: '3'
 services:
   node:
     build: .
+    command: "pm2 start ./server/app.js"
     ports:
       - "80:80"
     depends_on:
