@@ -9,5 +9,10 @@ services:
       - db
     stdin_open: true
     tty: true
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
   db:
     image: mongo:3.2
