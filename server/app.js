@@ -40,6 +40,7 @@ app.use(session({
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
+app.use(compression())
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use('/static', express.static(path.resolve(__dirname, '../static')));
 app.use(log4js.connectLogger(logger, {

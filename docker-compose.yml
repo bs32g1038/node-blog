@@ -3,7 +3,7 @@ services:
   node:
     build: .
     volumes:
-      - "./static/images:/code/static/images"
+      - "./static/upload:/code/static/upload"
     command: "npm run start"
     ports:
       - "443:443"
