@@ -18,7 +18,7 @@ const logger = require('./utils/logger');
 const bodyParser = require('body-parser');
 const uploadLocal = require('./middlewares/StoreFile');
 const cookieParser = require('cookie-parser');
-const render = require('./middlewares/render');
+// const render = require('./middlewares/render');
 const { ReqRouter } = require('./core/decorator');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -47,7 +47,7 @@ app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
 app.use(cors())
-app.use(render)
+// app.use(render)
 require('./core/api');
 require('./core/admin');
 app.use(ReqRouter.init())
