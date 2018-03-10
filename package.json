@@ -26,6 +26,7 @@
     "react-router-dom": "^4.2.2",
     "rimraf": "^2.6.2",
     "serve-favicon": "^2.4.5",
+    "utility": "^1.13.1",
     "wangeditor": "^3.1.0"
   },
   "devDependencies": {
