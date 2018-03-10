@@ -20,8 +20,8 @@ let uploadLocal = function(req, res, next) {
         const date = new Date(); //获取到当前的系统时间
         const fileName = utils.md5(utils.YYYYMMDD() + String(req.file.size) + req.file.originalname) + path.extname(req.file.originalname);
         const sharpImg = sharp(req.file.buffer);
-        if (util.isNumber(width) && util.isNumber(height)) {
-            sharpImg.resize(width, height);
+        if (width && height) {
+            sharpImg.resize(Number(width), Number(height));
             sharpImg.max();
         } else {
             sharpImg.resize(1024, 1024)
