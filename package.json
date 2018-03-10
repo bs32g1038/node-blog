@@ -26,6 +26,7 @@
     "react-router-dom": "^4.2.2",
     "rimraf": "^2.6.2",
     "serve-favicon": "^2.4.5",
+    "sharp": "^0.20.0",
     "utility": "^1.13.1",
     "wangeditor": "^3.1.0"
   },
@@ -44,7 +45,6 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.15.1",
     "npm-run-all": "^4.1.2",
-    "moment": "2.21.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.2",

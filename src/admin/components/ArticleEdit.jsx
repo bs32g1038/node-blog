@@ -19,6 +19,8 @@ class ArticleEdit extends React.Component {
         editor.customConfig.onchange = html => {
             this.setState({ editorContent: html })
         }
+        editor.customConfig.uploadFileName = 'file'
+        editor.customConfig.uploadImgServer = '/admin/api/upload?isEditor=true'
         editor.customConfig.menus = [
             'head',  // 标题
             'bold',  // 粗体
@@ -65,7 +67,7 @@ class ArticleEdit extends React.Component {
             const formdata = new FormData();
             formdata.append('file', inputObj.files[0]);
             axios({
-                url: '/upload',
+                url: '/upload?w=200&h=200',
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
