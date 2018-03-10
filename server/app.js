@@ -1,4 +1,3 @@
-const Axios = require('axios');
 require('babel-register')
 require('./app')
 require('./models')
@@ -6,12 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const https = require('https');
-const express = require('express');
-const favicon = require('serve-favicon');
-const config = require('./config');
+const Axios = require('axios');
 const log4js = require('log4js');
 const helmet = require('helmet');
-// const csurf = require('csurf');
+const express = require('express');
+const config = require('./config');
+const favicon = require('serve-favicon');
 const compression = require('compression')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -23,21 +22,10 @@ const render = require('./middlewares/render');
 const { ReqRouter } = require('./core/decorator');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
 const resolve = (_) => path.resolve(__dirname, _);
-
 const app = express();
-
-// 删除header中的X-Powered-By标签
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
-
-// 设置express支持模板渲染
-app.set('views', path.join(__dirname, '../views')); // ejs引擎渲染html文件
-app.set('view engine', 'ejs');
-app.engine('.ejs', require('ejs').renderFile);
-app.use(compression({ threshold: 0 }))
-// 中间件
 app.use(bodyParser.json({
     limit: '1mb',
 }));
@@ -48,11 +36,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser(config.session_secret));
 app.use(session({
     secret: config.session_secret,
-    cookie: {
-        maxAge: 1000 * 60 * 10
-    },
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
@@ -61,13 +46,6 @@ app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
 app.use(cors())
-
-//防止跨站请求伪造
-// app.use(csurf({ cookie: true }));
-// app.use(function(req, res, next) {
-//     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
-//     next();
-// });
 app.use(render)
 require('./core/api');
 require('./core/admin');
@@ -85,6 +63,7 @@ if (process.env.NODE_ENV === "production") {
         res.end(rs);
     })
 }
+
 // 处理页面404错误
 app.use((req, res) => {
     res.status(404).json({
