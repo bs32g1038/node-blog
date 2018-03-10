@@ -37,7 +37,7 @@ class UserLogin extends React.Component {
                     <div>
                         <input
                             placeholder="请填写密码"
-                            type="text"
+                            type="password"
                             className="form-control input-sm"
                             name="password" />
                     </div>
