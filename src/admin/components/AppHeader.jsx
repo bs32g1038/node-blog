@@ -13,7 +13,7 @@ export default class AppHeader extends React.Component {
                 <Link to="/blog/admin/comments"><i className="fa fa-comments fa-fw"></i>评论管理</Link>
                 <Link to="/blog/admin/categories"><i className="fa fa-folder fa-fw"></i>分类管理</Link>
                 <Link to="/blog/admin/guestbooks"><i className="fa fa-coffee fa-fw"></i>留言管理</Link>
-                <a href="/admin/login-out"><i className="fa fa-power-off  fa-fw"></i>注销</a>
+                <a href="/blog/admin/loginOut"><i className="fa fa-power-off  fa-fw"></i>注销</a>
             </div>
         </nav>
       </header>

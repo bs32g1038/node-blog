@@ -192,7 +192,7 @@ class ArticleEdit extends React.Component {
                         </div>
                         <div className="form-group">
                             <label className="control-label col-sm-3">操作：</label>
-                            <button type="submit" className="btn is-primary" >发布</button>
+                            <button type="submit" className="btn is-primary">发布</button>
                             <button id="save_draft" className="btn">存为草稿</button>
                         </div>
                     </form>

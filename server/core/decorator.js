@@ -6,7 +6,8 @@ exports.ReqRouter = {
         GET: "get",
         POST: "post",
         PUT: "put",
-        DELETE: "delete"
+        DELETE: "delete",
+        ALL:"all"
     },
     route: (path, type) => {
         return function(target, name, descriptor) {

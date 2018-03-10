@@ -10,6 +10,26 @@ const pageSchema = {
 
 class Admin {
 
+    // 后台登陆
+    @ReqRouter.route('/admin/api/login', ReqRouter.type.POST)
+    static async login(req, res, next) {
+        const account = req.body.account;
+        const password = req.body.password;
+        if (account === "bs32g1038@163.com" && password === "123456") {
+            req.session.user = { account }
+            return res.json({ account })
+        }
+        res.status(401).end()
+    }
+
+    @ReqRouter.route('/admin/api/*', ReqRouter.type.ALL)
+    static async auth(req, res, next) {
+        if (req.session.user) {
+            return next()
+        }
+        res.status(401).json({ msg: "你尚未登陆，请登陆！" })
+    }
+
     // 文章列表
     @ReqRouter.route('/admin/api/articles', ReqRouter.type.GET)
     static async getArticles(req, res, next) {
@@ -38,6 +58,7 @@ class Admin {
         await models.Article.updateOne({ _id }, req.body);
         return res.status(201).json({ _id });
     }
+
     // 单篇文章获取
     @ReqRouter.route('/admin/api/articles/:id', ReqRouter.type.GET)
     static async getArticle(req, res, next) {

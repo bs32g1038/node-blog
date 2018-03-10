@@ -1,23 +1,30 @@
 const Axios = require('axios');
-
 require('babel-register')
 require('./app')
 require('./models')
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
+const https = require('https');
 const express = require('express');
 const favicon = require('serve-favicon');
 const config = require('./config');
 const log4js = require('log4js');
 const helmet = require('helmet');
 // const csurf = require('csurf');
+const compression = require('compression')
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const logger = require('./utils/logger');
 const bodyParser = require('body-parser');
 const uploadLocal = require('./middlewares/StoreFile');
 const cookieParser = require('cookie-parser');
 const render = require('./middlewares/render');
 const { ReqRouter } = require('./core/decorator');
-const cors = require('cors')
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const resolve = (_) => path.resolve(__dirname, _);
 
 const app = express();
 
@@ -29,6 +36,7 @@ app.use(helmet.frameguard('sameorigin'));
 app.set('views', path.join(__dirname, '../views')); // ejs引擎渲染html文件
 app.set('view engine', 'ejs');
 app.engine('.ejs', require('ejs').renderFile);
+app.use(compression({ threshold: 0 }))
 // 中间件
 app.use(bodyParser.json({
     limit: '1mb',
@@ -37,7 +45,16 @@ app.use(bodyParser.urlencoded({
     extended: true,
     limit: '1mb',
 }));
-app.use(cookieParser());
+app.use(cookieParser(config.session_secret));
+app.use(session({
+    secret: config.session_secret,
+    cookie: {
+        maxAge: 1000 * 60 * 10
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}))
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use('/static', express.static(path.resolve(__dirname, '../static')));
 app.use(log4js.connectLogger(logger, {
@@ -86,12 +103,12 @@ app.use((err, req, res) => {
     logger.error(err);
     return res.status(500).send('服务器异常！');
 });
-
-if (!module.parent) {
-    app.listen(config.server.port, () => {
-        logger.info('NodeBlog listening on port', config.server.port);
-        logger.info(
-            `You can debug your app with http://${config.server.hostname}:${config.server.port}`
-        );
-    });
-}
+const options = {
+    key: fs.readFileSync(resolve('../certificate/214537474860105.key')),
+    cert: fs.readFileSync(resolve('../certificate/214537474860105.pem'))
+};
+http.createServer(app).listen(config.server.port);
+https.createServer(options, app).listen(443);
+console.log('web server start');
+console.log(`HTTP LISTEN http://${config.server.hostname}:${config.server.port}`)
+console.log(`HTTPS LISTEN https://${config.server.hostname}`);
