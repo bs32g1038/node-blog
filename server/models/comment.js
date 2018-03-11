@@ -1,14 +1,17 @@
-/*
- * @Author: bs32g1038@163.com
- * @Date: 2017-02-04 17:46:59
- * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-06-04 08:11:14
- */
 const mongoose = require("mongoose");
 let CommentSchema = new mongoose.Schema({
-    nickName: { type: String },
-    email: { type: String },
-    content: { type: String },
+    nickName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
     reply: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comment'
@@ -20,9 +23,16 @@ let CommentSchema = new mongoose.Schema({
     location: {
         type: String
     },
-    pass: { type: Boolean, default: false },
-    identity: { type: Number, default: 0 } // 0是游客，1是作者 
+    pass: {
+        type: Boolean,
+        default: false
+    },
+    identity: {
+        type: Number,
+        default: 0 // 0是游客，1是作者 
+    }
 }, {
     timestamps: true
 });
+CommentSchema.index({ createdAt: -1 });
 module.exports = mongoose.model('comment', CommentSchema, 'comment');

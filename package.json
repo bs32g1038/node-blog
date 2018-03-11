@@ -31,6 +31,7 @@
     "wangeditor": "^3.1.0"
   },
   "devDependencies": {
+    "autoprefixer": "^8.1.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -45,6 +46,7 @@
     "node-sass": "^4.7.2",
     "nodemon": "^1.15.1",
     "npm-run-all": "^4.1.2",
+    "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.2",

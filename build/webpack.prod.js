@@ -15,7 +15,16 @@ module.exports = merge(common, {
     module: {
         rules: [{
             test: /\.scss$/,
-            use: ['style-loader', 'css-loader?minimize', 'sass-loader']
+            use: ['style-loader', 'css-loader?minimize', {
+                loader: "postcss-loader",
+                options: {
+                    plugins: function() {
+                        return [
+                            require('autoprefixer')
+                        ];
+                    }
+                }
+            }, 'sass-loader']
         }]
     }
 });

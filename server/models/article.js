@@ -1,9 +1,3 @@
-/*
- * @Author: bs32g1038@163.com
- * @Date: 2017-02-03 23:01:44
- * @Last Modified by: bs32g1038@163.com
- * @Last Modified time: 2017-05-18 11:19:47
- */
 const mongoose = require("mongoose");
 const ArticleSchema = new mongoose.Schema({
     title: {
