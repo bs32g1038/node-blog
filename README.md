@@ -4,6 +4,10 @@
 
 [https://www.lizc.me](https://www.lizc.me "blog")
 
+**screenshot**
+
+![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot.jpg?raw=true)
+
 **Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API
@@ -34,6 +38,7 @@
 **Thank you：**
 
 If you think these contents are useful to you, please add a "Star" at the top right. This is the encouragement to me, thank you!
+
 
 # License
 MIT
