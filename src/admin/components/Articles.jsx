@@ -13,7 +13,7 @@ export default class Articles extends React.Component {
         };
     }
     generateArticleList(articles = []) {
-        const self = this; 
+        const self = this;
         return (articles.map((item) => (
             <tr key={item._id}>
                 <td>
@@ -27,7 +27,7 @@ export default class Articles extends React.Component {
                     </a>
                 </td>
                 <td>{parseTime(item.createdAt)}</td>
-                <td>{item.category.name}</td>
+                <td>{item.category && item.category.name}</td>
                 <td>{item.viewsCount}</td>
                 <td>{item.commentCount}</td>
                 <td>正文</td>
@@ -53,8 +53,8 @@ export default class Articles extends React.Component {
         const { location, history } = this.props;
         const self = this;
         const id = e.currentTarget.getAttribute('data-id');
-        if(confirm("确认要删除？")){ 
-            axios.delete('/articles/' + id).then(()=>{
+        if (confirm("确认要删除？")) {
+            axios.delete('/articles/' + id).then(() => {
                 alert("删除文章成功")
                 this.fetchData(location)
             })

@@ -22,8 +22,8 @@ class App extends React.Component {
     }
     check(Item) {
         return (props) => {
-            const user = sessionStorage.getItem("user");
-            if (!user) {
+            const token = sessionStorage.getItem("node-blog-bs32g1038");
+            if (!token) {
                 return <Redirect to='/blog/admin/login'></Redirect>
             } else {
                 return <Item {...props} />

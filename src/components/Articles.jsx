@@ -39,18 +39,18 @@ export default class Articles extends React.Component {
     }
     fetchData(location) {
         const q = queryString.parse(location.search);
-        const query = { cid: '', limit: 10, page: 1, ...q };
+        const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1, ...q };
         axios.get('/articles?' + queryString.stringify(query)).then((res) => {
             this.setState({
                 articles: res.data,
             });
         });
-      }
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.location.search != this.props.location.search) {
             this.fetchData(nextProps.location);
-        } 
-     }
+        }
+    }
     componentDidMount() {
         this.fetchData(this.props.location)
     }

@@ -20,7 +20,10 @@ class ArticleEdit extends React.Component {
             this.setState({ editorContent: html })
         }
         editor.customConfig.uploadFileName = 'file'
-        editor.customConfig.uploadImgServer = '/admin/api/upload?isEditor=true'
+        editor.customConfig.uploadImgServer = '/api/upload/image?isEditor=true'
+        editor.customConfig.uploadImgHeaders = {
+            'authorization': sessionStorage.getItem("node-blog-bs32g1038")
+        }
         editor.customConfig.menus = [
             'head',  // 标题
             'bold',  // 粗体
@@ -67,7 +70,7 @@ class ArticleEdit extends React.Component {
             const formdata = new FormData();
             formdata.append('file', inputObj.files[0]);
             axios({
-                url: '/upload?w=200&h=200',
+                url: '/upload/image?w=200&h=200',
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -80,7 +83,6 @@ class ArticleEdit extends React.Component {
         for (const ele of e.currentTarget.elements) {
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }
-        console.log(data)
         const p = match.params.id ? this.updateArticle(match.params.id, data) : this.createArticle(data)
         p.then((res) => {
             alert("提交成功")
@@ -150,7 +152,12 @@ class ArticleEdit extends React.Component {
                                     {
                                         this.state.categories.map((item) => {
                                             return <option key={item._id} value={item._id}>{item.name}</option>
-                                        })
+                                        }).filter((item) => item.key == (article.category && article.category._id))
+                                    }
+                                    {
+                                        this.state.categories.map((item) => {
+                                            return <option key={item._id} value={item._id}>{item.name}</option>
+                                        }).filter((item) => item.key != (article.category && article.category._id))
                                     }
                                 </select>
                             </div>

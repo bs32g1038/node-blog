@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from '../utils/axios';
 import { withRouter } from "react-router-dom";
+const tokenKey = "node-blog-bs32g1038";
 class UserLogin extends React.Component {
     constructor(props) {
         super(props);
@@ -11,17 +12,16 @@ class UserLogin extends React.Component {
         for (const ele of e.currentTarget.elements) {
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }
-        console.log(data)
         axios.post('/login', data).then((res) => {
             alert("登陆成功！")
-            sessionStorage.setItem("user", res.data.account);
+            sessionStorage.setItem(tokenKey, res.data.token);
             history.push('/blog/admin/articles');
         })
         return e.preventDefault()
     }
     render() {
         return (
-            <form onSubmit={(e) => this.login(e)} className="form-horizontal">
+            <form onSubmit={(e) => this.login(e)} className="form-horizontal" >
                 <div className="form-group">
                     <label className="control-label">账号：</label>
                     <div>

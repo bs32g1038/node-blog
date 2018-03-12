@@ -31,7 +31,7 @@ export default class Articles extends React.Component {
                     <button
                         className="doc_del btn btn-default btn-xs"
                         data-id={item._id}
-                        onClick={(e) => self.deleteArticle(e)}
+                        onClick={(e) => self.deleteGuestbook(e)}
                         title="删除">
                         <i className="fa fa-trash-o"></i>
                     </button>
@@ -39,13 +39,13 @@ export default class Articles extends React.Component {
             </tr>
         )))
     }
-    deleteArticle(e) {
+    deleteGuestbook(e) {
         const { location, history } = this.props;
         const self = this;
         const id = e.currentTarget.getAttribute('data-id');
         if (confirm("确认要删除？")) {
-            axios.delete('/articles/' + id).then(() => {
-                alert("删除文章成功")
+            axios.delete('/guestbooks/' + id).then(() => {
+                alert("删除留言成功")
                 this.fetchData(location)
             })
         }

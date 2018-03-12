@@ -22,7 +22,6 @@ class GuestbookReply extends React.Component {
         for (const ele of e.currentTarget.elements) {
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }
-        console.log(data)
         axios.put('/guestbooks/' + match.params.id, data).then((res) => {
             alert("提交成功")
             history.push('/blog/admin/guestbooks');

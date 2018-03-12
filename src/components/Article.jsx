@@ -3,6 +3,7 @@ import config from '../config';
 import { parseTime, timeAgo } from '../utils/time';
 import axios from '../utils/axios';
 import CommentForm from './CommentForm';
+import queryString from 'query-string';
 
 const replyFn = (item) => (
     <div className="comments-list__quote">
@@ -54,19 +55,17 @@ export default class Article extends React.Component {
     }
     componentDidMount() {
         const { match } = this.props;
-        axios.get('/articles/' + match.params.id).then((res) => {
+        const query = { fields: '-summary,category.name' };
+        const articlePrmoise = axios.get('/articles/' + match.params.id + '?' + queryString.stringify(query));
+        const commentsPrmoise = axios.get('/comments?articleId=' + match.params.id);
+        Promise.all([articlePrmoise, commentsPrmoise]).then(([a, b]) => {
             this.setState({
-                article: res.data,
-            });
-        });
-        axios.get('/comments?articleId=' + match.params.id).then((res) => {
-            this.setState({
-                comments: res.data,
+                article: a.data,
+                comments: b.data
             });
         });
     }
     render() {
-        console.log(this.props)
         const { article } = this.state;
         return (
             <div className="article view">
