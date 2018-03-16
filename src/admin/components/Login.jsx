@@ -9,7 +9,9 @@ class UserLogin extends React.Component {
     login(e) {
         const { history } = this.props;
         const data = {};
-        for (const ele of e.currentTarget.elements) {
+        const elements = event.currentTarget.elements;
+        for (let i = 0; i < 3; i++) {
+            let ele = elements[i];
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }
         axios.post('/login', data).then((res) => {

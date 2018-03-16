@@ -32,7 +32,7 @@ let uploadLocal = function(req, res, next) {
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }
-        sharpImg.toFile(path.resolve(__dirname, basePath + fileName)).then((info) => {
+        sharpImg.toFile(path.resolve(__dirname, basePath + '/' + fileName)).then((info) => {
             const url = '/static/upload/' + date.getFullYear() + '/' + fileName;
             if (isEditor) {
                 return res.json({ errno: 0, data: [url] });

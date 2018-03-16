@@ -80,7 +80,9 @@ class ArticleEdit extends React.Component {
     publish(e) {
         const { match, location, history } = this.props;
         const data = {};
-        for (const ele of e.currentTarget.elements) {
+        const elements = event.currentTarget.elements;
+        for (let i = 0; i < 3; i++) {
+            let ele = elements[i];
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }
         const p = match.params.id ? this.updateArticle(match.params.id, data) : this.createArticle(data)
