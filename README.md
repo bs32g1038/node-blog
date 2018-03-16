@@ -2,7 +2,7 @@
 
 **Demo：**
 
-[https://www.lizc.me](https://www.lizc.me "blog")
+[http://www.lizc.me](http://www.lizc.me "blog")
 
 **screenshot**
 

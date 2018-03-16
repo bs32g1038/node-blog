@@ -13,3 +13,5 @@ services:
     tty: true
   db:
     image: mongo:3.2
+    volumes:
+      - "./data/db:/data/db"

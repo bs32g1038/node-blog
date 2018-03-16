@@ -63,11 +63,9 @@ li {
 
 .tip {
   font-size: 1rem;
-  color: #333;
-  // border-left: 4px solid green;
+  color: #333; // border-left: 4px solid green;
   // background-color: rgba(225, 204, 204, 0.3);
-  padding: 5px;
-  //   background: radial-gradient(transparent 0px, transparent 4px, #fff 4px, #fefefe);
+  padding: 5px; //   background: radial-gradient(transparent 0px, transparent 4px, #fff 4px, #fefefe);
   //   /*径向渐变，改变了背景块的一个角*/
   //   background-size: 15px 15px;
   //   /*背景大小，repeat*/
@@ -121,4 +119,38 @@ li {
   .disabled {
     color: #ccc
   }
+}
+
+.load-loop {
+  animation: load-loop 1s linear infinite;
+  -webkit-animation: load-loop 1s linear infinite;
+}
+
+@-webkit-keyframes slideInDown {
+  from {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInDown {
+  -webkit-animation-name: slideInDown;
+  animation-name: slideInDown;
 }
