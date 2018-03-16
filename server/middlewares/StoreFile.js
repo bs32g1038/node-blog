@@ -27,8 +27,12 @@ let uploadLocal = function(req, res, next) {
             sharpImg.resize(1024, 1024)
             sharpImg.min()
         }
-        sharpImg.withoutEnlargement()
-        sharpImg.toFile(path.resolve(__dirname, `../../static/upload/${date.getFullYear()}/` + fileName)).then((info) => {
+        sharpImg.withoutEnlargement();
+        const basePath = path.resolve(__dirname, `../../static/upload/${date.getFullYear()}/`);
+        if (!fs.existsSync(basePath)) {
+            fs.mkdirSync(basePath);
+        }
+        sharpImg.toFile(path.resolve(__dirname, basePath + fileName)).then((info) => {
             const url = '/static/upload/' + date.getFullYear() + '/' + fileName;
             if (isEditor) {
                 return res.json({ errno: 0, data: [url] });
