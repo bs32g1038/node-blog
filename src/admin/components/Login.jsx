@@ -9,8 +9,8 @@ class UserLogin extends React.Component {
     login(e) {
         const { history } = this.props;
         const data = {};
-        const elements = event.currentTarget.elements;
-        for (let i = 0; i < 3; i++) {
+        const elements = e.currentTarget.elements;
+        for (let i = 0; i < elements.length; i++) {
             let ele = elements[i];
             ele.name !== '' ? data[ele.name] = ele.value : "";
         }

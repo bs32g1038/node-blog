@@ -43,21 +43,25 @@ class ArticleEdit extends React.Component {
         ]
         editor.create();
         const { match } = this.props;
+        const self = this;
         if (match.params.id) {
-            axios.get('/articles/' + match.params.id).then((res) => {
-                this.setState({
-                    article: res.data,
-                    editorContent: res.data.content,
-                    screenshot: res.data.screenshot,
+            axios.all([axios.get('/articles/' + match.params.id), axios.get('/categories/')])
+                .then(axios.spread(function (aRes, cRes) {
+                    self.setState({
+                        article: aRes.data,
+                        categories: cRes.data,
+                        editorContent: aRes.data.content,
+                        screenshot: aRes.data.screenshot,
+                    });
+                    editor.txt.html(aRes.data.content)
+                }));
+        } else {
+            axios.get('/categories/').then((res) => {
+                self.setState({
+                    categories: res.data
                 });
-                editor.txt.html(res.data.content)
             });
         }
-        axios.get('/categories/').then((res) => {
-            this.setState({
-                categories: res.data
-            });
-        });
     }
     uploadImage(event) {
         const self = this;
@@ -80,10 +84,10 @@ class ArticleEdit extends React.Component {
     publish(e) {
         const { match, location, history } = this.props;
         const data = {};
-        const elements = event.currentTarget.elements;
-        for (let i = 0; i < 3; i++) {
+        const elements = e.currentTarget.elements;
+        for (let i = 0; i < elements.length; i++) {
             let ele = elements[i];
-            ele.name !== '' ? data[ele.name] = ele.value : "";
+            ele.name && (data[ele.name] = ele.value);
         }
         const p = match.params.id ? this.updateArticle(match.params.id, data) : this.createArticle(data)
         p.then((res) => {
@@ -154,12 +158,12 @@ class ArticleEdit extends React.Component {
                                     {
                                         this.state.categories.map((item) => {
                                             return <option key={item._id} value={item._id}>{item.name}</option>
-                                        }).filter((item) => item.key == (article.category && article.category._id))
+                                        }).filter((item) => item.key === (article.category && article.category._id))
                                     }
                                     {
                                         this.state.categories.map((item) => {
                                             return <option key={item._id} value={item._id}>{item.name}</option>
-                                        }).filter((item) => item.key != (article.category && article.category._id))
+                                        }).filter((item) => item.key !== (article.category && article.category._id))
                                     }
                                 </select>
                             </div>

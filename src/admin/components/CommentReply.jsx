@@ -23,8 +23,10 @@ class CommentReply extends React.Component {
     publish(e) {
         const { match, location, history } = this.props;
         const data = {};
-        for (const ele of e.currentTarget.elements) {
-            ele.name !== '' ? data[ele.name] = ele.value : "";
+        const elements = e.currentTarget.elements;
+        for (let i = 0; i < elements.length; i++) {
+            let ele = elements[i];
+            ele.name && (data[ele.name] = ele.value);
         }
         Object.assign(data, { reply: match.params.id })
         axios.post('/comments/', data).then((res) => {

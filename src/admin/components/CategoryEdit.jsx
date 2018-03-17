@@ -21,8 +21,10 @@ class CategoryEdit extends React.Component {
     publish(e) {
         const { match, location, history } = this.props;
         const data = {};
-        for (const ele of e.currentTarget.elements) {
-            ele.name !== '' ? data[ele.name] = ele.value : "";
+        const elements = e.currentTarget.elements;
+        for (let i = 0; i < elements.length; i++) {
+            let ele = elements[i];
+            ele.name && (data[ele.name] = ele.value);
         }
         const p = match.params.id ? this.updateCategory(match.params.id, data) : this.createCategory(data)
         p.then((res) => {

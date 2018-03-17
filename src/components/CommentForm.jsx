@@ -55,7 +55,7 @@ class CommentForm extends React.Component {
         };
         const self = this;
         const elements = event.currentTarget.elements;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < elements.length; i++) {
             let ele = elements[i];
             if (ele.name) {
                 if (ele.name == "email" && !/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(ele.value)) {
@@ -69,7 +69,6 @@ class CommentForm extends React.Component {
                 data[ele.name] = ele.value;
             }
         }
-        console.log(data)
         if (this.props.replyId) {
             Object.assign(data, {
                 reply: this.props.replyId

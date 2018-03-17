@@ -19,8 +19,10 @@ class GuestbookReply extends React.Component {
     publish(e) {
         const { match, location, history } = this.props;
         const data = {};
-        for (const ele of e.currentTarget.elements) {
-            ele.name !== '' ? data[ele.name] = ele.value : "";
+        const elements = e.currentTarget.elements;
+        for (let i = 0; i < elements.length; i++) {
+            let ele = elements[i];
+            ele.name && (data[ele.name] = ele.value);
         }
         axios.put('/guestbooks/' + match.params.id, data).then((res) => {
             alert("提交成功")

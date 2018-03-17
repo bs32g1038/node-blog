@@ -64,7 +64,13 @@ class ArticleApi {
     @ReqRouter.AUTH()
     static async update(req, res, next) {
         const _id = req.params._id;
-        await models.Article.updateOne({ _id }, req.body);
+        const article = await models.Article.findByIdAndUpdate({ _id }, req.body);
+        if (article.category != req.body.category) {
+            await Promise.all([
+                models.Category.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } }),
+                models.Category.updateOne({ _id: req.body.category }, { $inc: { articleCount: 1 } })
+            ])
+        }
         return res.status(201).json({ _id });
     }
 
@@ -72,7 +78,9 @@ class ArticleApi {
     @ReqRouter.AUTH()
     static async delete(req, res, next) {
         const { _id } = req.params;
+        const article = await models.Article.findById(_id)
         await models.Article.deleteOne({ _id })
+        await models.Category.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } })
         return res.json({ _id })
     }
 
