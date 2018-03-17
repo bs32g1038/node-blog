@@ -17,6 +17,15 @@ const ReqRouter = require('./core/decorator-router');
 const cors = require('cors');
 const resolve = (_) => path.resolve(__dirname, _);
 const app = express();
+function ensureSecure(req, res, next) {
+    if (req.secure) {
+        return next();
+    };
+    res.redirect('https://' + req.hostname + req.url);
+}
+if (process.env.NODE_ENV === "production") {
+    app.use(ensureSecure());
+}
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
 app.use(bodyParser.json({
@@ -26,12 +35,13 @@ app.use(bodyParser.urlencoded({
     extended: true,
     limit: '1mb',
 }));
-app.use(compression({filter: shouldCompress}))
-function shouldCompress (req, res) {
-  if (req.headers['x-no-compression']) {
-    return false
-  }
-  return compression.filter(req, res)
+app.use(compression({ filter: shouldCompress }))
+
+function shouldCompress(req, res) {
+    if (req.headers['x-no-compression']) {
+        return false
+    }
+    return compression.filter(req, res)
 }
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use('/static', express.static(path.resolve(__dirname, '../static')));
