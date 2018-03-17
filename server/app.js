@@ -24,7 +24,7 @@ function ensureSecure(req, res, next) {
     res.redirect('https://' + req.hostname + req.url);
 }
 if (process.env.NODE_ENV === "production") {
-    app.use(ensureSecure());
+    app.use(ensureSecure);
 }
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
