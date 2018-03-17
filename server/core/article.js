@@ -49,7 +49,10 @@ class ArticleApi {
         const { _id } = req.params;
         const { fields } = req.query;
         const fds = handleFields(fields);
-        return res.json(await models.Article.findById(_id, fds.article).populate('category', fds.category))
+        const article = await models.Article.findByIdAndUpdate(_id, { $inc: { viewsCount: 1 } }, {
+            select: fds.article
+        }).populate('category', fds.category);
+        return res.json(article)
     }
 
     @ReqRouter.POST()
