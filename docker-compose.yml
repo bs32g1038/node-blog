@@ -7,6 +7,7 @@ services:
     command: "npm run start"
     ports:
       - "443:443"
+      - "80:80"      
     depends_on:
       - db
     stdin_open: true
