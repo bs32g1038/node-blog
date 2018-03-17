@@ -26,7 +26,13 @@ app.use(bodyParser.urlencoded({
     extended: true,
     limit: '1mb',
 }));
-app.use(compression())
+app.use(compression({filter: shouldCompress}))
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    return false
+  }
+  return compression.filter(req, res)
+}
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use('/static', express.static(path.resolve(__dirname, '../static')));
 app.use(log4js.connectLogger(logger, {
