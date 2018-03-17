@@ -6,7 +6,7 @@ import { parseTime, timeAgo } from '../utils/time';
 
 const generateItems = (items) => items.map((item) =>
     (
-        <li className="article-item" v-for="item in articles" key={item._id}>
+        <li className="article-item" key={item._id}>
             <div className="article-header">
                 <div className="article-brief">
                     <div className="article-meta">
@@ -25,7 +25,7 @@ const generateItems = (items) => items.map((item) =>
                     <a style={{ backgroundImage: `url(${item.screenshot})` }}></a>
                 </div>
             </div>
-            <div className="article-summary">{item.summary}</div>
+            <p className="article-summary">{item.summary}</p>
         </li>
     )
 )
@@ -56,7 +56,7 @@ export default class Articles extends React.Component {
     }
     render() {
         return (
-            <ul className="articles">
+            <ul className="app-article-list">
                 {generateItems(this.state.articles)}
             </ul>
         )

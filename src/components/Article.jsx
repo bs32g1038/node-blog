@@ -6,31 +6,31 @@ import CommentForm from './CommentForm';
 import queryString from 'query-string';
 
 const replyFn = (item) => (
-    <div className="comments-list__quote">
-        <span className="comments-list__info-author"><i className="fa fa-fw fa-user"></i>{item.nickName}
+    <div className="comments-quote">
+        <span className="comments-info-author"><i className="fa fa-fw fa-user"></i>{item.nickName}
         </span>
-        <span className="comments-list__info-time">{timeAgo(item.createdAt)}前</span>
-        <div className="comments-list__item-content">
+        <span className="comments-info-time">{timeAgo(item.createdAt)}前</span>
+        <div className="comments-item-content">
             {item.content}
         </div>
     </div>
 )
 
 const articleComments = (items, self) => items.map((item) => (
-    <li className="comments-list__item" key={item._id}>
-        <div className="comments-list__info">
-            <span className="comments-list__info-author"><i className="fa fa-fw fa-user"></i>{item.nickName} 说：
+    <li className="comments-item" key={item._id}>
+        <div className="comments-info">
+            <span className="comments-info-author"><i className="fa fa-fw fa-user"></i>{item.nickName} 说：
       </span>
             <div style={{ float: 'right' }}>
-                <span className="comments-list__info-time">{parseTime(item.createdAt)} | </span>
+                <span className="comments-info-time">{parseTime(item.createdAt)} | </span>
                 <a href="javascript:;" comment-id={item._id} onClick={() => self.setState({
                     showCommentForm: item._id
                 })}>回复</a>
             </div>
         </div>
         {item.reply && replyFn(item.reply)}
-        <div className="comments-list__item-content">{item.content}</div>
-        <div className="comments-list__replay-box">
+        <div className="comments-item-content">{item.content}</div>
+        <div className="comments-replay-box">
             {
                 self.state.showCommentForm === item._id
                 && <CommentForm
@@ -76,13 +76,9 @@ export default class Article extends React.Component {
                         </h2>
                         <div className="meta">
                             <span>发表于{parseTime(article.createdAt)}</span>
-                            <span v-if="article.category">&nbsp; | &nbsp;
-        <span>分类于
-          <a href={`/blog/articles?cid=${article.category._id}`}>{article.category.name}</a>
-                                </span>
-                            </span>
-                            <span>&nbsp; | &nbsp;{article.commentCount}条评论</span>
-                            <span>&nbsp; | &nbsp;阅读次数&nbsp;{article.viewsCount}</span>
+                            <span>分类于<a href={`/blog/articles?cid=${article.category._id}`}>{article.category.name}</a></span>
+                            <span>{article.commentCount}条评论</span>
+                            <span>阅读次数{article.viewsCount}</span>
                         </div>
                     </div>
                     <div className="markdown-body" dangerouslySetInnerHTML={{
@@ -94,7 +90,7 @@ export default class Article extends React.Component {
                         </li>
                         <li className="post-copyright-link">
                             <strong>本文链接：</strong>
-                            <a href={'http://www.lizc.me' + this.props.location.pathname}>{'http://www.lizc.me' + this.props.location.pathname}</a>
+                            <a href={'https://www.lizc.me' + this.props.location.pathname}>{'http://www.lizc.me' + this.props.location.pathname}</a>
                         </li>
                         <li className="post-copyright-license">
                             <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
