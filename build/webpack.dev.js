@@ -27,7 +27,7 @@ module.exports = merge(common, {
         },
         historyApiFallback: {
             rewrites: [
-                { from: /blog\/admin/, to: '/static/test/admin.html' },                
+                { from: /blog\/admin/, to: '/static/test/admin.html' },
                 { from: /./, to: '/static/test/index.html' }
             ]
         }
@@ -38,4 +38,16 @@ module.exports = merge(common, {
             use: ['style-loader', 'css-loader', 'sass-loader']
         }]
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /react|react-dom|react-router-dom|axios/, // you may add "vendor.js" here if you want to
+                    name: "vendor",
+                    chunks: "initial",
+                    enforce: true,
+                }
+            }
+        }
+    }
 });

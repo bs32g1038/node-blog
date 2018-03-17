@@ -17,6 +17,8 @@ const ReqRouter = require('./core/decorator-router');
 const cors = require('cors');
 const resolve = (_) => path.resolve(__dirname, _);
 const app = express();
+
+// http重定向到https
 function ensureSecure(req, res, next) {
     if (req.secure) {
         return next();
@@ -55,19 +57,10 @@ require('./core/category');
 require('./core/comment');
 require('./core/guestbook');
 require('./core/upload');
-app.use(ReqRouter.getRoutes())
 if (process.env.NODE_ENV === "production") {
-    app.use('/blog/admin', function(req, res, next) {
-        let content = fs.readFileSync(path.resolve(__dirname, '../static/app/admin.html'), 'utf-8');
-        let rs = content.replace('<!-- name -->', config.site.name + "后台");
-        res.end(rs);
-    })
-    app.use(function(req, res, next) {
-        let content = fs.readFileSync(path.resolve(__dirname, '../static/app/index.html'), 'utf-8');
-        let rs = content.replace('<!-- name -->', config.site.name + "博客");
-        res.end(rs);
-    })
+    require('./core/ssr');
 }
+app.use(ReqRouter.getRoutes())
 
 // 处理服务器异常
 app.use((err, req, res, next) => {

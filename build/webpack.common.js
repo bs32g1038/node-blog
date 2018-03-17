@@ -28,17 +28,5 @@
      },
      resolve: {
          extensions: [".js", ".jsx"]
-     },
-     optimization: {
-         splitChunks: {
-             cacheGroups: {
-                 vendor: {
-                     test: /react|react-dom|react-router-dom|axios/, // you may add "vendor.js" here if you want to
-                     name: "vendor",
-                     chunks: "initial",
-                     enforce: true,
-                 }
-             }
-         }
      }
  };

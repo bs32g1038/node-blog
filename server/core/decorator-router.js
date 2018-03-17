@@ -49,6 +49,10 @@ export function DELETE(path = '') {
     return route('delete', path);
 };
 
+export function USE(path = '') {
+    return route('use', path);
+};
+
 export function getRoutes() {
     const router = express.Router();
     for (const route of _routes_) {
