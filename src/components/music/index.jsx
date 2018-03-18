@@ -4,13 +4,14 @@ import './index.scss';
 export default class Music extends React.Component {
     constructor(props) {
         super(props);
+        const audio = document.getElementsByTagName('audio')[0] || document.body.appendChild(document.createElement('audio'))
         this.state = {
-            audio: document.createElement('audio'),
+            audio,
             musicCurrentTime: 0,
             isPlay: false,
             indicator: 0,
             playList: [],
-            playIndex: 0,
+            playIndex: audio.getAttribute('playIndex') || -1,
             playMode: 0,
             isShowList: true,
             volume: 1
@@ -41,20 +42,21 @@ export default class Music extends React.Component {
     }
     play(index) {
         const { audio, playList } = this.state;
+        if (audio.paused && audio.src) {
+            console.log(audio.paused, audio.src)
+            return audio.play()
+        }
         const music = playList[index || 0];
         audio.src = music.src;
-        audio.load();
         audio.play();
+        audio.setAttribute('playIndex', index || 0);
         this.setState({
             isPlay: true,
-            playIndex: index
+            playIndex: index || 0
         })
     }
     pause() {
         this.state.audio.pause();
-        this.setState({
-            isPlay: false
-        })
     }
     playNext() {
         if (this.state.playIndex + 1 < this.state.playList.length) {
@@ -108,7 +110,33 @@ export default class Music extends React.Component {
             })
         }
     }
-    componentDidMount() {
+    // 尚未完成
+    volumeIndicatorDown(event) {
+        const dom = event.currentTarget;
+        var w = dom.getBoundingClientRect().left;
+        //获取距离父级相对位置
+        console.log(w + "==========")
+        let volume ;
+        const onmousemove = (e) => {
+            e = e || window.event;
+            let x = e.clientX;
+            console.log(x )
+            
+            volume = (w - x) / w;
+            return volume
+        }
+        const onmouseup = () => {
+            console.log(volume)
+            this.setState({
+                volume
+            })
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+        document.onmouseup = (e) => onmouseup(e);
+        document.onmousemove = (e) => onmousemove(e)
+    }
+    componentWillMount() {
         this.setState({
             playList: [{
                 src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
@@ -163,12 +191,21 @@ export default class Music extends React.Component {
                             </li>
                             {
                                 this.state.playList.map((item, index) => (
-                                    <li className="app-music-item" key={index} onClick={() => this.play(index)}>
+                                    <li
+                                        className="app-music-item"
+                                        key={index}
+                                        onClick={() => this.play(index)}
+                                    >
                                         <div className="song-index">{index + 1}</div>
                                         <div className="song-name">{item.name}</div>
                                         <div className="song-singer">{item.singer}</div>
                                         <div className="song-album">{item.album}</div>
                                         <div className="song-duration">{item.time}</div>
+                                        {
+                                            (this.state.playIndex == index)
+                                            && !this.state.audio.paused &&
+                                            <div className="song-animate"><i></i><i></i><i></i></div>
+                                        }
                                     </li>
                                 ))
                             }
@@ -178,10 +215,10 @@ export default class Music extends React.Component {
                     <div className="music-play-area">
                         <a title="上一曲" onClick={() => this.playPre()}><i className="fa fa-step-backward"></i></a>
                         {
-                            this.state.isPlay ?
-                                <a title="暂停" onClick={() => this.pause()}><i className="fa fa-pause"></i></a>
+                            !this.state.audio.paused ?
+                                <a title="暂停" className="pause" onClick={() => this.pause()}><i className="fa fa-pause"></i></a>
                                 :
-                                <a title="播放" onClick={() => this.play()}><i className="fa fa-play"></i></a>
+                                <a title="播放" className="play" onClick={() => this.play()}><i className="fa fa-play"></i></a>
                         }
                         <a title="下一曲" onClick={() => this.playNext()}><i className="fa fa-step-forward"></i></a>
                         {
@@ -194,25 +231,30 @@ export default class Music extends React.Component {
                             <div className="play-time">{this.calcTime(this.state.musicCurrentTime || 0)}</div>
                             <div className="play-progress-line" onClick={(e) => this.indicatorProcessClick(e)} >
                                 <span className="play-progress-active"
-                                    style={{ width: (this.state.musicCurrentTime / this.state.audio.duration) * 288 + 'px' }}
+                                    style={{ width: (this.state.musicCurrentTime / this.state.audio.duration) * 190 + 'px' }}
                                 ></span>
                                 <span
                                     className="play-indicator"
-                                    style={{ left: (this.state.musicCurrentTime / this.state.audio.duration) * 288 + 'px' }}
+                                    style={{ left: (this.state.musicCurrentTime / this.state.audio.duration) * 190 + 'px' }}
                                 ></span>
                             </div>
                             <div className="play-time">{this.calcTime(this.state.audio.duration || 0)}</div>
                         </div>
-                        <a title="音量">
-                            <i className="fa fa-volume-up"></i>
-                            <span className="volume"
+                        <div title="音量" className="music-play-volume">
+                            <i className="fa fa-volume-up volume"></i>
+                            <span className="volume-line"
+                                onClick={(e) => this.indicatorVolumeClick(e)}
+                            ></span>
+                            <span className="volume-line-active"
+                                style={{ width: this.state.volume * 100 + 'px' }}
                                 onClick={(e) => this.indicatorVolumeClick(e)}
                             ></span>
                             <span className="volume-indicator"
-                                style={{ left: this.state.volume * 100 + 15 + 'px' }}
+                                // onMouseDown={(e) => this.volumeIndicatorDown(e)}
+                                style={{ left: this.state.volume * 100 + 8 + 'px' }}
                             ></span>
-                        </a>
-                        <a title="歌词"><span className="">词</span></a>
+                        </div>
+                        <a title="歌词"><span className="word">词</span></a>
                         <a title="歌曲列表" onClick={() => this.showPlayList()}><i className="fa fa-bars"></i></a>
                     </div>
                 </div>
