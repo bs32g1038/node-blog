@@ -8,7 +8,6 @@ export default class Music extends React.Component {
         this.state = {
             audio,
             musicCurrentTime: 0,
-            isPlay: false,
             indicator: 0,
             playList: [],
             playIndex: audio.getAttribute('playIndex') || -1,
@@ -42,8 +41,7 @@ export default class Music extends React.Component {
     }
     play(index) {
         const { audio, playList } = this.state;
-        if (audio.paused && audio.src) {
-            console.log(audio.paused, audio.src)
+        if (!audio.ended && audio.paused && audio.src) {
             return audio.play()
         }
         const music = playList[index || 0];
@@ -51,7 +49,6 @@ export default class Music extends React.Component {
         audio.play();
         audio.setAttribute('playIndex', index || 0);
         this.setState({
-            isPlay: true,
             playIndex: index || 0
         })
     }
@@ -116,12 +113,12 @@ export default class Music extends React.Component {
         var w = dom.getBoundingClientRect().left;
         //获取距离父级相对位置
         console.log(w + "==========")
-        let volume ;
+        let volume;
         const onmousemove = (e) => {
             e = e || window.event;
             let x = e.clientX;
-            console.log(x )
-            
+            console.log(x)
+
             volume = (w - x) / w;
             return volume
         }
@@ -160,7 +157,7 @@ export default class Music extends React.Component {
         })
         this.state.audio.volume = 1;
         this.state.audio.addEventListener('timeupdate', () => this.timeupdate())
-        this.state.audio.addEventListener('ended', () => this.playMode());
+        this.state.audio.addEventListener('ended', () => this.playMode(this.state.playMode));
     }
     render() {
         return (

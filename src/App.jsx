@@ -6,7 +6,7 @@ import Articles from './components/Articles';
 import Guestbooks from './components/Guestbooks';
 import Article from './components/Article';
 import About from './components/About';
-import Music from './components/Music/index';
+import Music from './components/music/index';
 import axios from './utils/axios'; 
 
 export default class App extends React.Component {
