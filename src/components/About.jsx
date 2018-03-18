@@ -2,7 +2,7 @@ import * as React from 'react';
 export default class About extends React.Component {
     render() {
         return (
-            <div className="about view">
+            <div className="about">
                 <h1 className="resume">个人简历</h1>
                 <div className="about-header">
                     <div className="person-base">
