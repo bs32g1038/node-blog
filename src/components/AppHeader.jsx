@@ -11,7 +11,7 @@ export default class AppHeader extends React.Component {
             <Link to="/blog"><i className="fa fa-home fa-fw"></i>首页</Link>
             <Link to="/blog/guestbook"><i className="fa fa-coffee fa-fw"></i>留言</Link>
             <Link to="/blog/about"><i className="fa fa-user fa-fw"></i>关于</Link>
-            <Link to="/blog/music"><i className="fa fa-user fa-fw"></i>音乐</Link>
+            <Link to="/blog/music"><i className="fa fa-coffee fa-fw"></i>音乐</Link>
             <a href="javasript:;"><i className="fa fa-search fa-fw"></i>搜索</a>
             <a href="javasript:;" rel="alternate"><i className="fa fa-rss fa-fw"></i>RSS</a>
             <a href={config.site.author.github} className="app-github">
