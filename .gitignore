@@ -4,3 +4,4 @@ node_modules
 .vscode
 static/app/*
 static/upload/*
+logs
