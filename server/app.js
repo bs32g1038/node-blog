@@ -4,7 +4,6 @@ require('./models')
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const https = require('https');
 const log4js = require('log4js');
 const helmet = require('helmet');
 const express = require('express');
@@ -17,17 +16,6 @@ const ReqRouter = require('./core/decorator-router');
 const cors = require('cors');
 const resolve = (_) => path.resolve(__dirname, _);
 const app = express();
-
-// http重定向到https
-function ensureSecure(req, res, next) {
-    if (req.secure) {
-        return next();
-    };
-    res.redirect('https://' + req.hostname + req.url);
-}
-if (process.env.NODE_ENV === "production") {
-    app.use(ensureSecure);
-}
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
 app.use(bodyParser.json({
@@ -45,8 +33,10 @@ function shouldCompress(req, res) {
     }
     return compression.filter(req, res)
 }
-app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
-app.use('/static', express.static(path.resolve(__dirname, '../static')));
+if (process.env.NODE_ENV !== "production") {
+    app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
+    app.use('/static', express.static(path.resolve(__dirname, '../static')));
+}
 app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
@@ -74,12 +64,6 @@ app.use((err, req, res, next) => {
     // console.log(res.status)
     return res.status(500).send('服务器异常！');
 });
-const options = {
-    key: fs.readFileSync(resolve('../certificate/214537474860105.key')),
-    cert: fs.readFileSync(resolve('../certificate/214537474860105.pem'))
-};
 http.createServer(app).listen(config.server.port);
-https.createServer(options, app).listen(443);
-console.log('web server start');
-console.log(`HTTP LISTEN http://${config.server.hostname}:${config.server.port}`)
-console.log(`HTTPS LISTEN https://${config.server.hostname}`);
+logger.log('web server start');
+logger.log(`site--http://${config.server.hostname}:${config.server.port}`)
