@@ -5,12 +5,10 @@ services:
     volumes:
       - "./static/upload:/code/static/upload"
     command: "npm run start"
-    ports:
-      - "443:443"
-      - "80:80"      
+    expose:
+      - "8080"  
     depends_on:
       - db
-      - nginx
     stdin_open: true
     tty: true
   db:
@@ -18,11 +16,12 @@ services:
     volumes:
       - "./mongo-db:/data/db"
   nginx:
-    restart: always
     image: nginx:1.12-alpine
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      - "node"
     volumes:
       - ./logs:/var/log/nginx
       - ./static:/etc/nginx/static
