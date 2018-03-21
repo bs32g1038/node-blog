@@ -13,7 +13,9 @@ export default class Music extends React.Component {
             playIndex: audio.getAttribute('playIndex') || -1,
             playMode: 0,
             isShowList: true,
-            volume: 1
+            volume: 1,
+            timeupdateFn: null,
+            endedFn: null
         }
     }
     calcTime(time) {
@@ -133,8 +135,15 @@ export default class Music extends React.Component {
         document.onmouseup = (e) => onmouseup(e);
         document.onmousemove = (e) => onmousemove(e)
     }
-    componentWillMount() {
+    componentDidMount() {
+        this.state.audio.volume = 1;
+        const timeupdateFn = () => this.timeupdate()
+        const endedFn = () => this.playMode(this.state.playMode)
+        this.state.audio.addEventListener('timeupdate', timeupdateFn)
+        this.state.audio.addEventListener('ended', endedFn);
         this.setState({
+            timeupdateFn,
+            endedFn,
             playList: [{
                 src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
                 name: "生生",
@@ -155,9 +164,11 @@ export default class Music extends React.Component {
                 time: "04:37"
             }]
         })
-        this.state.audio.volume = 1;
-        this.state.audio.addEventListener('timeupdate', () => this.timeupdate())
-        this.state.audio.addEventListener('ended', () => this.playMode(this.state.playMode));
+    }
+    componentWillUnmount() {
+        this.state.audio.removeEventListener('timeupdate', this.state.timeupdateFn);
+        this.state.audio.removeEventListener('ended', this.state.endedFn);
+        document.body.removeChild(this.state.audio)
     }
     render() {
         return (

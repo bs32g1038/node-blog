@@ -59,6 +59,7 @@ li {
     align-items: center;
     font-size: 12px;
     background-color: #fff;
+    flex: 0 0 auto;
     li {
         display: inline-block;
         margin-right: 20px;
@@ -71,4 +72,9 @@ li {
 .load-loop {
     animation: load-loop 1s linear infinite;
     -webkit-animation: load-loop 1s linear infinite;
+}
+
+.masker-background {
+    border-color: hsla(0,0%,95%,.1);
+    background-color: hsla(0,0%,95%,.3);
 }

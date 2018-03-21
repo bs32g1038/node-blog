@@ -30,20 +30,43 @@ const generateItems = (items) => items.map((item) =>
     )
 )
 
+const LoadingMasker = (
+    <div className="article-list-loading-masker">
+        <li className="article-item">
+            <div className="article-header">
+                <div className="article-brief">
+                    <div className="article-meta masker-background"></div>
+                    <a className="article-title masker-background"></a>
+                    <div className="article-meta masker-background"></div>
+                </div>
+                <div className="article-thumb masker-background"></div>
+            </div>
+            <p className="article-summary masker-background"></p>
+        </li>
+    </div>
+)
+
 export default class Articles extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: []
+            articles: [],
+            loading: false
         };
     }
     fetchData(location) {
+        this.setState({
+            loading: true
+        })
         const q = queryString.parse(location.search);
         const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1, ...q };
         axios.get('/articles?' + queryString.stringify(query)).then((res) => {
-            this.setState({
-                articles: res.data,
-            });
+            setTimeout(() => {
+                this.setState({
+                    articles: res.data,
+                    loading: false
+                });
+            }, 400);
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -52,12 +75,15 @@ export default class Articles extends React.Component {
         }
     }
     componentDidMount() {
-        this.fetchData(this.props.location)
+        return this.fetchData(this.props.location)
     }
     render() {
         return (
             <ul className="app-article-list">
-                {generateItems(this.state.articles)}
+                {
+                    this.state.loading ? LoadingMasker :
+                        generateItems(this.state.articles)
+                }
             </ul>
         )
     }

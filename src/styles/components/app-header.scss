@@ -6,6 +6,7 @@
     align-items: center;
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    user-select: none;
     .site-name {
         transition: color .15s ease;
         margin-right: 22px;
