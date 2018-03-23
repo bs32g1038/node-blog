@@ -16,6 +16,10 @@ const ReqRouter = require('./core/decorator-router');
 const cors = require('cors');
 const resolve = (_) => path.resolve(__dirname, _);
 const app = express();
+
+const reactSSR = require('./ssr');
+
+
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard('sameorigin'));
 app.use(bodyParser.json({
@@ -33,6 +37,7 @@ function shouldCompress(req, res) {
     }
     return compression.filter(req, res)
 }
+
 if (process.env.NODE_ENV !== "production") {
     app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
     app.use('/static', express.static(path.resolve(__dirname, '../static')));
@@ -41,6 +46,7 @@ app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
 app.use(cors())
+
 require('./core/login');
 require('./core/article');
 require('./core/category');
@@ -51,6 +57,10 @@ if (process.env.NODE_ENV === "production") {
     require('./core/ssr');
 }
 app.use(ReqRouter.getRoutes())
+
+app.use('/', reactSSR)
+
+// app.get('/blog', reactSSR)
 
 // 处理服务器异常
 app.use((err, req, res, next) => {

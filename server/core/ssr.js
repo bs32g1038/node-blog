@@ -52,14 +52,14 @@ class SSR {
         res.end(cacheHtml('关于'))
     }
 
-    @ReqRouter.GET('/blog')
-    static async blog(req, res, next) {
-        res.end(cacheHtml())
-    }
+    // @ReqRouter.GET('/blog')
+    // static async blog(req, res, next) {
+    //     res.end(cacheHtml())
+    // }
 
-    @ReqRouter.USE('/')
-    static async home(req, res, next) {
-        res.end(cacheHtml())
-    }
+    // @ReqRouter.USE('/')
+    // static async home(req, res, next) {
+    //     res.end(cacheHtml())
+    // }
 
 }

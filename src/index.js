@@ -1,11 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter , Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './styles/index.scss';
+import routes from './router';
+import { renderRoutes } from 'react-router-config'
 import App from './App';
-ReactDOM.render(
+const initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data-json'));
+ReactDOM.hydrate (
     <BrowserRouter>
-        <App />
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/blog" />} />
+        <Route path="/blog" component={()=> <App {...initialData}/>} />
+      </Switch>
     </BrowserRouter>,
-    document.getElementById('app')
+    document.getElementById('apps')
 );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from '../utils/axios';
-import message from './Message';
+// import message from './Message';
 
 class CommentForm extends React.Component {
     constructor(props) {
@@ -81,7 +81,7 @@ class CommentForm extends React.Component {
             self.setState({
                 buttonLoading: false
             })
-            message.info('提交成功!')
+            // message.info('提交成功!')
             self.refs.form.reset();
         })
         return event.preventDefault()

@@ -19,8 +19,7 @@ const replyFn = (item) => (
 const articleComments = (items, self) => items.map((item) => (
     <li className="comments-item" key={item._id}>
         <div className="comments-info">
-            <span className="comments-info-author"><i className="fa fa-fw fa-user"></i>{item.nickName} 说：
-      </span>
+            <span className="comments-info-author"><i className="fa fa-fw fa-user"></i>{item.nickName} 说：</span>
             <div style={{ float: 'right' }}>
                 <span className="comments-info-time">{parseTime(item.createdAt)} | </span>
                 <a href="javascript:;" comment-id={item._id} onClick={() => self.setState({
@@ -42,33 +41,37 @@ const articleComments = (items, self) => items.map((item) => (
         </div>
     </li>
 ))
+
 export default class Article extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            article: {
-                category: {}
-            },
-            comments: [],
-            showCommentForm: ""
+            showCommentForm: ''
         }
     }
-    componentDidMount() {
-        const { match } = this.props;
+
+    static fetch(match, location, options) {
         const query = { fields: '-summary,category.name' };
-        const articlePrmoise = axios.get('/articles/' + match.params.id + '?' + queryString.stringify(query));
-        const commentsPrmoise = axios.get('/comments?articleId=' + match.params.id);
-        Promise.all([articlePrmoise, commentsPrmoise]).then(([a, b]) => {
-            this.setState({
-                article: a.data,
-                comments: b.data
-            });
-        });
+        const id = match.params.id;
+        const articlePrmoise = axios.get('/articles/' + id + '?' + queryString.stringify(query));
+        const commentsPrmoise = axios.get('/comments?articleId=' + id);
+        return Promise.all([articlePrmoise, commentsPrmoise]);
     }
+
     render() {
-        const { article } = this.state;
+        let results = this.props.data,
+            article = { category: {} },
+            comments = [];
+
+        if (results) {
+            const [a, b] = results[0];
+            article = a.data;
+            comments = b.data;
+        }
+
         return (
-            <div className="article view">
+            <div className="article">
                 <article className="inner">
                     <div className="header">
                         <h2 className="title">
@@ -101,7 +104,7 @@ export default class Article extends React.Component {
                         <CommentForm url="/comments" articleId={article._id} />
                         <ul className="comments-list">
                             {
-                                articleComments(this.state.comments, this)
+                                articleComments(comments, this)
                             }
                         </ul>
                     </div>

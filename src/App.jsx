@@ -1,27 +1,50 @@
 import * as React from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
-import Articles from './components/Articles';
-import Guestbooks from './components/Guestbooks';
-import Article from './components/Article';
-import About from './components/About';
-import Music from './components/music/index';
-import axios from './utils/axios'; 
+import axios from './utils/axios';
+import { renderRoutes, matchRoutes } from 'react-router-config'
+import reactRouterFetch from './utils/router-fetch';
+import routes from './router';
+// import progress from './components/progress';
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);        
         this.state = {
-            categories: []
+            categories: this.props.categories,
+            previousLocation: null,
+            data: this.props.data,
+            isFetching: false
         };
     }
     componentDidMount() {
-        axios.get('/categories').then((res) => {
+        const p = Promise.all([axios.get('/categories'), reactRouterFetch(routes, this.props.location)])
+        p.then(([resCategory, resArticle]) => {
             this.setState({
-                categories: res.data,
-            });
-        });
+                categories: resCategory.data,
+                data: resArticle
+            })
+        })
+    }
+    componentWillReceiveProps(nextProps) {
+        const navigated = nextProps.location !== this.props.location
+        if (navigated && !this.state.isFetching) {
+            // progress.start()
+            this.setState({
+                previousLocation: this.props.location,
+                isFetching: true
+            })
+            reactRouterFetch(routes, nextProps.location)
+                .then((data) => {
+                    this.setState({
+                        data,
+                        previousLocation: null,
+                        isFetching: false
+                    })
+                    // progress.finish()
+                })
+        }
     }
     render() {
         return (
@@ -41,18 +64,14 @@ export default class App extends React.Component {
                         ))
                     }
                 </ul>
-                <Switch>
-                    <Route exact path="/" render={() => (<Redirect to="/blog"/>)}/>
-                    <Route exact path="/blog" component={Articles} />
-                    <Route exact path="/blog/articles" component={Articles} />
-                    <Route exact path="/blog/articles/:id" component={Article} />
-                    <Route exact path="/blog/guestbook" component={Guestbooks} />
-                    <Route exact path="/blog/about" component={About} />
-                    <Route exact path="/blog/music" component={Music} />
-                </Switch>
+                <Route
+                    location={this.state.previousLocation || this.props.location}
+                    render={() => renderRoutes(routes, { data: this.state.data })}
+                />
                 <AppFooter />
             </div>
         )
     }
 }
 
+export default App

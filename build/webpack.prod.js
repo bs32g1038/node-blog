@@ -12,10 +12,10 @@ module.exports = merge(common, {
     plugins: [
         new UglifyJSPlugin()
     ],
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM'
-    },
+    // externals: {
+    //     react: 'React',
+    //     'react-dom': 'ReactDOM'
+    // },
     module: {
         rules: [{
             test: /\.scss$/,

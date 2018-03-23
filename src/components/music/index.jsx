@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './index.scss';
+// import './index.scss';
 
 export default class Music extends React.Component {
     constructor(props) {
