@@ -33,7 +33,7 @@ class SSR {
 
     @ReqRouter.GET('/blog/articles/:_id')
     static async article(req, res, next) {
-        const aritcle = await models.Article.findById(_id, 'title')
+        const article = await models.Article.findById(req.params._id, 'title');
         res.end(cacheHtml(article.title))
     }
 

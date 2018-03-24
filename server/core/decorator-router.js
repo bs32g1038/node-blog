@@ -20,7 +20,7 @@ function route(method, path) {
         _routes_.push({ target, method, path, key });
         return descriptor;
     };
-};
+}
 
 export function ROUTER(path) {
     return function(target) {
@@ -31,27 +31,27 @@ export function ROUTER(path) {
 
 export function GET(path = '') {
     return route('get', path);
-};
+}
 
 export function POST(path = '') {
     return route('post', path);
-};
+}
 
 export function PUT(path = '') {
     return route('put', path);
-};
+}
 
 export function PATCH(path = '') {
     return route('patch', path);
-};
+}
 
 export function DELETE(path = '') {
     return route('delete', path);
-};
+}
 
 export function USE(path = '') {
     return route('use', path);
-};
+}
 
 export function getRoutes() {
     const router = express.Router();

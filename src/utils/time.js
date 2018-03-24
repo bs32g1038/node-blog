@@ -1,11 +1,9 @@
-// import moment from 'moment';
-// moment.locale('zh-cn'); // 使用中文
-// exports.parseTime = function(timestamp, format) {
-//     return moment(timestamp).format('YYYY-MM-DD HH:MM:SS');
-// }
-// exports.timeAgo = function(timestamp) {
-//     return moment(timestamp).fromNow();
-// }
+function pluralize(time, label) {
+    if (time === 1) {
+        return time + label
+    }
+    return time + label  
+}
 
 exports.timeAgo = function(time) {
     const between = Date.now() / 1000 - Number(new Date(time).getTime() / 1000)
@@ -39,10 +37,3 @@ exports.parseTime = function(timestamp, format, full) {
         return o[m];
     });
 };
-
-function pluralize(time, label) {
-    if (time === 1) {
-        return time + label
-    }
-    return time + label  
-}

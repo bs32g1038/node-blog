@@ -5,8 +5,6 @@ services:
     volumes:
       - "./static/upload:/code/static/upload"
     command: "npm run start"
-    volumes:
-      - static:/code/static      
     depends_on:
       - db
     stdin_open: true
@@ -23,8 +21,6 @@ services:
       - "node"
     volumes:
       - ./logs:/var/log/nginx
-      - static:/etc/nginx/static
+      - ./static:/etc/nginx/static
       - ./nginx/certificate:/etc/nginx/certificate
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-volumes:
-  static:
