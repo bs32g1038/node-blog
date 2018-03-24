@@ -9,12 +9,14 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             chunks: ['vendor', 'app'],
-            template: path.resolve(__dirname, '../src/index.html')
+            template: path.resolve(__dirname, '../src/index.html'),
+            hash: true
         }),
         new HtmlWebpackPlugin({
             chunks: ['vendor', 'admin'],
             filename: "admin.html",
-            template: path.resolve(__dirname, '../src/admin/index.html')
+            template: path.resolve(__dirname, '../src/admin/index.html'),
+            hash: true
         })
     ],
     module: {
