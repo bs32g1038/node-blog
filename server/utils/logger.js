@@ -26,7 +26,7 @@ const log4js = require('log4js');
 log4js.configure({
  appenders: {
    console: { type: 'console' },
-   file: { type: 'file', filename: 'cheese.log' }
+   file: { type: 'file', filename: './logs/cheese.log' }
  },
  categories: {
    cheese: { appenders: ['file'], level: 'info' },

@@ -82,7 +82,7 @@ export default class Comments extends Component {
                         <thead className="table-header">
                             <tr>
                                 <th>昵称</th>
-                                <th>emial</th>
+                                <th>email</th>
                                 <th>创建时间</th>
                                 <th>内容</th>
                                 <th>回复文章</th>

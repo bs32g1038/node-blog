@@ -4,16 +4,17 @@ import axios from '../utils/axios';
 import queryString from 'query-string';
 import { parseTime } from '../utils/time';
 
-export default class Articles extends Component {
+export default class Guestbooks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: []
+            guestbooks: []
         };
     }
-    generateArticleList(guestbooks = []) {
+    generateGuestbookList(guestbooks = []) {
         const self = this;
-        return (guestbooks.map((item) => (
+        console.log(guestbooks)
+        return guestbooks.map((item) => (
             <tr key={item._id}>
                 <td>{item.nickName}</td>
                 <td>{item.email}</td>
@@ -36,7 +37,7 @@ export default class Articles extends Component {
                     </button>
                 </td>
             </tr>
-        )))
+        ))
     }
     deleteGuestbook(e) {
         const { location, history } = this.props;
@@ -60,7 +61,7 @@ export default class Articles extends Component {
         axios
             .get('/guestbooks?' + queryString.stringify(query))
             .then((res) => {
-                this.setState({ articles: res.data });
+                this.setState({ guestbooks: res.data });
             });
     }
     componentWillReceiveProps(nextProps) {
@@ -82,14 +83,14 @@ export default class Articles extends Component {
                         <thead className="table-header">
                             <tr>
                                 <th>昵称</th>
-                                <th>emial</th>
+                                <th>email</th>
                                 <th>创建时间</th>
                                 <th>内容</th>
                                 <th>回复内容</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody>{this.generateArticleList(this.state.articles)}</tbody>
+                        <tbody>{this.generateGuestbookList(this.state.guestbooks)}</tbody>
                     </table>
                 </div>
             </div>

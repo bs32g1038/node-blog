@@ -27,7 +27,7 @@ class GuestbookApi {
     @ReqRouter.GET()
     static async list(req, res, next) {
         const pageInfo = Joi.validate(req.query, pageSchema);
-        const fields = auth(req) ? '-email' : '';
+        const fields = auth(req) ? '' : '-email';
         res.json(await models.Guestbook.find({}, fields, {
             skip: (pageInfo.value.page - 1) * pageInfo.value.limit,
             limit: pageInfo.value.limit
