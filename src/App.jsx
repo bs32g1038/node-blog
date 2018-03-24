@@ -1,5 +1,5 @@
 import { Component, render } from 'inferno';
-import { Route,  Link } from 'inferno-router';
+import { Route, Link } from 'inferno-router';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import axios from './utils/axios';
@@ -31,6 +31,7 @@ class App extends Component {
         const navigated = nextProps.location !== this.props.location
         progress.start()
         if (navigated && !this.state.isFetching) {
+            window.scrollTo(0, 0)
             this.setState({
                 previousLocation: this.props.location,
                 isFetching: true

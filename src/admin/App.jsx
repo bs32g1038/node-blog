@@ -16,7 +16,6 @@ import axios from './utils/axios';
 class App extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
     }
     check(Item) {
         return (props) => {

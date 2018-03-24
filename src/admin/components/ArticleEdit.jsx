@@ -1,5 +1,6 @@
 import { Component } from 'inferno';
 import { withRouter } from "inferno-router";
+import { Link } from 'inferno-router';
 import E from 'wangeditor';
 import axios from '../utils/axios';
 class ArticleEdit extends Component {
@@ -13,7 +14,7 @@ class ArticleEdit extends Component {
         }
     }
     componentDidMount() {
-        const elem =  document.getElementById('editorElem')
+        const elem = document.getElementById('editorElem')
         const editor = new E(elem)
         // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
         editor.customConfig.onchange = html => {
@@ -106,24 +107,24 @@ class ArticleEdit extends Component {
         const article = this.state.article;
         return (
             <div>
-                <div className="panel">
-                    <a className="btn is-primary" href="/admin/doc/publish">
+                 <div className="panel">
+                    <Link className="btn is-primary" to="/blog/admin/articles/edit">
                         <span className="fa fa-plus-square">&nbsp;</span>
                         添加文档
-                    </a>
+                    </Link>
                     <button className="btn is-danger" id="btnListDel">
                         <span className="fa fa-fw fa-trash-o">&nbsp;</span>
                         批量删除
                     </button>
                     <div className="pull-right">
-                        <form name="searchForm">
+                        <form action="/admin/manage/contentList" name="searchForm">
                             <div className="search-input-group">
                                 <input
                                     type="text"
                                     name="searchKey"
                                     id="searchInput"
                                     className="form-control input-sm pull-right"
-                                    width="200px"
+                                    width="200"
                                     placeholder="请输入需要查询的关键字"
                                     value="" />
                                 <button className="btn is-primary" type="submit">
@@ -142,7 +143,7 @@ class ArticleEdit extends Component {
                         <div className="form-group">
                             <label className="control-label">文章标题：</label>
                             <div>
-                                <input 
+                                <input
                                     placeholder="请输入文章标题"
                                     type="text"
                                     className="form-control input-sm"
@@ -181,7 +182,7 @@ class ArticleEdit extends Component {
                         </div>
                         <div className="form-group">
                             <label className="control-label">内容摘要：</label>
-                            <textarea 
+                            <textarea
                                 placeholder="请输入文章内容摘要"
                                 name="summary"
                                 defaultValue={article.summary}

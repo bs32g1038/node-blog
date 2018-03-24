@@ -1,9 +1,8 @@
 .article {
-    padding-bottom: 20px;
     background-color: #fff;
     .inner {
         max-width: 980px;
-        padding: 10px 28px 0 28px;
+        padding: 20px 40px 20px 40px;
     }
     .active {
         padding-top: 15px;
@@ -17,7 +16,7 @@
     .title {
         word-break: break-word;
         margin: 10px 0;
-        font-size: 18px;
+        font-size: 26px; 
     }
     .title-link {
         display: inline-block;
@@ -31,21 +30,51 @@
         color: rgb(153, 153, 153);
         font-family: Monda, "PingFang SC", "Microsoft YaHei", sans-serif;
         font-size: 12px;
-        span{
+        span {
             padding: 0 5px;
         }
     }
 }
 
+.article-body {
+    text-align: justify;
+    font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    box-shadow: initial;
+    border-radius: initial;
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin: 20px 0 15px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    h3 {
+        font-size: 18px;
+    }
+    h4 {
+        font-size: 16px;
+    }
+    p {
+        margin: 0 0 25px 0;
+    }
+    pre {
+        overflow: auto;
+        font-size: 13px;
+        color: #4d4d4c;
+        background: #f7f7f7;
+        line-height: 1.6;
+        padding: 10px;
+    }
+}
+
 .post-copyright {
-    color:#444;
+    color: #444;
     margin: 28px 0 0;
     padding: 7px 14px;
-    background-color: rgba(233, 223, 119, 0.58);
     list-style: none;
     font-size: 14px;
-    background-color: #DEEBF7;
-    border: 1px solid #d3d3d3;
-    border-radius: 5px;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #aad1f5), color-stop(1, #8bc8dd) );
+    background-color: #f9f9f9;
 }

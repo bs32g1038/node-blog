@@ -78,7 +78,7 @@ export default class Article extends Component {
                             <span>阅读次数{article.viewsCount}</span>
                         </div>
                     </div>
-                    <div className="markdown-body" dangerouslySetInnerHTML={{
+                    <div className="article-body" dangerouslySetInnerHTML={{
                         __html: article.content
                     }}></div>
                     <ul className="post-copyright">

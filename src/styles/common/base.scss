@@ -7,6 +7,7 @@
 html {
     height: $size-100;
     font-size: $font-size-base;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -15,16 +16,47 @@ body {
     font-size: 14px;
     color: $body-color;
     line-height: $line-height-base;
-    background-color: #f4f5f5;
+    background: #f5f7f9;
+    margin: 0;
+    line-height: 2;
+    color: #444;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
 }
 
 a {
+    background-color: transparent;
     color: #34495e;
     text-decoration: none;
 }
 
 a:hover {
     color: #409eff;
+}
+
+pre {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+strong {
+    font-weight: bolder;
+}
+
+code {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+small {
+    font-size: 80%;
+}
+
+img {
+    border-style: none;
 }
 
 ul {
@@ -75,6 +107,6 @@ li {
 }
 
 .masker-background {
-    border-color: hsla(0,0%,95%,.1);
-    background-color: hsla(0,0%,95%,.3);
+    border-color: hsla(0, 0%, 95%, .1);
+    background-color: hsla(0, 0%, 95%, .3);
 }

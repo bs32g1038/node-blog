@@ -257,7 +257,7 @@ export default class Music extends  Component {
                             ></span>
                             <span className="volume-indicator"
                                 // onMouseDown={(e) => this.volumeIndicatorDown(e)}
-                                style={{ left: this.state.volume * 100 + 8 + 'px' }}
+                                style={{ left: this.state.volume * 100 + 'px' }}
                             ></span>
                         </div>
                         <a title="歌词"><span className="word">词</span></a>

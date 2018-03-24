@@ -37,7 +37,7 @@
 
 .search-input-group {
     display: flex;
-    input{
+    input {
         margin-right: 5px;
     }
 }
@@ -66,7 +66,6 @@
         border-radius: 4px;
         border: 1px solid #dddee1;
         transition: all .2s ease-in-out;
-        height: 32px;
         padding: 5px 10px 5px 10px;
     }
     textarea {
@@ -100,10 +99,10 @@ input {
     vertical-align: top;
     background-color: white;
     border-color: #dbdbdb;
-    color: #363636; 
+    color: #363636;
     max-width: 100%;
     width: 100%;
-    &:focus{
+    &:focus {
         outline: none
     }
 }
@@ -119,7 +118,7 @@ input {
     padding: 5px;
     border-radius: 5px;
     border: 1px dashed #ccc;
-    button{
+    button {
         margin-left: 5px;
     }
 }
@@ -138,7 +137,7 @@ input {
     font-size: 12px;
     background-color: #fff;
     box-sizing: border-box;
-    td{
+    td {
         padding: 5px;
     }
 }
@@ -159,4 +158,3 @@ input {
     padding: 8px 5px 8px 5px;
     display: block;
 }
-
