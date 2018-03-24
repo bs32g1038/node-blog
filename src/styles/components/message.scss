@@ -22,22 +22,13 @@
     background: #fff;
     display: inline-block;
     pointer-events: all;
+    transition: opacity 1s ease-in;
 }
 
 .fade-enter {
     opacity: 0.01;
 }
 
-.fade-enter.fade-enter-active {
+.fade-enter.active {
     opacity: 1;
-    transition: opacity .3s ease-in;
-}
-
-.fade-exit {
-    opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-    opacity: 0.01;
-    transition: opacity .3s ease-out;
 }

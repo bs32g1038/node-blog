@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { withRouter } from 'inferno-router';
 import axios from '../utils/axios';
-import { withRouter } from "react-router-dom";
-class GuestbookReply extends React.Component {
+class GuestbookReply extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {

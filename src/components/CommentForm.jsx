@@ -1,8 +1,7 @@
-import * as React from 'react';
+import { Component } from 'inferno';
 import axios from '../utils/axios';
-// import message from './Message';
-
-class CommentForm extends React.Component {
+import message from './Message';
+class CommentForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -11,7 +10,7 @@ class CommentForm extends React.Component {
     }
     render() {
         return (
-            <form className="comment-form" ref="form" onSubmit={(e) => this.ok(e)}>
+            <form className="comment-form" id="form" onSubmit={(e) => this.ok(e)}>
                 <div className="form-inline">
                     <div className="form-group">
                         <label className="label">昵称</label>
@@ -26,7 +25,7 @@ class CommentForm extends React.Component {
                     <textarea id="content" name="content" rows="3" placeholder="留点空白给你说~" className="comment-form__textarea"></textarea>
                 </div>
                 <div className="footer">
-                    <button type="submit" className="submit">
+                    <button type="submit" className="submit" style={{cursor: this.state.buttonLoading && 'default'}}>
                         {this.state.buttonLoading && <i className="fa fa-spinner fa-pulse fa-fw" ></i>}提 交
                     </button>
                 </div>
@@ -81,8 +80,8 @@ class CommentForm extends React.Component {
             self.setState({
                 buttonLoading: false
             })
-            // message.info('提交成功!')
-            self.refs.form.reset();
+            message.info('提交成功!')
+            document.getElementById('form').reset();
         })
         return event.preventDefault()
     }

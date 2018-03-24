@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { withRouter } from 'inferno-router';
 import axios from '../utils/axios';
-import { withRouter } from "react-router-dom";
-class CategoryEdit extends React.Component {
+class CategoryEdit extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {

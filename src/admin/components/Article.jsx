@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { Component } from 'inferno'; 
 import config from '../config';
 import { parseTime } from '../utils/time';
 import axios from '../utils/axios';
 
-export default class Article extends React.Component {
+export default class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {

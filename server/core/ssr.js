@@ -8,14 +8,9 @@ const models = require('../models');
 const config = require('../config');
 const resolve = (_) => path.resolve(__dirname, _);
 
-const cndjs = `
-<script crossorigin src="https://unpkg.com/react@16.2.0/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.production.min.js"></script>
-`
 let adminHtml = fs.readFileSync(resolve('../../static/app/admin.html'), 'utf-8');
 let indexHtml = fs.readFileSync(resolve('../../static/app/index.html'), 'utf-8');
-adminHtml = adminHtml.replace('<!-- name -->', config.site.name + "后台").replace('<!-- scripts -->', cndjs);
-indexHtml = indexHtml.replace('<!-- scripts -->', cndjs);
+adminHtml = adminHtml.replace('<!-- name -->', config.site.name + "后台");
 
 function cacheHtml(name) {
     const key = 'blog@home-html-' + name;
@@ -52,14 +47,14 @@ class SSR {
         res.end(cacheHtml('关于'))
     }
 
-    // @ReqRouter.GET('/blog')
-    // static async blog(req, res, next) {
-    //     res.end(cacheHtml())
-    // }
+    @ReqRouter.GET('/blog')
+    static async blog(req, res, next) {
+        res.end(cacheHtml())
+    }
 
-    // @ReqRouter.USE('/')
-    // static async home(req, res, next) {
-    //     res.end(cacheHtml())
-    // }
+    @ReqRouter.USE('/')
+    static async home(req, res, next) {
+        res.end(cacheHtml())
+    }
 
 }

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { Component } from 'inferno';
 import config from '../config';
-export default class AppFooter extends React.Component {
+export default class AppFooter extends Component {
     componentDidMount() {
         var timer = null;
         document.getElementById('backTop').onclick = function () {

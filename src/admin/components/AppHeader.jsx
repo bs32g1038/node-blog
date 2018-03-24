@@ -1,10 +1,9 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { Link, withRouter } from 'inferno-router';
 import config from '../config';
-import { Link } from 'react-router-dom';
-import { withRouter } from "react-router-dom";
 const tokenKey = "node-blog-bs32g1038";
 
-class AppHeader extends React.Component {
+class AppHeader extends Component {
   loginOut() {
     sessionStorage.removeItem(tokenKey);
     const { history } = this.props;

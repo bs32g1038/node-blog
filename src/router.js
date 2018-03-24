@@ -2,7 +2,7 @@ import Articles from './components/Articles';
 import Guestbooks from './components/Guestbooks';
 import Article from './components/Article';
 import About from './components/About';
-import Music from './components/music/index';
+import Music from './components/Music';
 const routes = [{
         path: '/',
         exact: true,

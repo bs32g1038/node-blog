@@ -1,7 +1,5 @@
-import * as React from 'react';
-// import './index.scss';
-
-export default class Music extends React.Component {
+import { Component } from 'inferno';
+export default class Music extends  Component {
     constructor(props) {
         super(props);
         const audio = document.getElementsByTagName('audio')[0] || document.body.appendChild(document.createElement('audio'))

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Component } from 'inferno';
+import { Route, Switch, Redirect, withRouter } from 'inferno-router';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import Articles from './components/Articles';
@@ -12,13 +12,11 @@ import Comments from './components/Comments';
 import CommentReply from './components/CommentReply';
 import Article from './components/Article';
 import Login from './components/Login';
-import About from './components/About';
 import axios from './utils/axios';
-import { Link } from 'react-router-dom';
-import { withRouter } from "react-router-dom";
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
         super(props);
+        console.log(props)
     }
     check(Item) {
         return (props) => {
@@ -47,7 +45,6 @@ class App extends React.Component {
                     <Route exact path="/blog/admin/categories" component={this.check(Categories)} />
                     <Route exact path="/blog/admin/categories/edit" component={this.check(CategoryEdit)} />
                     <Route exact path="/blog/admin/categories/edit/:id" component={this.check(CategoryEdit)} />
-                    <Route exact path="/blog/about" component={this.check(About)} />
                 </Switch>
                 <AppFooter />
             </div>

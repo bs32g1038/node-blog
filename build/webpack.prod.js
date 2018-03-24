@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.js');
@@ -10,12 +11,18 @@ module.exports = merge(common, {
         filename: '[name].bundle.js'
     },
     plugins: [
-        new UglifyJSPlugin()
+        new UglifyJSPlugin({
+            uglifyOptions: {
+                output: {
+                    comments: false,
+                    beautify: false,
+                },
+                compress: {
+                    drop_console: true
+                }
+            }
+        })
     ],
-    // externals: {
-    //     react: 'React',
-    //     'react-dom': 'ReactDOM'
-    // },
     module: {
         rules: [{
             test: /\.scss$/,

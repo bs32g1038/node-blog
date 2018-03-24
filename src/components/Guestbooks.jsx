@@ -1,6 +1,5 @@
-import * as React from 'react';
+import { Component } from 'inferno';
 import axios from '../utils/axios';
-import { Link } from 'react-router-dom'
 import { parseTime, timeAgo } from '../utils/time';
 import config from '../config';
 import CommentForm from './CommentForm';
@@ -20,15 +19,15 @@ const LoadingMasker = (
     </div>
 )
 
-export default class Guestbooks extends React.Component {
+export default class Guestbooks extends Component {
     
     static fetch(match, location, options) {
-        return axios.get('/guestbooks')
+        return axios.get('/guestbooks').then((_)=>({guestbooks:_.data}));
     }
 
     render() {
-        let results = this.props.data;
-        let guestbooks = results ? results[0].data : [];
+        let data = this.props.data;
+        let guestbooks = data ? data.guestbooks : [];
         return (
             <div className="app-guestbook-list">
                 <h2 className="resume">--留言板--</h2>

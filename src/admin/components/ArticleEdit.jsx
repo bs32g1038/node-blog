@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { withRouter } from "inferno-router";
 import E from 'wangeditor';
 import axios from '../utils/axios';
-import { withRouter } from "react-router-dom";
-class ArticleEdit extends React.Component {
+class ArticleEdit extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -13,7 +13,7 @@ class ArticleEdit extends React.Component {
         }
     }
     componentDidMount() {
-        const elem = this.refs.editorElem
+        const elem =  document.getElementById('editorElem')
         const editor = new E(elem)
         // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
         editor.customConfig.onchange = html => {
@@ -142,8 +142,7 @@ class ArticleEdit extends React.Component {
                         <div className="form-group">
                             <label className="control-label">文章标题：</label>
                             <div>
-                                <input
-                                    key={article._id}
+                                <input 
                                     placeholder="请输入文章标题"
                                     type="text"
                                     className="form-control input-sm"
@@ -182,8 +181,7 @@ class ArticleEdit extends React.Component {
                         </div>
                         <div className="form-group">
                             <label className="control-label">内容摘要：</label>
-                            <textarea
-                                key={article._id}
+                            <textarea 
                                 placeholder="请输入文章内容摘要"
                                 name="summary"
                                 defaultValue={article.summary}
@@ -198,7 +196,7 @@ class ArticleEdit extends React.Component {
                             <textarea name="content" value={this.state.editorContent} style={{ display: "none" }}></textarea>
                             {/* 将生成编辑器 */}
                             <div
-                                ref="editorElem"
+                                id="editorElem"
                                 style={{
                                     textAlign: 'left',
                                     width: "650px"

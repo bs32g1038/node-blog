@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Component } from 'inferno';
 import config from '../config';
 import { parseTime, timeAgo } from '../utils/time';
 import axios from '../utils/axios';
@@ -42,7 +42,7 @@ const articleComments = (items, self) => items.map((item) => (
     </li>
 ))
 
-export default class Article extends React.Component {
+export default class Article extends Component {
 
     constructor(props) {
         super(props);
@@ -56,19 +56,13 @@ export default class Article extends React.Component {
         const id = match.params.id;
         const articlePrmoise = axios.get('/articles/' + id + '?' + queryString.stringify(query));
         const commentsPrmoise = axios.get('/comments?articleId=' + id);
-        return Promise.all([articlePrmoise, commentsPrmoise]);
+        return Promise.all([articlePrmoise, commentsPrmoise]).then((arr)=>({article:arr[0].data, comments:arr[1].data}));
     }
 
     render() {
-        let results = this.props.data,
-            article = { category: {} },
-            comments = [];
-
-        if (results) {
-            const [a, b] = results[0];
-            article = a.data;
-            comments = b.data;
-        }
+        let data = this.props.data;
+        let article = data ? data.article : { category: {} };
+        let comments = data ? data.comments : [];
 
         return (
             <div className="article">

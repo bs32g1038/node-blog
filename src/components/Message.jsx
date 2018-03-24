@@ -1,8 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { CSSTransition } from 'react-transition-group'
+import { Component, render } from 'inferno';
 
-class Message extends React.Component {
+class Message extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,18 +13,12 @@ class Message extends React.Component {
         return (
             <div className="message">
                 <div className="message-notice">
-                    <CSSTransition
-                        in={show}
-                        timeout={300}
-                        classNames="fade"
-                    >
-                        <div className="message-notice-content">
-                            <div className="message-custom-content message-info">
-                                <i className="fa fa-info-circle fa-fw"></i>
-                                <span> {content} </span>
-                            </div>
+                    <div className="message-notice-content">
+                        <div className="message-custom-content message-info">
+                            <i className="fa fa-info-circle fa-fw"></i>
+                            <span> {content} </span>
                         </div>
-                    </CSSTransition>
+                    </div>
                 </div>
             </div>
         )
@@ -37,14 +29,14 @@ Message.newInstance = function newNotificationInstance(properties) {
     let props = properties || {};
     let div = document.createElement('div');
     document.body.appendChild(div);
-    const notification = ReactDOM.render(<Message {...props} />, div);
+    const notification = render(<Message {...props} />, div);
     return {
         notice(noticeProps) {
             notification.setState({ ...noticeProps });
         },
         component: notification,
         destroy() {
-            ReactDOM.unmountComponentAtNode(div);
+            render(null, div);
             document.body.removeChild(div);
         },
     };
@@ -55,6 +47,6 @@ export default {
         messageInstance.notice({ content, show: true })
         setTimeout(() => {
             messageInstance.destroy();
-        }, 4 * 1000);
+        }, 3 * 1000);
     }
 };

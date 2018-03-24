@@ -1,11 +1,10 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { Link, withRouter } from 'inferno-router';
 import axios from '../utils/axios';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
 import { parseTime } from '../utils/time';
-import { withRouter } from "react-router-dom";
 
-export default class Articles extends React.Component {
+export default class Articles extends Component {
     constructor(props) {
         super(props);
         this.state = {

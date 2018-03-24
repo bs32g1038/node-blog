@@ -1,4 +1,4 @@
-import { matchRoutes } from 'react-router-config'
+import { matchRoutes } from '../router-util'
 
 function reactRouterFetch(routes, location, options) {
     const branch = matchRoutes(routes, location.pathname)
@@ -9,7 +9,11 @@ function reactRouterFetch(routes, location, options) {
                 return route.component.fetch && route.component.fetch(match, location, options)
             })
         if (promises && promises.length > 0) {
-            return Promise.all(promises)
+            return Promise.all(promises).then((arr) => {
+                let o = {};
+                arr.map((item) => Object.assign(o, item))
+                return o;
+            })
         } else {
             return Promise.resolve()
         }

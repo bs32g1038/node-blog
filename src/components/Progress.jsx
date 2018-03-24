@@ -1,7 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-// import './index.scss'
-class Progress extends React.Component {
+import { Component, render } from 'inferno';
+class Progress extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +16,8 @@ class Progress extends React.Component {
     start() {
         this.setState({
             show: true,
-            canSuccess: true
+            canSuccess: true,
+            percent: 0
         })
         if (this.state._timer) {
             clearInterval(this.state._timer)
@@ -100,7 +99,7 @@ Progress.newInstance = function newNotificationInstance(properties) {
     let props = properties || {};
     let div = document.createElement('div');
     document.body.appendChild(div);
-    const progress = ReactDOM.render(<Progress />, div);
+    const progress = render(<Progress />, div);
     return {
         start: () => progress.start(),
         finish: () => progress.finish()

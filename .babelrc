@@ -1,10 +1,12 @@
 {
-  "presets": [
-    ["env", {
-      "targets": {
-        "node": "current"
-      }
-    }], "react"
-  ],
-  "plugins": ["transform-decorators-legacy","transform-object-rest-spread"]
+    "presets": [
+        ["env", {
+            "targets": {
+                "node": "current"
+            }
+        }]
+    ],
+    "plugins": [
+        ["babel-plugin-inferno", { "imports": true }], "transform-decorators-legacy", "transform-object-rest-spread", "syntax-jsx"
+    ]
 }

@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Component, render } from 'inferno';
+import { Route,  Link } from 'inferno-router';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import axios from './utils/axios';
-import { renderRoutes, matchRoutes } from 'react-router-config'
-import reactRouterFetch from './utils/router-fetch';
+import { renderRoutes } from './router-util';
+import routerFetch from './utils/router-fetch';
 import routes from './router';
-// import progress from './components/progress';
+import progress from './components/Progress';
 
-class App extends React.Component {
+class App extends Component {
     constructor(props) {
-        super(props);        
+        super(props);
         this.state = {
-            categories: this.props.categories,
+            categories: [],
             previousLocation: null,
-            data: this.props.data,
+            data: null,
             isFetching: false
         };
     }
-    componentDidMount() {
-        const p = Promise.all([axios.get('/categories'), reactRouterFetch(routes, this.props.location)])
+    componentWillMount() {
+        const p = Promise.all([axios.get('/categories'), routerFetch(routes, this.props.location)])
         p.then(([resCategory, resArticle]) => {
             this.setState({
                 categories: resCategory.data,
@@ -29,20 +29,20 @@ class App extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         const navigated = nextProps.location !== this.props.location
+        progress.start()
         if (navigated && !this.state.isFetching) {
-            // progress.start()
             this.setState({
                 previousLocation: this.props.location,
                 isFetching: true
             })
-            reactRouterFetch(routes, nextProps.location)
+            routerFetch(routes, nextProps.location)
                 .then((data) => {
                     this.setState({
                         data,
                         previousLocation: null,
                         isFetching: false
                     })
-                    // progress.finish()
+                    progress.finish()
                 })
         }
     }

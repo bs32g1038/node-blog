@@ -63,7 +63,7 @@
 }
 
 .comments-item {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #F8F8F7;
     padding-bottom: 16px;
     margin-bottom: 16px;
     &:lash-child {
@@ -87,10 +87,6 @@
     font-size: 0.875;
 }
 
-.comments-list__info-reply {
-    float: right;
-}
-
 .comments-item-content {
     font-size: 14px;
     line-height: 1.5;
@@ -100,10 +96,10 @@
     padding: 5px 20px 5px 20px;
     margin-bottom: 10px;
     margin-left: 10px;
-    border-left: 4px solid #ccc;
-    border-right: 4px solid #ccc;
-    background-color: #edd4d4;
-    font-size: 0.875;
+    // border-left: 4px solid #ccc;
+    // border-right: 4px solid #ccc;
+    background-color: #F8F8F7;
+    font-size: 14px;
 }
 
 .comments-replay-box {

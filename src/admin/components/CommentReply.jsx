@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { withRouter } from 'inferno-router';
 import axios from '../utils/axios';
-import { withRouter } from "react-router-dom";
 import { parseTime } from '../utils/time';
 
-class CommentReply extends React.Component {
+class CommentReply extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -45,7 +45,6 @@ class CommentReply extends React.Component {
                         控制台----回复评论
                     </div>
                     <form onSubmit={(e) => this.publish(e)} className="form-horizontal">
-                        <div className="alert alert-warning text-center" role="alert"></div>
                         <div className="form-group">
                             <label className="control-label">昵称：</label>
                             <div>{comment.nickName}</div>
@@ -66,12 +65,11 @@ class CommentReply extends React.Component {
                             <label className="control-label">内容：</label>
                             <div>{comment.content}</div>
                         </div>
-                        <input type="hidden" name="reply" key={comment._id} defaultValue={comment._id} />
-                        <input type="hidden" name="article" key={comment.article && comment.article._id} defaultValue={comment.article && comment.article._id} />
+                        <input type="hidden" name="reply" defaultValue={comment._id} />
+                        <input type="hidden" name="article" defaultValue={comment.article && comment.article._id} />
                         <div className="form-group">
                             <label className="control-label">回复内容：</label>
                             <textarea
-                                key={comment._id}
                                 placeholder="请输入评论"
                                 name="content"
                                 style={{

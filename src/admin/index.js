@@ -1,9 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { BrowserRouter , Switch, Route } from 'react-router-dom';
+import {  render } from 'inferno';
+import { BrowserRouter, Switch } from 'inferno-router';
 import './styles/index.scss';
 import App from './App';
-ReactDOM.render(
+render(
     <BrowserRouter>
         <App />
     </BrowserRouter>,

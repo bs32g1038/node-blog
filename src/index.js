@@ -1,17 +1,13 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Component, render } from 'inferno';
+import { BrowserRouter, Route, Switch, Redirect } from 'inferno-router';
 import './styles/index.scss';
-import routes from './router';
-import { renderRoutes } from 'react-router-config'
-import App from './App';
-const initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data-json'));
-ReactDOM.hydrate (
+import App from './App'
+render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/blog" />} />
-        <Route path="/blog" component={()=> <App {...initialData}/>} />
+        <Route path="/blog" component={App} />
       </Switch>
     </BrowserRouter>,
-    document.getElementById('apps')
+    document.getElementById('app')
 );

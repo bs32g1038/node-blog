@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { Component } from 'inferno';
+import { withRouter } from 'inferno-router';
 import axios from '../utils/axios';
-import { withRouter } from "react-router-dom";
 const tokenKey = "node-blog-bs32g1038";
-class UserLogin extends React.Component {
+class UserLogin extends Component {
     constructor(props) {
         super(props);
     }

@@ -1,7 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
@@ -9,6 +11,12 @@ module.exports = merge(common, {
         path: path.resolve(__dirname, '../static'),
         publicPath: '/static/test',
         filename: '[name].bundle.js'
+    },
+    resolve: {
+        alias: {
+            "inferno": path.join(__dirname, "../node_modules/inferno/dist/inferno.js"),
+            "inferno-router": path.join(__dirname, "../node_modules/inferno-router/dist/inferno-router.js"),
+        },
     },
     devServer: {
         port: 3000,
@@ -42,7 +50,7 @@ module.exports = merge(common, {
         splitChunks: {
             cacheGroups: {
                 vendor: {
-                    test: /react|react-dom|react-router-dom|axios/, // you may add "vendor.js" here if you want to
+                    test: /inferno|inferno-router|axios/, // you may add "vendor.js" here if you want to
                     name: "vendor",
                     chunks: "initial",
                     enforce: true,

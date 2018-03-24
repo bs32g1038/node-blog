@@ -1,20 +1,20 @@
-import * as React from 'react';
 import axios from '../utils/axios';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom'
+import { Component } from 'inferno';
+import { Link } from 'inferno-router';
 import { parseTime, timeAgo } from '../utils/time';
 
-export default class Articles extends React.Component {
+export default class Articles extends Component {
 
     static fetch(match, location, options) {
         const q = queryString.parse(location.search);
         const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1, ...q };
-        return axios.get('/articles?' + queryString.stringify(query));
+        return axios.get('/articles?' + queryString.stringify(query)).then((_)=>({articles: _.data}));
     }
     
     render() {
-        let results = this.props.data;
-        let articles = results ? results[0].data : [];
+        let data = this.props.data;
+        let articles = data ? data.articles : [];
         return (
             <ul className="app-article-list">
                 {
