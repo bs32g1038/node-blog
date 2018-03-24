@@ -60,10 +60,9 @@ class GuestbookReply extends Component {
                         <div className="form-group">
                             <label className="control-label">回复内容：</label>
                             <textarea
-                                key={guestbook._id}
                                 placeholder="请输入文章内容摘要"
                                 name="replyContent"
-                                defaultValue={guestbook.replyContent}
+                                value={guestbook.replyContent}
                                 style={{
                                     minHeight: "80px",
                                     maxHeight: "115px",

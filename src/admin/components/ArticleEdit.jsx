@@ -105,6 +105,7 @@ class ArticleEdit extends Component {
     }
     render() {
         const article = this.state.article;
+        console.log(article)
         return (
             <div>
                  <div className="panel">
@@ -185,7 +186,7 @@ class ArticleEdit extends Component {
                             <textarea
                                 placeholder="请输入文章内容摘要"
                                 name="summary"
-                                defaultValue={article.summary}
+                                value={article.summary}
                                 style={{
                                     minHeight: "80px",
                                     maxHeight: "115px",

@@ -13,7 +13,6 @@ export default class Guestbooks extends Component {
     }
     generateGuestbookList(guestbooks = []) {
         const self = this;
-        console.log(guestbooks)
         return guestbooks.map((item) => (
             <tr key={item._id}>
                 <td>{item.nickName}</td>
