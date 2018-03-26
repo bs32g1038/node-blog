@@ -8,7 +8,7 @@ const uploadLocal = require('../middlewares/StoreFile');
 class UploadApi {
 
     @ReqRouter.POST('/image')
-    @ReqRouter.AUTH()
+    // @ReqRouter.AUTH()
     static async one(req, res, next) {
         return uploadLocal(req, res, next)
     }

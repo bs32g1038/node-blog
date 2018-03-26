@@ -17,6 +17,7 @@
     flex-direction: row;
     border-bottom: 5px solid #31AEFB;
     .person-base {
+        flex: 1 0 auto;
         .name {
             color: #31AEFB;
             font-size: 20px;

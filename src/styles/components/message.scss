@@ -22,7 +22,6 @@
     background: #fff;
     display: inline-block;
     pointer-events: all;
-    transition: opacity 1s ease-in;
 }
 
 .fade-enter {
@@ -32,3 +31,17 @@
 .fade-enter.active {
     opacity: 1;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.2s ease-in;
+} 

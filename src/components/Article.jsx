@@ -52,7 +52,7 @@ export default class Article extends Component {
     }
 
     static fetch(match, location, options) {
-        const query = { fields: '-summary,category.name' };
+        const query = { fields: '-summary,category.name', md: true };
         const id = match.params.id;
         const articlePrmoise = axios.get('/articles/' + id + '?' + queryString.stringify(query));
         const commentsPrmoise = axios.get('/comments?articleId=' + id);

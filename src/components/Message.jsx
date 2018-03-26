@@ -8,12 +8,15 @@ class Message extends Component {
             show: false
         }
     }
+    componentDidMount(){
+        document.getElementById('message').classList.add('fadeIn')
+    }
     render() {
         let { content, show } = this.state;
         return (
             <div className="message">
                 <div className="message-notice">
-                    <div className="message-notice-content">
+                    <div className="message-notice-content"  id="message">
                         <div className="message-custom-content message-info">
                             <i className="fa fa-info-circle fa-fw"></i>
                             <span> {content} </span>
@@ -44,9 +47,9 @@ Message.newInstance = function newNotificationInstance(properties) {
 export default {
     info(content) {
         const messageInstance = Message.newInstance({});
-        messageInstance.notice({ content, show: true })
+        messageInstance.notice({ content, show: true }) 
         setTimeout(() => {
             messageInstance.destroy();
-        }, 3 * 1000);
+        }, 2.5 * 1000);
     }
 };

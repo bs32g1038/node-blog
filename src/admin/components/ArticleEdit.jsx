@@ -1,7 +1,8 @@
 import { Component } from 'inferno';
 import { withRouter } from "inferno-router";
 import { Link } from 'inferno-router';
-import E from 'wangeditor';
+// import E from 'wangeditor';
+// import MdEdit from './MdEdit';
 import axios from '../utils/axios';
 class ArticleEdit extends Component {
     constructor(props, context) {
@@ -14,35 +15,35 @@ class ArticleEdit extends Component {
         }
     }
     componentDidMount() {
-        const elem = document.getElementById('editorElem')
-        const editor = new E(elem)
-        // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
-        editor.customConfig.onchange = html => {
-            this.setState({ editorContent: html })
-        }
-        editor.customConfig.uploadFileName = 'file'
-        editor.customConfig.uploadImgServer = '/api/upload/image?isEditor=true'
-        editor.customConfig.uploadImgHeaders = {
-            'authorization': sessionStorage.getItem("node-blog-bs32g1038")
-        }
-        editor.customConfig.menus = [
-            'head',  // 标题
-            'bold',  // 粗体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'foreColor',  // 文字颜色
-            'backColor',  // 背景颜色
-            'link',  // 插入链接
-            'list',  // 列表
-            'justify',  // 对齐方式
-            'quote',  // 引用
-            'image',  // 插入图片
-            'table',  // 表格
-            'video',  // 插入视频
-            'code',  // 插入代码
-        ]
-        editor.create();
+        // const elem = document.getElementById('editorElem')
+        // const editor = new E(elem)
+        // // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
+        // editor.customConfig.onchange = html => {
+        //     this.setState({ editorContent: html })
+        // }
+        // editor.customConfig.uploadFileName = 'file'
+        // editor.customConfig.uploadImgServer = '/api/upload/image?isEditor=true'
+        // editor.customConfig.uploadImgHeaders = {
+        //     'authorization': sessionStorage.getItem("node-blog-bs32g1038")
+        // }
+        // editor.customConfig.menus = [
+        //     'head',  // 标题
+        //     'bold',  // 粗体
+        //     'italic',  // 斜体
+        //     'underline',  // 下划线
+        //     'strikeThrough',  // 删除线
+        //     'foreColor',  // 文字颜色
+        //     'backColor',  // 背景颜色
+        //     'link',  // 插入链接
+        //     'list',  // 列表
+        //     'justify',  // 对齐方式
+        //     'quote',  // 引用
+        //     'image',  // 插入图片
+        //     'table',  // 表格
+        //     'video',  // 插入视频
+        //     'code',  // 插入代码
+        // ]
+        // editor.create();
         const { match } = this.props;
         const self = this;
         if (match.params.id) {
@@ -54,7 +55,7 @@ class ArticleEdit extends Component {
                         editorContent: aRes.data.content,
                         screenshot: aRes.data.screenshot,
                     });
-                    editor.txt.html(aRes.data.content)
+                    // editor.txt.html(aRes.data.content)
                 }));
         } else {
             axios.get('/categories/').then((res) => {
@@ -103,9 +104,13 @@ class ArticleEdit extends Component {
     updateArticle(id, data) {
         return axios.put('/articles/' + id, data)
     }
+    onChange(value){
+        this.setState({
+            editorContent: value
+        })
+    }
     render() {
-        const article = this.state.article;
-        console.log(article)
+        const article = this.state.article; 
         return (
             <div>
                  <div className="panel">
@@ -195,14 +200,15 @@ class ArticleEdit extends Component {
                         </div>
                         <div className="form-group">
                             <label className="control-label col-sm-3">文章详情：</label>
-                            <textarea name="content" value={this.state.editorContent} style={{ display: "none" }}></textarea>
+                            {/* <textarea name="content" value={this.state.editorContent} style={{ display: "none" }}></textarea> */}
                             {/* 将生成编辑器 */}
-                            <div
+                            {/* <div
                                 id="editorElem"
                                 style={{
                                     textAlign: 'left',
                                     width: "650px"
-                                }}></div>
+                                }}></div> */}
+                                {/* <MdEdit name="content" value={this.state.editorContent} onChange={(value)=>this.onChange(value)}/> */}
 
                         </div>
                         <div className="form-group">

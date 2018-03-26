@@ -4,6 +4,8 @@ const ReqRouter = require('./decorator-router');
 const models = require('../models');
 const config = require('../config');
 const util = require('util');
+const MarkdownIt = require('markdown-it');
+const markdown = new MarkdownIt();
 
 const pageSchema = {
     limit: Joi.number().integer().min(1).max(100).default(10),
@@ -49,9 +51,12 @@ class ArticleApi {
         const { _id } = req.params;
         const { fields } = req.query;
         const fds = handleFields(fields);
-        const article = await models.Article.findByIdAndUpdate(_id, { $inc: { viewsCount: 1 } }, {
+        let article = await models.Article.findByIdAndUpdate(_id, { $inc: { viewsCount: 1 } }, {
             select: fds.article
         }).populate('category', fds.category);
+        if(req.query.md){
+            article.content = markdown.render(article.content);
+        }
         return res.json(article)
     }
 
