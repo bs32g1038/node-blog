@@ -4,6 +4,7 @@ services:
     build: .
     volumes:
       - "./static/upload:/code/static/upload"
+      - "./static:/code/static"
     command: "npm run start"
     depends_on:
       - db

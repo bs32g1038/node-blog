@@ -16,7 +16,6 @@ let uploadLocal = function(req, res, next) {
         }
         const width = req.query.w;
         const height = req.query.h;
-        const isEditor = req.query.isEditor;
         const date = new Date(); //获取到当前的系统时间
         const fileName = utils.md5(utils.YYYYMMDD() + String(req.file.size) + req.file.originalname) + path.extname(req.file.originalname);
         const sharpImg = sharp(req.file.buffer);
@@ -34,9 +33,6 @@ let uploadLocal = function(req, res, next) {
         }
         sharpImg.toFile(path.resolve(__dirname, basePath + '/' + fileName)).then((info) => {
             const url = '/static/upload/' + date.getFullYear() + '/' + fileName;
-            if (isEditor) {
-                return res.json({ errno: 0, data: [url] });
-            }
             return res.json({ url });
         }).catch((err) => {
             logger.info(err)

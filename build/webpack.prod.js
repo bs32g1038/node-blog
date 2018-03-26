@@ -36,6 +36,9 @@ module.exports = merge(common, {
                     }
                 }
             }, 'sass-loader']
+        }, {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
         }]
     }
 });

@@ -1,8 +1,7 @@
 import { Component } from 'inferno';
 import { withRouter } from "inferno-router";
 import { Link } from 'inferno-router';
-// import E from 'wangeditor';
-// import MdEdit from './MdEdit';
+import MdEdit from './MdEdit';
 import axios from '../utils/axios';
 class ArticleEdit extends Component {
     constructor(props, context) {
@@ -15,35 +14,6 @@ class ArticleEdit extends Component {
         }
     }
     componentDidMount() {
-        // const elem = document.getElementById('editorElem')
-        // const editor = new E(elem)
-        // // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
-        // editor.customConfig.onchange = html => {
-        //     this.setState({ editorContent: html })
-        // }
-        // editor.customConfig.uploadFileName = 'file'
-        // editor.customConfig.uploadImgServer = '/api/upload/image?isEditor=true'
-        // editor.customConfig.uploadImgHeaders = {
-        //     'authorization': sessionStorage.getItem("node-blog-bs32g1038")
-        // }
-        // editor.customConfig.menus = [
-        //     'head',  // 标题
-        //     'bold',  // 粗体
-        //     'italic',  // 斜体
-        //     'underline',  // 下划线
-        //     'strikeThrough',  // 删除线
-        //     'foreColor',  // 文字颜色
-        //     'backColor',  // 背景颜色
-        //     'link',  // 插入链接
-        //     'list',  // 列表
-        //     'justify',  // 对齐方式
-        //     'quote',  // 引用
-        //     'image',  // 插入图片
-        //     'table',  // 表格
-        //     'video',  // 插入视频
-        //     'code',  // 插入代码
-        // ]
-        // editor.create();
         const { match } = this.props;
         const self = this;
         if (match.params.id) {
@@ -55,7 +25,6 @@ class ArticleEdit extends Component {
                         editorContent: aRes.data.content,
                         screenshot: aRes.data.screenshot,
                     });
-                    // editor.txt.html(aRes.data.content)
                 }));
         } else {
             axios.get('/categories/').then((res) => {
@@ -84,7 +53,7 @@ class ArticleEdit extends Component {
         }
     }
     publish(e) {
-        const { match, location, history } = this.props;
+        const { match, history } = this.props;
         const data = {};
         const elements = e.currentTarget.elements;
         for (let i = 0; i < elements.length; i++) {
@@ -92,10 +61,10 @@ class ArticleEdit extends Component {
             ele.name && (data[ele.name] = ele.value);
         }
         const p = match.params.id ? this.updateArticle(match.params.id, data) : this.createArticle(data)
-        p.then((res) => {
-            alert("提交成功")
+        p.then(() => {
+            alert("提交成功");
             history.push('/blog/admin/articles');
-        })
+        });
         return e.preventDefault()
     }
     createArticle(data) {
@@ -104,16 +73,16 @@ class ArticleEdit extends Component {
     updateArticle(id, data) {
         return axios.put('/articles/' + id, data)
     }
-    onChange(value){
+    onChange(value) {
         this.setState({
             editorContent: value
         })
     }
     render() {
-        const article = this.state.article; 
+        const article = this.state.article;
         return (
             <div>
-                 <div className="panel">
+                <div className="panel">
                     <Link className="btn is-primary" to="/blog/admin/articles/edit">
                         <span className="fa fa-plus-square">&nbsp;</span>
                         添加文档
@@ -200,16 +169,7 @@ class ArticleEdit extends Component {
                         </div>
                         <div className="form-group">
                             <label className="control-label col-sm-3">文章详情：</label>
-                            {/* <textarea name="content" value={this.state.editorContent} style={{ display: "none" }}></textarea> */}
-                            {/* 将生成编辑器 */}
-                            {/* <div
-                                id="editorElem"
-                                style={{
-                                    textAlign: 'left',
-                                    width: "650px"
-                                }}></div> */}
-                                {/* <MdEdit name="content" value={this.state.editorContent} onChange={(value)=>this.onChange(value)}/> */}
-
+                            <MdEdit name="content" value={this.state.editorContent} onChange={(value) => this.onChange(value)} />
                         </div>
                         <div className="form-group">
                             <label className="control-label col-sm-3">操作：</label>

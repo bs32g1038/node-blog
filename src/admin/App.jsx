@@ -3,8 +3,8 @@ import { Route, Switch, Redirect, withRouter } from 'inferno-router';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import Articles from './components/Articles';
-import ArticleEdit from './components/ArticleEdit';
-import MdEdit from './components/MdEdit';
+import asyncComponent from './components/asyncComponent';
+const ArticleEdit = asyncComponent(()=>import('./components/ArticleEdit'));
 import Guestbooks from './components/Guestbooks';
 import GuestbookReply from './components/GuestbookReply';
 import Categories from './components/Categories';
@@ -33,7 +33,6 @@ class App extends Component {
             <div className="app-main">
                 <AppHeader />
                 <Switch>
-                    <Route exact path="/blog/admin/edit" component={MdEdit} />
                     <Route exact path="/blog/admin/login" component={Login} />
                     <Route exact path="/blog/admin" component={this.check(Articles)} />
                     <Route exact path="/blog/admin/articles" component={this.check(Articles)} />

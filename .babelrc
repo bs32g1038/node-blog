@@ -7,6 +7,6 @@
         }]
     ],
     "plugins": [
-        ["babel-plugin-inferno", { "imports": true }], "transform-decorators-legacy", "transform-object-rest-spread", "syntax-jsx"
+        ["babel-plugin-inferno", { "imports": true }], "transform-decorators-legacy", "transform-object-rest-spread", "syntax-jsx", "syntax-dynamic-import"
     ]
 }

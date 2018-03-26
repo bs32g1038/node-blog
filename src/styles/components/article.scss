@@ -35,40 +35,39 @@
         }
     }
 }
-
-.article-body {
-    text-align: justify;
-    font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
-    font-size: 14px;
-    box-shadow: initial;
-    border-radius: initial;
-    h2,
-    h3,
-    h4,
-    h5 {
-        margin: 20px 0 15px;
-    }
-    h2 {
-        font-size: 20px;
-    }
-    h3 {
-        font-size: 18px;
-    }
-    h4 {
-        font-size: 16px;
-    }
-    p {
-        margin: 0 0 25px 0;
-    }
-    pre {
-        overflow: auto;
-        font-size: 13px;
-        color: #4d4d4c;
-        background: #f7f7f7;
-        line-height: 1.6;
-        padding: 10px;
-    }
-}
+// .article-body {
+//     text-align: justify;
+//     font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
+//     font-size: 14px;
+//     box-shadow: initial;
+//     border-radius: initial;
+//     h2,
+//     h3,
+//     h4,
+//     h5 {
+//         margin: 20px 0 15px;
+//     }
+//     h2 {
+//         font-size: 20px;
+//     }
+//     h3 {
+//         font-size: 18px;
+//     }
+//     h4 {
+//         font-size: 16px;
+//     }
+//     p {
+//         margin: 0 0 25px 0;
+//     }
+//     pre {
+//         overflow: auto;
+//         font-size: 13px;
+//         color: #4d4d4c;
+//         background: #f7f7f7;
+//         line-height: 1.6;
+//         padding: 10px;
+//     }
+// }
 
 .post-copyright {
     color: #444;
@@ -78,3 +77,6 @@
     font-size: 14px;
     background-color: #f9f9f9;
 }
+
+// 导入github样式
+@import '../common/github-markdown.scss';
