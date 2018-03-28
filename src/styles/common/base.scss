@@ -18,7 +18,6 @@ body {
     line-height: $line-height-base;
     background: #f5f7f9;
     margin: 0;
-    // line-height: 2;
     color: #444;
 }
 
@@ -68,6 +67,10 @@ li {
     list-style: none;
 }
 
+.markdown-body li {
+    list-style: inherit;
+}
+
 .app {
     height: $size-100;
     width: $main-width;
@@ -79,9 +82,9 @@ li {
     font-size: 14px;
     color: #333;
     padding: 5px;
-    color: #fff;
     text-align: center;
-    background-image: url(/static/images/tip.jpg)
+    background-color: #efefef;
+    border-left: 2px solid #67CCEA;
 }
 
 .app-category-list {
