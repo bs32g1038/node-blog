@@ -28,8 +28,8 @@ export default class Articles extends Component {
                                     </div>
                                     <Link className="article-title" to={`/blog/articles/${item._id}`}>{item.title}</Link>
                                     <div className="article-meta">
-                                        <a href="#">评论：{item.commentCount}</a> <em>·</em>
-                                        <a href="#">阅读：{item.viewsCount}</a>
+                                        <a href="javascript:;">评论：{item.commentCount}</a> <em>·</em>
+                                        <a href="javascript:;">阅读：{item.viewsCount}</a>
                                         <em>·</em>
                                         <span>分类：{item.category.name}</span>
                                     </div>
