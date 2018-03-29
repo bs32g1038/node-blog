@@ -1,7 +1,6 @@
 import { Component } from 'inferno';
 import Axios from 'axios';
 import { parseTime } from '../utils/time';
-
 // example
 // {
 //     src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
