@@ -189,7 +189,7 @@ export default class Music extends Component {
                 <div className="app-music-wrap">
                     <div className="app-music-header">
                         <div className="app-music-cover">
-                            <img src={info.coverImgUrl} alt={info.name} />
+                            <img src={info.coverImgUrl + '?param=200y200'} alt={info.name} />
                         </div>
                         <div className="app-music-sheet">
                             <div className="sheet-title">{info.name}</div>
