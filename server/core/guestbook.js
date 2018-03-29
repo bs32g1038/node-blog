@@ -30,7 +30,8 @@ class GuestbookApi {
         const fields = auth(req) ? '' : '-email';
         res.json(await models.Guestbook.find({}, fields, {
             skip: (pageInfo.value.page - 1) * pageInfo.value.limit,
-            limit: pageInfo.value.limit
+            limit: pageInfo.value.limit,
+            sort: { createdAt: -1 }
         }));
     }
 
@@ -44,10 +45,13 @@ class GuestbookApi {
     @ReqRouter.POST()
     static async create(req, res, next) {
         const realIP = getIpAddress(req);
-        const result = await axios.get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&&ip=' + "183.48.33.250")
+        const result = await axios.get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&&ip=' + req.ip)
         if (result.data.province || result.data.city) {
             Object.assign(req.body, { location: result.data.province + " " + result.data.city })
         }
+        Object.assign(req.body, {
+            avatar: `/static/images/avatars/a-${Math.floor(Math.random() * 20)}.png`,
+        })
         const article = await models.Guestbook.create(req.body)
         res.json({ _id: article._id });
     }

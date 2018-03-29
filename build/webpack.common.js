@@ -17,7 +17,8 @@ module.exports = {
             filename: "admin.html",
             template: path.resolve(__dirname, '../src/admin/index.html'),
             hash: true
-        })
+        }),
+        new webpack.optimize.ModuleConcatenationPlugin()
     ],
     module: {
         rules: [{

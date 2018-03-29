@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 let GuestbookSchema = new mongoose.Schema({
+    avatar: {
+        type: String
+    },
     nickName: {
         type: String,
         required: true

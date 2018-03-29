@@ -12,6 +12,7 @@ module.exports = merge(common, {
     },
     plugins: [
         new UglifyJSPlugin({
+            parallel: true,
             uglifyOptions: {
                 output: {
                     comments: false,

@@ -5,6 +5,15 @@
     flex: 1 0 auto
 }
 
+.guestbook-list-wrap {
+    display: flex;
+}
+
+.guestbook-list-left,
+.guestbook-list-right {
+    flex: 1 0 auto;
+}
+
 .guestbook-item {
     padding: 20px 25px;
     position: relative;
@@ -12,20 +21,43 @@
 
 .guestbook-user {
     border-radius: 5px;
+    width: 320px;
     &.blog {
         float: right;
         position: relative;
     }
     &-content {
         font-size: 14px;
-        padding: 10px;
+        padding: 10px 0;
         border-radius: 4px;
-        border: 1px solid #ccc
+        line-height: 1.8
     }
     &-mata {
-        font-size: 12px;
+        font-size: 14px;
         color: #999;
         padding-top: 5px;
+        display: flex;
+        .avatar {
+            height: 24px;
+            width: 24px;
+            img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                background-color: #f2f2f1;
+                border-radius: 50%;
+            }
+        }
+        .nick-name {
+            color: #42b983;
+            padding-left: 5px;
+            flex: 1 0 auto;
+        }
+        .time,
+        .map {
+            font-size: 12px;
+            padding-left: 5px;
+        }
     }
 }
 
