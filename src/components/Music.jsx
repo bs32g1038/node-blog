@@ -1,5 +1,16 @@
 import { Component } from 'inferno';
-export default class Music extends  Component {
+import Axios from 'axios';
+import { parseTime } from '../utils/time';
+
+// example
+// {
+//     src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
+//     name: "生生",
+//     singer: "林俊杰",
+//     album: "《新地球》",
+//     time: "04:18"
+// }
+export default class Music extends Component {
     constructor(props) {
         super(props);
         const audio = document.getElementsByTagName('audio')[0] || document.body.appendChild(document.createElement('audio'))
@@ -13,7 +24,13 @@ export default class Music extends  Component {
             isShowList: true,
             volume: 1,
             timeupdateFn: null,
-            endedFn: null
+            endedFn: null,
+            info: {
+                coverImgUrl: '/static/images/bg.jpg', 
+                name: 'LIZCBLOG博客音乐',
+                createTime: '2017-1-30',
+                description: '本播放器由react强力驱动，功能完整，欢迎来点歌噢',
+            }
         }
     }
     calcTime(time) {
@@ -139,28 +156,18 @@ export default class Music extends  Component {
         const endedFn = () => this.playMode(this.state.playMode)
         this.state.audio.addEventListener('timeupdate', timeupdateFn)
         this.state.audio.addEventListener('ended', endedFn);
-        this.setState({
-            timeupdateFn,
-            endedFn,
-            playList: [{
-                src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
-                name: "生生",
-                singer: "林俊杰",
-                album: "《新地球》",
-                time: "04:18"
-            }, {
-                src: "http://61.144.3.98:8084/SXC_I_1704463232_16430776272680940686/m10.music.126.net/20180318155620/a307f5b0956399b3d0c23cedd4ee5a58/ymusic/131c/9e38/8940/8750eafcf2191e89caca8c158b152243.mp3",
-                name: "那些年",
-                singer: "胡夏",
-                album: "那些年，我们一起追的女孩 电影原声带",
-                time: "06:11"
-            }, {
-                src: "http://61.144.3.105:8084/SXC_H_1704463232_17924146551797217188/m10.music.126.net/20180318155940/b774e4fe5cdf07fb248d217bcd76cfea/ymusic/daf3/f49c/a530/c54eea6d4cf849b1776d295a7e850778.mp3",
-                name: "愿得一人心",
-                singer: "李行亮",
-                album: "《愿得一人心》",
-                time: "04:37"
-            }]
+        Axios.get('/api/playlist/detail?id=360062344').then((res)=>{
+            this.setState({
+                timeupdateFn,
+                endedFn,
+                playList: res.data.tracks,
+                info: {
+                    coverImgUrl: res.data.coverImgUrl, 
+                    name: res.data.name,
+                    createTime: parseTime(res.data.createTime, 'y-m-d'),
+                    description: res.data.description,
+                }
+            })
         })
     }
     componentWillUnmount() {
@@ -169,55 +176,24 @@ export default class Music extends  Component {
         document.body.removeChild(this.state.audio)
     }
     render() {
+        const info = this.state.info
         return (
             <div className="app-music">
                 <div className="music-top-tip">基于react的音乐播放器</div>
                 <div className="app-music-wrap">
                     <div className="app-music-header">
                         <div className="app-music-cover">
-                            <img src="/static/images/bg.jpg" alt="" />
+                            <img src={info.coverImgUrl} alt={info.name} />
                         </div>
                         <div className="app-music-sheet">
-                            <div className="sheet-title">LIZCBLOG博客音乐</div>
-                            <div className="sheet-time"><span>创建时间：</span>2017-1-30</div>
-                            <p className="sheet-summary"> 本播放器由react强力驱动，功能完整，欢迎来点歌噢</p>
+                            <div className="sheet-title">{info.name}</div>
+                            <div className="sheet-time"><span>创建时间：</span>{info.createTime}</div>
+                            <p className="sheet-summary">{info.description}</p>
                         </div>
                         <div className="app-sheet-sign">
                             歌单
                         </div>
                     </div>
-                    {
-                        this.state.isShowList && <ul className="app-music-list">
-                            <li className="app-music-item">
-                                <div className="song-index">索引</div>
-                                <div className="song-name">歌曲名称</div>
-                                <div className="song-singer">歌手</div>
-                                <div className="song-album">专辑</div>
-                                <div className="song-duration">时长</div>
-                            </li>
-                            {
-                                this.state.playList.map((item, index) => (
-                                    <li
-                                        className="app-music-item"
-                                        key={index}
-                                        onClick={() => this.play(index)}
-                                    >
-                                        <div className="song-index">{index + 1}</div>
-                                        <div className="song-name">{item.name}</div>
-                                        <div className="song-singer">{item.singer}</div>
-                                        <div className="song-album">{item.album}</div>
-                                        <div className="song-duration">{item.time}</div>
-                                        {
-                                            (this.state.playIndex == index)
-                                            && !this.state.audio.paused &&
-                                            <div className="song-animate"><i></i><i></i><i></i></div>
-                                        }
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    }
-
                     <div className="music-play-area">
                         <a title="上一曲" onClick={() => this.playPre()}><i className="fa fa-step-backward"></i></a>
                         {
@@ -263,6 +239,37 @@ export default class Music extends  Component {
                         <a title="歌词"><span className="word">词</span></a>
                         <a title="歌曲列表" onClick={() => this.showPlayList()}><i className="fa fa-bars"></i></a>
                     </div>
+                    {
+                        this.state.isShowList && <ul className="app-music-list">
+                            <li className="app-music-item">
+                                <div className="song-index">索引</div>
+                                <div className="song-name">歌曲名称</div>
+                                <div className="song-singer">歌手</div>
+                                <div className="song-album">专辑</div>
+                                <div className="song-duration">时长</div>
+                            </li>
+                            {
+                                this.state.playList.map((item, index) => (
+                                    <li
+                                        className="app-music-item"
+                                        key={index}
+                                        onClick={() => this.play(index)}
+                                    >
+                                        <div className="song-index">{index + 1}</div>
+                                        <div className="song-name">{item.name}</div>
+                                        <div className="song-singer">{item.singer}</div>
+                                        <div className="song-album">{item.album}</div>
+                                        <div className="song-duration">{item.time}</div>
+                                        {
+                                            (this.state.playIndex == index)
+                                            && !this.state.audio.paused &&
+                                            <div className="song-animate"><i></i><i></i><i></i></div>
+                                        }
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    }
                 </div>
             </div>
         )

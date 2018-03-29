@@ -36,6 +36,7 @@ require('./core/category');
 require('./core/comment');
 require('./core/guestbook');
 require('./core/upload');
+require('./core/music');
 if (process.env.NODE_ENV === "production") {
     require('./core/ssr');
 }
@@ -54,4 +55,4 @@ app.use((err, req, res, next) => {
     return res.status(500).send('服务器异常！');
 });
 http.createServer(app).listen(config.server.port);
-logger.log(`web server start--http://${config.server.hostname}:${config.server.port}`)
+console.log(`web server start--http://${config.server.hostname}:${config.server.port}`)
