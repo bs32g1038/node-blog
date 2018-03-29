@@ -13,20 +13,19 @@ import { parseTime } from '../utils/time';
 export default class Music extends Component {
     constructor(props) {
         super(props);
-        const audio = document.getElementsByTagName('audio')[0] || document.body.appendChild(document.createElement('audio'))
         this.state = {
-            audio,
+            audio: {},
             musicCurrentTime: 0,
             indicator: 0,
             playList: [],
-            playIndex: audio.getAttribute('playIndex') || -1,
+            playIndex: -1,
             playMode: 0,
             isShowList: true,
             volume: 1,
             timeupdateFn: null,
             endedFn: null,
             info: {
-                coverImgUrl: '/static/images/bg.jpg', 
+                coverImgUrl: '/static/images/bg.jpg',
                 name: 'LIZCBLOG博客音乐',
                 createTime: '2017-1-30',
                 description: '本播放器由react强力驱动，功能完整，欢迎来点歌噢',
@@ -151,29 +150,36 @@ export default class Music extends Component {
         document.onmousemove = (e) => onmousemove(e)
     }
     componentDidMount() {
-        this.state.audio.volume = 1;
+        // 已存在播放器直接加载播放器中的数据
+        let audio = document.getElementsByTagName('audio')[0];
+        if (audio) {
+            this.setState(Object.assign(JSON.parse(audio.getAttribute('state')), { audio }))
+        } else {
+            audio = document.body.appendChild(document.createElement('audio'))
+            this.setState({ audio })
+            this.state.audio.volume = 1;
+            Axios.get('/api/playlist/detail?id=2161739123').then((res) => {
+                this.setState({
+                    timeupdateFn,
+                    endedFn,
+                    playList: res.data.tracks,
+                    info: {
+                        coverImgUrl: res.data.coverImgUrl,
+                        name: res.data.name,
+                        createTime: parseTime(res.data.createTime, 'y-m-d'),
+                        description: res.data.description,
+                    }
+                })
+            })
+        }
+        // 为audio捆绑事件
         const timeupdateFn = () => this.timeupdate()
         const endedFn = () => this.playMode(this.state.playMode)
-        this.state.audio.addEventListener('timeupdate', timeupdateFn)
-        this.state.audio.addEventListener('ended', endedFn);
-        Axios.get('/api/playlist/detail?id=360062344').then((res)=>{
-            this.setState({
-                timeupdateFn,
-                endedFn,
-                playList: res.data.tracks,
-                info: {
-                    coverImgUrl: res.data.coverImgUrl, 
-                    name: res.data.name,
-                    createTime: parseTime(res.data.createTime, 'y-m-d'),
-                    description: res.data.description,
-                }
-            })
-        })
+        audio.ontimeupdate = timeupdateFn;
+        audio.onended = endedFn;
     }
     componentWillUnmount() {
-        this.state.audio.removeEventListener('timeupdate', this.state.timeupdateFn);
-        this.state.audio.removeEventListener('ended', this.state.endedFn);
-        document.body.removeChild(this.state.audio)
+        this.state.audio.setAttribute('state', JSON.stringify(this.state));
     }
     render() {
         const info = this.state.info
