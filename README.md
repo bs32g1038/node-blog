@@ -6,7 +6,9 @@
 
 **screenshot**
 
-![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot.jpg?raw=true)
+![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot.png?raw=true)
+
+![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot-back.png?raw=true)
 
 **Project introduction：**
 
