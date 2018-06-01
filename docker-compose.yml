@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  blog:
+    build: .
+    image: blog-api:1.0
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - db
+    volumes:
+      - ./logs/blog:/code/logs/blog
+      - ./static/upload:/code/static/upload
+    command: npm run start
+  db:
+    image: mongo:3.2
+    volumes:
+      - "./mongo-db:/data/db"
