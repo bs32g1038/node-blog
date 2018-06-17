@@ -1,0 +1,90 @@
+.loginMask {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.loginPanel {
+    height: 200px;
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 8888;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.tip {
+    text-align: center
+}
+
+.tabUserLogin {
+    color: #999;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.tabUserRegister {
+    color: #999;
+    cursor: pointer;
+}
+
+.active {
+    color: #5e7fe5;
+}
+
+.group {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.label {
+    color: #9e9e9e;
+    display: flex;
+    padding: 3px 0 3px 12px;
+    white-space: nowrap;
+}
+
+.red {
+    color: #f90000;
+}
+
+.input {
+    border: none;
+    color: #515151;
+    flex: 1 0 auto;
+    margin-left: -1px;
+    padding: 3px 0;
+    height: 36px;
+    border-bottom: 1px dashed #ddd;
+    &:focus {
+        outline: none
+    }
+}
+
+.loginBtn {
+    background-color: rgba(2, 117, 216, .5);
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 12px;
+    text-align: center;
+    width: 100%;
+}
+
+.footer {
+    margin: 0 20px;
+}

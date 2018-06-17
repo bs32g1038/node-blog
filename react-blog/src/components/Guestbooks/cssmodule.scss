@@ -1,0 +1,65 @@
+.guestbook {
+    background-color: #fff;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column
+}
+
+.resume {
+    font-size: 24px;
+    text-align: center
+}
+
+.formInline,
+.main {
+    display: flex
+}
+
+.guestbookItem {
+    padding: 20px 25px;
+    position: relative;
+    width: 400px
+}
+
+.userMata {
+    color: #999;
+    display: flex;
+    font-size: 14px;
+    padding-top: 5px
+}
+
+.avatar {
+    height: 24px;
+    width: 24px
+}
+
+.avatarImg {
+    background-color: #f2f2f1;
+    border-radius: 50%;
+    display: block;
+    height: 100%;
+    width: 100%
+}
+
+.nickName {
+    color: #42b983;
+    flex: 1 0 auto;
+    padding-left: 5px
+}
+
+.userContent {
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.8;
+    padding: 10px 0
+}
+
+.time,
+.map {
+    font-size: 12px;
+    padding-left: 5px
+}
+
+.form {
+    padding: 20px
+}

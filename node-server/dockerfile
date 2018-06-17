@@ -1,0 +1,5 @@
+FROM node:8.11.1-alpine
+WORKDIR /code
+COPY ./package.json /code
+RUN npm install --production
+COPY . /code

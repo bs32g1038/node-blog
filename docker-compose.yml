@@ -1,18 +1,30 @@
 version: '3.4'
 services:
-  blog:
-    build: .
-    image: blog-api:1.0
-    ports:
-      - 80:80
-      - 443:443
+  server:
+    build: ./server
     depends_on:
       - db
     volumes:
       - ./logs/blog:/code/logs/blog
       - ./static/upload:/code/static/upload
     command: npm run start
+  server-extend:
+    build: ./server-extend
+    volumes:
+      - ./logs/blog:/code/logs/blog
+      - ./static/upload:/code/static/upload
+    command: npm run start
+  nginx:
+    image: nginx:1.14.0-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./logs:/var/log/nginx
+      - ./static:/etc/nginx/static
+      - ./nginx/certificate:/etc/nginx/certificate
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
   db:
     image: mongo:3.2
     volumes:
-      - "./mongo-db:/data/db"
+      - mongodata:/data/db

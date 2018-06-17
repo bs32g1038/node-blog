@@ -1,0 +1,66 @@
+.article {
+    background-color: #fff;
+}
+
+.inner {
+    max-width: 980px;
+    padding: 20px 40px 20px 40px;
+}
+
+.active {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 5px;
+}
+
+.header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.title {
+    word-break: break-word;
+    margin: 10px 0;
+    font-size: 26px;
+}
+
+.titleLink {
+    display: inline-block;
+    position: relative;
+    color: rgb(85, 85, 85);
+    border-bottom: none;
+    vertical-align: top;
+}
+
+.meta {
+    margin: 3px 0px 6px;
+    color: rgb(153, 153, 153);
+    font-family: Monda, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 12px;
+    span {
+        padding: 0 5px;
+    }
+}
+
+.comments {
+    margin-top: 20px;
+}
+
+.tip {
+    color: rgba(51, 51, 51, 0.8);
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+}
+
+.copyright {
+    color: #444;
+    margin: 28px 0 0;
+    padding: 7px 14px;
+    list-style: none;
+    font-size: 12px;
+    background-color: #efefef;
+}
+
+// 导入github样式
+// @import '../common/github-markdown.scss';

@@ -1,0 +1,53 @@
+.TopSidebar {
+    height: 55px;
+    display: flex;
+    background-color: #639EE1;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.mainBtn {
+    flex: 1 0 auto;
+    justify-content: center;
+    display: flex;
+}
+
+.btn {
+    font-size: 16px;
+    margin: 0 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btnActive {
+    color: #555;
+}
+
+.toolBtn {
+    padding-right: 5px;
+    display: flex;
+    >a {
+        display: block;
+        font-size: 16px;
+        margin: 0 10px;
+        >i {
+            color: #fff;
+        }
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.avatarImg {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
