@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const articleApi = require('./core/article');
 const categoryApi = require('./core/category');
 const commentApi = require('./core/comment');
@@ -104,39 +102,6 @@ router.post('/api/upload/image', authMiddlware, uploadApi.uploadSingalImage);
  * RSS源生成
  */
 router.get('/RSS', RSS.index);
-
-/**
- * 聊天室api
- */
-
-// 聊天室
-const groupApi = require('./core/chatroom/group');
-const UserApi = require('./core/chatroom/user');
-
-
-router.get('/api/chatroom/groups', groupApi.list);
-router.get('/api/chatroom/groups/:_id', groupApi.one);
-router.post('/api/chatroom/groups', groupApi.create);
-router.put('/api/chatroom/groups/:_id', groupApi.update);
-router.delete('/api/chatroom/groups/:_id', groupApi.delete);
-
-router.get('/api/chatroom/users', UserApi.list);
-router.post('/api/chatroom/users/register', UserApi.register);
-router.post('/api/chatroom/users/login', UserApi.login);
-
-/**
- * 生产环境下读取html静态文件
- */
-if (process.env.NODE_ENV === 'production') {
-    const indexHtml = fs.readFileSync(path.resolve(__dirname, '../static/app/index.html'), 'utf8');
-    const adminHtml = fs.readFileSync(path.resolve(__dirname, '../static/app/admin.html'), 'utf8');
-    router.get('/blog/admin', function (req, res, next) {
-        res.send(adminHtml);
-    });
-    router.get('/', function (req, res, next) {
-        res.send(indexHtml);
-    });
-}
 
 // 导出路由
 module.exports = router;

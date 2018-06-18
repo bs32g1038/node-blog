@@ -16,7 +16,6 @@ export default class AppHeader extends Component {
                     <Link className={styles.navLink} to="/blog/about"><i className="fa fa-user fa-fw"></i>关于</Link>
                     <Link className={styles.navLink} to="/blog/music"><i className="fa fa-music fa-fw"></i>音乐</Link>
                     <Link className={styles.navLink} to="/blog/links"><i className="fa fa-globe fa-fw"></i>友链</Link>
-                    <Link className={styles.navLink} to="/blog/chatroom"><i className="fa fa-comments fa-fw"></i>聊天室</Link>
                     <a className={styles.navLink} href="javasript:;"><i className="fa fa-search fa-fw"></i>搜索</a>
                     <a className={styles.navLink} href="/RSS" rel="noopener noreferrer" target="_blank"><i className="fa fa-rss fa-fw"></i>RSS</a>
                     <a className={styles.navLink + ' ' + styles.github} href={siteInfo.github} rel="noopener noreferrer" target="_blank">

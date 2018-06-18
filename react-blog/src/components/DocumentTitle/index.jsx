@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
+import config from '../../config';
 export default class DocumentTitle extends Component {
     setTitle() {
         document.title = this.props.title
-            ? this.props.title + ' | ' + this.context.siteInfo.name
-            : this.context.siteInfo.name;
+            ? this.props.title + ' | ' + config.siteInfo.name
+            : config.siteInfo.name;
     }
     componentDidMount() {
         this.setTitle();
@@ -17,11 +16,3 @@ export default class DocumentTitle extends Component {
         return this.props.children;
     }
 }
-
-DocumentTitle.contextTypes = {
-    siteInfo: PropTypes.shape({
-        name: PropTypes.string,
-        icp: PropTypes.string,
-        github: PropTypes.string
-    })
-};

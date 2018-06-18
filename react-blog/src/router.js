@@ -4,7 +4,6 @@ import Article from './components/Article';
 import About from './components/About';
 import Music from './components/Music';
 import FriendlyLinks from './components/FriendlyLinks';
-// import ChatRoom from './components/ChatRoom/index.jsx';
 
 const routes = [{
     path: '/',
@@ -38,12 +37,6 @@ const routes = [{
     path: '/blog/links',
     exact: true,
     component: FriendlyLinks
-}, 
-// {
-//     path: '/blog/chatroom',
-//     exact: true,
-//     component: ChatRoom
-// }
-];
+}];
 
 export default routes;

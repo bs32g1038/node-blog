@@ -14,9 +14,6 @@ const CommentReply = asyncComponent(()=>import('./components/CommentReply'));
 const Links = asyncComponent(()=>import('./components/Links'));
 const LinkEdit = asyncComponent(()=>import('./components/LinkEdit'));
 import AppSideMenu from './components/AppSideMenu';
-// import ChatRoomGroups from './components/ChatRoom/Groups';
-// import ChatRoomGroupsEdit from './components/ChatRoom/GroupsEdit';
-// import Users from './components/ChatRoom/Users';
 
 import config from './config';
 
@@ -52,11 +49,6 @@ class App extends Component {
                                 <Route exact path="/blog/admin/links" component={Links} />
                                 <Route exact path="/blog/admin/links/edit" component={LinkEdit} />
                                 <Route exact path="/blog/admin/links/edit/:id" component={LinkEdit} />
-                                {/* <Route exact path="/blog/admin/chatroom/groups" component={ChatRoomGroups} />
-                                <Route exact path="/blog/admin/chatroom/groups/edit" component={ChatRoomGroupsEdit} />
-                                <Route exact path="/blog/admin/chatroom/groups/edit/:id" component={ChatRoomGroupsEdit} />
-                                <Route exact path="/blog/admin/chatroom/users" component={Users} /> */}
-
                             </Switch>
                     )} />
                     <AppFooter />
