@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import styles from './cssmodule.scss';
+import config from '../../config';
 
 export default class AppFooter extends Component {
     componentDidMount() {
@@ -19,7 +19,7 @@ export default class AppFooter extends Component {
         };
     }
     render() {
-        const { siteInfo } = this.context;
+        const { siteInfo } = config;
         return (
             <footer className={styles.footer}>
                 <div className={styles.backTop} title="返回顶部" id="backTop">
@@ -39,11 +39,3 @@ export default class AppFooter extends Component {
         );
     }
 }
-
-AppFooter.contextTypes = {
-    siteInfo: PropTypes.shape({
-        name: PropTypes.string,
-        icp: PropTypes.string,
-        github: PropTypes.string
-    })
-};

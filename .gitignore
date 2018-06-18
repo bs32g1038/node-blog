@@ -6,3 +6,4 @@ static/upload/*
 logs/blog/*
 !.gitkeep
 .idea
+*.log

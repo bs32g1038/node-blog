@@ -1,4 +1,5 @@
 const path = require('path');
+const express = require('express');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
@@ -6,29 +7,28 @@ module.exports = merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
     output: {
-        path: path.resolve(__dirname, '../../static'),
-        publicPath: '/static/test',
+        path: path.resolve(__dirname, '../../nginx/static'),
+        publicPath: '/static/test/',
         filename: '[name].bundle.js'
     },
     devServer: {
         port: 3000,
         compress: true,
+        before: function (app) {
+            app.use('/static', express.static(path.resolve(__dirname, '../../nginx/static')))
+        },
         proxy: {
             '/api': {
-                target: 'http://127.0.0.1',
+                target: 'http://127.0.0.1:8080',
                 secure: false,
                 changeOrigin: true
-            },
-            '/RSS': {
-                target: 'http://127.0.0.1'
             }
         },
         historyApiFallback: {
             rewrites: [
                 { from: /./, to: '/static/test/index.html' }
             ]
-        },
-        disableHostCheck: true
+        }
     },
     module: {
         rules: [{

@@ -5,7 +5,7 @@ log4js.configure({
         console: { type: 'console' },
         file: {
             type: 'file',
-            filename: path.resolve(__dirname, '../../logs/blog/cheese.log'),
+            filename: path.resolve(__dirname, '../logs/cheese.log'),
             maxLogSize: 3145728, // 3m
             backups: 3,
             compress: true

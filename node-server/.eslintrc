@@ -1,7 +1,6 @@
 {
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "eslint:recommended"
     ],
     "root": true,
     "rules": {
@@ -42,10 +41,7 @@
             {
                 "SwitchCase": 1
             }
-        ],
-        "react/react-in-jsx-scope": "never",
-        "react/prop-types": "never",
-        "react/jsx-uses-vars": "error"
+        ]
     },
     "env": {
         "node": true,
@@ -54,10 +50,7 @@
     },
     "parserOptions": {
         "ecmaVersion": 7,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
+        "sourceType": "module"
     },
     "parser": "babel-eslint"
 }

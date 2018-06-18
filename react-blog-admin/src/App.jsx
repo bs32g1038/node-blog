@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
-import Articles from './components/Articles';
-// import asyncComponent from './components/asyncComponent';
-import ArticleEdit from './components/ArticleEdit';
-import Guestbooks from './components/Guestbooks';
-import GuestbookReply from './components/GuestbookReply';
-import Categories from './components/Categories';
-import CategoryEdit from './components/CategoryEdit';
-import Comments from './components/Comments';
-import CommentReply from './components/CommentReply';
-import Links from './components/Links';
-import LinkEdit from './components/LinkEdit';
+import asyncComponent from './components/asyncComponent';
+const Articles = asyncComponent(()=>import('./components/Articles'));
+const ArticleEdit = asyncComponent(()=>import('./components/ArticleEdit'));
+const Guestbooks = asyncComponent(()=>import('./components/Guestbooks'));
+const GuestbookReply = asyncComponent(()=>import('./components/GuestbookReply'));
+const Categories = asyncComponent(()=>import('./components/Categories'));
+const CategoryEdit = asyncComponent(()=>import('./components/CategoryEdit'));
+const Comments = asyncComponent(()=>import('./components/Comments'));
+const CommentReply = asyncComponent(()=>import('./components/CommentReply'));
+const Links = asyncComponent(()=>import('./components/Links'));
+const LinkEdit = asyncComponent(()=>import('./components/LinkEdit'));
 import AppSideMenu from './components/AppSideMenu';
-import ChatRoomGroups from './components/ChatRoom/Groups';
-import ChatRoomGroupsEdit from './components/ChatRoom/GroupsEdit';
-import Users from './components/ChatRoom/Users';
+// import ChatRoomGroups from './components/ChatRoom/Groups';
+// import ChatRoomGroupsEdit from './components/ChatRoom/GroupsEdit';
+// import Users from './components/ChatRoom/Users';
 
 import config from './config';
 
@@ -52,10 +52,10 @@ class App extends Component {
                                 <Route exact path="/blog/admin/links" component={Links} />
                                 <Route exact path="/blog/admin/links/edit" component={LinkEdit} />
                                 <Route exact path="/blog/admin/links/edit/:id" component={LinkEdit} />
-                                <Route exact path="/blog/admin/chatroom/groups" component={ChatRoomGroups} />
+                                {/* <Route exact path="/blog/admin/chatroom/groups" component={ChatRoomGroups} />
                                 <Route exact path="/blog/admin/chatroom/groups/edit" component={ChatRoomGroupsEdit} />
                                 <Route exact path="/blog/admin/chatroom/groups/edit/:id" component={ChatRoomGroupsEdit} />
-                                <Route exact path="/blog/admin/chatroom/users" component={Users} />
+                                <Route exact path="/blog/admin/chatroom/users" component={Users} /> */}
 
                             </Switch>
                     )} />

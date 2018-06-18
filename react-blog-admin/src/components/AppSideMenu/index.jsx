@@ -55,11 +55,11 @@ class AppSideMenu extends Component {
                     <SubMenu key="SubMenu-links" title={<span><i className="fa fa-link fa-fw"></i><span>友情管理</span></span>}>
                         <Menu.Item key="5"><Link to="/blog/admin/links"><i className="fa fa-globe fa-fw"></i>友链列表</Link></Menu.Item>
                     </SubMenu>
-                    <SubMenu key="SubMenu-chatroom" title={<span><i className="fa fa-comments fa-fw"></i><span>聊天室管理</span></span>}>
+                    {/* <SubMenu key="SubMenu-chatroom" title={<span><i className="fa fa-comments fa-fw"></i><span>聊天室管理</span></span>}>
                         <Menu.Item key="6"><Link to="/blog/admin/chatroom/groups"><i className="fa fa-institution fa-fw"></i>房间管理</Link></Menu.Item>
                         <Menu.Item key="7"><Link to="/blog/admin/chatroom/users"><i className="fa fa-user fa-fw"></i>用户管理</Link></Menu.Item>
                         <Menu.Item key="8"><Link to="/blog/admin/comments"><i className="fa fa-comments fa-fw"></i>评论管理</Link></Menu.Item>
-                    </SubMenu>
+                    </SubMenu> */}
                 </Menu>
             </div>
         );

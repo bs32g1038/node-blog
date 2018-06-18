@@ -21,7 +21,16 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: ['@babel/preset-env', '@babel/preset-react'],
-                    plugins: ["@babel/plugin-syntax-dynamic-import", ["import", { libraryName: "antd", style: "css" }]]
+                    plugins: [
+                        ["@babel/plugin-transform-runtime", {
+                            "helpers": false,
+                            "polyfill": false,
+                            "regenerator": true,
+                            "moduleName": "@babel/runtime"
+                        }],
+                        "@babel/plugin-syntax-dynamic-import",
+                        ["import", { libraryName: "antd", style: "css" }]
+                    ]
                 }
             }
         },

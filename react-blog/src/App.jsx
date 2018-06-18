@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Route, matchPath, Switch } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import Categories from "./components/Categories";
@@ -16,16 +15,6 @@ export default class App extends Component {
             previousLocation: null,
             data: null,
             isFetching: false
-        };
-    }
-
-    getChildContext() {
-        return {
-            siteInfo: {
-                name: 'Lizc博客',
-                icp: '粤ICP备16021965号-2',
-                github: 'https://github.com/bs32g1038/node-blog'
-            }
         };
     }
 
@@ -98,11 +87,3 @@ export default class App extends Component {
         );
     }
 }
-
-App.childContextTypes = {
-    siteInfo: PropTypes.shape({
-        name: PropTypes.string,
-        icp: PropTypes.string,
-        github: PropTypes.string
-    })
-};

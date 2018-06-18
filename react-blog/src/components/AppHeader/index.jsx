@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './cssmodule.scss';
-
+import config from '../../config';
 export default class AppHeader extends Component {
     render() {
-        const { siteInfo } = this.context;
+        const { siteInfo } = config;
         return (
             <header className={styles.header}>
                 <h1 className={styles.siteName}>
@@ -32,11 +31,3 @@ export default class AppHeader extends Component {
         );
     }
 }
-
-AppHeader.contextTypes = {
-    siteInfo: PropTypes.shape({
-        name: PropTypes.string,
-        icp: PropTypes.string,
-        github: PropTypes.string
-    })
-};
