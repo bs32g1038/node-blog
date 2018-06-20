@@ -1,4 +1,5 @@
 require('./models');
+const path = require('path');
 const http = require('http');
 const log4js = require('log4js');
 const express = require('express');
@@ -21,6 +22,10 @@ app.use(bodyParser.urlencoded({
 app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
+
+if (process.env.NODE_ENV !== 'production') {
+    app.use('/static/upload', express.static(path.resolve(__dirname, './upload')));
+}
 
 app.use(require('./middlewares/response').setHeadPaging);
 app.use(require('./router'));

@@ -4,7 +4,7 @@ module.exports = {
     server: {
         debug: isDev,
         hostname: 'localhost',
-        port: isDev ? '8080' : '80'
+        port: '8080'
     },
     db: {
         uri: isDev ? 'mongodb://localhost:27017/dev' : 'mongodb://db:27017/blog',

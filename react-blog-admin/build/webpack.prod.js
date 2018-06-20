@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = {
     loader: "postcss-loader",
     options: {
@@ -14,7 +14,6 @@ const autoprefixer = {
         }
     }
 };
-
 module.exports = merge(common, {
     mode: 'production',
     output: {
@@ -23,18 +22,6 @@ module.exports = merge(common, {
         filename: '[name].bundle.js'
     },
     plugins: [
-        new UglifyJSPlugin({
-            parallel: true,
-            uglifyOptions: {
-                output: {
-                    comments: false,
-                    beautify: false,
-                },
-                compress: {
-                    drop_console: true
-                }
-            }
-        }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
@@ -42,32 +29,52 @@ module.exports = merge(common, {
     ],
     module: {
         rules: [
-            {// cssmodule
+            {
                 test: /\.scss$/,
                 include: [/cssmodule/],
-                use: [MiniCssExtractPlugin.loader, {
+                use: ['style-loader', {
                     loader: 'css-loader',
                     options: {
                         modules: true,
-                        minimize: true,
-                        localIdentName: '[hash:base64:6]'
+                        localIdentName: '[local]-[hash:base64:5]'
                     }
-                }, autoprefixer, 'sass-loader']
-            },
-            {// 普通css文件打包
+                }, 'sass-loader']
+            }, {
                 test: /\.scss$/,
                 exclude: [/cssmodule/],
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            },
+            {
+                test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, {
                     loader: 'css-loader',
                     options: {
                         minimize: true
                     }
-                }, autoprefixer, 'sass-loader']
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                }, autoprefixer]
             }
         ]
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
+            new OptimizeCssAssetsPlugin({})
+        ],
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: module => module.nameForCondition
+                        && /\.(css|scss)$/.test(module.nameForCondition())
+                        && !/^javascript/.test(module.type),
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
     }
 });

@@ -1,4 +1,3 @@
-cd /node-blog
 git fetch origin
 git reset --hard origin/master
 docker-compose build

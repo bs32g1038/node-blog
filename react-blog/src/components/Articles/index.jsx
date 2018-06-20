@@ -40,7 +40,7 @@ export default class Articles extends Component {
                                         <div className={styles.meta}>
                                             <a href="javascript:;">评论：{item.commentCount}</a> <em>·</em>
                                             <a href="javascript:;">阅读：{item.viewsCount}</a> <em>·</em>
-                                            <span>分类：{item.category && item.category.name}</span>
+                                            <span>分类：{(item.category && item.category.name) || '暂无分类'}</span>
                                         </div>
                                     </div>
                                     <div className={styles.thumb}>

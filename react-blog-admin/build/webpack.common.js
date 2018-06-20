@@ -7,7 +7,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            chunks: ['vendor', 'admin'],
+            chunks: ['vendor', 'styles', 'admin'],
             template: path.resolve(__dirname, '../src/index.html'),
             hash: true,
             title: "Lizc博客后台"
@@ -29,7 +29,7 @@ module.exports = {
                             "moduleName": "@babel/runtime"
                         }],
                         "@babel/plugin-syntax-dynamic-import",
-                        ["import", { libraryName: "antd", style: "css" }]
+                        ["import", { libraryName: 'antd', style: "css" }]
                     ]
                 }
             }

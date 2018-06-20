@@ -2,6 +2,8 @@ version: '3.4'
 services:
   server:
     build: ./node-server
+    ports:
+      - 8080:8080
     depends_on:
       - db
     volumes:
@@ -18,5 +20,3 @@ services:
       - ./nginx/static:/etc/nginx/static
   db:
     image: mongo:3.2
-    volumes:
-      - ../data/mongo-db:/data/db

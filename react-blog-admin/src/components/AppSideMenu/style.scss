@@ -15,7 +15,10 @@
         color: #fff
     }
     .ant-menu-submenu {
-        color: #fff
+        color: #fff;
+        .ant-menu {
+            background-color: transparent;
+        }
     }
     .ant-menu-item:hover,
     .ant-menu-submenu-title:hover {

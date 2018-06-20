@@ -15,10 +15,15 @@ module.exports = merge(common, {
         port: 3000,
         compress: true,
         before: function (app) {
-            app.use('/static', express.static(path.resolve(__dirname, '../../nginx/static')))
+            app.use('/static', express.static(path.resolve(__dirname, '../../nginx/static')));
         },
         proxy: {
             '/api': {
+                target: 'http://127.0.0.1:8080',
+                secure: false,
+                changeOrigin: true
+            },
+            '/static/upload': {
                 target: 'http://127.0.0.1:8080',
                 secure: false,
                 changeOrigin: true

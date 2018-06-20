@@ -24,7 +24,6 @@ const checkFormData = (req) => {
     const website = req.body.website;
     const content = req.body.content;
     const replyContent = req.body.replyContent;
-
     if (!validator.isLength(nickName, { min: 1, max: 100 })) {
         msg = '[nickName]昵称长度必须在1-100个字符之间！';
     } else if (!validator.isEmail(email)) {
@@ -106,9 +105,19 @@ class GuestbookApi {
          * @return {object} 返回留言对象
          */
         const realIP = getIpAddress(req);
-        const result = await axios.get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&&ip=' + realIP);
-        if (result.data.province || result.data.city) {
-            Object.assign(req.body, { location: result.data.province + " " + result.data.city });
+        try {
+            // 接入腾讯地图api
+            const rt = await axios.get(`http://apis.map.qq.com/ws/location/v1/ip?ip=${realIP}&key=6A6BZ-VAM3D-Q3E4S-P3EKR-D76CF-YUBL7`).then((rs) => {
+                return rs.data;
+            });
+            if (rt.status == 0 && rt.result && rt.result.ad_info && (rt.result.ad_info.province || rt.result.ad_info.city)) {
+                Object.assign(req.body, { location: rt.result.ad_info.province + " " + rt.result.ad_info.city });
+            }
+        } catch (error) {
+            logger.error(error);
+            res.status(500).json({
+                message: '在创建guestbook过程中ip地址获取异常！'
+            });
         }
         const msg = checkFormData(req);
         if (msg) {

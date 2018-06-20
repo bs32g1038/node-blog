@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const autoprefixer = {
     loader: "postcss-loader",
@@ -23,18 +24,6 @@ module.exports = merge(common, {
         filename: '[name].bundle.js'
     },
     plugins: [
-        new UglifyJSPlugin({
-            parallel: true,
-            uglifyOptions: {
-                output: {
-                    comments: false,
-                    beautify: false,
-                },
-                compress: {
-                    drop_console: true
-                }
-            }
-        }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
@@ -67,8 +56,23 @@ module.exports = merge(common, {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [MiniCssExtractPlugin.loader, {
+                    loader: 'css-loader',
+                    options: {
+                        minimize: true
+                    }
+                }, autoprefixer]
             }
+        ]
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
+            new OptimizeCssAssetsPlugin({})
         ]
     }
 });

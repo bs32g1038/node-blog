@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import './style.scss';
 import cofig from '../../config';
 import { Menu } from 'antd';
+import './style.scss';
 const SubMenu = Menu.SubMenu;
 
 class AppSideMenu extends Component {
