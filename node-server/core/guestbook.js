@@ -105,12 +105,14 @@ class GuestbookApi {
          * @return {object} 返回留言对象
          */
         const realIP = getIpAddress(req);
+        logger.info(realIP);
         try {
             // 接入腾讯地图api
             const rt = await axios.get(`http://apis.map.qq.com/ws/location/v1/ip?ip=${realIP}&key=6A6BZ-VAM3D-Q3E4S-P3EKR-D76CF-YUBL7`).then((rs) => {
                 return rs.data;
             });
             if (rt.status == 0 && rt.result && rt.result.ad_info && (rt.result.ad_info.province || rt.result.ad_info.city)) {
+                console.log(rt.result.ad_info.province + " " + rt.result.ad_info.city, rt)
                 Object.assign(req.body, { location: rt.result.ad_info.province + " " + rt.result.ad_info.city });
             }
         } catch (error) {
