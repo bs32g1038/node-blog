@@ -112,7 +112,7 @@ class GuestbookApi {
                 return rs.data;
             });
             if (rt.status == 0 && rt.result && rt.result.ad_info && (rt.result.ad_info.province || rt.result.ad_info.city)) {
-                console.log(rt.result.ad_info.province + " " + rt.result.ad_info.city, rt)
+                console.log(rt.result.ad_info.province + " " + rt.result.ad_info.city, rt);
                 Object.assign(req.body, { location: rt.result.ad_info.province + " " + rt.result.ad_info.city });
             }
         } catch (error) {

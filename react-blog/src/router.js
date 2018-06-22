@@ -25,11 +25,13 @@ const routes = [{
     path: '/blog/guestbook',
     exact: true,
     component: Guestbooks
-}, {
-    path: '/blog/about',
-    exact: true,
-    component: About
-}, {
+}, 
+// {
+//     path: '/blog/about',
+//     exact: true,
+//     component: About
+// },
+ {
     path: '/blog/music',
     exact: true,
     component: Music

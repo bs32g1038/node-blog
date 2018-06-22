@@ -13,7 +13,7 @@ export default class AppHeader extends Component {
                 <nav className={styles.nav}>
                     <Link className={styles.navLink} to="/blog"><i className="fa fa-home fa-fw"></i>首页</Link>
                     <Link className={styles.navLink} to="/blog/guestbook"><i className="fa fa-coffee fa-fw"></i>留言</Link>
-                    <Link className={styles.navLink} to="/blog/about"><i className="fa fa-user fa-fw"></i>关于</Link>
+                    {/* <Link className={styles.navLink} to="/blog/about"><i className="fa fa-user fa-fw"></i>关于</Link> */}
                     <Link className={styles.navLink} to="/blog/music"><i className="fa fa-music fa-fw"></i>音乐</Link>
                     <Link className={styles.navLink} to="/blog/links"><i className="fa fa-globe fa-fw"></i>友链</Link>
                     <a className={styles.navLink} href="javasript:;"><i className="fa fa-search fa-fw"></i>搜索</a>
