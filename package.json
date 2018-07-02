@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "http-proxy-middleware": "^0.18.0"
+  }
+}

@@ -1,0 +1,45 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    background: #f5f7f9;
+    color: #444;
+    font-family: -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif;
+    font-size: 14px;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0
+}
+
+a {
+    color: #34495e;
+    text-decoration: none
+}
+
+a:hover {
+    color: #409eff
+}
+
+.app {
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    width: 800px
+}
+
+input,
+textarea {
+    font: 400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif
+}

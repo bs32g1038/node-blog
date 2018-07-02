@@ -1,0 +1,61 @@
+$prefix: _articles;
+.#{$prefix} {
+    background-color: #fff;
+    flex: 1 0 auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    &-item {
+        border-bottom: 1px solid rgba(178, 186, 194, .15);
+        padding: 10px 15px
+    }
+    &-item-header {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0 10px
+    }
+    &-item-brief {
+        display: block;
+        font-size: 18px;
+        line-height: 32px;
+        overflow: hidden;
+        padding: 0 28px;
+        text-overflow: ellipsis;
+        white-space: nowrap
+    }
+    &-item-title {
+        color: rgb(85, 85, 85);
+        font-size: 18px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+            color: #007fff
+        }
+    }
+    &-item-meta {
+        color: #999;
+        font-size: 12px;
+        >a {
+            color: #999;
+        }
+    }
+    &-item-thumb {
+        height: 96px;
+        width: 150px
+    }
+    &-item-thumbA {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: block;
+        height: 100%;
+        width: 100%
+    }
+    &-item-summary {
+        font-size: 14px;
+        margin: 8px 28px;
+        word-wrap: break-word
+    }
+}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import styles from "./cssmodule.scss";
-
 class Message extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +42,7 @@ Message.newInstance = function newNotificationInstance(properties) {
         },
     };
 };
+
 
 export default {
     info(content) {

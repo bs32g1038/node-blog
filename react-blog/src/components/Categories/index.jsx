@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import styles from "./cssmodule.scss";
 
 export default class Categories extends Component {
     render() {
+        let categories = this.props.categories || [];
+        console.log(categories)
         return (
-            <ul className={styles.cats}>
-                <li className={styles.catItem}>
+            <ul className="_categories">
+                <li className="_c-item">
                     <i className="fa fa-book fa-fw"></i>分类
                 </li>
                 {
-                    this.props.categories.map((item) => (
-                        <li className={styles.catItem} key={item._id}>
-                            <Link className={styles.catLink} to={`/blog/articles?cid=${item._id}`}>
+                    categories.map((item) => (
+                        <li className="_c-item" key={item._id}>
+                            <Link className="_c-link" to={`/blog/articles?cid=${item._id}`}>
                                 {item.name}<span>({item.articleCount})</span>
                             </Link>
                         </li>

@@ -25,10 +25,12 @@ app.use(log4js.connectLogger(logger, {
 
 if (process.env.NODE_ENV !== 'production') {
     app.use('/static/upload', express.static(path.resolve(__dirname, './upload')));
+    app.use('/static/', express.static(path.resolve(__dirname, '../nginx/static')));
 }
 
 app.use(require('./middlewares/response').setHeadPaging);
 app.use(require('./router'));
+app.use(require('./ssr/server-bundle'));
 
 // 处理服务器异常
 app.use((err, req, res, next) => {
