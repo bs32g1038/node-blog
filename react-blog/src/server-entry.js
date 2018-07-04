@@ -62,23 +62,28 @@ const ReactSSR = require('react-dom/server');
 import { StaticRouter, matchPath } from 'react-router-dom';
 import App from './App.jsx';
 import routes from './router';
+import { StoreContext, $store } from './context/store';
 
 export default function init(req, cb) {
     let context = {};
     Promise.all(routes.map(route => {
         let match = matchPath(req.url, route);
         if (match) {
-            return route.component.asyncData && route.component.asyncData(match, {});
+            console.log(route.component().asyncData, match)
+            return route.component.asyncData && route.component.asyncData({ store: $store });
         }
         return null;
     }).filter(_ => !!_)).then(([data]) => {
-        cb(ReactSSR.renderToString(
-            <StaticRouter context={context}>
-                <App routes={routes} data={data} />
-            </StaticRouter>
-        ), data);
+        const content = ReactSSR.renderToString(
+            <StoreContext.Provider value={$store}>
+                <StaticRouter context={context}>
+                    <App routes={routes} data={data} />
+                </StaticRouter>
+            </StoreContext.Provider>
+        );
+        // console.log($store)
+        cb(content, $store);
     }).catch(err => {
         console.log(err, '错误');
     });
-
 }

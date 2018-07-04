@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withStore } from '../../context/store';
 
-export default class Categories extends Component {
+class Categories extends Component {
     render() {
         let categories = this.props.categories || [];
-        console.log(categories)
         return (
             <ul className="_categories">
                 <li className="_c-item">
@@ -23,3 +23,4 @@ export default class Categories extends Component {
         );
     }
 }
+export default withStore(Categories);

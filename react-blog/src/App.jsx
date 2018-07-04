@@ -6,9 +6,10 @@ import AppFooter from './components/app-footer';
 // import progress from './components/Progress';
 import axios from './utils/axios';
 import * as store from './utils/store';
+import { withStore, StoreContext, $store } from './context/store';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 
-export default class App extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,29 +75,33 @@ export default class App extends Component {
     render() {
         // console.log(this.state.categories)
         return (
-            <div className="app-main">
-                <AppHeader />
-                <Categories categories={this.state.categories} />
-                {/* <Route
-                    location={this.state.previousLocation || this.props.location}
-                    render={() => (
-                        <Switch>
-                            {this.state.routes.map((route, i) => (
-                                <Route
-                                    key={route.key || i}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    strict={route.strict}
-                                    render={props => (
-                                        <route.component {...props} {...this.state.data} />
-                                    )}
-                                />
-                            ))}
-                        </Switch>
-                    )}
-                /> */}
-                <AppFooter />
-            </div>
+            <StoreContext.Provider value={$store}>
+                <div className="app-main">
+                    <AppHeader />
+                    <Categories categories={this.state.categories} />
+                    <Route
+                        location={this.state.previousLocation || this.props.location}
+                        render={() => (
+                            <Switch>
+                                {this.state.routes.map((route, i) => (
+                                    <Route
+                                        key={route.key || i}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        strict={route.strict}
+                                        render={props => (
+                                            <route.component {...props} {...this.state.data} />
+                                        )}
+                                    />
+                                ))}
+                            </Switch>
+                        )}
+                    />
+                    <AppFooter />
+                </div>
+            </StoreContext.Provider>
         );
     }
 }
+
+export default App;

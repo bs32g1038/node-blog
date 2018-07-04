@@ -4,23 +4,26 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { parseTime } from '../../utils/time';
 import DocumentTitle from '../DocumentTitle';
+import { withStore } from '../../context/store';
 
-export default class Articles extends Component {
+class Articles extends Component {
     constructor(props) {
         super(props);
         this.state = {
             articles: this.props.articles || []
         };
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.setState({
-            articles: nextProps.articles
-        });
+    static getDerivedStateFromProps(nextProps) {
+        console.log(nextProps.$store.articles)
+        return nextProps.$store.articles;
     }
-    static asyncData(match, location) {
+    static asyncData(obj) {
         // const q = queryString.parse(location.search);
-        const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1};
-        return axios.get('/articles?' + queryString.stringify(query)).then((_) => ({ articles: _.data }));
+        const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1 };
+        return axios.get('/articles?' + queryString.stringify(query)).then((_) => {
+            console.log(_.data)
+            return obj.store.setArticles(_.data);
+        });
     }
     render() {
         return (
@@ -55,3 +58,5 @@ export default class Articles extends Component {
         );
     }
 }
+
+export default withStore(Articles);
