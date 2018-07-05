@@ -24,7 +24,7 @@ const serverCompiler = webpack(serverConfig);
 serverCompiler.outputFileSystem = mfs;
 let serverBundle;
 let ready;
-const readyPromise = new Promise(r => { ready = r });
+const readyPromise = new Promise(r => { ready = r; });
 const update = () => {
     if (serverBundle) {
         ready();
@@ -46,7 +46,6 @@ serverCompiler.watch({}, (err, stats) => {
     const m = new Module();
     m._compile(bundle, 'server-entry.js');
     serverBundle = m.exports.default;
-    console.log(serverBundle);
     update();
 });
 

@@ -25,36 +25,21 @@ const $store = {
 };
 
 // 是服务器端渲染就加入数据到store
-// if (isSSR()) {
-//     Object.assign($store, __INITIAL_STATE__());
-// console.log(__INITIAL_STATE__())
-
-// }
-console.log($store)
-
+if (isSSR()) {
+    Object.assign($store, __INITIAL_STATE__());
+    console.log('服务器端的返回的数据：', __INITIAL_STATE__());
+}
 
 export { $store };
 
 export const StoreContext = React.createContext($store);
 
-class StoreComponent extends React.Component {
-    static asyncData() {
-    }
-    render() {
-        const { Component, props } = this.props;
+export function withStore(Component) {
+    return function StoreComponent(props) {
         return (
             <StoreContext.Consumer>
                 {data => <Component {...props} $store={data} />}
             </StoreContext.Consumer>
-        );
-    }
-}
-
-export function withStore(Component) {
-    StoreComponent.asyncData = Component.asyncData;
-    return function StoreComponent(props) {
-        return (
-            <StoreComponent Component={Component} props={props} />
         );
     };
 }

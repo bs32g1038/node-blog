@@ -59,29 +59,24 @@
 // };
 import React from 'react';
 const ReactSSR = require('react-dom/server');
-import { StaticRouter, matchPath } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom';
 import App from './App.jsx';
 import routes from './router';
-import { StoreContext, $store } from './context/store';
+import { matchRoutes } from 'react-router-config';
+import { $store } from './context/store';
 
 export default function init(req, cb) {
     let context = {};
-    Promise.all(routes.map(route => {
-        let match = matchPath(req.url, route);
-        if (match) {
-            console.log(route.component().asyncData, match)
-            return route.component.asyncData && route.component.asyncData({ store: $store });
-        }
-        return null;
-    }).filter(_ => !!_)).then(([data]) => {
+    const branchs = matchRoutes(routes, req.url);
+    Promise.all(branchs.map(branch => {
+        return branch && branch.route.asyncData && branch.route.asyncData({ store: $store });
+    })).then(() => {
         const content = ReactSSR.renderToString(
-            <StoreContext.Provider value={$store}>
-                <StaticRouter context={context}>
-                    <App routes={routes} data={data} />
-                </StaticRouter>
-            </StoreContext.Provider>
+            <StaticRouter location={req.url} context={context}>
+                <App routes={routes} $store={$store} />
+            </StaticRouter>
         );
-        // console.log($store)
+        console.log($store.categories)
         cb(content, $store);
     }).catch(err => {
         console.log(err, '错误');

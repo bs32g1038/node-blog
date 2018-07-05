@@ -51,7 +51,7 @@
   "scripts": {
     "dev": "npm-run-all --parallel dev:client dev:server",
     "dev:client": "webpack-dev-server --open --config ./build/webpack.dev.js --hide-modules",
-    "dev:server": "cross-env NODE_ENV=development  node server/server.js",
+    "dev:server": "cross-env NODE_ENV=development node server/server.js",
     "build": "webpack --config ./build/webpack.prod.js --progress --hide-modules"
   },
   "dependencies": {
