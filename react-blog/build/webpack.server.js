@@ -93,15 +93,16 @@ const path = require('path');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./webpack.common');
 
+const isDev = process.env.NODE_ENV != "production";
+
 const config = webpackMerge(baseConfig, {
-    mode: 'development',
+    mode: isDev ? 'development' : 'production',
     target: 'node',//打包成node端执行
     entry: {
         app: path.join(__dirname, '../src/server-entry.js'),
     },
     output: {
-        path: path.resolve(__dirname, '../../nginx/static'),
-        publicPath: '/static/test/',
+        path: path.resolve(__dirname, '../dist'),
         filename: 'server-entry.js',
         libraryTarget: 'commonjs2'//使用配置方案 commonjs2
     },

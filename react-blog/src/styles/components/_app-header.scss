@@ -1,5 +1,4 @@
-$prefix: _app-header;
-.#{$prefix} {
+.AppHeader {
     align-items: center;
     background-color: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -7,37 +6,41 @@ $prefix: _app-header;
     flex: 0 0 auto;
     user-select: none;
     z-index: 999;
-    ._site-name {
-        color: #f03838;
-        font-size: 14px;
-        margin-left: 28px;
-        margin-right: 22px;
-        transition: color .15s ease
+}
+
+.AppHeader-siteName {
+    color: #f03838;
+    font-size: 14px;
+    margin-left: 28px;
+    margin-right: 22px;
+    transition: color .15s ease
+}
+
+.AppHeader-nav {
+    flex: 1 0 auto;
+    margin: 0;
+    text-align: right
+}
+
+.AppHeader-navLink {
+    color: #71777c;
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 10px;
+    transition: color .15s ease;
+    vertical-align: middle;
+    &:hover {
+        color: #61B3E6
     }
-    ._nav {
-        flex: 1 0 auto;
-        margin: 0;
-        text-align: right
-    }
-    ._nav-link {
-        color: #71777c;
-        display: inline-block;
-        font-size: 14px;
-        padding: 0 10px;
-        transition: color .15s ease;
-        vertical-align: middle;
-        &:hover {
-            color: #61B3E6
-        }
-    }
-    ._github {
+    &.github {
         line-height: 0;
         padding: 0
     }
-    ._github-svg {
-        color: #fff;
-        fill: #42b983;
-        height: 50px;
-        width: 50px
-    }
+}
+
+.AppHeader-githubSvg {
+    color: #fff;
+    fill: #42b983;
+    height: 50px;
+    width: 50px
 }

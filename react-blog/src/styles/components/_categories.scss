@@ -1,5 +1,4 @@
-$prefix: _categories;
-.#{_categories} {
+.Categories {
     align-items: center;
     background-color: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -8,11 +7,13 @@ $prefix: _categories;
     font-size: 12px;
     margin: 0;
     padding: 10px 42px;
-    ._c-item {
-        display: inline-block;
-        margin-right: 20px
-    }
-    ._c-link {
-        color: #90979c
-    }
+}
+
+.Categories-item {
+    display: inline-block;
+    margin-right: 20px
+}
+
+.Categories-link {
+    color: #90979c
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import styles from "./cssmodule.scss";
 class Message extends Component {
     constructor(props) {
         super(props);
@@ -9,14 +8,14 @@ class Message extends Component {
         };
     }
     componentDidMount() {
-        document.getElementById('message').classList.add(styles.fadeIn);
+        document.getElementById('message').classList.add("MessageSlideInDown");
     }
     render() {
         let { content } = this.state;
         return (
-            <div className={styles.message}>
-                <div className={styles.messageNotice}>
-                    <div className={styles.messageNoticeContent} id="message">
+            <div className="Message">
+                <div className="Message-notice">
+                    <div className="Message-noticeContent" id="message">
                         <i className="fa fa-info-circle fa-fw"></i>
                         <span> {content} </span>
                     </div>
@@ -26,7 +25,7 @@ class Message extends Component {
     }
 }
 
-Message.newInstance = function newNotificationInstance(properties) {
+function newNotificationInstance(properties) {
     let props = properties || {};
     let div = document.createElement('div');
     document.body.appendChild(div);
@@ -37,8 +36,11 @@ Message.newInstance = function newNotificationInstance(properties) {
         },
         component: notification,
         destroy() {
-            render(null, div);
-            document.body.removeChild(div);
+            document.getElementById('message').classList.add("MessageSlideInUp");
+            setTimeout(() => {
+                render(null, div);
+                document.body.removeChild(div);
+            }, 200);
         },
     };
 };
@@ -46,7 +48,7 @@ Message.newInstance = function newNotificationInstance(properties) {
 
 export default {
     info(content) {
-        const messageInstance = Message.newInstance({});
+        const messageInstance = newNotificationInstance({});
         messageInstance.notice({ content });
         setTimeout(() => {
             messageInstance.destroy();

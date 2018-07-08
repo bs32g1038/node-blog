@@ -1,4 +1,4 @@
-.wrapLinks {
+.FriendlyLinks {
     background-color: #fff;
     display: flex;
     flex: 1 0 auto;
@@ -6,22 +6,30 @@
     padding: 28px
 }
 
-.header {
+.FriendlyLinks-header {
     text-align: center
 }
 
-.title {
+.FriendlyLinks-headerTitle {
     font-size: 24px;
     margin: 5px
 }
 
-.body {
+.FriendlyLinks-tip {
+    border-left: 2px solid #67CCEA;
+    border-left-width: 5px;
+    color: #333;
+    font-size: 14px;
+    padding: 5px 5px 5px 20px
+}
+
+.FriendlyLinks-body {
     display: flex;
     flex-wrap: wrap;
     padding: 0
 }
 
-.item {
+.FriendlyLinks-item {
     list-style: none;
     margin: 0;
     padding: 10px;
@@ -29,26 +37,26 @@
     width: 33.3%
 }
 
-.itemContent {
+.FriendlyLinks-itemContent {
     border: 1px solid #dededd;
     border-radius: 5px;
     padding: 10px
 }
 
-.itemImg {
+.FriendlyLinks-itemImg {
     border-radius: 50%;
     height: 20px;
     margin-right: 8px;
     width: 20px
 }
 
-.itemMeta {
+.FriendlyLinks-itemMeta {
     align-items: center;
     color: #333;
     display: flex
 }
 
-.itemDescription {
+.FriendlyLinks-itemDescription {
     color: #999;
     font-size: 12px;
     height: 52px;
@@ -57,21 +65,13 @@
     overflow: hidden
 }
 
-.li {
+.FriendlyLinks-li {
     font-size: 14px;
     list-style: inherit;
     padding: 5px
 }
 
-.tip {
-    border-left: 2px solid #67CCEA;
-    border-left-width: 5px;
-    color: #333;
-    font-size: 14px;
-    padding: 5px 5px 5px 20px
-}
-
-.jump {
+.FriendlyLinks-jump {
     font-size: 16px;
     font-weight: bold
 }

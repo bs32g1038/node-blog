@@ -8,20 +8,18 @@ import DocumentTitle from '../DocumentTitle';
 export default class Articles extends Component {
     constructor(props) {
         super(props);
-        // console.log(props)
         this.state = {
             articles: (this.props.$store && this.props.$store.articles) || []
         };
     }
     static getDerivedStateFromProps(nextProps) {
-        // console.log('articles:', nextProps.$store);
         return {
             articles: nextProps.$store.articles
         };
     }
-    static asyncData({ store }) {
+    static asyncData({ store, route = {} }) {
         // const q = queryString.parse(location.search);
-        const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1 };
+        const query = { fields: '-content,category.name', cid: '', limit: 10, page: 1, ...route.query };
         return axios.get('/articles?' + queryString.stringify(query)).then((_) => {
             return store.setArticles(_.data);
         });
@@ -29,28 +27,28 @@ export default class Articles extends Component {
     render() {
         return (
             <DocumentTitle title="文章列表">
-                <ul className="_articles">
+                <ul className="Articles">
                     {
                         this.state.articles.map((item) => (
-                            <li className="_articles-item" key={item._id}>
-                                <div className="_articles-item-header">
-                                    <div className="_articles-item-brief">
-                                        <div className="_articles-item-meta">
+                            <li className="Articles-item" key={item._id}>
+                                <div className="Articles-itemHeader">
+                                    <div className="Articles-itemBrief">
+                                        <div className="Articles-itemMeta">
                                             <strong>TIME</strong>
                                             <em>·</em> {parseTime(item.createdAt)}
                                         </div>
-                                        <Link className="_articles-item-title" to={`/blog/articles/${item._id}`}>{item.title}</Link>
-                                        <div className="_articles-item-meta">
+                                        <Link className="Articles-itemTitle" to={`/blog/articles/${item._id}`}>{item.title}</Link>
+                                        <div className="Articles-itemMeta">
                                             <a href="javascript:;">评论：{item.commentCount}</a> <em>·</em>
                                             <a href="javascript:;">阅读：{item.viewsCount}</a> <em>·</em>
                                             <span>分类：{(item.category && item.category.name) || '暂无分类'}</span>
                                         </div>
                                     </div>
-                                    <div className="_articles-item-thumb">
-                                        <a className="_articles-item-thumbA" style={{ backgroundImage: `url(${item.screenshot})` }}></a>
+                                    <div className="Articles-itemThumb">
+                                        <a className="Articles-itemThumbA" style={{ backgroundImage: `url(${item.screenshot})` }}></a>
                                     </div>
                                 </div>
-                                <p className="_articles-item-summary">{item.summary}</p>
+                                <p className="Articles-itemSummary">{item.summary}</p>
                             </li>
                         ))
                     }

@@ -1,0 +1,307 @@
+@keyframes waves {
+    10% {
+        height: 20%
+    }
+    20% {
+        height: 60%
+    }
+    40% {
+        height: 40%
+    }
+    60% {
+        height: 100%
+    }
+    100% {
+        height: 50%
+    }
+}
+
+.MusicWrap {
+    background-color: #fff;
+    padding: 20px
+}
+
+.MusicHeader {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    &-cover {
+        flex: 0 0 auto;
+        height: 90px;
+        width: 120px
+    }
+    &-coverImg {
+        display: block;
+        height: auto;
+        max-height: 100%;
+        width: 100%
+    }
+    &-sheet {
+        margin-left: 10px;
+        overflow: hidden
+    }
+    &-sheetTitle {
+        color: #555;
+        font-size: 16px;
+        font-weight: 700;
+        overflow: hidden;
+        padding-bottom: 8px;
+        text-overflow: ellipsis;
+        white-space: nowrap
+    }
+    &-meta,
+    &-sheetTime {
+        color: #999;
+        font-size: 12px
+    }
+    &-sheetTime span {
+        padding-right: 5px
+    }
+    &-sheetSummary {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap
+    }
+    &-sheetSign {
+        color: #AE3B35;
+        font-weight: bold;
+        position: absolute;
+        right: 0;
+        top: 0
+    }
+}
+
+.currentMusicInfo {
+    padding: 10px;
+    padding-right: 30px;
+    position: relative;
+    text-align: center;
+    width: 100%
+}
+
+.currentMusicSign {
+    color: #AE3B35;
+    font-weight: bold;
+    left: 10px;
+    position: absolute;
+    top: 10px
+}
+
+.MusicLyric {
+    flex: 1 0 auto;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    transition: height 0.25s ease-in-out;
+    &-list {
+        transition: transform 0.1s ease-out
+    }
+    &-item {
+        height: 24px;
+        line-height: 24px;
+        margin: 0;
+        &.on {
+            color: #31c27c
+        }
+    }
+}
+
+.musicMain {
+    padding-left: 20px
+}
+
+.musicName {
+    font-size: 16px
+}
+
+.MusicPlayArea {
+    align-items: center;
+    background-color: #fafafa;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    user-select: none;
+    >a {
+        cursor: pointer;
+        font-size: 14px;
+        margin: 0 10px;
+        position: relative;
+        &.play,
+        &.pause {
+            font-size: 20px;
+            width: 20px
+        }
+        &.word {
+            color: #dc794e;
+            font-size: 15px;
+            padding: 1px
+        }
+    }
+    &-volume {
+        align-items: center;
+        display: flex;
+        margin: 0 10px;
+        position: relative
+    }
+}
+
+.MusicPlayProgress {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    &-playTime {
+        padding: 0 5px
+    }
+    &-infoWrap {
+        margin-top: -3px;
+        padding: 0 5px;
+        >.musicInfo {
+            padding-bottom: 5px
+        }
+    }
+    &-Line {
+        background-color: #999;
+        border-radius: 5px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+        width: 300px;
+        cursor: pointer;
+        &.active {
+            background-color: #66B7FF;
+            border-radius: 5px;
+            height: 4px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            z-index: 50
+        }
+    }
+    &-indicator {
+        background-color: #fff;
+        border: 1px solid #C5C5C5;
+        border-radius: 50%;
+        display: block;
+        height: 12px;
+        left: 0;
+        position: absolute;
+        top: -4px;
+        width: 12px;
+        z-index: 100
+    }
+}
+
+.MusicPlayVolume {
+    align-items: center;
+    display: flex;
+    margin: 0 10px;
+    position: relative; // >i {
+    //     &.volume {
+    //         font-size: 14px
+    //     }
+    // }
+    &-line {
+        background-color: #E6E6E8;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        height: 4px;
+        margin-left: 5px;
+        position: relative;
+        width: 100px;
+        &.active {
+            background-color: #66B7FF;
+            display: block;
+            position: absolute;
+            margin-left: 0;
+            border: none
+        }
+    }
+    &-indicator {
+        background-color: #fff;
+        border: 1px solid #C5C5C5;
+        border-radius: 50%;
+        cursor: pointer;
+        display: block;
+        height: 12px;
+        left: 88px;
+        position: absolute;
+        top: -5px;
+        width: 12px;
+        z-index: 100
+    }
+}
+
+.MusicListTable {
+    display: table;
+    width: 100%;
+    &-header {
+        display: table-header-group;
+        .MusicListTable-cell {
+            background-color: #f4f4f6;
+        }
+    }
+    &-body {
+        display: table-header-group;
+        .MusicListTable-row {
+            cursor: pointer;
+            &:hover {
+                background-color: #ebeced
+            }
+        }
+    }
+    &-row {
+        display: table-row;
+        position: relative;
+        &.header {
+            background-color: #F4F4F6;
+        }
+    }
+    &-cell {
+        padding: 10px 20px;
+        display: table-cell;
+        &.index {
+            width: 80px;
+        }
+        &.singer {
+            width: 200px
+        }
+        &.duration {
+            width: 100px
+        }
+    }
+}
+
+.Music-songAnimate {
+    height: 12px;
+    padding-right: 6px; 
+    position: absolute;
+    right: 0;
+    top: 11px;
+    >i {
+        position: relative;
+        display: inline-block;
+        width: 3px;
+        height: 100%;
+        margin-right: 2px;
+        &:after {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            content: '';
+            background-color: #e03a3a;
+        }
+        &:nth-of-type(1):after {
+            animation: waves .6s linear 0s infinite alternate;
+        }
+        &:nth-of-type(2):after {
+            animation: waves .9s linear 0s infinite alternate;
+        }
+        &:nth-of-type(3):after {
+            animation: waves 1.2s linear 0s infinite alternate;
+        }
+    }
+}

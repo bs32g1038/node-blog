@@ -67,16 +67,21 @@ import { $store } from './context/store';
 
 export default function init(req, cb) {
     let context = {};
-    const branchs = matchRoutes(routes, req.url);
+    const branchs = matchRoutes(routes, req.path);
     Promise.all(branchs.map(branch => {
-        return branch && branch.route.asyncData && branch.route.asyncData({ store: $store });
+        return branch && branch.route.asyncData && branch.route.asyncData({
+            store: $store,
+            route: {
+                query: req.query,
+                params: branch.match.params
+            }
+        });
     })).then(() => {
         const content = ReactSSR.renderToString(
-            <StaticRouter location={req.url} context={context}>
+            <StaticRouter location={req.path} context={context}>
                 <App routes={routes} $store={$store} />
             </StaticRouter>
         );
-        console.log($store.categories)
         cb(content, $store);
     }).catch(err => {
         console.log(err, '错误');

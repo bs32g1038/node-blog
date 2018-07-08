@@ -9,10 +9,10 @@ import routes from './router';
 ReactDOM.hydrate(
     <StoreContext.Provider value={$store}>
         <BrowserRouter>
-            {/* <Switch>
-                <Route exact path="/" render={() => <Redirect to="/blog" />} /> */}
-        {renderRoutes(routes, { routes })}
-            {/* </Switch> */}
+            <Switch>
+                <Route exact path="/" render={() => <Redirect to="/blog" />} />
+                {renderRoutes(routes, { routes })}
+            </Switch>
         </BrowserRouter>
     </StoreContext.Provider>,
     document.getElementById('app')

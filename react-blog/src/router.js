@@ -1,12 +1,11 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import { withStore } from './context/store';
-import articles from './components/articles';
-// import Guestbooks from './components/Guestbooks';
-// import Article from './components/Article';
+import Articles from './components/articles';
+// import articles from './components/articles';
+import Guestbooks from './components/guestbooks';
+import Article from './components/article';
 // import About from './components/About';
-// import Music from './components/Music';
-// import FriendlyLinks from './components/FriendlyLinks';
+import Music from './components/music';
+import FriendlyLinks from './components/friendly-links';
 import App from './App';
 
 const routes = [
@@ -18,36 +17,44 @@ const routes = [
             {
                 path: '/blog',
                 exact: true,
-                component: withStore(articles),
-                asyncData: articles.asyncData
+                component: withStore(Articles),
+                asyncData: Articles.asyncData
             },
-            // {
-            //     path: '/blog/articles/:id',
-            //     exact: true,
-            //     component: Article
-            // }, {
-            //     path: '/blog/articles',
-            //     exact: true,
-            //     component: Articles
-            // }, {
-            //     path: '/blog/guestbook',
-            //     exact: true,
-            //     component: Guestbooks
-            // }, 
+            {
+                path: '/blog/articles/:id',
+                exact: true,
+                component: withStore(Article),
+                asyncData: Article.asyncData
+            },
+            {
+                path: '/blog/articles',
+                exact: true,
+                component: withStore(Articles),
+                asyncData: Articles.asyncData,
+
+            },
+            {
+                path: '/blog/guestbook',
+                exact: true,
+                component: withStore(Guestbooks),
+                asyncData: Guestbooks.asyncData
+            },
             // {
             //     path: '/blog/about',
             //     exact: true,
             //     component: About
             // },
-            //  {
-            //     path: '/blog/music',
-            //     exact: true,
-            //     component: Music
-            // }, {
-            //     path: '/blog/links',
-            //     exact: true,
-            //     component: FriendlyLinks
-            // }]
+            {
+                path: '/blog/music',
+                exact: true,
+                component: Music
+            },
+            {
+                path: '/blog/links',
+                exact: true,
+                component: withStore(FriendlyLinks),
+                asyncData: FriendlyLinks.asyncData
+            }
         ]
     }
 ];

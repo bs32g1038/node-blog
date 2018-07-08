@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../utils/axios';
-import message from '../Message';
-import styles from './cssmodule.scss';
+import message from '../message';
 import { isURL } from 'validator';
 
 class CommentForm extends Component {
@@ -14,27 +13,27 @@ class CommentForm extends Component {
     render() {
         let sumbitBtnStyle = this.state.buttonLoading ? { cursor: 'default', pointerEvents: 'none' } : {};
         return (
-            <form className={styles.form} id="form" onSubmit={(e) => this.ok(e)}>
-                <p className={styles.notice}>电子邮件地址不会被公开。必填项已用*标注</p>
-                <div className={styles.formInline}>
-                    <div className={styles.group}>
-                        <label className={styles.label}>昵称<span className={styles.red}>*</span>：</label>
-                        <input className={styles.input} id="nickName" name="nickName" placeholder="请输入你的昵称" type="text" />
+            <form className="CommentForm" id="form" onSubmit={(e) => this.ok(e)}>
+                <p className="CommentForm-notice">电子邮件地址不会被公开。必填项已用*标注</p>
+                <div className="CommentForm-formInline">
+                    <div className="CommentForm-formGroup">
+                        <label className="CommentForm-formLabel">昵称<span className="red">*</span>：</label>
+                        <input className="CommentForm-formInput" id="nickName" name="nickName" placeholder="请输入你的昵称" type="text" />
                     </div>
-                    <div className={styles.group}>
-                        <label className={styles.label}>邮箱<span className={styles.red}>*</span>：</label>
-                        <input className={styles.input} id="email" name="email" placeholder="请输入你的email" type="text" />
+                    <div className="CommentForm-formGroup">
+                        <label className="CommentForm-formLabel">邮箱<span className="red">*</span>：</label>
+                        <input className="CommentForm-formInput" id="email" name="email" placeholder="请输入你的email" type="text" />
                     </div>
-                    <div className={styles.group}>
-                        <label className={styles.label}>网址：</label>
-                        <input className={styles.input} id="website" name="website" placeholder="如：https://www.lizc.me" type="text" />
+                    <div className="CommentForm-formGroup">
+                        <label className="CommentForm-formLabel">网址：</label>
+                        <input className="CommentForm-formInput" id="website" name="website" placeholder="如：https://www.lizc.me" type="text" />
                     </div>
                 </div>
-                <div className={styles.contentWrap}>
-                    <textarea className={styles.textarea} id="content" name="content" rows="3" placeholder="留点空白给你说~"></textarea>
+                <div className="CommentForm-contentWrap">
+                    <textarea className="CommentForm-textarea" id="content" name="content" rows="3" placeholder="留点空白给你说~"></textarea>
                 </div>
-                <div className={styles.footer}>
-                    <button type="submit" className={styles.submit} style={sumbitBtnStyle}>
+                <div className="CommentForm-footer">
+                    <button type="submit" className="CommentForm-submit" style={sumbitBtnStyle}>
                         {this.state.buttonLoading && <i className="fa fa-spinner fa-pulse fa-fw" ></i>}提 交
                     </button>
                 </div>

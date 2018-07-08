@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'development',
@@ -11,6 +12,14 @@ module.exports = merge(common, {
         publicPath: '/static/test/',
         filename: '[name].bundle.js'
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            chunks: ['vendor', 'app'],
+            template: path.resolve(__dirname, '../src/index.html'),
+            hash: true,
+            title: "Lizc博客"
+        })
+    ],
     devServer: {
         port: 8888,
         compress: true,
@@ -37,16 +46,6 @@ module.exports = merge(common, {
     },
     module: {
         rules: [{
-            test: /\.scss$/,
-            include: [/cssmodule/],
-            use: ['style-loader', {
-                loader: 'css-loader',
-                options: {
-                    modules: true,
-                    localIdentName: '[local]-[hash:base64:5]'
-                }
-            }, 'sass-loader']
-        }, {
             test: /\.scss$/,
             exclude: [/cssmodule/],
             use: ['style-loader', 'css-loader', 'sass-loader']

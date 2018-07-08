@@ -1,19 +1,9 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
         app: path.resolve(__dirname, '../src/index.js')
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            chunks: ['vendor', 'app'],
-            template: path.resolve(__dirname, '../src/index.html'),
-            hash: true,
-            title: "Lizc博客"
-        })
-    ],
     module: {
         rules: [{
             test: /\.(js|jsx)$/,

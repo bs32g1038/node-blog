@@ -16,11 +16,25 @@ export const isSSR = function () {
 const $store = {
     categories: [],
     articles: [],
+    guestbooks: [],
+    links: [],
+    article: {},
+    comments: [],
     setArticles: function (articles) {
         this.articles = articles;
     },
     setCategories(categories) {
         this.categories = categories;
+    },
+    setGuestbooks(guestbooks) {
+        this.guestbooks = guestbooks;
+    },
+    setLinks(links) {
+        this.links = links;
+    },
+    setArticle(article, commetns) {
+        this.article = article;
+        this.comments = commetns;
     }
 };
 

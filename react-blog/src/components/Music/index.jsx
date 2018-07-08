@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { parseTime } from '../../utils/time';
-import styles from './cssmodule.scss';
 import DocumentTitle from '../DocumentTitle';
 // eg.
 // {
@@ -318,30 +317,39 @@ export default class Music extends Component {
         }
     }
 
-    // 将要挂载时加载网络数据
-    componentWillMount() {
-        Axios.get('/api/music/playlist?id=2161739123').then((res) => {
-            this.setState({
-                playList: res.data.tracks,
-                info: {
-                    coverImgUrl: res.data.coverImgUrl + '?param=200y200',
-                    name: res.data.name,
-                    createTime: parseTime(res.data.createTime, 'y-m-d'),
-                    description: res.data.description,
-                }
-            });
-        });
+    asyncData() {
+
     }
 
+    // 将要挂载时加载网络数据
     // dom挂载完毕，为audio添加相应事件
     componentDidMount() {
         // 已存在播放器直接加载播放器中的数据
         let audio = document.getElementsByTagName('audio')[0];
         if (audio) {
-            this.setState(Object.assign(JSON.parse(audio.getAttribute('state')), { audio }));
+            const musicState = sessionStorage.getItem('MusicState');
+            if (musicState) {
+                let o = JSON.parse(musicState);
+                Object.assign(o, {
+                    audio
+                });
+                this.setState(o);
+            }
         } else {
-            audio = document.body.appendChild(document.createElement('audio'));
+            Axios.get('/api/music/playlist?id=2161739123').then((res) => {
+                this.setState({
+                    playList: res.data.tracks,
+                    info: {
+                        coverImgUrl: res.data.coverImgUrl + '?param=200y200',
+                        name: res.data.name,
+                        createTime: parseTime(res.data.createTime, 'y-m-d'),
+                        description: res.data.description,
+                    }
+                });
+            });
+            audio = document.createElement('audio');
             audio.volume = 1;
+            document.body.appendChild(audio);
             this.setState({ audio });
         }
 
@@ -358,7 +366,9 @@ export default class Music extends Component {
 
     // 组件销毁时，把相关数据存到dom节点上
     componentWillUnmount() {
-        this.state.audio.setAttribute('state', JSON.stringify(this.state));
+        sessionStorage.setItem('MusicState', JSON.stringify(this.state));
+        document.getElementById('js-progress').onmousedown = null;
+        document.getElementById('js-volume').onmousedown = null;
     }
 
     render() {
@@ -369,7 +379,7 @@ export default class Music extends Component {
             lyric.push(
                 <p
                     key={k}
-                    className={data[k].index == this.state.curLyricItem ? styles.lyricItem + ' ' + styles.on : styles.lyricItem}
+                    className={data[k].index == this.state.curLyricItem ? "MusicLyric-item on" : "MusicLyric-item"}
                     data-time={k}>{data[k].content}</p>
             );
         }
@@ -377,25 +387,25 @@ export default class Music extends Component {
         /**
          * 广告
          */
-        lyric.push(<p className={styles.lyricItem} key="none-word">该歌曲暂无歌词</p>);
-        lyric.push(<p className={styles.lyricItem} key="www.lizc.me">www.lizc.me</p>);
+        lyric.push(<p className="MusicLyric-item" key="none-word">该歌曲暂无歌词</p>);
+        lyric.push(<p className="MusicLyric-item" key="www.lizc.me">www.lizc.me</p>);
         return (
             <DocumentTitle title="音乐">
-                <div className={styles.wrap}>
-                    <div className={styles.header}>
-                        <div className={styles.cover}>
-                            <img className={styles.coverImg} src={info.coverImgUrl} alt={info.name} />
+                <div className="MusicWrap">
+                    <div className="MusicHeader">
+                        <div className="MusicHeader-cover">
+                            <img className="MusicHeader-coverImg" src={info.coverImgUrl} alt={info.name} />
                         </div>
-                        <div className={styles.musicSheet}>
-                            <div className={styles.sheetTitle}>{info.name}</div>
-                            <div className={styles.sheetTime}><span>创建时间：</span>{info.createTime}</div>
-                            <p className={styles.sheetSummary} title={info.description}>{info.description}</p>
+                        <div className="MusicHeader-sheet">
+                            <div className="MusicHeader-sheetTitle">{info.name}</div>
+                            <div className="MusicHeader-sheetTime"><span>创建时间：</span>{info.createTime}</div>
+                            <p className="MusicHeader-sheetSummary" title={info.description}>{info.description}</p>
                         </div>
-                        <div className={styles.sheetSign}>歌单</div>
+                        <div className="MusicHeader-sheetSign">歌单</div>
                     </div>
                     {/* 歌词显示区域 */}
-                    <div className={styles.lyricMain} style={{height:this.state.isShowLyric ? '50px' : '0'}}>
-                        <div className={styles.lyricWrap} style={{transform: `translateY(${-this.state.curLyricItem * 24}px)`}}>
+                    <div className="MusicLyric" style={{ height: this.state.isShowLyric ? '50px' : '0' }}>
+                        <div className="MusicLyric-list" style={{ transform: `translateY(${-this.state.curLyricItem * 24}px)` }}>
                             {
 
                                 /**
@@ -406,13 +416,13 @@ export default class Music extends Component {
                         </div>
                     </div>
                     {/* 歌曲操作区域，包括播放，暂停，上一首，下一首，音量，进度... */}
-                    <div className={styles.playArea}>
+                    <div className="MusicPlayArea">
                         <a title="上一曲" onClick={() => this.playPre()}><i className="fa fa-step-backward"></i></a>
                         {
                             !this.state.audio.paused ?
-                                <a title="暂停" className={styles.pause} onClick={() => this.pause()}><i className="fa fa-pause"></i></a>
+                                <a title="暂停" className="pause" onClick={() => this.pause()}><i className="fa fa-pause"></i></a>
                                 :
-                                <a title="播放" className={styles.play} onClick={() => this.play()}><i className="fa fa-play"></i></a>
+                                <a title="播放" className="play" onClick={() => this.play()}><i className="fa fa-play"></i></a>
                         }
                         <a title="下一曲" onClick={() => this.playNext()}><i className="fa fa-step-forward"></i></a>
                         {
@@ -421,25 +431,25 @@ export default class Music extends Component {
                                 :
                                 <a title="列表随机" onClick={() => this.setMode(0)}><i className="fa fa-random"></i></a>
                         }
-                        <div className={styles.playProgress}>
-                            <div className={styles.playTime}>{this.calcTime(this.state.currentTime || 0)}</div>
-                            <div className={styles.playInfoWrap}>
-                                <div className={styles.musicInfo}>{this.state.songName}/{this.state.singer}</div>
-                                <div id="js-progress" className={styles.playProgressLine}>
-                                    <span id="play-progress-active" className={styles.playProgressActive} style={{ width: this.state.currentProgress }}></span>
-                                    <span id="play-indicator" className={styles.playIndicator} style={{ left: this.state.currentProgress }}></span>
+                        <div className="MusicPlayProgress">
+                            <div className="MusicPlayProgress-playTime">{this.calcTime(this.state.currentTime || 0)}</div>
+                            <div className="MusicPlayProgress-infoWrap">
+                                <div className="musicInfo">{this.state.songName}/{this.state.singer}</div>
+                                <div id="js-progress" className="MusicPlayProgress-Line">
+                                    <span id="play-progress-active" className="MusicPlayProgress-Line active" style={{ width: this.state.currentProgress }}></span>
+                                    <span id="play-indicator" className="MusicPlayProgress-indicator" style={{ left: this.state.currentProgress }}></span>
                                 </div>
                             </div>
-                            <div className={styles.playTime}>{this.calcTime(this.state.audio.duration || 0)}</div>
+                            <div className="MusicPlayProgress-playTime">{this.calcTime(this.state.audio.duration || 0)}</div>
                         </div>
-                        <div title="音量" className={styles.playVolume}>
+                        <div title="音量" className="MusicPlayVolume">
                             <i className="fa fa-volume-up volume"></i>
-                            <div className={styles.volumeLine} id="js-volume">
-                                <span className={styles.volumeLineActive}></span>
-                                <span id="volume-indicator" className={styles.volumeIndicator}></span>
+                            <div className="MusicPlayVolume-line" id="js-volume">
+                                <span className="MusicPlayVolume-line active"></span>
+                                <span id="volume-indicator" className="MusicPlayVolume-indicator"></span>
                             </div>
                         </div>
-                        <a title="歌词"><span className={styles.word} onClick={() => this.showLyric()}>词</span></a>
+                        <a title="歌词" className="word"><span onClick={() => this.showLyric()}>词</span></a>
                         <a title="歌曲列表" onClick={() => this.showPlayList()}><i className="fa fa-bars"></i></a>
                     </div>
                     {
@@ -447,30 +457,35 @@ export default class Music extends Component {
                         /**
                          * 播放列表显示，并且穷举音乐列表中的数据
                          */
-                        <div>
-                            <div className={styles.musicListBar}>
-                                <div className={styles.songIndex}>索引</div>
-                                <div className={styles.songName}>歌曲名称</div>
-                                <div className={styles.songSinger}>歌手</div>
-                                <div className={styles.songDuration}>时长</div>
+                        <div className="MusicListTable">
+                            <div className="MusicListTable-header">
+                                <div className="MusicListTable-row">
+                                    <div className="MusicListTable-cell index">索引</div>
+                                    <div className="MusicListTable-cell name">歌曲名称</div>
+                                    <div className="MusicListTable-cell singer">歌手</div>
+                                    <div className="MusicListTable-cell duration">时长</div>
+                                    <div className="MusicListTable-cell"></div>
+                                </div>
                             </div>
-                            <ul className={styles.musicList}>
+                            <ul className="MusicListTable-body">
                                 {
                                     this.state.playList.map((item, index) => (
                                         <li
-                                            className={styles.musicItem}
+                                            className="MusicListTable-row"
                                             key={index}
                                             onClick={() => this.play(index)}
                                         >
-                                            <div className={styles.songIndex}>{index + 1}</div>
-                                            <div className={styles.songName}>{item.name}</div>
-                                            <div className={styles.songSinger}>{item.singer}</div>
-                                            <div className={styles.songDuration}>{item.time}</div>
-                                            {
-                                                (this.state.playIndex == index)
-                                                && !this.state.audio.paused &&
-                                                <div className={styles.songAnimate}><i></i><i></i><i></i></div>
-                                            }
+                                            <div className="MusicListTable-cell index">{index + 1}</div>
+                                            <div className="MusicListTable-cell name">{item.name}</div>
+                                            <div className="MusicListTable-cell singer">{item.singer}</div>
+                                            <div className="MusicListTable-cell duration">{item.time}</div>
+                                            <div className="MusicListTable-cell" style={{ position: 'relative' }}>
+                                                {
+                                                    (this.state.playIndex == index)
+                                                    && !this.state.audio.paused &&
+                                                    <div className="Music-songAnimate"><i></i><i></i><i></i></div>
+                                                }
+                                            </div>
                                         </li>
                                     ))
                                 }
