@@ -13,6 +13,7 @@ export default class Articles extends Component {
         };
     }
     static getDerivedStateFromProps(nextProps) {
+        console.log(nextProps.$store)
         return {
             articles: nextProps.$store.articles
         };
@@ -25,6 +26,7 @@ export default class Articles extends Component {
         });
     }
     render() {
+        console.log(this.state.articles)
         return (
             <DocumentTitle title="文章列表">
                 <ul className="Articles">

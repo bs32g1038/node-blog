@@ -44,7 +44,6 @@ if (isSSR()) {
     console.log('服务器端的返回的数据：', __INITIAL_STATE__());
 }
 
-export { $store };
 
 export const StoreContext = React.createContext($store);
 
@@ -57,3 +56,5 @@ export function withStore(Component) {
         );
     };
 }
+
+export { $store };

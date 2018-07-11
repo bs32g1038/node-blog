@@ -48,11 +48,20 @@ class App extends Component {
         if (isSSR()) {
             return;
         }
-        this.getDataBeforeRouter(this.props.location).catch(err => {
+      
+        this.getDataBeforeRouter(this.props.location).then(()=>{
+            this.setState();
+        }).catch(err => {
             console.log('获取数据失败！', err);
         });
+        console.log(this.props.$store)
+    }
+    static getDerivedStateFromProps(nextProps) {
+        console.log(nextProps)
+        return true;
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("ss")
         if (this.state.previousLocation != this.props.location && !this.state.isFetching) {
             this.setState({
                 isFetching: true
