@@ -23,6 +23,7 @@ class App extends Component {
             _timer: null
         };
     }
+    // 异步数据请求用于服务器端和客户端
     static asyncData({ store }) {
         if (store.categories.length > 0) {
             return Promise.resolve();
@@ -31,6 +32,7 @@ class App extends Component {
             return store.setCategories(_.data);
         });
     }
+    // 预加载数据，并显示滚动条
     getDataBeforeRouter(location) {
         const q = queryString.parse(location.search);
         const branchs = matchRoutes(this.state.routes, location.pathname);
@@ -44,24 +46,25 @@ class App extends Component {
             });
         }));
     }
+    // 挂在dom节点
     componentDidMount() {
         if (isSSR()) {
             return;
         }
-      
-        this.getDataBeforeRouter(this.props.location).then(()=>{
-            this.setState();
+        this.getDataBeforeRouter(this.props.location).then(() => {
+            this.setState({}); // 触发更新provider的value
         }).catch(err => {
             console.log('获取数据失败！', err);
         });
-        console.log(this.props.$store)
     }
+    // props更新触发state更新
     static getDerivedStateFromProps(nextProps) {
-        console.log(nextProps)
-        return true;
+        return {
+            categories: nextProps.$store.categories
+        };
     }
+    // state更新时触发
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("ss")
         if (this.state.previousLocation != this.props.location && !this.state.isFetching) {
             this.setState({
                 isFetching: true
@@ -80,6 +83,7 @@ class App extends Component {
             });
         }
     }
+    // 进度条进度增加
     increase() {
         if (this.state.percent > 95 && !this.state.isShowProgress) {
             return this.setState({
@@ -95,6 +99,7 @@ class App extends Component {
         this.setState({ percent, isShowProgress: true });
         this._timer = setTimeout(() => this.increase(), 1000);
     }
+    // 进度条完成
     finishProgress() {
         clearInterval(this._timer);
         clearInterval(this._t);
@@ -107,6 +112,7 @@ class App extends Component {
             });
         }, 500);
     }
+    // 渲染函数
     render() {
         return (
             <div className="app-main">

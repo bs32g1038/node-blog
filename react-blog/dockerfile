@@ -1,0 +1,6 @@
+FROM node:8.11.1-alpine
+WORKDIR /code
+COPY ./package.json /code
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+RUN cnpm install --production
+COPY . /code

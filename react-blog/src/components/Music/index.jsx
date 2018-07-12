@@ -13,8 +13,8 @@ import DocumentTitle from '../DocumentTitle';
 export default class Music extends Component {
     constructor(props) {
         super(props);
+        this.audio = {};
         this.state = {
-            audio: {},
             curLyricItem: 0,
             songName: '基于react的音乐播放器',
             singer: 'LIZCBLOG',
@@ -131,7 +131,7 @@ export default class Music extends Component {
      * audio时间更新事件
      */
     timeupdate() {
-        let audio = this.state.audio;
+        let audio = this.audio;
         if (!isNaN(audio.duration)) {
             this.setState({
                 currentTime: audio.currentTime,
@@ -145,7 +145,8 @@ export default class Music extends Component {
      * 播放歌曲
      */
     play(index) {
-        const { audio, playList } = this.state;
+        const { playList } = this.state;
+        const audio = this.audio;
         if (!audio.ended && audio.paused && audio.src) {
             return audio.play();
         }
@@ -166,7 +167,7 @@ export default class Music extends Component {
      * 暂停
      */
     pause() {
-        this.state.audio.pause();
+        this.audio.pause();
     }
 
     /**
@@ -330,10 +331,8 @@ export default class Music extends Component {
             const musicState = sessionStorage.getItem('MusicState');
             if (musicState) {
                 let o = JSON.parse(musicState);
-                Object.assign(o, {
-                    audio
-                });
                 this.setState(o);
+                this.audio = audio;
             }
         } else {
             Axios.get('/api/music/playlist?id=2161739123').then((res) => {
@@ -350,7 +349,7 @@ export default class Music extends Component {
             audio = document.createElement('audio');
             audio.volume = 1;
             document.body.appendChild(audio);
-            this.setState({ audio });
+            this.audio = audio;
         }
 
         // 为audio绑定基础事件
@@ -369,6 +368,8 @@ export default class Music extends Component {
         sessionStorage.setItem('MusicState', JSON.stringify(this.state));
         document.getElementById('js-progress').onmousedown = null;
         document.getElementById('js-volume').onmousedown = null;
+        this.audio.ontimeupdate = null;
+        this.audio.onended = null;
     }
 
     render() {
@@ -419,7 +420,7 @@ export default class Music extends Component {
                     <div className="MusicPlayArea">
                         <a title="上一曲" onClick={() => this.playPre()}><i className="fa fa-step-backward"></i></a>
                         {
-                            !this.state.audio.paused ?
+                            !this.audio.paused ?
                                 <a title="暂停" className="pause" onClick={() => this.pause()}><i className="fa fa-pause"></i></a>
                                 :
                                 <a title="播放" className="play" onClick={() => this.play()}><i className="fa fa-play"></i></a>
@@ -440,7 +441,7 @@ export default class Music extends Component {
                                     <span id="play-indicator" className="MusicPlayProgress-indicator" style={{ left: this.state.currentProgress }}></span>
                                 </div>
                             </div>
-                            <div className="MusicPlayProgress-playTime">{this.calcTime(this.state.audio.duration || 0)}</div>
+                            <div className="MusicPlayProgress-playTime">{this.calcTime(this.audio.duration || 0)}</div>
                         </div>
                         <div title="音量" className="MusicPlayVolume">
                             <i className="fa fa-volume-up volume"></i>
@@ -482,7 +483,7 @@ export default class Music extends Component {
                                             <div className="MusicListTable-cell" style={{ position: 'relative' }}>
                                                 {
                                                     (this.state.playIndex == index)
-                                                    && !this.state.audio.paused &&
+                                                    && !this.audio.paused &&
                                                     <div className="Music-songAnimate"><i></i><i></i><i></i></div>
                                                 }
                                             </div>

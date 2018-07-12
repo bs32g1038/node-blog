@@ -26,7 +26,6 @@ export default class Articles extends Component {
         });
     }
     render() {
-        console.log(this.state.articles)
         return (
             <DocumentTitle title="文章列表">
                 <ul className="Articles">
