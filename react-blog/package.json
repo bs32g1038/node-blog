@@ -3,6 +3,26 @@
   "version": "2.0.0",
   "description": "A simple and whole react blog web",
   "license": "MIT",
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:client dev:server",
+    "dev:client": "webpack-dev-server --open --config ./build/webpack.dev.js --hide-modules",
+    "dev:server": "cross-env NODE_ENV=development node server/server.js",
+    "build:client": "webpack --config ./build/webpack.prod.js --progress --hide-modules",
+    "build:server": "cross-env NODE_ENV=production webpack --config ./build/webpack.server.js --progress --hide-modules",
+    "build": "npm-run-all --parallel build:client build:server",
+    "start": "cross-env NODE_ENV=production node server/server.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cross-env": "^5.1.6",
+    "dayjs": "^1.6.5",
+    "express": "^4.16.3",
+    "query-string": "^6.1.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-router-dom": "^4.2.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.49",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.49",
@@ -14,7 +34,6 @@
     "babel-plugin-import": "^1.7.0",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^4.5.2",
-    "cross-env": "^5.1.6",
     "crypto-js": "^3.1.9-1",
     "css-loader": "^0.28.11",
     "global": "^4.3.2",
@@ -42,24 +61,5 @@
     "babel-polyfill": "^6.26.0",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.8.2"
-  },
-  "scripts": {
-    "dev": "npm-run-all --parallel dev:client dev:server",
-    "dev:client": "webpack-dev-server --open --config ./build/webpack.dev.js --hide-modules",
-    "dev:server": "cross-env NODE_ENV=development node server/server.js",
-    "build:client": "webpack --config ./build/webpack.prod.js --progress --hide-modules",
-    "build:server": "cross-env NODE_ENV=development webpack --config ./build/webpack.server.js --progress --hide-modules",
-    "build": "npm-run-all --parallel build:client build:server",
-    "start": "cross-env NODE_ENV=production node server/server.js"
-  },
-  "dependencies": {
-    "query-string": "^6.1.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-router-config": "^1.0.0-beta.4",
-    "react-router-dom": "^4.2.2",
-    "dayjs": "^1.6.5",
-    "express": "^4.16.3",
-    "axios": "^0.18.0"
   }
 }
