@@ -16,11 +16,20 @@
 }
 
 .FriendlyLinks-tip {
-    border-left: 2px solid #67CCEA;
-    border-left-width: 5px;
     color: #333;
     font-size: 14px;
-    padding: 5px 5px 5px 20px
+    padding: 5px 5px 5px 20px;
+    >i {
+        margin-right: 5px;
+    }
+}
+
+.FriendlyLinks-hr {
+    margin: 20px 0;
+    height: 3px;
+    border: none;
+    background-color: #ccc;
+    background-image: repeating-linear-gradient(-45deg, #fff, #fff 4px, transparent 4px, transparent 8px);
 }
 
 .FriendlyLinks-body {
@@ -34,13 +43,15 @@
     margin: 0;
     padding: 10px;
     position: relative;
-    width: 33.3%
+    width: 33.3%;
 }
 
 .FriendlyLinks-itemContent {
-    border: 1px solid #dededd;
+    // border: 1px solid #dededd;
     border-radius: 5px;
-    padding: 10px
+    padding: 10px;
+    position: relative;
+    background-color: #f4f5f7;
 }
 
 .FriendlyLinks-itemImg {
@@ -52,12 +63,12 @@
 
 .FriendlyLinks-itemMeta {
     align-items: center;
-    color: #333;
+    color: #212121;
     display: flex
 }
 
 .FriendlyLinks-itemDescription {
-    color: #999;
+    color: #6d757a;
     font-size: 12px;
     height: 52px;
     margin-bottom: 5px;
@@ -65,13 +76,24 @@
     overflow: hidden
 }
 
+.FriendlyLinks-itemDecoration {
+    background-color: #cad0da;
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    padding: 5px;
+    border-radius: 50%;
+    color: #fff;
+    border: 4px solid #fff;
+}
+
 .FriendlyLinks-li {
     font-size: 14px;
-    list-style: inherit;
+    list-style: circle;
     padding: 5px
 }
 
 .FriendlyLinks-jump {
-    font-size: 16px;
-    font-weight: bold
+    font-size: 14px;
+    color: #f51c1c;
 }
