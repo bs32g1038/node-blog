@@ -72,6 +72,9 @@ class App extends Component {
             this.increase();
         }
         if (this.state.isFetching) {
+            if(typeof _hmt != 'undefined'){
+                _hmt.push(['_trackPageview', this.props.location.pathname]);
+            }
             this.getDataBeforeRouter(this.props.location).then((res) => {
                 this.setState({
                     previousLocation: this.props.location,
