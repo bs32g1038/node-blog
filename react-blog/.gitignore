@@ -1,7 +1,0 @@
-.cache
-node_modules
-.vscode
-static/upload/*
-logs/blog/*
-!.gitkeep
-static

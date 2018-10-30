@@ -1,10 +1,7 @@
+dist
 .cache
 node_modules
 .vscode
-upload
-logs/blog/*
-!.gitkeep
-.idea
-*.log
-venv
-__pycache__
+static/upload/*
+logs
+reactsrc
