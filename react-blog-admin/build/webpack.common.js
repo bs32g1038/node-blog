@@ -24,12 +24,10 @@ module.exports = {
                     plugins: [
                         ["@babel/plugin-transform-runtime", {
                             "helpers": false,
-                            "polyfill": false,
                             "regenerator": true,
-                            "moduleName": "@babel/runtime"
                         }],
                         "@babel/plugin-syntax-dynamic-import",
-                        ["import", { libraryName: 'antd', style: "css" }]
+                        ["import", { libraryName: 'antd', libraryDirectory: "es", style: "css" }]
                     ]
                 }
             }

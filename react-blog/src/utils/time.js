@@ -4,10 +4,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.locale('zh-cn');
 dayjs.extend(relativeTime);
 
-exports.timeAgo = function (timestamp) {
+export const timeAgo = function (timestamp) {
     return dayjs(timestamp).fromNow();
 };
 
-exports.parseTime = function (timestamp) {
+export const parseTime = function (timestamp) {
     return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
 };

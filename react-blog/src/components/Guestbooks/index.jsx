@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from '../../utils/axios';
 import { timeAgo } from '../../utils/time';
 import CommentForm from '../comment-form';
-import DocumentTitle from '../DocumentTitle';
+import DocumentTitle from '../document-title';
 
 export default class Guestbooks extends Component {
     constructor(props) {

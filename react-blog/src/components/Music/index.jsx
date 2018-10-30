@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { parseTime } from '../../utils/time';
-import DocumentTitle from '../DocumentTitle';
+import DocumentTitle from '../document-title';
 // eg.
 // {
 //     src: "http://61.144.3.98:8084/SXC_F_1704463232_10792661911514900099/m10.music.126.net/20180318155508/3171b7ca93266b6e4ebda7714089e4d4/ymusic/0671/ca73/355c/2b832330d25a65cab30dbea4ebc4fd28.mp3",
@@ -369,7 +369,23 @@ export default class Music extends Component {
         document.getElementById('js-progress').onmousedown = null;
         document.getElementById('js-volume').onmousedown = null;
         this.audio.ontimeupdate = null;
-        this.audio.onended = null;
+        this.audio.onended = function () {
+            const data = sessionStorage.getItem('MusicState');
+            const state = JSON.parse(data);
+            let index = 0;
+            if (state.mode == 0) {
+                index = state.playIndex + 1;
+                (state.playIndex  + 1 > state.playList.length) && (index = 0);
+            } else {
+                index = Math.ceil(Math.random() * state.playList.length - 1);
+            }
+            const music = state.playList[index];
+            this.src = music.src;
+            this.play().catch(error => { }); // 捕抓多次点击错误
+            state.playIndex = index;
+            sessionStorage.setItem('MusicState', JSON.stringify(state));
+        };
+        this.audio = null;
     }
 
     render() {
@@ -428,9 +444,9 @@ export default class Music extends Component {
                         <a title="下一曲" onClick={() => this.playNext()}><i className="fa fa-step-forward"></i></a>
                         {
                             this.state.playMode == 0 ?
-                                <a title="列表循环" onClick={() => this.setMode(1)}><i className="fa fa-repeat"></i></a>
+                                <a title="列表循环" style={{width: '30px'}} onClick={() => this.setMode(1)}><i className="fa fa-repeat"></i></a>
                                 :
-                                <a title="列表随机" onClick={() => this.setMode(0)}><i className="fa fa-random"></i></a>
+                                <a title="列表随机" style={{width: '30px'}} onClick={() => this.setMode(0)}><i className="fa fa-random"></i></a>
                         }
                         <div className="MusicPlayProgress">
                             <div className="MusicPlayProgress-playTime">{this.calcTime(this.state.currentTime || 0)}</div>

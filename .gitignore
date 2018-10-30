@@ -7,3 +7,4 @@ logs/blog/*
 .idea
 *.log
 venv
+__pycache__

@@ -3,7 +3,7 @@ import { parseTime, timeAgo } from '../../utils/time';
 import axios from '../../utils/axios';
 import CommentForm from '../comment-form';
 import queryString from 'query-string';
-import DocumentTitle from '../DocumentTitle';
+import DocumentTitle from '../document-title';
 
 const replyFn = (item) => (
     <div className="ArticleComments-quote">

@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { parseTime } from '../../utils/time';
-import DocumentTitle from '../DocumentTitle';
+import DocumentTitle from '../document-title';
 
 export default class Articles extends Component {
     constructor(props) {

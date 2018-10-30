@@ -27,7 +27,7 @@ class UserLogin extends Component {
         return (
             <div className="sign-in">
                 <div className="sign-in-main">
-                    <img className="brand" src={require('assets/login-logo.png')} />
+                    <img className="brand" src={require('../assets/login-logo.png')} />
                     <div className="sign-in-panel">
                         <div className="sign-in-head">
                             <h3 className="sign-in-title">后台登陆</h3>

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "nodemon --watch * --exec python ./app.py"
+    "dev": "nodemon --ignore node_modules --ignore venv --watch ./ --exec python app.py"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"

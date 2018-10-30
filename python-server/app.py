@@ -1,14 +1,18 @@
 from aiohttp import web
-from captcha import createCaptcha
+from captcha import ValidCodeImg
 routes = web.RouteTableDef()
+
 
 def generateCaptcha():
     return
 
+
 @routes.get('/')
 async def hello(request):
-    print(createCaptcha())
-    return web.Response(content_type="image/png",body=createCaptcha())
+    img = ValidCodeImg()
+    data, valid_str = img.getValidCodeImg()
+    return web.Response(content_type="image/png", body=data)
+
 
 app = web.Application()
 app.add_routes(routes)
