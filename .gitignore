@@ -1,7 +1,6 @@
-dist
 .cache
 node_modules
 .vscode
-static/upload/*
+static/upload/**
 logs
-reactsrc
+!.gitkeep
