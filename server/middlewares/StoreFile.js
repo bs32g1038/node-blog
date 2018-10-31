@@ -32,7 +32,7 @@ let uploadLocal = function (req, res, next) {
             sharpImg.min();
         }
         sharpImg.withoutEnlargement();
-        const basePath = path.resolve(__dirname, `../upload/${date.getFullYear()}/`);
+        const basePath = path.resolve(__dirname, `../../static/upload/${date.getFullYear()}/`);
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }

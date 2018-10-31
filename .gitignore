@@ -2,5 +2,5 @@
 node_modules
 .vscode
 static/upload/**
-logs
+logs/**
 !.gitkeep
