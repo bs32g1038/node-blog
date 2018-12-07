@@ -112,15 +112,9 @@ if (!isDev) {
         const template = fs.readFileSync(path.join(__dirname, '../static/admin/index.html'), 'utf8');
         res.send(template);
     });
-
-    const serverBundle = require('../react-ssr/server-entry').default;
-    const template = fs.readFileSync(path.join(__dirname, '../static/app/index.html'), 'utf8');
+    const serverBundle = require('../react-ssr/server').default;
     router.get(/blog/, function (req, res) {
-        serverBundle(req, function (content, data) {
-            res.send(template.replace('<!-- app -->', content).replace('<!-- state -->',
-                `<script>window.__INITIAL_STATE__=${JSON.stringify(data)}</script>`
-            ));
-        });
+        serverBundle(req, res);
     });
 }
 
