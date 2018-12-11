@@ -11,6 +11,7 @@
     "data2xml": "^1.2.5",
     "express": "^4.16.3",
     "express-favicon": "^2.0.1",
+    "highlight.js": "^9.13.1",
     "jsonwebtoken": "^8.3.0",
     "log4js": "^3.0.5",
     "lru-cache": "^4.1.3",

@@ -7,8 +7,21 @@ const MarkdownIt = require('markdown-it');
 const helper = require('../utils/helper');
 const logger = require('../utils/logger');
 const validator = require('validator');
+const hljs = require('highlight.js'); // https://highlightjs.org/
 
-const markdown = new MarkdownIt();
+const markdown = new MarkdownIt({
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return '<pre class="hljs"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            } catch (__) { }
+        }
+
+        return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
+    }
+});
 
 // 实现动态控制数据字段返回
 const handleFields = (fields) => {
@@ -96,8 +109,8 @@ class ArticleApi {
             let article = await models.Article.findByIdAndUpdate(_id, {
                 $inc: { viewsCount: 1 }
             }, {
-                select: fds.article
-            }).populate('category', fds.category);
+                    select: fds.article
+                }).populate('category', fds.category);
             if (req.query.md) {
                 article.content = markdown.render(article.content);
             }
