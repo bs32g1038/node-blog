@@ -6,6 +6,7 @@
     "start": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
+    "cp": "node ./scripts/cp.js",
     "start:prod": "cross-env NODE_ENV=production node build/server.js"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "mockjs": "^1.0.1-beta3",
     "razzle": "^2.4.0",
     "razzle-plugin-typescript": "^2.4.0",
+    "shelljs": "^0.8.3",
     "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
