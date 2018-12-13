@@ -1,39 +1,67 @@
-# react-blog
+# 个人博客前端页面
 
-#### 项目介绍
-{**以下是码云平台说明，您可以替换为您的项目简介**
-码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+## How to use
+Download the example [or clone the whole project](https://github.com/jaredpalmer/razzle.git):
 
-#### 软件架构
-软件架构说明
+```bash
+curl https://codeload.github.com/jaredpalmer/razzle/tar.gz/master | tar -xz --strip=2 razzle-master/examples/with-typescript
+cd with-typescript
+```
 
+Install it and run:
 
-#### 安装教程
+```bash
+yarn install
+yarn start
+```
 
-1. xxxx
-2. xxxx
-3. xxxx
+## Idea behind the example
+This is an of how to use Razzle with [TypeScript](https://github.com/Microsoft/TypeScript). 
+In `razzle.config.js`, we locate the part of the webpack configuration 
+that is running `babel-loader` and swap it out for `ts-loader`. 
+Additionally, we make sure Razzle knows how to resolve `.ts` and `.tsx` files.
 
-#### 使用说明
+Lastly, we also need to modify our Jest configuration to handle typescript files. 
+Thus we add `ts-jest` and `@types/jest` to our dev dependencies. Then we augment Razzle's default jest setup by adding a field in our `package.json`.
 
-1. xxxx
-2. xxxx
-3. xxxx
+```json
+// package.json
 
-#### 参与贡献
+{
+  ...
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+      "^.+\\.css$": "<rootDir>/node_modules/razzle/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/node_modules/razzle/config/jest/fileTransform.js"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.(ts|js)?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).(ts|js)?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ]
+  }
+}
+```
 
-1. Fork 本项目
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+The `tslint.json` and `tsconfig.json` are taken from Microsoft's official 
+[TypeScript-React-Starter](https://github.com/Microsoft/TypeScript-React-Starter).
 
+Note: You do not techincally _need_ to fully replace `babel-loader` with 
+`ts-loader` to use TypeScript. Both TS and Babel transpile ES6 code,
+so when you run both webpack loaders you are making Razzle do twice the work. From our testing,
+this can make HMR extremely slow on larger apps. Thus, this example overwrites
+`babel-loader` with `ts-loader`. However, if you are incrementally moving to typescript you may want to run both loaders side by side. If you are running both, add this to your `jest.transform` setup in `package.json`:
 
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+```
+"^.+\\.(js|jsx)$": "<rootDir>/node_modules/razzle/config/jest/babelTransform.js",
+```
+This will continue to transform .js files through babel.
