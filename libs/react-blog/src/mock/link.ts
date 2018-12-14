@@ -1,5 +1,0 @@
-const links = [{ _id: '5ac069e761927e001f831f4b', name: 'Lizc个人博客', url: 'https://github.com/bs32g1038/node-blog', description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！', logo: 'https://www.lizc.me/static/images/logo.png', createdAt: '2018-04-01T05:11:03.597Z', updatedAt: '2018-04-25T02:43:01.028Z', __v: 0 }, { _id: '5ac06b3461927e001f831f4c', name: '水墨寒技术博客', url: 'https://smohan.net', description: '90后双鱼座普通逗比男青年，目前专注于前端与PHP技术的学习。', logo: 'https://secure.gravatar.com/avatar/85356416ea5399c0dc1ea9fd354b1c8e?s=100', createdAt: '2018-04-01T05:16:36.223Z', updatedAt: '2018-04-01T05:16:36.223Z', __v: 0 }, { _id: '5ac23cda5a886700156c810c', name: '一颗帅阿星', url: 'http://axing.site', description: '阿星前端随笔', logo: 'https://www.lizc.me/static/images/any.png', createdAt: '2018-04-02T14:23:22.382Z', updatedAt: '2018-04-25T02:43:09.804Z', __v: 0 }, { _id: '5ad75c46cbb75e00154891e4', name: '梦魇小栈', url: 'https://blog.ihoey.com', description: '心，若没有栖息的地方，到哪里都是流浪......', logo: 'https://cdn.dode.top/avatar.png', createdAt: '2018-04-18T14:55:02.885Z', updatedAt: '2018-04-18T14:55:02.885Z', __v: 0 }];
-
-export const getLinks = () => {
-    return links;
-};
