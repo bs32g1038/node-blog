@@ -1,7 +1,7 @@
 import React from 'react';
 import MusicJson from './musicList.json';
 import musicLyric from './musicLyric.json';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -411,7 +411,7 @@ export default class App extends React.Component {
                 <div className="bg-mask"></div>
                 <div className="bg-music-player" style={{ backgroundImage: 'url(https://y.gtimg.cn/music/photo_new/T002R300x300M000004RThJi4G1v0A.jpg?max_age=2592000)' }} id="backImg"></div>
                 <header className="header">
-                    <h1 class="site-logo">
+                    <h1 className="site-logo">
                         <a href="http://www.lizc.me" rel="noopener noreferrer" target="_blank">MM音乐</a>
                     </h1>
                     <div className="header-help">
@@ -533,7 +533,7 @@ export default class App extends React.Component {
                                     </a>
                                     :
                                     <a title="列表随机" onClick={() => this.setMode(0)}>
-                                        <svg class="icon-recycle" viewBox="0 0 1024 1024">
+                                        <svg className="icon-recycle" viewBox="0 0 1024 1024">
                                             <path d="M747.52 309.4528a245.76 245.76 0 0 0-245.76 245.76v14.7456c-15.7696 38.912-17.408 56.7296-29.2864 68.1984a286.72 286.72 0 0 1-257.4336 162.816h-20.48v-40.96h20.48a245.76 245.76 0 0 0 239.2064-190.2592c2.4576-3.6864 4.5056-7.5776 6.7584-11.264s0-2.048 0-3.2768a286.72 286.72 0 0 1 286.72-286.72h61.44v40.96zM794.4192 721.5104l-87.04 86.2208a20.48 20.48 0 0 0 0 28.672 20.48 20.48 0 0 0 29.0816 0l87.04-86.2208a20.48 20.48 0 0 0 0-28.672 20.48 20.48 0 0 0-29.0816 0zM792.576 303.5136l-86.8352-86.8352a20.48 20.48 0 1 1 28.8768-28.8768l86.8352 86.8352a20.48 20.48 0 0 1-28.8768 28.8768zM749.1584 715.5712A245.76 245.76 0 0 1 502.784 471.04v-14.7456c-15.7696-38.5024-17.6128-56.32-29.2864-67.7888a286.72 286.72 0 0 0-197.632-155.0336v40.96a245.76 245.76 0 0 1 178.7904 181.248c2.4576 3.6864 4.5056 7.5776 6.7584 11.264s0 2.048 0 3.072a286.72 286.72 0 0 0 286.72 284.672h61.44v-40.96zM235.52 228.352h-40.96v40.96h40.96z" />
                                         </svg>
                                     </a>
