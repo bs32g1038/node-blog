@@ -26,6 +26,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "serialize-javascript": "^1.5.0",
+    "shelljs": "^0.8.3",
     "validator": "^10.9.0"
   },
   "devDependencies": {
