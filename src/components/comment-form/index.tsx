@@ -104,7 +104,8 @@ const Textarea = styled.textarea((props: { isError?: boolean }) => ({
 
 const Footer = styled.div((_) => ({
     display: 'flex',
-    justifycontent: 'flex-end'
+    justifycontent: 'flex-end',
+    transition: 'all .4s ease-in'
 }));
 
 const Button = styled.button((_) => ({
@@ -137,7 +138,6 @@ interface Props {
 }
 
 class CommentForm extends Component<Props, any> {
-
     public state = {
         isValidationErrors_nickName: false,
         isValidationErrors_email: false,
@@ -146,7 +146,6 @@ class CommentForm extends Component<Props, any> {
         buttonLoading: false,
         errorText: ''
     };
-
     public render() {
         return (
             <CommentFormWrap ref="form">
@@ -179,15 +178,13 @@ class CommentForm extends Component<Props, any> {
             </CommentFormWrap>
         );
     }
-
     public submit() {
         const form: any = ReactDOM.findDOMNode(this.refs.form);
-        const elements = form.elements;
+        const elements: [{ name: string, value: string }] = form.elements;
         const data: any = {
             article: this.props.articleId
         };
-        for (const ele of elements) {
-            // const ele = elements[i];
+        for (const ele of Array.from(elements)) {
             if (ele.name) { data[ele.name] = ele.value; }
         }
         const lay = () => setTimeout(() => {
@@ -198,34 +195,31 @@ class CommentForm extends Component<Props, any> {
                 isValidationErrors_content: false
             });
         }, 800);
-        if (data.nickName !== null && isEmpty(data.nickName)) {
+        if (isEmpty(data.nickName)) {
             return this.setState({
                 isValidationErrors_nickName: true
             }, lay);
-        } else if (data.email !== null && !isEmail(data.email)) {
+        } else if (!isEmail(data.email)) {
             return this.setState({
                 isValidationErrors_email: true
             }, lay);
-        } else if (data.website !== null && !isURL(data.website)) {
+        } else if (!isEmpty(data.website) && !isURL(data.website)) {
             return this.setState({
                 isValidationErrors_website: true
             }, lay);
-        } else if (data.content !== null && isEmpty(data.content)) {
+        } else if (isEmpty(data.content)) {
             return this.setState({
                 isValidationErrors_content: true
             }, lay);
         }
-
         if (this.props.replyId) {
             Object.assign(data, {
                 reply: this.props.replyId
             });
         }
-
         this.setState({
             buttonLoading: true
         });
-
         axios.post(this.props.url, data).then(() => {
             location.reload();
         }).catch((err) => {
@@ -242,7 +236,6 @@ class CommentForm extends Component<Props, any> {
                 });
             }
         });
-
     }
 }
 
