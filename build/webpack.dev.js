@@ -12,7 +12,7 @@ module.exports = merge(common, {
         filename: '[name].bundle.js'
     },
     devServer: {
-        port: 3001,
+        port: 3002,
         compress: true,
         before: function (app) {
             app.use('/static', express.static(path.resolve(__dirname, '../../nginx/static')));
