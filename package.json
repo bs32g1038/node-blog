@@ -15,6 +15,8 @@
     "axios": "^0.18.0",
     "cross-env": "^5.2.0",
     "dayjs": "^1.7.7",
+    "emotion": "^10.0.6",
+    "emotion-server": "^10.0.6",
     "express": "^4.16.4",
     "polished": "^2.3.1",
     "query-string": "^6.2.0",
@@ -43,6 +45,7 @@
     "@types/redux": "^3.6.0",
     "@types/validator": "^9.4.3",
     "@types/webpack-env": "^1.13.6",
+    "http-proxy-middleware": "^0.19.1",
     "mockjs": "^1.0.1-beta3",
     "razzle": "^2.4.0",
     "razzle-plugin-typescript": "^2.4.0",
@@ -50,7 +53,8 @@
     "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "url-loader": "^1.1.2"
   },
   "jest": {
     "transform": {

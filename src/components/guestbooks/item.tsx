@@ -3,11 +3,15 @@ import React, { SFC } from 'react';
 import { timeAgo } from '../../utils/time';
 
 const GuestbookItem = styled.div((_) => ({
-    padding: '20px 25px',
+    // padding: '20px 25px',
+    // position: 'relative',
+    // width: '400px',
+    // boxSizing: 'border-box',
+    label: 'Guestbooks-item',
+    padding: '20px 20px',
     position: 'relative',
-    width: '400px',
-    boxSizing: 'border-box',
-    label: 'Guestbooks-item'
+    width: '330px',
+    boxSizing: 'border-box'
 }));
 
 const UserMata = styled.div((_) => ({

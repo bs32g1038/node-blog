@@ -6,7 +6,10 @@ import { parseTime } from '../../utils/time';
 const ArticleItem = styled.li((_) => ({
     borderBottom: '1px solid rgba(178, 186, 194, .15)',
     padding: '10px 15px',
-    label: 'article-item'
+    label: 'article-item',
+    '&:last-child': {
+        borderBottom: 'none'
+    }
 }));
 
 const Header = styled.div((_) => ({
@@ -20,7 +23,7 @@ const Brief = styled.div((_) => ({
     fontSize: '18px',
     lineHeight: '32px',
     overflow: 'hidden',
-    padding: '0 28px',
+    padding: '0 18px',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
 }));
@@ -62,7 +65,7 @@ const ThumbA = styled.a((_) => ({
 
 const Summary = styled.p((_) => ({
     fontSize: '14px',
-    margin: '8px 28px',
+    margin: '8px 18px',
     wordWrap: 'break-word'
 }));
 
@@ -84,7 +87,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     </Meta>
                 </Brief>
                 <ThumbWrap>
-                    <ThumbA style={{ backgroundImage: `url(${item.screenshot})` }}></ThumbA>
+                    <ThumbA style={{ backgroundImage: `url(http://127.0.0.1:8080${item.screenshot})` }}></ThumbA>
                 </ThumbWrap>
             </Header>
             <Summary>{item.summary}</Summary>

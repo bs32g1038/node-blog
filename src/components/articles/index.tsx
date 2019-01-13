@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../redux/reducers/articles';
+import Categories from '../categories';
 import ArticleItem from './item';
 
 const UL = styled.ul((_) => ({
@@ -16,13 +17,17 @@ class Articles extends React.Component<any, any> {
     public render() {
         const { articles } = this.props._DB;
         return (
-            <UL>
-                {
-                    articles.map((item: any) => (
-                        <ArticleItem item={item} key={item._id}></ArticleItem>
-                    ))
-                }
-            </UL>
+            <div>
+                <Categories></Categories>
+                <UL>
+                    {
+                        articles.map((item: any) => (
+                            <ArticleItem item={item} key={item._id}></ArticleItem>
+                        ))
+                    }
+                </UL>
+            </div>
+
         );
     }
 }

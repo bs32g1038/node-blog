@@ -36,22 +36,26 @@ const Notice = styled.p((_) => ({
 
 const FormInline = styled.div((_) => ({
     display: 'flex',
-    marginBottom: '10px',
+    marginBottom: '10px'
 }));
 
 const FormGroup = styled.div((_) => ({
-    display: 'flex',
-    flex: '1 0 auto',
+    // display: 'flex',
+    // flex: '1 0 auto',
     marginRight: '5px',
-    backgroundColor: '#f5f5f5'
+    marginLeft: '20px',
+    marginTop: '10px',
+    marginBottom: '10px',
+    // backgroundColor: '#f5f5f5',
+    borderRadius: '2px'
 }));
 
 const FormLabel = styled.label((_) => ({
-    alignItems: 'center',
-    color: '#9e9e9e',
-    display: 'flex',
+    // alignItems: 'center',
+    color: '#333',
+    // display: 'flex',
     justifyContent: 'center',
-    padding: '3px 0 3px 12px',
+    padding: '3px 0 3px 8px',
     whiteSpace: 'nowrap',
     '>.red': {
         color: '#f90000'
@@ -59,14 +63,16 @@ const FormLabel = styled.label((_) => ({
 }));
 
 const FormInput = styled.input((props: { isError?: boolean }) => ({
-    border: 'none',
-    color: '#515151',
+    color: '#333',
     flex: '1 0 auto',
     marginLeft: '-1px',
-    padding: '3px 4px',
-    backgroundColor: '#f5f5f5',
+    padding: '3px 0',
+    // backgroundColor: '#f5f5f5',
     height: '36px',
     boxSizing: 'border-box',
+    border: '1px solid #efefef',
+    paddingLeft: '5px',
+    width: '50%',
     ...props.isError ? { animation: `${bounce} 1s ease infinite` } : {},
     '&:focus': {
         outline: 'none'
@@ -90,11 +96,13 @@ const ContentWrap = styled.div((_) => ({
 }));
 
 const Textarea = styled.textarea((props: { isError?: boolean }) => ({
-    border: 'none',
-    width: '100%',
+    // border: 'none',
+    width: '80%',
     padding: '12px',
-    backgroundColor: '#f5f5f5',
+    // backgroundColor: '#f5f5f5',
     minHeight: '90px',
+    border: '1px solid #efefef',
+    marginLeft: '20px',
     '&:focus': {
         outline: 'none'
     },
@@ -104,21 +112,25 @@ const Textarea = styled.textarea((props: { isError?: boolean }) => ({
 
 const Footer = styled.div((_) => ({
     display: 'flex',
-    justifycontent: 'flex-end',
+    justifyContent: 'flex-end',
     transition: 'all .4s ease-in'
 }));
 
 const Button = styled.button((_) => ({
-    backgroundColor: 'rgba(2, 117, 216, 0.5)',
-    border: 'none',
-    borderRadius: '3px',
+    // backgroundColor: 'rgba(2, 117, 216, 0.5)',
+    // border: 'none',
+    // borderRadius: '3px',
     color: '#fff',
     cursor: 'pointer',
     fontSize: '14px',
     fontWeight: 400,
     padding: '10px 12px',
     textAlign: 'center',
-    width: '100%'
+
+    // width: '100%',
+    border: '1px solid #6190e8',
+    borderRadius: '5px',
+    backgroundColor: '#6190e8'
 }));
 
 const ErrorTipDiv = styled.p((_) => ({
@@ -150,22 +162,19 @@ class CommentForm extends Component<Props, any> {
         return (
             <CommentFormWrap ref="form">
                 <Notice>电子邮件地址不会被公开。必填项已用*标注</Notice>
-                <FormInline>
-                    <FormGroup>
-                        <FormLabel>昵称<span className="red">*</span>：</FormLabel>
-                        <FormInput isError={this.state.isValidationErrors_nickName} id="nickName" name="nickName" placeholder="请输入你的昵称" type="text" />
-                    </FormGroup>
-                    <FormGroup>
-                        <FormLabel>邮箱<span className="red">*</span>：</FormLabel>
-                        <FormInput isError={this.state.isValidationErrors_email} id="email" name="email" placeholder="请输入你的email" type="text" />
-                    </FormGroup>
-                </FormInline>
-                <FormInline>
-                    <FormGroup>
-                        <FormLabel>网址：</FormLabel>
-                        <FormInput isError={this.state.isValidationErrors_website} id="website" name="website" placeholder="如：https://www.lizc.me" type="text" />
-                    </FormGroup>
-                </FormInline>
+                <FormLabel>昵称<span className="red">*</span>：</FormLabel>
+                <FormGroup>
+                    <FormInput isError={this.state.isValidationErrors_nickName} id="nickName" name="nickName" placeholder="请输入你的昵称" type="text" />
+                </FormGroup>
+                <FormLabel>邮箱<span className="red">*</span>：</FormLabel>
+                <FormGroup>
+                    <FormInput isError={this.state.isValidationErrors_email} id="email" name="email" placeholder="请输入你的email" type="text" />
+                </FormGroup>
+                <FormLabel>网址：</FormLabel>
+                <FormGroup>
+                    <FormInput isError={this.state.isValidationErrors_website} id="website" name="website" placeholder="如：https://www.lizc.me" type="text" />
+                </FormGroup>
+                <FormLabel>你要留的言<span className="red">*</span>：</FormLabel>
                 <ContentWrap>
                     <Textarea isError={this.state.isValidationErrors_content} id="content" name="content" rows={3} placeholder="留点空白给你说~"></Textarea>
                 </ContentWrap>

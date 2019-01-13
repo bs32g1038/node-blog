@@ -9,11 +9,13 @@ const GuestbooksWrap = styled.div((_) => ({
     backgroundColor: '#fff',
     display: 'flex',
     flex: '1 0 auto',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '28px'
 }));
 
 const FormInline = styled.div((_) => ({
-    display: 'flex'
+    display: 'flex',
+    minHeight: '200px'
 }));
 const Main = FormInline;
 
@@ -39,6 +41,11 @@ class Guestbooks extends React.Component<any, any> {
             <GuestbooksWrap>
                 <Title>--留言板--</Title>
                 <Main>
+                    {
+                        guestbooks.length <= 0 && (
+                            <div style={{ width: '100%', textAlign: 'center', lineHeight: '200px' }}>
+                                暂无数据
+                        </div>)}
                     <div>{lefts}</div>
                     <div>{rigths}</div>
                 </Main>

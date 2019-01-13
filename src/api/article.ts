@@ -22,4 +22,10 @@ export default class Article {
         });
     }
 
+    public static fetchRecentArticles() {
+        return axios.get('/recentArticles').then((_) => {
+            return _.data;
+        });
+    }
+
 }

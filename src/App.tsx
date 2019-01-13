@@ -7,14 +7,15 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 import { Route } from 'react-router-dom';
 import AppFooter from './components/app-footer';
 import AppHeader from './components/app-header';
-import Categories from './components/categories';
 import Progress from './components/progress';
+import RightPane from './components/right-pane';
 import siteInfo from './config/site-info';
 
 let _t: any = null;
 let _timer: any = null;
 
 class App extends React.Component<any, any> {
+
     constructor(props: any) {
         super(props);
         const { routes } = this.props;
@@ -24,7 +25,8 @@ class App extends React.Component<any, any> {
             isFetching: false,
             isShowProgress: false,
             percent: 0,
-            _timer: null
+            _timer: null,
+            init: false
         };
     }
 
@@ -50,6 +52,28 @@ class App extends React.Component<any, any> {
             });
             this.increase();
         }
+        if (this.state.isFetching) {
+            const w: any = window;
+            if (typeof w._hmt !== 'undefined') {
+                w._hmt.push(['_trackPageview', this.props.location.pathname]);
+            }
+            this.getDataBeforeRouter(this.props.location).then((res) => {
+                this.setState({
+                    previousLocation: this.props.location,
+                    isFetching: false
+                });
+                this.finishProgress();
+            }).catch((err) => {
+                console.log('获取数据失败！', err);
+            });
+        }
+    }
+
+    public componentDidMount() {
+        this.setState({
+            isFetching: true
+        });
+        this.increase();
         if (this.state.isFetching) {
             const w: any = window;
             if (typeof w._hmt !== 'undefined') {
@@ -106,22 +130,21 @@ class App extends React.Component<any, any> {
                 <Global
                     styles={{
                         body: {
-                            background: '#f5f7f9',
                             color: '#444',
                             fontFamily: '-apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif',
                             fontSize: '14px',
                             lineHeight: '1.5',
                             margin: 0
                         },
-                        '.app': {
-                            width: '800px',
-                            margin: '0 auto'
-                        },
                         input: {
                             font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif'
                         },
                         textarea: {
                             font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif'
+                        },
+                        '.page-wrap': {
+                            marginLeft: '241px',
+                            marginRight: '260px'
                         }
                     }}
                 />
@@ -132,22 +155,25 @@ class App extends React.Component<any, any> {
                     }}
                 >
                 </AppHeader>
-                <Categories></Categories>
-                {
-                    this.state.routes && <Route
-                        location={this.state.previousLocation || this.props.location}
-                        render={() => (
-                            renderRoutes(this.state.routes[0].routes)
-                        )}
-                    />
-                }
-                <AppFooter
-                    siteInfo={{
-                        icp: siteInfo.icp,
-                        name: siteInfo.name
-                    }}
-                >
-                </AppFooter>
+                <div className="page-wrap">
+                    {
+                        this.state.routes && <Route
+                            location={this.state.previousLocation || this.props.location}
+                            render={() => (
+                                renderRoutes(this.state.routes[1].routes)
+                            )}
+                        />
+                    }
+
+                    {/* <AppFooter
+                        siteInfo={{
+                            icp: siteInfo.icp,
+                            name: siteInfo.name
+                        }}
+                    >
+                    </AppFooter> */}
+                </div>
+                <RightPane></RightPane>
             </div>
         );
     }

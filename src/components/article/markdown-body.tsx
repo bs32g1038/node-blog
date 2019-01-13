@@ -3,7 +3,7 @@ import React from 'react';
 
 const Div = styled.div`
     &.markdown-body {
-        font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans - serif;
+        font-family: Lato,Helvetica Neue For Number,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
         font-size: 14px;
         line-height: 2;
     }
@@ -49,6 +49,7 @@ const Div = styled.div`
         padding-left: 10px;
         padding-right: 10px;
         background-color: #f7f7f7;
+        padding: 10px 0;
     }
     blockquote {
         margin: 0;

@@ -15,7 +15,7 @@ hydrate(
     <Provider store={Store(W.__INITIAL_STATE__)}>
         <BrowserRouter>
             <Switch>
-                <Route exact={true} path="/" render={() => <Redirect to="/blog" />} />
+                {/* <Route exact={true} path="/" render={() => <Redirect to="/" />} /> */}
                 {renderRoutes(routes, { routes })}
             </Switch>
         </BrowserRouter>

@@ -7,12 +7,12 @@ import { State } from '../../redux/reducers/categories';
 const CategoriesWrap = styled.ul(() => ({
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+    borderBottom: '1px solid rgba(178,186,194,.15)',
     display: 'flex',
     flex: '0 0 auto',
     fontSize: '12px',
     margin: '0',
-    padding: '10px 42px'
+    padding: '11px 22px'
 }));
 
 const Item = styled.li(() => ({

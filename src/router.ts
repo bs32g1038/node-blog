@@ -3,16 +3,23 @@ import Article from './components/article';
 import Articles from './components/articles';
 import FriendlyLinks from './components/friendly-links';
 import Guestbooks from './components/guestbooks';
+import Home from './components/home';
 import { fetchArticle } from './redux/reducers/article';
-import { fetchArticles } from './redux/reducers/articles';
+import { fetchArticles, fetchRecentArticles } from './redux/reducers/articles';
 import { fetchCategories } from './redux/reducers/categories';
 import { fetchGuestbooks } from './redux/reducers/guestbooks';
 import { fetchLinks } from './redux/reducers/links';
 
 const routes: any = [
     {
+        component: Home,
+        path: '/',
+        exact: true
+    },
+    {
         asyncData: (store: any) => {
             store.dispatch(fetchCategories());
+            store.dispatch(fetchRecentArticles());
         },
         component: App,
         path: '/blog',
@@ -22,7 +29,7 @@ const routes: any = [
                     const page = route.query.page;
                     const limit = route.query.limit;
                     const cid = route.query.cid;
-                    return store.dispatch(fetchArticles(page, limit, {cid}));
+                    return store.dispatch(fetchArticles(page, limit, { cid }));
                 },
                 component: Articles,
                 exact: true,
@@ -42,7 +49,7 @@ const routes: any = [
                     const page = route.query.page;
                     const limit = route.query.limit;
                     const cid = route.query.cid;
-                    return store.dispatch(fetchArticles(page, limit, {cid}));
+                    return store.dispatch(fetchArticles(page, limit, { cid }));
                 },
                 component: Articles,
                 exact: true,

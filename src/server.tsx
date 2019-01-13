@@ -3,9 +3,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
+import { renderRoutes } from 'react-router-config';
+import { Switch } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom';
 import serialize from 'serialize-javascript';
-import App from './App';
 import Store from './redux/store';
 import routes from './router';
 
@@ -33,7 +34,10 @@ export const ssr = (req: express.Request, res: express.Response) => {
         const markup = renderToString(
             <Provider store={store}>
                 <StaticRouter context={context} location={req.url}>
-                    <App routes={routes} />
+                    <Switch>
+                        {/* <Route exact={true} path="/" render={() => <Redirect to="/" />} /> */}
+                        {renderRoutes(routes, { routes })}
+                    </Switch>
                 </StaticRouter>
             </Provider>
         );
