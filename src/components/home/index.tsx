@@ -13,7 +13,7 @@ const HomeWrap = styled.div((_) => ({
     width: '100%',
     maxWidth: 'none',
     height: '100%',
-    background: 'url(/public/images/bg1.jpg) top left no-repeat #666666',
+    background: 'url(/static/images/bg1.jpg) top left no-repeat #666666',
     backgroundSize: 'cover',
     transition: 'all 2s ease'
 }));
@@ -144,7 +144,7 @@ export default class Home extends React.Component<any, any> {
         meteorShower.start();
         const $home: any = document.getElementById('j_homePage');
         let cur: number = 0;
-        const arr = ['/public/images/bg.jpg', '/public/images/bg2.jpg', '/public/images/bg1.jpg'];
+        const arr = ['/static/images/bg.jpg', '/static/images/bg2.jpg', '/static/images/bg1.jpg'];
         setInterval(() => {
             $home.style.backgroundImage = `url(${arr[cur]})`;
             cur < arr.length - 1 ? cur++ : (cur = 0);
@@ -169,7 +169,7 @@ export default class Home extends React.Component<any, any> {
                 <Canvas id="canvas" height="400px" width="1000px"></Canvas>
                 <MainWrap>
                     <AvatarWrap>
-                        <img src="/public/images/avatar.jpg" />
+                        <img src="/static/images/avatar.jpg" />
                     </AvatarWrap>
                     <H1>
                         <Link to="/" title="Lizc的个人网站">

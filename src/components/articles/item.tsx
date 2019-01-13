@@ -87,7 +87,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     </Meta>
                 </Brief>
                 <ThumbWrap>
-                    <ThumbA style={{ backgroundImage: `url(http://127.0.0.1:8080${item.screenshot})` }}></ThumbA>
+                    <ThumbA style={{ backgroundImage: `url(${item.screenshot})` }}></ThumbA>
                 </ThumbWrap>
             </Header>
             <Summary>{item.summary}</Summary>

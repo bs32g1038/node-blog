@@ -28,7 +28,7 @@ const NavA = styled.a(() => ({
     fontSize: rem(color.fontSizeBase),
     verticalAlign: 'middle',
     textDecoration: 'none',
-    ...padding(0, '10px'),
+    ...padding(0),
     ...transitions('color .15s ease'),
     position: 'fixed',
     right: 0,
@@ -176,7 +176,7 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                 <Pannel></Pannel>
                 <MainWrap>
                     <AvatarWrap>
-                        <img src="/public/images/avatar.jpg" />
+                        <img src="/static/images/avatar.jpg" />
                     </AvatarWrap>
                     <H1>
                         <Link to="/" title="Lizc的个人网站">
