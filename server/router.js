@@ -115,7 +115,7 @@ if (!isDev) {
         res.send(template);
     });
     const serverBundle = require('../react-ssr/server').default;
-    router.get(/blog/, function (req, res) {
+    router.get(/\//, function (req, res) {
         serverBundle(req, res);
     });
 }
