@@ -93,6 +93,13 @@ class ArticleApi {
         }
     }
 
+    static async getRecentArticles(req, res, next) {
+        return res.json(await models.Article.find({}, 'title', {
+            skip: 0,
+            limit: 5
+        }));
+    }
+
     static async getArticle(req, res, next) {
 
         /**
@@ -109,8 +116,8 @@ class ArticleApi {
             let article = await models.Article.findByIdAndUpdate(_id, {
                 $inc: { viewsCount: 1 }
             }, {
-                    select: fds.article
-                }).populate('category', fds.category);
+                select: fds.article
+            }).populate('category', fds.category);
             if (req.query.md) {
                 article.content = markdown.render(article.content);
             }

@@ -25,6 +25,8 @@ const authMiddlware = async (req, res, next) => {
  */
 router.get('/api/articles', articleApi.getArticles);
 
+router.get('/api/recentArticles', articleApi.getRecentArticles);
+
 router.get('/api/articles/:_id', articleApi.getArticle);
 
 router.post('/api/articles', authMiddlware, articleApi.createArticle);
