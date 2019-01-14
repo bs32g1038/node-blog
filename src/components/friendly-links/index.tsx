@@ -3,15 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/links';
+import { media, rem } from '../../utils/helper';
 import LinkItem from './item';
 
-const FriendlyLinksWrap = styled.div((_) => ({
-    backgroundColor: '#fff',
-    display: 'flex',
-    flex: '1 0 auto',
-    flexDirection: 'column',
-    padding: '28px'
-}));
+const FriendlyLinksWrap = styled.div`
+    background-color: #fff;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: ${rem('28px')};
+`;
 
 const Header = styled.header((_) => ({
     textAlign: 'center'
@@ -112,4 +113,4 @@ export default connect(
     (state: State) => ({
         _DB: state.links
     })
-)(FriendlyLinks);
+)(FriendlyLinks as any);

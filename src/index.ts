@@ -24,7 +24,8 @@ const port = process.env.PORT || 3000;
 if (process.env.TYPE !== 'SSR') {
     express()
         .use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }))
-        .use('/static', express.static(process.env.RAZZLE_PUBLIC_DIR!))
+        .use('/static', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }))
+        .use('/public', express.static(process.env.RAZZLE_PUBLIC_DIR!))
         .use((req, res) => app.handle(req, res))
         .listen(port, (err: Error) => {
             if (err) {

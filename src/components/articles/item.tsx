@@ -1,73 +1,81 @@
 import styled from '@emotion/styled';
+import { padding } from 'polished';
 import React, { SFC } from 'react';
 import { Link } from 'react-router-dom';
+import media from '../../utils/media';
+import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
 
-const ArticleItem = styled.li((_) => ({
-    borderBottom: '1px solid rgba(178, 186, 194, .15)',
-    padding: '10px 15px',
-    label: 'article-item',
-    '&:last-child': {
-        borderBottom: 'none'
+const ArticleItem = styled.li`
+    border-bottom: 1px solid rgba(178,186,194,.15);
+    padding: ${rem('10px')} ${rem('15px')};
+    &:last-child {
+        border-bottom: none;
     }
-}));
+`;
 
-const Header = styled.div((_) => ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '10px 0 10px'
-}));
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 10px;
+`;
 
-const Brief = styled.div((_) => ({
-    display: 'block',
-    fontSize: '18px',
-    lineHeight: '32px',
-    overflow: 'hidden',
-    padding: '0 18px',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-}));
+const Brief = styled.div`
+    display: block;
+    font-size: 18px;
+    line-height: 32px;
+    overflow: hidden;
+    ${padding(0, rem('18px'))}
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
 
-const Meta = styled.div((_) => ({
-    color: '#999',
-    fontSize: '12px',
-    '>a': {
-        color: '#999',
-        textDecoration: 'none'
+const Meta = styled.div`
+    color: #999;
+    font-size: 12px;
+    >a{
+        color: #999;
+        font-size: 12px;
+        text-decoration: none;
     }
-}));
+`;
 
-const Title = styled(Link)((_) => ({
-    color: 'rgb(85, 85, 85)',
-    fontWeight: 700,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    textDecoration: 'none',
-    '&:hover': {
-        color: '#007fff'
+const Title = styled(Link)`
+    color: rgb(85,85,85);
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    &:hover {
+        color: '#007fff';
     }
-}));
+`;
 
-const ThumbWrap = styled.div((_) => ({
-    height: '96px',
-    width: '150px'
-}));
+const ThumbWrap = styled.div`
+    height: 96px;
+    width: 150px;
+    ${media.phone`
+        height: 96px;
+        width: 80px;
+        min-width: 80px;
+    `}
+`;
 
-const ThumbA = styled.a((_) => ({
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    display: 'block',
-    height: '100%',
-    width: '100%'
-}));
+const ThumbA = styled.a`
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    height: 100%;
+    width: 100%;
+`;
 
-const Summary = styled.p((_) => ({
-    fontSize: '14px',
-    margin: '8px 18px',
-    wordWrap: 'break-word'
-}));
+const Summary = styled.p`
+    font-size: 14px;
+    margin: 8px 18px;
+    word-wrap: break-word;
+`;
 
 const Item: SFC<{ item: any }> = (props: any) => {
     const item = props.item;

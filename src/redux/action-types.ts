@@ -4,3 +4,5 @@ export const FETCH_ARTICLE = 'FETCH_ARTICLE';
 export const FETCH_GUESTBOOKS = 'FETCH_GUESTBOOKS';
 export const FETCH_LINKS = 'FETCH_LINKS';
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
+
+export const IS_MOBILE = 'IS_MOBILE';

@@ -2,31 +2,34 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../redux/reducers/guestbooks';
+import { media, rem } from '../../utils/helper';
 import CommentForm from '../comment-form';
 import GuestbookItem from './item';
 
-const GuestbooksWrap = styled.div((_) => ({
-    backgroundColor: '#fff',
-    display: 'flex',
-    flex: '1 0 auto',
-    flexDirection: 'column',
-    padding: '28px'
-}));
+const GuestbooksWrap = styled.div`
+    background-color: #fff;
+    margin: 5px 0;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: ${rem('20px')};
+`;
 
-const FormInline = styled.div((_) => ({
-    display: 'flex',
-    minHeight: '200px'
-}));
-const Main = FormInline;
+const Main = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: ${rem('20px')};
+`;
 
-const Title = styled.h2((_) => ({
-    fontSize: '24px',
-    textAlign: 'center'
-}));
+const Title = styled.h2`
+    font-size: 24px;
+    text-align: center;
+    margin: 5px 0;
+`;
 
-const GuestbooksFormWrap = styled.div((_) => ({
-    padding: '20px'
-}));
+const GuestbooksFormWrap = styled.div`
+    padding: ${rem('20px')};
+`;
 
 class Guestbooks extends React.Component<any, any> {
     public render() {
@@ -43,7 +46,7 @@ class Guestbooks extends React.Component<any, any> {
                 <Main>
                     {
                         guestbooks.length <= 0 && (
-                            <div style={{ width: '100%', textAlign: 'center', lineHeight: '200px' }}>
+                            <div style={{ width: '100%', textAlign: 'center'}}>
                                 暂无数据
                         </div>)}
                     <div>{lefts}</div>
@@ -61,4 +64,4 @@ export default connect(
     (state: State) => ({
         _DB: state.guestbooks
     })
-)(Guestbooks);
+)(Guestbooks as any);

@@ -7,9 +7,6 @@ import ScrollToTop from './components/scroll-to-top';
 import Store from './redux/store';
 import routes from './router';
 
-// 实际打包时应该不引入mock
-// if (process.env.NODE_ENV !== 'production') { require('./mock'); }
-
 const W: any = window;
 
 hydrate(
@@ -17,12 +14,11 @@ hydrate(
         <BrowserRouter>
             <ScrollToTop>
                 <Switch>
-                    {/* <Route exact={true} path="/" render={() => <Redirect to="/" />} /> */}
                     {renderRoutes(routes, { routes })}
                 </Switch>
             </ScrollToTop>
         </BrowserRouter>
-    </Provider>,
+    </Provider> as any,
     document.getElementById('root')
 );
 

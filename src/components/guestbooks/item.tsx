@@ -1,18 +1,26 @@
 import styled from '@emotion/styled';
 import React, { SFC } from 'react';
+import { media, rem } from '../../utils/helper';
+import marked from '../../utils/marked';
 import { timeAgo } from '../../utils/time';
 
-const GuestbookItem = styled.div((_) => ({
-    // padding: '20px 25px',
-    // position: 'relative',
-    // width: '400px',
-    // boxSizing: 'border-box',
-    label: 'Guestbooks-item',
-    padding: '20px 20px',
-    position: 'relative',
-    width: '330px',
-    boxSizing: 'border-box'
-}));
+const GuestbookItem = styled.div`
+    padding: ${rem('20px')};
+    position: relative;
+    width: 334px;
+    box-sizing: border-box;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #f4f5f7;
+    border-right: 1px solid #f4f5f7;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px #ececec;
+    ${media.phone`
+        box-shadow: none;
+        border: none;
+        width: 100%;
+    `}
+`;
 
 const UserMata = styled.div((_) => ({
     color: '#999',
@@ -45,12 +53,15 @@ const AvatarImg = styled.img((_) => ({
     width: '100%'
 }));
 
-const UserContent = styled.div((_) => ({
-    borderRadius: '4px',
-    fontSize: '14px',
-    lineHeight: '1.8',
-    padding: '10px 0'
-}));
+const UserContent = styled.div`
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.8;
+    padding: 10px 0;
+    img{
+        max-width: 24px;
+    }
+`;
 
 const MataTime = styled.span((_) => ({
     fontSize: '12px',
@@ -85,7 +96,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     {timeAgo(item.createdAt)}
                 </MataTime>
             </UserMata>
-            <UserContent>{item.content}</UserContent>
+            <UserContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></UserContent>
             <UserContent><strong>回复：</strong>&nbsp;&nbsp;{item.replyContent || '暂无回复...'}</UserContent>
         </GuestbookItem>
     );

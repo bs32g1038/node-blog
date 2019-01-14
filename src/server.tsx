@@ -7,7 +7,9 @@ import { renderRoutes } from 'react-router-config';
 import { Switch } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom';
 import serialize from 'serialize-javascript';
+import { setIsMobile } from './redux/reducers/global';
 import Store from './redux/store';
+
 import routes from './router';
 
 let assets: any;
@@ -17,6 +19,16 @@ const syncLoadAssets = () => {
 };
 
 syncLoadAssets();
+
+function getMachine(req: any): string {
+    const deviceAgent = req.headers['user-agent'].toLowerCase();
+    const agentID = deviceAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini)/);
+    if (agentID) {
+        return 'mobile';
+    } else {
+        return 'pc';
+    }
+}
 
 export const ssr = (req: express.Request, res: express.Response) => {
     const store = Store();
@@ -31,24 +43,25 @@ export const ssr = (req: express.Request, res: express.Response) => {
         );
     })).then(() => {
         const context = {};
+        store.dispatch(setIsMobile(getMachine(req) === 'pc'));
         const markup = renderToString(
             <Provider store={store}>
                 <StaticRouter context={context} location={req.url}>
                     <Switch>
-                        {/* <Route exact={true} path="/" render={() => <Redirect to="/" />} /> */}
                         {renderRoutes(routes, { routes })}
                     </Switch>
                 </StaticRouter>
-            </Provider>
+            </Provider> as any
         );
         const finalState = store.getState();
         res.send(
             `<!doctype html>
-                <html lang="">
+                <html lang="" style="font-size: ${getMachine(req) === 'pc' ? '50px' : '20px'}">
                     <head>
                     <title>Lizc博客</title>
                     <meta charset="UTF-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+                    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
                     <meta content="Lizc博客，nodejs，前端，后端，docker，综合" name="Keywords">
                     <meta content="博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！" name="description">
                     <link rel="shortcut icon" sizes="48x48" href="/static/logo.png">
@@ -73,7 +86,7 @@ export const ssr = (req: express.Request, res: express.Response) => {
                 : `<script src="${assets.client.js}" defer crossorigin></script>`
             }
             </head>
-            <body>
+            <body data-machine="${getMachine(req)}">
                 <div id="root">${markup}</div>
                 <script>
                 window.__INITIAL_STATE__ = ${serialize(finalState)}

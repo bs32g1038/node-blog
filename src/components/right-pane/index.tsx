@@ -4,126 +4,113 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/articles';
+import media from '../../utils/media';
 import AppFooter from '../app-footer';
 
-const HomeWrap = styled.div((_) => ({
-    position: 'fixed',
-    right: '0',
-    display: 'block',
-    zIndex: 900,
-    maxWidth: 'none',
-    height: '100%',
-    top: 0,
-    width: '260px',
-    backgroundColor: '#f9f9f9'
-}));
+const RightPaneDiv = styled.div`
+    display: block;
+    z-index: 900;
+    max-width: none;
+    height: 100%;
+    width: 240px;
+    background-color: #f4f5f7;
+    position: fixed;
+    right: 0;
+    top: 0;
+    ${media.phone`
+        position: static;
+        width: 100%;
+        background-color: #fff;
+    `};
+`;
 
-const MainWrap = styled.div((_) => ({
-    position: 'relative',
-    bottom: 0,
-    color: '#333',
-    '> p': {
-        fontSize: '12px'
+const MainWrap = styled.div`
+    position: relative;
+    bottom: 0;
+    color: #333;
+    >p {
+        font-size: 12px
     }
-}));
+`;
 
-const Item = styled.div((_) => ({
-    '> h3': {
-        marginLeft: '10px',
-        fontWeight: 600,
-        fontSize: '12px'
+const Item = styled.div`
+    ${media.phone`display:none;`};
+    >h3{
+        margin-left: 10px;
+        font-weight: 600;
+        font-size: 12px;
     }
-}));
+`;
 
-const AvatarWrap = styled.a((_) => ({
-    'img': {
-        width: '80px',
-        borderRadius: '50%',
-        border: '3px solid #FFF',
-        backgroundColor: 'transparent'
+const SearchWrap = styled.div`
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    input {
+        width: 160px;
+        color: #333;
+        text-decoration: none;
+        line-height: 26px;
+        outline: none;
+        padding-left: 5px;
     }
-}));
-
-const SearchWrap = styled.div((_) => ({
-    display: 'flex',
-    padding: '0 10px',
-    alignItems: 'center',
-    'input': {
-        width: '180px',
-        color: '#333',
-        textDecoration: 'none',
-        lineHeight: '26px',
-        outline: 'none',
-        paddingLeft: '5px'
-    },
-    'button': {
-        width: '50px',
-        height: '32px',
-        background: '#3aa5d0',
-        color: '#fff',
-        borderRadius: '0 4px 4px 0',
-        border: 'none',
-        cursor: 'pointer'
+    button {
+        width: 50px;
+        height: 32px;
+        background: #3aa5d0;
+        color: #fff;
+        border-radius: 0 4px 4px 0;
+        border: none;
+        cursor: pointer;
     }
-}));
+`;
 
-const Hr = styled.hr((_) => ({
-    maxWidth: '160px',
-    height: '1px',
-    marginTop: '30px',
-    marginBottom: '30px',
-    border: 'none',
-    backgroundImage: 'linear-gradient(0deg, transparent, #fff, transparent)'
-}));
-
-const Description = styled.p((_) => ({
-    color: '#fff',
-    '>a': {
-        color: '#fff',
-        textDecoration: 'none'
+const UL = styled.ul`
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    list-style-type: decimal;
+    padding: 0 5px 0 0;
+    ${media.phone`display:none;`};
+    >h3 {
+        margin-left: 10px;
+        font-weight: 600;
+        font-size: 12px;
     }
-}));
+`;
 
-const UL = styled.ul((_) => ({
-    display: 'inline-block',
-    position: 'relative',
-    margin: '0',
-    listStyleType: 'decimal',
-    padding: 0,
-    '>h3': {
-        marginLeft: '10px',
-        fontWeight: 600,
-        fontSize: '12px'
-    }
-}));
+const LI = styled.li`
+    margin: 10px 1px 0 35px;
+    line-height: 1em;
+`;
 
-const LI = styled.li((_) => ({
-    margin: '10px 1px 0 35px',
-    lineHeight: '1em'
-}));
+const ATag = styled(Link)`
+    display: block;
+    position: relative;
+    color: #333;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 30px;
+    line-height: 1.5;
+`;
 
-const ATag = styled(Link)((_) => ({
-    display: 'block',
-    position: 'relative',
-    color: '#333',
-    textDecoration: 'none',
-    fontSize: '12px',
-    borderRadius: '30px',
-    lineHeight: 1.5
-}));
-
-const Footer = styled.footer((_) => ({
-    color: '#FFF',
-    fontSize: '12px',
-    marginTop: '40px'
-}));
+const Footer = styled.footer`
+    margin-top: 20px;
+    box-sizing: border-box;
+    color: #8590a6;
+    flex: 0 0 auto;
+    font-size: 12px;
+    font-weight: normal;
+    position: relative;
+    text-align: center;
+    padding: 8px 10px 10px 10px;
+`;
 
 class RightPane extends React.Component<any, any> {
     public render() {
         const { recentArticles } = this.props._DB;
-        console.log(recentArticles);
         return (
-            <HomeWrap>
+            <RightPaneDiv>
                 <MainWrap>
                     <Item>
                         <h3>搜索</h3>
@@ -140,7 +127,7 @@ class RightPane extends React.Component<any, any> {
                         <h3>最新文章</h3>
                         {
                             recentArticles.map((item: any) => (
-                                <LI>
+                                <LI key={item._id}>
                                     <ATag to={'/blog/articles/' + item._id}>{item.title}</ATag>
                                 </LI>
                             ))
@@ -154,13 +141,13 @@ class RightPane extends React.Component<any, any> {
                     >
                     </AppFooter>
                 </MainWrap>
-            </HomeWrap>
+            </RightPaneDiv>
         );
     }
 }
 
 export default connect(
-    (state: State) => ({
+    (state: any) => ({
         _DB: state.articles
     })
-)(RightPane);
+)(RightPane as any);

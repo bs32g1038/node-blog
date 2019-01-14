@@ -1,18 +1,22 @@
 import styled from '@emotion/styled';
 import React, { SFC } from 'react';
+import { media } from '../../utils/helper';
 
-const FriendlyLinksItem = styled.li((_) => ({
-    listStyle: 'none',
-    margin: 0,
-    padding: '10px',
-    position: 'relative',
-    width: '33.3%',
-    label: 'link-item',
-    boxSizing: 'border-box',
-    a: {
-        textDecoration: 'none'
+const FriendlyLinksItem = styled.li`
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    width: 33.3%;
+    box-sizing: border-box;
+    a {
+        -webkit-text-decoration: none;
+        text-decoration: none;
     }
-}));
+    ${media.phone`
+        width: 100%;
+    `}
+`;
 
 const ItemContent = styled.div((_) => ({
     borderRadius: '5px',

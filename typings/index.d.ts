@@ -3,6 +3,11 @@ declare module '*.svg' {
     export default content;
 }
 
+declare module 'marked' {
+    const Renderer: any
+    export default Renderer;
+}
+
 declare module 'dayjs/plugin/relativeTime' {
     module 'dayjs' {
         interface Dayjs {

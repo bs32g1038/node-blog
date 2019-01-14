@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
@@ -25,7 +25,7 @@ const ItemLink = styled(Link)(() => ({
     textDecoration: 'none'
 }));
 
-class Categories extends React.Component<any, any> {
+class Categories extends Component<any, any> {
     public render() {
         const { categories } = this.props._DB || [];
         return (
@@ -46,9 +46,8 @@ class Categories extends React.Component<any, any> {
         );
     }
 }
-
 export default connect(
     (state: State) => ({
         _DB: state.categories
     })
-)(Categories);
+)((Categories as any));

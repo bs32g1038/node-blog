@@ -3,56 +3,62 @@ import styled from '@emotion/styled';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../redux/reducers/article';
+import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
 
-const ArticleWrap = styled.div((_) => ({
-    backgroundColor: '#fff'
-}));
+const ArticleWrap = styled.div`
+    background-color: #fff;
+`;
 
-const ArticleItem = styled.article((_) => ({
-    maxWidth: '980px',
-    padding: '20px 40px 20px 40px'
-}));
+const ArticleItem = styled.article`
+    max-width: 980px;
+    padding: ${rem('20px')} ${rem('30px')};
+`;
 
-const ArticleHeader = styled.div((_) => ({
-    marginBottom: '20px',
-    textAlign: 'center'
-}));
+const ArticleHeader = styled.div`
+    margin-bottom: 20px;
+    text-align: center;
+`;
 
-const Title = styled.h2((_) => ({
-    wordBreak: 'break-word',
-    margin: '10px 0',
-    fontSize: '26px',
-    'a': {
-        display: 'inline-block',
-        position: 'relative',
-        color: 'rgb(85, 85, 85)',
-        borderBottom: 'none',
-        verticalAlign: 'top',
-        textDecoration: 'none'
+const Title = styled.h2`
+    word-break: break-word;
+    margin: 10px 0;
+    font-size: 26px;
+    a{
+        display: inline-block;
+        position: relative;
+        color: rgb(85,85,85);
+        border-bottom: none;
+        vertical-align: top;
+        text-decoration: none;
     }
-}));
+`;
 
-const Meta = styled.div((_) => ({
-    margin: '3px 0px 6px',
-    color: 'rgb(153, 153, 153)',
-    fontFamily: 'Monda, "PingFang SC", "Microsoft YaHei", sans-serif',
-    fontSize: '12px',
-    'span': {
-        padding: '0 5px',
+const Meta = styled.div`
+    margin: 3px 0px 6px;
+    color: rgb(153,153,153);
+    font-family: Monda,"PingFang SC","Microsoft YaHei",sans-serif;
+    font-size: 12px;
+    span {
+        padding: 0 5px;
     }
-}));
+`;
 
-const Copyright = styled.ul((_) => ({
-    color: '#444',
-    margin: '28px 0 0',
-    padding: '7px 14px',
-    listStyle: 'none',
-    fontSize: '12px',
-    backgroundColor: '#efefef'
-}));
+const Copyright = styled.ul`
+    color: #444;
+    margin: 28px 0 0;
+    padding: 7px 14px;
+    list-style: none;
+    font-size: 12px;
+    background-color: #efefef;
+    a {
+        white-space: pre-wrap;
+        word-break: break-all;
+        text-decoration: none
+    }
+`;
 
 class Article extends Component<any, any> {
     public render() {
@@ -92,4 +98,4 @@ export default connect(
     (state: State) => ({
         _DB: state.article
     })
-)(Article);
+)(Article as any);

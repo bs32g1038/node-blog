@@ -36,4 +36,4 @@ export default connect(
     (state: State) => ({
         _DB: state.articles
     })
-)(Articles);
+)(Articles as any);
