@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({
 app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
-
+app.use('/public/', express.static(path.resolve(__dirname, '../public')));
 app.use('/static/', express.static(path.resolve(__dirname, '../static')));
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use(require('./middlewares/response').setHeadPaging);
