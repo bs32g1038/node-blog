@@ -96,7 +96,8 @@ class ArticleApi {
     static async getRecentArticles(req, res, next) {
         return res.json(await models.Article.find({}, 'title', {
             skip: 0,
-            limit: 5
+            limit: 5,
+            sort: { createdAt: -1 }
         }));
     }
 
