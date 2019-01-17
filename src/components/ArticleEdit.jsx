@@ -141,7 +141,7 @@ class ArticleEdit extends Component {
                         })(
                             <Upload
                                 disabled={false}
-                                action="/api/upload/image?w=200&h=200"
+                                action="/api/upload/image?w=600&h=600"
                                 onChange={this.handleChange}
                                 multiple={false}
                                 name="file"
