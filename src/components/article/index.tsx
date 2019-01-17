@@ -48,15 +48,17 @@ const Meta = styled.div`
 
 const Copyright = styled.ul`
     color: #444;
-    margin: 28px 0 0;
-    padding: 7px 14px;
+    padding: 5px 12px;
     list-style: none;
-    font-size: 12px;
+    font-size: 13px;
     background-color: #efefef;
+    border-radius: 3px;
+    line-height: 1.8;
     a {
         white-space: pre-wrap;
         word-break: break-all;
-        text-decoration: none
+        text-decoration: none;
+        color: inherit;
     }
 `;
 

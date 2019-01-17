@@ -45,13 +45,13 @@ const AvatarWrapA = styled.a((_) => ({
     width: '24px'
 }));
 
-const AvatarImg = styled.img((_) => ({
-    backgroundColor: '#f2f2f1',
-    borderRadius: '50%',
-    display: 'block',
-    height: '100%',
-    width: '100%'
-}));
+const AvatarImg = styled.img`
+    background-color: #f2f2f1;
+    border-radius: 50%;
+    display: block;
+    height: 100%;
+    width: 100%;
+`;
 
 const UserContent = styled.div`
     border-radius: 4px;
@@ -59,7 +59,8 @@ const UserContent = styled.div`
     line-height: 1.8;
     padding: 10px 0;
     img{
-        max-width: 24px;
+        max-width: 20px;
+        vertical-align: middle;
     }
 `;
 

@@ -16,6 +16,10 @@ renderer.paragraph = (text: any, level: any) => {
     });
 };
 
+renderer.link = () => {
+    return '';
+};
+
 export default (str: any) => {
     return marked(str, { renderer });
 };

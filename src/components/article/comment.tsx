@@ -7,12 +7,11 @@ const CommentsWrap = styled.div((_) => ({
     marginTop: '20px'
 }));
 
-const Tip = styled.h3((_) => ({
-    color: 'rgba(51, 51, 51, 0.8)',
-    textAlign: 'center',
-    fontSize: '20px',
-    margin: '0'
-}));
+const Tip = styled.h3`
+    color: rgba(51,51,51,0.8);
+    text-align: center;
+    font-size: 20px;
+`;
 
 const Main = styled.ul((_) => ({
     listStyle: 'none',
