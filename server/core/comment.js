@@ -65,7 +65,7 @@ class CommentApi {
                 });
             } else {
                 comments = await models.Comment.find(filter, '-email', {
-                    sort: { createdAt: -1 }
+                    sort: { createdAt: 1 }
                 }).populate('reply', '-email');
             }
             return res.json(comments);
@@ -111,18 +111,19 @@ class CommentApi {
          * @param {number} identity: 评论的身份0游客，1作者
          * @return {object} 返回文章对象
          */
-        const msg = checkFormData(req);
-        if (msg) {
-            return res.status(422).json({
-                message: msg
-            });
-        }
         if (auth(req)) {
             Object.assign(req.body, {
                 identity: 1,
                 nickName: config.user.nickName,
                 email: config.user.email,
                 location: config.user.location,
+            });
+        }
+        console.log(req.body);
+        const msg = checkFormData(req);
+        if (msg) {
+            return res.status(422).json({
+                message: msg
             });
         }
         try {
@@ -134,7 +135,7 @@ class CommentApi {
             }
             const comment = await models.Comment.create({
                 pass: true,
-                identity: 0,
+                identity: req.body.identity,
                 nickName: req.body.nickName.trim(),
                 email: req.body.email.trim(),
                 location: req.body.location,
