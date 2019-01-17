@@ -19,9 +19,20 @@ export default class App extends React.Component {
             playList: MusicJson.tracks,
             info: MusicJson,
             lyric: '',
-            isShowLyric: true,
-            isPaused: true
+            isShowLyric: false,
+            isPaused: true,
+            picUrl: '',
+            isShowAboutDialog: false
         };
+    }
+
+    /**
+     * 显示关于对话框窗口
+     */
+    showAboutDialog() {
+        this.setState({
+            isShowAboutDialog: !this.state.isShowAboutDialog
+        })
     }
 
     /**
@@ -146,8 +157,10 @@ export default class App extends React.Component {
         const music = playList[index];
         audio.src = music.src;
         audio.play().catch(error => { }); // 捕抓多次点击错误
+        document.body.style.backgroundImage = `url(${music.picUrl})`;
         this.setState({
             songName: music.name,
+            picUrl: music.picUrl,
             singer: music.singer,
             playIndex: index,   // 设置歌曲索引
             curLyricItem: 0,    // 重置歌词
@@ -360,6 +373,10 @@ export default class App extends React.Component {
 
         // 绑定音量进度控制事件
         document.getElementById('js-volume').onmousedown = (e) => this._jsvolumeline(e, audio);
+
+        // 默认播放器第一首歌
+        this.play(1);
+        this.pause();
     }
 
     // 组件销毁时，把相关数据存到dom节点上
@@ -409,84 +426,95 @@ export default class App extends React.Component {
         return (
             <div className="music-wrap">
                 <div className="bg-mask"></div>
-                <div className="bg-music-player" style={{ backgroundImage: 'url(https://y.gtimg.cn/music/photo_new/T002R300x300M000004RThJi4G1v0A.jpg?max_age=2592000)' }} id="backImg"></div>
+                <div className="bg-music-player" style={{ backgroundImage: `url(${this.state.picUrl})` }} id="backImg"></div>
+                <div className="about-dialog" style={{ display: this.state.isShowAboutDialog ? 'block' : 'none' }}>
+                    <div className="about-dialog-title">关于</div>
+                    <div className="about-dialog-content">
+                        <p>歌曲来源于网易云音乐，请勿用于商业用于，否则后果自负。</p>
+                        <p>版权所有Copyright © 2016-2019 (@lee)</p>
+                        <p>博客：<a href="http://www.lizc.me" target="_blank">http://www.lizc.me</a></p>
+                    </div>
+                    <div className="about-dialog-footer">
+                        <button type="button" onClick={() => this.showAboutDialog()}>关闭</button>
+                    </div>
+                </div>
                 <header className="header">
                     <h1 className="site-logo">
                         <a href="http://www.lizc.me" rel="noopener noreferrer" target="_blank">MM音乐</a>
                     </h1>
                     <div className="header-help">
-                        <a href="javascript:;">关于</a>
+                        <a href="javascript:;" onClick={() => this.showAboutDialog()}>关于</a>
                     </div>
                 </header>
                 <div className="MusicCore">
-                    <div className="MusicCore-body">
-                        <div className="MusicCore-right">
-                            <div className="MusicHeader">
-                                <div className="MusicHeader-cover">
-                                    <img className="MusicHeader-coverImg" src={info.coverImgUrl} alt={info.name} />
-                                </div>
-                                <div className="MusicHeader-sheet">
-                                    <div className="MusicHeader-sheetTitle">{info.name}</div>
-                                    <div className="MusicHeader-sheetTime"><span>创建时间：</span>{info.createTime}</div>
-                                    <p style={{ color: '#fff' }}>歌单简介：</p>
-                                    <p className="MusicHeader-sheetSummary" title={info.description}>{info.description}</p>
-                                </div>
+                    <div className="MusicCore-body" style={{ display: this.state.isShowLyric && 'none' || '' }}>
+                        <div className="MusicHeader">
+                            <div className="MusicHeader-cover">
+                                <img className="MusicHeader-coverImg" src={info.coverImgUrl} alt={info.name} />
                             </div>
-                            <div className="MusicLyric" style={{ height: this.state.isShowLyric ? '100px' : '0' }}>
-                                <div className="MusicLyric-list" style={{ transform: `translateY(${-this.state.curLyricItem * 24}px)` }}>
-                                    {
-
-                                        /**
-                                         * 歌词加载显示
-                                         */
-                                        lyric
-                                    }
-                                </div>
+                            <div className="MusicHeader-sheet">
+                                <div className="MusicHeader-sheetTitle">{info.name}</div>
+                                <div className="MusicHeader-sheetTime"><span>创建时间：</span>{info.createTime}</div>
+                                <p className="MusicHeader-sheetSummary" title={info.description}>{info.description}</p>
                             </div>
                         </div>
-                        <div className="MusicCore-left">
-                            <div className="MusicListTable">
-                                <div className="MusicListTable-header">
-                                    <div className="MusicListTable-row">
-                                        <div className="MusicListTable-cell index">序号</div>
-                                        <div className="MusicListTable-cell name">歌曲</div>
-                                        <div className="MusicListTable-cell singer">歌手</div>
-                                        <div className="MusicListTable-cell duration">时长</div>
-                                        <div className="MusicListTable-cell"></div>
-                                    </div>
+                        <div className="MusicListTable">
+                            <div className="MusicListTable-header">
+                                <div className="MusicListTable-row">
+                                    <div className="MusicListTable-cell index">序号</div>
+                                    <div className="MusicListTable-cell name">歌曲</div>
+                                    <div className="MusicListTable-cell singer">歌手</div>
+                                    <div className="MusicListTable-cell duration">时长</div>
+                                    <div className="MusicListTable-cell"></div>
                                 </div>
-                                <ul className="MusicListTable-body">
-                                    {
-                                        this.state.playList.map((item, index) => (
-                                            [<li
-                                                className="MusicListTable-row"
-                                                key={index}
-                                                onClick={() => this.play(index)}
-                                            >
-                                                <div className="MusicListTable-cell index">{index + 1}</div>
-                                                <div className="MusicListTable-cell name">{item.name}</div>
-                                                <div className="MusicListTable-cell singer">{item.singer}</div>
-                                                <div className="MusicListTable-cell duration">{item.time}</div>
-                                                <div className="MusicListTable-cell" style={{ position: 'relative' }}>
-                                                    {
-                                                        (this.state.playIndex == index)
-                                                        && !this.audio.paused &&
-                                                        <div className="Music-songAnimate"><i></i><i></i><i></i></div>
-                                                    }
-                                                </div>
-                                            </li>,
-                                            <li className="MusicListTable-row" key={'line' + index}>
-                                                <i className="list-line"></i>
-                                                <i className="list-line"></i>
-                                                <i className="list-line"></i>
-                                                <i className="list-line"></i>
-                                                <i className="list-line"></i>
-                                                <i className="list-line"></i>
-                                            </li>
-                                            ]
-                                        ))
-                                    }
-                                </ul>
+                            </div>
+                            <ul className="MusicListTable-body">
+                                {
+                                    this.state.playList.map((item, index) => (
+                                        [<li
+                                            className="MusicListTable-row"
+                                            key={index}
+                                            onClick={() => this.play(index)}
+                                        >
+                                            <div className="MusicListTable-cell index">{index + 1}</div>
+                                            <div className="MusicListTable-cell name">{item.name}</div>
+                                            <div className="MusicListTable-cell singer">{item.singer}</div>
+                                            <div className="MusicListTable-cell duration">{item.time}</div>
+                                            <div className="MusicListTable-cell" style={{ position: 'relative' }}>
+                                                {
+                                                    (this.state.playIndex == index)
+                                                    && !this.audio.paused &&
+                                                    <div className="Music-songAnimate"><i></i><i></i><i></i></div>
+                                                }
+                                            </div>
+                                        </li>,
+                                        <li className="MusicListTable-row" key={'line' + index}>
+                                            <i className="list-line"></i>
+                                            <i className="list-line"></i>
+                                            <i className="list-line"></i>
+                                            <i className="list-line"></i>
+                                            <i className="list-line"></i>
+                                            <i className="list-line"></i>
+                                        </li>
+                                        ]
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="song-play-area" style={{ display: !this.state.isShowLyric && 'none' || '' }}>
+                        <div className="pic-circle">
+                            <img src={this.state.picUrl} alt="" />
+                        </div>
+                        <div className="MusicLyric">
+                            <div className="MusicLyric-list" style={{ transform: `translateY(${-this.state.curLyricItem * 24}px)` }}>
+                                {
+
+                                    /**
+                                     * 歌词加载显示
+                                     */
+                                    lyric
+                                }
                             </div>
                         </div>
                     </div>
@@ -514,14 +542,19 @@ export default class App extends React.Component {
                             <a title="下一曲" className="next" href="javascript:;" onClick={() => this.playNext()}>
                                 <svg className="icon-next" viewBox="0 0 1024 1024"><path d="M912.920002 27.333633l-27.147936 0c-22.853949 0-41.591347 18.701911-41.591347 41.591347l0 363.391975c-5.890925-5.1102-11.639899-10.184912-18.772886-14.869262l-609.533257-393.591834c-80.556619-51.953697-146.385927-16.217786-146.385927 79.704919l0 816.886705c0 95.816243 65.829307 131.658616 146.385927 79.669432l609.533257-393.698297c7.132987-4.613375 12.881962-9.794549 18.772886-14.869262l0 363.569412c0 22.853949 18.737399 41.591347 41.591347 41.591347l27.147936 0c22.853949 0 41.591347-18.737399 41.591347-41.591347L954.51135 68.889493C954.51135 46.035544 935.773951 27.333633 912.920002 27.333633z" /></svg>
                             </a>
-                            <div className="MusicPlayProgress">
-                                <div className="_base-info">
-                                    <div className="musicInfo">{this.state.songName}/{this.state.singer}</div>
-                                    <div className="MusicPlayProgress-playTime"><span>{this.calcTime(this.state.currentTime || 0)}</span>/<span>{this.calcTime(this.audio.duration || 0)}</span></div>
+                            <div className="info-content">
+                                <div className="music-pic">
+                                    <img src={this.state.picUrl} alt="" onClick={() => this.showLyric()} />
                                 </div>
-                                <div id="js-progress" className="MusicPlayProgress-Line">
-                                    <span id="play-progress-active" className="MusicPlayProgress-Line active" style={{ width: this.state.currentProgress }}></span>
-                                    <span id="play-indicator" className="MusicPlayProgress-indicator" style={{ left: this.state.currentProgress }}></span>
+                                <div className="MusicPlayProgress">
+                                    <div className="_base-info">
+                                        <div className="musicInfo">{this.state.songName}/{this.state.singer}</div>
+                                        <div className="MusicPlayProgress-playTime"><span>{this.calcTime(this.state.currentTime || 0)}</span>/<span>{this.calcTime(this.audio.duration || 0)}</span></div>
+                                    </div>
+                                    <div id="js-progress" className="MusicPlayProgress-Line">
+                                        <span id="play-progress-active" className="MusicPlayProgress-Line active" style={{ width: this.state.currentProgress }}></span>
+                                        <span id="play-indicator" className="MusicPlayProgress-indicator" style={{ left: this.state.currentProgress }}></span>
+                                    </div>
                                 </div>
                             </div>
                             {
@@ -532,7 +565,7 @@ export default class App extends React.Component {
                                         </svg>
                                     </a>
                                     :
-                                    <a title="列表随机" onClick={() => this.setMode(0)}>
+                                    <a title="列表随机" className="recycle" onClick={() => this.setMode(0)}>
                                         <svg className="icon-recycle" viewBox="0 0 1024 1024">
                                             <path d="M747.52 309.4528a245.76 245.76 0 0 0-245.76 245.76v14.7456c-15.7696 38.912-17.408 56.7296-29.2864 68.1984a286.72 286.72 0 0 1-257.4336 162.816h-20.48v-40.96h20.48a245.76 245.76 0 0 0 239.2064-190.2592c2.4576-3.6864 4.5056-7.5776 6.7584-11.264s0-2.048 0-3.2768a286.72 286.72 0 0 1 286.72-286.72h61.44v40.96zM794.4192 721.5104l-87.04 86.2208a20.48 20.48 0 0 0 0 28.672 20.48 20.48 0 0 0 29.0816 0l87.04-86.2208a20.48 20.48 0 0 0 0-28.672 20.48 20.48 0 0 0-29.0816 0zM792.576 303.5136l-86.8352-86.8352a20.48 20.48 0 1 1 28.8768-28.8768l86.8352 86.8352a20.48 20.48 0 0 1-28.8768 28.8768zM749.1584 715.5712A245.76 245.76 0 0 1 502.784 471.04v-14.7456c-15.7696-38.5024-17.6128-56.32-29.2864-67.7888a286.72 286.72 0 0 0-197.632-155.0336v40.96a245.76 245.76 0 0 1 178.7904 181.248c2.4576 3.6864 4.5056 7.5776 6.7584 11.264s0 2.048 0 3.072a286.72 286.72 0 0 0 286.72 284.672h61.44v-40.96zM235.52 228.352h-40.96v40.96h40.96z" />
                                         </svg>
