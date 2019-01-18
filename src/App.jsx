@@ -439,7 +439,6 @@ export default class App extends React.Component {
                 <div className="about-dialog" style={{ display: this.state.isShowAboutDialog ? 'block' : 'none' }}>
                     <div className="about-dialog-title">关于</div>
                     <div className="about-dialog-content">
-                        <p>歌曲来源于网易云音乐，请勿用于商业用于，否则后果自负。</p>
                         <p>版权所有Copyright © 2016-2019 (@lee)</p>
                         <p>博客：<a href="http://www.lizc.me" target="_blank">http://www.lizc.me</a></p>
                         <p>版本：1.0.0</p>
