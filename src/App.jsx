@@ -384,7 +384,7 @@ export default class App extends React.Component {
         document.getElementById('js-volume').onmousedown = (e) => this._jsvolumeline(e, audio);
 
         // 默认播放器第一首歌
-        this.play(1);
+        this.play(0);
         this.pause();
     }
 

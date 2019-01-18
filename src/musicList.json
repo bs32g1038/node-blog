@@ -2,12 +2,12 @@
     "coverImgUrl": "http://p1.music.126.net/H_oZPrz7kjNkHjiGHcSGpA==/3294136838308432.jpg",
     "tracks": [
         {
-            "id": 32507038,
-            "src": "http://music.163.com/song/media/outer/url?id=32507038.mp3",
-            "name": "演员",
-            "singer": "薛之谦",
-            "picUrl": "http://p1.music.126.net/qpvBqYIqkRhO9Ry2qOCdJQ==/2942293117852634.jpg",
-            "time": "04:21"
+            "id": 486814412,
+            "src": "http://music.163.com/song/media/outer/url?id=486814412.mp3",
+            "name": "沙漠骆驼",
+            "singer": "展展与罗罗",
+            "picUrl": "http://p2.music.126.net/oov7j64hTKZSm0CEUkRNoQ==/109951163111639178.jpg",
+            "time": "05:38"
         },
         {
             "id": 483671599,
@@ -40,14 +40,6 @@
             "singer": "三无男孩",
             "picUrl": "http://p2.music.126.net/tJgNALXQpqGVxk8wgcfANw==/109951162934015184.jpg",
             "time": "05:11"
-        },
-        {
-            "id": 486814412,
-            "src": "http://music.163.com/song/media/outer/url?id=486814412.mp3",
-            "name": "沙漠骆驼",
-            "singer": "展展与罗罗",
-            "picUrl": "http://p2.music.126.net/oov7j64hTKZSm0CEUkRNoQ==/109951163111639178.jpg",
-            "time": "05:38"
         },
         {
             "id": 29723041,
@@ -162,14 +154,6 @@
             "time": "04:41"
         },
         {
-            "id": 109039,
-            "src": "http://music.163.com/song/media/outer/url?id=109039.mp3",
-            "name": "凤凰于飞",
-            "singer": "刘欢",
-            "picUrl": "http://p2.music.126.net/a_3dR0ru-eGJusO8N0ZySA==/65970697667327.jpg",
-            "time": "02:44"
-        },
-        {
             "id": 86369,
             "src": "http://music.163.com/song/media/outer/url?id=86369.mp3",
             "name": "偏爱",
@@ -186,14 +170,6 @@
             "time": "04:18"
         },
         {
-            "id": 185813,
-            "src": "http://music.163.com/song/media/outer/url?id=185813.mp3",
-            "name": "阳光宅男",
-            "singer": "周杰伦",
-            "picUrl": "http://p2.music.126.net/STWQpRLgUBOcXQIDPoEL_A==/109951163533011733.jpg",
-            "time": "03:42"
-        },
-        {
             "id": 64927,
             "src": "http://music.163.com/song/media/outer/url?id=64927.mp3",
             "name": "等",
@@ -208,14 +184,6 @@
             "singer": "陈奕迅",
             "picUrl": "http://p2.music.126.net/q4MZj15xz1usJq0dIu-LRg==/109951163381539466.jpg",
             "time": "03:59"
-        },
-        {
-            "id": 66842,
-            "src": "http://music.163.com/song/media/outer/url?id=66842.mp3",
-            "name": "十年",
-            "singer": "陈奕迅",
-            "picUrl": "http://p2.music.126.net/WF9SAVpoTbueroj7CLoKKg==/109951163028210664.jpg",
-            "time": "03:25"
         }
     ],
     "createTime": "2019-1-17",
