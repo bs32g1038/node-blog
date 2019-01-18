@@ -22,7 +22,8 @@ export default class App extends React.Component {
             isShowLyric: false,
             isPaused: true,
             picUrl: '',
-            isShowAboutDialog: false
+            isShowAboutDialog: false,
+            ctrlClickTime: null // 用于控制只执行最后一次点击播放事件
         };
     }
 
@@ -145,28 +146,35 @@ export default class App extends React.Component {
      * 播放歌曲
      */
     play(index) {
-        const { playList } = this.state;
-        const audio = this.audio;
-        if (!audio.ended && audio.paused && audio.src) {
+        clearTimeout(this.state.ctrlClickTime)
+        const ctrlClickTime = setTimeout(() => {
+            const { playList } = this.state;
+            const audio = this.audio;
+            if (!audio.ended && audio.paused && audio.src) {
+                this.setState({
+                    isPaused: false
+                })
+                return audio.play().catch(error => { console.log(error) });
+            }
+            index = index || 0;
+            const music = playList[index];
+            audio.src = music.src;
+            audio.load();
+            audio.play().catch(error => { console.log(error) }); // 捕抓多次点击错误
+            document.body.style.backgroundImage = `url(${music.picUrl})`;
             this.setState({
+                songName: music.name,
+                picUrl: music.picUrl,
+                singer: music.singer,
+                playIndex: index,   // 设置歌曲索引
+                curLyricItem: 0,    // 重置歌词
                 isPaused: false
-            })
-            return audio.play();
-        }
-        index = index || 0;
-        const music = playList[index];
-        audio.src = music.src;
-        audio.play().catch(error => { }); // 捕抓多次点击错误
-        document.body.style.backgroundImage = `url(${music.picUrl})`;
+            });
+            this.ajaxGetLyric(music.id); // 获取歌词，并设置
+        }, 100);
         this.setState({
-            songName: music.name,
-            picUrl: music.picUrl,
-            singer: music.singer,
-            playIndex: index,   // 设置歌曲索引
-            curLyricItem: 0,    // 重置歌词
-            isPaused: false
+            ctrlClickTime: ctrlClickTime
         });
-        this.ajaxGetLyric(music.id); // 获取歌词，并设置
     }
 
     /**
@@ -433,6 +441,12 @@ export default class App extends React.Component {
                         <p>歌曲来源于网易云音乐，请勿用于商业用于，否则后果自负。</p>
                         <p>版权所有Copyright © 2016-2019 (@lee)</p>
                         <p>博客：<a href="http://www.lizc.me" target="_blank">http://www.lizc.me</a></p>
+                        <p>版本：1.0.0</p>
+                        <p>如果你觉得本项目对你有帮助，可以请作者喝杯咖啡(*^_^*)哦</p>
+                        <p>
+                            打赏作者：
+                            <img src={require('./assets/pay-qrcode.jpg')} alt="打赏作者"/>
+                        </p>
                     </div>
                     <div className="about-dialog-footer">
                         <button type="button" onClick={() => this.showAboutDialog()}>关闭</button>

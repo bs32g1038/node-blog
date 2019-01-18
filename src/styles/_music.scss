@@ -397,6 +397,12 @@
             line-height: 1.6;
             font-size: 12px;
         }
+        img {
+            max-width: 120px;
+            height: auto;
+            vertical-align: text-top;
+            border-radius: 10px;
+        }
     }
     .about-dialog-footer {
         text-align: center;
