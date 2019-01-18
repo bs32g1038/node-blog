@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 import { parseTime, timeAgo } from '../../utils/time';
 import CommentForm from '../comment-form';
@@ -114,7 +115,7 @@ const replyFn = (item: any) => (
                     {item.identity !== 0 ? '博主' : '游客'}
                 </UserSign>
             </User>
-            <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
+            <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
             <Meta>发表于：{timeAgo(item.createdAt)}前</Meta>
         </Content>
     </Quote>
@@ -139,7 +140,7 @@ class Item extends React.Component<{ item: any }, any> {
                                 {item.identity !== 0 ? '博主' : '游客'}
                             </UserSign>
                         </User>
-                        <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
+                        <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
                         <Meta>
                             <span className="ArticleComments-infoTime">
                                 发表于：{parseTime(item.createdAt)}

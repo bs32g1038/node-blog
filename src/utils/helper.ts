@@ -1,5 +1,6 @@
 import { css } from '@emotion/core';
 import { rem as _rem } from 'polished';
+import jsxss from 'xss';
 
 const sizes = {
     desktop: 992,
@@ -19,4 +20,18 @@ export const media = Object.keys(sizes).reduce((acc: any, label) => {
 
 export const rem = (str: any): any => {
     return _rem(str, 50);
+};
+
+const Xss = new jsxss.FilterXSS({
+    onIgnoreTagAttr: (tag: any, name: any, value: any, isWhiteAttr: any) => {
+        // 让 prettyprint 可以工作
+        if (tag === 'pre' && name === 'class') {
+            return name + '="' + jsxss.escapeAttrValue(value) + '"';
+        }
+        return '';
+    }
+});
+
+export const xss = (html: any) => {
+    return Xss.process(html);
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../redux/reducers/guestbooks';
 import { media, rem } from '../../utils/helper';
+
 import CommentForm from '../comment-form';
 import GuestbookItem from './item';
 

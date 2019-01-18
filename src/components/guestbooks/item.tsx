@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { SFC } from 'react';
-import { media, rem } from '../../utils/helper';
+import { media, rem, xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 import { timeAgo } from '../../utils/time';
 
@@ -97,7 +97,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     {timeAgo(item.createdAt)}
                 </MataTime>
             </UserMata>
-            <UserContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></UserContent>
+            <UserContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></UserContent>
             <UserContent><strong>回复：</strong>&nbsp;&nbsp;{item.replyContent || '暂无回复...'}</UserContent>
         </GuestbookItem>
     );

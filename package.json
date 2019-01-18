@@ -31,7 +31,8 @@
     "redux-thunk": "^2.3.0",
     "serialize-javascript": "^1.6.1",
     "shelljs": "^0.8.3",
-    "validator": "^10.10.0"
+    "validator": "^10.10.0",
+    "xss": "^1.0.3"
   },
   "devDependencies": {
     "@types/express": "^4.16.0",

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { isEmail, isEmpty, isURL } from 'validator';
 import axios from '../../utils/axios';
-import { media, rem } from '../../utils/helper';
+import { media, rem, xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 
 const bounce = keyframes`
@@ -209,15 +209,16 @@ class CommentForm extends Component<Props, any> {
         if (event.target.nodeName.toLowerCase() === 'img') {
             const $li = event.target.parentNode;
             const text = $li.getAttribute('data-input').trim();
-            const $content: any = document.getElementById('content');
+            const $content: any = ReactDOM.findDOMNode(this.refs.content);
             $content.value = $content.value + text;
-            this.renderMakrdown();
+            if (this.state.isShowPreview) {
+                this.renderMakrdown($content.value + text);
+            }
         }
     }
-    public renderMakrdown() {
-        const $content: any = document.getElementById('content');
+    public renderMakrdown(str: string) {
         this.setState({
-            previewHtml: marked($content.value)
+            previewHtml: marked(str)
         });
     }
     public showPreview() {
@@ -226,9 +227,11 @@ class CommentForm extends Component<Props, any> {
         });
     }
     public componentDidMount() {
-        const $content: any = document.getElementById('content');
+        const $content: any = ReactDOM.findDOMNode(this.refs.content);
         $content.oninput = () => {
-            this.renderMakrdown();
+            if (this.state.isShowPreview) {
+                this.renderMakrdown($content.value);
+            }
         };
     }
     public render() {
@@ -240,10 +243,10 @@ class CommentForm extends Component<Props, any> {
                     <FormInput isError={this.state.isValidationErrors_website} id="website" name="website" placeholder="网址 http(s)://" type="text" />
                 </FormGroup>
                 <ContentWrap>
-                    <Textarea isError={this.state.isValidationErrors_content} id="content" name="content" rows={3} placeholder="留点空白给你说~"></Textarea>
+                    <Textarea isError={this.state.isValidationErrors_content} ref="content" name="content" rows={3} placeholder="留点空白给你说~"></Textarea>
                     {
                         this.state.isShowPreview &&
-                        <PreviewPane dangerouslySetInnerHTML={{ __html: this.state.previewHtml }}></PreviewPane>
+                        <PreviewPane dangerouslySetInnerHTML={{ __html: xss(this.state.previewHtml) }}></PreviewPane>
                     }
                 </ContentWrap>
                 {this.state.errorText && <ErrorTipDiv>{this.state.errorText}</ErrorTipDiv>}
