@@ -154,6 +154,7 @@ export default class App extends React.Component {
                 this.setState({
                     isPaused: false
                 })
+                audio.load();
                 return audio.play().catch(error => { console.log(error) });
             }
             index = index || 0;
@@ -171,7 +172,7 @@ export default class App extends React.Component {
                 isPaused: false
             });
             this.ajaxGetLyric(music.id); // 获取歌词，并设置
-        }, 100);
+        }, 200);
         this.setState({
             ctrlClickTime: ctrlClickTime
         });
