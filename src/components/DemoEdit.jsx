@@ -5,7 +5,6 @@ import MdEdit from './MdEdit';
 
 import { Form, Input, Button, message } from 'antd';
 const FormItem = Form.Item;
-const { TextArea } = Input;
 
 class DemoEdit extends Component {
     constructor(props, context) {
