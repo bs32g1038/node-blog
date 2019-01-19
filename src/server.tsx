@@ -64,7 +64,7 @@ export const ssr = (req: express.Request, res: express.Response) => {
                     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
                     <meta content="Lizc博客，nodejs，前端，后端，docker，综合" name="Keywords">
                     <meta content="博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！" name="description">
-                    <link rel="shortcut icon" sizes="48x48" href="/static/logo.png">
+                    <link rel="shortcut icon" sizes="48x48" href="/public/logo.png">
                     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
                     <script>
                         var _hmt = _hmt || [];
