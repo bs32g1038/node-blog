@@ -8,6 +8,8 @@ const helper = require('../utils/helper');
 const logger = require('../utils/logger');
 const validator = require('validator');
 const hljs = require('highlight.js'); // https://highlightjs.org/
+const mila = require('markdown-it-link-attributes');
+
 
 const markdown = new MarkdownIt({
     highlight: function (str, lang) {
@@ -20,6 +22,13 @@ const markdown = new MarkdownIt({
         }
 
         return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
+    }
+});
+
+markdown.use(mila, {
+    attrs: {
+        target: '_blank',
+        rel: 'noopener'
     }
 });
 
