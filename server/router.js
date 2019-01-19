@@ -5,7 +5,6 @@ const guestbookApi = require('./core/guestbook');
 const linkApi = require('./core/link');
 const demoApi = require('./core/demo');
 const LoginApi = require('./core/login');
-const musicApi = require('./core/music');
 const RSS = require('./core/RSS');
 const uploadApi = require('./core/upload');
 const auth = require('./utils/auth');
@@ -98,14 +97,6 @@ router.put('/api/demos/:_id', authMiddlware, demoApi.updateDemo);
 router.delete('/api/demos/:_id', authMiddlware, demoApi.deleteDemo);
 
 router.get('/demos/:_id', demoApi.renderDemoShowPage);
-
-
-/**
- * 音乐api
- */
-router.get('/api/music/playlist', musicApi.playlist);
-
-router.get('/api/music/lyric', musicApi.lyric);
 
 /**
  * 登陆api
