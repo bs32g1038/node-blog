@@ -8,6 +8,11 @@ const logger = require('./utils/logger');
 const bodyParser = require('body-parser');
 const favicon = require('express-favicon');
 const app = express();
+const ejs = require('ejs');
+
+app.set('views', path.resolve(__dirname, '../views')); 
+app.engine('html', ejs.__express);
+app.set('view engine', 'html'); 
 
 // 隐藏express header x-powered-by
 app.disable('x-powered-by');
@@ -23,6 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
+
 app.use('/public/', express.static(path.resolve(__dirname, '../public')));
 app.use('/static/', express.static(path.resolve(__dirname, '../static')));
 app.use(favicon(path.resolve(__dirname, '../static/logo.png')));

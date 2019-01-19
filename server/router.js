@@ -3,6 +3,7 @@ const categoryApi = require('./core/category');
 const commentApi = require('./core/comment');
 const guestbookApi = require('./core/guestbook');
 const linkApi = require('./core/link');
+const demoApi = require('./core/demo');
 const LoginApi = require('./core/login');
 const musicApi = require('./core/music');
 const RSS = require('./core/RSS');
@@ -84,6 +85,22 @@ router.post('/api/links', authMiddlware, linkApi.createLink);
 router.put('/api/links/:_id', authMiddlware, linkApi.updateLink);
 
 router.delete('/api/links/:_id', authMiddlware, linkApi.deleteLink);
+
+/**
+ * 分类api
+ */
+router.get('/api/demos', authMiddlware, demoApi.getDemos);
+
+router.get('/api/demos/:_id', demoApi.getDemo);
+
+router.post('/api/demos', authMiddlware, demoApi.createDemo);
+
+router.put('/api/demos/:_id', authMiddlware, demoApi.updateDemo);
+
+router.delete('/api/demos/:_id', authMiddlware, demoApi.deleteDemo);
+
+router.get('/demos/:_id', demoApi.renderDemoShowPage);
+
 
 /**
  * 音乐api
