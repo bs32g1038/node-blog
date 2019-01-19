@@ -27,10 +27,10 @@ class AppSideMenu extends Component {
                 defaultOpenKeys = ['SubMenu-links'];
             }
         }));
-        ['/blog/admin/chatroom/groups'].some(((path) => {
+        ['/blog/admin/demos'].some(((path) => {
             if (location.pathname.indexOf(path) >= 0) {
                 defaultSelectedKeys = ['6'];
-                defaultOpenKeys = ['SubMenu-chatroom'];
+                defaultOpenKeys = ['SubMenu-demo'];
             }
         }));
         const { siteInfo } = cofig;
@@ -54,6 +54,9 @@ class AppSideMenu extends Component {
                     </SubMenu>
                     <SubMenu key="SubMenu-links" title={<span><i className="fa fa-link fa-fw"></i><span>友情管理</span></span>}>
                         <Menu.Item key="5"><Link to="/blog/admin/links"><i className="fa fa-globe fa-fw"></i>友链列表</Link></Menu.Item>
+                    </SubMenu>
+                    <SubMenu key="SubMenu-demos" title={<span><i className="fa fa-codepen fa-fw"></i><span>代码管理</span></span>}>
+                        <Menu.Item key="6"><Link to="/blog/admin/demos"><i className="fa fa-globe fa-fw"></i>代码demo</Link></Menu.Item>
                     </SubMenu>
                     {/* <SubMenu key="SubMenu-chatroom" title={<span><i className="fa fa-comments fa-fw"></i><span>聊天室管理</span></span>}>
                         <Menu.Item key="6"><Link to="/blog/admin/chatroom/groups"><i className="fa fa-institution fa-fw"></i>房间管理</Link></Menu.Item>

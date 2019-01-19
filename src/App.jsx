@@ -13,6 +13,9 @@ import Comments from './components/Comments';
 import CommentReply from './components/CommentReply';
 import Links from './components/Links';
 import LinkEdit from './components/LinkEdit';
+import Demos from './components/Demos';
+import DemoEdit from './components/DemoEdit';
+
 import AppSideMenu from './components/AppSideMenu';
 
 import config from './config';
@@ -49,6 +52,9 @@ class App extends Component {
                                 <Route exact path="/blog/admin/links" component={Links} />
                                 <Route exact path="/blog/admin/links/edit" component={LinkEdit} />
                                 <Route exact path="/blog/admin/links/edit/:id" component={LinkEdit} />
+                                <Route exact path="/blog/admin/demos" component={Demos} />
+                                <Route exact path="/blog/admin/demos/edit" component={DemoEdit} />
+                                <Route exact path="/blog/admin/demos/edit/:id" component={DemoEdit} />
                             </Switch>
                     )} />
                     <AppFooter />
