@@ -11,8 +11,6 @@ const uploadApi = require('./core/upload');
 const auth = require('./utils/auth');
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
 
 const authMiddlware = async (req, res, next) => {
     const user = auth(req);
@@ -123,19 +121,6 @@ router.post('/api/upload/image', authMiddlware, uploadApi.uploadSingalImage);
  * RSS源生成
  */
 router.get('/RSS', RSS.index);
-
-const isDev = process.env.NODE_ENV !== 'production';
-if (!isDev) {
-
-    router.get(/blog\/admin/, function (req, res) {
-        const template = fs.readFileSync(path.join(__dirname, '../static/admin/index.html'), 'utf8');
-        res.send(template);
-    });
-    const serverBundle = require('../react-ssr/server').default;
-    router.get(/\//, function (req, res) {
-        serverBundle(req, res);
-    });
-}
 
 // 导出路由
 module.exports = router;

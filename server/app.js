@@ -6,7 +6,6 @@ const express = require('express');
 const config = require('./config');
 const logger = require('./utils/logger');
 const bodyParser = require('body-parser');
-const favicon = require('express-favicon');
 const app = express();
 const ejs = require('ejs');
 
@@ -29,9 +28,8 @@ app.use(log4js.connectLogger(logger, {
     level: 'info'
 }));
 
-app.use('/public/', express.static(path.resolve(__dirname, '../public')));
+// app.use('/public/', express.static(path.resolve(__dirname, '../public')));
 app.use('/static/', express.static(path.resolve(__dirname, '../static')));
-app.use(favicon(path.resolve(__dirname, '../static/logo.png')));
 app.use(require('./middlewares/response').setHeadPaging);
 app.use(require('./router'));
 
