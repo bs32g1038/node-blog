@@ -56,6 +56,7 @@ class DemoEdit extends Component {
                         wrapperCol={{ span: 10 }}
                         label="demo标题："
                     >
+
                         {getFieldDecorator('title', {
                             rules: [{
                                 required: true,
@@ -63,7 +64,7 @@ class DemoEdit extends Component {
                                 min: 1,
                                 max: 25
                             }],
-                            initialValue: demo.title
+                            initialValue: demo.title || ''
                         })(
                             <Input type="text" placeholder="请输入demo标题：" />
                         )}
@@ -77,7 +78,7 @@ class DemoEdit extends Component {
                             rules: [{
                                 required: true
                             }],
-                            initialValue: demo.content
+                            initialValue: demo.content || ''
                         })(
                             <MdEdit />
                         )}
