@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   api:
-    build: https://gitee.com/chengli01/node-blog.git
+    build: ../node-blog
     depends_on:
       - db
     volumes:
@@ -12,19 +12,19 @@ services:
       - 8080:8080
     network_mode: "host"
   blog:
-    build: https://gitee.com/chengli01/react-blog.git
+    build: ../react-blog
     command: "npm run start:prod"
     ports:
       - 3000:3000
     network_mode: "host"
   admin:
-    build: https://gitee.com/chengli01/react-blog-admin.git
+    build: ../react-blog-admin
     command: npm run start
     ports:
       - 3002:3002
     network_mode: "host"
   nginx:
-    build: https://gitee.com/chengli01/blog-nginx.git
+    build: ../blog-nginx
     network_mode: "host"
     depends_on:
       - api
