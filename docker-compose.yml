@@ -39,6 +39,7 @@ services:
   db:
     image: mongo:4.1
     volumes:
+      - ../data/mongo-backup:/data/mongo-backup
       - ../data/mongo-db:/data/db
     ports:
       - 27017:27017
