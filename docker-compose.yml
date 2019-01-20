@@ -13,7 +13,7 @@ services:
     network_mode: "host"
   blog:
     build: https://gitee.com/chengli01/react-blog.git
-    command: npm run start
+    command: "npm run start:prod"
     ports:
       - 3000:3000
     network_mode: "host"
