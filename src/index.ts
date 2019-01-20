@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 let proxy;
 if (process.env.NODE_ENV !== 'production') {
     proxy = require('http-proxy-middleware');
@@ -29,9 +30,11 @@ if (process.env.TYPE !== 'SSR') {
     if (process.env.NODE_ENV !== 'production') {
         server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
         server.use('/static', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
+        server.use('/public', express.static(process.env.RAZZLE_PUBLIC_DIR!));
+    } else {
+        server.use('/public', express.static(path.resolve(__dirname, './public')));
     }
-    server.use('/public', express.static(process.env.RAZZLE_PUBLIC_DIR!))
-        .use((req, res) => app.handle(req, res))
+    server.use((req, res) => app.handle(req, res))
         .listen(port, (err: Error) => {
             if (err) {
                 console.error(err);
