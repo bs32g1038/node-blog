@@ -19,12 +19,12 @@ module.exports = merge(common, {
     output: {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/static/admin/',
-        filename: '[name].bundle.js'
+        filename: '[name].[hash].bundle.js'
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: "[name].[hash].css",
+            chunkFilename: "[id].[hash].css"
         })
     ],
     module: {

@@ -9,7 +9,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             chunks: ['vendor', 'styles', 'admin'],
             template: path.resolve(__dirname, '../src/index.html'),
-            hash: true,
             title: "Lizc博客后台"
         })
     ],
