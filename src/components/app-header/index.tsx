@@ -190,7 +190,7 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                 <Pannel></Pannel>
                 <MainWrap>
                     <AvatarWrap>
-                        <img src="/static/images/avatar.jpg" />
+                        <img src="/public/images/avatar.jpg" />
                     </AvatarWrap>
                     <H1>
                         <Link to="/" title="Lizc的个人网站">

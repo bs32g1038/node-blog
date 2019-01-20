@@ -33,6 +33,7 @@ if (process.env.TYPE !== 'SSR') {
         server.use('/public', express.static(process.env.RAZZLE_PUBLIC_DIR!));
     } else {
         server.use('/public', express.static(path.resolve(__dirname, './public')));
+        server.use('/static', express.static(path.resolve(__dirname, './public/static')));
     }
     server.use((req, res) => app.handle(req, res))
         .listen(port, (err: Error) => {
