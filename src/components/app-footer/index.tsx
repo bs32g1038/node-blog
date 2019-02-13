@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { padding } from 'polished';
 import React, { Component } from 'react';
-import { color } from '../../config/theme';
 
 const Footer = styled.footer((props) => ({
     label: 'app-footer',

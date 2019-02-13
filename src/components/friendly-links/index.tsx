@@ -11,7 +11,7 @@ const FriendlyLinksWrap = styled.div`
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
-    padding: ${rem('28px')};
+    padding: ${rem('28px')} 0;
 `;
 
 const Header = styled.header((_) => ({

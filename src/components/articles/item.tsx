@@ -8,10 +8,11 @@ import { parseTime } from '../../utils/time';
 
 const ArticleItem = styled.li`
     border-bottom: 1px solid rgba(178,186,194,.15);
-    padding: ${rem('10px')} ${rem('15px')};
-    &:last-child {
-        border-bottom: none;
-    }
+    padding: 0.2rem 0;
+    ${media.phone`
+        padding-left: 5px;
+        padding-right: 5px;
+    `};
 `;
 
 const Header = styled.div`
@@ -25,7 +26,6 @@ const Brief = styled.div`
     font-size: 18px;
     line-height: 32px;
     overflow: hidden;
-    ${padding(0, rem('18px'))}
     text-overflow: ellipsis;
     white-space: nowrap;
 `;
@@ -63,6 +63,8 @@ const ThumbWrap = styled.div`
 `;
 
 const ThumbA = styled.a`
+    box-shadow: 0 10px 14px #d0d0d0;
+    border-radius: 5px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -73,7 +75,7 @@ const ThumbA = styled.a`
 
 const Summary = styled.p`
     font-size: 14px;
-    margin: 8px 18px;
+    margin: 8px 0;
     word-wrap: break-word;
 `;
 

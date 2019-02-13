@@ -29,7 +29,7 @@ const routes: any = [
                     const page = route.query.page;
                     const limit = route.query.limit;
                     const cid = route.query.cid;
-                    return store.dispatch(fetchArticles(page, limit, { cid }));
+                    return store.dispatch(fetchArticles(page, 20, { cid }));
                 },
                 component: Articles,
                 exact: true,

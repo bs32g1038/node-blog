@@ -96,9 +96,8 @@ const LI = styled.li((_) => ({
         color: '#FFF',
         textDecoration: 'none',
         fontSize: '14px',
-        padding: '10px 20px',
+        padding: '10px 0',
         margin: '0 5px',
-        border: '1px solid #fff',
         borderRadius: '30px',
         letterSpacing: '1px'
     }
@@ -111,9 +110,8 @@ const ATag = styled(Link)((_) => ({
     color: '#FFF',
     textDecoration: 'none',
     fontSize: '14px',
-    padding: '10px 20px',
+    padding: '10px 0',
     margin: '0 5px',
-    border: '1px solid #fff',
     borderRadius: '30px',
     letterSpacing: '1px'
 }));
@@ -184,15 +182,19 @@ export default class Home extends React.Component<any, any> {
                         <LI>
                             <ATag to="/blog">博客</ATag>
                         </LI>
+                        <span> · </span>
                         <LI>
                             <ATag to="/blog/guestbook">留言</ATag>
                         </LI>
+                        <span> · </span>
                         <LI>
                             <ATag to="/blog/links">友链</ATag>
                         </LI>
+                        <span> · </span>
                         <LI>
                             <a href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">音乐</a>
                         </LI>
+                        <span> · </span>
                         <LI>
                             <a href={siteInfo.github} rel="noopener noreferrer" target="_blank">Github</a>
                         </LI>

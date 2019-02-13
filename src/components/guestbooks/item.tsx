@@ -7,7 +7,6 @@ import { timeAgo } from '../../utils/time';
 const GuestbookItem = styled.div`
     padding: ${rem('20px')};
     position: relative;
-    width: 334px;
     box-sizing: border-box;
     margin-right: 5px;
     margin-bottom: 5px;

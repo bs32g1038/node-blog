@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
 
-const CategoriesWrap = styled.ul(() => ({
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderBottom: '1px solid rgba(178,186,194,.15)',
-    display: 'flex',
-    flex: '0 0 auto',
-    fontSize: '12px',
-    margin: '0',
-    padding: '11px 22px'
-}));
+const CategoriesWrap = styled.ul`
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(178,186,194,.15);
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 12px;
+    margin: 0;
+    padding: 11px 0;
+`;
 
 const Item = styled.li(() => ({
     display: 'inline-block',

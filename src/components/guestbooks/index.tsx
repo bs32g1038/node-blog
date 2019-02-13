@@ -9,17 +9,24 @@ import GuestbookItem from './item';
 
 const GuestbooksWrap = styled.div`
     background-color: #fff;
-    margin: 5px 0;
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
-    padding: ${rem('20px')};
+    padding: ${rem('28px')} 0 ;
 `;
 
 const Main = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-top: ${rem('20px')};
+    >div{
+        width: 50%;
+    }
+    ${media.phone`
+        >div {
+            width: 100%;
+        }
+    `}
 `;
 
 const Title = styled.h2`
@@ -51,7 +58,7 @@ class Guestbooks extends React.Component<any, any> {
                                 暂无数据
                         </div>)}
                     <div>{lefts}</div>
-                    <div>{rigths}</div>
+                    <div style={{marginRight: '-5px'}}>{rigths}</div>
                 </Main>
                 <GuestbooksFormWrap>
                     <CommentForm url="/guestbooks"></CommentForm>
