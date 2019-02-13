@@ -30,7 +30,6 @@ const MainWrap = styled.div`
         font-size: '12px'
     }
     ${media.phone`
-        padding-left: 5px;
         width: 100%;
     `};
 `;
@@ -47,6 +46,10 @@ const H1 = styled.h1`
     margin: 0;
     font-size: 16px;
     font-family: paopaoyuFont;
+    ${media.phone`
+        padding-left: 5px;
+        width: 100%;
+    `};
 `;
 
 const Menu = styled.div`
@@ -57,7 +60,6 @@ const Menu = styled.div`
         display: none
     }
     ${media.phone`
-        height: 20px;
         >i {
             display: block;
             padding-right: 20px;
