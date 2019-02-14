@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/links';
@@ -64,6 +65,7 @@ class FriendlyLinks extends Component<any, any> {
         const { links } = this.props._DB;
         return (
             <FriendlyLinksWrap>
+                <Helmet title="Lizc-友情链接"></Helmet>
                 <Header>
                     <HeaderTitle>--友情链接--</HeaderTitle>
                     <p>Web海洋的小船，不一样的友谊🐎</p>

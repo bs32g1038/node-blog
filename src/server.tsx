@@ -1,15 +1,15 @@
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
 import { renderRoutes } from 'react-router-config';
-import { Switch } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import serialize from 'serialize-javascript';
 import { setIsMobile } from './redux/reducers/global';
 import Store from './redux/store';
-
 import routes from './router';
 
 let assets: any;
@@ -53,12 +53,14 @@ export const ssr = (req: express.Request, res: express.Response) => {
                 </StaticRouter>
             </Provider> as any
         );
+        const helmet = Helmet.renderStatic();
+        console.log(helmet.title.toString());
         const finalState = store.getState();
         res.send(
             `<!doctype html>
                 <html lang="" style="font-size: ${getMachine(req) === 'pc' ? '50px' : '20px'}">
                     <head>
-                    <title>Lizc博客</title>
+                    ${helmet.title.toString()}
                     <meta charset="UTF-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
                     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>

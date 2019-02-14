@@ -1,6 +1,7 @@
 import { css, Global } from '@emotion/core';
 import styled from '@emotion/styled';
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { State } from '../../redux/reducers/article';
 import rem from '../../utils/rem';
@@ -67,6 +68,7 @@ class Article extends Component<any, any> {
         const { article, comments } = this.props._DB;
         return (
             <ArticleWrap>
+                <Helmet title={article.title + ' lizc的个人日志'}></Helmet>
                 <ArticleItem>
                     <ArticleHeader>
                         <Title>
