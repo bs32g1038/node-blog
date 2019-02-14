@@ -23,6 +23,7 @@ export default class App extends React.Component {
             isPaused: true,
             picUrl: '',
             isShowAboutDialog: false,
+            randomList: {}, // {1: true, 2: false}模拟真随机
             ctrlClickTime: null // 用于控制只执行最后一次点击播放事件
         };
     }
@@ -218,10 +219,25 @@ export default class App extends React.Component {
      * 根据播放模式播放歌曲
      */
     playMode(mode) {
-        if (mode == 0) {
+        if (mode === 0) {
             this.playNext();
         } else {
-            this.play(Math.ceil(Math.random() * this.state.playList.length - 1));
+            let randomList = {};
+            if (Object.keys(this.state.randomList).length <= 0) {
+                for (let i = 0; i < this.state.playList.length; i++) {
+                    randomList[i] = 0;
+                }
+            } else {
+                randomList = this.state.randomList;
+            }
+            const arr = Object.keys(randomList);
+            const num = Math.ceil(Math.random() * arr.length - 1);
+            const index = arr[num];
+            delete randomList[index];
+            this.setState({
+                randomList
+            });
+            return this.play(index);
         }
     }
 
@@ -445,7 +461,7 @@ export default class App extends React.Component {
                         <p>如果你觉得本项目对你有帮助，可以请作者喝杯咖啡(*^_^*)哦</p>
                         <p>
                             打赏作者：
-                            <img src={require('./assets/pay-qrcode.jpg')} alt="打赏作者"/>
+                            <img src={require('./assets/pay-qrcode.jpg')} alt="打赏作者" />
                         </p>
                     </div>
                     <div className="about-dialog-footer">
