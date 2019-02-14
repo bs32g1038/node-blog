@@ -65,7 +65,7 @@ class FriendlyLinks extends Component<any, any> {
         const { links } = this.props._DB;
         return (
             <FriendlyLinksWrap>
-                <Helmet title="Lizc-友情链接"></Helmet>
+                <Helmet title="lizc-友情链接"></Helmet>
                 <Header>
                     <HeaderTitle>--友情链接--</HeaderTitle>
                     <p>Web海洋的小船，不一样的友谊🐎</p>

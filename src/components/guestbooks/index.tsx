@@ -50,7 +50,7 @@ class Guestbooks extends React.Component<any, any> {
         });
         return (
             <GuestbooksWrap>
-                <Helmet title="Lizc-留言板"></Helmet>
+                <Helmet title="lizc-留言板"></Helmet>
                 <Title>--留言板--</Title>
                 <Main>
                     {

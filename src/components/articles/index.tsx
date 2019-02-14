@@ -20,7 +20,7 @@ class Articles extends React.Component<any, any> {
         return (
             <div>
                 <Categories></Categories>
-                <Helmet title="Lizc-个人日志"></Helmet>
+                <Helmet title="lizc-个人日志"></Helmet>
                 <UL>
                     {
                         articles.map((item: any) => (

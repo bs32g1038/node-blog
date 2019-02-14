@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { margin, padding, rem, transitions } from 'polished';
+import { transitions } from 'polished';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { color } from '../../config/theme';
@@ -155,6 +155,12 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                             <LI>
                                 <ATag to="/blog/links">
                                     <i className="fa fa-globe fa-fw"></i>友链
+                                </ATag>
+                            </LI>
+                            <span> · </span>
+                            <LI>
+                                <ATag to="/blog/about">
+                                    <i className="fa fa-user fa-fw"></i>关于
                                 </ATag>
                             </LI>
                             <span> · </span>
