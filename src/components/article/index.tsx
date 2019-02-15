@@ -117,6 +117,11 @@ class Article extends Component<any, any> {
             }
         };
         const t = toc();
+        if (!t) {
+            const $t: any = document.getElementById('toc');
+            $t.style.display = 'none';
+            return;
+        }
         let scrollTop = 0;
         const $html = document.documentElement;
         const $body = document.body;
@@ -131,16 +136,12 @@ class Article extends Component<any, any> {
         }
         scrollTop = $body.scrollTop || $html.scrollTop;
         scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
-        // toc and backTop
         window.onscroll = () => {
             scrollTop = $body.scrollTop || $html.scrollTop;
             if ($toc) {
                 $cs = window.getComputedStyle($toc);
                 tocHeight = parseInt($cs.height, 10);
                 winHeight = document.documentElement.clientHeight;
-                // if (tocHeight + 20 > winHeight) {
-                //     return;
-                // }
                 scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
             }
         };
