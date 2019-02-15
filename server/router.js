@@ -7,6 +7,8 @@ const demoApi = require('./core/demo');
 const LoginApi = require('./core/login');
 const RSS = require('./core/RSS');
 const uploadApi = require('./core/upload');
+const fileApi = require('./core/file');
+const mediaApi = require('./core/medias');
 const auth = require('./utils/auth');
 const express = require('express');
 const router = express.Router();
@@ -84,7 +86,7 @@ router.put('/api/links/:_id', authMiddlware, linkApi.updateLink);
 router.delete('/api/links/:_id', authMiddlware, linkApi.deleteLink);
 
 /**
- * 分类api
+ * demo code api
  */
 router.get('/api/demos', authMiddlware, demoApi.getDemos);
 
@@ -99,6 +101,20 @@ router.delete('/api/demos/:_id', authMiddlware, demoApi.deleteDemo);
 router.get('/demos/:_id', demoApi.renderDemoShowPage);
 
 /**
+ * 静态文件管理
+ */
+router.get('/api/files', authMiddlware, fileApi.getFiles);
+
+router.delete('/api/files/:_id', authMiddlware, fileApi.deleteFile);
+
+/**
+ * 媒体文件管理
+ */
+router.get('/api/medias', authMiddlware, mediaApi.getMedias);
+
+router.delete('/api/medias/:_id', authMiddlware, mediaApi.deleteMedia);
+
+/**
  * 登陆api
  */
 router.post('/api/login', LoginApi.login);
@@ -107,6 +123,8 @@ router.post('/api/login', LoginApi.login);
  * 图片api
  */
 router.post('/api/upload/image', authMiddlware, uploadApi.uploadSingalImage);
+
+router.post('/api/upload/static-files', uploadApi.uploadStaticFile);
 
 /**
  * RSS源生成

@@ -17,11 +17,11 @@ app.set('view engine', 'html');
 app.disable('x-powered-by');
 
 app.use(bodyParser.json({
-    limit: '1mb',
+    limit: '10mb',
 }));
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: '1mb',
+    limit: '10mb',
 }));
 
 app.use(log4js.connectLogger(logger, {
