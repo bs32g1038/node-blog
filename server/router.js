@@ -129,7 +129,7 @@ router.post('/api/upload/static-files', uploadApi.uploadStaticFile);
 /**
  * RSS源生成
  */
-router.get('/RSS', RSS.index);
+router.get('/blog/rss', RSS.index);
 
 // 导出路由
 module.exports = router;
