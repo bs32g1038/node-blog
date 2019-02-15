@@ -165,9 +165,9 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                             </LI>
                             <span> · </span>
                             <LI>
-                                <ATag to="/blog/rss">
+                                <a href="/blog/rss" rel="noopener noreferrer" target="_blank">
                                     <i className="fa fa-rss fa-fw"></i>Rss
-                                </ATag>
+                                </a>
                             </LI>
                         </UL>
                     </Menu>
