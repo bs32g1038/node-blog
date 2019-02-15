@@ -2,7 +2,6 @@
  * 上传api类
  */
 const StoreFile = require('../middlewares/StoreFile');
-const { md5 } = require('../utils/crypto');
 const fs = require('fs');
 const path = require('path');
 const models = require('../models');
@@ -34,7 +33,6 @@ class UploadApi {
             const name = shortid.generate();
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
-            const key = md5(req.file.buffer);
 
             // 图片处理
             const width = req.query.w;
@@ -61,7 +59,6 @@ class UploadApi {
                     suffix,
                     fileName,
                     filePath,
-                    key,
                     type: 'image'
                 });
                 const url = filePath + '/' + fileName;
@@ -70,6 +67,9 @@ class UploadApi {
                     url
                 });
             }).catch((err) => {
+                if(err.code === 11000){
+                    res.json();
+                }
                 logger.error(err);
                 return res.status(500).json({ message: '上传图片失败！' });
             });
@@ -85,7 +85,6 @@ class UploadApi {
             const name = shortid.generate();
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
-            const key = md5(req.file.buffer);
             try {
                 await fs.writeFileSync(path.resolve(__dirname, '../..' + filePath) + '/' + fileName, req.file.buffer);
                 const file = await models.File.create({
@@ -95,8 +94,7 @@ class UploadApi {
                     size,
                     suffix,
                     fileName,
-                    filePath,
-                    key
+                    filePath
                 });
                 return res.status(201).json({
                     _id: file._id,

@@ -7,11 +7,7 @@ let FileSchema = new mongoose.Schema({
     size: { type: Number },
     suffix: { type: String },
     fileName: { type: String },//文件全名
-    filePath: { type: String },
-    key: {
-        type: String,
-        unique: true
-    }
+    filePath: { type: String }
 }, {
     timestamps: true
 });

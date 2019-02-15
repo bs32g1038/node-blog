@@ -8,11 +8,7 @@ let MediaSchema = new mongoose.Schema({
     suffix: { type: String },
     fileName: { type: String },//文件全名
     filePath: { type: String },
-    type: { type: String },
-    key: {
-        type: String,
-        unique: true
-    }
+    type: { type: String }
 }, {
     timestamps: true
 });
