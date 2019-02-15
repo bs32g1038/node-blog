@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
+import media from '../../utils/media';
 
 const CategoriesWrap = styled.ul`
     align-items: center;
@@ -13,6 +14,9 @@ const CategoriesWrap = styled.ul`
     font-size: 12px;
     margin: 0;
     padding: 11px 0;
+    ${media.phone`
+        padding-left: 5px;
+    `};
 `;
 
 const Item = styled.li(() => ({

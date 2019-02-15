@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/links';
-import { media, rem } from '../../utils/helper';
+import { rem } from '../../utils/helper';
 import LinkItem from './item';
 
 const FriendlyLinksWrap = styled.div`
@@ -65,7 +66,7 @@ class FriendlyLinks extends Component<any, any> {
         const { links } = this.props._DB;
         return (
             <FriendlyLinksWrap>
-                <Helmet title="lizc-友情链接"></Helmet>
+                <Helmet title={siteInfo.name + '-友情链接'}></Helmet>
                 <Header>
                     <HeaderTitle>--友情链接--</HeaderTitle>
                     <p>Web海洋的小船，不一样的友谊🐎</p>

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/article';
 import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
@@ -68,7 +69,7 @@ class Article extends Component<any, any> {
         const { article, comments } = this.props._DB;
         return (
             <ArticleWrap>
-                <Helmet title={article.title + ' lizc的个人日志'}></Helmet>
+                <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
                 <ArticleItem>
                     <ArticleHeader>
                         <Title>

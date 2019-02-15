@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/articles';
 import Categories from '../categories';
 import ArticleItem from './item';
@@ -20,7 +21,7 @@ class Articles extends React.Component<any, any> {
         return (
             <div>
                 <Categories></Categories>
-                <Helmet title="lizc-个人日志"></Helmet>
+                <Helmet title={siteInfo.name + '-博客'}></Helmet>
                 <UL>
                     {
                         articles.map((item: any) => (

@@ -172,11 +172,11 @@ export default class Home extends React.Component<any, any> {
                         <img src="/public/images/avatar.jpg" />
                     </AvatarWrap>
                     <H1>
-                        <Link to="/" title="Lizc的个人网站">
-                            Lizc的个人网站
+                        <Link to="/" title={siteInfo.name}>
+                            {siteInfo.name}
                         </Link>
                     </H1>
-                    <Description>哈喽！我是李成 (@lee)，一名 web developer 开发者。专注于前端开发。</Description>
+                    <Description>哈喽！我是李成 (@Jason Li)，一名 web developer 开发者。专注于前端开发。</Description>
                     <Hr />
                     <UL>
                         <LI>

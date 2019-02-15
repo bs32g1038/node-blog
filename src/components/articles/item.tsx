@@ -10,8 +10,8 @@ const ArticleItem = styled.li`
     border-bottom: 1px solid rgba(178,186,194,.15);
     padding: 0.2rem 0;
     ${media.phone`
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
     `};
 `;
 

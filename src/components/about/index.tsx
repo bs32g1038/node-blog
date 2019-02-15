@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import siteInfo from '../../config/site-info';
+import media from '../../utils/media';
 
 const AboutDiv = styled.div`
     display: flex;
@@ -26,6 +28,9 @@ const AboutDiv = styled.div`
                 color: #31AEFB;
                 font-size: 12px;
             }
+            ${media.phone`
+                display: none;
+            `};
         }
         .person-info {
             flex: 1 0 auto;
@@ -47,11 +52,25 @@ const AboutDiv = styled.div`
                 height: 90px;
                 border-radius: 2px;
             }
+            ${media.phone`
+                flex: auto;
+                text-align: left;
+                img{
+                    width: 70px;
+                    height: 70px;
+                }
+                h4{
+                    font-size: 12px;
+                }
+            `};
         }
     }
     .about-main {
         display: flex;
         flex-direction: column;
+        ${media.phone`
+            padding-left: 8px;
+        `};
     }
     .about-main-item {
         flex: 1 0 auto;
@@ -82,7 +101,7 @@ export default class About extends React.Component<any, any> {
     public render() {
         return (
             <AboutDiv className="about">
-                <Helmet title="lizc-关于"></Helmet>
+                <Helmet title={siteInfo.name + '-关于'}></Helmet>
                 <h1 className="resume">个人简历</h1>
                 <div className="about-header">
                     <div className="person-base">
@@ -101,6 +120,7 @@ export default class About extends React.Component<any, any> {
                     </ul>
                     <div className="person-img">
                         <img src="/public/images/avatar.png" alt="头像" />
+                        <h4 className="aim">求职目标：<br />web前端工程师</h4>
                     </div>
                 </div>
                 <div className="about-main">

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/guestbooks';
 import { media, rem } from '../../utils/helper';
 import CommentForm from '../comment-form';
@@ -50,7 +51,7 @@ class Guestbooks extends React.Component<any, any> {
         });
         return (
             <GuestbooksWrap>
-                <Helmet title="lizc-留言板"></Helmet>
+                <Helmet title={siteInfo.name + '-留言板'}></Helmet>
                 <Title>--留言板--</Title>
                 <Main>
                     {

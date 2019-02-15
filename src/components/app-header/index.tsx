@@ -134,8 +134,8 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
         return (
             <Container>
                 <MainWrap>
-                    <HomeNav to="/" title="Lizc的个人网站">
-                        <H1>Lizc的个人日志</H1>
+                    <HomeNav to="/" title={siteInfo.name}>
+                        <H1>{siteInfo.name}</H1>
                     </HomeNav>
                     <Menu>
                         <i className={this.state.isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => this.showMenu()}></i>
