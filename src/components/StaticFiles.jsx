@@ -68,7 +68,7 @@ export default class Articles extends Component {
                             type="primary"
                             size="small"
                             title="复制"
-                            data-clipboard-text={record.filePath + '/' + record.fileName}
+                            data-clipboard-text={record.filePath + record.fileName}
                             className="btnCopy"
                         >
                             复制url
