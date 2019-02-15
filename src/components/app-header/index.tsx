@@ -96,6 +96,16 @@ const UL = styled.ul`
 const LI = styled.li`
     display: inline-block;
     line-height: 1em;
+    .rss {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 10px 10px;
+        border-radius: 30px;
+        letter-spacing: 1px;
+        color: #555;
+    }
 `;
 
 const ATag = styled(Link)`
@@ -165,7 +175,7 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                             </LI>
                             <span> · </span>
                             <LI>
-                                <a href="/blog/rss" rel="noopener noreferrer" target="_blank">
+                                <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
                                     <i className="fa fa-rss fa-fw"></i>Rss
                                 </a>
                             </LI>
