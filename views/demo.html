@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="李志成的个人网站，个人博客，代码展示，demo展示，代码分享" name="Keywords">
+    <meta content="李志成的博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！" name="description">
     <%-code.header %>
     <title>
-        <%= title %>-demo展示
+        <%= title %>-李志成的个人网站
     </title>
     <style>
         /* Paraíso Comment */
@@ -201,6 +203,8 @@
                 <%- hljs('html', code.html) -%>
                 <h5>CSS代码：</h5>
                 <%- hljs('css', code.css) -%>
+                <h5>javascript代码：</h5>
+                <%- hljs('javascript', code.javascript) -%>
             </div>
         </div>
     </div>
