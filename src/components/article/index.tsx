@@ -5,8 +5,10 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import siteInfo from '../../config/site-info';
 import { State } from '../../redux/reducers/article';
+import media from '../../utils/media';
 import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
+import toc from '../../utils/toc';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
 
@@ -64,12 +66,94 @@ const Copyright = styled.ul`
     }
 `;
 
+const Toc = styled.div`
+    position: absolute;
+    left: 50%;
+    margin-left: 340px;
+    top: 200px;
+    font-size: 13px;
+    &.fixed{
+        position: fixed;
+        top: 20px;
+        overflow-y: auto;
+        bottom: 0
+    }
+    .toc-title {
+        font-size: 16px;
+    }
+    ol{
+        line-height: 1.8em;
+        list-style: none;
+        padding-left: 10px;
+    }
+    a {
+        color: #888;
+        text-decoration: none
+    }
+    ${media.phone`
+        display: none;
+    `};
+`;
+
 class Article extends Component<any, any> {
+    public componentDidMount() {
+        const Util = {
+            addClass(element: any, className: any) {
+                const classes = element.className ? element.className.split(' ') : [];
+                if (classes.indexOf(className) < 0) {
+                    classes.push(className);
+                }
+                element.className = classes.join(' ');
+                return element;
+            },
+            removeClass(element: any, className: any) {
+                const classes = element.className ? element.className.split(' ') : [];
+                const index = classes.indexOf(className);
+                if (index > -1) {
+                    classes.splice(index, 1);
+                }
+                element.className = classes.join(' ');
+                return element;
+            }
+        };
+        const t = toc();
+        let scrollTop = 0;
+        const $html = document.documentElement;
+        const $body = document.body;
+        const $toc: any = document.getElementById('toc');
+        const objE = document.createElement('div');
+        objE.innerHTML = t;
+        let $cs: any = window.getComputedStyle($toc);
+        let tocHeight = parseInt($cs.height, 10);
+        let winHeight = document.documentElement.clientHeight;
+        if (tocHeight + 20 > winHeight) {
+            return;
+        }
+        scrollTop = $body.scrollTop || $html.scrollTop;
+        scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
+        // toc and backTop
+        window.onscroll = () => {
+            scrollTop = $body.scrollTop || $html.scrollTop;
+            if ($toc) {
+                $cs = window.getComputedStyle($toc);
+                tocHeight = parseInt($cs.height, 10);
+                winHeight = document.documentElement.clientHeight;
+                // if (tocHeight + 20 > winHeight) {
+                //     return;
+                // }
+                scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
+            }
+        };
+        return $toc.appendChild(objE);
+    }
     public render() {
         const { article, comments } = this.props._DB;
         return (
             <ArticleWrap>
                 <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
+                <Toc id="toc">
+                    <strong className="toc-title">文章目录</strong>
+                </Toc>
                 <ArticleItem>
                     <ArticleHeader>
                         <Title>

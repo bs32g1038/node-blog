@@ -54,7 +54,6 @@ export const ssr = (req: express.Request, res: express.Response) => {
             </Provider> as any
         );
         const helmet = Helmet.renderStatic();
-        console.log(helmet.title.toString());
         const finalState = store.getState();
         res.send(
             `<!doctype html>
