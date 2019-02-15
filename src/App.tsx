@@ -53,7 +53,6 @@ class App extends React.Component<any, any> {
     }
 
     public componentDidUpdate(prevProps: any, prevState: any) {
-        console.log(this.state.previousLocation);
         if ((this.state.previousLocation.pathname !== this.props.location.pathname || this.state.previousLocation.search !== this.props.location.search) && !this.state.isFetching) {
             this.setState({
                 isFetching: true

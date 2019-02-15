@@ -45,7 +45,7 @@ function tocHelper(options: any = {}) {
     for (let i = firstLevel - 1; i < lastLevel; i++) {
         result += '</li></ol>';
     }
-    if (result === '<ol class="toc"></ol>') {
+    if (result === '<ol class="toc"></li></ol>') {
         return '';
     }
     return result;

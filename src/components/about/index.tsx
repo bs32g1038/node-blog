@@ -145,14 +145,12 @@ export default class About extends React.Component<any, any> {
                             <li>
                                 <h4>项目：个人博客开发</h4>
                                 <p>项目简介： 项目简介：一个类博客的应用，主要负责博客的界面ui设计，后台数据交换逻辑实现，项目文件架构，迭代开发</p>
-                                <p>
-                                    <ul className="person-info">
-                                        <li>主要是使用react,nodejs等前端web技术进行网站的开发</li>
-                                        <li>使用webpack构建前后端</li>
-                                        <li>后端采用nodejs express mongodb。利用mongoose进行模型规划</li>
-                                        <li>项目开源代码: https://github.com/bs32g1038/node-blog</li>
-                                    </ul>
-                                </p>
+                                <ul className="person-info">
+                                    <li>主要是使用react,nodejs等前端web技术进行网站的开发</li>
+                                    <li>使用webpack构建前后端</li>
+                                    <li>后端采用nodejs express mongodb。利用mongoose进行模型规划</li>
+                                    <li>项目开源代码: https://github.com/bs32g1038/node-blog</li>
+                                </ul>
                             </li>
                             <li>
                                 <h4>项目：职业招聘系统前端开发</h4>
