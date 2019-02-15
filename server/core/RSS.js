@@ -40,7 +40,7 @@ class RSSController {
                 link: config.rss.link + '/articles/' + article._id,
                 guid: config.rss.link + '/articles/' + article._id,
                 description: markdown.render(article.content),
-                author: config.site.author.email,
+                author: config.user.email,
                 pubDate: article.createdAt
             });
         });

@@ -22,7 +22,7 @@ module.exports = {
         location: '广东 广州'
     },
     rss: {
-        title: 'Lizc：个人技术博客',
+        title: '李志成的个人网站',
         link: 'http://www.lizc.me',
         language: 'zh-cn',
         description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！',
