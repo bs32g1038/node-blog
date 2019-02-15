@@ -52,6 +52,9 @@ const AboutDiv = styled.div`
                 height: 90px;
                 border-radius: 2px;
             }
+            h4{
+                display: none;
+            }
             ${media.phone`
                 flex: auto;
                 text-align: left;
@@ -61,6 +64,7 @@ const AboutDiv = styled.div`
                 }
                 h4{
                     font-size: 12px;
+                    display: block;
                 }
             `};
         }
