@@ -15,7 +15,8 @@ import Links from './components/Links';
 import LinkEdit from './components/LinkEdit';
 import Demos from './components/Demos';
 import DemoEdit from './components/DemoEdit';
-
+import StaticFiles from './components/StaticFiles';
+import Medias from './components/Medias';
 import AppSideMenu from './components/AppSideMenu';
 
 import config from './config';
@@ -55,6 +56,8 @@ class App extends Component {
                                 <Route exact path="/blog/admin/demos" component={Demos} />
                                 <Route exact path="/blog/admin/demos/edit" component={DemoEdit} />
                                 <Route exact path="/blog/admin/demos/edit/:id" component={DemoEdit} />
+                                <Route exact path="/blog/admin/demos/static-files" component={StaticFiles} />
+                                <Route exact path="/blog/admin/medias" component={Medias} />
                             </Switch>
                     )} />
                     <AppFooter />

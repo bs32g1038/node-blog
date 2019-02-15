@@ -4,6 +4,7 @@
   "description": "A simple and whole react blog admin",
   "license": "MIT",
   "dependencies": {
+    "clipboard": "^2.0.4",
     "express": "^4.16.4"
   },
   "devDependencies": {

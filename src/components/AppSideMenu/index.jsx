@@ -33,6 +33,12 @@ class AppSideMenu extends Component {
                 defaultOpenKeys = ['SubMenu-demo'];
             }
         }));
+        ['/blog/admin/medias'].some(((path) => {
+            if (location.pathname.indexOf(path) >= 0) {
+                defaultSelectedKeys = ['8'];
+                defaultOpenKeys = ['SubMenu-medias'];
+            }
+        }));
         const { siteInfo } = cofig;
         return (
             <div className="app-side-menu">
@@ -57,6 +63,10 @@ class AppSideMenu extends Component {
                     </SubMenu>
                     <SubMenu key="SubMenu-demos" title={<span><i className="fa fa-codepen fa-fw"></i><span>代码管理</span></span>}>
                         <Menu.Item key="6"><Link to="/blog/admin/demos"><i className="fa fa-globe fa-fw"></i>代码demo</Link></Menu.Item>
+                        <Menu.Item key="7"><Link to="/blog/admin/demos/static-files"><i className="fa fa-folder-open fa-fw"></i>静态文件</Link></Menu.Item>
+                    </SubMenu>
+                    <SubMenu key="SubMenu-medias" title={<span><i className="fa fa-trophy fa-fw"></i><span>媒体管理</span></span>}>
+                        <Menu.Item key="8"><Link to="/blog/admin/medias"><i className="fa fa-globe fa-fw"></i>图片列表</Link></Menu.Item>
                     </SubMenu>
                     {/* <SubMenu key="SubMenu-chatroom" title={<span><i className="fa fa-comments fa-fw"></i><span>聊天室管理</span></span>}>
                         <Menu.Item key="6"><Link to="/blog/admin/chatroom/groups"><i className="fa fa-institution fa-fw"></i>房间管理</Link></Menu.Item>

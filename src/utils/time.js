@@ -8,6 +8,6 @@ export const timeAgo = function (timestamp) {
     return dayjs(timestamp).fromNow();
 };
 
-export const parseTime = function (timestamp) {
-    return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+export const parseTime = function (timestamp, format) {
+    return dayjs(timestamp).format(format || 'YYYY-MM-DD HH:mm:ss');
 };

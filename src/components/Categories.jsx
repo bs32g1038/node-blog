@@ -67,6 +67,7 @@ export default class Articles extends Component {
         axios
             .get('/categories?' + queryString.stringify(query))
             .then((res) => {
+                res.data[0].key = res.data[0]._id;
                 this.setState({ categories: res.data });
             });
     }
@@ -79,6 +80,16 @@ export default class Articles extends Component {
         this.fetchData(this.props.location);
     }
     render() {
+        console.log(this.state.categories);
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            },
+            getCheckboxProps: record => ({
+                disabled: record.key === 'Disabled User', // Column configuration not to be checked
+                name: record.name,
+            }),
+        };
         return (
             <div className="main-content">
                 <div className="manager-tip">
@@ -100,7 +111,7 @@ export default class Articles extends Component {
                 <div className="table-wrapper">
                     <Table
                         rowKey={record => record._id}
-                        rowSelection={{}}
+                        rowSelection={rowSelection}
                         columns={this.getTableColums()}
                         dataSource={this.state.categories}
                     />

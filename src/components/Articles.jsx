@@ -9,7 +9,9 @@ class Articles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: []
+            articles: [],
+            pagination: {},
+            loading: false,
         };
     }
     getTableColums() {
@@ -141,6 +143,9 @@ class Articles extends Component {
                         rowSelection={{}}
                         columns={this.getTableColums()}
                         dataSource={this.state.articles}
+                        // pagination={this.state.pagination}
+                        // loading={this.state.loading}
+                        // onChange={this.handleTableChange}
                     />
                 </div>
             </div>
