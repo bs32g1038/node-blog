@@ -15,13 +15,16 @@ export default class Comments extends Component {
         return [
             {
                 title: '昵称',
-                dataIndex: 'nickName'
+                dataIndex: 'nickName',
+                width: 90
             }, {
                 title: 'email',
-                dataIndex: 'email'
+                dataIndex: 'email',
+                width: 100
             }, {
                 title: '创建时间',
                 dataIndex: 'createdAt',
+                width: 100,
                 render: (text, record) => (parseTime(record.createdAt))
             }, {
                 title: '内容',
@@ -29,11 +32,8 @@ export default class Comments extends Component {
             }, {
                 title: '文章标题',
                 dataIndex: 'article',
+                width: 120,
                 render: (text, record) => (record.article.title)
-            }, {
-                title: '回复的人',
-                dataIndex: 'reply',
-                render: (text, record) => (record.reply && record.reply.nickName)
             }, {
                 title: '操作',
                 key: 'operation',
@@ -90,6 +90,7 @@ export default class Comments extends Component {
         this.fetchData(this.props.location);
     }
     render() {
+        const expandedRowKeys = this.state.comments.map((item) => item._id);
         return (
             <div className="main-content">
                 <div className="manager-tip">
@@ -108,6 +109,8 @@ export default class Comments extends Component {
                         rowSelection={{}}
                         columns={this.getTableColums()}
                         dataSource={this.state.comments}
+                        expandedRowRender={record => (record.reply && <p style={{ margin: 0 }}><span style={{ color: 'rgb(234, 102, 102)' }}>回复给@({record.reply.nickName})</span>《{record.reply.content}》</p>)}
+                        expandedRowKeys={expandedRowKeys}
                     />
                 </div>
             </div>

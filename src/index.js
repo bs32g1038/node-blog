@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './utils/history';
-
 import App from './App';
 import Login from './components/Login';
 class Main extends Component {

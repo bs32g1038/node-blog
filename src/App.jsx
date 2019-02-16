@@ -15,8 +15,8 @@ import Links from './components/Links';
 import LinkEdit from './components/LinkEdit';
 import Demos from './components/Demos';
 import DemoEdit from './components/DemoEdit';
-import StaticFiles from './components/StaticFiles';
-import Medias from './components/Medias';
+const StaticFiles = asyncComponent(() => import('./components/StaticFiles'));
+const Medias = asyncComponent(() => import('./components/Medias'));
 import AppSideMenu from './components/AppSideMenu';
 
 import config from './config';

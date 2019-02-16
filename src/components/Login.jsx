@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from '../utils/axios';
 import config from '../config';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Alert } from 'antd';
 const FormItem = Form.Item;
 
 class UserLogin extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            firstLoginTip: ''
+        };
     }
     handleLogin(e) {
         e.preventDefault();
@@ -22,6 +25,13 @@ class UserLogin extends Component {
             }
         });
     }
+    componentDidMount() {
+        axios.get('/getFirstLoginInfo').then((res) => {
+            this.setState({
+                firstLoginTip: res.data.msg
+            });
+        });
+    }
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -32,6 +42,7 @@ class UserLogin extends Component {
                         <div className="sign-in-head">
                             <h3 className="sign-in-title">后台登陆</h3>
                         </div>
+                        {this.state.firstLoginTip && <Alert message={this.state.firstLoginTip} type="warning" style={{ margin: '0 20px 20px 20px' }} />}
                         <Form onSubmit={(e) => this.handleLogin(e)} className="login-form">
                             <FormItem
                                 label="账号："
