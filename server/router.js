@@ -9,7 +9,9 @@ const RSS = require('./core/RSS');
 const uploadApi = require('./core/upload');
 const fileApi = require('./core/file');
 const mediaApi = require('./core/medias');
+const RateLimit = require('./middlewares/rate-limit');
 const auth = require('./utils/auth');
+const config = require('./config');
 const express = require('express');
 const router = express.Router();
 
@@ -42,7 +44,15 @@ router.get('/api/comments', commentApi.getComments);
 
 router.get('/api/comments/:_id', commentApi.getComment);
 
-router.post('/api/comments', commentApi.createComment);
+const commentLimit = new RateLimit({
+    name: 'comment',
+    errorMsg: '你今天已经到达最大的评论次数，谢谢你对本博客的支持！',
+    limitCount: config.max_comment_per_day,
+    expired: 24 * 60 * 60,
+    showJson: true
+});
+
+router.post('/api/comments', commentLimit, commentApi.createComment);
 
 router.delete('/api/comments/:_id', authMiddlware, commentApi.deleteComment);
 
@@ -66,7 +76,15 @@ router.get('/api/guestbooks', guestbookApi.getGuestbooks);
 
 router.get('/api/guestbooks/:_id', guestbookApi.getGuestbook);
 
-router.post('/api/guestbooks', guestbookApi.createGuestbook);
+const guestbookLimit = new RateLimit({
+    name: 'guestbook',
+    errorMsg: '你今天已经到达最大的留言次数，谢谢你对本博客的支持！',
+    limitCount: config.max_guestbook_per_day,
+    expired: 24 * 60 * 60,
+    showJson: true
+});
+
+router.post('/api/guestbooks', guestbookLimit, guestbookApi.createGuestbook);
 
 router.put('/api/guestbooks/:_id', authMiddlware, guestbookApi.updateGuestbook);
 
@@ -118,6 +136,8 @@ router.delete('/api/medias/:_id', authMiddlware, mediaApi.deleteMedia);
  * 登陆api
  */
 router.post('/api/login', LoginApi.login);
+
+router.get('/api/getFirstLoginInfo', LoginApi.getFirstLoginInfo);
 
 /**
  * 图片api

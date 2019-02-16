@@ -15,8 +15,6 @@ module.exports = {
     },
     token_secret_key: 'NODEBLOG/bs32g1038@163.com/TOKEN',
     user: {
-        account: 'bs32g1038@163.com',
-        password: 'lia8651047',
         nickName: '冷夜流星',
         email: 'bs32g1038@163.com',
         location: '广东 广州'
@@ -28,5 +26,9 @@ module.exports = {
         description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！',
         //最多获取的RSS Item数量
         max_rss_items: 50
-    }
+    },
+    // 每个访问者一天可以发的评论数
+    max_comment_per_day: 100,
+    // 每个访问者一天可以发的留言数
+    max_guestbook_per_day: 100,
 };

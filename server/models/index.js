@@ -6,3 +6,4 @@ exports.Link = require("./link");
 exports.Demo = require("./demo");
 exports.File = require("./file");
 exports.Media = require("./media");
+exports.User = require("./user");
