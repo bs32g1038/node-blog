@@ -188,6 +188,8 @@ const EmoticonLi = styled.li`
     }
 `;
 
+const USER_COMMENT_INFO = 'user-comment-info';
+
 interface Props {
     url: string;
     replyId?: string;
@@ -227,6 +229,16 @@ class CommentForm extends Component<Props, any> {
         });
     }
     public componentDidMount() {
+        const info = localStorage.getItem(USER_COMMENT_INFO);
+        if (info) {
+            const $nickName: any = document.getElementById('nickName');
+            const $email: any = document.getElementById('email');
+            const $website: any = document.getElementById('website');
+            const data: any = JSON.parse(info);
+            $nickName.value = data.nickName;
+            $email.value = data.email;
+            $website.value = data.website;
+        }
         const $content: any = ReactDOM.findDOMNode(this.refs.content);
         $content.oninput = () => {
             if (this.state.isShowPreview) {
@@ -431,6 +443,13 @@ class CommentForm extends Component<Props, any> {
                 isValidationErrors_content: true
             }, lay);
         }
+
+        localStorage.setItem(USER_COMMENT_INFO, JSON.stringify({
+            nickName: data.nickName,
+            email: data.email,
+            website: data.website
+        }));
+
         if (this.props.replyId) {
             Object.assign(data, {
                 reply: this.props.replyId

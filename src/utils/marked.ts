@@ -16,8 +16,8 @@ renderer.paragraph = (text: any, level: any) => {
     });
 };
 
-renderer.link = () => {
-    return '';
+renderer.link = (text: string) => {
+    return text;
 };
 
 export default (str: any) => {
