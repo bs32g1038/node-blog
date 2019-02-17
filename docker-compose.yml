@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   api:
-    build: ../node-blog
+    build: ../node-blog-api
     depends_on:
       - db
     volumes:
