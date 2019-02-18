@@ -49,7 +49,7 @@ class UploadApi {
             if (!fs.existsSync(basePath)) {
                 fs.mkdirSync(basePath);
             }
-            sharpImg.toFile(basePath + '/' + fileName).then(async (info) => {
+            return sharpImg.toFile(basePath + '/' + fileName).then(async (info) => {
                 const file = await models.Media.create({
                     originalName,
                     name,
