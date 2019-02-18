@@ -1,4 +1,5 @@
-const cache = require('lru-cache')();
+const LRU = require('lru-cache');
+const cache = new LRU();
 let SEPARATOR = '☆@☆';
 
 function RateLimit(options = {}) {
