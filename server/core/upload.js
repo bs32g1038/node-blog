@@ -5,10 +5,9 @@ const StoreFile = require('../middlewares/StoreFile');
 const fs = require('fs');
 const path = require('path');
 const models = require('../models');
-const shortid = require('shortid');
 const sharp = require('sharp');
 const logger = require('../utils/logger');
-
+const { md5 } = require('../utils/crypto');
 class UploadApi {
 
     // 上传单个文件
@@ -30,7 +29,7 @@ class UploadApi {
             const mimetype = req.file.mimetype;
             const size = req.file.size;
             const suffix = path.extname(req.file.originalname);
-            const name = shortid.generate();
+            const name = md5(req.file.buffer);
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
 
@@ -82,7 +81,7 @@ class UploadApi {
             const mimetype = req.file.mimetype;
             const size = req.file.size;
             const suffix = path.extname(req.file.originalname);
-            const name = shortid.generate();
+            const name = md5(req.file.buffer);
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
             try {
