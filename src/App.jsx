@@ -14,7 +14,7 @@ import CommentReply from './components/CommentReply';
 import Links from './components/Links';
 import LinkEdit from './components/LinkEdit';
 import Demos from './components/Demos';
-import DemoEdit from './components/DemoEdit';
+const DemoEdit = asyncComponent(() => import('./components/DemoEdit'));
 const StaticFiles = asyncComponent(() => import('./components/StaticFiles'));
 const Medias = asyncComponent(() => import('./components/Medias'));
 import AppSideMenu from './components/AppSideMenu';
