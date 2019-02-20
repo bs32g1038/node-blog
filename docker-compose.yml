@@ -24,7 +24,7 @@ services:
       - 3002:3002
     network_mode: "host"
   nginx:
-    build: ../blog-nginx
+    build: ../nginx
     network_mode: "host"
     depends_on:
       - api
@@ -35,7 +35,7 @@ services:
       - 443:443
     volumes:
       - ../data/logs:/var/log/nginx
-      - ../blog-nginx/certificate:/etc/nginx/certificate
+      - ../nginx/certificate:/etc/nginx/certificate
   db:
     image: mongo:4.1
     volumes:
