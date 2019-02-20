@@ -458,7 +458,8 @@ export default class App extends React.Component {
                     <div className="about-dialog-title">关于</div>
                     <div className="about-dialog-content">
                         <p>版权所有Copyright © 2016-2019 (@lee)</p>
-                        <p>博客：<a href="http://www.lizc.me" target="_blank">http://www.lizc.me</a></p>
+                        <p>博客：<a href="http://www.lizc.me" target="_blank" rel="noopener noreferrer">http://www.lizc.me</a></p>
+                        <p>github：<a href="https://github.com/bs32g1038/MusicApp" target="_blank" rel="noopener noreferrer">https://github.com/bs32g1038/MusicApp</a></p>
                         <p>版本：1.0.0</p>
                         <p>如果你觉得本项目对你有帮助，可以请作者喝杯咖啡(*^_^*)哦</p>
                         <p>
