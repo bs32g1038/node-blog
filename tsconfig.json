@@ -20,7 +20,7 @@
     "strict": true,
     "pretty": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2016"
+    "target": "es5"
   },
   "exclude": [
     "node_modules",

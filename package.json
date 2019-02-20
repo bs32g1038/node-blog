@@ -37,7 +37,7 @@
     "http-proxy-middleware": "^0.19.1",
     "marked": "^0.6.0",
     "polished": "^3.0.0",
-    "query-string": "^6.2.0",
+    "query-string": "^5.1.1",
     "razzle": "^2.4.1",
     "razzle-plugin-typescript": "^2.4.1",
     "react": "^16.8.2",
