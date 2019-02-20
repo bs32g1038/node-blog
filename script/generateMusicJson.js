@@ -66,7 +66,7 @@ const getLyric = async (id) => {
 
 (async () => {
 
-    const sheet = await playlist(63531287);
+    const sheet = await playlist(368529707);
 
     /**
      * 生成歌曲列表

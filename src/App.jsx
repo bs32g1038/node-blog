@@ -446,8 +446,10 @@ export default class App extends React.Component {
         /**
          * 广告
          */
-        lyric.push(<p className="MusicLyric-item" key="none-word">该歌曲暂无歌词</p>);
-        lyric.push(<p className="MusicLyric-item" key="www.lizc.me">www.lizc.me</p>);
+        if(lyric.length <= 0){
+            lyric.push(<p className="MusicLyric-item" key="none-word">该歌曲暂无歌词</p>);
+            lyric.push(<p className="MusicLyric-item" key="www.lizc.me">www.lizc.me</p>);
+        }
         return (
             <div className="music-wrap">
                 <div className="bg-mask"></div>
