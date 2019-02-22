@@ -45,15 +45,16 @@ class AboutApi {
     static async getUserData(req, res, next) {
         let info = cache.get(config.github_secret_key);
         if (!info) {
-            const userInfo = await this.getUserInfo(req, res, next);
+            const result = await AboutApi.getUserInfo(req, res, next);
             const username = req.params.username;
             let obj = {};
-            obj.userInfo = userInfo;
-            let results = await Promise.all(promiseQueue.map(item => item(username, userInfo.createdAt)));
+            obj.userInfo = result.user;
+            let results = await Promise.all(promiseQueue.map(item => item(username, obj.userInfo.createdAt)));
             for (let i in results) {
                 obj[getLists[i]] = results[i];
             }
             cache.set(config.github_secret_key, JSON.stringify(obj), 1000 * 60 * 60);
+            console.log(obj);
             return res.json({
                 success: true,
                 ...obj
