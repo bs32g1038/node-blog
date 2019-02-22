@@ -9,6 +9,7 @@ const RSS = require('./core/RSS');
 const uploadApi = require('./core/upload');
 const fileApi = require('./core/file');
 const mediaApi = require('./core/medias');
+const aboutApi = require('./core/about');
 const RateLimit = require('./middlewares/rate-limit');
 const auth = require('./utils/auth');
 const config = require('./config');
@@ -150,6 +151,11 @@ router.post('/api/upload/static-files', uploadApi.uploadStaticFile);
  * RSS源生成
  */
 router.get('/blog/rss', RSS.index);
+
+/**
+ * 关于api
+ */
+router.get('/api/about/github/user-profile/:username', aboutApi.getUserData);
 
 // 导出路由
 module.exports = router;

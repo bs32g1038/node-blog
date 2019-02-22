@@ -31,4 +31,5 @@ module.exports = {
     max_comment_per_day: 100,
     // 每个访问者一天可以发的留言数
     max_guestbook_per_day: 100,
+    github_secret_key: 'Github/bs32g1038@163.com/TOKEN'
 };
