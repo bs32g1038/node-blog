@@ -17,15 +17,13 @@ const AboutDiv = styled.div`
         flex: 1 0 auto;
         display: flex;
         flex-direction: row;
-        border-bottom: 5px solid #31AEFB;
+        border-bottom: 2px solid #444;
         .person-base {
             flex: 1 0 auto;
             .name {
-                color: #31AEFB;
                 font-size: 20px;
             }
             .aim {
-                color: #31AEFB;
                 font-size: 12px;
             }
             ${media.phone`
@@ -39,9 +37,6 @@ const AboutDiv = styled.div`
             li {
                 font-size: 12px;
                 padding: 5px;
-            }
-            i {
-                color: #31AEFB;
             }
         }
         .person-img {
@@ -80,7 +75,6 @@ const AboutDiv = styled.div`
         flex: 1 0 auto;
         .about-main-title{
             flex: 0 0 auto;
-            color: #31AEFB;
             i {
                 vertical-align: text-bottom;
                 margin-left: 5px;
@@ -106,7 +100,10 @@ export default class About extends React.Component<any, any> {
         return (
             <AboutDiv className="about">
                 <Helmet title={siteInfo.name + '-关于'}></Helmet>
-                <h1 className="resume">个人简历</h1>
+                <h1 className="resume">--关于--</h1>
+                <p style={{ borderLeft: '3px solid #ccc', padding: '5px 10px', backgroundColor: '#efefef' }}>
+                    专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
+                </p>
                 <div className="about-header">
                     <div className="person-base">
                         <h2 className="name">冷夜流星</h2>
@@ -143,8 +140,8 @@ export default class About extends React.Component<any, any> {
                         <h4 className="about-main-title">项目经验<i className="fa fa-graduation-cap fa-fw"></i></h4>
                         <ul className="about-main-content">
                             <li>
-                                <h4>项目：个人博客开发</h4>
-                                <p>项目简介： 项目简介：一个类博客的应用，主要负责博客的界面ui设计，后台数据交换逻辑实现，项目文件架构，迭代开发</p>
+                                <h4>项目：博客网站开发</h4>
+                                <p>项目简介：一个类博客的应用，主要负责博客的界面ui设计，后台数据交换逻辑实现，项目文件架构，迭代开发</p>
                                 <ul className="person-info">
                                     <li>主要是使用react,nodejs等前端web技术进行网站的开发</li>
                                     <li>使用webpack构建前后端</li>
