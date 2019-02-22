@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react';
-const CalendarHeatmap = React.lazy(() => import('react-calendar-heatmap'));
-const PieChart = React.lazy(() => import('./PieChart'));
+import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
+import PieChart from './PieChart';
 
 const AboutDiv = styled.div`
     display: flex;
