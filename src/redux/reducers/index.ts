@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import about from './about';
 import article from './article';
 import articles from './articles';
 import categories from './categories';
@@ -12,5 +13,6 @@ export default combineReducers({
     guestbooks,
     links,
     categories,
+    about,
     $G: global
 });

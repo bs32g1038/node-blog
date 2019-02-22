@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import React from 'react';
+const CalendarHeatmap = React.lazy(() => import('react-calendar-heatmap'));
+const PieChart = React.lazy(() => import('./PieChart'));
+import 'react-calendar-heatmap/dist/styles.css';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 
@@ -95,8 +100,24 @@ const AboutDiv = styled.div`
     }
 `;
 
-export default class About extends React.Component<any, any> {
+const today = new Date();
+
+class About extends React.Component<any, any> {
     public render() {
+        const userProfile = this.props._DB.profile;
+        let values = [];
+        const userCommits = userProfile.userCommits;
+        const userRepos = userProfile.userRepos;
+        const totalContributionLastYear = userProfile.userCommits && userProfile.userCommits.total || 0;
+        if (userProfile && userProfile.userCommits && userProfile.userCommits.contribution) {
+            values = userProfile.userCommits.contribution.map((item: any) => {
+                return {
+                    year: item.year,
+                    date: item.year + '-' + item.month,
+                    count: item.count,
+                };
+            });
+        }
         return (
             <AboutDiv className="about">
                 <Helmet title={siteInfo.name + '-关于'}></Helmet>
@@ -123,6 +144,34 @@ export default class About extends React.Component<any, any> {
                         <img src="/public/images/avatar.png" alt="头像" />
                         <h4 className="aim">求职目标：<br />web前端工程师</h4>
                     </div>
+                </div>
+                <p>
+                    {totalContributionLastYear} contributions in the last year
+                </p>
+                <CalendarHeatmap
+                    startDate={(values[0] && values[0].year + '-1-1') || (new Date().getFullYear()) - 1 + '-1-1'}
+                    endDate={today}
+                    values={values}
+                    classForValue={(value: any) => {
+                        if (!value) {
+                            return 'color-empty';
+                        }
+                        return `color-github-${value.count}`;
+                    }}
+                    tooltipDataAttrs={(value: any) => {
+                        if (!value.date) {
+                            return {};
+                        }
+                        return {
+                            'data-tip': `${value.date} has count: ${value.count}`,
+                        };
+                    }}
+                    showWeekdayLabels={true}
+                />
+                <ReactTooltip></ReactTooltip>
+                <div style={{ display: 'flex' }}>
+                    <h3 style={{ minWidth: 140 }}>Stars per Repo(top 12)</h3>
+                    <PieChart userRepos={userRepos}></PieChart>
                 </div>
                 <div className="about-main">
                     <div className="about-main-item">
@@ -188,3 +237,9 @@ export default class About extends React.Component<any, any> {
         );
     }
 }
+
+export default connect(
+    (state: any) => ({
+        _DB: state.about
+    })
+)(About as any);

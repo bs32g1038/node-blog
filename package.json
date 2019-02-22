@@ -9,6 +9,7 @@
     "start:prod": "cross-env NODE_ENV=production node ./build/server.js"
   },
   "dependencies": {
+    "@types/chart.js": "^2.7.45",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "react-helmet": "^5.2.0"
@@ -30,6 +31,7 @@
     "@types/validator": "^10.9.0",
     "@types/webpack-env": "^1.13.7",
     "axios": "^0.18.0",
+    "chart.js": "^2.7.3",
     "dayjs": "^1.8.6",
     "emotion": "^10.0.7",
     "emotion-server": "^10.0.7",
@@ -41,10 +43,13 @@
     "razzle": "^2.4.1",
     "razzle-plugin-typescript": "^2.4.1",
     "react": "^16.8.2",
+    "react-calendar-heatmap": "^1.8.0",
+    "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.0",
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.3.1",
+    "react-tooltip": "^3.9.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "serialize-javascript": "^1.6.1",

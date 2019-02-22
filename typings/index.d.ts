@@ -22,3 +22,13 @@ declare module 'serialize-javascript' {
     const func: (_: any) => void;
     export default func;
 }
+
+declare module 'react-calendar-heatmap' {
+    const content: any;
+    export default content;
+}
+
+declare module 'react-tooltip' {
+    const content: any;
+    export default content;
+}

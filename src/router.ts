@@ -5,6 +5,7 @@ import Articles from './components/articles';
 import FriendlyLinks from './components/friendly-links';
 import Guestbooks from './components/guestbooks';
 import Home from './components/home';
+import { fetchUserProfile } from './redux/reducers/about';
 import { fetchArticle } from './redux/reducers/article';
 import { fetchArticles, fetchRecentArticles } from './redux/reducers/articles';
 import { fetchCategories } from './redux/reducers/categories';
@@ -75,6 +76,9 @@ const routes: any = [
                 path: '/blog/links'
             },
             {
+                asyncData: (store: any, route: any) => {
+                    return store.dispatch(fetchUserProfile('bs32g1038'));
+                },
                 component: About,
                 exact: true,
                 path: '/blog/about'
