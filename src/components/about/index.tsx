@@ -52,7 +52,7 @@ const AboutDiv = styled.div`
                 height: 90px;
                 border-radius: 2px;
             }
-            h4{
+            h3{
                 display: none;
             }
             ${media.phone`
@@ -62,7 +62,7 @@ const AboutDiv = styled.div`
                     width: 70px;
                     height: 70px;
                 }
-                h4{
+                h3{
                     font-size: 12px;
                     display: block;
                 }
@@ -88,15 +88,98 @@ const AboutDiv = styled.div`
         .about-main-content{
             font-size: 14px;
             line-height: 26px;
-            padding: 10px;
+            padding: 10px 10px 0;
             margin: 0;
-            h4{
+            list-style: circle;
+            h3{
                 margin:  0;
+            }
+            h4{
+                margin: 0;
             }
             p{
                 margin: 5px 0;
             }
         }
+    }
+
+    .pie-chart{
+        display: flex;
+        ${media.phone`
+            display: block;
+        `};
+    }
+
+    .skills-list {
+        display: flex;
+    }
+
+    .skills-list ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        flex: 1 0 auto;
+        width: 50%;
+    }
+
+    .skills-list ul li .progress {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 4px;
+        background: #eee;
+    }
+
+    .skills-list ul li .progress .percentage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0%;
+        height: 100%;
+        background: #2eca7f;
+        transition: all 0.6s ease 0s;
+        border-radius: 4px;
+        &.html{
+            background-color: #e892bb;
+        }
+        &.css{
+            background-color: #ac97e0;
+        }
+        &.javascript{
+            background-color: #e0b176;
+        }
+        &.nodejs{
+            background-color: #4cf3ff;
+        }
+        &.mongodb{
+            background-color: #709441;
+        }
+        &.react{
+            background-color: #7fc8f8;
+        }
+        &.vue{
+            background-color: #51b1ef;
+        }
+    }
+
+    .skills-list ul li .progress {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 8px;
+        background: #eee;
+        border-radius: 4px;
+    }
+
+    .skills-list ul li {
+        position: relative;
+        padding: 15px 10px 0;
+    }
+
+    .skills-list ul li .name {
+        margin: 0 0 11px 0;
+        line-height: 16px;
+        font-weight: 400;
     }
 `;
 
@@ -128,7 +211,7 @@ class About extends React.Component<any, any> {
                 <div className="about-header">
                     <div className="person-base">
                         <h2 className="name">冷夜流星</h2>
-                        <h4 className="aim">求职目标：web前端工程师</h4>
+                        <h3 className="aim">求职目标：web前端工程师</h3>
                     </div>
                     <ul className="person-info">
                         <li><i className="fa fa-user fa-fw"></i>2*岁</li>
@@ -142,7 +225,7 @@ class About extends React.Component<any, any> {
                     </ul>
                     <div className="person-img">
                         <img src="/public/images/avatar.png" alt="头像" />
-                        <h4 className="aim">求职目标：<br />web前端工程师</h4>
+                        <h3 className="aim">求职目标：<br />web前端工程师</h3>
                     </div>
                 </div>
                 <p>
@@ -169,13 +252,13 @@ class About extends React.Component<any, any> {
                     showWeekdayLabels={true}
                 />
                 <ReactTooltip></ReactTooltip>
-                <div style={{ display: 'flex' }}>
+                <div className="pie-chart">
                     <h3 style={{ minWidth: 140 }}>Stars per Repo(top 12)</h3>
                     <PieChart userRepos={userRepos}></PieChart>
                 </div>
                 <div className="about-main">
                     <div className="about-main-item">
-                        <h4 className="about-main-title">专业技能<i className="fa fa-leaf"></i></h4>
+                        <h3 className="about-main-title" style={{ marginBottom: 0 }}>专业技能<i className="fa fa-leaf"></i></h3>
                         <div className="about-main-content">
                             <li>了解 photoshop 软件以及 axurepr 原型界面软件；</li>
                             <li>能开发符合w3c规范的前台网页、对 div+css 盒子模型布局有深刻的理解; 熟悉掌握 javascript 中 dom 编程
@@ -184,9 +267,66 @@ class About extends React.Component<any, any> {
                             <li>熟悉 html5 语义化标签编程和 css3 结构选择器和动画并加以使用；</li>
                             <li>了解git操作，熟悉nodejs与npm生态化开发, docker基本使用。</li>
                         </div>
+                        <div className="skills-list">
+                            <ul>
+                                <li className="border-line-h">
+                                    <div className="name">HTML5</div>
+                                    <div className="progress">
+                                        <div className="percentage html" style={{ width: '80%' }}></div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">CSS3</div>
+                                    <div className="progress">
+                                        <div className="percentage css" style={{ width: '85%' }}></div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">Mongodb</div>
+                                    <div className="progress">
+                                        <div className="percentage mongodb" style={{ width: '75%' }}></div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">Vue/Vue-router/Vuex</div>
+                                    <div className="progress">
+                                        <div className="percentage vue" style={{ width: '80%' }}></div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li className="border-line-h">
+                                    <div className="name">Javascript</div>
+                                    <div className="progress">
+                                        <div className="percentage javascript" style={{ width: '85%' }}></div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">NODEJS</div>
+                                    <div className="progress">
+                                        <div className="percentage nodejs" style={{ width: '77%' }}></div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">Git</div>
+                                    <div className="progress">
+                                        <div className="percentage git" style={{ width: '70%' }}>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="border-line-h">
+                                    <div className="name">React/React-router/Redux</div>
+                                    <div className="progress">
+                                        <div className="percentage react" style={{ width: '82%' }}></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="clear">
+                        </div>
                     </div>
                     <div className="about-main-item">
-                        <h4 className="about-main-title">项目经验<i className="fa fa-graduation-cap fa-fw"></i></h4>
+                        <h3 className="about-main-title" style={{ marginBottom: 0 }}>项目经验<i className="fa fa-graduation-cap fa-fw"></i></h3>
                         <ul className="about-main-content">
                             <li>
                                 <h4>项目：博客网站开发</h4>
@@ -225,7 +365,7 @@ class About extends React.Component<any, any> {
                         </ul>
                     </div>
                     <div className="about-main-item">
-                        <h4 className="about-main-title">技能评价<i className="fa fa-edit fa-fw"></i></h4>
+                        <h3 className="about-main-title" style={{ marginBottom: 0, marginTop: '10px' }}>自我评价<i className="fa fa-edit fa-fw"></i></h3>
                         <div className="about-main-content">
                             <li>具有良好的团队精神，很强的责任感；</li>
                             <li>工作踏实，认真负责，能够灵活处理工作中的突发事件；</li>
