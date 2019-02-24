@@ -87,11 +87,11 @@ class App extends React.Component<any, any> {
                 w._hmt.push(['_trackPageview', this.props.location.pathname]);
             }
             this.getDataBeforeRouter(this.props.location).then((res) => {
+                this.finishProgress();
                 this.setState({
                     previousLocation: this.props.location,
                     isFetching: false
                 });
-                this.finishProgress();
             }).catch((err) => {
                 console.log('获取数据失败！', err);
             });
@@ -124,7 +124,8 @@ class App extends React.Component<any, any> {
         });
         _t = setTimeout(() => {
             this.setState({
-                isShowProgress: false
+                isShowProgress: false,
+                percent: 0
             });
         }, 500);
     }

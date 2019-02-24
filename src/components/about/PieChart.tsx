@@ -63,7 +63,6 @@ export default class PieChart extends React.Component<any, any> {
                 return item.node.name;
             });
             const o: any = { ...initData };
-            console.log(data);
             o.datasets[0].data = data;
             o.labels = labels;
             this.setState({
