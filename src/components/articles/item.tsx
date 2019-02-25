@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
-import { padding } from 'polished';
 import React, { SFC } from 'react';
 import { Link } from 'react-router-dom';
 import media from '../../utils/media';
-import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
 
 const ArticleItem = styled.li`

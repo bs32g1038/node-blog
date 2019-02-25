@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { transitions } from 'polished';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { color } from '../../config/theme';
 import media from '../../utils/media';
 
 const Container = styled.header`
