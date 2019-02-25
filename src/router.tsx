@@ -28,7 +28,7 @@ const routes: any = [
                 path: '/blog/articles/:id'
             },
             {
-                component: (props: any) => <Articles {...props} />,
+                component: (props: any) => <Articles key={props.location.key} {...props} />,
                 exact: true,
                 path: '/blog/articles'
             },

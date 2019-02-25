@@ -21,7 +21,7 @@ export default class ContentLoader extends Component<Props, any> {
     public static defaultProps: Props = {
         width: 400,
         height: 120,
-        speed: 2,
+        speed: 0,
         preserveAspectRatio: 'xMidYMid meet',
         primaryColor: '#f9f9f9',
         secondaryColor: '#ecebeb',
