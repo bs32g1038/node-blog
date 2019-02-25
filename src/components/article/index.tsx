@@ -110,19 +110,7 @@ class Article extends Component<any, any> {
         };
     }
 
-    public componentDidMount() {
-        const q = queryString.parse(location.search);
-        this.setState({
-            isLoading: true
-        });
-        Article.asyncData({ dispatch: this.props.dispatch }, {
-            query: q,
-            params: this.props.match.params
-        }).then(() => {
-            this.setState({
-                isLoading: false
-            });
-        });
+    public generateToc() {
         const Util = {
             addClass(element: any, className: any) {
                 const classes = element.className ? element.className.split(' ') : [];
@@ -173,6 +161,24 @@ class Article extends Component<any, any> {
         };
         return $toc.appendChild(objE);
     }
+
+    public componentDidMount() {
+        const q = queryString.parse(location.search);
+        this.setState({
+            isLoading: true
+        });
+        Article.asyncData({ dispatch: this.props.dispatch }, {
+            query: q,
+            params: this.props.match.params
+        }).then(() => {
+            this.setState({
+                isLoading: false
+            }, () => {
+                this.generateToc();
+            });
+        });
+    }
+    
     public render() {
         const { article, comments } = this.props._DB;
         return (
