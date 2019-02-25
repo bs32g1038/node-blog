@@ -53,8 +53,7 @@ class AboutApi {
             for (let i in results) {
                 obj[getLists[i]] = results[i];
             }
-            cache.set(config.github_secret_key, JSON.stringify(obj), 1000 * 60 * 60);
-            console.log(obj);
+            cache.set(config.github_secret_key, JSON.stringify(obj), 1000 * 60 * 60 * 12);
             return res.json({
                 success: true,
                 ...obj
