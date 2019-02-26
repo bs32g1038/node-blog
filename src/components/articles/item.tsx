@@ -3,6 +3,7 @@ import React, { SFC } from 'react';
 import { Link } from 'react-router-dom';
 import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
+import LazyLoad from '../lazy-load';
 
 const ArticleItem = styled.li`
     border-bottom: 1px solid rgba(178,186,194,.15);
@@ -95,7 +96,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     </Meta>
                 </Brief>
                 <ThumbWrap>
-                    <ThumbA style={{ backgroundImage: `url(${item.screenshot})` }}></ThumbA>
+                    <LazyLoad tag={ThumbA} style={{ backgroundImage: `url(${item.screenshot})` }}></LazyLoad>
                 </ThumbWrap>
             </Header>
             <Summary>{item.summary}</Summary>
