@@ -164,25 +164,25 @@ class Article extends Component<any, any> {
 
     public componentDidMount() {
         const { article } = this.props._DB;
-        if (article) {
-            return;
-        }
-        const q = queryString.parse(location.search);
-        this.setState({
-            isLoading: true
-        });
-        Article.asyncData({ dispatch: this.props.dispatch }, {
-            query: q,
-            params: this.props.match.params
-        }).then(() => {
+        if (article._id !== this.props.match.params.id) {
+            const q = queryString.parse(location.search);
             this.setState({
-                isLoading: false
-            }, () => {
-                this.generateToc();
+                isLoading: true
             });
-        });
+            Article.asyncData({ dispatch: this.props.dispatch }, {
+                query: q,
+                params: this.props.match.params
+            }).then(() => {
+                this.setState({
+                    isLoading: false
+                }, () => {
+                    this.generateToc();
+                });
+            });
+        }
+
     }
-    
+
     public render() {
         const { article, comments } = this.props._DB;
         return (
