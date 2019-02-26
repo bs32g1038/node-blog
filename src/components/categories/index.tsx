@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
+import { fetchCategories } from '../../redux/reducers/categories';
 import media from '../../utils/media';
 
 const CategoriesWrap = styled.ul`
@@ -30,6 +31,13 @@ const ItemLink = styled(Link)(() => ({
 }));
 
 class Categories extends Component<any, any> {
+
+    public componentDidMount() {
+        const { categories } = this.props._DB || [];
+        if (categories.length <= 0) {
+            this.props.dispatch(fetchCategories());
+        }
+    }
 
     public render() {
         const { categories } = this.props._DB || [];
