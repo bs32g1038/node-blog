@@ -462,8 +462,6 @@ class CommentForm extends Component<Props, any> {
             location.reload();
         }).catch((err) => {
             const res = err.response;
-            console.log(res.status);
-
             if (res.status === 422) {
                 this.setState({
                     errorText: '内容长度必须在1-250个字符之间！',

@@ -7,6 +7,7 @@ import { renderRoutes } from 'react-router-config';
 import AppFooter from './components/app-footer';
 import AppHeader from './components/app-header';
 import siteInfo from './config/site-info';
+import { fetchCategories } from './redux/reducers/categories';
 import media from './utils/media';
 
 const PageWrap = styled.div`
@@ -16,6 +17,10 @@ const PageWrap = styled.div`
 `;
 
 class App extends React.Component<any, any> {
+
+    public static asyncData(store: any) {
+        store.dispatch(fetchCategories());
+    }
 
     constructor(props: any) {
         super(props);

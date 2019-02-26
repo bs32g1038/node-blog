@@ -8,10 +8,6 @@ const Container = styled.header`
     align-items: center;
     background-color: #f9f9f9;
     background-size: cover;
-    @font-face{
-        font-family: paopaoyuFont;
-        src: url('/public/fonts/subfont.ttf')
-    }
 `;
 
 const MainWrap = styled.div`
@@ -34,9 +30,15 @@ const MainWrap = styled.div`
 `;
 
 const HomeNav = styled(Link)`
+    display: flex;
     text-decoration: none;
     color: #555;
     font-size: 16px;
+    align-items: center;
+    img{
+        width: 32px;
+        height: 32px;
+    }
 `;
 
 const H1 = styled.h1`
@@ -44,7 +46,6 @@ const H1 = styled.h1`
     text-align: center;
     margin: 0;
     font-size: 16px;
-    font-family: paopaoyuFont;
     ${media.phone`
         padding-left: 5px;
         width: 100%;
@@ -144,7 +145,8 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
             <Container>
                 <MainWrap>
                     <HomeNav to="/" title={siteInfo.name}>
-                        <H1>{siteInfo.name}</H1>
+                        <img src={require('../../assets/images/notebook.png')} alt={siteInfo.name} />
+                        <H1>《{siteInfo.name}》</H1>
                     </HomeNav>
                     <Menu>
                         <i className={this.state.isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => this.showMenu()}></i>

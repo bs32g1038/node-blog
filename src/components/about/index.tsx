@@ -201,6 +201,10 @@ class About extends React.Component<any, any> {
     }
 
     public componentDidMount() {
+        const { profile } = this.props._DB;
+        if (profile) {
+            return;
+        }
         this.setState({
             isLoading: true
         });

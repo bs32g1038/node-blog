@@ -77,6 +77,10 @@ class FriendlyLinks extends Component<any, any> {
     }
 
     public componentDidMount() {
+        const { links } = this.props._DB;
+        if (links.length > 0) {
+            return;
+        }
         this.setState({
             isLoading: true
         });

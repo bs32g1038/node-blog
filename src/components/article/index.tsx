@@ -163,6 +163,10 @@ class Article extends Component<any, any> {
     }
 
     public componentDidMount() {
+        const { article } = this.props._DB;
+        if (article) {
+            return;
+        }
         const q = queryString.parse(location.search);
         this.setState({
             isLoading: true

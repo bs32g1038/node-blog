@@ -59,6 +59,10 @@ class Guestbooks extends React.Component<any, any> {
     }
 
     public componentDidMount() {
+        const { guestbooks } = this.props._DB;
+        if (guestbooks.length > 0) {
+            return;
+        }
         const q = queryString.parse(location.search);
         this.setState({
             isLoading: true

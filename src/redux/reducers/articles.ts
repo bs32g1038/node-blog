@@ -1,28 +1,21 @@
 import api from '../../api/article';
-import { FETCH_ARTICLES, FETCH_RECENT_ARTICLES } from '../action-types';
+import { FETCH_ARTICLES } from '../action-types';
 
 export const setArticles = (articles: any) => ({
     type: FETCH_ARTICLES,
     articles
 });
 
-export const setRecentArticles = (recentArticles: any) => ({
-    type: FETCH_RECENT_ARTICLES,
-    recentArticles
-});
-
 export const fetchArticles = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
     return (dispatch: any) => {
         return api.fetchArticles(page, limit, filter).then((articles) => {
-            dispatch(setArticles(articles));
-        });
-    };
-};
-
-export const fetchRecentArticles = () => {
-    return (dispatch: any) => {
-        return api.fetchRecentArticles().then((articles) => {
-            dispatch(setRecentArticles(articles));
+            const o: any = {};
+            if (filter.cid) {
+                o[filter.cid] = articles;
+            } else {
+                o.blog = articles;
+            }
+            dispatch(setArticles(o));
         });
     };
 };
@@ -39,7 +32,7 @@ export interface State {
 }
 
 const initialState: State = {
-    articles: [],
+    articles: {},
     recentArticles: []
 };
 
@@ -50,13 +43,6 @@ export default function (state: any = initialState, action: Action) {
             return {
                 ...state,
                 articles
-            };
-        }
-        case FETCH_RECENT_ARTICLES: {
-            const { recentArticles } = action;
-            return {
-                ...state,
-                recentArticles
             };
         }
         default:

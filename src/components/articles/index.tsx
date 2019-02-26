@@ -26,6 +26,7 @@ class Articles extends React.Component<any, any> {
         const cid = route.query.cid;
         return store.dispatch(fetchArticles(page, limit, { cid }));
     }
+
     constructor(props: any) {
         super(props);
         this.state = {
@@ -33,8 +34,20 @@ class Articles extends React.Component<any, any> {
         };
     }
 
-    public componentDidMount() {
-        const q = queryString.parse(location.search);
+    public getList() {
+        const q: { cid?: string } = queryString.parse(this.props.location.search);
+        const { articles } = this.props._DB;
+        let list: [];
+        if (q.cid) {
+            list = articles[q.cid] || [];
+        } else {
+            list = articles.blog || [];
+        }
+        return list;
+    }
+
+    public fetchData() {
+        const q: { cid?: string } = queryString.parse(this.props.location.search);
         this.setState({
             isLoading: true
         });
@@ -48,8 +61,23 @@ class Articles extends React.Component<any, any> {
         });
     }
 
+    public componentDidUpdate(prevProps: any) {
+        const navigated = prevProps.location !== this.props.location;
+        if (navigated) {
+            this.fetchData();
+        }
+    }
+
+    public componentDidMount() {
+        const list = this.getList();
+        if (list.length > 0) {
+            return;
+        }
+        this.fetchData();
+    }
+
     public render() {
-        const { articles } = this.props._DB;
+        const articles = this.getList();
         const loaders = [];
         for (let i = 0; i < 9; i++) {
             loaders.push(
@@ -84,10 +112,5 @@ class Articles extends React.Component<any, any> {
 export default connect(
     (state: State) => ({
         _DB: state.articles
-    }),
-    // (dispatch) => ({
-    //     fetchArticles: () => dispatch({ type: 'INCREMENT' }),
-    //     decrement: () => dispatch({ type: 'DECREMENT' }),
-    //     reset: () => dispatch({ type: 'RESET' })
-    // })
+    })
 )(Articles as any);
