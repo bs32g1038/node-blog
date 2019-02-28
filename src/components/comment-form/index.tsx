@@ -214,7 +214,11 @@ class CommentForm extends Component<Props, any> {
             const $content: any = ReactDOM.findDOMNode(this.refs.content);
             $content.value = $content.value + text;
             if (this.state.isShowPreview) {
-                this.renderMakrdown($content.value + text);
+                this.renderMakrdown($content.value);
+            } else {
+                this.setState({
+                    previewHtml: $content.value
+                });
             }
         }
     }
@@ -225,7 +229,8 @@ class CommentForm extends Component<Props, any> {
     }
     public showPreview() {
         this.setState({
-            isShowPreview: !this.state.isShowPreview
+            isShowPreview: !this.state.isShowPreview,
+            previewHtml: marked(this.state.previewHtml)
         });
     }
     public componentDidMount() {

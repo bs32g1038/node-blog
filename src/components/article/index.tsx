@@ -180,6 +180,8 @@ class Article extends Component<any, any> {
                     this.generateToc();
                 });
             });
+        } else {
+            this.generateToc();
         }
 
     }
