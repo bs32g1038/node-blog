@@ -19,7 +19,7 @@ const ArticleWrap = styled.div`
 
 const ArticleItem = styled.article`
     max-width: 980px;
-    padding: ${rem('20px')} ${rem('30px')};
+    padding: ${rem('20px')} 0;
 `;
 
 const ArticleHeader = styled.div`
@@ -70,9 +70,10 @@ const Copyright = styled.ul`
 const Toc = styled.div`
     position: absolute;
     left: 50%;
-    margin-left: 340px;
+    margin-left: 370px;
     top: 200px;
     font-size: 13px;
+    width: 150px;
     &.fixed{
         position: fixed;
         top: 20px;

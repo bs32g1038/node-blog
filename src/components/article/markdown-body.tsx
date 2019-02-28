@@ -41,7 +41,7 @@ const Div = styled.div`
     pre {
         overflow: auto;
         margin: 20px 0;
-        padding: 0;
+        padding: 10px;
         font-size: 13px;
         color: #4d4d4c;
         background: #f7f7f7;
@@ -50,6 +50,21 @@ const Div = styled.div`
         padding-right: 10px;
         background-color: #f7f7f7;
         padding: 10px 0;
+        position: relative;
+        border-radius: 3px;
+        :after{
+            content: " ";
+            position: absolute;
+            border-radius: 50%;
+            background: #fc625d;
+            width: 12px;
+            height: 12px;
+            top: 0;
+            margin-top: 13px;
+            box-shadow: 20px 0px #fdbc40, 40px 0px #35cd4b;
+            z-index: 3;
+            right: 54px;
+        }
     }
     blockquote {
         margin: 0;
