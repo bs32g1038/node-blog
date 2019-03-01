@@ -133,11 +133,13 @@ class ArticleApi {
                     article.content = markdown.render(article.content);
                 }
                 const prevArticle = await models.Article.findOne({
-                    _id: { "$gt": _id }
+                    _id: { $gt: _id }
                 }, 'title');
                 const nextArticle = await models.Article.findOne({
-                    _id: { "$lt": _id }
-                }, 'title');
+                    _id: { $lt: _id }
+                }, 'title', {
+                    sort: { _id: -1 }
+                });
                 if (prevArticle) {
                     article.prev = prevArticle;
                 }
