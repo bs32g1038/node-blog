@@ -15,13 +15,12 @@ const markdown = new MarkdownIt({
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
             try {
-                return '<pre class="hljs"><code>' +
+                return '<pre><code class="hljs">' +
                     hljs.highlight(lang, str, true).value +
                     '</code></pre>';
             } catch (__) { }
         }
-
-        return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
+        return '<pre><code class="hljs">' + markdown.utils.escapeHtml(str) + '</code></pre>';
     }
 });
 
@@ -128,10 +127,26 @@ class ArticleApi {
             }, {
                 select: fds.article
             }).populate('category', fds.category);
-            if (req.query.md) {
-                article.content = markdown.render(article.content);
+            if (article) {
+                article = article.toObject();
+                if (req.query.md) {
+                    article.content = markdown.render(article.content);
+                }
+                const prevArticle = await models.Article.findOne({
+                    _id: { "$gt": _id }
+                }, 'title');
+                const nextArticle = await models.Article.findOne({
+                    _id: { "$lt": _id }
+                }, 'title');
+                if (prevArticle) {
+                    article.prev = prevArticle;
+                }
+                if (nextArticle) {
+                    article.next = nextArticle;
+                }
             }
             return res.json(article);
+
         } catch (error) {
             logger.error(error);
             res.status(500).json({
