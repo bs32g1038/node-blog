@@ -77,24 +77,32 @@ class Articles extends Component {
             this.fetchData(location);
         });
     }
-    fetchData(location) {
-        const q = queryString.parse(location.search);
+    fetchData(page = 1, limit = 10) {
+        this.setState({ loading: true });
         const query = {
-            cid: '',
-            limit: 10,
-            page: 1,
-            ...q
+            limit,
+            page
         };
         axios
             .get('/articles?' + queryString.stringify(query))
             .then((res) => {
-                this.setState({ articles: res.data });
+                const paging = JSON.parse(res.headers['x-paging']);
+                const pagination = { ...this.state.pagination };
+                pagination.total = paging.total;
+                this.setState({
+                    articles: res.data,
+                    loading: false,
+                    pagination,
+                });
             });
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.location.search != this.props.location.search) {
-            this.fetchData(nextProps.location);
-        }
+    handleTableChange(pagination) {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        this.fetchData(pagination.current, pagination.pageSize);
     }
     componentDidMount() {
         this.fetchData(this.props.location);
@@ -143,9 +151,9 @@ class Articles extends Component {
                         rowSelection={{}}
                         columns={this.getTableColums()}
                         dataSource={this.state.articles}
-                        // pagination={this.state.pagination}
-                        // loading={this.state.loading}
-                        // onChange={this.handleTableChange}
+                        pagination={this.state.pagination}
+                        loading={this.state.loading}
+                        onChange={(pagination) => this.handleTableChange(pagination)}
                     />
                 </div>
             </div>
