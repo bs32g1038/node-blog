@@ -28,6 +28,7 @@ export default class Articles extends Component {
             }, {
                 title: '创建时间',
                 dataIndex: 'createdAt',
+                width: 120,
                 render: (text, record) => (parseTime(record.createdAt, 'YYYY-MM-DD'))
             }, {
                 title: '文件类型',
@@ -36,10 +37,8 @@ export default class Articles extends Component {
             }, {
                 title: '文件大小',
                 dataIndex: 'size',
+                width: 80,
                 render: (text, record) => ((record.size / 1024).toFixed(1) + 'k')
-            }, {
-                title: '文件路径',
-                dataIndex: 'filePath'
             }, {
                 title: '操作',
                 key: 'operation',
@@ -86,7 +85,6 @@ export default class Articles extends Component {
                 const paging = JSON.parse(res.headers['x-paging']);
                 const pagination = { ...this.state.pagination };
                 pagination.total = paging.total;
-                console.log(paging.total);
                 this.setState({
                     files: res.data,
                     loading: false,
@@ -103,7 +101,6 @@ export default class Articles extends Component {
     }
     handleTableChange(pagination) {
         const pager = { ...this.state.pagination };
-        console.log(pagination);
         pager.current = pagination.current;
         this.setState({
             pagination: pager,
