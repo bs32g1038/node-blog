@@ -35,6 +35,9 @@ const HomeNav = styled(Link)`
     color: #555;
     font-size: 16px;
     align-items: center;
+    ${media.phone`
+        margin-left: 10px;
+    `};
     img{
         width: 32px;
         height: 32px;
