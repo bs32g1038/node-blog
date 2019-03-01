@@ -13,18 +13,32 @@ export default class Links extends Component {
     getTableColums() {
         return [
             {
+                width: 100,
                 title: '名称',
                 dataIndex: 'name'
             }, {
                 title: 'url',
-                dataIndex: 'url'
-            }, {
+                dataIndex: 'url',
+                render: (text, record) => (
+                    <span>
+                        ${record.url}
+                    </span>
+                )
+            },
+             {
                 title: '描述',
                 dataIndex: 'description'
-            }, {
+            }, 
+            {
                 title: 'logo',
-                dataIndex: 'logo'
-            }, {
+                dataIndex: 'logo',
+                render: (text, record) => (
+                    <span>
+                        ${record.logo}
+                    </span>
+                )
+            },
+             {
                 title: '操作',
                 key: 'operation',
                 width: 180,
@@ -62,7 +76,7 @@ export default class Links extends Component {
         const q = queryString.parse(location.search);
         const query = {
             cid: '',
-            limit: 10,
+            limit: 20,
             page: 1,
             ...q
         };
@@ -71,11 +85,6 @@ export default class Links extends Component {
             .then((res) => {
                 this.setState({ links: res.data });
             });
-    }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.location.search != this.props.location.search) {
-            this.fetchData(nextProps.location);
-        }
     }
     componentDidMount() {
         this.fetchData(this.props.location);
