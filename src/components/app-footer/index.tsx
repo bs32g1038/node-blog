@@ -61,7 +61,7 @@ export default class AppFooter extends Component<AppFooterProps, {}> {
                     const t = document.documentElement && document.documentElement.scrollTop;
                     const oTop = document.body.scrollTop || t || 0;
                     if (oTop > 0) {
-                        const p = oTop - 50;
+                        const p = oTop - 100;
                         if (document.documentElement) {
                             document.body.scrollTop = document.documentElement.scrollTop = p;
                         }
