@@ -3,12 +3,12 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, State } from '../../redux/reducers/article';
 import media from '../../utils/media';
 import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
-import toc from '../../utils/toc';
 import ContentLoader from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
@@ -20,6 +20,12 @@ const ArticleWrap = styled.div`
 const ArticleItem = styled.article`
     max-width: 980px;
     padding: ${rem('20px')} 0;
+    ${
+    media.phone`
+            padding-left: 12px;
+            padding-right: 12px;
+        `
+    }
 `;
 
 const ArticleHeader = styled.div`
@@ -67,34 +73,21 @@ const Copyright = styled.ul`
     }
 `;
 
-const Toc = styled.div`
-    position: absolute;
-    left: 50%;
-    margin-left: 370px;
-    top: 200px;
-    font-size: 13px;
-    width: 150px;
-    &.fixed{
-        position: fixed;
-        top: 20px;
-        overflow-y: auto;
-        bottom: 0
-    }
-    .toc-title {
-        font-size: 16px;
-    }
-    ol{
-        line-height: 1.8em;
-        list-style: none;
-        padding-left: 10px;
+const PrevNextArticle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    p{
+        margin-right: 10px;
+        &:last-child{
+            margin-right: 0;
+        }
     }
     a {
-        color: #888;
-        text-decoration: none
+        white-space: pre-wrap;
+        word-break: break-all;
+        text-decoration: none;
+        color: inherit;
     }
-    ${media.phone`
-        display: none;
-    `};
 `;
 
 class Article extends Component<any, any> {
@@ -111,58 +104,6 @@ class Article extends Component<any, any> {
         };
     }
 
-    public generateToc() {
-        const Util = {
-            addClass(element: any, className: any) {
-                const classes = element.className ? element.className.split(' ') : [];
-                if (classes.indexOf(className) < 0) {
-                    classes.push(className);
-                }
-                element.className = classes.join(' ');
-                return element;
-            },
-            removeClass(element: any, className: any) {
-                const classes = element.className ? element.className.split(' ') : [];
-                const index = classes.indexOf(className);
-                if (index > -1) {
-                    classes.splice(index, 1);
-                }
-                element.className = classes.join(' ');
-                return element;
-            }
-        };
-        const t = toc();
-        if (!t) {
-            const $t: any = document.getElementById('toc');
-            $t.style.display = 'none';
-            return;
-        }
-        let scrollTop = 0;
-        const $html = document.documentElement;
-        const $body = document.body;
-        const $toc: any = document.getElementById('toc');
-        const objE = document.createElement('div');
-        objE.innerHTML = t;
-        let $cs: any = window.getComputedStyle($toc);
-        let tocHeight = parseInt($cs.height, 10);
-        let winHeight = document.documentElement.clientHeight;
-        if (tocHeight + 20 > winHeight) {
-            return;
-        }
-        scrollTop = $body.scrollTop || $html.scrollTop;
-        scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
-        window.onscroll = () => {
-            scrollTop = $body.scrollTop || $html.scrollTop;
-            if ($toc) {
-                $cs = window.getComputedStyle($toc);
-                tocHeight = parseInt($cs.height, 10);
-                winHeight = document.documentElement.clientHeight;
-                scrollTop > 180 ? Util.addClass($toc, 'fixed') : Util.removeClass($toc, 'fixed');
-            }
-        };
-        return $toc.appendChild(objE);
-    }
-
     public componentDidMount() {
         const { article } = this.props._DB;
         if (article._id !== this.props.match.params.id) {
@@ -176,14 +117,9 @@ class Article extends Component<any, any> {
             }).then(() => {
                 this.setState({
                     isLoading: false
-                }, () => {
-                    this.generateToc();
                 });
             });
-        } else {
-            this.generateToc();
         }
-
     }
 
     public render() {
@@ -224,13 +160,10 @@ class Article extends Component<any, any> {
                         :
                         <>
                             <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
-                            <Toc id="toc">
-                                <strong className="toc-title">文章目录</strong>
-                            </Toc>
                             <ArticleItem>
                                 <ArticleHeader>
                                     <Title>
-                                        <a href={`/blog/articles/${article._id}`}>{article.title}</a>
+                                        <Link to={`/blog/articles/${article._id}`}>{article.title}</Link>
                                     </Title>
                                     <Meta>
                                         <span>发表于{parseTime(article.createdAt)}</span>
@@ -249,6 +182,20 @@ class Article extends Component<any, any> {
                                         <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
                                     </li>
                                 </Copyright>
+                                <PrevNextArticle>
+                                    {
+                                        article.prev && <p>
+                                            <strong>上一篇：</strong>
+                                            <Link to={`/blog/articles/${article.prev._id}`}>{article.prev.title}</Link>
+                                        </p>
+                                    }
+                                    {
+                                        article.next && <p>
+                                            <strong>下一篇：</strong>
+                                            <Link to={`/blog/articles/${article.next._id}`}>{article.next.title}</Link>
+                                        </p>
+                                    }
+                                </PrevNextArticle>
                                 <Comment article={article} comments={comments}></Comment>
                             </ArticleItem>
                         </>
