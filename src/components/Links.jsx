@@ -18,12 +18,7 @@ export default class Links extends Component {
                 dataIndex: 'name'
             }, {
                 title: 'url',
-                dataIndex: 'url',
-                render: (text, record) => (
-                    <span>
-                        ${record.url}
-                    </span>
-                )
+                dataIndex: 'url'
             },
              {
                 title: '描述',
@@ -31,12 +26,7 @@ export default class Links extends Component {
             }, 
             {
                 title: 'logo',
-                dataIndex: 'logo',
-                render: (text, record) => (
-                    <span>
-                        ${record.logo}
-                    </span>
-                )
+                dataIndex: 'logo'
             },
              {
                 title: '操作',
