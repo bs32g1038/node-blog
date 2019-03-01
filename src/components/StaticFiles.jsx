@@ -46,6 +46,7 @@ export default class Articles extends Component {
             }, {
                 title: '创建时间',
                 dataIndex: 'createdAt',
+                width: 120,
                 render: (text, record) => (parseTime(record.createdAt, 'YYYY-MM-DD'))
             }, {
                 title: '文件类型',
@@ -54,10 +55,8 @@ export default class Articles extends Component {
             }, {
                 title: '文件大小',
                 dataIndex: 'size',
+                width: 80,
                 render: (text, record) => ((record.size / 1024).toFixed(1) + 'k')
-            }, {
-                title: '文件路径',
-                dataIndex: 'filePath'
             }, {
                 title: '操作',
                 key: 'operation',
