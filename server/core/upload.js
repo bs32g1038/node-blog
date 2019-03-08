@@ -66,7 +66,7 @@ class UploadApi {
                     url
                 });
             }).catch((err) => {
-                if(err.code === 11000){
+                if (err.code === 11000) {
                     res.json();
                 }
                 logger.error(err);
@@ -84,6 +84,28 @@ class UploadApi {
             const name = md5(req.file.buffer);
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
+            let category = 6;
+            if (mimetype.toLowerCase().includes('mp4')) {
+                category = 1;
+            } else if (mimetype.toLowerCase().includes('mp3')) {
+                category = 2;
+            }
+            if (category === 6) {
+                const imageTypes = ['png', 'jpg', 'jpeg'];
+                imageTypes.forEach(item => {
+                    if (mimetype.toLowerCase().includes(item)) {
+                        category = 3;
+                    }
+                })
+            }
+            if (category === 6) {
+                const docsTypes = ['txt', 'doc', 'docx', 'pdf'];
+                docsTypes.forEach(item => {
+                    if (mimetype.toLowerCase().includes(item)) {
+                        category = 4;
+                    }
+                })
+            }
             try {
                 await fs.writeFileSync(path.resolve(__dirname, '../..' + filePath) + '/' + fileName, req.file.buffer);
                 const file = await models.File.create({
@@ -93,7 +115,9 @@ class UploadApi {
                     size,
                     suffix,
                     fileName,
-                    filePath
+                    filePath,
+                    category,
+                    parentId: req.query.parentId || null
                 });
                 return res.status(201).json({
                     _id: file._id,

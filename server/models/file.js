@@ -7,7 +7,10 @@ let FileSchema = new mongoose.Schema({
     size: { type: Number },
     suffix: { type: String },
     fileName: { type: String },//文件全名
-    filePath: { type: String }
+    filePath: { type: String },
+    isdir: { type: Boolean, default: false },
+    category: { type: Number },
+    parentId: { type: mongoose.Schema.Types.ObjectId, default: null }
 }, {
     timestamps: true
 });

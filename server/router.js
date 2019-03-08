@@ -124,6 +124,10 @@ router.get('/demos/:_id', demoApi.renderDemoShowPage);
  */
 router.get('/api/files', authMiddlware, fileApi.getFiles);
 
+router.post('/api/files/createFolder', authMiddlware, fileApi.createFolder);
+
+router.get('/api/files/getFolderName/:_id', authMiddlware, fileApi.getFolderName);
+
 router.delete('/api/files/:_id', authMiddlware, fileApi.deleteFile);
 
 /**
