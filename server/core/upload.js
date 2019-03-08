@@ -108,6 +108,11 @@ class UploadApi {
             }
             try {
                 await fs.writeFileSync(path.resolve(__dirname, '../..' + filePath) + '/' + fileName, req.file.buffer);
+                if (req.query.parentId) {
+                    await models.File.updateOne({ _id: req.query.parentId }, {
+                        $inc: { fileCount: 1 }
+                    })
+                }
                 const file = await models.File.create({
                     originalName,
                     name,

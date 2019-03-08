@@ -42,6 +42,12 @@ class FileApi {
          */
         try {
             const { _id } = req.params;
+            const fileInfo = await models.File.findById(_id);
+            if (fileInfo.parentId) {
+                await models.File.updateOne({ _id: fileInfo.parentId }, {
+                    $inc: { fileCount: -1 }
+                })
+            }
             await models.File.deleteOne({ _id });
             return res.status(204).json({});
         } catch (error) {
@@ -79,8 +85,8 @@ class FileApi {
         }
     }
 
-    static async getFolderName(req, res, next){
-        
+    static async getFolderName(req, res, next) {
+
         /** 
          * 根据id，获取文件夹名称
          */

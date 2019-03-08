@@ -10,7 +10,8 @@ let FileSchema = new mongoose.Schema({
     filePath: { type: String },
     isdir: { type: Boolean, default: false },
     category: { type: Number },
-    parentId: { type: mongoose.Schema.Types.ObjectId, default: null }
+    parentId: { type: mongoose.Schema.Types.ObjectId, default: null },
+    fileCount: { type: Number, default: 0 }
 }, {
     timestamps: true
 });
