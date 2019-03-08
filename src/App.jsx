@@ -57,6 +57,7 @@ class App extends Component {
                                 <Route exact path="/blog/admin/demos/edit" component={DemoEdit} />
                                 <Route exact path="/blog/admin/demos/edit/:id" component={DemoEdit} />
                                 <Route exact path="/blog/admin/demos/static-files" component={StaticFiles} />
+                                <Route exact path="/blog/admin/demos/static-files/:folderId" component={StaticFiles} />
                                 <Route exact path="/blog/admin/medias" component={Medias} />
                             </Switch>
                     )} />
