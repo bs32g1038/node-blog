@@ -22,7 +22,7 @@ class Articles extends React.Component<any, any> {
 
     public static asyncData(store: any, route: any) {
         const page = route.query.page;
-        const limit = route.query.limit || 20;
+        const limit = route.query.limit || 30;
         const cid = route.query.cid;
         return store.dispatch(fetchArticles(page, limit, { cid }));
     }
