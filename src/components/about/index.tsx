@@ -261,7 +261,7 @@ class About extends React.Component<any, any> {
                         <>
                             <Helmet title={siteInfo.name + '-关于'}></Helmet>
                             <h1 className="resume">--关于--</h1>
-                            <p style={{ padding: '10px 18px', backgroundColor: '#efefef', borderRadius: '4px' }}>
+                            <p style={{ padding: '10px 18px', margin: '0 10px', backgroundColor: '#efefef', borderRadius: '4px' }}>
                                 专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
                             </p>
                             <p style={{ padding: '0 10px' }}>
