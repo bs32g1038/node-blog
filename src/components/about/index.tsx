@@ -261,13 +261,11 @@ class About extends React.Component<any, any> {
                         <>
                             <Helmet title={siteInfo.name + '-关于'}></Helmet>
                             <h1 className="resume">--关于--</h1>
-                            <p style={{ borderLeft: '3px solid #ccc', padding: '5px 10px', backgroundColor: '#efefef' }}>
+                            <p style={{ padding: '10px 18px', backgroundColor: '#efefef', borderRadius: '4px' }}>
                                 专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
                             </p>
-                            <p>15年的时候开始接触了前端，直到现在，不敢说擅长什么，只能说勤能补拙。</p>
-                            <p>书山有路勤为径，学海无涯苦作舟。</p>
-                            <p>
-                                本博客是一个技术性博客，平时主要发布一些关于web前端以及后端开发的文章，这其中包括第三方的文章，也包括我自己总结的一些文章。 我会一直坚持写作，把自己的一些笔记记录下来，虽然有些笔记显示稚嫩，但是也算是一个过程，留作以后反思。
+                            <p style={{ padding: '0 10px' }}>
+                                本博客是一个技术性博客，平时主要发布一些关于web前端以及后端开发的文章，这其中包括第三方的文章，也包括我自己总结的一些文章。 我会一直坚持写作，把自己的一些笔记记录下来，以作备忘和分享。
                             </p>
                             <div className="about-header">
                                 <div className="person-base">
