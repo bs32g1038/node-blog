@@ -18,32 +18,21 @@ const UL = styled.ul((_) => ({
     padding: 0
 }));
 
-class Articles extends React.Component<any, any> {
+class Articles extends React.Component<any, { isLoading: boolean }> {
+
+    public state = {
+        isLoading: false
+    };
 
     public static asyncData(store: any, route: any) {
-        const page = route.query.page;
-        const limit = route.query.limit || 30;
-        const cid = route.query.cid;
+        const { page, limit = 30, cid } = route.query;
         return store.dispatch(fetchArticles(page, limit, { cid }));
-    }
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            isLoading: false
-        };
     }
 
     public getList() {
         const q: { cid?: string } = queryString.parse(this.props.location.search);
         const { articles } = this.props._DB;
-        let list: [];
-        if (q.cid) {
-            list = articles[q.cid] || [];
-        } else {
-            list = articles.blog || [];
-        }
-        return list;
+        return (q.cid ? articles[q.cid] : articles.blog) || [];
     }
 
     public fetchData() {
@@ -78,18 +67,15 @@ class Articles extends React.Component<any, any> {
 
     public render() {
         const articles = this.getList();
-        const loaders = [];
-        for (let i = 0; i < 9; i++) {
-            loaders.push(
-                <ContentLoader width={720} height={160} key={`loader-${i}`}>
-                    <rect x="0" y="20" width="240" height="25"></rect>
-                    <rect x="0" y="60" width="300" height="30"></rect>
-                    <rect x="0" y="105" width="240" height="25"></rect>
-                    <rect x="600" y="20" width="110" height="110"></rect>
-                    <rect x="0" y="140" width="720" height="1"></rect>
-                </ContentLoader>
-            );
-        }
+        const loaders = new Array(9).fill('').map((item, index) => (
+            <ContentLoader width={720} height={160} key={`loader-${index}`}>
+                <rect x="0" y="20" width="240" height="25"></rect>
+                <rect x="0" y="60" width="300" height="30"></rect>
+                <rect x="0" y="105" width="240" height="25"></rect>
+                <rect x="600" y="20" width="110" height="110"></rect>
+                <rect x="0" y="140" width="720" height="1"></rect>
+            </ContentLoader>
+        ));
         return (
             <div>
                 <Categories></Categories>

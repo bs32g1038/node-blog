@@ -45,17 +45,14 @@ const GuestbooksFormWrap = styled.div`
 
 class Guestbooks extends React.Component<any, any> {
 
+    public state = {
+        isLoading: false
+    };
+
     public static asyncData(store: any, route: any) {
         const page = route.query.page;
         const limit = route.query.limit || 20;
         return store.dispatch(fetchGuestbooks(page, limit));
-    }
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            isLoading: false
-        };
     }
 
     public componentDidMount() {
@@ -85,19 +82,16 @@ class Guestbooks extends React.Component<any, any> {
             const item = <GuestbookItem item={guestbook} key={guestbook._id}></GuestbookItem>;
             return index % 2 === 0 ? lefts.push(item) : rigths.push(item);
         });
-        const loaders = [];
-        for (let i = 0; i < 9; i++) {
-            loaders.push(
-                <ContentLoader width={720} height={240} key={`leftLoaders-${i}`}>
-                    <circle cx="50" cy="50" r="40"></circle>
-                    <rect x="100" y="30" width="100" height="40"></rect>
-                    <rect x="300" y="30" width="200" height="40"></rect>
-                    <rect x="520" y="30" width="180" height="40"></rect>
-                    <rect x="20" y="120" width="690" height="50"></rect>
-                    <rect x="20" y="200" width="690" height="40"></rect>
-                </ContentLoader>
-            );
-        }
+        const loaders = new Array(9).fill('').map((item, index) => (
+            <ContentLoader width={720} height={240} key={`leftLoaders-${index}`}>
+                <circle cx="50" cy="50" r="40"></circle>
+                <rect x="100" y="30" width="100" height="40"></rect>
+                <rect x="300" y="30" width="200" height="40"></rect>
+                <rect x="520" y="30" width="180" height="40"></rect>
+                <rect x="20" y="120" width="690" height="50"></rect>
+                <rect x="20" y="200" width="690" height="40"></rect>
+            </ContentLoader>
+        ));
         return (
             <GuestbooksWrap>
                 {

@@ -64,16 +64,12 @@ const Jump = styled(Link)((_) => ({
 }));
 
 class FriendlyLinks extends Component<any, any> {
+    public state = {
+        isLoading: false
+    };
 
     public static asyncData(store: any) {
         return store.dispatch(fetchLinks());
-    }
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            isLoading: false
-        };
     }
 
     public componentDidMount() {

@@ -33,14 +33,14 @@ const ItemLink = styled(Link)(() => ({
 class Categories extends Component<any, any> {
 
     public componentDidMount() {
-        const { categories } = this.props._DB || [];
+        const { categories = [] } = this.props._DB;
         if (categories.length <= 0) {
             this.props.dispatch(fetchCategories());
         }
     }
 
     public render() {
-        const { categories } = this.props._DB || [];
+        const { categories = [] } = this.props._DB;
         return (
             <CategoriesWrap>
                 <Item>
