@@ -352,7 +352,7 @@ class Article extends Component<any, any> {
                                                 <MediaContent
                                                     to={`/blog/articles/${item._id}`}
                                                     className="media-content"
-                                                    style={{ background: `url(${item.screenshot})` }}
+                                                    style={{ backgroundImage: `url(${item.screenshot})` }}
                                                 >
                                                 </MediaContent>
                                                 <div className="media-action">
@@ -385,7 +385,7 @@ class Article extends Component<any, any> {
                                         <MediaContent
                                             to={`/blog/articles/${item._id}`}
                                             className="media-content"
-                                            style={{ background: `url(${item.screenshot})` }}
+                                            style={{ backgroundImage: `url(${item.screenshot})` }}
                                         >
                                         </MediaContent>
                                         <div className="media-action">
