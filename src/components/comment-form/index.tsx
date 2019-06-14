@@ -43,7 +43,7 @@ const FormGroup = styled.div`
     flex-wrap: wrap;
 `;
 
-const FormInput = styled.input`
+const FormInput: any = styled.input`
     color: #333;
     flex: 1 0 auto;
     margin-left: -1px;
@@ -75,7 +75,7 @@ const ContentWrap = styled.div((_) => ({
     marginBottom: '6px'
 }));
 
-const Textarea = styled.textarea`
+const Textarea: any = styled.textarea`
     width: 100%;
     min-width: 200px;
     min-height: 90px;

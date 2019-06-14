@@ -1,7 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-react"],
   "rules": {
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": [true, "never"],
     "align": [false, "parameters", "arguments", "statements"],
     "ban": false,
     "class-name": true,
@@ -21,9 +21,9 @@
     "max-line-length": [false, 120],
     "member-ordering": [
       true,
-      "private-before-public",
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": ["static-field", "instance-field", "static-method", "instance-method"]
+      }
     ],
     "no-any": false,
     "no-var-requires": false,
@@ -42,7 +42,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "one-line": [
       true,
       "check-catch",

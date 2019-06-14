@@ -36,12 +36,12 @@ if (process.env.TYPE !== 'SSR') {
         server.use('/static/images', express.static(path.resolve(__dirname, './public/images')));
         server.use('/static', express.static(path.resolve(__dirname, './public/static')));
     }
-    server.use((req, res) => app.handle(req, res))
-        .listen(port, (err: Error) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
+    server.use((req: any, res: any) => app.handle(req, res))
+        .listen(port, () => {
+            // if (err) {
+            //     console.error(err);
+            //     return;
+            // }
             console.log(`> Started on port ${port}`);
         });
 }

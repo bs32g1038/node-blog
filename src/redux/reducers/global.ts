@@ -18,7 +18,7 @@ const initialState: State = {
     isMobile: false
 };
 
-export default function (state: any = initialState, action: Action) {
+export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case IS_MOBILE: {
             const { isMobile } = action;

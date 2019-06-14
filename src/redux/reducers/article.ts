@@ -47,7 +47,7 @@ const initialState: State = {
     recentArticles: []
 };
 
-export default function (state: any = initialState, action: Action) {
+export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_ARTICLE: {
             const { article, comments } = action;

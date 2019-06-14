@@ -27,7 +27,7 @@ const initialState: State = {
     guestbooks: []
 };
 
-export default function (state: any = initialState, action: Action) {
+export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_GUESTBOOKS: {
             const { guestbooks } = action;

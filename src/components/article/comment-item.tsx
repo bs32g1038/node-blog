@@ -49,7 +49,7 @@ const NickName = styled.span`
     color: #6d757a;
 `;
 
-const UserSign = styled.span`
+const UserSign: any = styled.span`
     margin-left: 5px;
     color: #fff;
     background-color: rgba(58, 165, 208, 0.8);

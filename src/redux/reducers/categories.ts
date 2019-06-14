@@ -27,7 +27,7 @@ const initialState: State = {
     categories: []
 };
 
-export default function (state: any = initialState, action: Action) {
+export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_CATEGORIES: {
             const { categories } = action;

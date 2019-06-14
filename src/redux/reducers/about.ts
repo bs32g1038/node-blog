@@ -27,7 +27,7 @@ const initialState: State = {
     profile: null
 };
 
-export default function (state: any = initialState, action: Action) {
+export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_ABOUT_USER_PROFILE: {
             const { profile } = action;
