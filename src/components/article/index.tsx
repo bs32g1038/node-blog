@@ -246,6 +246,22 @@ class Article extends Component<any, any> {
         }
     }
 
+    public componentDidUpdate(prevProps: any) {
+        const navigated = prevProps.location !== this.props.location;
+        if (navigated) {
+            this.setState({
+                isLoading: true
+            });
+            Article.asyncData({ dispatch: this.props.dispatch }, {
+                params: this.props.match.params
+            }).then(() => {
+                this.setState({
+                    isLoading: false
+                });
+            });
+        }
+    }
+
     public render() {
         const { article, comments, recentArticles } = this.props._DB;
         return (
@@ -257,14 +273,18 @@ class Article extends Component<any, any> {
                                 <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
                                 <ArticleItem>
                                     <ArticleHeader>
+                                        <ContentLoader width={720} height={20}>
+                                            <rect x="0" y="0" width="500" height="20"></rect>
+                                        </ContentLoader>
                                         <Title>
-                                            <ContentLoader width={720} height={40}>
-                                                <rect x="260" y="0" width="200" height="40"></rect>
+                                            <ContentLoader width={720} height={20}>
+                                                <rect x="0" y="0" width="300" height="20"></rect>
                                             </ContentLoader>
                                         </Title>
+
                                         <Meta>
                                             <ContentLoader width={720} height={20}>
-                                                <rect x="160" y="0" width="400" height="20"></rect>
+                                                <rect x="0" y="0" width="400" height="20"></rect>
                                             </ContentLoader>
                                         </Meta>
                                     </ArticleHeader>
@@ -344,31 +364,38 @@ class Article extends Component<any, any> {
                     <WidgetArea>
                         <section id="recommended_posts-5" className="widget Recommended_Posts">
                             <WidgetTitle>最近文章</WidgetTitle>
-                            <div className="list-grid list-grid-padding p-0 my-n2">
+                            <div className="list-grid list-grid-padding p-0 my-n2" style={{ width: '240px' }}>
                                 {
-                                    recentArticles.slice(0, 5).map((item: any) => (
-                                        <ListItem key={'rc' + item._id}>
-                                            <Media>
-                                                <MediaContent
-                                                    to={`/blog/articles/${item._id}`}
-                                                    className="media-content"
-                                                    style={{ backgroundImage: `url(${item.screenshot})` }}
-                                                >
-                                                </MediaContent>
-                                                <div className="media-action">
-                                                    <i className="iconfont icon-pic-s"></i>
-                                                </div>
-                                            </Media>
-                                            <ListContent>
-                                                <div className="list-body">
-                                                    <ListTitle to={`/blog/articles/${item._id}`} className="list-title text-sm h-2x">{item.title}</ListTitle>
-                                                </div>
-                                                <TextMuted>
-                                                    <div>2019-03-08</div>
-                                                </TextMuted>
-                                            </ListContent>
-                                        </ListItem>
-                                    ))
+                                    this.state.isLoading ?
+                                        <ContentLoader width={240} height={85}>
+                                            <rect x="0" y="0" width="100" height="85"></rect>
+                                            <rect x="120" y="0" width="120" height="40"></rect>
+                                            <rect x="120" y="75" width="60" height="10"></rect>
+                                        </ContentLoader>
+                                        :
+                                        recentArticles.slice(0, 5).map((item: any) => (
+                                            <ListItem key={'rc' + item._id}>
+                                                <Media>
+                                                    <MediaContent
+                                                        to={`/blog/articles/${item._id}`}
+                                                        className="media-content"
+                                                        style={{ backgroundImage: `url(${item.screenshot})` }}
+                                                    >
+                                                    </MediaContent>
+                                                    <div className="media-action">
+                                                        <i className="iconfont icon-pic-s"></i>
+                                                    </div>
+                                                </Media>
+                                                <ListContent>
+                                                    <div className="list-body">
+                                                        <ListTitle to={`/blog/articles/${item._id}`} className="list-title text-sm h-2x">{item.title}</ListTitle>
+                                                    </div>
+                                                    <TextMuted>
+                                                        <div>2019-03-08</div>
+                                                    </TextMuted>
+                                                </ListContent>
+                                            </ListItem>
+                                        ))
                                 }
                             </div>
                         </section>
@@ -379,28 +406,35 @@ class Article extends Component<any, any> {
                     <div className="list-header h4 mb-3 mb-md-4">相关文章</div>
                     <ListGrouped>
                         {
-                            recentArticles.slice(0, 5).map((item: any) => (
-                                <ListItem className="list-nice-overlay">
-                                    <Media className="media">
-                                        <MediaContent
-                                            to={`/blog/articles/${item._id}`}
-                                            className="media-content"
-                                            style={{ backgroundImage: `url(${item.screenshot})` }}
-                                        >
-                                        </MediaContent>
-                                        <div className="media-action">
-                                            <i className="iconfont icon-pic-s"></i>
+                            this.state.isLoading ?
+                                <ContentLoader width={960} height={240} style={{ width: '400px' }}>
+                                    <rect x="0" y="0" width="960" height="40"></rect>
+                                    <rect x="0" y="60" width="960" height="40"></rect>
+                                    <rect x="0" y="120" width="960" height="40"></rect>
+                                </ContentLoader>
+                                :
+                                recentArticles.slice(6, 9).map((item: any) => (
+                                    <ListItem className="list-nice-overlay" key={'rl' + item._id}>
+                                        <Media className="media">
+                                            <MediaContent
+                                                to={`/blog/articles/${item._id}`}
+                                                className="media-content"
+                                                style={{ backgroundImage: `url(${item.screenshot})` }}
+                                            >
+                                            </MediaContent>
+                                            <div className="media-action">
+                                                <i className="iconfont icon-pic-s"></i>
+                                            </div>
+                                        </Media>
+                                        <div className="list-content">
+                                            <div className="list-body">
+                                                <Link to={`/blog/articles/${item._id}`} className="list-title h-2x">
+                                                    {item.title}
+                                                </Link>
+                                            </div>
                                         </div>
-                                    </Media>
-                                    <div className="list-content">
-                                        <div className="list-body">
-                                            <Link to={`/blog/articles/${item._id}`} className="list-title h-2x">
-                                                {item.title}
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </ListItem>
-                            ))
+                                    </ListItem>
+                                ))
                         }
                     </ListGrouped>
                 </div>
