@@ -1,20 +1,19 @@
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import App from './App';
 import About from './components/about';
 import Article from './components/article';
 import Articles from './components/articles';
-import FriendlyLinks from './components/friendly-links';
-import Guestbooks from './components/guestbooks';
-import Home from './components/home';
 
 const routes: any = [
     {
-        component: Home,
+        render: () => <Redirect to="/blog" />,
         path: '/',
         exact: true
     },
     {
         component: App,
-        path: '/blog',
+        path: '/',
         routes: [
             {
                 component: Articles,
@@ -29,22 +28,12 @@ const routes: any = [
             {
                 component: Articles,
                 exact: true,
-                path: '/blog/articles'
-            },
-            {
-                component: Guestbooks,
-                exact: true,
-                path: '/blog/guestbook'
-            },
-            {
-                component: FriendlyLinks,
-                exact: true,
-                path: '/blog/links'
+                path: '/blog/categories/:cid'
             },
             {
                 component: About,
                 exact: true,
-                path: '/blog/about'
+                path: '/about'
             }
         ]
     }

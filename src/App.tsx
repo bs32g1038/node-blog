@@ -11,8 +11,8 @@ import { fetchCategories } from './redux/reducers/categories';
 import media from './utils/media';
 
 const PageWrap = styled.div`
-    width: 720px;
-    margin: 0 auto;
+    width: 960px;
+    margin: 20px auto;
     ${media.phone`margin-left:0;margin-right:0;width: 100%;`};
 `;
 

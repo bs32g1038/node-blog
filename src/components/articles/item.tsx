@@ -6,8 +6,10 @@ import { parseTime } from '../../utils/time';
 import LazyLoad from '../lazy-load';
 
 const ArticleItem = styled.li`
-    border-bottom: 1px solid rgba(178,186,194,.15);
+    /* border-bottom: 1px solid rgba(178,186,194,.15); */
     padding: 0.2rem 0;
+    max-width: 25%;
+    
     ${media.phone`
         padding-left: 8px;
         padding-right: 8px;
@@ -15,9 +17,8 @@ const ArticleItem = styled.li`
 `;
 
 const Header = styled.div`
-    display: flex;
     justify-content: space-between;
-    margin: 10px 0 10px;
+    margin: 10px 10px 10px;
 `;
 
 const Brief = styled.div`
@@ -26,7 +27,6 @@ const Brief = styled.div`
     line-height: 32px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const Meta = styled.div`
@@ -52,13 +52,17 @@ const Title = styled(Link)`
 `;
 
 const ThumbWrap = styled.div`
-    height: 96px;
-    width: 150px;
+    height: auto;
+    width: 100%;
     ${media.phone`
         height: 96px;
         width: 80px;
         min-width: 80px;
     `}
+    img{
+        width: 100%;
+        height: auto;
+    }
 `;
 
 const ThumbA = styled.a`
@@ -73,9 +77,21 @@ const ThumbA = styled.a`
 `;
 
 const Summary = styled.p`
-    font-size: 14px;
-    margin: 8px 0;
+    margin: 0;
     word-wrap: break-word;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #93999f;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: hidden;
+    transition: .3s all linear;
+    text-overflow: -o-ellipsis-lastline;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 48px;
+    line-height: 24px;
 `;
 
 const Item: SFC<{ item: any }> = (props: any) => {
@@ -84,22 +100,22 @@ const Item: SFC<{ item: any }> = (props: any) => {
         <ArticleItem>
             <Header>
                 <Brief>
+                    <ThumbWrap>
+                        <LazyLoad src={item.screenshot}></LazyLoad>
+                    </ThumbWrap>
                     <Meta>
                         <strong>TIME</strong>
                         <em>·</em> {parseTime(item.createdAt)}
                     </Meta>
                     <Title to={`/blog/articles/${item._id}`}>{item.title}</Title>
+                    <Summary>{item.summary}</Summary>
                     <Meta>
                         <a href="javascript:;">评论：{item.commentCount}</a> <em>·</em>
                         <a href="javascript:;">阅读：{item.viewsCount}</a> <em>·</em>
                         <span>分类：{(item.category && item.category.name) || '暂无分类'}</span>
                     </Meta>
                 </Brief>
-                <ThumbWrap>
-                    <LazyLoad tag={ThumbA} style={{ backgroundImage: `url(${item.screenshot})` }}></LazyLoad>
-                </ThumbWrap>
             </Header>
-            <Summary>{item.summary}</Summary>
         </ArticleItem>
     );
 };

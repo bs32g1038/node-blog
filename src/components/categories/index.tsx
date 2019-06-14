@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
 import { fetchCategories } from '../../redux/reducers/categories';
 import media from '../../utils/media';
@@ -12,23 +12,41 @@ const CategoriesWrap = styled.ul`
     border-bottom: 1px solid rgba(178,186,194,.15);
     display: flex;
     flex: 0 0 auto;
-    font-size: 12px;
+    font-size: 13px;
     margin: 0;
-    padding: 11px 0;
+    padding: 0 10px 15px;
+    border-bottom: 1px solid #ededee;
+    margin-bottom: 8px;
     ${media.phone`
         padding-left: 5px;
     `};
 `;
 
-const Item = styled.li(() => ({
-    display: 'inline-block',
-    marginRight: '20px'
-}));
+const Item = styled.li`
+    display: inline-block;
+    margin: 7px 20px 7px 0;
+`;
 
-const ItemLink = styled(Link)(() => ({
-    color: '#90979c',
-    textDecoration: 'none'
-}));
+const ItemLink = styled(NavLink)`
+    color: #90979c;
+    text-decoration: none;
+    &.active{
+        font-size: 14px;
+        color: #40404c;
+        font-weight: 700;
+        position: relative;
+        &:after{
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            width: 20px;
+            height: 3px;
+            background: #f86442;
+            transform: translate(-50%,0);
+        }
+    }
+`;
 
 class Categories extends Component<any, any> {
 
@@ -44,12 +62,14 @@ class Categories extends Component<any, any> {
         return (
             <CategoriesWrap>
                 <Item>
-                    <i className="fa fa-book fa-fw"></i>分类
+                    <ItemLink to="/blog" exact={true}>
+                        全部
+                    </ItemLink>
                 </Item>
                 {
                     categories.map((item: any) => (
                         <Item key={item._id}>
-                            <ItemLink to={`/blog/articles?cid=${item._id}`}>
+                            <ItemLink exact={true} to={`/blog/categories/${item._id}`}>
                                 {item.name}<span>({item.articleCount})</span>
                             </ItemLink>
                         </Item>

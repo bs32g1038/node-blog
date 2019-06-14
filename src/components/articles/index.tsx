@@ -10,13 +10,15 @@ import Categories from '../categories';
 import ContentLoader from '../content-loader';
 import ArticleItem from './item';
 
-const UL = styled.ul((_) => ({
-    backgroundColor: '#fff',
-    flex: '1 0 auto',
-    listStyle: 'none',
-    margin: 0,
-    padding: 0
-}));
+const UL = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+    flex: 1 0 auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+`;
 
 class Articles extends React.Component<any, { isLoading: boolean }> {
 
@@ -25,18 +27,19 @@ class Articles extends React.Component<any, { isLoading: boolean }> {
     };
 
     public static asyncData(store: any, route: any) {
-        const { page, limit = 30, cid } = route.query;
+        const { page, limit = 30 } = route.query;
+        const cid = route.params.cid;
         return store.dispatch(fetchArticles(page, limit, { cid }));
     }
 
-    public getList() {
-        const q: { cid?: string } = queryString.parse(this.props.location.search);
+    public getList(props: any) {
+        const q: { cid?: string } = props.match.params;
         const { articles } = this.props._DB;
         return (q.cid ? articles[q.cid] : articles.blog) || [];
     }
 
     public fetchData() {
-        const q: { cid?: string } = queryString.parse(this.props.location.search);
+        const q: { cid?: string } = this.props.match.params;
         this.setState({
             isLoading: true
         });
@@ -58,7 +61,7 @@ class Articles extends React.Component<any, { isLoading: boolean }> {
     }
 
     public componentDidMount() {
-        const list = this.getList();
+        const list = this.getList(this.props);
         if (list.length > 0) {
             return;
         }
@@ -66,7 +69,7 @@ class Articles extends React.Component<any, { isLoading: boolean }> {
     }
 
     public render() {
-        const articles = this.getList();
+        const articles = this.getList(this.props);
         const loaders = new Array(9).fill('').map((item, index) => (
             <ContentLoader width={720} height={160} key={`loader-${index}`}>
                 <rect x="0" y="20" width="240" height="25"></rect>
@@ -78,7 +81,7 @@ class Articles extends React.Component<any, { isLoading: boolean }> {
         ));
         return (
             <div>
-                <Categories></Categories>
+                <Categories key={this.props.location.pathname}></Categories>
                 <Helmet title={siteInfo.name + '-博客'}></Helmet>
                 {this.state.isLoading ?
                     loaders :
