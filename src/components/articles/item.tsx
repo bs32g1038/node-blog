@@ -9,7 +9,7 @@ const ArticleItem = styled.li`
     /* border-bottom: 1px solid rgba(178,186,194,.15); */
     padding: 0.2rem 0;
     max-width: 25%;
-    
+    flex: 1 0 auto;
     ${media.phone`
         padding-left: 8px;
         padding-right: 8px;
@@ -54,6 +54,13 @@ const Title = styled(Link)`
 const ThumbWrap = styled.div`
     height: auto;
     width: 100%;
+    position: relative;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    flex-shrink: 0;
+    border-radius: 2px;
     ${media.phone`
         height: 96px;
         width: 80px;
@@ -62,18 +69,31 @@ const ThumbWrap = styled.div`
     img{
         width: 100%;
         height: auto;
+        min-height: fill-available;
+        display: block;
+        max-width: 100%;
+        transition: all 444ms ease-in-out;
+    }
+    &:after{
+        content: '';
+        display: block;
+        padding-top: 66.66666%;
+        box-sizing: border-box;
     }
 `;
 
 const ThumbA = styled.a`
-    box-shadow: 0 10px 14px #d0d0d0;
-    border-radius: 5px;
-    background-position: center;
-    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    border-radius: 2px;
     background-size: cover;
-    display: block;
-    height: 100%;
-    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba(120, 120, 120, 0.1);
 `;
 
 const Summary = styled.p`
@@ -101,7 +121,9 @@ const Item: SFC<{ item: any }> = (props: any) => {
             <Header>
                 <Brief>
                     <ThumbWrap>
-                        <LazyLoad src={item.screenshot}></LazyLoad>
+                        <LazyLoad tag={ThumbA}>
+                            <img src={item.screenshot} />
+                        </LazyLoad>
                     </ThumbWrap>
                     <Meta>
                         <strong>TIME</strong>
