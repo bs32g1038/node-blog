@@ -102,11 +102,24 @@ class ArticleApi {
     }
 
     static async getRecentArticles(req, res, next) {
-        return res.json(await models.Article.find({}, 'title', {
-            skip: 0,
-            limit: 5,
-            sort: { createdAt: -1 }
-        }));
+        // let total = 9; // 总数
+        // let promises = [];
+        // for (let i = 0; i < 9; i++) {
+        //     const skip = Math.round(Math.random() * total);
+        //     promises.push(models.Article.find({}, 'title screenshot').skip(skip).limit(1));
+        // }
+        // Promise.all(promises).then(function (results) {
+        //     const data = results.map(item => {
+        //         return item[0];
+        //     });
+        //     return res.json(data);
+        // });
+
+        res.json(await models.Article.aggregate([{
+            $sample: { size: 9 }
+        }, {
+            $project: { title: 1, screenshot: 1 }
+        }]));
     }
 
     static async getArticle(req, res, next) {
