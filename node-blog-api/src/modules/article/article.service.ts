@@ -4,6 +4,31 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Article } from '../../models/article.model';
 import { Category } from '../../models/category.model';
 import { CreateArticleDto, UpdateArticleDto } from './article.dto';
+import * as MarkdownIt from 'markdown-it';
+import hljs = require('highlight.js');
+import mila = require('markdown-it-link-attributes');
+
+const markdown = new MarkdownIt({
+    highlight:  (str, lang) => {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return '<pre><code class="hljs">' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            } catch (__) {
+                return;
+            }
+        }
+        return '<pre><code class="hljs">' + markdown.utils.escapeHtml(str) + '</code></pre>';
+    }
+});
+
+markdown.use(mila, {
+    attrs: {
+        target: '_blank',
+        rel: 'noopener'
+    }
+});
 
 @Injectable()
 export class ArticleService {
@@ -43,13 +68,17 @@ export class ArticleService {
         }).populate('category');
     }
 
-    async getArticle(id: string) {
+    async getArticle(id: string, isRenderHtml: boolean) {
         const article = await this.articleModel.findByIdAndUpdate(id, {
             $inc: { viewsCount: 1 }
         }, { select: '-summary' }).populate('category');
 
         if (article) {
             const data = article.toObject();
+
+            if (isRenderHtml) {
+                data.content = markdown.render(data.content);
+            }
 
             const [prev, next] = await Promise.all([
                 this.articleModel.findOne({ _id: { $gt: id } }, 'title'),

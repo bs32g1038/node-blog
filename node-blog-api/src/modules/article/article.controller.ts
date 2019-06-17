@@ -59,8 +59,8 @@ export class ArticleController {
 
     @Get('/articles/:id')
     @JoiValidationPipe(ArticleController.idSchema)
-    async getArticle(@Param() params: { id: string }): Promise<Article> {
-        return await this.articleService.getArticle(params.id);
+    async getArticle(@Param() params: { id: string }, @Query() query: {md?: boolean}): Promise<Article> {
+        return await this.articleService.getArticle(params.id, query.md);
     }
 
     @Delete('/articles/:id')
