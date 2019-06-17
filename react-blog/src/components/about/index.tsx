@@ -188,6 +188,8 @@ class About extends React.Component<any, any> {
                     };
                 });
             }
+        } else {
+            userInfo = {};
         }
         return (
             <AboutDiv className="about">
