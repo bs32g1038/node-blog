@@ -1,13 +1,12 @@
 import { Model } from 'mongoose';
 import * as multer from 'multer';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { File } from '../../models/file.model';
 import { Media } from '../../models/media.model';
 import { md5 } from '../../utils/crypto.util';
 import * as path from 'path';
 import * as fs from 'fs';
-// import * as sharp from 'sharp';
 import logger from '../../utils/logger.util';
 
 const storage = multer.memoryStorage();
@@ -30,50 +29,48 @@ export class UploadService {
 
             // 实体数据
             const originalName = req.file.originalname;
-            const mimetype = req.file.mimetype;
+            const mimetype: string = req.file.mimetype;
             const size = req.file.size;
             const suffix = path.extname(req.file.originalname);
+            if (Number(size) > 1024 * 1024) {
+                return next(new BadRequestException('图片最大为 1M'));
+            }
+            if (!mimetype.includes('image')) {
+                return next(new BadRequestException('只能上传图片类型，支持jpg,png'));
+            }
             const name = md5(req.file.buffer);
             const fileName = name + suffix;
             const filePath = '/static/upload/' + new Date().getFullYear() + '/';
 
             // 图片处理
-            const width = req.query.w;
-            const height = req.query.h;
-            // const sharpImg: any = sharp(req.file.buffer);
-            // if (width && height) {
-            //     sharpImg.resize(Number(width), Number(height));
-            //     sharpImg.max();
-            // } else {
-            //     sharpImg.resize(1024, 1024);
-            //     sharpImg.min();
-            // }
-            // sharpImg.withoutEnlargement();
-            // const basePath = path.resolve(__dirname, `../..` + filePath);
-            // if (!fs.existsSync(basePath)) {
-            //     fs.mkdirSync(basePath);
-            // }
-            // return sharpImg.toFile(basePath + '/' + fileName).then(async (info) => {
-            //     const file = await this.mediaModel.create({
-            //         originalName,
-            //         name,
-            //         mimetype,
-            //         size,
-            //         suffix,
-            //         fileName,
-            //         filePath,
-            //         type: 'image'
-            //     });
-            //     const url = filePath + '/' + fileName;
-            //     return {
-            //         _id: file._id,
-            //         url
-            //     };
-            // })
+            const basePath = path.resolve(__dirname, `../../..` + filePath);
+            if (!fs.existsSync(basePath)) {
+                fs.mkdirSync(basePath);
+            }
+            fs.writeFile(basePath + '/' + fileName, req.file.buffer, async (error: any) => {
+                if (error) {
+                    logger.error(error);
+                }
+                const file = await this.mediaModel.create({
+                    originalName,
+                    name,
+                    mimetype,
+                    size,
+                    suffix,
+                    fileName,
+                    filePath,
+                    type: 'image'
+                });
+                const url = filePath + '/' + fileName;
+                return res.json({
+                    _id: file._id,
+                    url
+                });
+            });
         });
     }
 
-    async uploadStaticFile(req, res, next) {
+    async; uploadStaticFile(req, res, next) {
         return uploadSingle(req, res, async (err) => {
             const originalName = req.file.originalname;
             const mimetype = req.file.mimetype;

@@ -16,7 +16,7 @@ export class UploadController {
     }
 
     @Post('/api/upload/static-files')
-    // @Roles('admin')
+    @Roles('admin')
     async uploadStaticFile(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
         return await this.uploadService.uploadStaticFile(req, res, next);
     }
