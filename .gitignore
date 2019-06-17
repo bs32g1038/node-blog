@@ -5,3 +5,4 @@ logs/blog/*
 !.gitkeep
 static
 dist
+react-blog/build
