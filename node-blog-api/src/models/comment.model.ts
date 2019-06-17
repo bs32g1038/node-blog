@@ -10,6 +10,7 @@ export interface Comment extends Document {
     article: string;
     location: string;
     pass: boolean;
+    content: string;
     identity: number;
 }
 
@@ -28,6 +29,11 @@ export const CommentSchema = new mongoose.Schema({
         type: String,
         min: [1],
         max: 150
+    },
+    content: {
+        type: String,
+        min: [1],
+        max: 1000
     },
     reply: {
         type: mongoose.Schema.Types.ObjectId,

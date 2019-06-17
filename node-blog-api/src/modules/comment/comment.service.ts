@@ -33,15 +33,15 @@ export class CommentService {
 
     async getComments(
         query: {} = {},
-        option: { skip?: number, limit?: number, sort?: object }
+        option: { skip?: number, limit?: number, sort?: object, field: string }
     ): Promise<Comment[]> {
-        const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
+        const { skip = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = option;
         const filter = { ...query };
-        return await this.commentModel.find(filter, {}, {
+        return await this.commentModel.find(filter, field, {
             skip,
             limit,
             sort
-        }).populate('article', 'title').populate('reply');
+        }).populate('article', 'title').populate('reply', field);
     }
 
     async getComment(id: string) {
@@ -56,7 +56,7 @@ export class CommentService {
     }
 
     async count(query) {
-        const filter = { isDeleted: false, ...query };
+        const filter = { ...query };
         return await this.commentModel.countDocuments(filter);
     }
 

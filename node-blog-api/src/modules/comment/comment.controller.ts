@@ -19,6 +19,10 @@ export class CommentController {
         id: Joi.string().default('').max(50)
     };
 
+    static articleIdSchema = {
+        articleId: Joi.string().default('').max(50)
+    };
+
     @Post('/comments')
     async create(@Req() req, @Body() createCommentDto: CreateCommentDto) {
         if (auth(req)) {
@@ -40,12 +44,22 @@ export class CommentController {
 
     @Get('/comments')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getComments(@Query() query: { page: number, limit: number }) {
-        const items = await this.commentService.getComments({}, {
+    @JoiValidationPipe(CommentController.articleIdSchema)
+    async getComments(@Req() req, @Query() query: { page: number, limit: number, articleId: string }) {
+        let field = '';
+        const q: { article?: string } = {};
+        if (query.articleId) {
+            q.article = query.articleId;
+        }
+        if (!auth(req)) {
+            field = '-email';
+        }
+        const items = await this.commentService.getComments(q, {
+            field,
             skip: Number(query.page),
             limit: Number(query.limit)
         });
-        const totalCount = await this.commentService.count({});
+        const totalCount = await this.commentService.count(q);
         return {
             items,
             totalCount
