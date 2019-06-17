@@ -7,7 +7,7 @@ export default {
         port: '8080'
     },
     db: {
-        uri: isDev ? 'mongodb://localhost:27017/dev' : 'mongodb://localhost:27017/blog',
+        uri: isDev ? 'mongodb://localhost:27017/dev' : 'mongodb://db:27017/blog',
         options: {
             user: '',
             pass: ''
