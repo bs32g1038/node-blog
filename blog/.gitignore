@@ -1,7 +1,0 @@
-dist
-.cache
-node_modules
-.vscode
-static/upload/*
-logs
-reactsrc
