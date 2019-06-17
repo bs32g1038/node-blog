@@ -1,0 +1,56 @@
+.app-side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    background-color: #3c8ccd;
+    bottom: 0;
+    z-index: 999;
+    .site-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: 400;
+        width: 100%;
+        line-height: 60px;
+        margin: 0;
+        padding-left: 10px;
+        color: #fff;
+        height: 60px;
+    }
+}
+
+.app-side-menu-nav {
+    .menu-nav-item {
+        display: block;
+        width: 100%;
+        line-height: 45px;
+    }
+    a {
+        height: 45px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #fff;
+        padding: 0 20px;
+        display: block;
+        transition: all .2s ease-in-out;
+        position: relative;
+        &.active:after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            margin-top: -4px;
+            right: 15px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #22ff14;
+        }
+        .fa {
+            margin-right: 6px;
+        }
+        &:hover {
+            background-color: #009688;
+        }
+    }
+}

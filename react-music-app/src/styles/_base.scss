@@ -1,0 +1,196 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+body ::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: 0 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.MusicCore-left::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.MusicCore-left::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    color: #444;
+    font-family: -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif;
+    font-size: 14px;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0;
+    transition: all .5s cubic-bezier(0.19, 1, 0.22, 1);
+    background-size: contain;
+}
+
+a {
+    color: #34495e;
+    text-decoration: none
+}
+
+a:hover {
+    color: #409eff
+}
+
+.app {
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    width: 800px
+}
+
+input,
+textarea {
+    font: 400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.music-wrap {
+    width: 750px;
+    height: 500px;
+    margin: 0 auto;
+    background-color: #292a2b;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -375px;
+    border-radius: 10px;
+    box-shadow: 0 0 100px #4c3c3c;
+    &:before {
+        height: 40px;
+        width: 100%;
+        content: " ";
+        position: absolute;
+        border-radius: 50%;
+        background: #fc625d;
+        width: 12px;
+        height: 12px;
+        top: 0;
+        left: 20px;
+        margin-top: 13px;
+        box-shadow: 20px 0px #fdbc40, 40px 0px #35cd4b;
+        z-index: 3;
+    }
+    .header {
+        overflow: hidden;
+        margin-top: 20px;
+        position: relative;
+        z-index: 4;
+    }
+    .site-logo {
+        margin: 0;
+        font-weight: 500;
+        margin-left: 18px;
+        float: left;
+        a {
+            font-size: 18px;
+            color: #fff;
+            opacity: .3;
+        }
+    }
+    .header-help {
+        float: right;
+        margin-top: 10px;
+        margin-right: 40px;
+        a {
+            font-size: 14px;
+            color: #fff;
+            opacity: .3;
+        }
+    }
+}
+
+.bg-music-player {
+    display: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    filter: blur(65px);
+    opacity: .6;
+    transform: translateZ(0);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.bg-mask {
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .35);
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+}
+
+.MusicCore {
+    padding: 12px 20px 0;
+    z-index: 3;
+}
+
+.MusicCore-body {
+    height: 100%;
+    position: relative;
+    z-index: 3;
+}
+
+.MusicCore-left {
+    margin-right: 200px;
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.MusicCore-right {
+    width: 200px;
+    float: right;
+}
+
+.MusicCore-footer {
+    background-color: transparent;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+}
