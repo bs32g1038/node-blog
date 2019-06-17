@@ -50,17 +50,12 @@ export default class PieChart extends React.Component<any, any> {
     public componentDidMount() {
         const userRepos = this.props.userRepos;
         if (userRepos) {
-            const edges = userRepos.edges;
-            edges.sort((x: any, y: any) => {
-                return y.node.stargazers.totalCount - x.node.stargazers.totalCount;
+            const starsTop5 = userRepos.slice(0, 5);
+            const data = starsTop5.map((item: any) => {
+                return item.stargazersCount <= 0 ? 1 : item.stargazersCount;
             });
-
-            const starsTop12 = edges.slice(0, 12);
-            const data = starsTop12.map((item: any) => {
-                return item.node.stargazers.totalCount <= 0 ? 1 : item.node.stargazers.totalCount;
-            });
-            const labels = starsTop12.map((item: any) => {
-                return item.node.name;
+            const labels = starsTop5.map((item: any) => {
+                return item.name;
             });
             const o: any = { ...initData };
             o.datasets[0].data = data;
