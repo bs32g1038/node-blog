@@ -8,7 +8,8 @@ export const setArticles = (articles: any) => ({
 
 export const fetchArticles = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
     return (dispatch: any) => {
-        return api.fetchArticles(page, limit, filter).then((articles) => {
+        return api.fetchArticles(page, limit, filter).then((res) => {
+            const articles = res.items;
             const o: any = {};
             if (filter.cid) {
                 o[filter.cid] = articles;
