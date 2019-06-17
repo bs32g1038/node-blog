@@ -5,14 +5,10 @@ import AppFooter from './components/AppFooter';
 import asyncComponent from './components/asyncComponent';
 import Articles from './components/Articles';
 const ArticleEdit = asyncComponent(() => import('./components/ArticleEdit'));
-import Guestbooks from './components/Guestbooks';
-import GuestbookReply from './components/GuestbookReply';
 import Categories from './components/Categories';
 import CategoryEdit from './components/CategoryEdit';
 import Comments from './components/Comments';
 import CommentReply from './components/CommentReply';
-import Links from './components/Links';
-import LinkEdit from './components/LinkEdit';
 import Demos from './components/Demos';
 const DemoEdit = asyncComponent(() => import('./components/DemoEdit'));
 const StaticFiles = asyncComponent(() => import('./components/StaticFiles'));
@@ -45,14 +41,9 @@ class App extends Component {
                                 <Route exact path="/blog/admin/articles/edit/:id" component={ArticleEdit} />
                                 <Route exact path="/blog/admin/comments" component={Comments} />
                                 <Route exact path="/blog/admin/comments/reply/:id" component={CommentReply} />
-                                <Route exact path="/blog/admin/guestbooks" component={Guestbooks} />
-                                <Route exact path="/blog/admin/guestbooks/reply/:id" component={GuestbookReply} />
                                 <Route exact path="/blog/admin/categories" component={Categories} />
                                 <Route exact path="/blog/admin/categories/edit" component={CategoryEdit} />
                                 <Route exact path="/blog/admin/categories/edit/:id" component={CategoryEdit} />
-                                <Route exact path="/blog/admin/links" component={Links} />
-                                <Route exact path="/blog/admin/links/edit" component={LinkEdit} />
-                                <Route exact path="/blog/admin/links/edit/:id" component={LinkEdit} />
                                 <Route exact path="/blog/admin/demos" component={Demos} />
                                 <Route exact path="/blog/admin/demos/edit" component={DemoEdit} />
                                 <Route exact path="/blog/admin/demos/edit/:id" component={DemoEdit} />
