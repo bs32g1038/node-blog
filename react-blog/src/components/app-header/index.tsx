@@ -186,49 +186,30 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                 <MainWrap>
                     <HomeNav to="/" title={siteInfo.name}>
                         <img src={require('../../assets/images/logo.png')} alt={siteInfo.name} />
-                        {/* <H1>{siteInfo.name}</H1> */}
                     </HomeNav>
                     <Menu>
                         <i className={this.state.isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => this.showMenu()}></i>
                         <UL style={this.state.isShowMobileMenu ? { display: 'block' } : {}}>
                             <LI>
                                 <ATag to="/blog">
-                                    {/* <i className="fa fa-home fa-fw"></i> */}
                                     博客
                                 </ATag>
                             </LI>
-                            {/* <span> · </span> */}
-                            {/* <LI>
-                                <ATag to="/links">
-                                    <i className="fa fa-globe fa-fw"></i>友链
-                                </ATag>
-                            </LI> */}
-                            {/* <span> · </span> */}
                             <LI>
                                 <ATag to="/about">
-                                    {/* <i className="fa fa-user fa-fw"></i> */}
                                     关于
                                 </ATag>
                             </LI>
-                            {/* <span> · </span> */}
                             <LI>
                                 <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
-                                    {/* <i className="fa fa-coffee fa-fw"></i> */}
                                     音乐
                                 </a>
                             </LI>
-                            {/* <span> · </span> */}
                             <LI>
                                 <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
-                                    {/* <i className="fa fa-rss fa-fw"></i> */}
                                     Rss
                                 </a>
                             </LI>
-                            {/* <LI>
-                                <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
-                                    <i className="fa fa-github fa-fw"></i>Github
-                                </a>
-                            </LI> */}
                         </UL>
                     </Menu>
                     <UL>
