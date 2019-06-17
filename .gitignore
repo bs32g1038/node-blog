@@ -1,0 +1,6 @@
+.cache
+node_modules
+.vscode
+logs/blog/*
+!.gitkeep
+static

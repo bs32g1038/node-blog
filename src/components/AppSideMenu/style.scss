@@ -1,0 +1,86 @@
+.app-side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    background-color: #3c8ccd;
+    bottom: 0;
+    z-index: 999;
+    .ant-menu {
+        background-color: transparent;
+        color: #fff;
+        border-right: none
+    }
+    .ant-menu-item>a {
+        color: #fff
+    }
+    .ant-menu-submenu {
+        color: #fff;
+        .ant-menu {
+            background-color: transparent;
+        }
+    }
+    .ant-menu-item:hover,
+    .ant-menu-submenu-title:hover {
+        background-color: #009688;
+    }
+    .ant-menu-item:hover,
+    .ant-menu-item-active,
+    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+    .ant-menu-submenu-active,
+    .ant-menu-submenu-title:hover {
+        color: #fff;
+    }
+    .ant-menu-item:active,
+    .ant-menu-submenu-title:active {
+        background: none;
+    }
+    .ant-menu-submenu-title .ant-menu-submenu-arrow {
+        &:before,
+        &:after {
+            background-image: none;
+            background-color: #fff;
+        }
+    }
+    .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
+        &:before,
+        &:after {
+            background-image: none;
+            background-color: #fff;
+        }
+    }
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+        background-color: transparent;
+        color: #fff;
+        >a {
+            color: #fff;
+        }
+        &:after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            margin-top: -4px;
+            right: 15px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #22ff14;
+            border-right: none
+        }
+    }
+    .fa {
+        margin-right: 10px;
+    }
+}
+
+.app-side-menu-siteName {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 400;
+    width: 100%;
+    line-height: 60px;
+    margin: 0;
+    padding-left: 10px;
+    color: #fff;
+    height: 60px;
+}
