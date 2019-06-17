@@ -4,12 +4,6 @@
 
 [http://www.lizc.me](http://www.lizc.me "blog")
 
-**screenshot**
-
-![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot.png?raw=true)
-
-![](https://github.com/bs32g1038/node-blog/blob/master/static/images/screenshot-back.png?raw=true)
-
 **Project introduction：**
 
 * Node-blog through Nodejs and express provide the Restful API
@@ -31,6 +25,7 @@
 
 **2，install**
 
+>         cd **
 >         npm install
 
 **3，Run app**
