@@ -19,7 +19,6 @@ services:
     command: npm run start:prod
   nginx:
     build: ./nginx
-    network_mode: "host"
     depends_on:
       - api
       - blog
