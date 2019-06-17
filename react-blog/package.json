@@ -35,7 +35,7 @@
     "emotion-theming": "^10.0.10",
     "http-proxy-middleware": "^0.19.1",
     "marked": "^0.6.2",
-    "polished": "^3.4.0",
+    "polished": "^3.4.1",
     "query-string": "^6.7.0",
     "razzle": "^3.0.0",
     "razzle-plugin-typescript": "^3.0.0",
