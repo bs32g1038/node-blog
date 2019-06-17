@@ -31,7 +31,7 @@ export class ArticleService {
     }
 
     async getArticles(
-        query: { cid?: string },
+        query: { category?: string },
         option: { skip?: number, limit?: number, sort?: object }
     ): Promise<Article[]> {
         const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
