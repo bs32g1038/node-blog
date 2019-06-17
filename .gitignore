@@ -4,3 +4,4 @@ node_modules
 logs/blog/*
 !.gitkeep
 static
+dist
