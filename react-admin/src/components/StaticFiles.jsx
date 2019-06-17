@@ -43,7 +43,7 @@ class StaticFiles extends Component {
                             :
                             <span>
                                 <i className="fa fa-file fa-fw"></i>{record.originalName}
-                            </span>
+                            </span>;
                 }
             }, {
                 title: '创建时间',
@@ -55,14 +55,14 @@ class StaticFiles extends Component {
                 dataIndex: 'mimetype',
                 width: 160,
                 render: (text, record) => {
-                    return record.mimetype ? record.mimetype : '-'
+                    return record.mimetype ? record.mimetype : '-';
                 }
             }, {
                 title: '文件大小',
                 dataIndex: 'size',
                 width: 100,
                 render: (text, record) => {
-                    return record.size ? (record.size / 1024).toFixed(1) + 'k' : '-'
+                    return record.size ? (record.size / 1024).toFixed(1) + 'k' : '-';
                 }
             }, {
                 title: '操作',
@@ -113,11 +113,10 @@ class StaticFiles extends Component {
         return axios
             .get('/files?' + queryString.stringify(query))
             .then((res) => {
-                const paging = JSON.parse(res.headers['x-paging']);
                 const pagination = { ...this.state.pagination };
-                pagination.total = paging.total;
+                pagination.total = res.data.totalCount;
                 this.setState({
-                    files: res.data,
+                    files: res.data.items,
                     loading: false,
                     pagination,
                 });
@@ -131,7 +130,7 @@ class StaticFiles extends Component {
         return axios.get('/files/getFolderName/' + _id).then((res) => {
             return this.setState({
                 folderName: res.data.originalName
-            })
+            });
         });
     }
     createFolder(name) {
@@ -142,11 +141,11 @@ class StaticFiles extends Component {
             this.fetchData();
             this.setState({
                 isShowNewFolderDialog: false
-            })
+            });
         });
     }
     handleOk() {
-        return this.fetchData(this.props.location).then(() => {
+        return this.fetchData().then(() => {
             this.setState({
                 visible: false,
             });
@@ -154,7 +153,6 @@ class StaticFiles extends Component {
     }
     handleNewFloderOk(e) {
         e.preventDefault();
-        const { match, history } = this.props;
         this.props.form.validateFields((err, data) => {
             if (!err) {
                 this.createFolder(data.name);
@@ -238,7 +236,7 @@ class StaticFiles extends Component {
                                 onClick={() => this.setState({ isShowNewFolderDialog: true })}>
                                 <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                 新建文件夹
-                        </Button>
+                            </Button>
                     }
                     <Button
                         type="danger">
@@ -331,4 +329,4 @@ class StaticFiles extends Component {
     }
 }
 
-export default Form.create()(StaticFiles)
+export default Form.create()(StaticFiles);

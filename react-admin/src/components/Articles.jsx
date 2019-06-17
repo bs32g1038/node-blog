@@ -71,10 +71,9 @@ class Articles extends Component {
 
     }
     deleteArticle(_id) {
-        const { location } = this.props;
         axios.delete('/articles/' + _id).then(() => {
             message.success('删除文章成功！');
-            this.fetchData(location);
+            this.fetchData();
         });
     }
     fetchData(page = 1, limit = 10) {
@@ -86,11 +85,10 @@ class Articles extends Component {
         axios
             .get('/articles?' + queryString.stringify(query))
             .then((res) => {
-                const paging = JSON.parse(res.headers['x-paging']);
                 const pagination = { ...this.state.pagination };
-                pagination.total = paging.total;
+                pagination.total = res.data.totalCount;
                 this.setState({
-                    articles: res.data,
+                    articles: res.data.items,
                     loading: false,
                     pagination,
                 });
@@ -105,7 +103,7 @@ class Articles extends Component {
         this.fetchData(pagination.current, pagination.pageSize);
     }
     componentDidMount() {
-        this.fetchData(this.props.location);
+        this.fetchData();
     }
     render() {
         return (

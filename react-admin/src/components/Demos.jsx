@@ -74,7 +74,7 @@ export default class Articles extends Component {
         axios
             .get('/demos?' + queryString.stringify(query))
             .then((res) => {
-                this.setState({ demos: res.data });
+                this.setState({ demos: res.data.items });
             });
     }
     UNSAFE_componentWillReceiveProps(nextProps) {

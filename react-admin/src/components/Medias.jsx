@@ -82,11 +82,10 @@ export default class Articles extends Component {
         return axios
             .get('/medias?' + queryString.stringify(query))
             .then((res) => {
-                const paging = JSON.parse(res.headers['x-paging']);
                 const pagination = { ...this.state.pagination };
-                pagination.total = paging.total;
+                pagination.total = res.data.totalCount;
                 this.setState({
-                    files: res.data,
+                    files: res.data.items,
                     loading: false,
                     pagination,
                 });

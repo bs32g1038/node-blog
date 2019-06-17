@@ -78,7 +78,7 @@ export default class Comments extends Component {
         axios
             .get('/comments?' + queryString.stringify(query))
             .then((res) => {
-                this.setState({ comments: res.data });
+                this.setState({ comments: res.data.items });
             });
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
