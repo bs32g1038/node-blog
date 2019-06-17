@@ -1,5 +1,5 @@
 import api from '../../api/about';
-import { CHECK_ABOUT_USER_STATUS, FETCH_ABOUT_USER_PROFILE } from '../action-types';
+import { FETCH_ABOUT_USER_PROFILE } from '../action-types';
 
 export const setState = (profile: any) => ({
     type: FETCH_ABOUT_USER_PROFILE,
