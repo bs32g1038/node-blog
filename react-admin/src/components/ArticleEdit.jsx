@@ -38,12 +38,20 @@ class ArticleEdit extends Component {
             });
         }
     }
+    beforeUpload(file){
+        if(file.size > 1024 * 1024 ){
+            message.warning('图片大小最大为 1M ！');
+            return false;
+        }
+        return true;
+    }
     handleUpload(e) {
         if (Array.isArray(e)) {
             return e;
         }
         let fileList = e.fileList;
         fileList = fileList.slice(-1);
+    
         fileList = fileList.map((file) => {
             if (file.response) {
                 file.url = file.response.url;
@@ -141,13 +149,14 @@ class ArticleEdit extends Component {
                         })(
                             <Upload
                                 disabled={false}
-                                action="/api/upload/image?w=600&h=600"
-                                onChange={this.handleChange}
+                                action="/api/upload/image"
                                 multiple={false}
                                 name="file"
                                 listType="picture"
+                                accept=".jpg,.png"
                                 headers={{ authorization: localStorage.getItem(config.tokenKey) }}
                                 onRemove={() => false}
+                                beforeUpload={this.beforeUpload}
                             >
                                 <Button><i className="fa fa-arrow-up"></i>点击上传</Button>
                             </Upload>
