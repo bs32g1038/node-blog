@@ -17,7 +17,7 @@ export default class Article {
         return Promise.all([articlePrmoise, commentsPrmoise]).then((arr) => {
             return {
                 article: arr[0].data,
-                comments: arr[1].data
+                comments: arr[1].data.items
             };
         });
     }
