@@ -7,22 +7,16 @@ services:
     volumes:
       - ../data/logs:/code/logs
       - ../data/blog/upload:/code/static/upload
-    command: npm run start
-    ports:
-      - 8080:8080
-    network_mode: "host"
+    command: npm run start:prod
   blog:
     build: ./react-blog
-    command: "npm run start:prod"
-    ports:
-      - 3000:3000
-    network_mode: "host"
+    command: npm run start:prod
   admin:
     build: ./react-admin
-    command: npm run start
-    ports:
-      - 3002:3002
-    network_mode: "host"
+    command: npm run start:prod
+  music:
+    build: ./react-admin
+    command: npm run start:prod
   nginx:
     build: ./nginx
     network_mode: "host"
@@ -30,6 +24,7 @@ services:
       - api
       - blog
       - admin
+      - music
     ports:
       - 80:80
       - 443:443

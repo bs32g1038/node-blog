@@ -2,7 +2,7 @@ FROM node:10.16.0-alpine
 WORKDIR /code
 COPY ./package.json /code
 RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
-RUN cnpm install
+RUN cnpm install 
 RUN npm run build
 COPY . /code
-EXPOSE 3002
+EXPOSE 7000
