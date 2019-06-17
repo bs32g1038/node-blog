@@ -423,7 +423,7 @@ class Article extends Component<any, any> {
                                     <rect x="0" y="120" width="960" height="40"></rect>
                                 </ContentLoader>
                                 :
-                                recentArticles.slice(6, 9).map((item: any) => (
+                                recentArticles.slice(5, 9).map((item: any) => (
                                     <ListItem className="list-nice-overlay" key={'rl' + item._id}>
                                         <Media className="media">
                                             <MediaContent
