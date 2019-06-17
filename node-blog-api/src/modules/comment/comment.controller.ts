@@ -1,0 +1,67 @@
+import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Req } from '@nestjs/common';
+import { CreateCommentDto, UpdateCommentDto } from './comment.dto';
+import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
+import { CommentService } from './comment.service';
+import { Comment } from '../../models/comment.model';
+import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Roles } from '../../decorators/roles.decorator';
+import { RolesGuard } from '../../guards/roles.guard';
+import { auth } from '../../utils/auth.util';
+import config from '../../configs/index.config';
+import * as Joi from 'joi';
+
+@Controller('/api')
+@UseGuards(RolesGuard)
+export class CommentController {
+    constructor(private readonly commentService: CommentService) { }
+
+    static idSchema = {
+        id: Joi.string().default('').max(50)
+    };
+
+    @Post('/comments')
+    async create(@Req() req, @Body() createCommentDto: CreateCommentDto) {
+        if (auth(req)) {
+            Object.assign(createCommentDto, {
+                identity: 1,
+                nickName: config.user.nickName,
+                email: config.user.email,
+                location: config.user.location
+            });
+        }
+        return await this.commentService.create(createCommentDto);
+    }
+
+    @Put('/comments/:id')
+    @Roles('admin')
+    async update(@Param() params: { id: string }, @Body() categoryDto: UpdateCommentDto) {
+        return await this.commentService.update(params.id, categoryDto);
+    }
+
+    @Get('/comments')
+    @JoiValidationPipe(StandardPaginationSchema)
+    async getComments(@Query() query: { page: number, limit: number }) {
+        const items = await this.commentService.getComments({}, {
+            skip: Number(query.page),
+            limit: Number(query.limit)
+        });
+        const totalCount = await this.commentService.count({});
+        return {
+            items,
+            totalCount
+        };
+    }
+
+    @Get('/comments/:id')
+    @JoiValidationPipe(CommentController.idSchema)
+    async getComment(@Param() params: { id: string }): Promise<Comment> {
+        return await this.commentService.getComment(params.id);
+    }
+
+    @Delete('/comments/:id')
+    @JoiValidationPipe(CommentController.idSchema)
+    @Roles('admin')
+    async deleteComment(@Param() params: { id: string }): Promise<Comment> {
+        return await this.commentService.deleteComment(params.id);
+    }
+}

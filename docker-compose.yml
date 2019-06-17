@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   api:
-    build: ../node-blog-api
+    build: ./node-blog-api
     depends_on:
       - db
     volumes:
@@ -12,19 +12,19 @@ services:
       - 8080:8080
     network_mode: "host"
   blog:
-    build: ../react-blog
+    build: ./react-blog
     command: "npm run start:prod"
     ports:
       - 3000:3000
     network_mode: "host"
   admin:
-    build: ../react-blog-admin
+    build: ./react-admin
     command: npm run start
     ports:
       - 3002:3002
     network_mode: "host"
   nginx:
-    build: ../nginx
+    build: ./nginx
     network_mode: "host"
     depends_on:
       - api
@@ -35,7 +35,7 @@ services:
       - 443:443
     volumes:
       - ../data/logs:/var/log/nginx
-      - ../nginx/certificate:/etc/nginx/certificate
+      - ./nginx/certificate:/etc/nginx/certificate
   db:
     image: mongo:4.1
     volumes:
