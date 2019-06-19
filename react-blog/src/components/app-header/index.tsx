@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { transitions } from 'polished';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import GithubSVG from '../svgs/github-svg';
+import SearchSVG from '../svgs/search-svg';
+
 import media from '../../utils/media';
 
 const Container = styled.header`
@@ -44,17 +46,6 @@ const HomeNav = styled(NavLink)`
         width: auto;
         height: 40px;
     }
-`;
-
-const H1 = styled.h1`
-    ${transitions('color .15s ease')};
-    text-align: center;
-    margin: 0;
-    font-size: 16px;
-    ${media.phone`
-        padding-left: 5px;
-        width: 100%;
-    `};
 `;
 
 const Menu = styled.div`
@@ -152,11 +143,21 @@ const SearchForm = styled.form`
         -webkit-appearance: textfield;
         outline-offset: -2px;
     }
-    .search-icon{
-        color: #666;
-        padding: 0 8px;
-        cursor: pointer;
-    }
+`;
+
+const SearchIcon = styled(SearchSVG)`
+    width: 16px;
+    height: 16px;
+    fill: #666;
+    padding: 0 10px;
+    cursor: pointer;
+`;
+
+const GithubIcon = styled(GithubSVG)`
+    fill:#2B414D;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 `;
 
 export interface AppHeaderProps {
@@ -190,16 +191,8 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                     <Menu>
                         <i className={this.state.isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => this.showMenu()}></i>
                         <UL style={this.state.isShowMobileMenu ? { display: 'block' } : {}}>
-                            <LI>
-                                <ATag to="/blog">
-                                    博客
-                                </ATag>
-                            </LI>
-                            <LI>
-                                <ATag to="/about">
-                                    关于
-                                </ATag>
-                            </LI>
+                            <LI><ATag to="/blog">博客</ATag></LI>
+                            <LI><ATag to="/about">关于</ATag></LI>
                             <LI>
                                 <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
                                     音乐
@@ -216,12 +209,12 @@ export default class AppHeader extends Component<AppHeaderProps, AppHeaderState>
                         <LI>
                             <SearchForm>
                                 <input type="search" maxLength={32} placeholder="搜索更新啦" className="search-input" />
-                                <i className="fa fa-search fa-fw search-icon"></i>
+                                <SearchIcon />
                             </SearchForm>
                         </LI>
                         <LI>
                             <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
-                                <i className="fa fa-github fa-fw github" style={{ fontSize: '24px' }}></i>
+                                <GithubIcon />
                             </a>
                         </LI>
                     </UL>

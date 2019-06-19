@@ -1,44 +1,45 @@
 import styled from '@emotion/styled';
-import { padding } from 'polished';
 import React, { Component } from 'react';
 
-const Footer = styled.footer((props) => ({
-    label: 'app-footer',
-    marginTop: '20px',
-    boxSizing: 'border-box',
-    color: '#8590a6',
-    flex: '0 0 auto',
-    fontSize: '12px',
-    fontWeight: 'normal',
-    position: 'relative',
-    textAlign: 'center',
-    ...padding(8, 10, 10, 10)
-}));
+const Footer = styled.footer`
+    margin-top: 20px;
+    box-sizing: border-box;
+    color: #8590a6;
+    flex: 0 0 auto;
+    font-size: 12px;
+    font-weight: normal;
+    position: relative;
+    text-align: center;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+`;
 
-const P = styled.p((_) => ({
-    wordBreak: 'break-all',
-    wordWrap: 'break-word',
-    lineHeight: 1.8,
-    margin: 0,
-    '> a': {
-        textDecoration: 'none',
-        color: '#34495e'
+const P = styled.p`
+    word-break: break-all;
+    word-wrap: break-word;
+    line-height: 1.8;
+    margin: 0;
+    > a {
+        text-decoration: none;
+        color: #34495e;
     }
-}));
+`;
 
-const BackTopBtn = styled.div((_) => ({
-    color: '#333',
-    cursor: 'pointer',
-    display: 'block',
-    height: '44px',
-    lineHeight: '44px',
-    marginBottom: '-20px',
-    position: 'fixed',
-    right: '20px',
-    bottom: '20px',
-    textAlign: 'center',
-    width: '44px'
-}));
+const BackTopBtn = styled.div`
+    color: #333;
+    cursor: pointer;
+    display: block;
+    height: 44px;
+    line-height: 44px;
+    margin-bottom: -20px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    text-align: center;
+    width: 44px;
+`;
 
 export interface AppFooterProps {
     siteInfo: {

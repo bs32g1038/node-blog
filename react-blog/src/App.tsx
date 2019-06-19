@@ -1,6 +1,5 @@
-import { Global } from '@emotion/core';
+import { css, Global } from '@emotion/core';
 import styled from '@emotion/styled';
-import { normalize } from 'polished';
 import React from 'react';
 import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
@@ -9,6 +8,10 @@ import AppHeader from './components/app-header';
 import siteInfo from './config/site-info';
 import { fetchCategories } from './redux/reducers/categories';
 import media from './utils/media';
+
+const normalize = () => {
+    return '/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}b,strong{font-weight:bolder}code{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}details{display:block}summary{display:list-item}[hidden]{display:none}';
+};
 
 const PageWrap = styled.div`
     width: 960px;
@@ -44,7 +47,7 @@ class App extends React.Component<any, any> {
         };
         return (
             <div className="app">
-                <Global styles={normalize()} />
+                <Global styles={css`${normalize()}`} />
                 <Global
                     styles={{
                         body: {

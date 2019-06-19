@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { isEmail, isEmpty, isURL } from 'validator';
 import axios from '../../utils/axios';
-import { media, rem, xss } from '../../utils/helper';
+import { media, xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 
 const bounce = keyframes`

@@ -1,5 +1,4 @@
 import { css } from '@emotion/core';
-import { rem as _rem } from 'polished';
 import jsxss from 'xss';
 
 const sizes = {
@@ -17,10 +16,6 @@ export const media = Object.keys(sizes).reduce((acc: any, label) => {
     `;
     return acc;
 }, {});
-
-export const rem = (str: any): any => {
-    return _rem(str, 50);
-};
 
 const Xss = new jsxss.FilterXSS({
     onIgnoreTagAttr: (tag: any, name: any, value: any, isWhiteAttr: any) => {

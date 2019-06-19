@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
 import media from '../../utils/media';
-import rem from '../../utils/rem';
 import { parseTime } from '../../utils/time';
 import ContentLoader from '../content-loader';
 import Comment from './comment';
@@ -21,7 +20,7 @@ const ArticleWrap = styled.div`
 const ArticleItem = styled.article`
     max-width: 720px;
     flex: 1 0 auto;
-    padding: ${rem('20px')};
+    padding: '20px';
     ${
     media.phone`
             padding-left: 12px;
@@ -55,6 +54,11 @@ const Meta = styled.div`
     font-size: 12px;
     span {
         padding: 0 5px;
+    }
+    a {
+        color: rgb(153,153,153);
+        font-size: 12px;
+        margin-left: 4px;
     }
 `;
 
