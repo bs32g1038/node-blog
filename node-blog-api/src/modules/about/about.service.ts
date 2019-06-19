@@ -11,33 +11,20 @@ const handleUserCommits = (commits) => {
     const contribution = [];
     const parseSvg = $('.day');
     let total = 0;
-    const obj = {
-        year: '',
-        month: '',
-        count: 0
-    };
-    let lastMonth = '';
     parseSvg.each((_, svg) => {
         const dataCount = +$(svg).attr('data-count');
         const dataDate = $(svg).attr('data-date'); // ex. 2017-01-23
         const dataYear = dataDate.slice(0, 4); // ex. 2017
         const dataMonth = dataDate.slice(5, 7); // ex. 01
-        if (obj.month !== '' && obj.month !== dataMonth) {
-            lastMonth = obj.month;
-            contribution.push(Object.assign({}, obj));
-            obj.year = dataYear;
-            obj.month = dataMonth;
-            obj.count = dataCount;
-        } else {
-            obj.count += dataCount;
-            obj.year = dataYear;
-            obj.month = dataMonth;
-        }
+        const dataDay = dataDate.slice(8, 10); // ex. 01
+        const obj: any = {};
+        obj.year = dataYear;
+        obj.month = dataMonth;
+        obj.day = dataDay;
+        obj.count = dataCount;
+        contribution.push(obj);
         total += dataCount;
     });
-    if (obj.month !== lastMonth) {
-        contribution.push(Object.assign({}, obj));
-    }
     return {
         contribution,
         total
