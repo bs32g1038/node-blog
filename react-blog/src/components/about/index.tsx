@@ -92,6 +92,9 @@ const AboutDiv = styled.div`
     .skills-list li {
         padding: 15px 0;
     }
+    .react-calendar-heatmap {
+        margin-bottom: -20px
+    }
 `;
 
 const PinnedItemsList = styled.ol`
@@ -274,7 +277,8 @@ class About extends React.Component<any, any> {
                 values = userProfile.userCommits.contribution.map((item: any) => {
                     return {
                         year: item.year,
-                        date: item.year + '-' + item.month,
+                        month: item.month,
+                        date: item.year + '-' + item.month + '-' + item.day,
                         count: item.count,
                     };
                 });
@@ -366,7 +370,7 @@ class About extends React.Component<any, any> {
                             </div>
                             <p>Github {totalContributionLastYear} contributions in the last year</p>
                             <CalendarHeatmap
-                                startDate={(values[0] && values[0].year + '-1-1') || (new Date().getFullYear()) - 1 + '-1-1'}
+                                startDate={(values[0] && values[0].year + '-' + values[0].month) || (new Date().getFullYear()) - 1 + '-1-1'}
                                 endDate={today}
                                 values={values}
                                 classForValue={(value: any) => {
@@ -384,6 +388,8 @@ class About extends React.Component<any, any> {
                                     };
                                 }}
                                 showWeekdayLabels={true}
+                                horizontal={true}
+                                gutterSize={4}
                             />
                             <ReactTooltip></ReactTooltip>
                             <p>Pinned</p>
