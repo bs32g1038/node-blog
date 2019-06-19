@@ -83,7 +83,8 @@ const getUserRepos = async (username: string) => {
                     name: item.name,
                     forkCount: item.forks_count,
                     stargazersCount: item.stargazers_count,
-                    language: item.language
+                    language: item.language,
+                    description: item.description
                 };
             }).filter(item => item);
         });
