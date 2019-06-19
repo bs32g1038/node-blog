@@ -7,3 +7,4 @@ static
 dist
 react-blog/build
 *.lock
+*.log
