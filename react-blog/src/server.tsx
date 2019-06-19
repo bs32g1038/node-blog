@@ -1,12 +1,11 @@
+import { renderStylesToNodeStream } from 'emotion-server';
 import express from 'express';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToNodeStream } from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
-import { matchRoutes } from 'react-router-config';
-import { renderRoutes } from 'react-router-config';
-import { StaticRouter } from 'react-router-dom';
-import { Switch } from 'react-router-dom';
+import { matchRoutes, renderRoutes } from 'react-router-config';
+import { StaticRouter, Switch } from 'react-router-dom';
 import serialize from 'serialize-javascript';
 import { setIsMobile } from './redux/reducers/global';
 import Store from './redux/store';
@@ -44,18 +43,9 @@ export const ssr = (req: express.Request, res: express.Response) => {
     })).then(() => {
         const context = {};
         store.dispatch(setIsMobile(getMachine(req) === 'pc'));
-        const markup = renderToString(
-            <Provider store={store}>
-                <StaticRouter context={context} location={req.url}>
-                    <Switch>
-                        {renderRoutes(routes, { routes })}
-                    </Switch>
-                </StaticRouter>
-            </Provider> as any
-        );
         const helmet = Helmet.renderStatic();
         const finalState = store.getState();
-        res.send(
+        res.write(
             `<!doctype html>
                 <html lang="" style="font-size: ${getMachine(req) === 'pc' ? '50px' : '20px'}">
                     <head>
@@ -66,7 +56,6 @@ export const ssr = (req: express.Request, res: express.Response) => {
                     <meta content="李志成的个人网站，个人博客，lizc博客，web，nodejs，前端，后端，docker，综合" name="Keywords">
                     <meta content="博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！" name="description">
                     <link rel="shortcut icon" sizes="48x48" href="/public/logo.png">
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
                     <script>
                         var _hmt = _hmt || [];
                         (function() {
@@ -81,20 +70,35 @@ export const ssr = (req: express.Request, res: express.Response) => {
                 ? `<link rel="stylesheet" href="${assets.client.css}">`
                 : ''
             }
-                ${
-            process.env.NODE_ENV === 'production'
-                ? `<script src="${assets.client.js}" defer></script>`
-                : `<script src="${assets.client.js}" defer crossorigin></script>`
-            }
+
             </head>
             <body data-machine="${getMachine(req)}">
-                <div id="root">${markup}</div>
-                <script>
-                window.__INITIAL_STATE__ = ${serialize(finalState)}
-                </script>
-            </body>
-        </html>`
+                <div id="root">`
         );
+        const stream = renderToNodeStream(
+            <Provider store={store}>
+                <StaticRouter context={context} location={req.url}>
+                    <Switch>
+                        {renderRoutes(routes, { routes })}
+                    </Switch>
+                </StaticRouter>
+            </Provider> as any
+        );
+        stream.pipe(renderStylesToNodeStream());
+        stream.pipe(res, { end: false });
+        return stream.on('end', () => {
+            res.write(`</div>
+                ${
+                process.env.NODE_ENV === 'production'
+                    ? `<script src="${assets.client.js}" defer></script>`
+                    : `<script src="${assets.client.js}" defer crossorigin></script>`
+                }
+                <script>
+                    window.__INITIAL_STATE__ = ${serialize(finalState)}
+                </script>
+                </body></html>`);
+            return res.end();
+        });
     });
 };
 
