@@ -15,7 +15,7 @@ services:
     build: ./react-admin
     command: npm run start:prod
   music:
-    build: ./react-admin
+    build: ./react-music-app
     command: npm run start:prod
   nginx:
     build: ./nginx
