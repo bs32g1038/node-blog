@@ -9,16 +9,17 @@ import siteInfo from '../../config/site-info';
 import { fetchUserProfile } from '../../redux/reducers/about';
 import media from '../../utils/media';
 import ContentLoader from '../content-loader';
-import PieChart from './PieChart';
 
 const AboutDiv = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
     background-color: #fff;
-    .resume {
-        text-align: center;
-        font-size: 24px;
+    .bio {
+        padding: 10px 18px;
+        background-color: #f6f6f6;
+        border-radius: 3px;
+        border: 1px dashed #d5d3d3;
     }
     .about-header {
         flex: 1 0 auto;
@@ -44,6 +45,9 @@ const AboutDiv = styled.div`
             li {
                 font-size: 12px;
                 padding: 5px;
+                strong {
+                    margin-right: 5px;
+                }
             }
         }
         .person-img {
@@ -71,19 +75,9 @@ const AboutDiv = styled.div`
             `};
         }
     }
-
-    .pie-chart{
-        display: flex;
-        ${media.phone`
-            display: block;
-        `};
-    }
-
     .skills-list {
         display: flex;
-        margin-top: 20px;
     }
-
     .skills-list ul {
         list-style: none;
         padding-left: 0;
@@ -95,9 +89,83 @@ const AboutDiv = styled.div`
             margin-right: -20px;
         }
     }
-
     .skills-list li {
         padding: 15px 0;
+    }
+`;
+
+const PinnedItemsList = styled.ol`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 0;
+    .pinned-item-list-item {
+        margin-bottom: 16px;
+        width: calc(50% - 8px);
+        border: 1px solid #d1d5da;
+        border-radius: 3px;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+    .pinned-item-list-item-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        >.header {
+            display: flex;
+            width: 100%;
+            position: relative;
+            align-items: center;
+            > a {
+                color: #0366d6;
+            }
+        }
+        .header-icon {
+            margin-right: 8px
+        }
+        a {
+            text-decoration: none;
+            flex: 1 0 auto;
+        }
+    }
+    .pinned-item-desc {
+        flex: 1 0 auto;
+        font-size: 12px;
+        margin-bottom: 16px;
+        color: #586069;
+    }
+    .meta{
+        font-size: 12px;
+        color: #586069;
+        margin-bottom: 0;
+    }
+    .meta-item {
+        margin-right: 16px;
+    }
+    .pinned-item-meta {
+        display: inline-block;
+        color: #586069;
+        text-decoration: none;
+    }
+    .pinned-item-meta+.pinned-item-meta {
+        margin-left: 16px;
+    }
+    .octicon {
+        vertical-align: text-bottom;
+        display: inline-block;
+        fill: currentColor;
+    }
+    .repo-language-color {
+        border-radius: 50%;
+        display: inline-block;
+        height: 12px;
+        position: relative;
+        top: 1px;
+        width: 12px;
+        margin-right: 3px;
     }
 `;
 
@@ -109,7 +177,6 @@ const Skillbar = styled.div`
     border-radius: 35px;
     transition: 0.4s linear;
     transition-property: width,background-color;
-
     .skillbar-title {
         position: absolute;
         top: 0;
@@ -143,7 +210,6 @@ const Skillbar = styled.div`
             width: 70%;
         }
     }
-
     .skillbar-title span {
         display: block;
         background: rgba(0, 0, 0, 0.15);
@@ -152,7 +218,6 @@ const Skillbar = styled.div`
         line-height: 30px;
         border-radius: 35px;
     }
-
     .skill-bar-percent {
         position: absolute;
         right: 10px;
@@ -216,6 +281,7 @@ class About extends React.Component<any, any> {
             }
         } else {
             userInfo = {};
+            userRepos = [];
         }
         return (
             <AboutDiv className="about">
@@ -223,11 +289,6 @@ class About extends React.Component<any, any> {
                     this.state.isLoading ?
                         <>
                             <Helmet title={siteInfo.name + '-关于'}></Helmet>
-                            <h1 className="resume">
-                                <ContentLoader width={720} height={40}>
-                                    <rect x="260" y="0" width="200" height="40"></rect>
-                                </ContentLoader>
-                            </h1>
                             <ContentLoader width={720} height={30}>
                                 <rect x="0" y="0" rx="2" ry="2" width="720" height="30"></rect>
                             </ContentLoader>
@@ -277,8 +338,7 @@ class About extends React.Component<any, any> {
                         :
                         <>
                             <Helmet title={siteInfo.name + '-关于'}></Helmet>
-                            <h1 className="resume">--关于--</h1>
-                            <p style={{ padding: '10px 18px', backgroundColor: '#efefef', borderRadius: '4px' }}>
+                            <p className="bio">
                                 专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
                             </p>
                             <p>
@@ -290,17 +350,17 @@ class About extends React.Component<any, any> {
                                     <h3 className="aim">求职目标：web前端工程师</h3>
                                 </div>
                                 <ul className="person-info">
-                                    <li><i className="fa fa-user fa-fw"></i>2*岁</li>
-                                    <li><i className="fa fa-phone fa-fw"></i>185(*^_^*)7248</li>
-                                    <li><i className="fa fa-flag fa-fw"></i>计算机科学与技术</li>
+                                    <li><strong>Age:</strong>2*岁</li>
+                                    <li><strong>Phone:</strong>185(*^_^*)7248</li>
+                                    <li><strong>Profession:</strong>计算机科学与技术</li>
                                 </ul>
                                 <ul className="person-info">
-                                    <li><i className="fa fa-map-marker fa-fw"></i>{userInfo.location}</li>
-                                    <li><i className="fa fa-envelope fa-fw"></i>bs32g1038@163.com</li>
-                                    <li><i className="fa fa-university fa-fw"></i>大学本科</li>
+                                    <li><strong>Location:</strong>{userInfo.location}</li>
+                                    <li><strong>Email:</strong>bs32g1038@163.com</li>
+                                    <li><strong>Education:</strong>大学本科</li>
                                 </ul>
                                 <div className="person-img">
-                                    <img src={userInfo.avatarUrl} alt="头像" />
+                                    <img src="/public/images/avatar.png" alt="头像" />
                                     <h3 className="aim">web前端工程师</h3>
                                 </div>
                             </div>
@@ -326,10 +386,40 @@ class About extends React.Component<any, any> {
                                 showWeekdayLabels={true}
                             />
                             <ReactTooltip></ReactTooltip>
-                            <div className="pie-chart">
-                                <h3 style={{ minWidth: 140 }}>Stars per Repo(top 5)</h3>
-                                <PieChart userRepos={userRepos}></PieChart>
-                            </div>
+                            <p>Pinned</p>
+                            <PinnedItemsList>
+                                {
+                                    userRepos.map((item: any) => (
+                                        <li key={item.name} className="pinned-item-list-item">
+                                            <div className="pinned-item-list-item-content">
+                                                <div className="header">
+                                                    <svg className="octicon header-icon" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fillRule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path></svg>
+                                                    <a href={'https://github.com/bs32g1038/' + item.name} rel="noopener noreferrer" target="_blank">{item.name}</a>
+                                                    <span className="pinned-item-handle js-pinned-item-reorder pl-2" title="Drag to reorder">
+                                                        <svg className="octicon octicon-grabber" viewBox="0 0 8 16" version="1.1" width="8" height="16" aria-hidden="true"><path fillRule="evenodd" d="M8 4v1H0V4h8zM0 8h8V7H0v1zm0 3h8v-1H0v1z"></path></svg>
+                                                    </span>
+                                                </div>
+                                                <p className="pinned-item-desc">{item.description}</p>
+                                                <p className="meta">
+                                                    <span className="meta-item">
+                                                        <span className="repo-language-color" style={{ backgroundColor: '#2b7489' }}></span>
+                                                        <span>{item.language}</span>
+                                                    </span>
+                                                    <a className="pinned-item-meta" href={'https://github.com/bs32g1038/' + item.name + '/stargazers'} rel="noopener noreferrer" target="_blank">
+                                                        <svg aria-label="stars" className="octicon" viewBox="0 0 14 16" version="1.1" width="14" height="16"><path fillRule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>
+                                                        &nbsp;{item.stargazersCount}
+                                                    </a>
+                                                    <a className="pinned-item-meta" href={'https://github.com/bs32g1038/' + item.name + '/network/members'} rel="noopener noreferrer" target="_blank">
+                                                        <svg aria-label="forks" className="octicon" viewBox="0 0 10 16" version="1.1" width="10" height="16"><path fillRule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"></path></svg>
+                                                        &nbsp;{item.forkCount}
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    ))
+                                }
+                            </PinnedItemsList>
+                            <p>Skills</p>
                             <div className="skills-list">
                                 <ul>
                                     <li className="border-line-h">
