@@ -395,7 +395,7 @@ class Article extends Component<any, any> {
                                                         <ListTitle to={`/blog/articles/${item._id}`} className="list-title text-sm h-2x">{item.title}</ListTitle>
                                                     </div>
                                                     <TextMuted>
-                                                        <div>2019-03-08</div>
+                                                        <div>{parseTime(article.createdAt)}</div>
                                                     </TextMuted>
                                                 </ListContent>
                                             </ListItem>
@@ -415,7 +415,6 @@ class Article extends Component<any, any> {
                         </section>
                     </WidgetArea>
                 </ArticleWrap>
-
                 <div className="container">
                     <div className="list-header h4 mb-3 mb-md-4">相关文章</div>
                     <ListGrouped>
