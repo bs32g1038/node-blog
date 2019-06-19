@@ -40,7 +40,6 @@
     "react-redux": "^7.1.0",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-svg": "^10.0.9",
     "react-tooltip": "^3.10.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
