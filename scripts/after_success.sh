@@ -6,7 +6,6 @@ WORKDIR /code\n
 COPY ./package.json /code\n
 RUN yarn install\n
 COPY . /code\n
-RUN yarn run build
 "
 echo -e $dockerfile"\nEXPOSE 8080" > node-blog-api/dockerfile
 echo -e $dockerfile"\nEXPOSE 3002" > react-admin/dockerfile
