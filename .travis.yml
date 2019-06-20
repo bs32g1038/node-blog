@@ -2,13 +2,6 @@ language: node_js
 
 node_js: stable
 
-cache:
-  directories:
-    - react-blog/node_modules
-    - node-blog-api/node_modules
-    - react-admin/node_modules
-    - react-music-app/node_modules
-
 install:
   - cd $TRAVIS_BUILD_DIR
   - bash scripts/install-dependencies.sh
