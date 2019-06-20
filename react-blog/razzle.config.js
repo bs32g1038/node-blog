@@ -2,8 +2,6 @@
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const path = require('path');
 
-const isDev = process.env.NODE_ENV !== 'production';
-
 module.exports = {
     modify: (config, { target, dev }, webpack) => {
         const appConfig = config;
@@ -18,17 +16,9 @@ module.exports = {
         });
         appConfig.plugins.push(new ForkTsCheckerWebpackPlugin({
             tsconfig: path.resolve(__dirname, './tsconfig.json'),
-            tslint: isDev ? path.resolve(__dirname, './tslint.json') : '',
-            async: isDev,
+            tslint: dev ? path.resolve(__dirname, './tslint.json') : '',
             useTypescriptIncrementalApi: true,
-            checkSyntacticErrors: true,
-            reportFiles: [
-                '**',
-                '!**/__tests__/**',
-                '!**/?(*.)(spec|test).*',
-                '!**/src/setupProxy.*',
-                '!**/src/setupTests.*',
-            ],
+            checkSyntacticErrors: dev,
             watch: [path.resolve(__dirname, './src')],
             silent: true
         }))
