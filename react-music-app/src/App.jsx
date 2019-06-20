@@ -46,13 +46,13 @@ export default class App extends React.Component {
         hour = String(parseInt(time / 3600, 10));
         minute = String(parseInt((time % 3600) / 60, 10));
         second = String(parseInt(time % 60, 10));
-        if (hour != '0') {
-            if (hour.length == 1) hour = '0' + hour;
+        if (hour !== '0') {
+            if (hour.length === 1) hour = '0' + hour;
             timer += (hour + ':');
         }
-        if (minute.length == 1) minute = '0' + minute;
+        if (minute.length === 1) minute = '0' + minute;
         timer += (minute + ':');
-        if (second.length == 1) second = '0' + second;
+        if (second.length === 1) second = '0' + second;
         timer += second;
         return timer;
     }
@@ -95,7 +95,7 @@ export default class App extends React.Component {
                 return this.setState({
                     curLyricItem: data[k].index - 1
                 });
-            } else if (k == Math.floor(curTime)) {
+            } else if (k === Math.floor(curTime)) {
                 return this.setState({
                     curLyricItem: data[k].index
                 });
@@ -414,7 +414,7 @@ export default class App extends React.Component {
             const data = sessionStorage.getItem('MusicState');
             const state = JSON.parse(data);
             let index = 0;
-            if (state.mode == 0) {
+            if (state.mode === 0) {
                 index = state.playIndex + 1;
                 (state.playIndex + 1 > state.playList.length) && (index = 0);
             } else {
@@ -437,7 +437,7 @@ export default class App extends React.Component {
             lyric.push(
                 <p
                     key={k}
-                    className={data[k].index == this.state.curLyricItem ? "MusicLyric-item on" : "MusicLyric-item"}
+                    className={data[k].index === this.state.curLyricItem ? "MusicLyric-item on" : "MusicLyric-item"}
                     data-time={k}>{data[k].content}
                 </p>
             );
@@ -480,7 +480,7 @@ export default class App extends React.Component {
                     </div>
                 </header>
                 <div className="MusicCore">
-                    <div className="MusicCore-body" style={{ display: this.state.isShowLyric && 'none' || '' }}>
+                    <div className="MusicCore-body" style={{ display: this.state.isShowLyric ? 'none' : '' }}>
                         <div className="MusicHeader">
                             <div className="MusicHeader-cover">
                                 <img className="MusicHeader-coverImg" src={info.coverImgUrl} alt={info.name} />
@@ -515,7 +515,7 @@ export default class App extends React.Component {
                                             <div className="MusicListTable-cell duration">{item.time}</div>
                                             <div className="MusicListTable-cell" style={{ position: 'relative' }}>
                                                 {
-                                                    (this.state.playIndex == index)
+                                                    (this.state.playIndex === index)
                                                     && !this.audio.paused &&
                                                     <div className="Music-songAnimate"><i></i><i></i><i></i></div>
                                                 }
@@ -535,7 +535,7 @@ export default class App extends React.Component {
                             </ul>
                         </div>
                     </div>
-                    <div className="song-play-area" style={{ display: !this.state.isShowLyric && 'none' || '' }}>
+                    <div className="song-play-area" style={{ display: !this.state.isShowLyric ? 'none' : '' }}>
                         <div className="pic-circle">
                             <img src={this.state.picUrl} alt="" />
                         </div>
