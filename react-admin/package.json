@@ -56,7 +56,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --open --config ./build/webpack.dev.js --hide-modules",
-    "build": "rimraf ./dist && webpack --config ./build/webpack.prod.js --progress --hide-modules",
+    "build": "rimraf ./dist && webpack --config ./build/webpack.prod.js --hide-modules",
     "start:prod": "node ./server.js"
   },
   "browserslist": [
