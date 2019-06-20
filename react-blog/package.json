@@ -26,6 +26,7 @@
     "@types/webpack-env": "^1.13.9",
     "axios": "^0.19.0",
     "babel-preset-react-app": "^9.0.0",
+    "check-types": "^8.0.3",
     "cross-env": "^5.2.0",
     "dayjs": "^1.8.14",
     "emotion": "^10.0.9",
