@@ -6,5 +6,6 @@ logs/blog/*
 static
 dist
 react-blog/build
+react-music-app/build
 *.lock
 *.log

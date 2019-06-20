@@ -17,6 +17,7 @@ module.exports = {
         appConfig.plugins.push(new ForkTsCheckerWebpackPlugin({
             tsconfig: path.resolve(__dirname, './tsconfig.json'),
             tslint: dev ? path.resolve(__dirname, './tslint.json') : '',
+            async: !dev,
             useTypescriptIncrementalApi: true,
             checkSyntacticErrors: dev,
             watch: [path.resolve(__dirname, './src')],

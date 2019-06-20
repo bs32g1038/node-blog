@@ -1,0 +1,34 @@
+language: node_js
+
+node_js: stable
+
+cache:
+  directories:
+    - react-blog/node_modules
+    - node-blog-api/node_modules
+    - react-admin/node_modules
+    - react-music-app/node_modules
+
+install:
+  - cd $TRAVIS_BUILD_DIR
+  - bash scripts/install-dependencies.sh
+
+before_script:
+  - git config --global user.name "bs32g1038"
+  - git config --global user.email "bs32g1038@163.com"
+
+script:
+  - cd $TRAVIS_BUILD_DIR
+  - bash scripts/build.sh
+
+after_success:
+  - cd $TRAVIS_BUILD_DIR
+  - bash scripts/after_success.sh
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - GH_REF: github.com/bs32g1038/node-blog.git

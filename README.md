@@ -1,5 +1,7 @@
 # node-blog
 
+[![Build Status](https://travis-ci.org/bs32g1038/node-blog.svg?branch=master)](https://travis-ci.org/bs32g1038/node-blog)
+
 **Demo：**
 
 [http://www.lizc.me](http://www.lizc.me "blog")
