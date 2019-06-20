@@ -2,11 +2,12 @@
   "name": "react-music-app",
   "version": "1.0.0",
   "private": true,
+  "homepage": "http://music.lizc.me",
   "dependencies": {
-    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "serve": "^11.0.2"
   },
   "devDependencies": {
     "dayjs": "^1.8.14",
@@ -17,10 +18,16 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:prod": "node ./server.js"
+    "start:prod": "serve -s build -l 7000"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-is-valid": [
+        false
+      ],
+      "no-script-url": false
+    }
   },
   "browserslist": {
     "production": [
