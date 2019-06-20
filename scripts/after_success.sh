@@ -14,10 +14,6 @@ echo -e $dockerfile"\nEXPOSE 7000" > react-music-app/dockerfile
 echo "
 .cache
 node_modules
-.vscode
-logs/blog/*
-!.gitkeep
-static
 *.lock
 *.log
 " > .gitignore
