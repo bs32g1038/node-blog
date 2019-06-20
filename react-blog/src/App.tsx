@@ -42,9 +42,6 @@ class App extends React.Component<any, any> {
     }
 
     public render() {
-        const theme = {
-            isMobile: this.props.$G.isMobile
-        };
         return (
             <div className="app">
                 <Global styles={css`${normalize()}`} />

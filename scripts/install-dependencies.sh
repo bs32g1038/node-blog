@@ -1,6 +1,6 @@
-cd ../react-blog
+cd react-blog
 yarn install
-cd node-blog-api
+cd ../node-blog-api
 yarn install
 cd ../react-admin
 yarn install

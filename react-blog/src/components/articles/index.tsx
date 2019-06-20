@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import queryString from 'query-string';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -70,7 +69,7 @@ class Articles extends React.Component<any, { isLoading: boolean }> {
 
     public render() {
         const articles = this.getList(this.props);
-        const loaders = new Array(9).fill('').map((item, index) => (
+        const loaders = new Array(9).fill('').map((_, index) => (
             <ContentLoader width={720} height={160} key={`loader-${index}`}>
                 <rect x="0" y="20" width="240" height="25"></rect>
                 <rect x="0" y="60" width="300" height="30"></rect>

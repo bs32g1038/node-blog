@@ -60,12 +60,6 @@ const UserSign: any = styled.span`
     ${(props: any) => props.isAdmin && 'background-color: rgba(250, 90, 60, .95)'};
 `;
 
-const InfoTime = styled.span((_) => ({
-    color: '#9e9e9e',
-    fontSize: '0.875',
-    marginLeft: '8px'
-}));
-
 const ItemContent = styled.div`
     font-size: 14px;
     line-height: 1.5;
