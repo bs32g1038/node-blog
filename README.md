@@ -2,7 +2,7 @@
 
 A simple, fast and easy-to-use blog
 
-[![Build Status](https://travis-ci.org/bs32g1038/node-blog.svg?branch=master)](https://travis-ci.org/bs32g1038/node-blog) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) ![GitHub](https://img.shields.io/github/license/bs32g1038/node-blog.svg)
+[![Build Status](https://travis-ci.org/bs32g1038/node-blog.svg?branch=master)](https://travis-ci.org/bs32g1038/node-blog) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/context:javascript) ![GitHub](https://img.shields.io/github/license/bs32g1038/node-blog.svg)
 
 **Demo :**
 
