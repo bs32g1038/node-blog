@@ -39,7 +39,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "1.16.4",
-    "query-string": "^5.1.1",
+    "query-string": "^6.8.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-router-dom": "^4.3.1",
