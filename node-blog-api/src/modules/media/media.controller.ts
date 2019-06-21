@@ -6,7 +6,7 @@ import { Media } from '../../models/media.model';
 import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 
 @Controller('/api')
 @UseGuards(RolesGuard)

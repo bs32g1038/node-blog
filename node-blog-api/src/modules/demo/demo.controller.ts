@@ -6,7 +6,7 @@ import { Demo } from '../../models/demo.model';
 import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 import logger from '../../utils/logger.util';
 import * as MarkdownIt from 'markdown-it';
 import hljs = require('highlight.js'); // https://highlightjs.org/

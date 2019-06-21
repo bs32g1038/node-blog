@@ -8,7 +8,7 @@ import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { auth } from '../../utils/auth.util';
 import config from '../../configs/index.config';
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 
 @Controller('/api')
 @UseGuards(RolesGuard)

@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '../../models/user.model';
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 import config from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
 import * as crypto from '../../utils/crypto.util';

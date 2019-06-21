@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import * as Joi from '@hapi/joi';
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException, UsePipes } from '@nestjs/common';
 
 @Injectable()
