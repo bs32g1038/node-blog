@@ -4,7 +4,7 @@ node_js: stable
 
 install:
   - cd $TRAVIS_BUILD_DIR
-  - bash scripts/install-dependencies.sh
+  - bash scripts/install-dependencies.sh || travis_terminate 1
 
 before_script:
   - git config --global user.name "bs32g1038"
@@ -12,11 +12,11 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR
-  - bash scripts/build.sh
+  - bash scripts/build.sh || travis_terminate 1
 
 after_success:
   - cd $TRAVIS_BUILD_DIR
-  - bash scripts/after_success.sh
+  - bash scripts/after_success.sh || travis_terminate 1
 
 branches:
   only:
