@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import MarkdownIt from 'markdown-it';
+import './index.scss';
+import axios from '../../axios';
 const CM = require('codemirror');
 require('codemirror/mode/markdown/markdown');
-import './index.scss';
-import axios from '../../utils/axios';
+
 export default class MdEdit extends Component {
     constructor(props) {
         super(props);
