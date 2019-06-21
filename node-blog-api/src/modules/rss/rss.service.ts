@@ -35,7 +35,7 @@ export class RssService {
             }
         };
 
-        const articles = await this.articleModel.get({}, '', {
+        const articles = await this.articleModel.find({}, '', {
             skip: 0,
             limit: config.rss.max_rss_items,
             sort: { createdAt: -1 }
