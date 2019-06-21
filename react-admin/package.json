@@ -10,7 +10,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:prod": "node ./server.js"
+    "start:prod": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1"
