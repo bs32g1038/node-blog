@@ -70,7 +70,7 @@ export class UploadService {
         });
     }
 
-    async; uploadStaticFile(req, res, next) {
+    async uploadStaticFile(req, res, next) {
         return uploadSingle(req, res, async (err) => {
             const originalName = req.file.originalname;
             const mimetype = req.file.mimetype;
