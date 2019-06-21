@@ -4,7 +4,7 @@ dockerfile="
 FROM node:10.16.0-alpine\n
 WORKDIR /code\n
 COPY ./package.json /code\n
-RUN yarn install\n
+RUN yarn install --production\n
 COPY . /code\n
 "
 echo -e $dockerfile"\nEXPOSE 8080" > node-blog-api/dockerfile
