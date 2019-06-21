@@ -1,7 +1,7 @@
 {
   "name": "ts-blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "a blog server api",
   "author": "",
   "license": "MIT",
   "scripts": {
