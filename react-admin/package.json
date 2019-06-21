@@ -2,6 +2,7 @@
   "name": "react-admin",
   "version": "2.0.0",
   "description": "A simple and whole react blog admin",
+  "homepage": "http://www.lizc.me/blog/admin",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -9,10 +10,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:prod": "serve -s build -l 3002"
+    "start:prod": "node ./server.js"
   },
   "dependencies": {
-    "serve": "^11.0.2"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "antd": "^3.19.6",
