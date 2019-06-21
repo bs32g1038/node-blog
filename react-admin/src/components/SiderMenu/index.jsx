@@ -98,7 +98,7 @@ class SiderMenu extends Component {
                     theme={theme}
                     menus={routes}
                     onClick={this.menuClick}
-                    mode="inline"
+                    mode={this.state.mode}
                     selectedKeys={[selectedKey]}
                     openKeys={firstHide ? null : [openKey]}
                     onOpenChange={this.openMenu}
