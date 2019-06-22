@@ -2,6 +2,9 @@ language: node_js
 
 node_js: stable
 
+cache: yarn
+cache: npm
+
 install:
   - cd $TRAVIS_BUILD_DIR
   - bash scripts/install-dependencies.sh || travis_terminate 1
