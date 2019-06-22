@@ -33,7 +33,7 @@ export const ssr = (req: express.Request, res: express.Response) => {
     const store = Store();
     const branchs = matchRoutes(routes, req.path);
     Promise.all(branchs.map((branch: any) => {
-        return branch && branch.route.component && branch.route.component.asyncData && branch.route.component.asyncData(
+        return branch && branch.route && branch.route.asyncData && branch.route.asyncData(
             store,
             {
                 query: req.query,

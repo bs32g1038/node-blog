@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { State } from '../../redux/reducers/categories';
@@ -48,40 +48,36 @@ const ItemLink = styled(NavLink)`
     }
 `;
 
-class Categories extends Component<any, any> {
-
-    public componentDidMount() {
-        const { categories = [] } = this.props._DB;
-        if (categories.length <= 0) {
-            this.props.dispatch(fetchCategories());
+const C = (props: any) => {
+    useEffect(() => {
+        const cats = props._DB.categories || [];
+        if (cats.length <= 0) {
+            props.dispatch(fetchCategories());
         }
-    }
-
-    public render() {
-        const { categories = [] } = this.props._DB;
-        return (
-            <CategoriesWrap>
-                <Item>
-                    <ItemLink to="/blog" exact={true}>
-                        全部
+    });
+    const { categories = [] } = props._DB;
+    return (
+        <CategoriesWrap>
+            <Item>
+                <ItemLink to="/blog" exact={true}>
+                    全部
                     </ItemLink>
-                </Item>
-                {
-                    categories.map((item: any) => (
-                        <Item key={item._id}>
-                            <ItemLink exact={true} to={`/blog/categories/${item._id}`}>
-                                {item.name}<span>({item.articleCount})</span>
-                            </ItemLink>
-                        </Item>
-                    ))
-                }
-            </CategoriesWrap>
-        );
-    }
-}
+            </Item>
+            {
+                categories.map((item: any) => (
+                    <Item key={item._id}>
+                        <ItemLink exact={true} to={`/blog/categories/${item._id}`}>
+                            {item.name}<span>({item.articleCount})</span>
+                        </ItemLink>
+                    </Item>
+                ))
+            }
+        </CategoriesWrap>
+    );
+};
 
-export default connect(
+export const Categories = connect(
     (state: State) => ({
         _DB: state.categories
     })
-)((Categories as any));
+)((C as any));

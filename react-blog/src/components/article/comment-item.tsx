@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 import { xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 import { parseTime, timeAgo } from '../../utils/time';
-import CommentForm from '../comment-form';
+import { CommentForm } from '../comment-form';
 
 const CommentsItem = styled.li`
     border-bottom: 1px solid #f5f5f5;
@@ -115,56 +115,50 @@ const replyFn = (item: any) => (
     </Quote>
 );
 
-class Item extends React.Component<{ item: any }, any> {
-    public state = {
-        showCommentForm: ''
-    };
-    public render() {
-        const item = this.props.item;
-        return (
-            <CommentsItem>
-                <Info>
-                    <AvatarWrap>
-                        <img src={item.identity === 0 ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg` : '/public/images/avatar.jpg'} />
-                    </AvatarWrap>
-                    <Content>
-                        <User>
-                            <NickName>{item.nickName}</NickName>
-                            <UserSign isAdmin={item.identity !== 0}>
-                                {item.identity !== 0 ? '博主' : '游客'}
-                            </UserSign>
-                        </User>
-                        <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
-                        <Meta>
-                            <span className="ArticleComments-infoTime">
-                                发表于：{parseTime(item.createdAt)}
-                            </span>
-                            <span> | </span>
-                            <a
-                                href="javascript:;"
-                                comment-id={item._id}
-                                onClick={() => (this.setState({
-                                    showCommentForm: this.state.showCommentForm ? '' : item._id
-                                }))}
-                            >
-                                回复
+export const CommentItem = (props: { item: any }) => {
+    const [showCommentForm, setShowCommentForm] = useState('');
+
+    const item = props.item;
+    return (
+        <CommentsItem>
+            <Info>
+                <AvatarWrap>
+                    <img src={item.identity === 0 ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg` : '/public/images/avatar.jpg'} />
+                </AvatarWrap>
+                <Content>
+                    <User>
+                        <NickName>{item.nickName}</NickName>
+                        <UserSign isAdmin={item.identity !== 0}>
+                            {item.identity !== 0 ? '博主' : '游客'}
+                        </UserSign>
+                    </User>
+                    <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
+                    <Meta>
+                        <span className="ArticleComments-infoTime">
+                            发表于：{parseTime(item.createdAt)}
+                        </span>
+                        <span> | </span>
+                        <a
+                            href="javascript:;"
+                            comment-id={item._id}
+                            onClick={() => (setShowCommentForm(showCommentForm ? '' : item._id))}
+                        >
+                            回复
                             </a>
-                        </Meta>
-                        {item.reply && replyFn(item.reply)}
-                        <ReplyBox>
-                            {
-                                this.state.showCommentForm === item._id
-                                && <CommentForm
-                                    url="/comments"
-                                    articleId={item.article}
-                                    replyId={item._id}
-                                />
-                            }
-                        </ReplyBox>
-                    </Content>
-                </Info>
-            </CommentsItem>
-        );
-    }
-}
-export default Item;
+                    </Meta>
+                    {item.reply && replyFn(item.reply)}
+                    <ReplyBox>
+                        {
+                            showCommentForm === item._id
+                            && <CommentForm
+                                url="/comments"
+                                articleId={item.article}
+                                replyId={item._id}
+                            />
+                        }
+                    </ReplyBox>
+                </Content>
+            </Info>
+        </CommentsItem>
+    );
+};
