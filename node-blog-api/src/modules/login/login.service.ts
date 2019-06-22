@@ -5,7 +5,7 @@ import { User } from '../../models/user.model';
 import * as Joi from '@hapi/joi';
 import config from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
-import * as crypto from '../../utils/crypto.util';
+import * as pbkdf2 from '../../utils/pbkdf2.util';
 
 const schema = Joi.object().keys({
     account: Joi.string().min(3).max(30).required().error(new Error('账号长度在3-30之间！')),
@@ -47,7 +47,7 @@ export class LoginService {
             } else {
                 await this.userModel.create({
                     account,
-                    password: crypto.sha1(password)
+                    password: pbkdf2.getDerivedKey(password)
                 });
                 return {
                     token: jwt.sign({ account }, config.token_secret_key, {
@@ -58,7 +58,7 @@ export class LoginService {
         } else {
             const user = await this.userModel.findOne({
                 account,
-                password: crypto.sha1(password)
+                password: pbkdf2.getDerivedKey(password)
             });
             if (user) {
                 return {
