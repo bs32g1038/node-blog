@@ -2,6 +2,7 @@
     from {
         opacity: 0
     }
+
     to {
         opacity: 1
     }
@@ -91,6 +92,7 @@ body,
     margin-left: -375px;
     border-radius: 10px;
     box-shadow: 0 0 100px #4c3c3c;
+
     &:before {
         height: 40px;
         width: 100%;
@@ -106,31 +108,40 @@ body,
         box-shadow: 20px 0px #fdbc40, 40px 0px #35cd4b;
         z-index: 3;
     }
+
     .header {
         overflow: hidden;
         margin-top: 20px;
         position: relative;
         z-index: 4;
     }
+
     .site-logo {
         margin: 0;
         font-weight: 500;
         margin-left: 18px;
         float: left;
+
         a {
             font-size: 18px;
             color: #fff;
             opacity: .3;
         }
     }
+
     .header-help {
         float: right;
         margin-top: 10px;
         margin-right: 40px;
-        a {
+
+        >button {
             font-size: 14px;
             color: #fff;
             opacity: .3;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none
         }
     }
 }
