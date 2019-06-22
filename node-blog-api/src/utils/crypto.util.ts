@@ -1,12 +1,10 @@
 /**
  * 加密工具类api
  */
-import * as crypto from 'crypto';
+import * as crypto from 'crypto-js';
 
 export const md5 = (str: string) => {
-    const _md5 = crypto.createHash('md5');
-    _md5.update(str, 'utf8');
-    return _md5.digest('hex');
+    return crypto.MD5(str).toString(crypto.enc.Hex);
 };
 
 /**
@@ -15,7 +13,17 @@ export const md5 = (str: string) => {
  * @return {String} SHA1 值
  */
 export const sha1 = (value: string) => {
-    const _sha1 = crypto.createHash('sha1');
-    _sha1.update(value);
-    return _sha1.digest('hex');
+    return crypto.SHA1(value).toString(crypto.enc.Hex);
+};
+
+// 加密方法
+export const decrypt = (str: string) => {
+    const s1 = str.slice(0, 16);
+    const s2 = str.slice(str.length - 16, str.length);
+    const key = str.slice(16, str.length - 16);
+    return crypto.AES.decrypt(key, s1 + s2).toString(crypto.enc.Utf8);
+};
+
+export const getDerivedKey = (str: string) => {
+    return crypto.PBKDF2(str, 'salt', 1, 32, 'sha512').toString(crypto.enc.Hex);
 };

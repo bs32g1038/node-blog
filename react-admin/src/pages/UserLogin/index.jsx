@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from '../../axios';
 import config from '../../configs/default.config';
-import { Form, Input, Button, Alert } from 'antd';
+import { Form, Input, Button, Alert, message } from 'antd';
+import { encrypt } from '../../utils/crypto-js';
 import './style.scss';
 
 const FormItem = Form.Item;
@@ -18,9 +19,10 @@ class UserLogin extends Component {
         e.preventDefault();
         const { history } = this.props;
         this.props.form.validateFields((err, data) => {
+            const str = encrypt(JSON.stringify(data))
             if (!err) {
-                axios.post('/login', data).then((res) => {
-                    alert("登陆成功！");
+                axios.post('/login', { key: str }).then((res) => {
+                    message.success("登陆成功！");
                     localStorage.setItem(config.tokenKey, res.data.token);
                     history.push('/blog/admin/content/articles');
                 });
@@ -39,7 +41,7 @@ class UserLogin extends Component {
         return (
             <div className="sign-in">
                 <div className="sign-in-main">
-                    <img className="brand" src={require('../../assets/login-logo.png')} alt=""/>
+                    <img className="brand" src={require('../../assets/login-logo.png')} alt="" />
                     <div className="sign-in-panel">
                         <div className="sign-in-head">
                             <h3 className="sign-in-title">后台登陆</h3>
