@@ -29,15 +29,7 @@ class App extends React.Component<any, any> {
         super(props);
         const { routes } = this.props;
         this.state = {
-            routes,
-            previousLocation: this.props.location,
-            nextLocation: null,
-            isFetching: false,
-            isShowProgress: false,
-            percent: 0,
-            _timer: null,
-            init: false,
-            num: 1
+            routes
         };
     }
 

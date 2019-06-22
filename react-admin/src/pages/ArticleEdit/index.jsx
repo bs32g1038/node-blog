@@ -13,7 +13,6 @@ class ArticleEdit extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            editorContent: '',
             screenshot: '/static/images/default.jpg',
             article: {},
             categories: []
@@ -28,7 +27,6 @@ class ArticleEdit extends Component {
                     self.setState({
                         article: aRes.data,
                         categories: cRes.data,
-                        editorContent: aRes.data.content,
                         screenshot: aRes.data.screenshot,
                     });
                 }));
@@ -88,11 +86,6 @@ class ArticleEdit extends Component {
     }
     updateArticle(id, data) {
         return axios.put('/articles/' + id, data);
-    }
-    onChange(value) {
-        this.setState({
-            editorContent: value
-        });
     }
     render() {
         let { article, categories } = this.state;

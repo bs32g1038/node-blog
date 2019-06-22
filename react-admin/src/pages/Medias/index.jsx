@@ -11,7 +11,6 @@ export default class Medias extends Component {
         super(props);
         this.state = {
             files: [],
-            visible: false,
             pagination: {},
             loading: false,
             clipboard: null
@@ -91,13 +90,6 @@ export default class Medias extends Component {
                     pagination,
                 });
             });
-    }
-    handleOk() {
-        return this.fetchData(this.props.location).then(() => {
-            this.setState({
-                visible: false,
-            });
-        });
     }
     handleTableChange(pagination) {
         const pager = { ...this.state.pagination };

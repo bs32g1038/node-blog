@@ -230,7 +230,7 @@ class CommentForm extends Component<Props, any> {
     public showPreview() {
         this.setState({
             isShowPreview: !this.state.isShowPreview,
-            previewHtml: marked(this.state.previewHtml)
+            previewHtml: marked(this.state.previewHtml || '')
         });
     }
     public componentDidMount() {

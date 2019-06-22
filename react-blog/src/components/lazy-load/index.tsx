@@ -44,8 +44,9 @@ class LazyLoad extends React.Component<any, any> {
     }
 
     public render() {
+        const Tag = this.state.tag;
         return (
-            <this.state.tag {...this.state.attrs} ref="dom" />
+            <Tag {...this.state.attrs} ref="dom" />
         );
     }
 
