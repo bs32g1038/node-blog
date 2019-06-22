@@ -5,7 +5,7 @@ import { User } from '../../models/user.model';
 import * as Joi from '@hapi/joi';
 import config from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
-import * as pbkdf2 from '../../utils/pbkdf2.util';
+import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 
 const schema = Joi.object().keys({
     account: Joi.string().min(3).max(30).required().error(new Error('账号长度在3-30之间！')),
@@ -32,10 +32,11 @@ export class LoginService {
     }
 
     async login(data) {
-        const account = data.account;
-        const password = data.password;
+        const U = JSON.parse(decrypt(data.key));
+        const account = U.account;
+        const password = U.password;
         const count = await this.userModel.count({});
-        const result = Joi.validate(data, schema);
+        const result = Joi.validate(U, schema);
         if (count <= 0) {
             /**
              * 首次登陆，即为管理员账号，仅一次。
@@ -47,7 +48,7 @@ export class LoginService {
             } else {
                 await this.userModel.create({
                     account,
-                    password: pbkdf2.getDerivedKey(password)
+                    password: getDerivedKey(password)
                 });
                 return {
                     token: jwt.sign({ account }, config.token_secret_key, {
@@ -58,16 +59,16 @@ export class LoginService {
         } else {
             const user = await this.userModel.findOne({
                 account,
-                password: pbkdf2.getDerivedKey(password)
+                password: getDerivedKey(password)
             });
             if (user) {
                 return {
                     token: jwt.sign({
                         account,
                         roles: ['admin']
-                     }, config.token_secret_key, {
-                        expiresIn: 60 * 60
-                    })
+                    }, config.token_secret_key, {
+                            expiresIn: 60 * 60
+                        })
                 };
             } else {
                 return {
