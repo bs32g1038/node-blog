@@ -3,7 +3,7 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import ScrollToTop from './components/scroll-to-top';
+import { ScrollToTop } from './components/scroll-to-top';
 import Store from './redux/store';
 import routes from './router';
 

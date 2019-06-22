@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import GithubSVG from '../svgs/github-svg';
-import SearchSVG from '../svgs/search-svg';
+import { GithubSvg } from '../svgs/github-svg';
+import { SearchSvg } from '../svgs/search-svg';
 
 import media from '../../utils/media';
 
 const Container = styled.header`
     align-items: center;
     background: #fff;
-    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,.1); */
     border-bottom: 1px solid #f1f1f1;
 `;
 
@@ -145,7 +144,7 @@ const SearchForm = styled.form`
     }
 `;
 
-const SearchIcon = styled(SearchSVG)`
+const SearchIcon = styled(SearchSvg)`
     width: 16px;
     height: 16px;
     fill: #666;
@@ -153,7 +152,7 @@ const SearchIcon = styled(SearchSVG)`
     cursor: pointer;
 `;
 
-const GithubIcon = styled(GithubSVG)`
+const GithubIcon = styled(GithubSvg)`
     fill:#2B414D;
     width: 24px;
     height: 24px;
@@ -167,59 +166,49 @@ export interface AppHeaderProps {
     };
 }
 
-interface AppHeaderState {
-    isShowMobileMenu: boolean;
-}
-
-export default class AppHeader extends Component<AppHeaderProps, AppHeaderState> {
-    public state = {
-        isShowMobileMenu: false
+export const AppHeader = (props: AppHeaderProps) => {
+    const { siteInfo } = props;
+    const [isShowMobileMenu, setIsShowMobileMenu] = useState(false);
+    const showMenu = () => {
+        setIsShowMobileMenu(!isShowMobileMenu);
     };
-    public showMenu() {
-        this.setState({
-            isShowMobileMenu: !this.state.isShowMobileMenu
-        });
-    }
-    public render() {
-        const { siteInfo } = this.props;
-        return (
-            <Container>
-                <MainWrap>
-                    <HomeNav to="/" title={siteInfo.name}>
-                        <img src={require('../../assets/images/logo.png')} alt={siteInfo.name} />
-                    </HomeNav>
-                    <Menu>
-                        <i className={this.state.isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => this.showMenu()}></i>
-                        <UL style={this.state.isShowMobileMenu ? { display: 'block' } : {}}>
-                            <LI><ATag to="/blog">博客</ATag></LI>
-                            <LI><ATag to="/about">关于</ATag></LI>
-                            <LI>
-                                <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
-                                    音乐
-                                </a>
-                            </LI>
-                            <LI>
-                                <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
-                                    Rss
-                                </a>
-                            </LI>
-                        </UL>
-                    </Menu>
-                    <UL>
+    return (
+        <Container>
+            <MainWrap>
+                <HomeNav to="/" title={siteInfo.name}>
+                    <img src={require('../../assets/images/logo.png')} alt={siteInfo.name} />
+                </HomeNav>
+                <Menu>
+                    <i className={isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => showMenu()}></i>
+                    <UL style={isShowMobileMenu ? { display: 'block' } : {}}>
+                        <LI><ATag to="/blog">博客</ATag></LI>
+                        <LI><ATag to="/about">关于</ATag></LI>
                         <LI>
-                            <SearchForm>
-                                <input type="search" maxLength={32} placeholder="搜索更新啦" className="search-input" />
-                                <SearchIcon />
-                            </SearchForm>
+                            <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
+                                音乐
+                            </a>
                         </LI>
                         <LI>
-                            <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
-                                <GithubIcon />
+                            <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
+                                Rss
                             </a>
                         </LI>
                     </UL>
-                </MainWrap>
-            </Container>
-        );
-    }
-}
+                </Menu>
+                <UL>
+                    <LI>
+                        <SearchForm>
+                            <input type="search" maxLength={32} placeholder="搜索更新啦" className="search-input" />
+                            <SearchIcon />
+                        </SearchForm>
+                    </LI>
+                    <LI>
+                        <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
+                            <GithubIcon />
+                        </a>
+                    </LI>
+                </UL>
+            </MainWrap>
+        </Container>
+    );
+};

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import CommentForm from '../comment-form';
-import CommentItem from './comment-item';
+import { CommentForm } from '../comment-form';
+import { CommentItem } from './comment-item';
 
 const CommentsWrap = styled.div((_) => ({
     marginTop: '20px'

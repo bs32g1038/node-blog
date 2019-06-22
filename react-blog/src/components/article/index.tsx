@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import queryString from 'query-string';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
 import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
-import ContentLoader from '../content-loader';
+import { ContentLoader } from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
 
@@ -216,248 +216,218 @@ const ListGrouped = styled.div`
     display: flex;
 `;
 
-class Article extends Component<any, any> {
+export const asyncData = (store: any, route: any) => {
+    const id = route.params.id;
+    return store.dispatch(fetchArticle(id)).then(() => {
+        return store.dispatch(fetchRecentArticle());
+    });
+};
 
-    public static asyncData(store: any, route: any) {
-        const id = route.params.id;
-        return store.dispatch(fetchArticle(id)).then(() => {
-            return store.dispatch(fetchRecentArticle());
-        });
-    }
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            isLoading: false
-        };
-    }
-
-    public componentDidMount() {
-        const { article } = this.props._DB;
-        if (article._id !== this.props.match.params.id) {
+const C = (props: any) => {
+    const [isLoading, setLoading] = useState(false);
+    useEffect(() => {
+        const { _id } = props._DB.article;
+        if (_id !== props.match.params.id) {
             const q = queryString.parse(location.search);
-            this.setState({
-                isLoading: true
-            });
-            Article.asyncData({ dispatch: this.props.dispatch }, {
+            setLoading(true);
+            asyncData({ dispatch: props.dispatch }, {
                 query: q,
-                params: this.props.match.params
+                params: props.match.params
             }).then(() => {
-                this.setState({
-                    isLoading: false
-                });
+                return setLoading(false);
             });
         }
-    }
-
-    public componentDidUpdate(prevProps: any) {
-        const navigated = prevProps.location !== this.props.location;
-        if (navigated) {
-            this.setState({
-                isLoading: true
-            });
-            Article.asyncData({ dispatch: this.props.dispatch }, {
-                params: this.props.match.params
-            }).then(() => {
-                this.setState({
-                    isLoading: false
-                });
-            });
-        }
-    }
-
-    public render() {
-        const { article, comments, recentArticles } = this.props._DB;
-        return (
-            <>
-                <ArticleWrap>
-                    {
-                        this.state.isLoading ?
-                            <>
-                                <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
-                                <ArticleItem>
-                                    <ArticleHeader>
+    }, [1]);
+    const { article, comments, recentArticles } = props._DB;
+    return (
+        <>
+            <ArticleWrap>
+                {
+                    isLoading ?
+                        <>
+                            <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
+                            <ArticleItem>
+                                <ArticleHeader>
+                                    <ContentLoader width={720} height={20}>
+                                        <rect x="0" y="0" width="500" height="20"></rect>
+                                    </ContentLoader>
+                                    <Title>
                                         <ContentLoader width={720} height={20}>
-                                            <rect x="0" y="0" width="500" height="20"></rect>
+                                            <rect x="0" y="0" width="300" height="20"></rect>
                                         </ContentLoader>
-                                        <Title>
-                                            <ContentLoader width={720} height={20}>
-                                                <rect x="0" y="0" width="300" height="20"></rect>
-                                            </ContentLoader>
-                                        </Title>
+                                    </Title>
 
-                                        <Meta>
-                                            <ContentLoader width={720} height={20}>
-                                                <rect x="0" y="0" width="400" height="20"></rect>
-                                            </ContentLoader>
-                                        </Meta>
-                                    </ArticleHeader>
-                                    <ContentLoader width={720} height={320}>
-                                        <rect x="0" y="0" width="720" height="300"></rect>
-                                    </ContentLoader>
-                                    <ContentLoader width={720} height={110}>
-                                        <rect x="0" y="0" width="720" height="100"></rect>
-                                    </ContentLoader>
-                                    <ContentLoader width={720} height={50}>
-                                        <rect x="250" y="0" width="220" height="50"></rect>
-                                    </ContentLoader>
-                                    <ContentLoader width={720} height={120}>
-                                        <rect x="0" y="0" width="720" height="120"></rect>
-                                    </ContentLoader>
-                                </ArticleItem>
-                            </>
-                            :
-                            <>
-                                <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
-                                <ArticleItem>
-                                    <Breadcrumbs>
-                                        <span>
-                                            <Link to="/">
-                                                <span>首页</span>
-                                            </Link>
-                                        </span>
-                                        <span className="sep">›</span>
-                                        <span>
-                                            <Link to={'/blog/categories/' + (article.category && article.category._id)}>
-                                                <span className="text-muted">{(article.category && article.category.name)}</span>
-                                            </Link>
-                                        </span>
-                                        <span className="sep">›</span>
-                                        <span className="current">{article.title}
-                                        </span>
-                                    </Breadcrumbs>
-                                    <ArticleHeader>
-                                        <Title>
-                                            <Link to={`/blog/articles/${article._id}`}>{article.title}</Link>
-                                        </Title>
-                                        <Meta>
-                                            <span>发表于{parseTime(article.createdAt)}</span>
-                                            <span>分类于<a href={`/blog/categories/${article.category && article.category._id}`}>{article.category && article.category.name}</a></span>
-                                            <span>{article.commentCount}条评论</span>
-                                            <span>阅读次数{article.viewsCount}</span>
-                                        </Meta>
-                                    </ArticleHeader>
-                                    <MarkdownBody content={article.content}></MarkdownBody>
-                                    <Copyright>
-                                        <li>
-                                            <strong>本文链接：</strong>
-                                            <a href={'http://www.lizc.me' + this.props.location.pathname}>{'http://www.lizc.me' + this.props.location.pathname}</a>
-                                        </li>
-                                        <li>
-                                            <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
-                                    </li>
-                                    </Copyright>
-                                    <PrevNextArticle>
-                                        {
-                                            article.prev && <p>
-                                                <strong>上一篇：</strong>
-                                                <Link to={`/blog/articles/${article.prev._id}`}>{article.prev.title}</Link>
-                                            </p>
-                                        }
-                                        {
-                                            article.next && <p>
-                                                <strong>下一篇：</strong>
-                                                <Link to={`/blog/articles/${article.next._id}`}>{article.next.title}</Link>
-                                            </p>
-                                        }
-                                    </PrevNextArticle>
-                                    <Comment article={article} comments={comments}></Comment>
-                                </ArticleItem>
-                            </>
-                    }
-                    <WidgetArea>
-                        <section id="recommended_posts-5" className="widget Recommended_Posts">
-                            <WidgetTitle>最近文章</WidgetTitle>
-                            <div className="list-grid list-grid-padding p-0 my-n2" style={{ width: '240px' }}>
-                                {
-                                    this.state.isLoading ?
-                                        <ContentLoader width={240} height={85}>
-                                            <rect x="0" y="0" width="100" height="85"></rect>
-                                            <rect x="120" y="0" width="120" height="40"></rect>
-                                            <rect x="120" y="75" width="60" height="10"></rect>
+                                    <Meta>
+                                        <ContentLoader width={720} height={20}>
+                                            <rect x="0" y="0" width="400" height="20"></rect>
                                         </ContentLoader>
-                                        :
-                                        recentArticles.slice(0, 5).map((item: any) => (
-                                            <ListItem key={'rc' + item._id}>
-                                                <Media>
-                                                    <MediaContent
-                                                        to={`/blog/articles/${item._id}`}
-                                                        className="media-content"
-                                                        style={{ backgroundImage: `url(${item.screenshot})` }}
-                                                    >
-                                                    </MediaContent>
-                                                    <div className="media-action">
-                                                        <i className="iconfont icon-pic-s"></i>
-                                                    </div>
-                                                </Media>
-                                                <ListContent>
-                                                    <div className="list-body">
-                                                        <ListTitle to={`/blog/articles/${item._id}`} className="list-title text-sm h-2x">{item.title}</ListTitle>
-                                                    </div>
-                                                    <TextMuted>
-                                                        <div>{parseTime(article.createdAt)}</div>
-                                                    </TextMuted>
-                                                </ListContent>
-                                            </ListItem>
-                                        ))
-                                }
-                                <a href="https://www.vultr.com/?ref=7866918-4F">
-                                    <img
-                                        src="https://www.vultr.com/media/banners/banner_300x250.png"
-                                        style={{
-                                            width: '220px',
-                                            border: '1px solid #ccc',
-                                            height: 'auto',
-                                        }}
-                                    />
-                                </a>
-                            </div>
-                        </section>
-                    </WidgetArea>
-                </ArticleWrap>
-                <div className="container">
-                    <div className="list-header h4 mb-3 mb-md-4">相关文章</div>
-                    <ListGrouped>
-                        {
-                            this.state.isLoading ?
-                                <ContentLoader width={960} height={240} style={{ width: '400px' }}>
-                                    <rect x="0" y="0" width="960" height="40"></rect>
-                                    <rect x="0" y="60" width="960" height="40"></rect>
-                                    <rect x="0" y="120" width="960" height="40"></rect>
+                                    </Meta>
+                                </ArticleHeader>
+                                <ContentLoader width={720} height={320}>
+                                    <rect x="0" y="0" width="720" height="300"></rect>
                                 </ContentLoader>
-                                :
-                                recentArticles.slice(5, 9).map((item: any) => (
-                                    <ListItem className="list-nice-overlay" key={'rl' + item._id}>
-                                        <Media className="media">
-                                            <MediaContent
-                                                to={`/blog/articles/${item._id}`}
-                                                className="media-content"
-                                                style={{ backgroundImage: `url(${item.screenshot})` }}
-                                            >
-                                            </MediaContent>
-                                            <div className="media-action">
-                                                <i className="iconfont icon-pic-s"></i>
-                                            </div>
-                                        </Media>
-                                        <div className="list-content">
-                                            <div className="list-body">
-                                                <Link to={`/blog/articles/${item._id}`} className="list-title h-2x">
-                                                    {item.title}
-                                                </Link>
-                                            </div>
+                                <ContentLoader width={720} height={110}>
+                                    <rect x="0" y="0" width="720" height="100"></rect>
+                                </ContentLoader>
+                                <ContentLoader width={720} height={50}>
+                                    <rect x="250" y="0" width="220" height="50"></rect>
+                                </ContentLoader>
+                                <ContentLoader width={720} height={120}>
+                                    <rect x="0" y="0" width="720" height="120"></rect>
+                                </ContentLoader>
+                            </ArticleItem>
+                        </>
+                        :
+                        <>
+                            <Helmet title={article.title + ' - ' + siteInfo.name}></Helmet>
+                            <ArticleItem>
+                                <Breadcrumbs>
+                                    <span>
+                                        <Link to="/">
+                                            <span>首页</span>
+                                        </Link>
+                                    </span>
+                                    <span className="sep">›</span>
+                                    <span>
+                                        <Link to={'/blog/categories/' + (article.category && article.category._id)}>
+                                            <span className="text-muted">{(article.category && article.category.name)}</span>
+                                        </Link>
+                                    </span>
+                                    <span className="sep">›</span>
+                                    <span className="current">{article.title}
+                                    </span>
+                                </Breadcrumbs>
+                                <ArticleHeader>
+                                    <Title>
+                                        <Link to={`/blog/articles/${article._id}`}>{article.title}</Link>
+                                    </Title>
+                                    <Meta>
+                                        <span>发表于{parseTime(article.createdAt)}</span>
+                                        <span>分类于<a href={`/blog/categories/${article.category && article.category._id}`}>{article.category && article.category.name}</a></span>
+                                        <span>{article.commentCount}条评论</span>
+                                        <span>阅读次数{article.viewsCount}</span>
+                                    </Meta>
+                                </ArticleHeader>
+                                <MarkdownBody content={article.content}></MarkdownBody>
+                                <Copyright>
+                                    <li>
+                                        <strong>本文链接：</strong>
+                                        <a href={'http://www.lizc.me' + props.location.pathname}>{'http://www.lizc.me' + props.location.pathname}</a>
+                                    </li>
+                                    <li>
+                                        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
+                            </li>
+                                </Copyright>
+                                <PrevNextArticle>
+                                    {
+                                        article.prev && <p>
+                                            <strong>上一篇：</strong>
+                                            <Link to={`/blog/articles/${article.prev._id}`}>{article.prev.title}</Link>
+                                        </p>
+                                    }
+                                    {
+                                        article.next && <p>
+                                            <strong>下一篇：</strong>
+                                            <Link to={`/blog/articles/${article.next._id}`}>{article.next.title}</Link>
+                                        </p>
+                                    }
+                                </PrevNextArticle>
+                                <Comment article={article} comments={comments}></Comment>
+                            </ArticleItem>
+                        </>
+                }
+                <WidgetArea>
+                    <section id="recommended_posts-5" className="widget Recommended_Posts">
+                        <WidgetTitle>最近文章</WidgetTitle>
+                        <div className="list-grid list-grid-padding p-0 my-n2" style={{ width: '240px' }}>
+                            {
+                                isLoading ?
+                                    <ContentLoader width={240} height={85}>
+                                        <rect x="0" y="0" width="100" height="85"></rect>
+                                        <rect x="120" y="0" width="120" height="40"></rect>
+                                        <rect x="120" y="75" width="60" height="10"></rect>
+                                    </ContentLoader>
+                                    :
+                                    recentArticles.slice(0, 5).map((item: any) => (
+                                        <ListItem key={'rc' + item._id}>
+                                            <Media>
+                                                <MediaContent
+                                                    to={`/blog/articles/${item._id}`}
+                                                    className="media-content"
+                                                    style={{ backgroundImage: `url(${item.screenshot})` }}
+                                                >
+                                                </MediaContent>
+                                                <div className="media-action">
+                                                    <i className="iconfont icon-pic-s"></i>
+                                                </div>
+                                            </Media>
+                                            <ListContent>
+                                                <div className="list-body">
+                                                    <ListTitle to={`/blog/articles/${item._id}`} className="list-title text-sm h-2x">{item.title}</ListTitle>
+                                                </div>
+                                                <TextMuted>
+                                                    <div>{parseTime(item.createdAt)}</div>
+                                                </TextMuted>
+                                            </ListContent>
+                                        </ListItem>
+                                    ))
+                            }
+                            <a href="https://www.vultr.com/?ref=7866918-4F">
+                                <img
+                                    src="https://www.vultr.com/media/banners/banner_300x250.png"
+                                    style={{
+                                        width: '220px',
+                                        border: '1px solid #ccc',
+                                        height: 'auto',
+                                    }}
+                                />
+                            </a>
+                        </div>
+                    </section>
+                </WidgetArea>
+            </ArticleWrap>
+            <div className="container">
+                <div className="list-header h4 mb-3 mb-md-4">相关文章</div>
+                <ListGrouped>
+                    {
+                        isLoading ?
+                            <ContentLoader width={960} height={240} style={{ width: '400px' }}>
+                                <rect x="0" y="0" width="960" height="40"></rect>
+                                <rect x="0" y="60" width="960" height="40"></rect>
+                                <rect x="0" y="120" width="960" height="40"></rect>
+                            </ContentLoader>
+                            :
+                            recentArticles.slice(5, 9).map((item: any) => (
+                                <ListItem className="list-nice-overlay" key={'rl' + item._id}>
+                                    <Media className="media">
+                                        <MediaContent
+                                            to={`/blog/articles/${item._id}`}
+                                            className="media-content"
+                                            style={{ backgroundImage: `url(${item.screenshot})` }}
+                                        >
+                                        </MediaContent>
+                                        <div className="media-action">
+                                            <i className="iconfont icon-pic-s"></i>
                                         </div>
-                                    </ListItem>
-                                ))
-                        }
-                    </ListGrouped>
-                </div>
-            </>
-        );
-    }
-}
+                                    </Media>
+                                    <div className="list-content">
+                                        <div className="list-body">
+                                            <Link to={`/blog/articles/${item._id}`} className="list-title h-2x">
+                                                {item.title}
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </ListItem>
+                            ))
+                    }
+                </ListGrouped>
+            </div>
+        </>
+    );
+};
 
-export default connect(
+export const Article = connect(
     (state: State) => ({
         _DB: state.article
     })
-)(Article as any);
+)(C as any);

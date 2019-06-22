@@ -1,55 +1,39 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-class LazyLoad extends React.Component<any, any> {
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            tag: props.tag || 'img',
-            attrs: {},
-            fn: null
-        };
+const getTop = (e: any) => {
+    let T = e.offsetTop;
+    while (e.offsetParent) {
+        e = e.offsetParent;
+        T += e.offsetTop;
     }
-
-    public getTop(e: any) {
-        let T = e.offsetTop;
-        while (e.offsetParent) {
-            e = e.offsetParent;
-            T += e.offsetTop;
-        }
-        return T;
-    }
-
-    public load() {
+    return T;
+};
+export const LazyLoad = (props: { tag?: string, component: any, children: any }) => {
+    const [tag] = useState(props.tag || 'img');
+    const [attrs, setAttrs] = useState({});
+    const $dom = useRef(null);
+    const load = (): any => {
         const H = window.innerHeight;
         const S = document.documentElement.scrollTop || document.body.scrollTop;
-        if (H + S > this.getTop(this.refs.dom)) {
-            this.setState({
-                attrs: this.props
-            });
+        if (H + S > getTop($dom.current)) {
+            setAttrs(props);
         }
-    }
-
-    public componentDidMount() {
-        this.load();
-        const fn = () => this.load();
-        this.setState({
-            fn
-        });
-        window.addEventListener('scroll', fn, false);
-    }
-
-    public componentWillUnmount() {
-        window.removeEventListener('scroll', this.state.fn);
-    }
-
-    public render() {
-        const Tag = this.state.tag;
+    };
+    useEffect(() => {
+        load();
+        window.addEventListener('scroll', load, false);
+        return () => {
+            window.removeEventListener('scroll', load);
+        };
+    });
+    const Component = props.component;
+    if (Component) {
         return (
-            <Tag {...this.state.attrs} ref="dom" />
+            <Component {...attrs} ref={$dom} ></Component>
         );
     }
-
-}
-
-export default LazyLoad;
+    console.log('ssss');
+    return (
+        tag === 'img' ? <img {...attrs} ref={$dom} /> : <a {...attrs} ref={$dom} />
+    );
+};

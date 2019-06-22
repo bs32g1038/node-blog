@@ -96,7 +96,7 @@ export class ArticleService {
         return await this.articleModel.aggregate([{
             $sample: { size }
         }, {
-            $project: { title: 1, screenshot: 1 }
+            $project: { title: 1, screenshot: 1, createdAt: 1 }
         }]);
     }
 
