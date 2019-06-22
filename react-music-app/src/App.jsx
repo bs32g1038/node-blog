@@ -112,12 +112,6 @@ export default class App extends React.Component {
      * @param {string} id 
      */
     ajaxGetLyric(id) {
-        // return Axios.get('/api/music/lyric?id=' + id).then((res) => {
-        //     if (!res.data.lyric) {
-        //         return this.setState({
-        //             lyric: null
-        //         });
-        //     }
         let data = this.parseLyric(musicLyric[id]);
         let lyric = {};
         let i = -1;
@@ -130,7 +124,6 @@ export default class App extends React.Component {
         this.setState({
             lyric
         });
-        // }).catch(err => { });
     }
 
     /**
@@ -170,9 +163,9 @@ export default class App extends React.Component {
                 audio.play().catch(error => { console.log(error) }); // 捕抓多次点击错误
                 document.body.style.backgroundImage = `url(${music.picUrl})`;
                 this.setState({
-                    songName: music.name,
-                    picUrl: music.picUrl,
-                    singer: music.singer,
+                    songName: music.name || '',
+                    picUrl: music.picUrl || '',
+                    singer: music.singer || '',
                     playIndex: index,   // 设置歌曲索引
                     curLyricItem: 0,    // 重置歌词
                     isPaused: false
@@ -378,17 +371,6 @@ export default class App extends React.Component {
                 this.audio = audio;
             }
         } else {
-            // Axios.get('/api/music/playlist?id=2161739123').then((res) => {
-            //     this.setState({
-            //         playList: res.data.tracks,
-            //         info: {
-            //             coverImgUrl: res.data.coverImgUrl + '?param=200y200',
-            //             name: res.data.name,
-            //             createTime: res.data.createTime,
-            //             description: res.data.description,
-            //         }
-            //     });
-            // });
             audio = document.createElement('audio');
             audio.volume = 1;
             document.body.appendChild(audio);
