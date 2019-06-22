@@ -154,25 +154,27 @@ export default class App extends React.Component {
             if (!audio.ended && audio.paused && audio.src) {
                 this.setState({
                     isPaused: false
-                })
+                });
                 audio.load();
                 return audio.play().catch(error => { console.log(error) });
             }
             index = index || 0;
             const music = playList[index];
-            audio.src = music.src;
-            audio.load();
-            audio.play().catch(error => { console.log(error) }); // 捕抓多次点击错误
-            document.body.style.backgroundImage = `url(${music.picUrl})`;
-            this.setState({
-                songName: music.name,
-                picUrl: music.picUrl,
-                singer: music.singer,
-                playIndex: index,   // 设置歌曲索引
-                curLyricItem: 0,    // 重置歌词
-                isPaused: false
-            });
-            this.ajaxGetLyric(music.id); // 获取歌词，并设置
+            if (music) {
+                audio.src = music.src;
+                audio.load();
+                audio.play().catch(error => { console.log(error) }); // 捕抓多次点击错误
+                document.body.style.backgroundImage = `url(${music.picUrl})`;
+                this.setState({
+                    songName: music.name,
+                    picUrl: music.picUrl,
+                    singer: music.singer,
+                    playIndex: index,   // 设置歌曲索引
+                    curLyricItem: 0,    // 重置歌词
+                    isPaused: false
+                });
+                this.ajaxGetLyric(music.id); // 获取歌词，并设置
+            }
         }, 200);
         this.setState({
             ctrlClickTime: ctrlClickTime
@@ -446,7 +448,7 @@ export default class App extends React.Component {
         /**
          * 广告
          */
-        if(lyric.length <= 0){
+        if (lyric.length <= 0) {
             lyric.push(<p className="MusicLyric-item" key="none-word">该歌曲暂无歌词</p>);
             lyric.push(<p className="MusicLyric-item" key="www.lizc.me">www.lizc.me</p>);
         }
