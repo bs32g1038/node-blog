@@ -1,6 +1,3 @@
-'use strict';
-const path = require('path');
-
 module.exports = {
     modify: (config, { target, dev }, webpack) => {
         const appConfig = config;
