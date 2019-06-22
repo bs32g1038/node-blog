@@ -91,15 +91,19 @@ export default class App extends React.Component {
     renderLyric(curTime) {
         let data = this.state.lyric;
         for (let k in data) {
-            if (k > curTime) {
-                return this.setState({
-                    curLyricItem: data[k].index - 1
-                });
-            } else if (k === Math.floor(curTime)) {
-                return this.setState({
-                    curLyricItem: data[k].index
-                });
+            const index = data[k] || 0
+            if (index) {
+                if (k > curTime) {
+                    return this.setState({
+                        curLyricItem: index - 1
+                    });
+                } else if (k === Math.floor(curTime)) {
+                    return this.setState({
+                        curLyricItem: index
+                    });
+                }
             }
+
         }
     }
 

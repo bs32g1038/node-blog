@@ -90,7 +90,7 @@ export default class MdEdit extends Component {
         };
         if (!isFull) {
             request();
-        } else if (cancel) {
+        } else {
             cancel();
         }
     }
