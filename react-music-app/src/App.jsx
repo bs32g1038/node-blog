@@ -13,7 +13,7 @@ export default class App extends React.Component {
             singer: '--',
             currentTime: 0,
             currentProgress: 0,
-            playIndex: -1,
+            playIndex: 0,
             playMode: 1,
             isShowList: true,
             playList: MusicJson.tracks,
@@ -89,22 +89,19 @@ export default class App extends React.Component {
      * @param {number} curTime 
      */
     renderLyric(curTime) {
-        let data = this.state.lyric;
-        for (let k in data) {
-            const index = data[k] || 0
-            if (index) {
+        return this.setState(prevState => {
+            let data = prevState.lyric;
+            let index = 0
+            for (let k in data) {
                 if (k > curTime) {
-                    return this.setState({
-                        curLyricItem: index - 1
-                    });
-                } else if (k === Math.floor(curTime)) {
-                    return this.setState({
-                        curLyricItem: index
-                    });
+                    index = data[k] - 1
+                    break;
                 }
             }
-
-        }
+            return {
+                curLyricItem: index
+            }
+        });
     }
 
     /**
@@ -163,14 +160,14 @@ export default class App extends React.Component {
                 audio.load();
                 audio.play().catch(error => { console.log(error) }); // 捕抓多次点击错误
                 document.body.style.backgroundImage = `url(${music.picUrl})`;
-                this.setState({
-                    songName: music.name || '',
-                    picUrl: music.picUrl || '',
-                    singer: music.singer || '',
+                this.setState(prevState => ({
+                    songName: music.name || prevState.songName,
+                    picUrl: music.picUrl || prevState.picUrl,
+                    singer: music.singer || prevState.singer,
                     playIndex: index,   // 设置歌曲索引
                     curLyricItem: 0,    // 重置歌词
                     isPaused: false
-                });
+                }));
                 this.ajaxGetLyric(music.id); // 获取歌词，并设置
             }
         }, 200);
