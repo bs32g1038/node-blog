@@ -54,7 +54,7 @@ export class FileController {
     @Delete('/files/:id')
     @JoiValidationPipe(FileController.idSchema)
     @Roles('admin')
-    async deleteFile(@Param() params: { id: string }): Promise<File> {
+    async deleteFile(@Param() params: { id: string }) {
         return await this.fileService.deleteFile(params.id);
     }
 }

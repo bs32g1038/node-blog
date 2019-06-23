@@ -10,7 +10,7 @@ export interface File extends Document {
     suffix: string;
     fileName: string;
     filePath: string;
-    isdir: string;
+    isdir: boolean;
     category: number;
     parentId: string;
     fileCount: number;

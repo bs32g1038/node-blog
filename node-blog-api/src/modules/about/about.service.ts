@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import cheerio = require('cheerio');
-import axios from 'axios';
+import axios from '../../utils/axios.utils';
 import config from '../../configs/index.config';
 import * as LRU from 'lru-cache';
+import { GetUserDataDto, UserCommits, Contribution, UserInfo } from './about.dto';
 
 const cache = new LRU();
 
-const handleUserCommits = (commits) => {
+const handleUserCommits = (commits): UserCommits => {
     const $ = cheerio.load(commits);
-    const contribution = [];
+    const contribution: Contribution[] = [];
     const parseSvg = $('.day');
     let total = 0;
     parseSvg.each((_, svg) => {
@@ -31,17 +32,17 @@ const handleUserCommits = (commits) => {
     };
 };
 
-const getUserInfo = async (username: string) => {
+const getUserInfo = async (username: string): Promise<UserInfo> => {
     return axios.get(`https://api.github.com/users/${username}`)
         .then((res: any) => {
             const data = res.data;
-            return {
-                location: data.location,
-                name: data.name,
-                url: data.url,
-                avatarUrl: data.avatar_url,
-                bio: data.bio
-            };
+            const info = new UserInfo();
+            info.name = data.name;
+            info.url = data.url;
+            info.location = data.location;
+            info.avatarUrl = data.avatarUrl;
+            info.bio = data.bio;
+            return info;
         });
 };
 
@@ -80,14 +81,10 @@ const getUserRepos = async (username: string) => {
 @Injectable()
 export class AboutService {
 
-    async getUserData(username: string) {
+    async getUserData(username: string): Promise<GetUserDataDto> {
         const info: any = cache.get(config.github_secret_key);
         if (!info) {
-            const obj: {
-                userInfo?: any,
-                userRepos?: any,
-                userCommits?: any
-            } = {};
+            const obj: GetUserDataDto = {};
             const [userInfo, userRepos, userCommits] = await Promise.all([
                 getUserInfo(username),
                 getUserRepos(username),

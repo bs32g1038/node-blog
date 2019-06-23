@@ -53,7 +53,7 @@ export class MediaController {
     @Delete('/medias/:id')
     @JoiValidationPipe(MediaController.idSchema)
     @Roles('admin')
-    async deleteMedia(@Param() params: { id: string }): Promise<Media> {
+    async deleteMedia(@Param() params: { id: string })  {
         return await this.mediaService.deleteMedia(params.id);
     }
 }

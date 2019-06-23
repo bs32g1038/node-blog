@@ -1,4 +1,5 @@
 export class CreateArticleDto {
+    _id: string;
     title: string;
     content: string;
     summary: string;
@@ -7,6 +8,9 @@ export class CreateArticleDto {
     commentCount: number;
     viewsCount: number;
     isDeleted: boolean;
+    isDraft: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export class UpdateArticleDto {
@@ -19,4 +23,7 @@ export class UpdateArticleDto {
     commentCount: number;
     viewsCount: number;
     isDeleted: boolean;
+    isDraft: boolean;
+    createdAt: string;
+    updatedAt: string;
 }

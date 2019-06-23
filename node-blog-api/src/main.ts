@@ -3,7 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { resolve } from 'path';
 
-async function bootstrap() {
+export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(
         AppModule
     );
@@ -12,5 +12,8 @@ async function bootstrap() {
         prefix: '/static/'
     });
     await app.listen(8080);
+    return app;
 }
-bootstrap();
+if (!module.parent) {
+    bootstrap();
+}

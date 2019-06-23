@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Header } from '@nestjs/common';
 import { CreateDemoDto, UpdateDemoDto } from './demo.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { DemoService } from './demo.service';
@@ -54,15 +54,16 @@ export class DemoController {
     @Delete('/api/demos/:id')
     @JoiValidationPipe(DemoController.idSchema)
     @Roles('admin')
-    async deleteArticle(@Param() params: { id: string }): Promise<Demo> {
+    async deleteArticle(@Param() params: { id: string }) {
         return await this.demoService.deleteDemo(params.id);
     }
 
     @Get('/demos/:id')
+    @Header('Content-Type', 'text/html')
     async renderDemoShowPage(@Param() params: { id: string }) {
         const { id } = params;
         const demo = await this.demoService.getDemo(id);
-        const code: {html?: string, css?: string, javascript?: string} = {};
+        const code: { html?: string, css?: string, javascript?: string } = {};
         const markdown = new MarkdownIt({
             highlight(str, lang) {
                 if (lang) {
@@ -80,17 +81,18 @@ export class DemoController {
                 return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
             }
         });
-        const data = {
-            title: demo.title,
-            content: markdown.render(demo.content),
-            code,
-            hljs(lang?: any, str?: any) {
-            return `<pre class="hljs ${lang}"><code>` +
-                    hljs.highlight(lang, str, true).value +
-                    '</code></pre>';
-            }
-        };
-        return `
+        try {
+            const data = {
+                title: demo.title,
+                content: markdown.render(demo.content),
+                code,
+                hljs(lang?: any, str?: any) {
+                    return `<pre class="hljs ${lang}"><code>` +
+                        hljs.highlight(lang, str, true).value +
+                        '</code></pre>';
+                }
+            };
+            return `
         <!DOCTYPE html>
             <html lang="zh">
 
@@ -317,6 +319,9 @@ export class DemoController {
 
             </html>
         `;
+        } catch (error) {
+            return null;
+        }
     }
 
 }

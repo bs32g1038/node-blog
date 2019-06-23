@@ -51,9 +51,12 @@ export class LoginService {
                     password: getDerivedKey(password)
                 });
                 return {
-                    token: jwt.sign({ account }, config.token_secret_key, {
-                        expiresIn: 60 * 60
-                    })
+                    token: jwt.sign({
+                        account,
+                        roles: ['admin']
+                    }, config.token_secret_key, {
+                            expiresIn: 60 * 60
+                        })
                 };
             }
         } else {
