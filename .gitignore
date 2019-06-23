@@ -10,3 +10,4 @@ react-blog/build
 react-music-app/build
 *.lock
 *.log
+coverage

@@ -45,6 +45,10 @@ export const ArticleSchema = new mongoose.Schema({
     isDeleted: {
         type: Boolean,
         default: false
+    },
+    isDraft: {
+        type: Boolean,
+        isDraft: false
     }
 }, {
     timestamps: true

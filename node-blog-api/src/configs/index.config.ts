@@ -13,6 +13,13 @@ export default {
             pass: ''
         }
     },
+    test_db: {
+        uri: 'mongodb://localhost:27017/test',
+        options: {
+            user: '',
+            pass: ''
+        }
+    },
     token_secret_key: 'NODEBLOG/bs32g1038@163.com/TOKEN',
     user: {
         nickName: '冷夜流星',

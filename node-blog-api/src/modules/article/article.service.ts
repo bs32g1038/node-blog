@@ -71,7 +71,7 @@ export class ArticleService {
     async getArticle(id: string, isRenderHtml: boolean) {
         const article = await this.articleModel.findByIdAndUpdate(id, {
             $inc: { viewsCount: 1 }
-        }, { select: '-summary' }).populate('category');
+        }).populate('category');
 
         if (article) {
             const data = article.toObject();

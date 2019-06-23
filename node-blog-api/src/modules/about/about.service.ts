@@ -3,6 +3,7 @@ import cheerio = require('cheerio');
 import axios from 'axios';
 import config from '../../configs/index.config';
 import * as LRU from 'lru-cache';
+import { GetUserDataDto } from './about.dto';
 
 const cache = new LRU();
 
@@ -80,14 +81,10 @@ const getUserRepos = async (username: string) => {
 @Injectable()
 export class AboutService {
 
-    async getUserData(username: string) {
+    async getUserData(username: string): Promise<GetUserDataDto> {
         const info: any = cache.get(config.github_secret_key);
         if (!info) {
-            const obj: {
-                userInfo?: any,
-                userRepos?: any,
-                userCommits?: any
-            } = {};
+            const obj: GetUserDataDto = {};
             const [userInfo, userRepos, userCommits] = await Promise.all([
                 getUserInfo(username),
                 getUserRepos(username),

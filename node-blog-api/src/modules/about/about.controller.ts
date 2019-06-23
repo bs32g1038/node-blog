@@ -8,7 +8,7 @@ export class AboutController {
     constructor(private readonly aboutService: AboutService) { }
 
     @Get()
-    async getUserData(@Param() params: { username: string }) {
+    async getUserData(@Param() params: { username: string }): Promise<any> {
         return await this.aboutService.getUserData(params.username);
     }
 }

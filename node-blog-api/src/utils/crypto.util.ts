@@ -16,7 +16,15 @@ export const sha1 = (value: string) => {
     return crypto.SHA1(value).toString(crypto.enc.Hex);
 };
 
-// 加密方法
+export const encrypt = (str: string) => {
+    const m = crypto.MD5(str);
+    const s = m.toString(crypto.enc.Hex);
+    const s1 = s.slice(0, s.length / 2);
+    const s2 = s.slice(s.length / 2, s.length);
+    const encrypted = crypto.AES.encrypt(str, s);
+    return s1 + encrypted.toString() + s2;
+};
+
 export const decrypt = (str: string) => {
     const s1 = str.slice(0, 16);
     const s2 = str.slice(str.length - 16, str.length);
