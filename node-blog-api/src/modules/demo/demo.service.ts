@@ -39,9 +39,8 @@ export class DemoService {
     }
 
     async deleteDemo(id: string) {
-        const demo = await this.demoModel.findById(id);
         await this.demoModel.deleteOne({ _id: id });
-        return demo;
+        return {};
     }
 
     async count(query) {

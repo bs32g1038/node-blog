@@ -39,9 +39,8 @@ export class MediaService {
     }
 
     async deleteMedia(id: string) {
-        const media = await this.MediaModel.findById(id);
         await this.MediaModel.deleteOne({ _id: id });
-        return media;
+        return {};
     }
 
     async count(query) {

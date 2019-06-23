@@ -1,4 +1,4 @@
-export interface UserInfo {
+export class UserInfo {
     avatarUrl: string;
     bio: string;
     location: string;
@@ -6,7 +6,7 @@ export interface UserInfo {
     url: string;
 }
 
-export interface UserRepos {
+export class UserRepos {
     description: string;
     forkCount: number;
     language: string;
@@ -14,14 +14,14 @@ export interface UserRepos {
     stargazersCount: number;
 }
 
-export interface Contribution {
+export class Contribution {
     count: number;
     day: string;
     month: string;
     year: string;
 }
 
-export interface UserCommits {
+export class UserCommits {
     contribution: Contribution[];
     total: number;
 }

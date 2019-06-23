@@ -1,22 +1,23 @@
 export class CreateMediaDto {
-    title: string;
-    content: string;
-    summary: string;
-    screenshot: string;
-    category: string;
-    commentCount: number;
-    viewsCount: number;
-    isDeleted: boolean;
+    _id: string;
+    originalName: string;
+    name: string;
+    mimetype: string;
+    size: number;
+    suffix: string;
+    fileName: string;
+    filePath: string;
+    type: string;
 }
 
 export class UpdateMediaDto {
     _id: string;
-    title: string;
-    content: string;
-    summary: string;
-    screenshot: string;
-    category: string;
-    commentCount: number;
-    viewsCount: number;
-    isDeleted: boolean;
+    originalName: string;
+    name: string;
+    mimetype: string;
+    size: number;
+    suffix: string;
+    fileName: string;
+    filePath: string;
+    type: string;
 }

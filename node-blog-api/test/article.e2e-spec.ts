@@ -1,40 +1,40 @@
 import * as request from 'supertest';
+import { AboutModule } from '../src/modules/about.module';
 import { ArticleModule } from '../src/modules/article.module';
 import { LoginModule } from '../src/modules/login.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import config from '../src/configs/index.config';
-import { getToken } from './util';
 import * as mongoose from 'mongoose';
 
 describe('ArticleController', () => {
     let app: INestApplication;
-    let token: string;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
                 MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
                 ArticleModule,
-                LoginModule
+                LoginModule,
+                AboutModule
             ]
         }).compile();
         app = module.createNestApplication();
         await app.init();
-        token = await getToken(app);
     });
+
     const time = new Date().toISOString();
     const article = {
-        _id: '5c0f3e2b25349c1270e7a4ec',
+        _id: '5c0f3e2b25349c1270e732ec',
         isDraft: false,
-        commentCount: 9,
-        viewsCount: 639,
+        commentCount: 1,
+        viewsCount: 1,
         isDeleted: false,
         title: 'test',
         content: 'test',
-        summary: 'summary',
-        screenshot: '/static/images/default.jpg',
+        summary: 'test',
+        screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         category: '5c0a1317244b3c01b464a3ec',
         createdAt: time,
         updatedAt: time,
@@ -64,7 +64,7 @@ describe('ArticleController', () => {
     it('/POST /api/articles 200', async () => {
         return request(app.getHttpServer())
             .post('/api/articles')
-            .set('authorization', token)
+            .set('authorization', __TOKEN__)
             .send(article)
             .expect(201)
             .expect(article);
@@ -75,8 +75,11 @@ describe('ArticleController', () => {
             .get('/api/articles')
             .expect(200)
             .then(res => {
-                expect(res.body.totalCount).toEqual(1);
-                const a = res.body.items[0];
+                expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
+                const arr = res.body.items.filter(item => {
+                    return item._id === article._id;
+                });
+                const a = arr[0];
                 expect(a._id).toEqual(article._id);
                 expect(a.isDraft).toEqual(article.isDraft);
                 expect(a.commentCount).toEqual(article.commentCount);
@@ -118,18 +121,22 @@ describe('ArticleController', () => {
         return request(app.getHttpServer())
             .get('/api/recentArticles')
             .expect(200)
-            .expect([{
-                _id: article._id,
-                title: article.title,
-                screenshot: article.screenshot,
-                createdAt: article.createdAt
-            }]);
+            .then(res => {
+                const arr = res.body.filter(item => {
+                    return item._id === article._id;
+                });
+                const a = arr[0];
+                expect(a._id).toEqual(article._id);
+                expect(a.title).toEqual(article.title);
+                expect(a.screenshot).toEqual(article.screenshot);
+                expect(a.createdAt).toEqual(article.createdAt);
+            });
     });
 
     it('/PUT /api/articles 200', async () => {
         return request(app.getHttpServer())
             .put('/api/articles/' + article._id)
-            .set('authorization', token)
+            .set('authorization', __TOKEN__)
             .send(article)
             .expect(200)
             .then(res => {
@@ -144,7 +151,7 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(article.category);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(new Date(a.updatedAt).getTime()).toBeGreaterThan(new Date(article.updatedAt).getTime());
+                expect(new Date(a.updatedAt).getTime()).toBeGreaterThanOrEqual(new Date(article.updatedAt).getTime());
                 expect(a.__v).toEqual(article.__v);
             });
     });
@@ -152,7 +159,7 @@ describe('ArticleController', () => {
     it('/DELETE /api/articles/:id 200', async () => {
         return request(app.getHttpServer())
             .delete('/api/articles/' + article._id)
-            .set('authorization', token)
+            .set('authorization', __TOKEN__)
             .expect(200)
             .expect({});
     });

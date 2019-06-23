@@ -9,5 +9,7 @@
   "collectCoverage": true,
   "collectCoverageFrom": [
     "./src/**/*.{js,ts}"
-  ]
+  ],
+  "globalSetup": "<rootDir>/test/setup-globals.ts",
+  "setupFiles": ["<rootDir>/test/setup-files.ts"]
 }

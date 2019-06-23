@@ -39,9 +39,8 @@ export class FileService {
     }
 
     async deleteFile(id: string) {
-        const file = await this.fileModel.findById(id);
         await this.fileModel.deleteOne({ _id: id });
-        return file;
+        return {};
     }
 
     async count(query) {

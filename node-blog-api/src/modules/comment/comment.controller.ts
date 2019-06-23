@@ -75,7 +75,7 @@ export class CommentController {
     @Delete('/comments/:id')
     @JoiValidationPipe(CommentController.idSchema)
     @Roles('admin')
-    async deleteComment(@Param() params: { id: string }): Promise<Comment> {
+    async deleteComment(@Param() params: { id: string }) {
         return await this.commentService.deleteComment(params.id);
     }
 }

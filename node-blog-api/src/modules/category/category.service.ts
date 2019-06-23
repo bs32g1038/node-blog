@@ -16,8 +16,8 @@ export class CategoryService {
     }
 
     async update(id: string, data: UpdateCategoryDto) {
-        const category: Category = await this.categoryModel.findByIdAndUpdate({ _id: id }, data);
-        return category;
+        await this.categoryModel.updateOne({ _id: id }, data);
+        return await this.categoryModel.findById(id);
     }
 
     async getCategories(
@@ -38,9 +38,8 @@ export class CategoryService {
     }
 
     async deleteCategory(id: string) {
-        const category = await this.categoryModel.findById(id);
         await this.categoryModel.deleteOne({ _id: id });
-        return category;
+        return {};
     }
 
 }

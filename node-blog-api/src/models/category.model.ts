@@ -21,7 +21,7 @@ export const CategorySchema = new mongoose.Schema({
     },
     articleCount: {
         type: Number,
-        max: 1000,
+        max: 10000,
         default: 0
     }
 }, {

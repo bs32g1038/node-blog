@@ -19,6 +19,7 @@ describe('AboutController', () => {
     });
 
     it('/GET /api/about/github/user-profile/:username 200', async () => {
+        expect.assertions(3);
         return request(app.getHttpServer())
             .get('/api/about/github/user-profile/bs32g1038')
             .expect(200)
@@ -29,9 +30,8 @@ describe('AboutController', () => {
                 expect(res.userCommits.contribution.length).toBeGreaterThanOrEqual(1);
             })
             .catch(e => {
-                expect.assertions(1);
                 expect(e).toEqual({
-                    error: '500 Internal Server Error'
+                    error: 'Internal Server Error'
                 });
             });
     });

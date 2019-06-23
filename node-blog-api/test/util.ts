@@ -1,16 +1,15 @@
-import * as request from 'supertest';
-import { encrypt } from '../src/utils/crypto.util';
+import config from '../src/configs/index.config';
+import jwt = require('jsonwebtoken');
 
-export const getToken = async (app) => {
-    return await request(app.getHttpServer())
-        .post('/api/login')
-        .send({
-            key: encrypt(JSON.stringify({
-                account: 'test',
-                password: 'test'
-            }))
-        })
-        .then(res => {
-            return res.body.token;
+export const getToken = () => {
+    return jwt.sign({
+        account: 'test',
+        roles: ['admin']
+    }, config.token_secret_key, {
+            expiresIn: 60 * 60
         });
+};
+
+export const verifyToken = (str) => {
+    return jwt.verify(str, config.token_secret_key);
 };

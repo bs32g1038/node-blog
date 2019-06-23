@@ -27,8 +27,8 @@ export class CommentService {
     }
 
     async update(id: string, data: UpdateCommentDto) {
-        const comment: Comment = await this.commentModel.findByIdAndUpdate({ _id: id }, data);
-        return comment;
+        await this.commentModel.updateOne({ _id: id }, data);
+        return await this.commentModel.findById(id);
     }
 
     async getComments(
@@ -50,9 +50,8 @@ export class CommentService {
     }
 
     async deleteComment(id: string) {
-        const comment = await this.commentModel.findById(id);
         await this.commentModel.deleteOne({ _id: id });
-        return comment;
+        return {};
     }
 
     async count(query) {
