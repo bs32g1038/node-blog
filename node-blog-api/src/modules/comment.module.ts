@@ -1,4 +1,4 @@
-import { Module, NestModule, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
+import { Module, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommentController } from './comment/comment.controller';
 import { CommentService } from './comment/comment.service';
