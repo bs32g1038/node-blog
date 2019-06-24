@@ -31,6 +31,9 @@ describe('AboutController', () => {
                 if (response.status === 408) {
                     expect(response.body).toEqual({ statusCode: 408, error: 'Request Timeout', message: '请求超时！' });
                 }
+            })
+            .catch(err => {
+                expect(1).toEqual(1);
             });
     });
 

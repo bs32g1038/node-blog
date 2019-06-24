@@ -1,4 +1,7 @@
 import { AboutService, cache } from '../../src/modules/about/about.service';
+import axios from '../../src/utils/axios.utils';
+import * as path from 'path';
+import * as fs from 'fs';
 
 describe('AboutController', () => {
     let aboutService: AboutService;
@@ -9,14 +12,37 @@ describe('AboutController', () => {
 
     describe('getUserData', () => {
         it('getUserData method', async () => {
-            try {
-                const data = await aboutService.getUserData('bs32g1038');
-                expect(data.userInfo.url).toEqual('https://api.github.com/users/bs32g1038');
-                expect(data.userRepos[0].name).toEqual('node-blog');
-                expect(data.userCommits.contribution.length).toBeGreaterThanOrEqual(1);
-            } catch (error) {
-                expect(error.message).toEqual({ statusCode: 408, error: 'Request Timeout', message: '请求超时！' });
-            }
+            jest.spyOn(axios, 'get').mockImplementation((url: string): any => {
+                if (url === 'https://api.github.com/users/bs32g1038/repos') {
+                    return Promise.resolve({
+                        data: [{
+                            name: 'test',
+                            forkCount: 1,
+                            stargazersCount: 1,
+                            language: 'js',
+                            description: 'test'
+                        }]
+                    });
+                } else if (url === 'https://github.com/users/bs32g1038/contributions') {
+                    return Promise.resolve({
+                        data: fs.readFileSync(path.resolve(__dirname, './contributions.html'), 'utf-8')
+                    });
+                } else if (url === 'https://api.github.com/users/bs32g1038') {
+                    return Promise.resolve({
+                        data: {
+                            name: 'test',
+                            url: 'http://www.test.com',
+                            location: 'test',
+                            avatarUrl: 'http://www.test.com/test.jpg',
+                            bio: 'test'
+                        }
+                    });
+                }
+            });
+            const data = await aboutService.getUserData('bs32g1038');
+            expect(data.userInfo.url).toEqual('http://www.test.com');
+            expect(data.userRepos[0].name).toEqual('test');
+            expect(data.userCommits.contribution.length).toBeGreaterThanOrEqual(1);
         });
         it('have cache', async () => {
             jest.spyOn(cache, 'get').mockImplementation(() => {

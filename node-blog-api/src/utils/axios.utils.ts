@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { RequestTimeoutException } from '@nestjs/common';
 
 const instance: AxiosInstance = axios.create({
-    timeout: 5000
+    timeout: 10000
 });
 
 instance.interceptors.response.use(config => {
