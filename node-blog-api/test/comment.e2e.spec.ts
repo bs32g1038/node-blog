@@ -60,7 +60,7 @@ describe('CommentController', () => {
         __v: 0
     };
 
-    it('method:PUT -- [/api/comments/:id] 403', async () => {
+    it('/PUT -- /api/comments/:id 403', async () => {
         return request(app.getHttpServer())
             .put('/api/comments/' + comment._id)
             .send(comment)

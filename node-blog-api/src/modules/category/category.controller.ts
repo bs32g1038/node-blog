@@ -31,23 +31,24 @@ export class CategoryController {
 
     @Get('/categories')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getArticles(@Query() query: { page: number, limit: number }): Promise<Category[]> {
+    async getCategoris(@Query() query: { page: number, limit: number }): Promise<Category[]> {
         return await this.categoryService.getCategories({}, {
             skip: Number(query.page),
-            limit: Number(query.limit)
+            limit: Number(query.limit),
+            sort: {}
         });
     }
 
     @Get('/categories/:id')
     @JoiValidationPipe(CategoryController.idSchema)
-    async getArticle(@Param() params: { id: string }): Promise<Category> {
+    async getCategory(@Param() params: { id: string }): Promise<Category> {
         return await this.categoryService.getCategory(params.id);
     }
 
     @Delete('/categories/:id')
     @JoiValidationPipe(CategoryController.idSchema)
     @Roles('admin')
-    async deleteArticle(@Param() params: { id: string }) {
+    async deleteCategory(@Param() params: { id: string }) {
         return await this.categoryService.deleteCategory(params.id);
     }
 }

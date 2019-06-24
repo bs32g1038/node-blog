@@ -2,7 +2,12 @@
   "name": "react-music-app",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://music.lizc.me",
+  "license": "MIT",
+  "author": {
+    "name": "Json Li",
+    "email": "bs32g1038@163.com"
+  },
+  "homepage": "http://www.lizc.me",
   "dependencies": {
     "serve": "^11.0.2"
   },

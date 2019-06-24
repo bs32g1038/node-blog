@@ -14,6 +14,5 @@ export async function bootstrap() {
     await app.listen(8080);
     return app;
 }
-if (!module.parent) {
-    bootstrap();
-}
+
+bootstrap();

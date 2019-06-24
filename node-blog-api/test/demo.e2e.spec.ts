@@ -24,7 +24,7 @@ describe('DemoController', () => {
     const demo = {
         _id: '5d0fa726dec2a442e4c66bd2',
         title: 'test',
-        content: 'test',
+        content: '```html test```',
         visitCount: 1,
         createdAt: time,
         updatedAt: time,

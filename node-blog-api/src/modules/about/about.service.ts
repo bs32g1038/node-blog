@@ -5,7 +5,7 @@ import config from '../../configs/index.config';
 import * as LRU from 'lru-cache';
 import { GetUserDataDto, UserCommits, Contribution, UserInfo } from './about.dto';
 
-const cache = new LRU();
+export const cache = new LRU();
 
 const handleUserCommits = (commits): UserCommits => {
     const $ = cheerio.load(commits);

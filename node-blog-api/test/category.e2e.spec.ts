@@ -78,6 +78,22 @@ describe('CategoryController', () => {
             });
     });
 
+    it('/GET /api/categories?page=1&limit=20 200', async () => {
+        return request(app.getHttpServer())
+            .get('/api/categories')
+            .expect(200)
+            .then(res => {
+                const a = res.body[0];
+                expect(a._id).toEqual(category._id);
+                expect(a.articleCount).toEqual(category.articleCount);
+                expect(a.order).toEqual(category.order);
+                expect(a.name).toEqual(category.name);
+                expect(a.createdAt).toEqual(category.createdAt);
+                expect(a.updatedAt).toEqual(category.updatedAt);
+                expect(a.__v).toEqual(category.__v);
+            });
+    });
+
     it('/GET /api/categories/:id 200', async () => {
         return request(app.getHttpServer())
             .get('/api/categories/' + category._id)

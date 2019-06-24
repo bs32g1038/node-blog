@@ -5,31 +5,41 @@ node_js: stable
 services:
   - mongodb
 
-cache: yarn
-cache: npm
+cache:
+  timeout: 1000
+  directories:
+    - $HOME/.npm-cache
+    - $HOME/.npm-prefix
+    - $HOME/.npm
 
 install:
+  - set -e
   - cd $TRAVIS_BUILD_DIR
   - npm install -g codecov
-  - bash scripts/install-dependencies.sh || travis_terminate 1
+  - cd react-blog
+  - npm install
+  - cd ../node-blog-api
+  - npm install
+  - cd ../react-admin
+  - npm install
+  - cd ../react-music-app
+  - npm install
 
 before_script:
   - sleep 15
-  - git config --global user.name "bs32g1038"
-  - git config --global user.email "bs32g1038@163.com"
 
 script:
-  - cd $TRAVIS_BUILD_DIR
-  - bash scripts/build.sh || travis_terminate 1
-
-after_success:
-  - cd $TRAVIS_BUILD_DIR
-  - bash scripts/after_success.sh || travis_terminate 1
+  - set -e
+  - cd $TRAVIS_BUILD_DIR/react-blog
+  - NODE_OPTIONS=--max_old_space_size=1024 CI=false npm run build
+  - cd ../node-blog-api
+  - npm run test:cov
+  - codecov
+  - cd ../react-admin
+  - CI=false npm run build
+  - cd ../react-music-app
+  - CI=false npm run build
 
 branches:
   only:
     - master
-
-env:
-  global:
-    - GH_REF: github.com/bs32g1038/node-blog.git
