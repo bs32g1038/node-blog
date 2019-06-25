@@ -39,7 +39,6 @@ export class UploadService {
 
             // 图片处理
             const basePath = path.resolve(__dirname, `../../..` + filePath);
-
             /* istanbul ignore next */
             if (!fs.existsSync(basePath)) {
                 fs.mkdirSync(basePath);
@@ -95,7 +94,12 @@ export class UploadService {
                     }
                 });
             }
-            await fs.writeFileSync(path.resolve(__dirname, '../../..' + filePath) + '/' + fileName, req.file.buffer);
+            const basePath = path.resolve(__dirname, `../../..` + filePath);
+            /* istanbul ignore next */
+            if (!fs.existsSync(basePath)) {
+                fs.mkdirSync(basePath);
+            }
+            await fs.writeFileSync(basePath + '/' + fileName, req.file.buffer);
             if (req.query.parentId) {
                 await this.fileModel.updateOne({ _id: req.query.parentId }, {
                     $inc: { fileCount: 1 }
