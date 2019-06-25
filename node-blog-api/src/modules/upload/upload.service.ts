@@ -1,13 +1,12 @@
 import { Model } from 'mongoose';
 import * as multer from 'multer';
-import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { File } from '../../models/file.model';
 import { Media } from '../../models/media.model';
 import { md5 } from '../../utils/crypto.util';
 import * as path from 'path';
 import * as fs from 'fs';
-import logger from '../../utils/logger.util';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
