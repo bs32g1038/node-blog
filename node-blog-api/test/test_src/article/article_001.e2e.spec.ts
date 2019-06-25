@@ -1,12 +1,11 @@
 import * as request from 'supertest';
-import { AboutModule } from '../src/modules/about.module';
-import { ArticleModule } from '../src/modules/article.module';
-import { LoginModule } from '../src/modules/login.module';
+import { AboutModule } from '../../../src/modules/about.module';
+import { ArticleModule } from '../../../src/modules/article.module';
+import { LoginModule } from '../../../src/modules/login.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import { DatabaseModule } from '../../database/database.module';
+import { markdown } from '../../../src/modules/article/article.service';
 
 describe('ArticleController', () => {
     let app: INestApplication;
@@ -14,7 +13,7 @@ describe('ArticleController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 ArticleModule,
                 LoginModule,
                 AboutModule
@@ -90,7 +89,6 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.updatedAt).toEqual(article.updatedAt);
                 expect(a.__v).toEqual(article.__v);
             });
     });
@@ -112,8 +110,38 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.updatedAt).toEqual(article.updatedAt);
                 expect(a.__v).toEqual(article.__v);
+            });
+    });
+
+    it('/GET /api/articles/:id?md=true 200', async () => {
+        return request(app.getHttpServer())
+            .get('/api/articles/' + article._id + '?md=true')
+            .expect(200)
+            .then(res => {
+                const a = res.body;
+                expect(a._id).toEqual(article._id);
+                expect(a.isDraft).toEqual(article.isDraft);
+                expect(a.commentCount).toEqual(article.commentCount);
+                expect(a.viewsCount).toBeGreaterThan(article.viewsCount);
+                expect(a.isDeleted).toEqual(article.isDeleted);
+                expect(a.title).toEqual(article.title);
+                expect(a.content).toEqual(markdown.render(article.content));
+                expect(a.summary).toEqual(article.summary);
+                expect(a.screenshot).toEqual(article.screenshot);
+                expect(a.category).toEqual(null);
+                expect(a.createdAt).toEqual(article.createdAt);
+                expect(a.__v).toEqual(article.__v);
+            });
+    });
+
+    it('/GET /api/articles/:id 200 return null', async () => {
+        return request(app.getHttpServer())
+            .get('/api/articles/5c0f3e2b25349c1270e721ec')
+            .expect(200)
+            .then(res => {
+                const a = res.body;
+                expect(a).toEqual({});
             });
     });
 
@@ -144,7 +172,7 @@ describe('ArticleController', () => {
                 expect(a._id).toEqual(article._id);
                 expect(a.isDraft).toEqual(article.isDraft);
                 expect(a.commentCount).toEqual(article.commentCount);
-                expect(a.viewsCount).toEqual(article.viewsCount + 1);
+                expect(a.viewsCount).toBeGreaterThan(article.viewsCount + 1);
                 expect(a.isDeleted).toEqual(article.isDeleted);
                 expect(a.title).toEqual(article.title);
                 expect(a.summary).toEqual(article.summary);
@@ -166,6 +194,5 @@ describe('ArticleController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

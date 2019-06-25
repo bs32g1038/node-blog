@@ -1,10 +1,8 @@
 import * as request from 'supertest';
-import { MediaModule } from '../src/modules/media.module';
+import { MediaModule } from '../../../src/modules/media.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('MediaController', () => {
     let app: INestApplication;
@@ -12,7 +10,7 @@ describe('MediaController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 MediaModule
             ]
         }).compile();
@@ -152,6 +150,5 @@ describe('MediaController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

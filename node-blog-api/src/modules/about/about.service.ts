@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import cheerio = require('cheerio');
-import axios from '../../utils/axios.utils';
+import axios from '../../utils/axios.util';
 import config from '../../configs/index.config';
 import * as LRU from 'lru-cache';
 import { GetUserDataDto, UserCommits, Contribution, UserInfo } from './about.dto';

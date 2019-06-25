@@ -1,10 +1,8 @@
 import * as request from 'supertest';
-import { DemoModule } from '../src/modules/demo.module';
+import { DemoModule } from '../../../src/modules/demo.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('DemoController', () => {
     let app: INestApplication;
@@ -12,7 +10,7 @@ describe('DemoController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 DemoModule
             ]
         }).compile();
@@ -24,7 +22,7 @@ describe('DemoController', () => {
     const demo = {
         _id: '5d0fa726dec2a442e4c66bd2',
         title: 'test',
-        content: '```html test```',
+        content: '```html\ntest\n```\n```css\ntest\n```\n```javascript\ntest\n```',
         visitCount: 1,
         createdAt: time,
         updatedAt: time,
@@ -132,6 +130,5 @@ describe('DemoController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

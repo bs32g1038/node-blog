@@ -1,13 +1,12 @@
 import * as request from 'supertest';
-import { CommentModule } from '../src/modules/comment.module';
-import { ArticleModule } from '../src/modules/article.module';
-import { ArticleService } from '../src/modules/article/article.service';
-import { LoginModule } from '../src/modules/login.module';
+import { CommentModule } from '../../../src/modules/comment.module';
+import { ArticleModule } from '../../../src/modules/article.module';
+import { ArticleService } from '../../../src/modules/article/article.service';
+import { LoginModule } from '../../../src/modules/login.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import config from '../../../src/configs/index.config';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('CommentController', () => {
     let app: INestApplication;
@@ -33,7 +32,7 @@ describe('CommentController', () => {
     beforeAll(async () => {
         module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 CommentModule,
                 ArticleModule,
                 LoginModule
@@ -192,6 +191,5 @@ describe('CommentController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

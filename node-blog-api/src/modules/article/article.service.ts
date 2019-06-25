@@ -9,15 +9,11 @@ import hljs = require('highlight.js');
 import mila = require('markdown-it-link-attributes');
 
 const markdown = new MarkdownIt({
-    highlight:  (str, lang) => {
+    highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
-            try {
-                return '<pre><code class="hljs">' +
-                    hljs.highlight(lang, str, true).value +
-                    '</code></pre>';
-            } catch (__) {
-                return;
-            }
+            return '<pre><code class="hljs">' +
+                hljs.highlight(lang, str, true).value +
+                '</code></pre>';
         }
         return '<pre><code class="hljs">' + markdown.utils.escapeHtml(str) + '</code></pre>';
     }
@@ -29,6 +25,10 @@ markdown.use(mila, {
         rel: 'noopener'
     }
 });
+
+export {
+    markdown
+};
 
 @Injectable()
 export class ArticleService {

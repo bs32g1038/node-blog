@@ -1,9 +1,8 @@
 import * as request from 'supertest';
-import { RssModule } from '../src/modules/rss.module';
+import { RssModule } from '../../../src/modules/rss.module';
 import { Test } from '@nestjs/testing';
-import { MongooseModule } from '@nestjs/mongoose';
 import { INestApplication } from '@nestjs/common';
-import config from '../src/configs/index.config';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('RssController', () => {
     let app: INestApplication;
@@ -11,7 +10,7 @@ describe('RssController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 RssModule
             ]
         }).compile();

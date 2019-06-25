@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import * as multer from 'multer';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { File } from '../../models/file.model';
 import { Media } from '../../models/media.model';
@@ -47,10 +47,7 @@ export class UploadService {
             if (!fs.existsSync(basePath)) {
                 fs.mkdirSync(basePath);
             }
-            fs.writeFile(basePath + '/' + fileName, req.file.buffer, async (error: any) => {
-                if (error) {
-                    logger.error(error);
-                }
+            fs.writeFile(basePath + '/' + fileName, req.file.buffer, async () => {
                 const file = await this.mediaModel.create({
                     originalName,
                     name,

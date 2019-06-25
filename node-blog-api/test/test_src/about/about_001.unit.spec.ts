@@ -1,12 +1,12 @@
-import { AboutService, cache } from '../../src/modules/about/about.service';
-import axios from '../../src/utils/axios.utils';
+import { AboutService, cache } from '../../../src/modules/about/about.service';
+import axios from '../../../src/utils/axios.util';
 import * as path from 'path';
 import * as fs from 'fs';
 
 describe('AboutController', () => {
     let aboutService: AboutService;
 
-    beforeEach(() => {
+    beforeAll(() => {
         aboutService = new AboutService();
     });
 
@@ -16,6 +16,13 @@ describe('AboutController', () => {
                 if (url === 'https://api.github.com/users/bs32g1038/repos') {
                     return Promise.resolve({
                         data: [{
+                            name: 'test',
+                            forkCount: 1,
+                            stargazersCount: 1,
+                            language: 'js',
+                            description: 'test'
+                        }, {
+                            fork: true,
                             name: 'test',
                             forkCount: 1,
                             stargazersCount: 1,

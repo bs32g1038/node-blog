@@ -6,10 +6,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "sourceMap": true,
+    "inlineSources": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "inlineSourceMap": true
   },
   "exclude": ["node_modules", "coverage"]
 }

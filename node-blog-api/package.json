@@ -85,6 +85,7 @@
     "collectCoverageFrom": [
       "./src/**/*.{js,ts}",
       "!./src/main.ts",
+      "!./src/configs/index.config.ts",
       "!./src/utils/logger.util.ts",
       "!./src/pipes/joi.validation.pipe.ts"
     ],
@@ -92,6 +93,11 @@
     "setupFiles": ["<rootDir>/test/setup-files.ts"],
     "setupFilesAfterEnv": [
       "<rootDir>/test/default-timeout.ts"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    }
   }
 }

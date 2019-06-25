@@ -1,11 +1,9 @@
 import * as request from 'supertest';
-import { CategoryModule } from '../src/modules/category.module';
-import { LoginModule } from '../src/modules/login.module';
+import { CategoryModule } from '../../../src/modules/category.module';
+import { LoginModule } from '../../../src/modules/login.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('CategoryController', () => {
     let app: INestApplication;
@@ -13,7 +11,7 @@ describe('CategoryController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 CategoryModule,
                 LoginModule
             ]
@@ -138,6 +136,5 @@ describe('CategoryController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

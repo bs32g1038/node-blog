@@ -1,11 +1,10 @@
 import * as request from 'supertest';
-import { LoginModule } from '../src/modules/login.module';
+import { LoginModule } from '../../../src/modules/login.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { encrypt } from '../src/utils/crypto.util';
-import config from '../src/configs/index.config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { verifyToken } from './util';
+import { encrypt } from '../../../src/utils/crypto.util';
+import { verifyToken } from '../../util';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('LoginController', () => {
     let app: INestApplication;
@@ -13,7 +12,7 @@ describe('LoginController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 LoginModule
             ]
         }).compile();

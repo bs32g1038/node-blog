@@ -1,10 +1,8 @@
 import * as request from 'supertest';
-import { FileModule } from '../src/modules/file.module';
+import { FileModule } from '../../../src/modules/file.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import config from '../src/configs/index.config';
-import * as mongoose from 'mongoose';
+import { DatabaseModule } from '../../database/database.module';
 
 describe('FileController', () => {
     let app: INestApplication;
@@ -12,7 +10,7 @@ describe('FileController', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [
-                MongooseModule.forRoot(config.test_db.uri, { useNewUrlParser: true }),
+                DatabaseModule,
                 FileModule
             ]
         }).compile();
@@ -179,6 +177,5 @@ describe('FileController', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });

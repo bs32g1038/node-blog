@@ -1,7 +1,6 @@
-import { AppModule } from '../src/app.module';
+import { AppModule } from '../../src/app.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as mongoose from 'mongoose';
 
 describe('App Module', () => {
     let app: INestApplication;
@@ -17,6 +16,5 @@ describe('App Module', () => {
 
     afterAll(async () => {
         await app.close();
-        await mongoose.connection.close();
     });
 });
