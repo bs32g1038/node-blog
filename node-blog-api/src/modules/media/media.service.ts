@@ -47,5 +47,4 @@ export class MediaService {
         const filter = { ...query };
         return await this.MediaModel.countDocuments(filter);
     }
-
-}
+}/* istanbul ignore next */

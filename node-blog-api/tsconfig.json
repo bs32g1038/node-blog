@@ -2,13 +2,14 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
-    "removeComments": true,
+    // "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "sourceMap": true,
+    "inlineSources": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "inlineSourceMap": true,
     "incremental": true
   },
   "exclude": ["node_modules", "coverage"]

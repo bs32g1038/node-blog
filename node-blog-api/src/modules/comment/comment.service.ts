@@ -13,15 +13,12 @@ export class CommentService {
         @InjectModel('article') private readonly articleModel: Model<Article>
     ) { }
 
-    async create(createCategoryDto: CreateCommentDto) {
-        if (!createCategoryDto.article) {
-            return await this.commentModel.create(createCategoryDto);
-        }
-        const article = await this.articleModel.findById(createCategoryDto.article);
+    async create(commentDto: CreateCommentDto) {
+        const article = await this.articleModel.findById(commentDto.article);
         if (!article) {
             throw new BadRequestException('[article]文章id为错误数据');
         }
-        const comment: Comment = await this.commentModel.create(createCategoryDto);
+        const comment: Comment = await this.commentModel.create(commentDto);
         await this.articleModel.updateOne({ _id: article._id }, { $inc: { commentCount: 1 } });
         return comment;
     }
@@ -33,7 +30,7 @@ export class CommentService {
 
     async getComments(
         query: {} = {},
-        option: { skip?: number, limit?: number, sort?: object, field: string }
+        option: { skip?: number, limit?: number, sort?: object, field?: string }
     ): Promise<Comment[]> {
         const { skip = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = option;
         const filter = { ...query };
@@ -58,5 +55,4 @@ export class CommentService {
         const filter = { ...query };
         return await this.commentModel.countDocuments(filter);
     }
-
-}
+}/* istanbul ignore next */

@@ -47,5 +47,4 @@ export class FileService {
         const filter = { ...query };
         return await this.fileModel.countDocuments(filter);
     }
-
-}
+}/* istanbul ignore next */

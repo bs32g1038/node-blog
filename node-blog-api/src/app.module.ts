@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import config from './configs/index.config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { DatabaseModule } from './database/database.module';
 import { ArticleModule } from './modules/article.module';
 import { CategoryModule } from './modules/category.module';
 import { AboutModule } from './modules/about.module';
@@ -14,7 +13,7 @@ import { UploadModule } from './modules/upload.module';
 
 @Module({
     imports: [
-        MongooseModule.forRoot(config.db.uri, { useNewUrlParser: true }),
+        DatabaseModule,
         ArticleModule,
         CategoryModule,
         AboutModule,

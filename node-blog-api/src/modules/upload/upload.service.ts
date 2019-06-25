@@ -7,7 +7,6 @@ import { Media } from '../../models/media.model';
 import { md5 } from '../../utils/crypto.util';
 import * as path from 'path';
 import * as fs from 'fs';
-import logger from '../../utils/logger.util';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -21,11 +20,7 @@ export class UploadService {
     ) { }
 
     async uploadSingalImage(req, res, next) {
-        return uploadSingle(req, res, (err) => {
-
-            if (err) {
-                return next(err);
-            }
+        return uploadSingle(req, res, () => {
 
             // 实体数据
             const originalName = req.file.originalname;
@@ -44,13 +39,11 @@ export class UploadService {
 
             // 图片处理
             const basePath = path.resolve(__dirname, `../../..` + filePath);
+            /* istanbul ignore next */
             if (!fs.existsSync(basePath)) {
                 fs.mkdirSync(basePath);
             }
-            fs.writeFile(basePath + '/' + fileName, req.file.buffer, async (error: any) => {
-                if (error) {
-                    logger.error(error);
-                }
+            fs.writeFile(basePath + '/' + fileName, req.file.buffer, async () => {
                 const file = await this.mediaModel.create({
                     originalName,
                     name,
@@ -82,7 +75,7 @@ export class UploadService {
             let category = 6;
             if (mimetype.toLowerCase().includes('mp4')) {
                 category = 1;
-            } else if (mimetype.toLowerCase().includes('mp3')) {
+            } else if (mimetype.toLowerCase().includes('mpeg')) {// mp3
                 category = 2;
             }
             if (category === 6) {
@@ -101,7 +94,12 @@ export class UploadService {
                     }
                 });
             }
-            await fs.writeFileSync(path.resolve(__dirname, '../../..' + filePath) + '/' + fileName, req.file.buffer);
+            const basePath = path.resolve(__dirname, `../../..` + filePath);
+            /* istanbul ignore next */
+            if (!fs.existsSync(basePath)) {
+                fs.mkdirSync(basePath);
+            }
+            await fs.writeFileSync(basePath + '/' + fileName, req.file.buffer);
             if (req.query.parentId) {
                 await this.fileModel.updateOne({ _id: req.query.parentId }, {
                     $inc: { fileCount: 1 }
@@ -124,5 +122,4 @@ export class UploadService {
             });
         });
     }
-
-}
+}/* istanbul ignore next */

@@ -29,20 +29,16 @@ function RateLimit(options) {
     const { keyGenerator, limitCount, expired, status, errorMsg, name } = cf;
     return async (req: any, res: any, next) => {
         const key = name + SEPARATOR + keyGenerator(req) + SEPARATOR + limitCount;
-        try {
-            let count: any = await cache.get(key);
-            count = count || 0;
-            if (count < limitCount) {
-                count += 1;
-                cache.set(key, count, expired);
-                res.set('X-RateLimit-Limit', limitCount);
-                res.set('X-RateLimit-Remaining', limitCount - count);
-                next();
-            } else {
-                res.status(status).json({ msg: errorMsg });
-            }
-        } catch (error) {
-            return next(error);
+        let count: any = await cache.get(key);
+        count = count || 0;
+        if (count < limitCount) {
+            count += 1;
+            cache.set(key, count, expired);
+            res.set('X-RateLimit-Limit', limitCount);
+            res.set('X-RateLimit-Remaining', limitCount - count);
+            return next();
+        } else {
+            return res.status(status).json({ msg: errorMsg });
         }
     };
 }

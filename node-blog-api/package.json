@@ -2,8 +2,13 @@
   "name": "ts-blog",
   "version": "1.0.0",
   "description": "a blog server api",
-  "author": "",
+  "private": true,
   "license": "MIT",
+  "author": {
+    "name": "Json Li",
+    "email": "bs32g1038@163.com"
+  },
+  "homepage": "http://www.lizc.me",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -14,11 +19,8 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e:cov": "jest --coverage --config ./test/jest-e2e.json --forceExit",
-    "test:e2e:watch": "jest --config ./test/jest-e2e.json --watch",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:cov": "jest --coverage --forceExit",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
@@ -73,12 +75,31 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "./src/**/*.{js,ts}",
+      "!./src/main.ts",
+      "!./src/configs/index.config.ts",
+      "!./src/utils/axios.util.ts",
+      "!./src/utils/auth.util.ts",
+      "!./src/utils/logger.util.ts",
+      "!./src/pipes/joi.validation.pipe.ts"
+    ],
+    "globalSetup": "<rootDir>/test/setup-globals.ts",
+    "setupFiles": ["<rootDir>/test/setup-files.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/default-timeout.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    }
   }
 }

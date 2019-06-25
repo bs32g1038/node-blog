@@ -20,10 +20,7 @@ export class CategoryService {
         return await this.categoryModel.findById(id);
     }
 
-    async getCategories(
-        query: {} = {},
-        option: { skip?: number, limit?: number, sort?: object }
-    ): Promise<Category[]> {
+    async getCategories(query: {} = {}, option: { skip?: number, limit?: number, sort?: object }): Promise<Category[]> {
         const { skip = 1, limit = 100, sort = {} } = option;
         return await this.categoryModel.find(query, '', {
             skip: (skip - 1) * limit,
@@ -41,5 +38,4 @@ export class CategoryService {
         await this.categoryModel.deleteOne({ _id: id });
         return {};
     }
-
-}
+}/* istanbul ignore next */

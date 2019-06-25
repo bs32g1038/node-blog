@@ -81,4 +81,4 @@ export class LoginService {
         }
     }
 
-}
+}/* istanbul ignore next */

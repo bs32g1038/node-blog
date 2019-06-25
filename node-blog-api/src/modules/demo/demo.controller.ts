@@ -66,33 +66,29 @@ export class DemoController {
         const code: { html?: string, css?: string, javascript?: string } = {};
         const markdown = new MarkdownIt({
             highlight(str, lang) {
+                /* istanbul ignore next */
                 if (lang) {
                     code[lang] = str;
                 }
                 if (lang && hljs.getLanguage(lang)) {
-                    try {
-                        return `<pre class="hljs ${lang}"><code>` +
-                            hljs.highlight(lang, str, true).value +
-                            '</code></pre>';
-                    } catch (__) {
-                        throw Error(__);
-                    }
-                }
-                return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
-            }
-        });
-        try {
-            const data = {
-                title: demo.title,
-                content: markdown.render(demo.content),
-                code,
-                hljs(lang?: any, str?: any) {
                     return `<pre class="hljs ${lang}"><code>` +
                         hljs.highlight(lang, str, true).value +
                         '</code></pre>';
                 }
-            };
-            return `
+                return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
+            }
+        });
+        const data = {
+            title: demo.title,
+            content: markdown.render(demo.content),
+            code,
+            hljs(lang?: any, str?: any) {
+                return `<pre class="hljs ${lang}"><code>` +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            }
+        };
+        return `
         <!DOCTYPE html>
             <html lang="zh">
 
@@ -273,7 +269,7 @@ export class DemoController {
                     }
                 </style>
                 <style>
-                    ${data.code.css}
+                    ${data.code && data.code.css}
                 </style>
             </head>
 
@@ -283,7 +279,7 @@ export class DemoController {
                         <h3>效果：</h3>
                         <div class="show">
                             <div class="demo">
-                                ${data.code.html}
+                                ${data.code && data.code.html}
                             </div>
                         </div>
                     </div>
@@ -294,11 +290,11 @@ export class DemoController {
                         <h3>代码：</h3>
                         <div class="show">
                             <h5>HTML代码：</h5>
-                            ${data.hljs('html', data.code.html)}
+                            ${data.code.html ? data.hljs('html', data.code.html) : ''}
                             <h5>CSS代码：</h5>
-                            ${data.hljs('css', data.code.css)}
+                            ${data.code.css ? data.hljs('css', data.code.css) : ''}
                             <h5>javascript代码：</h5>
-                            ${data.hljs('javascript', data.code.javascript)}
+                            ${data.code.javascript ? data.hljs('javascript', data.code.javascript) : ''}
                         </div>
                     </div>
                 </div>
@@ -312,16 +308,13 @@ export class DemoController {
                     </p>
                 </div>
                 <script>
-                    ${data.code.javascript}
+                    ${data.code && data.code.javascript}
                 </script>
 
             </body>
 
             </html>
         `;
-        } catch (error) {
-            return null;
-        }
     }
 
 }
