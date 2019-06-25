@@ -1,7 +1,5 @@
 import * as request from 'supertest';
-import { AboutModule } from '../../../src/modules/about.module';
 import { ArticleModule } from '../../../src/modules/article.module';
-import { LoginModule } from '../../../src/modules/login.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
@@ -14,9 +12,7 @@ describe('ArticleController', () => {
         const module = await Test.createTestingModule({
             imports: [
                 DatabaseModule,
-                ArticleModule,
-                LoginModule,
-                AboutModule
+                ArticleModule
             ]
         }).compile();
         app = module.createNestApplication();
@@ -69,6 +65,14 @@ describe('ArticleController', () => {
             .expect(article);
     });
 
+    it('/POST /api/articles 200', async () => {
+        return request(app.getHttpServer())
+            .post('/api/articles')
+            .set('authorization', __TOKEN__)
+            .send({...article, _id: '5c0f3e2b25349c1270e432ec', content: '```html\ntest\n```'})
+            .expect(201);
+    });
+
     it('/GET /api/articles 200', async () => {
         return request(app.getHttpServer())
             .get('/api/articles')
@@ -93,6 +97,15 @@ describe('ArticleController', () => {
             });
     });
 
+    it('/GET /api/articles?cid=? 200', async () => {
+        return request(app.getHttpServer())
+            .get('/api/articles?cid=' + article._id)
+            .expect(200)
+            .then(res => {
+                expect(res.body.totalCount).toBeGreaterThanOrEqual(0);
+            });
+    });
+
     it('/GET /api/articles/:id 200', async () => {
         return request(app.getHttpServer())
             .get('/api/articles/' + article._id)
@@ -106,6 +119,26 @@ describe('ArticleController', () => {
                 expect(a.isDeleted).toEqual(article.isDeleted);
                 expect(a.title).toEqual(article.title);
                 expect(a.content).toEqual(article.content);
+                expect(a.summary).toEqual(article.summary);
+                expect(a.screenshot).toEqual(article.screenshot);
+                expect(a.category).toEqual(null);
+                expect(a.createdAt).toEqual(article.createdAt);
+                expect(a.__v).toEqual(article.__v);
+            });
+    });
+
+    it('/GET /api/articles/5c0f3e2b25349c1270e432ec?md=true 200', async () => {
+        return request(app.getHttpServer())
+            .get('/api/articles/5c0f3e2b25349c1270e432ec?md=true')
+            .expect(200)
+            .then(res => {
+                const a = res.body;
+                expect(a.isDraft).toEqual(article.isDraft);
+                expect(a.commentCount).toEqual(article.commentCount);
+                expect(a.viewsCount).toBeGreaterThanOrEqual(article.viewsCount);
+                expect(a.isDeleted).toEqual(article.isDeleted);
+                expect(a.title).toEqual(article.title);
+                expect(a.content).toEqual(markdown.render('```html\ntest\n```'));
                 expect(a.summary).toEqual(article.summary);
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
@@ -161,7 +194,7 @@ describe('ArticleController', () => {
             });
     });
 
-    it('/PUT /api/articles 200', async () => {
+    it('/PUT /api/articles/:id 200', async () => {
         return request(app.getHttpServer())
             .put('/api/articles/' + article._id)
             .set('authorization', __TOKEN__)

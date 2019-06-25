@@ -66,17 +66,14 @@ export class DemoController {
         const code: { html?: string, css?: string, javascript?: string } = {};
         const markdown = new MarkdownIt({
             highlight(str, lang) {
+                /* istanbul ignore next */
                 if (lang) {
                     code[lang] = str;
                 }
                 if (lang && hljs.getLanguage(lang)) {
-                    try {
-                        return `<pre class="hljs ${lang}"><code>` +
-                            hljs.highlight(lang, str, true).value +
-                            '</code></pre>';
-                    } catch (__) {
-                        throw Error(__);
-                    }
+                    return `<pre class="hljs ${lang}"><code>` +
+                        hljs.highlight(lang, str, true).value +
+                        '</code></pre>';
                 }
                 return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
             }

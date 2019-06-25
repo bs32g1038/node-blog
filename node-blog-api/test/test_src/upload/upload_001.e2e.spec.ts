@@ -19,18 +19,6 @@ describe('UploadController', () => {
         await app.init();
     });
 
-    it('/POST /api/upload/image 201', async () => {
-        return request(app.getHttpServer())
-            .post('/api/upload/image')
-            .set('authorization', __TOKEN__)
-            .set('Content-Type', 'application/x-www-form-urlencoded')
-            .attach('file', './test/assets/test.png')
-            .expect(201)
-            .then((res) => {
-                expect(typeof res.body.url).toEqual('string');
-            });
-    });
-
     it('/POST /api/upload/static-files 201', async () => {
         return request(app.getHttpServer())
             .post('/api/upload/static-files')

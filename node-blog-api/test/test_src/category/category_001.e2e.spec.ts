@@ -108,7 +108,7 @@ describe('CategoryController', () => {
             });
     });
 
-    it('/PUT /api/categories 200', async () => {
+    it('/PUT /api/categories/:id 200', async () => {
         return request(app.getHttpServer())
             .put('/api/categories/' + category._id)
             .set('authorization', __TOKEN__)
@@ -124,6 +124,14 @@ describe('CategoryController', () => {
                 expect(new Date(a.updatedAt).getTime()).toBeGreaterThanOrEqual(new Date(category.updatedAt).getTime());
                 expect(a.__v).toEqual(category.__v);
             });
+    });
+
+    it('/PUT /api/categories/:id 200', async () => {
+        return request(app.getHttpServer())
+            .put('/api/categories/5c0f3e2b25349c1270e7a4ac')
+            .set('authorization', __TOKEN__)
+            .send({ ...category, _id: '5c0f3e2b25349c1270e7a4ac' })
+            .expect(200);
     });
 
     it('/DELETE /api/categories/:id 200', async () => {

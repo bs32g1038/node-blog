@@ -38,4 +38,4 @@ export class CategoryService {
         await this.categoryModel.deleteOne({ _id: id });
         return {};
     }
-}
+}/* istanbul ignore next */

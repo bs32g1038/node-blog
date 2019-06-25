@@ -56,7 +56,21 @@ describe('LoginController', () => {
             });
     });
 
-    it('/POST /api/login 200', async () => {
+    it('/POST /api/login 200 first login', async () => {
+        return request(app.getHttpServer())
+            .post('/api/login')
+            .send({
+                key: encrypt(JSON.stringify({
+                    account: 'test',
+                    password: 'test'
+                }))
+            })
+            .then(res => {
+                expect(!verifyToken(res.body.token)).toBe(false);
+            });
+    });
+
+    it('/POST /api/login 200 second login', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({

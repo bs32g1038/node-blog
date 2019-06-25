@@ -47,4 +47,4 @@ export class DemoService {
         const filter = { ...query };
         return await this.demoModel.countDocuments(filter);
     }
-}
+}/* istanbul ignore next */

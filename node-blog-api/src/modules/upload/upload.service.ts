@@ -20,11 +20,7 @@ export class UploadService {
     ) { }
 
     async uploadSingalImage(req, res, next) {
-        return uploadSingle(req, res, (err) => {
-
-            if (err) {
-                return next(err);
-            }
+        return uploadSingle(req, res, () => {
 
             // 实体数据
             const originalName = req.file.originalname;
@@ -43,6 +39,8 @@ export class UploadService {
 
             // 图片处理
             const basePath = path.resolve(__dirname, `../../..` + filePath);
+
+            /* istanbul ignore next */
             if (!fs.existsSync(basePath)) {
                 fs.mkdirSync(basePath);
             }
@@ -78,7 +76,7 @@ export class UploadService {
             let category = 6;
             if (mimetype.toLowerCase().includes('mp4')) {
                 category = 1;
-            } else if (mimetype.toLowerCase().includes('mp3')) {
+            } else if (mimetype.toLowerCase().includes('mpeg')) {// mp3
                 category = 2;
             }
             if (category === 6) {
@@ -120,5 +118,4 @@ export class UploadService {
             });
         });
     }
-
-}
+}/* istanbul ignore next */

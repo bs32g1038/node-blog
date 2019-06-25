@@ -55,5 +55,4 @@ export class CommentService {
         const filter = { ...query };
         return await this.commentModel.countDocuments(filter);
     }
-
-}
+}/* istanbul ignore next */
