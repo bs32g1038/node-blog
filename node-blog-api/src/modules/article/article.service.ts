@@ -39,6 +39,7 @@ export class ArticleService {
 
     async create(createArticleDto: CreateArticleDto): Promise<Article> {
         const article: Article = await this.articleModel.create(createArticleDto);
+        /* istanbul ignore next */
         if (article.category) {
             await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         }
@@ -51,6 +52,7 @@ export class ArticleService {
             throw new BadRequestException('找不到该文章！');
         }
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
+        /* istanbul ignore next */
         if (article.category && (article.category.toString() === data.category)) {
             await Promise.all([
                 this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } }),
@@ -108,6 +110,7 @@ export class ArticleService {
     async deleteArticle(id: string) {
         const article = await this.articleModel.findById(id);
         await this.articleModel.deleteOne({ _id: id });
+        /* istanbul ignore next */
         if (article.category) {
             await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         }
