@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GithubSvg } from '../svgs/github-svg';
-import { SearchSvg } from '../svgs/search-svg';
+import { SearchForm } from './search-form';
 
 import media from '../../utils/media';
 
@@ -123,35 +123,6 @@ const ATag = styled(NavLink)`
     }
 `;
 
-const SearchForm = styled.form`
-    border: 1px solid hsla(0,0%,59.2%,.2);
-    background-color: rgba(227,231,236,.2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 2px;
-    .search-input{
-        border: none;
-        width: 150px;
-        padding: 7.2px 12px;
-        box-shadow: none;
-        outline: none;
-        font-size: 14px;
-        color: #666;
-        background-color: transparent;
-        -webkit-appearance: textfield;
-        outline-offset: -2px;
-    }
-`;
-
-const SearchIcon = styled(SearchSvg)`
-    width: 16px;
-    height: 16px;
-    fill: #666;
-    padding: 0 10px;
-    cursor: pointer;
-`;
-
 const GithubIcon = styled(GithubSvg)`
     fill:#2B414D;
     width: 24px;
@@ -197,10 +168,7 @@ export const AppHeader = (props: AppHeaderProps) => {
                 </Menu>
                 <UL>
                     <LI>
-                        <SearchForm>
-                            <input type="search" maxLength={32} placeholder="搜索更新啦" className="search-input" />
-                            <SearchIcon />
-                        </SearchForm>
+                        <SearchForm></SearchForm>
                     </LI>
                     <LI>
                         <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
