@@ -1,22 +1,17 @@
 import * as request from 'supertest';
 import { UploadModule } from '../../../src/modules/upload.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
-describe('UploadController', () => {
+describe('upload_001', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 UploadModule
             ]
-        }).compile();
-
-        app = module.createNestApplication();
-        await app.init();
+        });
     });
 
     it('/POST /api/upload/static-files 201', async () => {

@@ -1,23 +1,19 @@
 import * as request from 'supertest';
 import { CategoryModule } from '../../../src/modules/category.module';
 import { LoginModule } from '../../../src/modules/login.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
-describe('CategoryController', () => {
+describe('category_001', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 CategoryModule,
                 LoginModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        });
     });
 
     const time = new Date().toISOString();
@@ -65,8 +61,11 @@ describe('CategoryController', () => {
             .get('/api/categories')
             .expect(200)
             .then(res => {
-                const a = res.body[0];
-                expect(a._id).toEqual(category._id);
+                const arr = res.body.filter(item => {
+                    return item._id === category._id;
+                });
+                const a = arr[0];
+                expect(typeof a._id === 'string').toEqual(true);
                 expect(a.articleCount).toEqual(category.articleCount);
                 expect(a.order).toEqual(category.order);
                 expect(a.name).toEqual(category.name);
@@ -81,7 +80,10 @@ describe('CategoryController', () => {
             .get('/api/categories')
             .expect(200)
             .then(res => {
-                const a = res.body[0];
+                const arr = res.body.filter(item => {
+                    return item._id === category._id;
+                });
+                const a = arr[0];
                 expect(a._id).toEqual(category._id);
                 expect(a.articleCount).toEqual(category.articleCount);
                 expect(a.order).toEqual(category.order);

@@ -1,21 +1,16 @@
 import * as request from 'supertest';
 import { AboutModule } from '../../../src/modules/about.module';
 import { GetUserDataDto } from '../../../src/modules/about/about.dto';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { initApp } from '../../util';
 
 describe('AboutController', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
-            imports: [
-                AboutModule
-            ]
-        }).compile();
-
-        app = module.createNestApplication();
-        await app.init();
+        app = await initApp({
+            imports: [AboutModule]
+        });
     });
 
     it('/GET /api/about/github/user-profile/:username 200', async () => {

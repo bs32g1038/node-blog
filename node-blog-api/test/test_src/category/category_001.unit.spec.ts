@@ -1,26 +1,23 @@
-import { Test } from '@nestjs/testing';
 import { CategoryService } from '../../../src/modules/category/category.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategorySchema } from '../../../src/models/category.model';
-import { DatabaseModule } from '../../database/database.module';
 import { INestApplication } from '@nestjs/common';
+import { initApp } from '../../util';
 
 describe('CategoryService', () => {
     let app: INestApplication;
     let categoryService: CategoryService;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 MongooseModule.forFeature([
                     { name: 'category', schema: CategorySchema, collection: 'category' }
-                ])],
+                ])
+            ],
             providers: [CategoryService]
-        }).compile();
-        categoryService = module.get<CategoryService>(CategoryService);
-        app = module.createNestApplication();
-        await app.init();
+        });
+        categoryService = app.get<CategoryService>(CategoryService);
     });
 
     it('getCategories {} {}', async () => {

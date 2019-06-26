@@ -3,14 +3,12 @@ import { CommentModule } from '../../../src/modules/comment.module';
 import { ArticleModule } from '../../../src/modules/article.module';
 import { ArticleService } from '../../../src/modules/article/article.service';
 import { LoginModule } from '../../../src/modules/login.module';
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import config from '../../../src/configs/index.config';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
-describe('CommentController', () => {
+describe('comment_001', () => {
     let app: INestApplication;
-    let module: TestingModule;
 
     const time = new Date().toISOString();
     const article = {
@@ -30,17 +28,14 @@ describe('CommentController', () => {
     };
 
     beforeAll(async () => {
-        module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 CommentModule,
                 ArticleModule,
                 LoginModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
-        const articleService = module.get<ArticleService>(ArticleService);
+        });
+        const articleService = app.get<ArticleService>(ArticleService);
         await articleService.create(article);
     });
 

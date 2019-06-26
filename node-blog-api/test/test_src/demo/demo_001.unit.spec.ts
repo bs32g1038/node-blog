@@ -1,26 +1,24 @@
-import { Test } from '@nestjs/testing';
 import { DemoService } from '../../../src/modules/demo/demo.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DemoSchema } from '../../../src/models/demo.model';
-import { DatabaseModule } from '../../database/database.module';
 import { INestApplication } from '@nestjs/common';
+import { initApp } from '../../util';
 
-describe('DemoService', () => {
+describe('demo_001_unit', () => {
     let app: INestApplication;
     let demoService: DemoService;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 MongooseModule.forFeature([
                     { name: 'demo', schema: DemoSchema, collection: 'demo' }
-                ])],
+                ])
+            ],
             providers: [DemoService]
-        }).compile();
-        demoService = module.get<DemoService>(DemoService);
-        app = module.createNestApplication();
-        await app.init();
+
+        });
+        demoService = app.get<DemoService>(DemoService);
     });
 
     it('getDemos {} {}', async () => {

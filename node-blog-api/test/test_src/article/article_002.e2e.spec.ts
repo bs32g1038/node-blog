@@ -1,21 +1,13 @@
 import * as request from 'supertest';
 import { ArticleModule } from '../../../src/modules/article.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
 describe('article_002', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
-            imports: [
-                DatabaseModule,
-                ArticleModule
-            ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        app = await initApp({ imports: [ArticleModule] });
     });
 
     const time = new Date().toISOString();

@@ -1,22 +1,14 @@
 import * as request from 'supertest';
 import { ArticleModule } from '../../../src/modules/article.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
 import * as mongoose from 'mongoose';
+import { initApp } from '../../util';
 
 describe('article_003', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
-            imports: [
-                DatabaseModule,
-                ArticleModule
-            ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        app = await initApp({ imports: [ArticleModule] });
     });
 
     const time = new Date().toISOString();
@@ -31,13 +23,13 @@ describe('article_003', () => {
         content: '```html```\ntest\n```',
         summary: 'test',
         screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
-        category: null,
+        category: mongoose.Types.ObjectId(),
         createdAt: time,
         updatedAt: time,
         __v: 0
     };
 
-    it('/POST /api/articles 200', async () => {
+    it('/POST /api/articles 201', async () => {
         return request(app.getHttpServer())
             .post('/api/articles')
             .set('authorization', __TOKEN__)

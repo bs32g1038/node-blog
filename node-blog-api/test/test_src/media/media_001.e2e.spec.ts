@@ -1,21 +1,17 @@
 import * as request from 'supertest';
 import { MediaModule } from '../../../src/modules/media.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
-describe('MediaController', () => {
+describe('media_001', () => {
     let app: INestApplication;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 MediaModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        });
     });
 
     const time = new Date().toISOString();

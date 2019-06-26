@@ -3,25 +3,20 @@ import * as request from 'supertest';
 import { CommentModule } from '../../../src/modules/comment.module';
 import { ArticleModule } from '../../../src/modules/article.module';
 import { LoginModule } from '../../../src/modules/login.module';
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
-describe('CommentController', () => {
+describe('comment_003', () => {
     let app: INestApplication;
-    let module: TestingModule;
 
     beforeAll(async () => {
-        module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 CommentModule,
                 ArticleModule,
                 LoginModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        });
     });
 
     const comment = {
@@ -41,6 +36,7 @@ describe('CommentController', () => {
             .send(comment)
             .expect(400);
     });
+
     afterAll(async () => {
         await app.close();
     });

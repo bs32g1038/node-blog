@@ -1,28 +1,25 @@
-import { Test } from '@nestjs/testing';
 import { CommentService } from '../../../src/modules/comment/comment.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ArticleSchema } from '../../../src/models/article.model';
 import { CommentSchema } from '../../../src/models/comment.model';
-import { DatabaseModule } from '../../database/database.module';
 import { INestApplication } from '@nestjs/common';
+import { initApp } from '../../util';
 
-describe('CommentService', () => {
+describe('comment_001_unit', () => {
     let app: INestApplication;
     let commentService: CommentService;
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 MongooseModule.forFeature([
                     { name: 'article', schema: ArticleSchema, collection: 'article' },
                     { name: 'comment', schema: CommentSchema, collection: 'comment' }
-                ])],
+                ])
+            ],
             providers: [CommentService]
-        }).compile();
-        commentService = module.get<CommentService>(CommentService);
-        app = module.createNestApplication();
-        await app.init();
+        });
+        commentService = app.get<CommentService>(CommentService);
     });
 
     it('getComments {} {}', async () => {

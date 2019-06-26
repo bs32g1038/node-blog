@@ -1,20 +1,17 @@
 import * as request from 'supertest';
 import { SearchModule } from '../../../src/modules/search.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
+import { initApp } from '../../util';
 
 describe('search_001', () => {
     let app: INestApplication;
+
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 SearchModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
+        });
     });
 
     it('/GET /api/search 200 no key', async () => {

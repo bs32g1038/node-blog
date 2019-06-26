@@ -1,14 +1,36 @@
 import * as request from 'supertest';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CategorySchema } from '../../../src/models/category.model';
 import { ArticleModule } from '../../../src/modules/article.module';
+import { CategoryService } from '../../../src/modules/category/category.service';
 import { INestApplication } from '@nestjs/common';
-import * as mongoose from 'mongoose';
 import { initApp } from '../../util';
+import * as mongoose from 'mongoose';
 
-describe('article_005', () => {
+describe('article_006', () => {
     let app: INestApplication;
-
+    const category_id = mongoose.Types.ObjectId();
     beforeAll(async () => {
-        app = await initApp({ imports: [ArticleModule] });
+        app = await initApp({
+            imports: [
+                ArticleModule,
+                MongooseModule.forFeature([
+                    { name: 'category', schema: CategorySchema, collection: 'category' }
+                ])
+            ],
+            providers: [CategoryService]
+        });
+        const categoryService = app.get<CategoryService>(CategoryService);
+        const category = {
+            _id: category_id,
+            articleCount: 10,
+            order: 0,
+            name: 'test',
+            createdAt: time,
+            updatedAt: time,
+            __v: 0
+        };
+        categoryService.create(category);
     });
 
     const time = new Date().toISOString();
@@ -20,7 +42,7 @@ describe('article_005', () => {
         isDeleted: false,
         title: 'test',
         content: '```html```\ntest\n```',
-        category: mongoose.Types.ObjectId(),
+        category: category_id,
         summary: 'test',
         screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         createdAt: time,
@@ -34,22 +56,6 @@ describe('article_005', () => {
             .set('authorization', __TOKEN__)
             .send(article)
             .expect(201);
-    });
-
-    it('/PUT /api/articles/:id 400', async () => {
-        return request(app.getHttpServer())
-            .put('/api/articles/' + mongoose.Types.ObjectId())
-            .set('authorization', __TOKEN__)
-            .send(article)
-            .expect(400);
-    });
-
-    it('/PUT /api/articles/:id 200', async () => {
-        return request(app.getHttpServer())
-            .put('/api/articles/' + article._id)
-            .set('authorization', __TOKEN__)
-            .send(article)
-            .expect(200);
     });
 
     afterAll(async () => {

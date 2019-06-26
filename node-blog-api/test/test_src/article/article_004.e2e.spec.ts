@@ -1,27 +1,23 @@
 import * as request from 'supertest';
 import { ArticleModule } from '../../../src/modules/article.module';
 import { CategoryModule } from '../../../src/modules/category.module';
-import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
 import { CategoryService } from '../../../src/modules/category/category.service';
 import * as mongoose from 'mongoose';
+import { initApp } from '../../util';
 
 describe('article_004', () => {
     let app: INestApplication;
     const category_id: string = mongoose.Types.ObjectId();
 
     beforeAll(async () => {
-        const module = await Test.createTestingModule({
+        app = await initApp({
             imports: [
-                DatabaseModule,
                 ArticleModule,
                 CategoryModule
             ]
-        }).compile();
-        app = module.createNestApplication();
-        await app.init();
-        const categoryService = module.get<CategoryService>(CategoryService);
+        });
+        const categoryService = app.get<CategoryService>(CategoryService);
         await categoryService.create({
             _id: category_id,
             articleCount: 10,
