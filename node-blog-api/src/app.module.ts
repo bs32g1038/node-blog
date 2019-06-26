@@ -10,6 +10,7 @@ import { MediaModule } from './modules/media.module';
 import { RssModule } from './modules/rss.module';
 import { LoginModule } from './modules/login.module';
 import { UploadModule } from './modules/upload.module';
+import { SearchModule } from './modules/search.module';
 
 @Module({
     imports: [
@@ -23,7 +24,8 @@ import { UploadModule } from './modules/upload.module';
         MediaModule,
         RssModule,
         LoginModule,
-        UploadModule
+        UploadModule,
+        SearchModule
     ]
 })
 export class AppModule { }
