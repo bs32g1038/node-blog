@@ -27,7 +27,7 @@ export class FileService {
         const { skip = 1, limit = 10, sort = {} } = option;
         const filter = { ...query };
         return await this.fileModel.find(filter, {}, {
-            skip,
+            skip: (skip - 1) * limit,
             limit,
             sort
         });

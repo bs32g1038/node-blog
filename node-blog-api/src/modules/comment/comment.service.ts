@@ -35,7 +35,7 @@ export class CommentService {
         const { skip = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = option;
         const filter = { ...query };
         return await this.commentModel.find(filter, field, {
-            skip,
+            skip: (skip - 1) * limit,
             limit,
             sort
         }).populate('article', 'title').populate('reply', field);
