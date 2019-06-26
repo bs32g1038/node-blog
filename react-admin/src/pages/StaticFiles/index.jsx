@@ -6,6 +6,7 @@ import Clipboard from 'clipboard';
 import { Link } from 'react-router-dom';
 import { Table, Button, Popconfirm, message, Upload, Icon, Modal, Form, Input } from 'antd';
 import PageHeaderWrapper from '../../components/PageHeaderWrapper';
+import config from '../../configs/default.config';
 
 const FormItem = Form.Item;
 const Dragger = Upload.Dragger;
@@ -201,6 +202,7 @@ class StaticFiles extends Component {
             name: 'file',
             multiple: true,
             action: '/api/upload/static-files?parentId=' + (this.props.match.params.folderId || ''),
+            headers: {authorization: localStorage.getItem(config.tokenKey) || ''},
             onChange(info) {
                 const status = info.file.status;
                 if (status !== 'uploading') {
