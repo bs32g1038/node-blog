@@ -237,7 +237,7 @@ const C = (props: any) => {
                 return setLoading(false);
             });
         }
-    }, [1]);
+    }, [props.match.params.id]);
     const { article, comments, recentArticles } = props._DB;
     return (
         <>

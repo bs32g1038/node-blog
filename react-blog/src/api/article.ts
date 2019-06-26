@@ -28,4 +28,8 @@ export default class Article {
         });
     }
 
+    public static searchArticles(key: string) {
+        return axios.get('/search?key=' + key);
+    }
+
 }
