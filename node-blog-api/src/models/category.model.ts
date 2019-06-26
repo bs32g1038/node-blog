@@ -12,7 +12,8 @@ export const CategorySchema = new mongoose.Schema({
     name: {
         type: String,
         min: [1],
-        max: 150
+        max: 150,
+        required: true
     },
     order: {
         type: Number,

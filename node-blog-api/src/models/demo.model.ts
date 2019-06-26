@@ -12,10 +12,12 @@ export const DemoSchema = new mongoose.Schema({
     title: {
         type: String,
         min: [1],
-        max: 150
+        max: 150,
+        required: true
     },
     content: {
-        type: String
+        type: String,
+        required: true
     },
     visitCount: {
         type: Number,

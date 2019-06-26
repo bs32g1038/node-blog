@@ -39,7 +39,9 @@ export class ArticleService {
 
     async create(createArticleDto: CreateArticleDto): Promise<Article> {
         const article: Article = await this.articleModel.create(createArticleDto);
-        await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
+        if (article.category) {
+            await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
+        }
         return article;
     }
 

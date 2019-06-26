@@ -55,7 +55,7 @@ export class LoginService {
                         account,
                         roles: ['admin']
                     }, config.token_secret_key, {
-                            expiresIn: 60 * 60
+                            expiresIn: 60 * 60 * 12
                         })
                 };
             }

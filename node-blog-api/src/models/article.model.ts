@@ -17,21 +17,31 @@ export const ArticleSchema = new mongoose.Schema({
     title: {
         type: String,
         min: [1],
-        max: 150
+        max: 150,
+        required: true
     },
     content: {
         type: String,
-        max: 8000
+        min: [1],
+        max: 8000,
+        required: true
     },
     summary: {
         type: String,
-        max: 2000
+        min: [1],
+        max: 2000,
+        required: true
     },
     screenshot: {
         type: String,
-        max: 200
+        max: 200,
+        default: ''
     },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+        required: true
+    },
     commentCount: {
         type: Number,
         max: 100000,

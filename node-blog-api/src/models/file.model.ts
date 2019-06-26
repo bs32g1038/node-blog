@@ -20,32 +20,40 @@ export const FileSchema = new mongoose.Schema({
     originalName: {
         type: String,
         min: [1],
-        max: 200
+        max: 200,
+        required: true
     },
     name: {
-        type: String
+        type: String,
+        required: true
     },
     mimetype: {
-        type: String
+        type: String,
+        required: true
     },
     size: {
-        type: Number
+        type: Number,
+        required: true
     },
     suffix: {
-        type: String
+        type: String,
+        required: true
     },
     fileName: {
-        type: String
+        type: String,
+        required: true
     }, // 文件全名
     filePath: {
-        type: String
+        type: String,
+        required: true
     },
     isdir: {
         type: Boolean,
         default: false
     },
     category: {
-        type: Number
+        type: Number,
+        required: true
     },
     parentId: {
         type: mongoose.Schema.Types.ObjectId,

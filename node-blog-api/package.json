@@ -89,7 +89,8 @@
       "!./src/utils/axios.util.ts",
       "!./src/utils/auth.util.ts",
       "!./src/utils/logger.util.ts",
-      "!./src/pipes/joi.validation.pipe.ts"
+      "!./src/pipes/joi.validation.pipe.ts",
+      "!./src/filters/all-exceptions.filter.ts"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": ["<rootDir>/test/setup-files.ts"],

@@ -18,35 +18,40 @@ export const CommentSchema = new mongoose.Schema({
     nickName: {
         type: String,
         min: [1],
-        max: 150
+        max: 150,
+        required: true
     },
     email: {
         type: String,
         min: [1],
-        max: 150
+        max: 150,
+        required: true
     },
     website: {
         type: String,
-        min: [1],
-        max: 150
+        max: 150,
+        default: ''
     },
     content: {
         type: String,
         min: [1],
-        max: 1000
+        max: 1000,
+        required: true
     },
     reply: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'comment'
+        ref: 'comment',
+        default: null
     },
     article: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'article'
+        ref: 'article',
+        required: true
     },
     location: {
         type: String,
-        min: [1],
-        max: 150
+        max: 150,
+        default: ''
     },
     pass: {
         type: Boolean,
