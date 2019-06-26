@@ -35,6 +35,7 @@ script:
   - cd ../node-blog-api
   - npm run test:cov
   - codecov
+  - npm run build
   - cd ../react-admin
   - CI=false npm run build
   - cd ../react-music-app
