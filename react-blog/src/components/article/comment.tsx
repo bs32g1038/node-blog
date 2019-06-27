@@ -28,8 +28,8 @@ const comemnt = (props: { article: any, comments: any }) => {
             <CommentForm url="/comments" articleId={article._id} />
             <Main>
                 {
-                    comments.map((item: any) => (
-                        <CommentItem item={item} key={item._id}></CommentItem>
+                    comments.map((item: any, index: number) => (
+                        <CommentItem item={item} index={index} key={item._id}></CommentItem>
                     ))
                 }
             </Main>

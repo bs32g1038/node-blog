@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 const C = (props: any) => {
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [props.location]);
+    });
     return props.children;
 };
 

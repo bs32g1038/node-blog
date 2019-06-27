@@ -8,6 +8,16 @@ import { CommentForm } from '../comment-form';
 const CommentsItem = styled.li`
     border-bottom: 1px solid #f5f5f5;
     padding: 10px;
+    position: relative;
+    &:after{
+        content: attr(data-index);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        text-align: center;
+        color: #d5cbcb;
+        font-size: 12px;
+    }
 `;
 
 const Info = styled.div`
@@ -28,7 +38,9 @@ const AvatarWrap = styled.div`
     }
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+    width: 100%;
+`;
 
 const Meta = styled.div`
     color: #999;
@@ -115,12 +127,12 @@ const replyFn = (item: any) => (
     </Quote>
 );
 
-export const CommentItem = (props: { item: any }) => {
+export const CommentItem = (props: { item: any, index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
 
     const item = props.item;
     return (
-        <CommentsItem>
+        <CommentsItem data-index={'# ' + props.index + ' 楼层'}>
             <Info>
                 <AvatarWrap>
                     <img src={item.identity === 0 ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg` : '/public/images/avatar.jpg'} />

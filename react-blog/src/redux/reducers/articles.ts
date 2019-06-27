@@ -1,22 +1,17 @@
 import api from '../../api/article';
 import { FETCH_ARTICLES } from '../action-types';
 
-export const setArticles = (articles: any) => ({
+export const setArticles = (articles: any, cid: string) => ({
     type: FETCH_ARTICLES,
-    articles
+    articles,
+    cid
 });
 
 export const fetchArticles = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
     return (dispatch: any) => {
         return api.fetchArticles(page, limit, filter).then((res) => {
             const articles = res.items;
-            const o: any = {};
-            if (filter.cid) {
-                o[filter.cid] = articles;
-            } else {
-                o.blog = articles;
-            }
-            dispatch(setArticles(o));
+            return dispatch(setArticles(articles, filter.cid));
         });
     };
 };
@@ -24,26 +19,27 @@ export const fetchArticles = (page?: number, limit?: number, filter: { cid: stri
 export interface Action {
     type?: string;
     articles?: any[];
-    recentArticles: any[];
+    cid: string;
 }
 
 export interface State {
     articles: any;
-    recentArticles: any;
 }
 
 const initialState: State = {
-    articles: {},
-    recentArticles: []
+    articles: {}
 };
 
 export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_ARTICLES: {
-            const { articles } = action;
+            const { articles, cid } = action;
             return {
                 ...state,
-                articles
+                articles: {
+                    ...state.articles,
+                    ...{ [cid ? cid : 'blog']: articles }
+                }
             };
         }
         default:

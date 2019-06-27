@@ -1,7 +1,7 @@
 import React from 'react';
 
 const uid = () => {
-    return Math.random().toString(36).substring(2);
+    return Math.random().toString(36).substring(10);
 };
 
 interface Props {
@@ -21,8 +21,8 @@ const defaultProps: Props = {
     height: 120,
     speed: 0,
     preserveAspectRatio: 'xMidYMid meet',
-    primaryColor: '#f9f9f9',
-    secondaryColor: '#ecebeb',
+    primaryColor: 'rgba(207,216,220,0.2)',
+    secondaryColor: 'rgba(207,216,220,0.4)',
     animate: true,
     uniqueKey: '',
     style: null,
