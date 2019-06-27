@@ -48,8 +48,8 @@ class GlobalHeader extends Component {
                     />
                     <span style={{ paddingLeft: '40px' }}><strong>亲爱的主人，欢迎你回来！</strong></span>
                     <div className={styles.right}>
-                        <a href="/blog/about" rel="noopener noreferrer" target="_blank"><i className="fa fa-user fa-fw"></i>个人简历</a>
-                        <a href="/blog/music" rel="noopener noreferrer" target="_blank"><i className="fa fa-music fa-fw"></i>博客音乐播放器</a>
+                        <a href="http://www.lizc.me/about" rel="noopener noreferrer" target="_blank"><i className="fa fa-user fa-fw"></i>个人简历</a>
+                        <a href="http://music.lizc.me" rel="noopener noreferrer" target="_blank"><i className="fa fa-music fa-fw"></i>博客音乐播放器</a>
                         <Tooltip title="help">
                             <a
                                 target="_blank"

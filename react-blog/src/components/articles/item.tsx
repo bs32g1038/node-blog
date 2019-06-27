@@ -3,6 +3,7 @@ import React, { SFC } from 'react';
 import { Link } from 'react-router-dom';
 import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
+import { ContentLoader } from '../content-loader';
 import { LazyLoad } from '../lazy-load';
 
 const ArticleItem = styled.li`
@@ -113,6 +114,16 @@ const Summary = styled.p`
     line-height: 24px;
 `;
 
+const loading = (
+    <ContentLoader width={240} height={300} uniqueKey={'article-item'} style={{ height: '300px' }}>
+        <rect x="0" y="0" width="230" height="140"></rect>
+        <rect x="0" y="150" width="140" height="14"></rect>
+        <rect x="0" y="174" width="200" height="14"></rect>
+        <rect x="0" y="198" width="180" height="14"></rect>
+        <rect x="0" y="222" width="230" height="14"></rect>
+    </ContentLoader >
+);
+
 const Item: SFC<{ item: any }> = (props: any) => {
     const item = props.item;
     return (
@@ -141,4 +152,8 @@ const Item: SFC<{ item: any }> = (props: any) => {
     );
 };
 
-export default Item;
+const C: SFC<{ item: any }> = (props: any) => {
+    return props.item ? <Item item={props.item}></Item> : <li>{loading}</li>;
+};
+
+export default C;
