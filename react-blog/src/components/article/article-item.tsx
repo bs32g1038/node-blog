@@ -110,7 +110,7 @@ interface Props {
 }
 
 const C = (props: Props) => {
-    const { article, location, comments } = props;
+    const { article, comments } = props;
     return (
         <ArticleItem>
             <Breadcrumbs>
