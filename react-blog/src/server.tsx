@@ -52,7 +52,7 @@ export const ssr = (req: express.Request, res: express.Response) => {
                     ${helmet.title.toString()}
                     <meta charset="UTF-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-                    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+                    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
                     <meta content="李志成的个人网站，个人博客，lizc博客，web，nodejs，前端，后端，docker，综合" name="Keywords">
                     <meta content="博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！" name="description">
                     <link rel="shortcut icon" sizes="48x48" href="/public/logo.png">

@@ -15,6 +15,8 @@ const ArticleItem = styled.article`
     media.phone`
             padding-left: 12px;
             padding-right: 12px;
+            width: 100%;
+            box-sizing: border-box;
         `
     }
 `;

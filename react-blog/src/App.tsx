@@ -15,7 +15,11 @@ const normalize = () => {
 const PageWrap = styled.div`
     width: 960px;
     margin: 20px auto;
-    ${media.phone`margin-left:0;margin-right:0;width: 100%;`};
+    ${media.phone`
+        margin: 0 0 50px 0;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+    `};
 `;
 
 export const asyncData = (store: any) => {
@@ -45,6 +49,15 @@ export const App = (props: { routes: RouteConfig }) => {
                     },
                 }}
             />
+            <Global styles={css`
+                ${media.phone`
+                    html, body, #root, .app {
+                        height: 100%;
+                        min-height: 100%;
+                        -webkit-tap-highlight-color: transparent;
+                    }
+                `}
+            `} />
             <AppHeader
                 siteInfo={{
                     github: siteInfo.github,
@@ -59,7 +72,8 @@ export const App = (props: { routes: RouteConfig }) => {
             <AppFooter
                 siteInfo={{
                     icp: siteInfo.icp,
-                    name: siteInfo.name
+                    name: siteInfo.name,
+                    github: siteInfo.github
                 }}
             />
         </div>

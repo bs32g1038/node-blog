@@ -7,6 +7,8 @@ import { match } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
+import isMobile from '../../utils/is-mobile';
+import media from '../../utils/media';
 import ArticleBottomGroup from './article-bottom-group';
 import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
@@ -14,6 +16,9 @@ import WidgetArea from './widget-area';
 const ArticleWrap = styled.div`
     background-color: #fff;
     display: flex;
+    ${media.phone`
+        display: block;
+    `}
 `;
 
 export const asyncData = (store: any, route: any) => {
@@ -66,7 +71,7 @@ const C = (props: Props) => {
                 <ArticleItem loading={isLoading} article={article} comments={comments} location={props.location}></ArticleItem>
                 <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
             </ArticleWrap>
-            <ArticleBottomGroup recentArticles={recentArticles.slice(5, 9)}></ArticleBottomGroup>
+            {!isMobile && <ArticleBottomGroup recentArticles={recentArticles.slice(5, 9)}></ArticleBottomGroup>}
         </>
     );
 };

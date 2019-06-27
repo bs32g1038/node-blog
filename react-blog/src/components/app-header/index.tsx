@@ -4,12 +4,26 @@ import { NavLink } from 'react-router-dom';
 import { GithubSvg } from '../svgs/github-svg';
 import { SearchForm } from './search-form';
 
+import isMobile from '../../utils/is-mobile';
 import media from '../../utils/media';
 
 const Container = styled.header`
     align-items: center;
     background: #fff;
     border-bottom: 1px solid #f1f1f1;
+    ${media.phone`
+        font-size: 18px;
+        border: none;
+        box-shadow: 0px 1px 3px 0px rgba(17, 58, 93, 0.1);
+        margin-bottom: 10px;
+        .search-form {
+            margin: 0 20px 0 0;
+            width: 100%;
+            input{
+                width: 100%;
+            }
+        }
+    `};
 `;
 
 const MainWrap = styled.div`
@@ -28,6 +42,7 @@ const MainWrap = styled.div`
     }
     ${media.phone`
         width: 100%;
+        height: 44px;
     `};
 `;
 
@@ -40,10 +55,19 @@ const HomeNav = styled(NavLink)`
     margin-right: 24px;
     ${media.phone`
         margin-left: 10px;
+        span{
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+        }
     `};
     img{
         width: auto;
         height: 40px;
+        ${media.phone`
+            display: none;
+        `};
     }
 `;
 
@@ -59,10 +83,7 @@ const Menu = styled.div`
         display: none
     }
     ${media.phone`
-        >i {
-            display: block;
-            padding-right: 20px;
-        }
+        display: none;
     `};
 `;
 
@@ -148,34 +169,41 @@ export const AppHeader = (props: AppHeaderProps) => {
             <MainWrap>
                 <HomeNav to="/" title={siteInfo.name}>
                     <img src={require('../../assets/images/logo.png')} alt={siteInfo.name} />
+                    <span>{siteInfo.name}</span>
                 </HomeNav>
-                <Menu>
-                    <i className={isShowMobileMenu ? 'fa fa-times' : 'fa fa-reorder'} onClick={() => showMenu()}></i>
-                    <UL style={isShowMobileMenu ? { display: 'block' } : {}}>
-                        <LI><ATag to="/blog">博客</ATag></LI>
-                        <LI><ATag to="/about">关于</ATag></LI>
-                        <LI>
-                            <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
-                                音乐
-                            </a>
-                        </LI>
-                        <LI>
-                            <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
-                                Rss
-                            </a>
-                        </LI>
-                    </UL>
-                </Menu>
-                <UL>
-                    <LI>
-                        <SearchForm></SearchForm>
-                    </LI>
-                    <LI>
-                        <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
-                            <GithubIcon />
-                        </a>
-                    </LI>
-                </UL>
+                {
+                    isMobile ? 
+                    <SearchForm></SearchForm>
+                    :
+                    <>
+                        <Menu>
+                            <UL style={isShowMobileMenu ? { display: 'block' } : {}}>
+                                <LI><ATag to="/blog">博客</ATag></LI>
+                                <LI><ATag to="/about">关于</ATag></LI>
+                                <LI>
+                                    <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
+                                        音乐
+                                    </a>
+                                </LI>
+                                <LI>
+                                    <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
+                                        Rss
+                                    </a>
+                                </LI>
+                            </UL>
+                        </Menu>
+                        <UL>
+                            <LI>
+                                <SearchForm></SearchForm>
+                            </LI>
+                            <LI>
+                                <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
+                                    <GithubIcon />
+                                </a>
+                            </LI>
+                        </UL>
+                    </>
+                }
             </MainWrap>
         </Container>
     );

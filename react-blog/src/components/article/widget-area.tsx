@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
 import { ContentLoader } from '../content-loader';
 
@@ -8,6 +9,23 @@ const WidgetArea = styled.div`
     width: 240px;
     margin-left: 20px;
     min-width: 240px;
+    ${media.phone`
+        width: 100%;
+        box-sizing: border-box;
+        margin-left: 0;
+        padding-left: 14px;
+        padding-right: 10px;
+        .widget{
+            width: 100%;
+        }
+    `}
+    .list-grid{
+        width: 240px;
+        ${media.phone`
+            width: 100%;
+            box-sizing: border-box;
+        `}
+    }
 `;
 
 const WidgetTitle = styled.div`
@@ -160,15 +178,15 @@ export default (props: { recentArticles: ItemProps[] }) => {
     }
     return (
         <WidgetArea>
-            <section className="widget Recommended_Posts">
+            <section className="widget">
                 <WidgetTitle>最近文章</WidgetTitle>
-                <div className="list-grid list-grid-padding" style={{ width: '240px' }}>
+                <div className="list-grid list-grid-padding">
                     {
                         arr.map((item, index) => {
                             return item ? <Item item={item} key={item._id}></Item> : <Loading key={`recommended_posts_loading_${index}`}></Loading>;
                         })
                     }
-                    <a href="https://www.vultr.com/?ref=7866918-4F">
+                    <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr">
                         <img
                             src="https://www.vultr.com/media/banners/banner_300x250.png"
                             style={{

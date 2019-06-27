@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import media from '../../utils/media';
 import { ContentLoader } from '../content-loader';
 
 const AboutHeader = styled.div`
@@ -7,6 +8,9 @@ const AboutHeader = styled.div`
     display: flex;
     flex-direction: row;
     border-bottom: 2px solid #444;
+    ${media.phone`
+        flex-wrap: wrap;
+    `};
     .person-base {
         flex: 1 0 auto;
         .name {
