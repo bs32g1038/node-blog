@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import siteInfo from '../../config/site-info';
 import { fetchUserProfile } from '../../redux/reducers/about';
+import media from '../../utils/media';
 import GithubContribution from './github-contribution';
 import GithubPinnedList from './github-pinned-list';
 import AboutHeader from './header';
@@ -14,6 +15,9 @@ const AboutDiv = styled.div`
     flex-direction: column;
     flex: 1 0 auto;
     background-color: #fff;
+    ${media.phone`
+        padding: 10px;
+    `};
     .bio {
         padding: 10px 18px;
         background-color: #f6f6f6;

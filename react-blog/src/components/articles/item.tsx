@@ -10,15 +10,23 @@ const ArticleItem = styled.li`
     padding: 0.2rem 0;
     max-width: 25%;
     flex: 1 0 auto;
+    position: relative;
     ${media.phone`
-        padding-left: 8px;
-        padding-right: 8px;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        &:after {
+            content: '';
+            position: absolute;
+            border-bottom: 1px solid #e5e5e5;
+            transform-origin: 0 0; /* 以左上角为基点 */
+            transform: scaleY(.5); /* 缩放50% */
+            box-sizing: border-box;
+            bottom: 0;
+            left: 0;
+            right: 0
+        }
     `};
-`;
-
-const Header = styled.div`
-    justify-content: space-between;
-    margin: 10px 10px 10px;
 `;
 
 const Brief = styled.div`
@@ -27,6 +35,21 @@ const Brief = styled.div`
     line-height: 32px;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 10px;
+    ${media.phone`
+        display: flex;
+        /* flex-direction: row-reverse; */
+    `};
+`;
+
+const Content = styled.div`
+    width: 100%;
+    margin-left: 14px;
+    ${media.phone`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    `};
 `;
 
 const Meta = styled.div`
@@ -36,6 +59,11 @@ const Meta = styled.div`
         color: #999;
         font-size: 12px;
         text-decoration: none;
+    }
+    &.time {
+        ${media.phone`
+            display: none;
+        `};
     }
 `;
 
@@ -49,6 +77,10 @@ const Title = styled(Link)`
     &:hover {
         color: '#007fff';
     }
+    ${media.phone`
+        font-size: 16px;
+        white-space: normal;
+    `};
 `;
 
 const ThumbWrap = styled.div`
@@ -62,9 +94,8 @@ const ThumbWrap = styled.div`
     flex-shrink: 0;
     border-radius: 2px;
     ${media.phone`
-        height: 96px;
-        width: 80px;
-        min-width: 80px;
+        /* height: 80px; */
+        width: 33.65%;
     `}
     img{
         width: 100%;
@@ -112,6 +143,9 @@ const Summary = styled.p`
     -webkit-box-orient: vertical;
     max-height: 48px;
     line-height: 24px;
+    ${media.phone`
+        display: none;
+    `};
 `;
 
 const loading = (
@@ -128,14 +162,14 @@ const Item: SFC<{ item: any }> = (props: any) => {
     const item = props.item;
     return (
         <ArticleItem>
-            <Header>
-                <Brief>
-                    <ThumbWrap>
-                        <LazyLoad component={ThumbA}>
-                            <img src={item.screenshot} />
-                        </LazyLoad>
-                    </ThumbWrap>
-                    <Meta>
+            <Brief>
+                <ThumbWrap>
+                    <LazyLoad component={ThumbA}>
+                        <img src={item.screenshot} />
+                    </LazyLoad>
+                </ThumbWrap>
+                <Content>
+                    <Meta className="time">
                         <strong>TIME</strong>
                         <em>·</em> {parseTime(item.createdAt)}
                     </Meta>
@@ -146,8 +180,8 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         <a href="javascript:;">阅读：{item.viewsCount}</a> <em>·</em>
                         <span>分类：{(item.category && item.category.name) || '暂无分类'}</span>
                     </Meta>
-                </Brief>
-            </Header>
+                </Content>
+            </Brief>
         </ArticleItem>
     );
 };

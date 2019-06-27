@@ -60,7 +60,7 @@ const NavSearchDropdown = styled.div<{ active: boolean }>`
     box-shadow: 0 4px 16px rgba(193,205,241,.42);
     transition: height .17s ease;
     text-align: left;
-    z-index: 100;
+    z-index: 2000;
     width: 100%;
 `;
 
@@ -177,7 +177,7 @@ export const SearchForm = (props: any) => {
         }
     };
     return (
-        <Form>
+        <Form className="search-form">
             <Input
                 type="input"
                 placeholder="搜索更新啦"

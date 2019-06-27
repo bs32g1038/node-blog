@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import media from '../../utils/media';
 
 const SkillList = styled.div`
     display: flex;
+    ${media.phone`
+        display: block;
+    `};
      ul {
         list-style: none;
         padding-left: 0;
@@ -13,6 +17,9 @@ const SkillList = styled.div`
         &:last-child {
             margin-right: -20px;
         }
+        ${media.phone`
+            width: 100%;
+        `};
     }
     li {
         padding: 15px 0;
