@@ -19,6 +19,10 @@ const CategoriesWrap = styled.ul`
     margin-bottom: 8px;
     ${media.phone`
         margin-bottom: 0;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        box-sizing: border-box;
     `};
 `;
 
