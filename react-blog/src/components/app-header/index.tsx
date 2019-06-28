@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import siteInfo from '../../config/site-info';
 import { GithubSvg } from '../svgs/github-svg';
 import { SearchForm } from './search-form';
 
@@ -156,15 +157,10 @@ const GithubIcon = styled(GithubSvg)`
 `;
 
 export interface AppHeaderProps {
-    siteInfo: {
-        github: string,
-        name: string
-    };
     _G: any;
 }
 
 const C = (props: AppHeaderProps) => {
-    const { siteInfo } = props;
     const { isMobile } = props._G;
     return (
         <Container>

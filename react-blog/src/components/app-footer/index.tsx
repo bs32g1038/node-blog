@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 import { GithubSvg } from '../svgs/github-svg';
 import { HomeSvg } from '../svgs/home-svg';
@@ -174,7 +175,6 @@ const hiddenBarWhenAndorid = () => {
 };
 
 const C = (props: AppFooterProps) => {
-    const { siteInfo } = props;
     const { isMobile } = props._G;
     useEffect(() => {
         loadBackTopBtnEvent();

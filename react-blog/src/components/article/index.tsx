@@ -54,7 +54,6 @@ const C = (props: Props) => {
     useEffect(() => {
         const { _id = '' } = props._DB.article || {};
         if (_id !== props.match.params.id) {
-            const q = queryString.parse(location.search);
             setLoading(true);
             setTimeout(() => {
                 fetchData(props).then(() => {
