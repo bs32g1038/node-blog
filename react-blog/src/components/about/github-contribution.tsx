@@ -51,7 +51,7 @@ const Contribution = (props: ContributionProps) => {
 };
 
 const loading = (
-    <ContentLoader width={720} height={100}>
+    <ContentLoader width={720} height={100} style={{height: '100px'}}>
         <rect x="0" y="10" rx="2" ry="2" width="160" height="100"></rect>
         <rect x="190" y="10" rx="2" ry="2" width="160" height="100"></rect>
         <rect x="370" y="10" rx="2" ry="2" width="160" height="100"></rect>

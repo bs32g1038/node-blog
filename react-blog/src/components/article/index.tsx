@@ -7,7 +7,6 @@ import { match } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
-import isMobile from '../../utils/is-mobile';
 import media from '../../utils/media';
 import ArticleBottomGroup from './article-bottom-group';
 import ArticleItem from './article-item';
@@ -38,6 +37,7 @@ interface Props extends RouteComponentProps {
     dispatch: any;
     _DB: State;
     match: MatchI;
+    $G: { isMobile: boolean };
 }
 
 const fetchData = (props: Props) => {
@@ -64,6 +64,7 @@ const C = (props: Props) => {
         }
     }, [props.match.params.id]);
     const { article, comments, recentArticles } = props._DB;
+    const { isMobile } = props.$G;
     return (
         <>
             <ArticleWrap>
@@ -77,7 +78,8 @@ const C = (props: Props) => {
 };
 
 export const Article = connect(
-    (state: { article: State }) => ({
-        _DB: state.article
+    (state: { article: State, $G: any }) => ({
+        _DB: state.article,
+        $G: state.$G
     })
 )(C as any);
