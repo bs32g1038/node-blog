@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { AppFooter } from './components/app-footer';
 import { AppHeader } from './components/app-header';
-import siteInfo from './config/site-info';
 import { fetchCategories } from './redux/reducers/categories';
 import media from './utils/media';
 
@@ -58,24 +57,13 @@ export const App = (props: { routes: RouteConfig }) => {
                     }
                 `}
             `} />
-            <AppHeader
-                siteInfo={{
-                    github: siteInfo.github,
-                    name: siteInfo.name
-                }}
-            />
+            <AppHeader />
             <PageWrap>
                 {
                     renderRoutes(routes[1].routes)
                 }
             </PageWrap>
-            <AppFooter
-                siteInfo={{
-                    icp: siteInfo.icp,
-                    name: siteInfo.name,
-                    github: siteInfo.github
-                }}
-            />
+            <AppFooter />
         </div>
     );
 };

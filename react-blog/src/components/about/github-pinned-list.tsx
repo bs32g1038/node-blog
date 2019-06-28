@@ -122,11 +122,14 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
 };
 
 const Loading = () => (
-    <ContentLoader width={720} height={100}>
-        <rect x="0" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="190" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="370" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="550" y="10" rx="2" ry="2" width="160" height="100"></rect>
+    <ContentLoader width={960} height={150} style={{height: '150px'}}>
+        <rect x="0" y="10" rx="2" ry="2" width="700" height="20"></rect>
+        <rect x="0" y="40" rx="2" ry="2" width="860" height="20"></rect>
+        <rect x="0" y="70" rx="2" ry="2" width="160" height="20"></rect>
+        <rect x="180" y="70" rx="2" ry="2" width="360" height="20"></rect>
+        <rect x="560" y="70" rx="2" ry="2" width="200" height="20"></rect>
+        <rect x="0" y="100" rx="2" ry="2" width="760" height="20"></rect>
+        <rect x="0" y="130" rx="2" ry="2" width="960" height="20"></rect>
     </ContentLoader>
 );
 
@@ -134,7 +137,7 @@ export default (props: UserReposProps) => {
     const { userRepos } = props;
     let arr = userRepos;
     if (Array.isArray(props.userRepos) && (props.userRepos.length <= 0)) {
-        arr = new Array(3).fill(null);
+        arr = new Array(1).fill(null);
     }
     return (
         <>

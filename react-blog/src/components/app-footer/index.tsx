@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import isMobile from '../../utils/is-mobile';
+import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 import { GithubSvg } from '../svgs/github-svg';
 import { HomeSvg } from '../svgs/home-svg';
@@ -108,6 +109,7 @@ export interface AppFooterProps {
         name: string,
         github: string
     };
+    _G: any;
 }
 
 const loadBackTopBtnEvent = () => {
@@ -158,11 +160,26 @@ const loadTimeCountEvent = () => {
     setInterval(showRunTime, 1000);
 };
 
-export const AppFooter = (props: AppFooterProps) => {
-    const { siteInfo } = props;
+const hiddenBarWhenAndorid = () => {
+    const originHeight = document.documentElement.clientHeight; // 浏览器当前的高度
+    window.onresize = () => {
+        const $e = document.getElementById('mobile-app-footer');
+        if ($e) {
+            if (document.documentElement.clientHeight < originHeight) {
+                $e.style.display = 'none';
+            } else {
+                $e.style.display = 'block';
+            }
+        }
+    };
+};
+
+const C = (props: AppFooterProps) => {
+    const { isMobile } = props._G;
     useEffect(() => {
         loadBackTopBtnEvent();
         loadTimeCountEvent();
+        hiddenBarWhenAndorid();
     });
     return (
         !isMobile
@@ -195,7 +212,7 @@ export const AppFooter = (props: AppFooterProps) => {
                 </P>
             </Footer>
             :
-            <MobileTabbar>
+            <MobileTabbar id="mobile-app-footer">
                 <NavLink className="tabbar-item" to="/blog">
                     <div className="tabbar-item__icon">
                         <HomeIcon></HomeIcon>
@@ -217,3 +234,9 @@ export const AppFooter = (props: AppFooterProps) => {
             </MobileTabbar>
     );
 };
+
+export const AppFooter = connect(
+    (state: any) => ({
+        _G: state.$G
+    })
+)(C as any);

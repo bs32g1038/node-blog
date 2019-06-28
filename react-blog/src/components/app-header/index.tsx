@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import siteInfo from '../../config/site-info';
 import { GithubSvg } from '../svgs/github-svg';
 import { SearchForm } from './search-form';
 
-import isMobile from '../../utils/is-mobile';
 import media from '../../utils/media';
 
 const Container = styled.header`
@@ -53,15 +54,9 @@ const HomeNav = styled(NavLink)`
     font-size: 16px;
     align-items: center;
     margin-right: 24px;
-    ${media.phone`
-        margin-left: 10px;
-        span{
-            font-size: 14px;
-            color: #333;
-            text-align: center;
-            font-weight: 700;
-        }
-    `};
+    span {
+        display: none;
+    }
     img{
         width: auto;
         height: 40px;
@@ -69,6 +64,16 @@ const HomeNav = styled(NavLink)`
             display: none;
         `};
     }
+    ${media.phone`
+        margin-left: 10px;
+        span{
+            display: block;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+        }
+    `};
 `;
 
 const Menu = styled.div`
@@ -152,18 +157,11 @@ const GithubIcon = styled(GithubSvg)`
 `;
 
 export interface AppHeaderProps {
-    siteInfo: {
-        github: string,
-        name: string
-    };
+    _G: any;
 }
 
-export const AppHeader = (props: AppHeaderProps) => {
-    const { siteInfo } = props;
-    const [isShowMobileMenu, setIsShowMobileMenu] = useState(false);
-    const showMenu = () => {
-        setIsShowMobileMenu(!isShowMobileMenu);
-    };
+const C = (props: AppHeaderProps) => {
+    const { isMobile } = props._G;
     return (
         <Container>
             <MainWrap>
@@ -172,39 +170,46 @@ export const AppHeader = (props: AppHeaderProps) => {
                     <span>{siteInfo.name}</span>
                 </HomeNav>
                 {
-                    isMobile ? 
-                    <SearchForm></SearchForm>
-                    :
-                    <>
-                        <Menu>
-                            <UL style={isShowMobileMenu ? { display: 'block' } : {}}>
-                                <LI><ATag to="/blog">博客</ATag></LI>
-                                <LI><ATag to="/about">关于</ATag></LI>
-                                <LI>
-                                    <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
-                                        音乐
+                    isMobile
+                        ?
+                        <SearchForm></SearchForm>
+                        :
+                        <React.Fragment>
+                            <Menu>
+                                <UL>
+                                    <LI><ATag to="/blog">博客</ATag></LI>
+                                    <LI><ATag to="/about">关于</ATag></LI>
+                                    <LI>
+                                        <a className="rss" href="http://music.lizc.me" rel="noopener noreferrer" target="_blank">
+                                            音乐
                                     </a>
+                                    </LI>
+                                    <LI>
+                                        <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
+                                            Rss
+                                    </a>
+                                    </LI>
+                                </UL>
+                            </Menu>
+                            <UL>
+                                <LI>
+                                    <SearchForm></SearchForm>
                                 </LI>
                                 <LI>
-                                    <a className="rss" href="/blog/rss" rel="noopener noreferrer" target="_blank">
-                                        Rss
+                                    <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
+                                        <GithubIcon />
                                     </a>
                                 </LI>
                             </UL>
-                        </Menu>
-                        <UL>
-                            <LI>
-                                <SearchForm></SearchForm>
-                            </LI>
-                            <LI>
-                                <a className="rss" href="https://github.com/bs32g1038" rel="noopener noreferrer" target="_blank">
-                                    <GithubIcon />
-                                </a>
-                            </LI>
-                        </UL>
-                    </>
+                        </React.Fragment>
                 }
             </MainWrap>
-        </Container>
+        </Container >
     );
 };
+
+export const AppHeader = connect(
+    (state: any) => ({
+        _G: state.$G
+    })
+)(C as any);
