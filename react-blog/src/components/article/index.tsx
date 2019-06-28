@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
