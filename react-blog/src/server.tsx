@@ -21,7 +21,7 @@ syncLoadAssets();
 
 function getMachine(req: any): string {
     const deviceAgent = req.headers['user-agent'].toLowerCase();
-    const agentID = deviceAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini)/);
+    const agentID = deviceAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/i);
     if (agentID) {
         return 'mobile';
     } else {
@@ -42,12 +42,12 @@ export const ssr = (req: express.Request, res: express.Response) => {
         );
     })).then(() => {
         const context = {};
-        store.dispatch(setIsMobile(getMachine(req) === 'pc'));
+        store.dispatch(setIsMobile(getMachine(req) === 'mobile'));
         const helmet = Helmet.renderStatic();
         const finalState = store.getState();
         res.write(
             `<!doctype html>
-                <html lang="" style="font-size: ${getMachine(req) === 'pc' ? '50px' : '20px'}">
+                <html lang="zh-hans">
                     <head>
                     ${helmet.title.toString()}
                     <meta charset="UTF-8" />
