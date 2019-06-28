@@ -60,6 +60,7 @@ const MobileTabbar = styled.div`
     height: 50px;
     background-color: #fff;
     border-top: 1px solid #e5e5e5;
+    z-index: 9000;
     .tabbar-item{
         display: flex;
         flex: 1;
