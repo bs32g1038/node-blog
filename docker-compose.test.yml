@@ -1,27 +1,27 @@
 version: '3.4'
 services:
   api:
-    image: bs32g1038/node-blog-api:${TAG}
+    build: ./node-blog-api
     depends_on:
       - db
     volumes:
       - ../data/logs:/code/logs
       - ../data/blog/upload:/code/static/upload
     command: npm run start:prod
-  web:
-    image: bs32g1038/node-blog-web:${TAG}
+  blog:
+    build: ./react-blog
     command: npm run start:prod
   admin:
-    image: bs32g1038/node-blog-admin:${TAG}
+    build: ./react-admin
     command: npm run start:prod
   music:
-    image: bs32g1038/node-blog-music:${TAG}
+    build: ./react-music-app
     command: npm run start:prod
   nginx:
-    image: bs32g1038/node-blog-nginx:${TAG}
+    build: ./nginx
     depends_on:
       - api
-      - web
+      - blog
       - admin
       - music
     ports:

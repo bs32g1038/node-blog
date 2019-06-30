@@ -1,0 +1,17 @@
+version: '3'
+services:
+  api:
+    build: ./node-blog-api
+    image: bs32g1038/node-blog-api:${TRAVIS_TAG}
+  web:
+    build: ./react-blog
+    image: bs32g1038/node-blog-web:${TRAVIS_TAG}
+  admin:
+    build: ./react-admin
+    image: bs32g1038/node-blog-admin:${TRAVIS_TAG}
+  music:
+    build: ./react-music-app
+    image: bs32g1038/node-blog-music:${TRAVIS_TAG}
+  nginx:
+    build: ./nginx
+    image: bs32g1038/node-blog-nginx:${TRAVIS_TAG}

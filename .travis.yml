@@ -1,9 +1,11 @@
 language: node_js
 
-node_js: stable
+node_js:
+  - "8.12.0"
 
 services:
   - mongodb
+  - docker
 
 cache:
   timeout: 1000
@@ -12,48 +14,42 @@ cache:
     - $HOME/.npm-prefix
     - $HOME/.npm
 
-install:
-  - set -e
-  - cd $TRAVIS_BUILD_DIR
-  - npm install -g codecov
-  - cd react-blog
-  - npm install
-  - cd ../node-blog-api
-  - npm install
-  - cd ../react-admin
-  - npm install
-  - cd ../react-music-app
-  - npm install
-
-before_script:
-  - sleep 15
-
-script:
-  - set -e
-  - cd $TRAVIS_BUILD_DIR/react-blog
-  - NODE_OPTIONS=--max_old_space_size=1024 CI=false npm run build
-  - cd ../node-blog-api
-  - npm run test:cov
-  - codecov
-  - npm run build
-  - cd ../react-admin
-  - CI=false npm run build
-  - cd ../react-music-app
-  - CI=false npm run build
-  - cd $TRAVIS_BUILD_DIR
-
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  skip_cleanup: true
-  on:
-    tags: true
-    branch: master
-      
-branches:
-  except:
-    - deploy
-
-env:
-  global:
-    - GH_REF: github.com/bs32g1038/node-blog.git
+jobs:
+  include:
+    - stage: Tests
+      if: tag IS blank
+      install:
+        - set -e
+        - cd $TRAVIS_BUILD_DIR
+        - npm install -g codecov
+        - cd react-blog
+        - npm install
+        - cd ../node-blog-api
+        - npm install
+        - cd ../react-admin
+        - npm install
+        - cd ../react-music-app
+        - npm install
+      script: .run_ui_tests 1
+      before_script:
+        - sleep 15
+      script:
+        - set -e
+        - cd $TRAVIS_BUILD_DIR/react-blog
+        - NODE_OPTIONS=--max_old_space_size=1024 CI=false npm run build
+        - cd ../node-blog-api
+        - npm run test:cov
+        - codecov
+        - npm run build
+        - cd ../react-admin
+        - CI=false npm run build
+        - cd ../react-music-app
+        - CI=false npm run build
+        - cd $TRAVIS_BUILD_DIR
+    - stage: deploy
+      if: tag IS present
+      provider: script
+      script: bash scripts/deploy.sh
+      on:
+        tags: true
+        branch: master
