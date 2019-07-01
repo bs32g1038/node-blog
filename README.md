@@ -2,24 +2,24 @@
 
 A simple, fast and easy-to-use blog
 
-**blog-web :**
+**blog-web :** [https://github.com/lc-notes/blog-web.git](https://github.com/lc-notes/blog-web.git)
 
 [![Build Status](https://travis-ci.com/lc-notes/blog-web.svg?branch=master)](https://travis-ci.com/lc-notes/blog-web) ![David (path)](https://img.shields.io/david/lc-notes/blog-web.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-web/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-web/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-web.svg)
 
 
-**blog-admin :**
+**blog-admin :** [https://github.com/lc-notes/blog-admin.git](https://github.com/lc-notes/blog-admin.git)
 
 [![Build Status](https://travis-ci.com/lc-notes/blog-admin.svg?branch=master)](https://travis-ci.com/lc-notes/blog-admin) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-admin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-admin/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-admin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-admin/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-admin.svg)
 
-**blog-server**
+**blog-server :** [https://github.com/lc-notes/blog-server.git](https://github.com/lc-notes/blog-server.git)
 
 [![Build Status](https://travis-ci.com/lc-notes/blog-server.svg?branch=master)](https://travis-ci.com/lc-notes/blog-server) ![David (path)](https://img.shields.io/david/lc-notes/blog-server.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-server/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-server/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-server.svg)
 
-**blog-music-app**
+**blog-music-app :** [https://github.com/lc-notes/blog-music-app.git](https://github.com/lc-notes/blog-music-app.git)
 
 [![Build Status](https://travis-ci.com/lc-notes/blog-music-app.svg?branch=master)](https://travis-ci.com/lc-notes/blog-music-app) ![David (path)](https://img.shields.io/david/lc-notes/blog-music-app.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-music-app.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-music-app/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-music-app.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-music-app/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-music-app.svg)
 
-**blog-nginx**
+**blog-nginx :** [https://github.com/lc-notes/blog-nginx.git](https://github.com/lc-notes/blog-nginx.git)
 
 [![Build Status](https://travis-ci.com/lc-notes/blog-nginx.svg?branch=master)](https://travis-ci.com/lc-notes/blog-nginx) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-nginx.svg)
 
@@ -47,26 +47,10 @@ A simple, fast and easy-to-use blog
 ## Project structure
 
 * nginx: used as gateway, unified port;
-
-source code: [https://github.com/lc-notes/blog-nginx.git](https://github.com/lc-notes/blog-nginx.git)
-
 * blog-server: provide blog server api, based one nodejs, mongodb;
-
-source code: [https://github.com/lc-notes/blog-server.git](https://github.com/lc-notes/blog-server.git)
-
 * blog-web: front-end ui;
-
-source code: [https://github.com/lc-notes/blog-web.git](https://github.com/lc-notes/blog-web.git)
-
 * blog-admin: admin ui;
-
-source code: [https://github.com/lc-notes/blog-admin.git](https://github.com/lc-notes/blog-admin.git)
-
-
 * blog-music-app: a simple music web app
-
-source code: [https://github.com/lc-notes/blog-music-app.git](https://github.com/lc-notes/blog-music-app.git)
-
 * docker-compose.yml: docker-compose deploy config file
 
 ## Todo
