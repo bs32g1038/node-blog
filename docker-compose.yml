@@ -18,7 +18,7 @@ services:
     image: lcnotes/blog-music-app:v2.0.0
     command: npm run start:prod
   nginx:
-    image: lcnotes/blog-nginx:v2.0.0
+    image: lcnotes/blog-nginx:v2.1.0
     depends_on:
       - server
       - web
@@ -27,9 +27,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - ../data/logs:/var/log/nginx
-      - ./nginx/certificate:/etc/nginx/certificate
   db:
     image: mongo:4.1
     volumes:

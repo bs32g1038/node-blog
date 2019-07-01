@@ -29,7 +29,7 @@ services:
       - 443:443
     volumes:
       - ../data/logs:/var/log/nginx
-      - ./nginx/certificate:/etc/nginx/certificate
+      - ../blog-nginx/certificate:/etc/nginx/certificate
   db:
     image: mongo:4.1
     volumes:
