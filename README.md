@@ -48,7 +48,7 @@ A simple, fast and easy-to-use blog
 
 * nginx: used as gateway, unified port;
 
-source code: [https://github.com/lc-notes/blog-web.git](https://github.com/lc-notes/blog-web.git)
+source code: [https://github.com/lc-notes/blog-nginx.git](https://github.com/lc-notes/blog-nginx.git)
 
 * blog-server: provide blog server api, based one nodejs, mongodb;
 
