@@ -1,7 +1,7 @@
 version: '3.4'
 services:
-  api:
-    image: bs32g1038/node-blog-api:${TAG}
+  server:
+    image: lcnotes/blog-server:v2.0.0
     depends_on:
       - db
     volumes:
@@ -9,18 +9,18 @@ services:
       - ../data/blog/upload:/code/static/upload
     command: npm run start:prod
   web:
-    image: bs32g1038/node-blog-web:${TAG}
+    image: lcnotes/blog-web:v2.0.0
     command: npm run start:prod
   admin:
-    image: bs32g1038/node-blog-admin:${TAG}
+    image: lcnotes/blog-admin:v2.0.0
     command: npm run start:prod
   music:
-    image: bs32g1038/node-blog-music:${TAG}
+    image: lcnotes/blog-music-app:v2.0.0
     command: npm run start:prod
   nginx:
-    image: bs32g1038/node-blog-nginx:${TAG}
+    image: lcnotes/node-blog-nginx:v2.0.0
     depends_on:
-      - api
+      - server
       - web
       - admin
       - music

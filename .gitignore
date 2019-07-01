@@ -1,13 +1,1 @@
-.cache
-node_modules
 .vscode
-logs/blog/*
-!.gitkeep
-static
-dist
-react-admin/build
-react-blog/build
-react-music-app/build
-*.lock
-*.log
-coverage
