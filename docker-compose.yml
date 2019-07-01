@@ -18,7 +18,7 @@ services:
     image: lcnotes/blog-music-app:v2.0.0
     command: npm run start:prod
   nginx:
-    image: lcnotes/node-blog-nginx:v2.0.0
+    image: lcnotes/blog-nginx:v2.0.0
     depends_on:
       - server
       - web
