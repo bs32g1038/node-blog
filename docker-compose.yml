@@ -9,7 +9,7 @@ services:
       - ../data/blog/upload:/code/static/upload
     command: npm run start:prod
   web:
-    image: lcnotes/blog-web:v2.1.0
+    image: lcnotes/blog-web:v2.1.1
     command: npm run start:prod
   admin:
     image: lcnotes/blog-admin:v2.0.0
