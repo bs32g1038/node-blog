@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   server:
-    image: lcnotes/blog-server:v2.0.0
+    image: lcnotes/blog-server:v2
     depends_on:
       - db
     volumes:
@@ -9,16 +9,16 @@ services:
       - ../data/blog/upload:/code/static/upload
     command: npm run start:prod
   web:
-    image: lcnotes/blog-web:v2.2.0
+    image: lcnotes/blog-web:v2
     command: npm run start:prod
   admin:
-    image: lcnotes/blog-admin:v2.0.0
+    image: lcnotes/blog-admin:v2
     command: npm run start:prod
   music:
-    image: lcnotes/blog-music-app:v2.0.0
+    image: lcnotes/blog-music-app:v2
     command: npm run start:prod
   nginx:
-    image: lcnotes/blog-nginx:v2.1.0
+    image: lcnotes/blog-nginx:v2
     depends_on:
       - server
       - web
