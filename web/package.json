@@ -9,21 +9,21 @@
   },
   "homepage": "http://www.lizc.me",
   "scripts": {
-    "dev": "razzle start",
-    "build": "razzle build",
-    "test": "razzle test --env=jsdom",
-    "start:prod": "cross-env NODE_ENV=production node ./build/server.js"
+    "dev": "cross-env NODE_ENV=development node server.js",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.12",
     "axios": "^0.19.0",
     "cross-env": "^5.2.0",
     "dayjs": "^1.8.14",
-    "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.12",
     "emotion": "^10.0.9",
     "emotion-server": "^10.0.9",
     "express": "^4.17.1",
     "marked": "^0.6.2",
+    "next": "^9.0.1",
     "path-to-regexp": "^3.0.0",
     "query-string": "^6.8.1",
     "razzle": "^3.0.0",
@@ -57,9 +57,9 @@
     "@types/webpack-env": "^1.13.9",
     "check-types": "^8.0.3",
     "http-proxy-middleware": "^0.19.1",
-    "typescript": "^3.5.2",
     "tslint": "^5.18.0",
     "tslint-react": "^4.0.0",
+    "typescript": "^3.5.2",
     "url-loader": "^2.0.1"
   },
   "browserslist": []

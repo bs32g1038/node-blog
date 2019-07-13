@@ -7,8 +7,13 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "lib": ["es6", "es2015", "es2017", "dom"],
+    "jsx": "preserve",
+    "lib": [
+      "es6",
+      "es2015",
+      "es2017",
+      "dom"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -20,7 +25,11 @@
     "strict": true,
     "pretty": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2016"
+    "target": "es2016",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
   },
   "exclude": [
     "node_modules",
@@ -31,5 +40,14 @@
     "jest",
     "razzle.config.js"
   ],
-  "types": ["typePatches", "node", "webpack-env"]
+  "types": [
+    "typePatches",
+    "node",
+    "webpack-env"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
