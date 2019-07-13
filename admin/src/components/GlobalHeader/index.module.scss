@@ -1,0 +1,94 @@
+.header {
+    background-color: #fff;
+    padding: 0;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+
+.right {
+    float: right;
+    height: 100%;
+    overflow: hidden;
+
+    a {
+        color: #71777c;
+        transition: color .15s ease;
+        display: inline-block;
+        vertical-align: middle;
+        font-weight: 300;
+        letter-spacing: 1.2px;
+        margin: 0 15px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+            color: #61B3E6
+        }
+
+        &:nth-child(10) {
+            margin-right: 0;
+        }
+
+        i {
+            margin-right: 6px;
+        }
+    }
+
+    .action {
+        display: inline-block;
+        height: 100%;
+        padding: 0 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        >i {
+            color: rgba(0, 0, 0, .65);
+            vertical-align: middle;
+        }
+
+        &:hover {
+            background: rgba(0, 0, 0, .025);
+        }
+
+        &:global(.opened) {
+            background: rgba(0, 0, 0, .025);
+        }
+    }
+
+    .search {
+        padding: 0 12px;
+
+        &:hover {
+            background: transparent;
+        }
+    }
+
+    .account {
+        .avatar {
+            margin: 20px 8px 20px 0;
+            color: #1890ff;
+            vertical-align: top;
+            background: hsla(0, 0%, 100%, .85);
+        }
+    }
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+
+    >img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.trigger {
+    height: 64px;
+    padding: 22px 24px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all .3s, padding 0s;
+}

@@ -1,7 +1,7 @@
 version: '3'
 services:
   server:
-    image: lcnotes/blog-server:v2
+    image: bs32g1038/blog-server:v2
     depends_on:
       - db
     volumes:
@@ -16,16 +16,12 @@ services:
   admin:
     image: lcnotes/blog-admin:v2
     command: npm run start:prod
-  music:
-    image: lcnotes/blog-music-app:v2
-    command: npm run start:prod
   nginx:
     image: lcnotes/blog-nginx:v2
     depends_on:
       - server
       - web
       - admin
-      - music
     ports:
       - 80:80
       - 443:443
@@ -34,5 +30,3 @@ services:
     volumes:
       - ../data/mongo-backup:/data/mongo-backup
       - ../data/mongo-db:/data/db
-    ports:
-      - 27017:27017

@@ -1,0 +1,55 @@
+language: node_js
+
+node_js:
+  - "10.16.0"
+
+services:
+  - mongodb
+  - docker
+
+cache:
+  timeout: 1000
+  directories:
+    - $HOME/.npm-cache
+    - $HOME/.npm-prefix
+    - $HOME/.npm
+
+jobs:
+  include:
+    - stage: Tests
+      if: tag IS blank
+      install:
+        - set -e
+        - cd $TRAVIS_BUILD_DIR
+        - npm install -g codecov
+        - cd react-blog
+        - npm install
+        - cd ../node-blog-api
+        - npm install
+        - cd ../react-admin
+        - npm install
+        - cd ../react-music-app
+        - npm install
+      script: .run_ui_tests 1
+      before_script:
+        - sleep 15
+      script:
+        - set -e
+        - cd $TRAVIS_BUILD_DIR/react-blog
+        - NODE_OPTIONS=--max_old_space_size=1024 CI=false npm run build
+        - cd ../node-blog-api
+        - npm run test:cov
+        - codecov
+        - npm run build
+        - cd ../react-admin
+        - CI=false npm run build
+        - cd ../react-music-app
+        - CI=false npm run build
+        - cd $TRAVIS_BUILD_DIR
+    - stage: deploy
+      if: tag IS present
+      provider: script
+      script: bash scripts/deploy.sh
+      on:
+        tags: true
+        branch: master

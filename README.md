@@ -2,26 +2,8 @@
 
 A simple, fast and easy-to-use blog
 
-**blog-web :** [https://github.com/lc-notes/blog-web.git](https://github.com/lc-notes/blog-web.git)
-
-[![Build Status](https://travis-ci.com/lc-notes/blog-web.svg?branch=master)](https://travis-ci.com/lc-notes/blog-web) ![David (path)](https://img.shields.io/david/lc-notes/blog-web.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-web/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-web/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-web.svg)
-
-
-**blog-admin :** [https://github.com/lc-notes/blog-admin.git](https://github.com/lc-notes/blog-admin.git)
-
-[![Build Status](https://travis-ci.com/lc-notes/blog-admin.svg?branch=master)](https://travis-ci.com/lc-notes/blog-admin) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-admin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-admin/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-admin.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-admin/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-admin.svg)
-
-**blog-server :** [https://github.com/lc-notes/blog-server.git](https://github.com/lc-notes/blog-server.git)
-
-[![Build Status](https://travis-ci.com/lc-notes/blog-server.svg?branch=master)](https://travis-ci.com/lc-notes/blog-server) ![David (path)](https://img.shields.io/david/lc-notes/blog-server.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-server/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-server/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-server.svg)
-
-**blog-music-app :** [https://github.com/lc-notes/blog-music-app.git](https://github.com/lc-notes/blog-music-app.git)
-
-[![Build Status](https://travis-ci.com/lc-notes/blog-music-app.svg?branch=master)](https://travis-ci.com/lc-notes/blog-music-app) ![David (path)](https://img.shields.io/david/lc-notes/blog-music-app.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/lc-notes/blog-music-app.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-music-app/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/lc-notes/blog-music-app.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/lc-notes/blog-music-app/context:javascript) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-music-app.svg)
-
-**blog-nginx :** [https://github.com/lc-notes/blog-nginx.git](https://github.com/lc-notes/blog-nginx.git)
-
-[![Build Status](https://travis-ci.com/lc-notes/blog-nginx.svg?branch=master)](https://travis-ci.com/lc-notes/blog-nginx) ![GitHub](https://img.shields.io/github/license/lc-notes/blog-nginx.svg)
+[![Build Status](https://travis-ci.org/bs32g1038/node-blog.svg?branch=master)](https://travis-ci.org/bs32g1038/node-blog) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/context:javascript) 
+[![codecov](https://codecov.io/gh/bs32g1038/node-blog/branch/master/graph/badge.svg)](https://codecov.io/gh/bs32g1038/node-blog) ![GitHub](https://img.shields.io/github/license/bs32g1038/node-blog.svg)
 
 **Demo :**
 
@@ -29,9 +11,9 @@ A simple, fast and easy-to-use blog
 
 **Screenshot :**
 
-![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/screenshot/home.png?raw=true)
+![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/scrdeenshots/home.png?raw=true)
 
-![screenshot-admin](https://github.com/bs32g1038/node-blog/blob/master/screenshot/admin.png?raw=true)
+![screenshot-admin](https://github.com/bs32g1038/node-blog/blob/master/scrdeenshots/admin.png?raw=true)
 
 ## Project introduction
 
@@ -47,11 +29,11 @@ A simple, fast and easy-to-use blog
 ## Project structure
 
 * nginx: used as gateway, unified port;
-* blog-server: provide blog server api, based one nodejs, mongodb;
-* blog-web: front-end ui;
-* blog-admin: admin ui;
-* blog-music-app: a simple music web app
-* docker-compose.yml: docker-compose deploy config file
+* node-blog-api: provide blog server api, based one nodejs, mongodb;
+* react-blog: front-end ui;
+* react-admin: admin ui;
+* react-music-app: a simple music web app
+* docker-compose.yml: docker-compose config file
 
 ## Todo
 - [ ] Article tags (I not  think it is a very useful function,but you can realize it easily by yourself) 
@@ -65,7 +47,7 @@ A simple, fast and easy-to-use blog
 
 **1，clone code**
 ```
-git clone https://github.com/lc-notes/**.git
+git clone https://github.com/bs32g1038/node-blog.git
 ```
 
 **2，install**
@@ -86,19 +68,38 @@ npm run build   // build dist for frontend
 
 ## Deploy
 
-**use docker**
+The project has integrated related suites, such as nginx dockerfile, docker-compose.yml. So you can easy to deploy the project.
 
-```
-git clone https://github.com/bs32g1038/node-blog.git
-docker-compose build
-docker-compose up -d
-```
+* First: I recommend that you debug locally and make changes to configuration information, such as database information and personal information.
 
-**no docker**
-* You need to git clone relative project.
-* Than, ```npm install``` && ```npm run start:prod```
-* Lastly, set the nginx
-* Finish!!! 👏👏👏
+* Secondly: you can choice the docker to deploy this project. It is very esay. you only ```pull``` the project to your server and install ```docker```, and run ```docker-compose build``` command, and run ```docker-compose up -d``` command
+
+**However!!!⚠**
+
+If you don't want to use docker, you must to ```cd``` the relative item and run ```npm install or yarn install``` command.
+
+At the same, When finish install, you need to run ```npm run start:prod``` command.
+
+Finally start nginx, before you may need to modify several areas of nginx config.
+
+for example:
+
+```nginx
+upstream server {
+    server api:8080;
+}
+upstream blog {
+    server blog:3000;
+}
+upstream admin {
+    server admin:3002;
+}
+upstream music {
+    server music:7000;
+}
+
+# change the ```api,blog,admin,music``` to localhost or 127.0.0.1
+```
 
 ## Environment dependence
 

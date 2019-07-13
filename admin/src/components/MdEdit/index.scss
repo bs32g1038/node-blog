@@ -1,0 +1,82 @@
+@import 'codemirror.scss';
+@import 'panda-syntax.scss';
+.MdEditor {
+    width: 800px;
+    border-top: none;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    button {
+        height: auto;
+    }
+}
+
+.MdEditor-wraper {
+    position: relative;
+    pre {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: normal;
+    }
+}
+
+.MdEditor-toolbar {
+    display: flex;
+    padding: 5px 13px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    background: #fff;
+    flex: 1 0 auto;
+    align-items: center;
+    user-select: none
+}
+
+.MdEditor-button {
+    align-items: center;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 26px;
+    margin: 0 2px;
+    white-space: nowrap;
+    color: #77839c;
+    background-color: transparent;
+    padding: 0;
+    outline: 0;
+    &:hover {
+        border-color: #ebebeb;
+        background: #f6f6f6;
+    }
+}
+
+.preview {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 20px;
+    background-color: #fff
+}
+
+.MdEditor-svg {
+    vertical-align: middle;
+    fill: #8590a6
+}
+
+.CodeMirror {
+    font-size: 14px;
+    font-family: "YaHei Consolas Hybrid", Consolas, "微软雅黑", "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", Helvetica, "Monaco", courier, monospace;
+    line-height: 1.6;
+    min-height: 500px;
+}
+
+:-webkit-full-screen {
+    background: #fff;
+    padding: 30px 40px;
+    width: 100%;
+    height: 100%;
+}

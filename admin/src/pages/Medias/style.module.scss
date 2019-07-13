@@ -1,0 +1,31 @@
+.mediaList {
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+
+    :global(.ant-card) {
+        margin-right: 10px;
+        margin-left: 10px;
+        box-sizing: border-box;
+        margin-top: 16px;
+        width: calc(25% - 20px);
+    }
+
+    :global(.ant-card-cover) {
+        padding: 10px;
+        height: 183px;
+
+        * {
+            display: block;
+            width: auto;
+            height: 100%;
+            margin: 0 auto;
+        }
+    }
+
+    :global(.ant-card-meta-title) {
+        white-space: normal;
+        word-break: break-all;
+    }
+
+}

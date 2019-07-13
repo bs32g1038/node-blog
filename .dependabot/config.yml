@@ -1,0 +1,14 @@
+version: 1
+
+update_configs:
+  - package_manager: "javascript"
+    directory: "/server"
+    update_schedule: "live"
+
+  - package_manager: "javascript"
+    directory: "/web"
+    update_schedule: "live"
+
+  - package_manager: "javascript"
+    directory: "/admin"
+    update_schedule: "live"

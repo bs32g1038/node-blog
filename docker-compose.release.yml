@@ -1,0 +1,14 @@
+version: '3'
+services:
+  server:
+    build: ./server
+    image: bs32g1038/node-blog-server:v2
+  web:
+    build: ./web
+    image: bs32g1038/node-blog-web:v2
+  admin:
+    build: ./admin
+    image: bs32g1038/node-blog-admin:v2
+      nginx:
+    build: ./nginx
+    image: bs32g1038/node-blog-nginx:v2
