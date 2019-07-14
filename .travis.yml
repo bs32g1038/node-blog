@@ -21,6 +21,7 @@ matrix:
       before_script:
         - cd ${TRAVIS_BUILD_DIR}/server
         - npm install
+        - npm install codecov -g
       script:
         - npm run test:cov
         - codecov
