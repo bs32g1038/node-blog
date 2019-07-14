@@ -38,12 +38,8 @@ matrix:
         - npm install
       script:
         - CI=false npm run build
-
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    tags: true
-    branch: master
-on:
-  branch: master
+    - env: deploy
+      provider: script
+      script: bash scripts/deploy.sh
+      on:
+        branch: master
