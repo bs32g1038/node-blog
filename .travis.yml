@@ -26,21 +26,39 @@ matrix:
         - npm run test:cov
         - codecov
         - npm run build
+      deploy:
+        provider: script
+        script: bash release-docker/release.sh
+        on:
+          branch: master
     - env: web
       before_script:
         - cd ${TRAVIS_BUILD_DIR}/web
         - npm install
       script:
         - NODE_OPTIONS=--max_old_space_size=1024 CI=false npm run build
+      deploy:
+        provider: script
+        script: bash release-docker/release.sh
+        on:
+          branch: master
     - env: admin
       before_script:
         - cd ${TRAVIS_BUILD_DIR}/admin
         - npm install
       script:
         - CI=false npm run build
-
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    branch: master
+      deploy:
+        provider: script
+        script: bash release-docker/release.sh
+        on:
+          branch: master
+    - env: nginx
+      before_script:
+        - cd ${TRAVIS_BUILD_DIR}/nginx
+      script: true
+      deploy:
+        provider: script
+        script: bash release-docker-image.sh
+        on:
+          branch: master
