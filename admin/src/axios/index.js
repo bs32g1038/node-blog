@@ -34,12 +34,12 @@ const errorHandler = (error) => {
     case 401:
         // 返回 401 清除token信息并跳转到登录页面
         localStorage.removeItem(config.tokenKey);
-        history.push('/blog/admin/login');
+        history.push('/user/login');
         return Promise.reject(error);
     case 403:
         // 返回 401 清除token信息并跳转到登录页面
         localStorage.removeItem(config.tokenKey);
-        history.push('/blog/admin/login');
+        history.push('/user/login');
         return Promise.reject(error);
     default:
         break;
@@ -56,7 +56,7 @@ axios.interceptors.request.use(function (c) {
     const token = localStorage.getItem(tokenKey);
     if (!(c.url.includes('getFirstLoginInfo') || c.url.includes('login'))) {
         if (!token) {
-            history.push('/blog/admin/login');
+            history.push('/user/login');
         }
     }
     c.headers.authorization = token || '';

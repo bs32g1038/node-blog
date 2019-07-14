@@ -35,7 +35,7 @@ export default class Categories extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/blog/admin/content/categories/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/content/categories/edit/' + record._id)}>
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>,
@@ -100,7 +100,7 @@ export default class Categories extends Component {
                     <div className={styles.panel}>
                         <Button
                             type="primary"
-                            onClick={() => this.props.history.push('/blog/admin/content/categories/edit')}>
+                            onClick={() => this.props.history.push('/content/categories/edit')}>
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加分类
                         </Button>

@@ -1,7 +1,7 @@
 version: '3'
 services:
   server:
-    image: bs32g1038/blog-server:v2
+    image: bs32g1038/node-blog-server:v2
     depends_on:
       - db
     volumes:
@@ -11,13 +11,13 @@ services:
     environment:
       - MONGODB_URL=mongodb://db:27017/blog
   web:
-    image: lcnotes/blog-web:v2
+    image: bs32g1038/node-blog-web:v2
     command: npm run start:prod
   admin:
-    image: lcnotes/blog-admin:v2
+    image: bs32g1038/node-blog-admin:v2
     command: npm run start:prod
   nginx:
-    image: lcnotes/blog-nginx:v2
+    image: bs32g1038/node-blog-nginx:v2
     depends_on:
       - server
       - web

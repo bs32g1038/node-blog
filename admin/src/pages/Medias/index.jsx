@@ -93,7 +93,7 @@ export default class Medias extends Component {
                                 this.state.medias.map((item, index) => {
                                     return (
                                         <Card
-                                            loading={true}
+                                            loading={this.state.loading}
                                             key={'aaa' + index}
                                             cover={
                                                 !item._id || this.state.loading

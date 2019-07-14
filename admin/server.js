@@ -8,8 +8,8 @@ const html = fs.readFileSync(path.resolve(__dirname, './build/index.html'), 'utf
 
 express()
     .disable('x-powered-by')
-    .use('/blog/admin', express.static(path.resolve(__dirname, './build')))
-    .get(/blog\/admin/, function (req, res, next) {
+    .use(express.static(path.resolve(__dirname, './build')))
+    .get(function (req, res, next) {
         res.send(html);
     })
     .listen(port, (err) => {

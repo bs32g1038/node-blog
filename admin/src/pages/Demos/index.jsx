@@ -31,7 +31,7 @@ export default class Demos extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/blog/admin/demos/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/demos/edit/' + record._id)}>
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>,
@@ -96,7 +96,7 @@ export default class Demos extends Component {
                     <div className="panel">
                         <Button
                             type="primary"
-                            onClick={() => this.props.history.push('/blog/admin/demos/edit')}>
+                            onClick={() => this.props.history.push('/demos/edit')}>
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加Demo
                         </Button>

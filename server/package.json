@@ -1,6 +1,6 @@
 {
   "name": "ts-blog",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "a blog server api",
   "private": true,
   "license": "MIT",

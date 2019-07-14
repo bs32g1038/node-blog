@@ -30,7 +30,7 @@ class CategoryEdit extends Component {
                 const p = match.params.id ? this.updateCategory(match.params.id, data) : this.createCategory(data);
                 p.then((res) => {
                     message.success("提交成功");
-                    history.push('/blog/admin/content/categories');
+                    history.push('/content/categories');
                 });
             }
         });

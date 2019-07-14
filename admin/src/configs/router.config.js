@@ -23,119 +23,119 @@ export default [
         component: BasicLayout,
         routes: [
             {
-                path: ['/', '/blog/admin', '/blog/admin/dashboard'],
+                path: ['/', '/dashboard'],
                 exact: true,
                 component: () => (
-                    <Redirect push to='/blog/admin/dashboard/analysis' />
+                    <Redirect push to='/dashboard/analysis' />
                 )
             },
             {
-                path: '/blog/admin/dashboard',
+                path: '/dashboard',
                 title: '仪表盘',
                 icon: 'dashboard',
                 component: RouteView,
                 routes: [
                     {
-                        path: '/blog/admin/dashboard/analysis',
+                        path: '/dashboard/analysis',
                         title: '分析页',
                         component: Dashboard,
                     }
                 ]
             },
             {
-                path: '/blog/admin/content',
+                path: '/content',
                 title: '博客管理',
                 icon: 'form',
                 component: RouteView,
                 routes: [
                     {
-                        path: '/blog/admin/content/articles',
+                        path: '/content/articles',
                         exact: true,
                         title: '文章管理',
                         component: Articles
                     },
                     {
-                        path: '/blog/admin/content/articles/edit',
+                        path: '/content/articles/edit',
                         exact: true,
                         component: ArticleEdit
                     },
                     {
-                        path: '/blog/admin/content/articles/edit/:id',
+                        path: '/content/articles/edit/:id',
                         exact: true,
                         component: ArticleEdit
                     },
                     {
-                        path: '/blog/admin/content/categories',
+                        path: '/content/categories',
                         exact: true,
                         title: '分类管理',
                         component: Categories
                     },
                     {
-                        path: '/blog/admin/content/categories/edit',
+                        path: '/content/categories/edit',
                         exact: true,
                         component: CategoryEdit
                     },
                     {
-                        path: '/blog/admin/content/categories/edit/:id',
+                        path: '/content/categories/edit/:id',
                         exact: true,
                         component: CategoryEdit
                     },
                     {
-                        path: '/blog/admin/content/comments',
+                        path: '/content/comments',
                         title: '评论管理',
                         exact: true,
                         component: Comments
                     },
                     {
-                        path: '/blog/admin/content/comments/reply/:id',
+                        path: '/content/comments/reply/:id',
                         exact: true,
                         component: CommentReply
                     }
                 ]
             },
             {
-                path: '/blog/admin/demos',
+                path: '/demos',
                 title: '代码管理',
                 icon: 'codepen',
                 component: RouteView,
                 routes: [
                     {
-                        path: '/blog/admin/demos',
+                        path: '/demos',
                         title: '代码demo',
                         exact: true,
                         component: Demos
                     },
                     {
-                        path: '/blog/admin/demos/edit',
+                        path: '/demos/edit',
                         exact: true,
                         component: DemoEdit
                     },
                     {
-                        path: '/blog/admin/demos/edit/:id',
+                        path: '/demos/edit/:id',
                         exact: true,
                         component: DemoEdit
                     },
                     {
-                        path: '/blog/admin/demos/static-files',
+                        path: '/demos/static-files',
                         title: '静态文件',
                         exact: true,
                         component: StaticFiles
                     },
                     {
-                        path: '/blog/admin/demos/static-files/:folderId',
+                        path: '/demos/static-files/:folderId',
                         exact: true,
                         component: StaticFiles
                     }
                 ]
             },
             {
-                path: '/blog/admin/medias',
+                path: '/medias',
                 title: '媒体管理',
                 icon: 'appstore',
                 component: RouteView,
                 routes: [
                     {
-                        path: '/blog/admin/medias',
+                        path: '/medias',
                         title: '图片列表',
                         exact: true,
                         component: Medias

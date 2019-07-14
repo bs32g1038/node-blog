@@ -78,7 +78,7 @@ class ArticleEdit extends Component {
                 const p = match.params.id ? this.updateArticle(match.params.id, data) : this.createArticle(data);
                 p.then(() => {
                     alert("提交成功");
-                    history.push('/blog/admin/content/articles');
+                    history.push('/content/articles');
                 });
             }
         });

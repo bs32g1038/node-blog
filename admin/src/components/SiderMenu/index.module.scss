@@ -28,7 +28,7 @@
     h1 {
         display: inline-block;
         margin: 0 0 0 12px;
-        color: white;
+        color: #444;
         font-weight: 600;
         font-size: 20px;
         font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -71,10 +71,6 @@
         .logo {
             background: white;
             box-shadow: 1px 1px 0 0 #e8e8e8;
-
-            h1 {
-                color: #1890ff;
-            }
         }
 
         :global(.ant-menu-light) {

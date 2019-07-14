@@ -32,7 +32,7 @@ class CommentReply extends Component {
                 Object.assign(data, { reply: match.params.id });
                 axios.post('/comments/', data).then((res) => {
                     message.success("提交成功");
-                    history.push('/blog/admin/content/comments');
+                    history.push('/content/comments');
                 });
             }
         });

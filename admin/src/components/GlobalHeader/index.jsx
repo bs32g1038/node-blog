@@ -16,7 +16,7 @@ class GlobalHeader extends Component {
     };
     logout = () => {
         localStorage.removeItem(config.tokenKey);
-        return history.push('/blog/admin/login');
+        return history.push('/user/login');
     };
     toggle = () => {
         const { collapsed, onCollapse } = this.props;
@@ -48,12 +48,10 @@ class GlobalHeader extends Component {
                     />
                     <span style={{ paddingLeft: '40px' }}><strong>亲爱的主人，欢迎你回来！</strong></span>
                     <div className={styles.right}>
-                        <a href="http://www.lizc.me/about" rel="noopener noreferrer" target="_blank"><i className="fa fa-user fa-fw"></i>个人简历</a>
-                        <a href="http://music.lizc.me" rel="noopener noreferrer" target="_blank"><i className="fa fa-music fa-fw"></i>博客音乐播放器</a>
                         <Tooltip title="help">
                             <a
                                 target="_blank"
-                                href="https://github.com/bs32g1038/node-blog"
+                                href={config.siteInfo.github}
                                 rel="noopener noreferrer"
                                 className={styles.action}
                             >

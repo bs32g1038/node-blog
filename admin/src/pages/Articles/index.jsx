@@ -64,7 +64,7 @@ class Articles extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/blog/admin/content/articles/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/content/articles/edit/' + record._id)}>
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>,
@@ -129,7 +129,7 @@ class Articles extends Component {
                             <Col>
                                 <Button
                                     type="primary"
-                                    onClick={() => this.props.history.push('/blog/admin/content/articles/edit')}>
+                                    onClick={() => this.props.history.push('/ticles/edit')}>
                                     <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                     添加文档
                                 </Button>

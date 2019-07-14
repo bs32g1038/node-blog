@@ -31,7 +31,7 @@ class DemoEdit extends Component {
                 const p = match.params.id ? this.updatedemo(match.params.id, data) : this.createdemo(data);
                 p.then((res) => {
                     message.success("提交成功");
-                    history.push('/blog/admin/demos');
+                    history.push('//demos');
                 });
             }
         });

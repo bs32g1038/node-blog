@@ -11,9 +11,9 @@ A simple, fast and easy-to-use blog
 
 **Screenshot :**
 
-![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/scrdeenshots/home.png?raw=true)
+![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
 
-![screenshot-admin](https://github.com/bs32g1038/node-blog/blob/master/scrdeenshots/admin.png?raw=true)
+![screenshot-admin](https://github.com/bs32g1038/node-blog/blob/master/docs/images/admin.png?raw=true)
 
 ## Project introduction
 

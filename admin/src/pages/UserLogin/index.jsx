@@ -24,7 +24,7 @@ class UserLogin extends Component {
                 axios.post('/login', { key: str }).then((res) => {
                     message.success("登陆成功！");
                     localStorage.setItem(config.tokenKey, res.data.token);
-                    history.push('/blog/admin/content/articles');
+                    history.push('/content/articles');
                 });
             }
         });
@@ -87,7 +87,7 @@ class UserLogin extends Component {
                             </FormItem>
                         </Form>
                     </div>
-                    <div className="nodeblog">Powered by <a href="//www.lizc.me" title="轻量级nodeblog博客系统" rel="noopener noreferrer" target="_blank">LIZCBLOG</a></div>
+                    <div className="nodeblog">Powered by <a href={config.siteInfo.domain} title="轻量级nodeblog博客系统" rel="noopener noreferrer" target="_blank">LIZCBLOG</a></div>
                 </div>
             </div>
         );

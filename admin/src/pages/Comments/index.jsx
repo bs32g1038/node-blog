@@ -45,7 +45,7 @@ export default class Comments extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/blog/admin/content/comments/reply/' + record._id)}>
+                            onClick={() => this.props.history.push('/content/comments/reply/' + record._id)}>
                             <i className="fa fa-edit fa-fw"></i>
                             回复
                         </Button>,
