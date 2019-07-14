@@ -2,8 +2,10 @@
 node_modules
 .vscode
 logs/blog/*
-!.gitkeep
 static
+!server/static
+server/static/upload/**
+!.gitkeep
 dist
 *.lock
 *.log
