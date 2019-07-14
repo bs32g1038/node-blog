@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { Articles } from '../../components/articles';
+import { ScrollToTop } from '../../components/scroll-to-top';
 import siteInfo from '../../config/site-info';
 import AppLayout from '../../layouts/app';
 import { fetchArticles } from '../../redux/reducers/articles';
@@ -9,12 +10,14 @@ import { isServer } from '../../utils/helper';
 
 const Page = () => {
     return (
-        <AppLayout>
-            <Head>
-                <title>{siteInfo.name + '-博客'}</title>
-            </Head>
-            <Articles></Articles>
-        </AppLayout>
+        <ScrollToTop>
+            <AppLayout>
+                <Head>
+                    <title>{siteInfo.name + '-博客'}</title>
+                </Head>
+                <Articles></Articles>
+            </AppLayout>
+        </ScrollToTop>
     );
 };
 

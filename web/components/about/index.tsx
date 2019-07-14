@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 import data from './data';
 import GithubContribution from './github-contribution';
@@ -40,7 +38,6 @@ const values = data.userCommits.contribution.map((item) => {
 export const About = (props: any) => {
     return (
         <AboutDiv className="about">
-            <Helmet title={siteInfo.name + '-关于'}></Helmet>
             <p className="bio">
                 专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
             </p>

@@ -41,6 +41,12 @@ app.prepare().then(() => {
     server.get('/blog/articles/:id', (req, res) => {
         return app.render(req, res, '/article', { id: req.params.id });
     });
+    // admin 
+
+    server.get('/blog/admin/login', (req, res) => {
+        return app.render(req, res, '/admin/login', {});
+    });
+
     server.get('/', (req, res) => res.redirect('/blog'))
     server.use(helmet())
     server.use((req, res) => {

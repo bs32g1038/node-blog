@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
 import media from '../../utils/media';
@@ -25,7 +24,7 @@ export const asyncData = (store: any, route: any) => {
     });
 };
 
-interface Props extends RouteComponentProps {
+interface Props {
     dispatch: any;
     _DB: State;
     router: any;
@@ -58,7 +57,7 @@ const C = (props: Props) => {
         <>
             <ArticleWrap>
                 <Head><title>{article.title + ' - ' + siteInfo.name}</title></Head>
-                <ArticleItem loading={isLoading} article={article} comments={comments} location={props.location}></ArticleItem>
+                <ArticleItem loading={isLoading} article={article} comments={comments}></ArticleItem>
                 <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
             </ArticleWrap>
         </>

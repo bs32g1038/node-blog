@@ -106,7 +106,6 @@ const Breadcrumbs = styled.div`
 interface Props {
     loading: boolean;
     article: any;
-    location: any;
     comments: any[];
 }
 
