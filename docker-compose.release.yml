@@ -9,6 +9,6 @@ services:
   admin:
     build: ./admin
     image: bs32g1038/node-blog-admin:v2
-      nginx:
+  nginx:
     build: ./nginx
     image: bs32g1038/node-blog-nginx:v2
