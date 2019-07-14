@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import React, { SFC } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
 import { ContentLoader } from '../content-loader';
@@ -77,7 +77,7 @@ const Meta = styled.div`
     `};
 `;
 
-const Title = styled(Link)`
+const Title = styled.a`
     color: rgb(85,85,85);
     font-weight: 700;
     overflow: hidden;
@@ -160,18 +160,17 @@ const Summary = styled.p`
 
 const Loading = connect(
     (state: any) => ({
-        $G: state.$G
     })
 )((props: any) => (
-    !props.$G.isMobile ?
-        <ContentLoader width={240} height={300} uniqueKey={'article-item'} style={{ height: '300px' }}>
-            <rect x="0" y="0" width="230" height="140"></rect>
-            <rect x="0" y="150" width="140" height="14"></rect>
-            <rect x="0" y="174" width="200" height="14"></rect>
-            <rect x="0" y="198" width="180" height="14"></rect>
-            <rect x="0" y="222" width="230" height="14"></rect>
-        </ContentLoader>
-        :
+    // !props.$G.isMobile ?
+    //     <ContentLoader width={240} height={300} uniqueKey={'article-item'} style={{ height: '300px' }}>
+    //         <rect x="0" y="0" width="230" height="140"></rect>
+    //         <rect x="0" y="150" width="140" height="14"></rect>
+    //         <rect x="0" y="174" width="200" height="14"></rect>
+    //         <rect x="0" y="198" width="180" height="14"></rect>
+    //         <rect x="0" y="222" width="230" height="14"></rect>
+    //     </ContentLoader>
+    //     :
         <ContentLoader width={375} height={114} uniqueKey={'article-item'} style={{ height: '114px' }}>
             <rect x="20" y="20" width="240" height="14"></rect>
             <rect x="20" y="44" width="280" height="14"></rect>
@@ -195,7 +194,9 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         <strong>TIME</strong>
                         <em>·</em> {parseTime(item.createdAt)}
                     </Meta>
-                    <Title to={`/blog/articles/${item._id}`}>{item.title}</Title>
+                    <Link href={`/blog/articles/${item._id}`} passHref={true}>
+                        <Title>{item.title}</Title>
+                    </Link>
                     <Summary>{item.summary}</Summary>
                     <Meta>
                         <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span> <em className="cmt">·</em>

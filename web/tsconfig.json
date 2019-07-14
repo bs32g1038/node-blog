@@ -29,21 +29,18 @@
     "skipLibCheck": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": true
   },
   "exclude": [
     "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "razzle.config.js"
+    ".next",
+    "static",
+    "public",
+    "assets"
   ],
   "types": [
     "typePatches",
-    "node",
-    "webpack-env"
+    "node"
   ],
   "include": [
     "next-env.d.ts",

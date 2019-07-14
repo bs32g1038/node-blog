@@ -30,3 +30,5 @@ const Xss = new jsxss.FilterXSS({
 export const xss = (html: any) => {
     return Xss.process(html);
 };
+
+export const isServer = typeof window === 'undefined';

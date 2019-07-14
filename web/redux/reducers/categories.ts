@@ -8,8 +8,8 @@ export const setCategories = (categories: any) => ({
 
 export const fetchCategories = (page?: number, limit?: number) => {
     return (dispatch: any) => {
-        return api.fetchCategories().then((guestbooks) => {
-            dispatch(setCategories(guestbooks));
+        return api.fetchCategories().then((categories) => {
+            dispatch(setCategories(categories));
         });
     };
 };

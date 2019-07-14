@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Api from '../../api/article';
+import * as Api from '../../api/article';
 import { GithubSvg } from '../svgs/github-svg';
 import { SearchSvg } from '../svgs/search-svg';
 
@@ -200,7 +200,7 @@ export const SearchForm = (props: any) => {
                     {
                         !isLoading && items.map((item: { _id: string, title: string }) => (
                             <li key={item._id}>
-                                <Link to={'/blog/articles/' + item._id}>{item.title}</Link>
+                                <Link href={'/blog/articles/' + item._id} passHref={true}>{item.title}</Link>
                             </li>
                         ))
                     }

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../redux/reducers/categories';
+import { fetchCategories, State } from '../../redux/reducers/categories';
 import media from '../../utils/media';
 import NavLink from '../nav-link';
 
@@ -58,6 +58,12 @@ const ItemLink = styled.a`
 `;
 
 const C = (props: any) => {
+    useEffect(() => {
+        const cats = props._DB.categories || [];
+        if (cats.length <= 0) {
+            props.dispatch(fetchCategories());
+        }
+    });
     const { categories = [] } = props._DB;
     return (
         <CategoriesWrap>

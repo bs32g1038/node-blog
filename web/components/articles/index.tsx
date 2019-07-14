@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 import { Router, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { fetchArticles } from '../../api/article';
-import siteInfo from '../../config/site-info';
-import { Categories } from '../categories';
+import { connect } from 'react-redux';
+import { Categories } from '../../components/categories';
+import { fetchArticles, State } from '../../redux/reducers/articles';
 import ArticleItem from './item';
 
 const UL = styled.ul`
@@ -18,31 +17,31 @@ const UL = styled.ul`
 `;
 
 const getList = (props: any) => {
-    return [];
+    const q: { cid?: string } = props.router.query;
+    const { articles } = props._DB;
+    return (q.cid ? articles[q.cid] : articles.blog);
 };
 
-export const asyncData = (route: any) => {
-    const { page, limit = 30 } = route.query;
-    const cid = route.params.cid;
-    return fetchArticles(page, limit, { cid });
+export const fetchData = (props: { router: any, dispatch: any }) => {
+    const { router } = props;
+    const { page = 1, limit = 30, cid = '' } = router.query;
+    return props.dispatch(fetchArticles(page, limit, { cid }));
 };
 
-const C = (props: { router: Router }) => {
-    const router = props.router;
+const C = (props: { router: Router, dispatch: any }) => {
     useEffect(() => {
         if (getList(props)) {
             return;
         }
-        const q: { cid?: string } = router.query;
+        const q: { cid?: string } = props.router.query;
         setTimeout(() => {
-            asyncData(router);
+            fetchData(props);
         }, 250);
-    }, [props.router.pathname]);
+    }, [props.router.query]);
     const articles = getList(props) || new Array(12).fill(null);
     return (
         <div>
             <Categories></Categories>
-            <Helmet title={siteInfo.name + '-博客'}></Helmet>
             <UL>
                 {
                     articles.map((item: any, index: number) => (
@@ -54,4 +53,8 @@ const C = (props: { router: Router }) => {
     );
 };
 
-export const Articles = withRouter(C);
+export const Articles = connect(
+    (state: State) => ({
+        _DB: state.articles
+    })
+)(withRouter(C) as any) as any;
