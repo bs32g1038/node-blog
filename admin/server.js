@@ -9,10 +9,10 @@ const html = fs.readFileSync(path.resolve(__dirname, './build/index.html'), 'utf
 express()
     .disable('x-powered-by')
     .use(express.static(path.resolve(__dirname, './build')))
-    .get(function (req, res, next) {
+    .get(function(req, res) {
         res.send(html);
     })
-    .listen(port, (err) => {
+    .listen(port, err => {
         if (err) {
             console.log(err);
             return;

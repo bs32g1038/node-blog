@@ -37,7 +37,9 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.18.0",
     "highlight.js": "^9.15.8",
+    "husky": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
+    "lint-staged": "^9.2.0",
     "log4js": "^4.4.0",
     "lru-cache": "^5.1.1",
     "markdown-it": "^8.4.2",
@@ -104,5 +106,19 @@
         "tsConfig": "<rootDir>/tsconfig.json"
       }
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md,css,html}": [
+      "prettier --tab-width 4 --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   }
 }

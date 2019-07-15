@@ -14,7 +14,9 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "start:prod": "node server.js"
+    "start:prod": "node server.js",
+    "lint": "eslint --ext .js --ignore-path .eslintignore .",
+    "format": "prettier --write 'src/*/*.js'"
   },
   "dependencies": {
     "express": "^4.17.1"
@@ -29,9 +31,13 @@
     "codemirror": "^5.48.0",
     "crypto-js": "^3.1.9-1",
     "dayjs": "^1.8.14",
+    "eslint-plugin-prettier": "^3.1.0",
     "http-proxy-middleware": "^0.19.1",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.2.0",
     "markdown-it": "^8.4.2",
     "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
     "query-string": "^6.8.0",
     "react": "^16.8.6",
     "react-document-title": "^2.0.3",
@@ -43,14 +49,19 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "indent": [
-        1,
-        4
-      ]
+  "browserslist": [],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
   },
-  "browserslist": []
+  "lint-staged": {
+    "*.{js,md,css,html}": [
+      "prettier --tab-width 4 --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
+  }
 }

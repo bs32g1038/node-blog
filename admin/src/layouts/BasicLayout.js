@@ -5,7 +5,7 @@ import GlobalFooter from '../components/GlobalFooter';
 import Header from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
 import styles from './BasicLayout.module.scss';
-import { renderRoutes } from "react-router-config";
+import { renderRoutes } from 'react-router-config';
 import Context from './MenuContext';
 
 const { Content } = Layout;
@@ -15,7 +15,7 @@ class BasicLayout extends React.Component {
         const { location, route } = this.props;
         return {
             location,
-            routes: route.routes
+            routes: route.routes,
         };
     }
     getLayoutStyle = () => {
@@ -27,23 +27,16 @@ class BasicLayout extends React.Component {
         }
         return null;
     };
-    handleMenuCollapse = collapsed => {
+    handleMenuCollapse = () => {
         this.setState({
-            collapsed: !this.state.collapsed
-        })
+            collapsed: !this.state.collapsed,
+        });
     };
     state = {
-        collapsed: false
-    }
+        collapsed: false,
+    };
     render() {
-        const {
-            route,
-            navTheme,
-            layout: PropsLayout,
-            isMobile,
-            menuData,
-            fixedHeader,
-        } = this.props;
+        const { route, navTheme, layout: PropsLayout, isMobile, menuData, fixedHeader } = this.props;
         const isTop = PropsLayout === 'topmenu';
         const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
         const layout = (
@@ -65,11 +58,7 @@ class BasicLayout extends React.Component {
                         minHeight: '100vh',
                     }}
                 >
-                    <Header
-                        menuData={menuData}
-                        onCollapse={this.handleMenuCollapse}
-                        collapsed={this.state.collapsed}
-                    />
+                    <Header menuData={menuData} onCollapse={this.handleMenuCollapse} collapsed={this.state.collapsed} />
                     <Content className={styles.content} style={contentStyle}>
                         {renderRoutes(route.routes)}
                     </Content>
@@ -80,13 +69,11 @@ class BasicLayout extends React.Component {
         return (
             <React.Fragment>
                 <DocumentTitle title={''}>
-                    <Context.Provider value={this.getContext()}>
-                        {layout}
-                    </Context.Provider>
+                    <Context.Provider value={this.getContext()}>{layout}</Context.Provider>
                 </DocumentTitle>
             </React.Fragment>
         );
     }
 }
 
-export default BasicLayout
+export default BasicLayout;
