@@ -25,7 +25,7 @@ describe('article_005', () => {
         screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/articles 201', async () => {

@@ -28,22 +28,21 @@ const handleUserCommits = (commits): UserCommits => {
     });
     return {
         contribution,
-        total
+        total,
     };
 };
 
 const getUserInfo = async (username: string): Promise<UserInfo> => {
-    return axios.get(`https://api.github.com/users/${username}`)
-        .then((res: any) => {
-            const data = res.data;
-            const info = new UserInfo();
-            info.name = data.name;
-            info.url = data.url;
-            info.location = data.location;
-            info.avatarUrl = data.avatarUrl;
-            info.bio = data.bio;
-            return info;
-        });
+    return axios.get(`https://api.github.com/users/${username}`).then((res: any) => {
+        const data = res.data;
+        const info = new UserInfo();
+        info.name = data.name;
+        info.url = data.url;
+        info.location = data.location;
+        info.avatarUrl = data.avatarUrl;
+        info.bio = data.bio;
+        return info;
+    });
 };
 
 /**
@@ -51,8 +50,7 @@ const getUserInfo = async (username: string): Promise<UserInfo> => {
  * @param {String} username
  */
 const getUsercommits = (username: string) => {
-    return axios.get(`https://github.com/users/${username}/contributions`)
-        .then(res => handleUserCommits(res.data));
+    return axios.get(`https://github.com/users/${username}/contributions`).then(res => handleUserCommits(res.data));
 };
 
 /**
@@ -61,9 +59,9 @@ const getUsercommits = (username: string) => {
  * @param {Date} createdAt
  */
 const getUserRepos = async (username: string) => {
-    return axios.get(`https://api.github.com/users/${username}/repos`)
-        .then(res => {
-            return res.data.map((item: any) => {
+    return axios.get(`https://api.github.com/users/${username}/repos`).then(res => {
+        return res.data
+            .map((item: any) => {
                 if (item.fork) {
                     return null;
                 }
@@ -72,15 +70,15 @@ const getUserRepos = async (username: string) => {
                     forkCount: item.forks_count,
                     stargazersCount: item.stargazers_count,
                     language: item.language,
-                    description: item.description
+                    description: item.description,
                 };
-            }).filter(item => item);
-        });
+            })
+            .filter(item => item);
+    });
 };
 
 @Injectable()
 export class AboutService {
-
     async getUserData(username: string): Promise<GetUserDataDto> {
         const info: any = cache.get(config.github_secret_key);
         if (!info) {
@@ -88,7 +86,7 @@ export class AboutService {
             const [userInfo, userRepos, userCommits] = await Promise.all([
                 getUserInfo(username),
                 getUserRepos(username),
-                getUsercommits(username)
+                getUsercommits(username),
             ]);
             obj.userInfo = userInfo;
             obj.userRepos = userRepos;
@@ -98,5 +96,4 @@ export class AboutService {
         }
         return JSON.parse(info);
     }
-
 }

@@ -1,4 +1,3 @@
-
 import * as request from 'supertest';
 import { CommentModule } from '../../../src/modules/comment.module';
 import { ArticleModule } from '../../../src/modules/article.module';
@@ -11,11 +10,7 @@ describe('comment_002', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                CommentModule,
-                ArticleModule,
-                LoginModule
-            ]
+            imports: [CommentModule, ArticleModule, LoginModule],
         });
     });
 

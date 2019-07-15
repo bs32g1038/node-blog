@@ -9,10 +9,7 @@ describe('category_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                CategoryModule,
-                LoginModule
-            ]
+            imports: [CategoryModule, LoginModule],
         });
     });
 
@@ -24,7 +21,7 @@ describe('category_001', () => {
         name: 'test',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/categories 403', async () => {

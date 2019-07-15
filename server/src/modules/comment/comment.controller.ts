@@ -13,14 +13,18 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CommentController {
-    constructor(private readonly commentService: CommentService) { }
+    constructor(private readonly commentService: CommentService) {}
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     static articleIdSchema = {
-        articleId: Joi.string().default('').max(50)
+        articleId: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/comments')
@@ -30,7 +34,7 @@ export class CommentController {
                 identity: 1,
                 nickName: config.user.nickName,
                 email: config.user.email,
-                location: config.user.location
+                location: config.user.location,
             });
         }
         return await this.commentService.create(createCommentDto);
@@ -45,7 +49,7 @@ export class CommentController {
     @Get('/comments')
     @JoiValidationPipe(StandardPaginationSchema)
     @JoiValidationPipe(CommentController.articleIdSchema)
-    async getComments(@Req() req, @Query() query: { page: number, limit: number, articleId: string }) {
+    async getComments(@Req() req, @Query() query: { page: number; limit: number; articleId: string }) {
         let field = '';
         const q: { article?: string } = {};
         if (query.articleId) {
@@ -58,12 +62,12 @@ export class CommentController {
         const items = await this.commentService.getComments(q, {
             field,
             skip: Number(query.page),
-            limit: Number(query.limit)
+            limit: Number(query.limit),
         });
         const totalCount = await this.commentService.count(q);
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
 

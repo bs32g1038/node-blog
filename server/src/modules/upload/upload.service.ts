@@ -17,11 +17,10 @@ export class UploadService {
     constructor(
         @InjectModel('file') private readonly fileModel: Model<File>,
         @InjectModel('media') private readonly mediaModel: Model<Media>
-    ) { }
+    ) {}
 
     async uploadSingalImage(req, res, next) {
         return uploadSingle(req, res, () => {
-
             // 实体数据
             const originalName = req.file.originalname;
             const mimetype: string = req.file.mimetype;
@@ -52,19 +51,19 @@ export class UploadService {
                     suffix,
                     fileName,
                     filePath,
-                    type: 'image'
+                    type: 'image',
                 });
                 const url = filePath + '/' + fileName;
                 return res.json({
                     _id: file._id,
-                    url
+                    url,
                 });
             });
         });
     }
 
     async uploadStaticFile(req, res, next) {
-        return uploadSingle(req, res, async (err) => {
+        return uploadSingle(req, res, async err => {
             const originalName = req.file.originalname;
             const mimetype = req.file.mimetype;
             const size = req.file.size;
@@ -75,7 +74,8 @@ export class UploadService {
             let category = 6;
             if (mimetype.toLowerCase().includes('mp4')) {
                 category = 1;
-            } else if (mimetype.toLowerCase().includes('mpeg')) {// mp3
+            } else if (mimetype.toLowerCase().includes('mpeg')) {
+                // mp3
                 category = 2;
             }
             if (category === 6) {
@@ -101,9 +101,12 @@ export class UploadService {
             }
             await fs.writeFileSync(basePath + '/' + fileName, req.file.buffer);
             if (req.query.parentId) {
-                await this.fileModel.updateOne({ _id: req.query.parentId }, {
-                    $inc: { fileCount: 1 }
-                });
+                await this.fileModel.updateOne(
+                    { _id: req.query.parentId },
+                    {
+                        $inc: { fileCount: 1 },
+                    }
+                );
             }
             const file = await this.fileModel.create({
                 originalName,
@@ -114,12 +117,12 @@ export class UploadService {
                 fileName,
                 filePath,
                 category,
-                parentId: req.query.parentId || null
+                parentId: req.query.parentId || null,
             });
             return res.json({
                 _id: file._id,
-                url: filePath + fileName
+                url: filePath + fileName,
             });
         });
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

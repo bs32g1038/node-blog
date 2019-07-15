@@ -8,9 +8,7 @@ describe('media_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MediaModule
-            ]
+            imports: [MediaModule],
         });
     });
 
@@ -27,7 +25,7 @@ describe('media_001', () => {
         type: 'image',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/medias 403', async () => {

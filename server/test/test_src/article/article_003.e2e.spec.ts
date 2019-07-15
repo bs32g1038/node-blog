@@ -26,7 +26,7 @@ describe('article_003', () => {
         category: mongoose.Types.ObjectId(),
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/articles 201', async () => {

@@ -12,10 +12,7 @@ describe('article_004', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                ArticleModule,
-                CategoryModule
-            ]
+            imports: [ArticleModule, CategoryModule],
         });
         const categoryService = app.get<CategoryService>(CategoryService);
         await categoryService.create({
@@ -24,7 +21,7 @@ describe('article_004', () => {
             order: 0,
             name: 'test',
             createdAt: time,
-            updatedAt: time
+            updatedAt: time,
         });
     });
 
@@ -42,7 +39,7 @@ describe('article_004', () => {
         category: category_id,
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/articles 200', async () => {

@@ -5,10 +5,8 @@ import { SearchService } from './search/search.service';
 import { ArticleSchema } from '../models/article.model';
 
 @Module({
-    imports: [MongooseModule.forFeature([
-        { name: 'article', schema: ArticleSchema, collection: 'article' }
-    ])],
+    imports: [MongooseModule.forFeature([{ name: 'article', schema: ArticleSchema, collection: 'article' }])],
     controllers: [SearchController],
-    providers: [SearchService]
+    providers: [SearchService],
 })
-export class SearchModule { }
+export class SearchModule {}

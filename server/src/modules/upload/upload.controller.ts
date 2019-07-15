@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from 'express';
 @Controller()
 @UseGuards(RolesGuard)
 export class UploadController {
-    constructor(private readonly uploadService: UploadService) { }
+    constructor(private readonly uploadService: UploadService) {}
 
     @Post('/api/upload/image')
     @Roles('admin')

@@ -8,9 +8,7 @@ describe('rss_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                RssModule
-            ]
+            imports: [RssModule],
         });
     });
 

@@ -10,12 +10,8 @@ describe('MediaService', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([
-                    { name: 'media', schema: MediaSchema, collection: 'media' }
-                ])
-            ],
-            providers: [MediaService]
+            imports: [MongooseModule.forFeature([{ name: 'media', schema: MediaSchema, collection: 'media' }])],
+            providers: [MediaService],
         });
         mediaService = app.get<MediaService>(MediaService);
     });

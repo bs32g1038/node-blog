@@ -11,10 +11,12 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class MediaController {
-    constructor(private readonly mediaService: MediaService) { }
+    constructor(private readonly mediaService: MediaService) {}
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/medias')
@@ -32,15 +34,18 @@ export class MediaController {
     @Get('/medias')
     @Roles('admin')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getMedias(@Query() query: { page: number, limit: number }) {
-        const items = await this.mediaService.getMedias({}, {
-            skip: Number(query.page),
-            limit: Number(query.limit)
-        });
+    async getMedias(@Query() query: { page: number; limit: number }) {
+        const items = await this.mediaService.getMedias(
+            {},
+            {
+                skip: Number(query.page),
+                limit: Number(query.limit),
+            }
+        );
         const totalCount = await this.mediaService.count({});
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
 
@@ -53,7 +58,7 @@ export class MediaController {
     @Delete('/medias/:id')
     @JoiValidationPipe(MediaController.idSchema)
     @Roles('admin')
-    async deleteMedia(@Param() params: { id: string })  {
+    async deleteMedia(@Param() params: { id: string }) {
         return await this.mediaService.deleteMedia(params.id);
     }
 }

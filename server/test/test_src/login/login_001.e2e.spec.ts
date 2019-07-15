@@ -10,9 +10,7 @@ describe('login_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                LoginModule
-            ]
+            imports: [LoginModule],
         });
     });
 
@@ -27,10 +25,12 @@ describe('login_001', () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
-                key: encrypt(JSON.stringify({
-                    account: '',
-                    password: 'test'
-                }))
+                key: encrypt(
+                    JSON.stringify({
+                        account: '',
+                        password: 'test',
+                    })
+                ),
             })
             .then(res => {
                 expect(typeof res.body.msg).toBe('string');
@@ -41,10 +41,12 @@ describe('login_001', () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
-                key: encrypt(JSON.stringify({
-                    account: 'test',
-                    password: ''
-                }))
+                key: encrypt(
+                    JSON.stringify({
+                        account: 'test',
+                        password: '',
+                    })
+                ),
             })
             .then(res => {
                 expect(typeof res.body.msg).toBe('string');
@@ -55,10 +57,12 @@ describe('login_001', () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
-                key: encrypt(JSON.stringify({
-                    account: 'test',
-                    password: 'test'
-                }))
+                key: encrypt(
+                    JSON.stringify({
+                        account: 'test',
+                        password: 'test',
+                    })
+                ),
             })
             .then(res => {
                 expect(!verifyToken(res.body.token)).toBe(false);
@@ -69,10 +73,12 @@ describe('login_001', () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
-                key: encrypt(JSON.stringify({
-                    account: 'test',
-                    password: 'test'
-                }))
+                key: encrypt(
+                    JSON.stringify({
+                        account: 'test',
+                        password: 'test',
+                    })
+                ),
             })
             .then(res => {
                 expect(!verifyToken(res.body.token)).toBe(false);
@@ -83,14 +89,16 @@ describe('login_001', () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
-                key: encrypt(JSON.stringify({
-                    account: 'test',
-                    password: ''
-                }))
+                key: encrypt(
+                    JSON.stringify({
+                        account: 'test',
+                        password: '',
+                    })
+                ),
             })
             .then(res => {
                 expect(res.body).toEqual({
-                    msg: '用户名或者密码输入有误，请重新检查后再登陆！'
+                    msg: '用户名或者密码输入有误，请重新检查后再登陆！',
                 });
             });
     });

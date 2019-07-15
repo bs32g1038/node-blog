@@ -8,9 +8,7 @@ describe('file_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                FileModule
-            ]
+            imports: [FileModule],
         });
     });
 
@@ -30,7 +28,7 @@ describe('file_001', () => {
         fileCount: 0,
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/files 403', async () => {

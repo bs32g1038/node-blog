@@ -8,9 +8,7 @@ describe('upload_002', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                UploadModule
-            ]
+            imports: [UploadModule],
         });
     });
 
@@ -21,7 +19,7 @@ describe('upload_002', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.png')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });

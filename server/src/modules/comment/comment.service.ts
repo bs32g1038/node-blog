@@ -11,7 +11,7 @@ export class CommentService {
     constructor(
         @InjectModel('comment') private readonly commentModel: Model<Comment>,
         @InjectModel('article') private readonly articleModel: Model<Article>
-    ) { }
+    ) {}
 
     async create(commentDto: CreateCommentDto) {
         const article = await this.articleModel.findById(commentDto.article);
@@ -30,15 +30,18 @@ export class CommentService {
 
     async getComments(
         query: {} = {},
-        option: { skip?: number, limit?: number, sort?: object, field?: string }
+        option: { skip?: number; limit?: number; sort?: object; field?: string }
     ): Promise<Comment[]> {
         const { skip = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = option;
         const filter = { ...query };
-        return await this.commentModel.find(filter, field, {
-            skip: (skip - 1) * limit,
-            limit,
-            sort
-        }).populate('article', 'title').populate('reply', field);
+        return await this.commentModel
+            .find(filter, field, {
+                skip: (skip - 1) * limit,
+                limit,
+                sort,
+            })
+            .populate('article', 'title')
+            .populate('reply', field);
     }
 
     async getComment(id: string) {
@@ -55,4 +58,4 @@ export class CommentService {
         const filter = { ...query };
         return await this.commentModel.countDocuments(filter);
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

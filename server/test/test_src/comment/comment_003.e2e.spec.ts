@@ -1,4 +1,3 @@
-
 import * as request from 'supertest';
 import { CommentModule } from '../../../src/modules/comment.module';
 import { ArticleModule } from '../../../src/modules/article.module';
@@ -11,11 +10,7 @@ describe('comment_003', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                CommentModule,
-                ArticleModule,
-                LoginModule
-            ]
+            imports: [CommentModule, ArticleModule, LoginModule],
         });
     });
 
@@ -27,7 +22,7 @@ describe('comment_003', () => {
         content: 'test',
         reply: '5c404fe4d7264e6bd09fbbfa',
         website: 'http://www.test.com',
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/comments 200', async () => {

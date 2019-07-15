@@ -13,10 +13,12 @@ import hljs = require('highlight.js'); // https://highlightjs.org/
 @Controller()
 @UseGuards(RolesGuard)
 export class DemoController {
-    constructor(private readonly demoService: DemoService) { }
+    constructor(private readonly demoService: DemoService) {}
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/api/demos')
@@ -33,15 +35,18 @@ export class DemoController {
 
     @Get('/api/demos')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getArticles(@Query() query: { page: number, limit: number }) {
-        const items = await this.demoService.getDemos({}, {
-            skip: Number(query.page),
-            limit: Number(query.limit)
-        });
+    async getArticles(@Query() query: { page: number; limit: number }) {
+        const items = await this.demoService.getDemos(
+            {},
+            {
+                skip: Number(query.page),
+                limit: Number(query.limit),
+            }
+        );
         const totalCount = await this.demoService.count({});
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
 
@@ -63,7 +68,7 @@ export class DemoController {
     async renderDemoShowPage(@Param() params: { id: string }) {
         const { id } = params;
         const demo = await this.demoService.getDemo(id);
-        const code: { html?: string, css?: string, javascript?: string } = {};
+        const code: { html?: string; css?: string; javascript?: string } = {};
         const markdown = new MarkdownIt({
             highlight(str, lang) {
                 /* istanbul ignore next */
@@ -71,22 +76,18 @@ export class DemoController {
                     code[lang] = str;
                 }
                 if (lang && hljs.getLanguage(lang)) {
-                    return `<pre class="hljs ${lang}"><code>` +
-                        hljs.highlight(lang, str, true).value +
-                        '</code></pre>';
+                    return `<pre class="hljs ${lang}"><code>` + hljs.highlight(lang, str, true).value + '</code></pre>';
                 }
                 return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
-            }
+            },
         });
         const data = {
             title: demo.title,
             content: markdown.render(demo.content),
             code,
             hljs(lang?: any, str?: any) {
-                return `<pre class="hljs ${lang}"><code>` +
-                    hljs.highlight(lang, str, true).value +
-                    '</code></pre>';
-            }
+                return `<pre class="hljs ${lang}"><code>` + hljs.highlight(lang, str, true).value + '</code></pre>';
+            },
         };
         return `
         <!DOCTYPE html>
@@ -316,5 +317,4 @@ export class DemoController {
             </html>
         `;
     }
-
 }

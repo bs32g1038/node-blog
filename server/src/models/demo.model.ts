@@ -8,21 +8,24 @@ export interface Demo extends Document {
     visitCount: number;
 }
 
-export const DemoSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        min: [1],
-        max: 150,
-        required: true
+export const DemoSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            min: [1],
+            max: 150,
+            required: true,
+        },
+        content: {
+            type: String,
+            required: true,
+        },
+        visitCount: {
+            type: Number,
+            default: 0,
+        },
     },
-    content: {
-        type: String,
-        required: true
-    },
-    visitCount: {
-        type: Number,
-        default: 0
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-});
+);

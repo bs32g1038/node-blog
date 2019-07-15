@@ -3,7 +3,7 @@ import { RssService } from './rss.service';
 
 @Controller()
 export class RssController {
-    constructor(private readonly rssService: RssService) { }
+    constructor(private readonly rssService: RssService) {}
 
     @Get('/blog/rss')
     @Header('Content-Type', 'text/xml')

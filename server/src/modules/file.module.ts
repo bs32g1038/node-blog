@@ -5,10 +5,8 @@ import { FileService } from './file/file.service';
 import { FileSchema } from '../models/file.model';
 
 @Module({
-    imports: [MongooseModule.forFeature([
-        { name: 'file', schema: FileSchema, collection: 'file' }
-    ])],
+    imports: [MongooseModule.forFeature([{ name: 'file', schema: FileSchema, collection: 'file' }])],
     controllers: [FileController],
-    providers: [FileService]
+    providers: [FileService],
 })
-export class FileModule { }
+export class FileModule {}

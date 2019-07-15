@@ -9,14 +9,14 @@ describe('AboutController', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [AboutModule]
+            imports: [AboutModule],
         });
     });
 
     it('/GET /api/about/github/user-profile/:username 200', async () => {
         return request(app.getHttpServer())
             .get('/api/about/github/user-profile/bs32g1038')
-            .then((response) => {
+            .then(response => {
                 if (response.status === 200) {
                     const res: GetUserDataDto = response.body;
                     expect(res.userInfo.url).toEqual('https://api.github.com/users/bs32g1038');

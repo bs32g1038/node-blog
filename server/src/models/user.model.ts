@@ -9,27 +9,30 @@ export interface User extends Document {
     password: string;
 }
 
-export const UserSchema = new mongoose.Schema({
-    type: {
-        type: String,
-        enum: ['admin'],
-        default: 'admin',
-        required: true
+export const UserSchema = new mongoose.Schema(
+    {
+        type: {
+            type: String,
+            enum: ['admin'],
+            default: 'admin',
+            required: true,
+        },
+        // 邮箱
+        account: {
+            type: String,
+            unique: true,
+            trim: true,
+            lowercase: true,
+            required: true,
+        },
+        // 密码
+        password: {
+            type: String,
+            set: sha1,
+            required: true,
+        },
     },
-    // 邮箱
-    account: {
-        type: String,
-        unique: true,
-        trim: true,
-        lowercase: true,
-        required: true
-    },
-    // 密码
-    password: {
-        type: String,
-        set: sha1,
-        required: true
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-}).index({ createdAt: -1 });
+).index({ createdAt: -1 });

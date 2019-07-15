@@ -3,7 +3,7 @@ import { LoginService } from './login.service';
 
 @Controller()
 export class LoginController {
-    constructor(private readonly loginService: LoginService) { }
+    constructor(private readonly loginService: LoginService) {}
 
     @Get('/api/getFirstLoginInfo')
     async getFirstLoginInfo() {

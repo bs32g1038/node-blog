@@ -15,24 +15,27 @@ describe('AboutController', () => {
             jest.spyOn(axios, 'get').mockImplementation((url: string): any => {
                 if (url === 'https://api.github.com/users/bs32g1038/repos') {
                     return Promise.resolve({
-                        data: [{
-                            name: 'test',
-                            forkCount: 1,
-                            stargazersCount: 1,
-                            language: 'js',
-                            description: 'test'
-                        }, {
-                            fork: true,
-                            name: 'test',
-                            forkCount: 1,
-                            stargazersCount: 1,
-                            language: 'js',
-                            description: 'test'
-                        }]
+                        data: [
+                            {
+                                name: 'test',
+                                forkCount: 1,
+                                stargazersCount: 1,
+                                language: 'js',
+                                description: 'test',
+                            },
+                            {
+                                fork: true,
+                                name: 'test',
+                                forkCount: 1,
+                                stargazersCount: 1,
+                                language: 'js',
+                                description: 'test',
+                            },
+                        ],
                     });
                 } else if (url === 'https://github.com/users/bs32g1038/contributions') {
                     return Promise.resolve({
-                        data: fs.readFileSync(path.resolve(__dirname, './contributions.html'), 'utf-8')
+                        data: fs.readFileSync(path.resolve(__dirname, './contributions.html'), 'utf-8'),
                     });
                 } else if (url === 'https://api.github.com/users/bs32g1038') {
                     return Promise.resolve({
@@ -41,8 +44,8 @@ describe('AboutController', () => {
                             url: 'http://www.test.com',
                             location: 'test',
                             avatarUrl: 'http://www.test.com/test.jpg',
-                            bio: 'test'
-                        }
+                            bio: 'test',
+                        },
                     });
                 }
             });

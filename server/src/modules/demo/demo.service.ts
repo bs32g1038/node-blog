@@ -6,9 +6,7 @@ import { CreateDemoDto, UpdateDemoDto } from './demo.dto';
 
 @Injectable()
 export class DemoService {
-    constructor(
-        @InjectModel('demo') private readonly demoModel: Model<Demo>
-    ) { }
+    constructor(@InjectModel('demo') private readonly demoModel: Model<Demo>) {}
 
     async create(createDemoDto: CreateDemoDto): Promise<Demo> {
         const demo: Demo = await this.demoModel.create(createDemoDto);
@@ -20,17 +18,18 @@ export class DemoService {
         return demo;
     }
 
-    async getDemos(
-        query: {},
-        option: { skip?: number, limit?: number, sort?: object }
-    ): Promise<Demo[]> {
+    async getDemos(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Demo[]> {
         const { skip = 1, limit = 10, sort = {} } = option;
         const filter = { ...query };
-        return await this.demoModel.find(filter, {}, {
-            skip: (skip - 1) * limit,
-            limit,
-            sort
-        });
+        return await this.demoModel.find(
+            filter,
+            {},
+            {
+                skip: (skip - 1) * limit,
+                limit,
+                sort,
+            }
+        );
     }
 
     async getDemo(id: string) {
@@ -47,4 +46,4 @@ export class DemoService {
         const filter = { ...query };
         return await this.demoModel.countDocuments(filter);
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

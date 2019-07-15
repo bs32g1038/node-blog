@@ -6,9 +6,7 @@ import { CreateFileDto, UpdateFileDto } from './file.dto';
 
 @Injectable()
 export class FileService {
-    constructor(
-        @InjectModel('file') private readonly fileModel: Model<File>
-    ) { }
+    constructor(@InjectModel('file') private readonly fileModel: Model<File>) {}
 
     async create(createFileDto: CreateFileDto): Promise<File> {
         const file: File = await this.fileModel.create(createFileDto);
@@ -20,17 +18,18 @@ export class FileService {
         return file;
     }
 
-    async getFiles(
-        query: {},
-        option: { skip?: number, limit?: number, sort?: object }
-    ): Promise<File[]> {
+    async getFiles(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<File[]> {
         const { skip = 1, limit = 10, sort = {} } = option;
         const filter = { ...query };
-        return await this.fileModel.find(filter, {}, {
-            skip: (skip - 1) * limit,
-            limit,
-            sort
-        });
+        return await this.fileModel.find(
+            filter,
+            {},
+            {
+                skip: (skip - 1) * limit,
+                limit,
+                sort,
+            }
+        );
     }
 
     async getFile(id: string) {
@@ -47,4 +46,4 @@ export class FileService {
         const filter = { ...query };
         return await this.fileModel.countDocuments(filter);
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

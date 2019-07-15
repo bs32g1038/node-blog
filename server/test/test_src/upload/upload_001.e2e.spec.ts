@@ -8,9 +8,7 @@ describe('upload_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                UploadModule
-            ]
+            imports: [UploadModule],
         });
     });
 
@@ -21,7 +19,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.txt')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -33,7 +31,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.png')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -45,7 +43,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.mp3')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -57,7 +55,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.mp4')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -69,7 +67,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.docx')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -81,7 +79,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.doc')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -93,7 +91,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.md')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -105,7 +103,7 @@ describe('upload_001', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', './test/assets/test.txt')
             .expect(201)
-            .then((res) => {
+            .then(res => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });

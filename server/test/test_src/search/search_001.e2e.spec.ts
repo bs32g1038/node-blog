@@ -8,9 +8,7 @@ describe('search_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                SearchModule
-            ]
+            imports: [SearchModule],
         });
     });
 

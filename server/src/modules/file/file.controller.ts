@@ -11,10 +11,12 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class FileController {
-    constructor(private readonly fileService: FileService) { }
+    constructor(private readonly fileService: FileService) {}
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/files')
@@ -32,15 +34,18 @@ export class FileController {
     @Get('/files')
     @Roles('admin')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getFiles(@Query() query: { page: number, limit: number, parentId: string }) {
-        const items = await this.fileService.getFiles({ parentId: query.parentId }, {
-            skip: Number(query.page),
-            limit: Number(query.limit)
-        });
+    async getFiles(@Query() query: { page: number; limit: number; parentId: string }) {
+        const items = await this.fileService.getFiles(
+            { parentId: query.parentId },
+            {
+                skip: Number(query.page),
+                limit: Number(query.limit),
+            }
+        );
         const totalCount = await this.fileService.count({ parentId: query.parentId });
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
 

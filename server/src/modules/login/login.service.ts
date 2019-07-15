@@ -8,15 +8,21 @@ import jwt = require('jsonwebtoken');
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 
 const schema = Joi.object().keys({
-    account: Joi.string().min(3).max(30).required().error(new Error('账号长度在3-30之间！')),
-    password: Joi.string().min(3).max(30).required().error(new Error('密码长度在3-30之间！'))
+    account: Joi.string()
+        .min(3)
+        .max(30)
+        .required()
+        .error(new Error('账号长度在3-30之间！')),
+    password: Joi.string()
+        .min(3)
+        .max(30)
+        .required()
+        .error(new Error('密码长度在3-30之间！')),
 });
 
 @Injectable()
 export class LoginService {
-    constructor(
-        @InjectModel('user') private readonly userModel: Model<User>
-    ) { }
+    constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
 
     async getFirstLoginInfo() {
         /**
@@ -25,7 +31,7 @@ export class LoginService {
         const count = await this.userModel.count({});
         if (count <= 0) {
             return {
-                msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！'
+                msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！',
             };
         }
         return '';
@@ -43,42 +49,49 @@ export class LoginService {
              */
             if (result.error) {
                 return {
-                    msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！' + result.error.message
+                    msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！' + result.error.message,
                 };
             } else {
                 await this.userModel.create({
                     account,
-                    password: getDerivedKey(password)
+                    password: getDerivedKey(password),
                 });
                 return {
-                    token: jwt.sign({
-                        account,
-                        roles: ['admin']
-                    }, config.token_secret_key, {
-                            expiresIn: 60 * 60 * 12
-                        })
+                    token: jwt.sign(
+                        {
+                            account,
+                            roles: ['admin'],
+                        },
+                        config.token_secret_key,
+                        {
+                            expiresIn: 60 * 60 * 12,
+                        }
+                    ),
                 };
             }
         } else {
             const user = await this.userModel.findOne({
                 account,
-                password: getDerivedKey(password)
+                password: getDerivedKey(password),
             });
             if (user) {
                 return {
-                    token: jwt.sign({
-                        account,
-                        roles: ['admin']
-                    }, config.token_secret_key, {
-                            expiresIn: 60 * 60
-                        })
+                    token: jwt.sign(
+                        {
+                            account,
+                            roles: ['admin'],
+                        },
+                        config.token_secret_key,
+                        {
+                            expiresIn: 60 * 60,
+                        }
+                    ),
                 };
             } else {
                 return {
-                    msg: '用户名或者密码输入有误，请重新检查后再登陆！'
+                    msg: '用户名或者密码输入有误，请重新检查后再登陆！',
                 };
             }
         }
     }
-
-}/* istanbul ignore next */
+} /* istanbul ignore next */

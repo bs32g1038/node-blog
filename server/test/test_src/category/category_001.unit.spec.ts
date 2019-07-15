@@ -11,11 +11,9 @@ describe('CategoryService', () => {
     beforeAll(async () => {
         app = await initApp({
             imports: [
-                MongooseModule.forFeature([
-                    { name: 'category', schema: CategorySchema, collection: 'category' }
-                ])
+                MongooseModule.forFeature([{ name: 'category', schema: CategorySchema, collection: 'category' }]),
             ],
-            providers: [CategoryService]
+            providers: [CategoryService],
         });
         categoryService = app.get<CategoryService>(CategoryService);
     });

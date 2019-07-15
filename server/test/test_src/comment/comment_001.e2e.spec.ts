@@ -24,16 +24,12 @@ describe('comment_001', () => {
         category: '5c0a1317244b3c01b464a3ec',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                CommentModule,
-                ArticleModule,
-                LoginModule
-            ]
+            imports: [CommentModule, ArticleModule, LoginModule],
         });
         const articleService = app.get<ArticleService>(ArticleService);
         await articleService.create(article);
@@ -51,7 +47,7 @@ describe('comment_001', () => {
         website: 'http://www.test.com',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/PUT -- /api/comments/:id 403', async () => {
@@ -94,7 +90,7 @@ describe('comment_001', () => {
             .set('authorization', __TOKEN__)
             .send({
                 ...comment,
-                _id: '5c0f3e2b25349c1270e3a44c'
+                _id: '5c0f3e2b25349c1270e3a44c',
             })
             .expect(201)
             .then(res => {

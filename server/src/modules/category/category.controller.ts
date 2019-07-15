@@ -11,10 +11,12 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CategoryController {
-    constructor(private readonly categoryService: CategoryService) { }
+    constructor(private readonly categoryService: CategoryService) {}
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/categories')
@@ -31,12 +33,15 @@ export class CategoryController {
 
     @Get('/categories')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getCategoris(@Query() query: { page: number, limit: number }): Promise<Category[]> {
-        return await this.categoryService.getCategories({}, {
-            skip: Number(query.page),
-            limit: Number(query.limit),
-            sort: {}
-        });
+    async getCategoris(@Query() query: { page: number; limit: number }): Promise<Category[]> {
+        return await this.categoryService.getCategories(
+            {},
+            {
+                skip: Number(query.page),
+                limit: Number(query.limit),
+                sort: {},
+            }
+        );
     }
 
     @Get('/categories/:id')

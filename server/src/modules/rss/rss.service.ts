@@ -18,10 +18,7 @@ function utf8ForXml(inputStr) {
 
 @Injectable()
 export class RssService {
-
-    constructor(
-        @InjectModel('article') private readonly articleModel: Model<Article>
-    ) { }
+    constructor(@InjectModel('article') private readonly articleModel: Model<Article>) {}
 
     async index() {
         const rss_obj = {
@@ -31,14 +28,14 @@ export class RssService {
                 link: config.rss.link,
                 language: config.rss.language,
                 description: config.rss.description,
-                item: []
-            }
+                item: [],
+            },
         };
 
         const articles = await this.articleModel.find({}, '', {
             skip: 0,
             limit: config.rss.max_rss_items,
-            sort: { createdAt: -1 }
+            sort: { createdAt: -1 },
         });
 
         articles.forEach(article => {
@@ -48,7 +45,7 @@ export class RssService {
                 guid: config.rss.link + '/articles/' + article._id,
                 description: markdown.render(article.content),
                 author: config.user.email,
-                pubDate: article.createdAt
+                pubDate: article.createdAt,
             });
         });
 
@@ -56,4 +53,4 @@ export class RssService {
         rssContent = utf8ForXml(rssContent);
         return rssContent;
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

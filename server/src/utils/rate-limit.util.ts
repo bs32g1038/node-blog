@@ -18,12 +18,12 @@ function RateLimit(options) {
             let ipAddress;
             const headers = req.headers;
             const forwardedIpsStr = headers['x-real-ip'] || headers['x-forwarded-for'];
-            forwardedIpsStr ? ipAddress = forwardedIpsStr : ipAddress = null;
+            forwardedIpsStr ? (ipAddress = forwardedIpsStr) : (ipAddress = null);
             if (!ipAddress) {
                 ipAddress = req.connection.remoteAddress;
             }
             return ipAddress;
-        }
+        },
     };
     Object.assign(cf, options || {});
     const { keyGenerator, limitCount, expired, status, errorMsg, name } = cf;

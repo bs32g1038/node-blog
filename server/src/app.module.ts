@@ -25,7 +25,7 @@ import { SearchModule } from './modules/search.module';
         RssModule,
         LoginModule,
         UploadModule,
-        SearchModule
-    ]
+        SearchModule,
+    ],
 })
-export class AppModule { }
+export class AppModule {}

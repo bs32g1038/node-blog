@@ -10,13 +10,8 @@ describe('file_001_unit', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([
-                    { name: 'file', schema: FileSchema, collection: 'file' }
-                ])
-            ],
-            providers: [FileService]
-
+            imports: [MongooseModule.forFeature([{ name: 'file', schema: FileSchema, collection: 'file' }])],
+            providers: [FileService],
         });
         fileService = app.get<FileService>(FileService);
     });

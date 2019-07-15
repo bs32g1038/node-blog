@@ -5,10 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ArticleSchema } from '../models/article.model';
 
 @Module({
-    imports: [MongooseModule.forFeature([
-        { name: 'article', schema: ArticleSchema, collection: 'article' }
-    ])],
+    imports: [MongooseModule.forFeature([{ name: 'article', schema: ArticleSchema, collection: 'article' }])],
     controllers: [RssController],
-    providers: [RssService]
+    providers: [RssService],
 })
-export class RssModule { }
+export class RssModule {}

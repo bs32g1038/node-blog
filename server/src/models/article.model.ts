@@ -13,53 +13,56 @@ export interface Article extends Document {
     isDeleted: boolean;
 }
 
-export const ArticleSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        min: [1],
-        max: 150,
-        required: true
+export const ArticleSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            min: [1],
+            max: 150,
+            required: true,
+        },
+        content: {
+            type: String,
+            min: [1],
+            max: 8000,
+            required: true,
+        },
+        summary: {
+            type: String,
+            min: [1],
+            max: 2000,
+            required: true,
+        },
+        screenshot: {
+            type: String,
+            max: 200,
+            default: '',
+        },
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'category',
+            required: true,
+        },
+        commentCount: {
+            type: Number,
+            max: 100000,
+            default: 0,
+        },
+        viewsCount: {
+            type: Number,
+            max: 100000,
+            default: 0,
+        },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        isDraft: {
+            type: Boolean,
+            isDraft: false,
+        },
     },
-    content: {
-        type: String,
-        min: [1],
-        max: 8000,
-        required: true
-    },
-    summary: {
-        type: String,
-        min: [1],
-        max: 2000,
-        required: true
-    },
-    screenshot: {
-        type: String,
-        max: 200,
-        default: ''
-    },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category',
-        required: true
-    },
-    commentCount: {
-        type: Number,
-        max: 100000,
-        default: 0
-    },
-    viewsCount: {
-        type: Number,
-        max: 100000,
-        default: 0
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false
-    },
-    isDraft: {
-        type: Boolean,
-        isDraft: false
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-});
+);

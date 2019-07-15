@@ -6,9 +6,7 @@ import { CreateMediaDto, UpdateMediaDto } from './media.dto';
 
 @Injectable()
 export class MediaService {
-    constructor(
-        @InjectModel('media') private readonly MediaModel: Model<Media>
-    ) { }
+    constructor(@InjectModel('media') private readonly MediaModel: Model<Media>) {}
 
     async create(createMediaDto: CreateMediaDto): Promise<Media> {
         const media: Media = await this.MediaModel.create(createMediaDto);
@@ -20,17 +18,18 @@ export class MediaService {
         return media;
     }
 
-    async getMedias(
-        query: {} = {},
-        option: { skip?: number, limit?: number, sort?: object }
-    ): Promise<Media[]> {
+    async getMedias(query: {} = {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Media[]> {
         const { skip = 1, limit = 10, sort = {} } = option;
         const filter = { ...query };
-        return await this.MediaModel.find(filter, {}, {
-            skip: (skip - 1) * limit,
-            limit,
-            sort
-        });
+        return await this.MediaModel.find(
+            filter,
+            {},
+            {
+                skip: (skip - 1) * limit,
+                limit,
+                sort,
+            }
+        );
     }
 
     async getMedia(id: string) {
@@ -47,4 +46,4 @@ export class MediaService {
         const filter = { ...query };
         return await this.MediaModel.countDocuments(filter);
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

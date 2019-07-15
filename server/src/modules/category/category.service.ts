@@ -6,9 +6,7 @@ import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 
 @Injectable()
 export class CategoryService {
-    constructor(
-        @InjectModel('category') private readonly categoryModel: Model<Category>
-    ) { }
+    constructor(@InjectModel('category') private readonly categoryModel: Model<Category>) {}
 
     async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
         const category: Category = await this.categoryModel.create(createCategoryDto);
@@ -20,12 +18,12 @@ export class CategoryService {
         return await this.categoryModel.findById(id);
     }
 
-    async getCategories(query: {} = {}, option: { skip?: number, limit?: number, sort?: object }): Promise<Category[]> {
+    async getCategories(query: {} = {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Category[]> {
         const { skip = 1, limit = 100, sort = {} } = option;
         return await this.categoryModel.find(query, '', {
             skip: (skip - 1) * limit,
             limit,
-            sort
+            sort,
         });
     }
 
@@ -38,4 +36,4 @@ export class CategoryService {
         await this.categoryModel.deleteOne({ _id: id });
         return {};
     }
-}/* istanbul ignore next */
+} /* istanbul ignore next */

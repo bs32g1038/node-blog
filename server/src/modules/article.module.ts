@@ -6,11 +6,13 @@ import { ArticleSchema } from '../models/article.model';
 import { CategorySchema } from '../models/category.model';
 
 @Module({
-    imports: [MongooseModule.forFeature([
-        { name: 'article', schema: ArticleSchema, collection: 'article' },
-        { name: 'category', schema: CategorySchema, collection: 'category' }
-    ])],
+    imports: [
+        MongooseModule.forFeature([
+            { name: 'article', schema: ArticleSchema, collection: 'article' },
+            { name: 'category', schema: CategorySchema, collection: 'category' },
+        ]),
+    ],
     controllers: [ArticleController],
-    providers: [ArticleService]
+    providers: [ArticleService],
 })
-export class ArticleModule { }
+export class ArticleModule {}

@@ -11,14 +11,18 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class ArticleController {
-    constructor(private readonly articleService: ArticleService) { }
+    constructor(private readonly articleService: ArticleService) {}
 
     static cIdSchema = {
-        cid: Joi.string().default('').max(50)
+        cid: Joi.string()
+            .default('')
+            .max(50),
     };
 
     static idSchema = {
-        id: Joi.string().default('').max(50)
+        id: Joi.string()
+            .default('')
+            .max(50),
     };
 
     @Post('/articles')
@@ -36,19 +40,19 @@ export class ArticleController {
     @Get('/articles')
     @JoiValidationPipe(StandardPaginationSchema)
     @JoiValidationPipe(ArticleController.cIdSchema)
-    async getArticles(@Query() query: { page: number, limit: number, cid: string }) {
+    async getArticles(@Query() query: { page: number; limit: number; cid: string }) {
         const q: { category?: string } = {};
         if (query.cid) {
             q.category = query.cid;
         }
         const items = await this.articleService.getArticles(q, {
             skip: Number(query.page),
-            limit: Number(query.limit)
+            limit: Number(query.limit),
         });
         const totalCount = await this.articleService.count(q);
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
 
@@ -59,7 +63,7 @@ export class ArticleController {
 
     @Get('/articles/:id')
     @JoiValidationPipe(ArticleController.idSchema)
-    async getArticle(@Param() params: { id: string }, @Query() query: {md?: boolean}): Promise<Article> {
+    async getArticle(@Param() params: { id: string }, @Query() query: { md?: boolean }): Promise<Article> {
         return await this.articleService.getArticle(params.id, query.md);
     }
 

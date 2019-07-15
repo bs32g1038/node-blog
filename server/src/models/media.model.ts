@@ -13,40 +13,43 @@ export interface Media extends Document {
     type: string;
 }
 
-export const MediaSchema = new mongoose.Schema({
-    originalName: {
-        type: String,
-        min: [1],
-        max: 200,
-        required: true
+export const MediaSchema = new mongoose.Schema(
+    {
+        originalName: {
+            type: String,
+            min: [1],
+            max: 200,
+            required: true,
+        },
+        name: {
+            type: String,
+            required: true,
+        },
+        mimetype: {
+            type: String,
+            required: true,
+        },
+        size: {
+            type: Number,
+            required: true,
+        },
+        suffix: {
+            type: String,
+            required: true,
+        },
+        fileName: {
+            type: String,
+            required: true,
+        }, // 文件全名
+        filePath: {
+            type: String,
+            required: true,
+        },
+        type: {
+            type: String,
+        },
     },
-    name: {
-        type: String,
-        required: true
-    },
-    mimetype: {
-        type: String,
-        required: true
-    },
-    size: {
-        type: Number,
-        required: true
-    },
-    suffix: {
-        type: String,
-        required: true
-    },
-    fileName: {
-        type: String,
-        required: true
-    }, // 文件全名
-    filePath: {
-        type: String,
-        required: true
-    },
-    type: {
-        type: String
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-}).index({ createdAt: -1 });
+).index({ createdAt: -1 });

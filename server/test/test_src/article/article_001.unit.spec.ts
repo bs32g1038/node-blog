@@ -15,9 +15,10 @@ describe('ArticleService', () => {
             imports: [
                 MongooseModule.forFeature([
                     { name: 'article', schema: ArticleSchema, collection: 'article' },
-                    { name: 'category', schema: CategorySchema, collection: 'category' }
-                ])],
-            providers: [ArticleService]
+                    { name: 'category', schema: CategorySchema, collection: 'category' },
+                ]),
+            ],
+            providers: [ArticleService],
         });
         articleService = app.get<ArticleService>(ArticleService);
     });

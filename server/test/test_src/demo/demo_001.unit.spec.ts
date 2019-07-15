@@ -10,13 +10,8 @@ describe('demo_001_unit', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([
-                    { name: 'demo', schema: DemoSchema, collection: 'demo' }
-                ])
-            ],
-            providers: [DemoService]
-
+            imports: [MongooseModule.forFeature([{ name: 'demo', schema: DemoSchema, collection: 'demo' }])],
+            providers: [DemoService],
         });
         demoService = app.get<DemoService>(DemoService);
     });

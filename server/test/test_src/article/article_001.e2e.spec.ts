@@ -25,7 +25,7 @@ describe('ArticleController', () => {
         category: '5c0a1317244b3c01b464a3ec',
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/articles 403', async () => {
@@ -61,7 +61,7 @@ describe('ArticleController', () => {
         return request(app.getHttpServer())
             .post('/api/articles')
             .set('authorization', __TOKEN__)
-            .send({...article, _id: '5c0f3e2b25349c1270e432ec', content: '```html\ntest\n```'})
+            .send({ ...article, _id: '5c0f3e2b25349c1270e432ec', content: '```html\ntest\n```' })
             .expect(201);
     });
 

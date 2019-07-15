@@ -14,10 +14,10 @@ describe('comment_001_unit', () => {
             imports: [
                 MongooseModule.forFeature([
                     { name: 'article', schema: ArticleSchema, collection: 'article' },
-                    { name: 'comment', schema: CommentSchema, collection: 'comment' }
-                ])
+                    { name: 'comment', schema: CommentSchema, collection: 'comment' },
+                ]),
             ],
-            providers: [CommentService]
+            providers: [CommentService],
         });
         commentService = app.get<CommentService>(CommentService);
     });

@@ -5,6 +5,6 @@ import { AboutService } from './about/about.service';
 @Module({
     imports: [],
     controllers: [AboutController],
-    providers: [AboutService]
+    providers: [AboutService],
 })
-export class AboutModule { }
+export class AboutModule {}

@@ -5,10 +5,13 @@ import * as Joi from '@hapi/joi';
 
 @Controller('/api/search')
 export class SearchController {
-    constructor(private readonly searchService: SearchService) { }
+    constructor(private readonly searchService: SearchService) {}
 
     static keySchema = {
-        key: Joi.string().default('').max(50).allow('')
+        key: Joi.string()
+            .default('')
+            .max(50)
+            .allow(''),
     };
 
     @Get('')
@@ -23,8 +26,7 @@ export class SearchController {
         }
         return {
             items,
-            totalCount
+            totalCount,
         };
     }
-
 }

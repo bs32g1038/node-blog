@@ -8,23 +8,26 @@ export interface Category extends Document {
     articleCount: number;
 }
 
-export const CategorySchema = new mongoose.Schema({
-    name: {
-        type: String,
-        min: [1],
-        max: 150,
-        required: true
+export const CategorySchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            min: [1],
+            max: 150,
+            required: true,
+        },
+        order: {
+            type: Number,
+            max: 200,
+            default: 0,
+        },
+        articleCount: {
+            type: Number,
+            max: 10000,
+            default: 0,
+        },
     },
-    order: {
-        type: Number,
-        max: 200,
-        default: 0
-    },
-    articleCount: {
-        type: Number,
-        max: 10000,
-        default: 0
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-});
+);

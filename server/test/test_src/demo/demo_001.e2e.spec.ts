@@ -8,9 +8,7 @@ describe('demo_001', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                DemoModule
-            ]
+            imports: [DemoModule],
         });
     });
 
@@ -22,7 +20,7 @@ describe('demo_001', () => {
         visitCount: 1,
         createdAt: time,
         updatedAt: time,
-        __v: 0
+        __v: 0,
     };
 
     it('/POST /api/demos 403', async () => {

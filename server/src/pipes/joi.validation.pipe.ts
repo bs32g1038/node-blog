@@ -3,7 +3,7 @@ import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException, UsePi
 
 @Injectable()
 export class JoiValidationPipeTransform implements PipeTransform {
-    constructor(private readonly schema: object) { }
+    constructor(private readonly schema: object) {}
 
     transform(value: any, metadata: ArgumentMetadata) {
         const { error } = Joi.validate(value, this.schema, { allowUnknown: true });

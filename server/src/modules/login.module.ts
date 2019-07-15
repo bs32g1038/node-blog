@@ -5,10 +5,8 @@ import { LoginService } from './login/login.service';
 import { UserSchema } from '../models/user.model';
 
 @Module({
-    imports: [MongooseModule.forFeature([
-        { name: 'user', schema: UserSchema, collection: 'user' }
-    ])],
+    imports: [MongooseModule.forFeature([{ name: 'user', schema: UserSchema, collection: 'user' }])],
     controllers: [LoginController],
-    providers: [LoginService]
+    providers: [LoginService],
 })
-export class LoginModule { }
+export class LoginModule {}
