@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Router, withRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Categories } from '../../components/categories';
 import { fetchArticles, State } from '../../redux/reducers/articles';
@@ -29,23 +29,31 @@ export const fetchData = (props: { router: any, dispatch: any }) => {
 };
 
 const C = (props: { router: Router, dispatch: any }) => {
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
-        if (getList(props)) {
+        const arts = getList(props);
+        if (arts && arts.length > 0) {
             return;
         }
         const q: { cid?: string } = props.router.query;
+        setLoading(true);
         setTimeout(() => {
-            fetchData(props);
+            fetchData(props).then(() => {
+                setLoading(false);
+            });
         }, 250);
     }, [props.router.query]);
-    const articles = getList(props) || new Array(12).fill(null);
+    let articles = getList(props);
+    if (!articles || loading) {
+        articles = new Array(4).fill(null);
+    }
     return (
         <div>
             <Categories></Categories>
             <UL>
                 {
                     articles.map((item: any, index: number) => (
-                        <ArticleItem item={item} key={item ? item._id : `article-item-loading-${index}`}></ArticleItem>
+                        <ArticleItem loading={loading} item={item} key={item ? item._id : `article-item-loading-${index}`}></ArticleItem>
                     ))
                 }
             </UL>

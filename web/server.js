@@ -12,6 +12,12 @@ app.prepare().then(() => {
         let proxy = require('http-proxy-middleware');
         server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
     }
+    server.get('/blog', (req, res) => {
+        return app.render(req, res, '/articles', { cid: req.params.id });
+    });
+    server.get('/blog/categories/:id', (req, res) => {
+        return app.render(req, res, '/articles', { cid: req.params.id });
+    });
     server.get('/blog/articles/:id', (req, res) => {
         return app.render(req, res, '/article', { id: req.params.id });
     });
