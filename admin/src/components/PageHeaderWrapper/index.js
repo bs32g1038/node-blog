@@ -26,19 +26,16 @@ const renderFooter = ({ tabList, tabActiveKey, onTabChange, tabBarExtraContent }
     ) : null;
 };
 
-
 const PageHeaderWrapper = ({
     children,
     contentWidth,
     fluid,
     wrapperClassName,
-    home,
     top,
     title,
     content,
     logo,
     extraContent,
-    hiddenBreadcrumb,
     ...restProps
 }) => {
     return (
@@ -46,44 +43,48 @@ const PageHeaderWrapper = ({
             {top}
             <MenuContext.Consumer>
                 {value => {
-                    return (<div className={styles.wrapper}>
-                        <div
-                            className={classNames({
-                                [styles.wide]: !fluid && contentWidth === 'Fixed',
-                            })}
-                        >
-                            <PageHeader
-                                title={
-                                    <>
-                                        {logo && <span className={styles.logo}>{logo}</span>}
-                                        <Title
-                                            level={4}
-                                            style={{
-                                                marginBottom: 0,
-                                                display: 'inline-block',
-                                            }}
-                                        >
-                                            {title}
-                                        </Title>
-                                    </>
-                                }
-                                key="pageheader"
-                                {...restProps}
-                                breadcrumb={generateBreadcrumbList(value)}
-                                className={styles.pageHeader}
-                                footer={renderFooter(restProps)}
+                    return (
+                        <div className={styles.wrapper}>
+                            <div
+                                className={classNames({
+                                    [styles.wide]: !fluid && contentWidth === 'Fixed',
+                                })}
                             >
-                                <div className={styles.detail}>
-                                    <div className={styles.main}>
-                                        <div className={styles.row}>
-                                            {content && <div className={styles.content}>{content}</div>}
-                                            {extraContent && <div className={styles.extraContent}>{extraContent}</div>}
+                                <PageHeader
+                                    title={
+                                        <>
+                                            {logo && <span className={styles.logo}>{logo}</span>}
+                                            <Title
+                                                level={4}
+                                                style={{
+                                                    marginBottom: 0,
+                                                    display: 'inline-block',
+                                                }}
+                                            >
+                                                {title}
+                                            </Title>
+                                        </>
+                                    }
+                                    key="pageheader"
+                                    {...restProps}
+                                    breadcrumb={generateBreadcrumbList(value)}
+                                    className={styles.pageHeader}
+                                    footer={renderFooter(restProps)}
+                                >
+                                    <div className={styles.detail}>
+                                        <div className={styles.main}>
+                                            <div className={styles.row}>
+                                                {content && <div className={styles.content}>{content}</div>}
+                                                {extraContent && (
+                                                    <div className={styles.extraContent}>{extraContent}</div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </PageHeader>
+                                </PageHeader>
+                            </div>
                         </div>
-                    </div>)
+                    );
                 }}
             </MenuContext.Consumer>
             {children ? (

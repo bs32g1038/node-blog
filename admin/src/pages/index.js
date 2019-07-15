@@ -23,5 +23,5 @@ export {
     DemoEdit,
     Demos,
     Medias,
-    StaticFiles
-}
+    StaticFiles,
+};

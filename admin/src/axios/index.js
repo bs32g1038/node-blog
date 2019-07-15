@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import { notification } from 'antd';
 import config from '../configs/default.config';
 import history from '../utils/history';
@@ -26,23 +26,23 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-const errorHandler = (error) => {
+const errorHandler = error => {
     const { response = {} } = error;
     const errortext = codeMessage[response.status] || response.statusText;
     const { status } = response;
     switch (status) {
-    case 401:
-        // 返回 401 清除token信息并跳转到登录页面
-        localStorage.removeItem(config.tokenKey);
-        history.push('/user/login');
-        return Promise.reject(error);
-    case 403:
-        // 返回 401 清除token信息并跳转到登录页面
-        localStorage.removeItem(config.tokenKey);
-        history.push('/user/login');
-        return Promise.reject(error);
-    default:
-        break;
+        case 401:
+            // 返回 401 清除token信息并跳转到登录页面
+            localStorage.removeItem(config.tokenKey);
+            history.push('/user/login');
+            return Promise.reject(error);
+        case 403:
+            // 返回 401 清除token信息并跳转到登录页面
+            localStorage.removeItem(config.tokenKey);
+            history.push('/user/login');
+            return Promise.reject(error);
+        default:
+            break;
     }
     notification.error({
         message: `请求错误 ${status}`,
@@ -51,27 +51,33 @@ const errorHandler = (error) => {
     return Promise.reject(error);
 };
 
-axios.interceptors.request.use(function (c) {
-    const tokenKey = config.tokenKey;
-    const token = localStorage.getItem(tokenKey);
-    if (!(c.url.includes('getFirstLoginInfo') || c.url.includes('login'))) {
-        if (!token) {
-            history.push('/user/login');
+axios.interceptors.request.use(
+    function(c) {
+        const tokenKey = config.tokenKey;
+        const token = localStorage.getItem(tokenKey);
+        if (!(c.url.includes('getFirstLoginInfo') || c.url.includes('login'))) {
+            if (!token) {
+                history.push('/user/login');
+            }
         }
+        c.headers.authorization = token || '';
+        return c;
+    },
+    function(error) {
+        return Promise.reject(error);
     }
-    c.headers.authorization = token || '';
-    return c;
-}, function (error) {
-    return Promise.reject(error);
-});
+);
 
 /**
  * 配置request请求时的默认参数
  */
-axios.interceptors.response.use(function (response) {
-    return response;
-}, function (error) {
-    return errorHandler(error);
-});
+axios.interceptors.response.use(
+    function(response) {
+        return response;
+    },
+    function(error) {
+        return errorHandler(error);
+    }
+);
 
 export default axios;

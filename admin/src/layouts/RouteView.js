@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderRoutes } from "react-router-config";
+import { renderRoutes } from 'react-router-config';
 
 class RouterView extends React.Component {
     render() {
@@ -7,8 +7,8 @@ class RouterView extends React.Component {
             route: { routes },
         } = this.props;
 
-        return renderRoutes(routes)
+        return renderRoutes(routes);
     }
 }
 
-export default RouterView
+export default RouterView;

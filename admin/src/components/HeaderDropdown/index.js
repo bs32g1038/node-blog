@@ -6,8 +6,6 @@ import styles from './index.module.scss';
 export default class HeaderDropdown extends PureComponent {
     render() {
         const { overlayClassName, ...props } = this.props;
-        return (
-            <Dropdown overlayClassName={classNames(styles.container, overlayClassName)} {...props} />
-        );
+        return <Dropdown overlayClassName={classNames(styles.container, overlayClassName)} {...props} />;
     }
 }
