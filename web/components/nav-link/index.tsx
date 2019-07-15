@@ -10,12 +10,12 @@ const ActiveLink = (data: any) => {
     let className = child.props.className || null;
     props.activeClassName = props.activeClassName || 'active';
     if (props.exact) {
-        if (router.pathname === props.href.split('?')[0] && props.activeClassName) {
+        if (router.asPath === props.href && props.activeClassName) {
             className = `${className !== null ? className : ''} ${
                 props.activeClassName
                 }`.trim();
         }
-    } else if (router.pathname.includes(props.href) && props.activeClassName) {
+    } else if (router.asPath.includes(props.href.split('?')[0]) && props.activeClassName) {
         className = `${className !== null ? className : ''} ${
             props.activeClassName
             }`.trim();
