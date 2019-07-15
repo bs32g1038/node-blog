@@ -59,7 +59,8 @@ matrix:
       script:
         - set -e 
         - docker build -f Dockerfile -t bs32g1038/nginx:test .
-        - docker run bs32g1038/nginx:test
+        - docker run -d bs32g1038/nginx:test
+        - sleep 8
         - docker stop $(docker ps -a -q)
       deploy:
         provider: script
