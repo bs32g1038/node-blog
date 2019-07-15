@@ -209,8 +209,8 @@ const Item: SFC<{ item: any }> = (props: any) => {
     );
 };
 
-const C: SFC<{ item: any }> = (props: any) => {
-    return props.item ? <Item item={props.item}></Item> : <li><Loading></Loading></li>;
+const C: SFC<{ item: any, loading: boolean }> = (props: any) => {
+    return (!props.loading && props.item) ? <Item item={props.item}></Item> : <li><Loading></Loading></li>;
 };
 
 export default C;
