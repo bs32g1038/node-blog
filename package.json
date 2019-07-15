@@ -9,9 +9,6 @@
     "name": "Jason Li",
     "email": "bs32g1038@163.com"
   },
-  "scripts": {
-    "postinstall": "yarn --cwd ./admin install && yarn --cwd ./server install && yarn --cwd ./web install"
-  },
   "devDependencies": {
   }
 }
