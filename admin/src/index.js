@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import routes from './configs/router.config';
 import * as serviceWorker from './serviceWorker';
-import { Router, Switch, Route } from "react-router-dom";
-import { renderRoutes } from "react-router-config";
-import { Provider } from 'react-redux'
-import store from './store'
+import { Router, Switch, Route } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import { Provider } from 'react-redux';
+import store from './store';
 import './styles/index.scss';
 import history from './utils/history';
 import UserLogin from './pages/UserLogin';

@@ -11,7 +11,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "lint-fix": "tslint -p tsconfig.json -c tslint.json --fix"
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
