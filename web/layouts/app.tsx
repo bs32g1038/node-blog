@@ -45,7 +45,7 @@ export default (props: { children: any }) => {
                 }}
             />
             <Global styles={css`
-                html, body, #root, .app {
+                html, body, #__next, .app {
                     height: 100%;
                     min-height: 100%;
                     background-color: #f5f5f5;
