@@ -10,22 +10,25 @@ export default class Categories extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: []
+            categories: [],
         };
     }
     getTableColums() {
         return [
             {
                 title: '名称',
-                dataIndex: 'name'
-            }, {
+                dataIndex: 'name',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                render: (text, record) => (parseTime(record.createdAt))
-            }, {
+                render: (text, record) => parseTime(record.createdAt),
+            },
+            {
                 title: '文章数量',
-                dataIndex: 'articleCount'
-            }, {
+                dataIndex: 'articleCount',
+            },
+            {
                 title: '操作',
                 key: 'operation',
                 width: 180,
@@ -35,27 +38,31 @@ export default class Categories extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/content/categories/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/content/categories/edit/' + record._id)}
+                        >
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
-                        </Button>,
-                        <Popconfirm title="确认要删除？" onConfirm={() => this.deleteCategory(record._id)} okText="确定" cancelText="取消">
-                            <Button
-                                type="danger"
-                                size="small"
-                                title="删除">
+                        </Button>
+                        ,
+                        <Popconfirm
+                            title="确认要删除？"
+                            onConfirm={() => this.deleteCategory(record._id)}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" size="small" title="删除">
                                 <i className="fa fa-trash-o fa-fw"></i>删除
                             </Button>
                         </Popconfirm>
                     </div>
-                )
-            }
+                ),
+            },
         ];
     }
     deleteCategory(_id) {
         const { location } = this.props;
         axios.delete('/categories/' + _id).then(() => {
-            message.success("删除分类成功");
+            message.success('删除分类成功');
             this.fetchData(location);
         });
     }
@@ -64,15 +71,13 @@ export default class Categories extends Component {
         const query = {
             limit: 10,
             page: 1,
-            ...q
+            ...q,
         };
-        axios
-            .get('/categories?' + queryString.stringify(query))
-            .then((res) => {
-                if (res.data && res.data.length > 0) {
-                    this.setState({ categories: res.data });
-                }
-            });
+        axios.get('/categories?' + queryString.stringify(query)).then(res => {
+            if (res.data && res.data.length > 0) {
+                this.setState({ categories: res.data });
+            }
+        });
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.location.search !== this.props.location.search) {
@@ -84,28 +89,20 @@ export default class Categories extends Component {
     }
     render() {
         const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
+            onChange: () => {},
             getCheckboxProps: record => ({
                 name: record.name,
             }),
         };
         return (
-            <PageHeaderWrapper
-                title='文章分类列表'
-                content='控制台----分类列表'
-            >
+            <PageHeaderWrapper title="文章分类列表" content="控制台----分类列表">
                 <div className="main-content">
                     <div className={styles.panel}>
-                        <Button
-                            type="primary"
-                            onClick={() => this.props.history.push('/content/categories/edit')}>
+                        <Button type="primary" onClick={() => this.props.history.push('/content/categories/edit')}>
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加分类
                         </Button>
-                        <Button
-                            type="danger">
+                        <Button type="danger">
                             <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
                             批量删除
                         </Button>

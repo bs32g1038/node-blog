@@ -22,13 +22,13 @@ const links = [
         href: 'https://github.com/bs32g1038/react-admin-kit',
         blankTarget: true,
     },
-]
+];
 
 const copyright = (
     <Fragment>
         Copyright <Icon type="copyright" /> 2019 Node blog bs32g1038@163.com 体验技术部出品
     </Fragment>
-)
+);
 
 const GlobalFooter = ({ className }) => {
     const clsString = classNames(styles.globalFooter, className);

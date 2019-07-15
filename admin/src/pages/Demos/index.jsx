@@ -9,19 +9,21 @@ export default class Demos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            demos: []
+            demos: [],
         };
     }
     getTableColums() {
         return [
             {
                 title: '名称',
-                dataIndex: 'title'
-            }, {
+                dataIndex: 'title',
+            },
+            {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                render: (text, record) => (parseTime(record.createdAt))
-            }, {
+                render: (text, record) => parseTime(record.createdAt),
+            },
+            {
                 title: '操作',
                 key: 'operation',
                 width: 300,
@@ -31,37 +33,43 @@ export default class Demos extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/demos/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/demos/edit/' + record._id)}
+                        >
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
-                        </Button>,
+                        </Button>
+                        ,
                         <Button
                             target="_blank"
                             type="primary"
                             style={{ backgroundColor: 'rgb(94, 181, 96)', border: '1px solid rgb(94, 181, 96)' }}
                             size="small"
                             title="预览"
-                            href={"/demos/" + record._id}>
+                            href={'/demos/' + record._id}
+                        >
                             <i className="fa fa-location-arrow fa-fw"></i>
                             预览
-                        </Button>,
-                        <Popconfirm title="确认要删除？" onConfirm={() => this.deleteCategory(record._id)} okText="确定" cancelText="取消">
-                            <Button
-                                type="danger"
-                                size="small"
-                                title="删除">
+                        </Button>
+                        ,
+                        <Popconfirm
+                            title="确认要删除？"
+                            onConfirm={() => this.deleteCategory(record._id)}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" size="small" title="删除">
                                 <i className="fa fa-trash-o fa-fw"></i>删除
                             </Button>
                         </Popconfirm>
                     </div>
-                )
-            }
+                ),
+            },
         ];
     }
     deleteCategory(_id) {
         const { location } = this.props;
         axios.delete('/demos/' + _id).then(() => {
-            message.success("删除分类成功");
+            message.success('删除分类成功');
             this.fetchData(location);
         });
     }
@@ -70,13 +78,11 @@ export default class Demos extends Component {
         const query = {
             limit: 10,
             page: 1,
-            ...q
+            ...q,
         };
-        axios
-            .get('/demos?' + queryString.stringify(query))
-            .then((res) => {
-                this.setState({ demos: res.data.items });
-            });
+        axios.get('/demos?' + queryString.stringify(query)).then(res => {
+            this.setState({ demos: res.data.items });
+        });
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.location.search !== this.props.location.search) {
@@ -88,20 +94,14 @@ export default class Demos extends Component {
     }
     render() {
         return (
-            <PageHeaderWrapper
-                title='demo列表'
-                content='控制台----demo列表'
-            >
+            <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
                 <div className="main-content">
                     <div className="panel">
-                        <Button
-                            type="primary"
-                            onClick={() => this.props.history.push('/demos/edit')}>
+                        <Button type="primary" onClick={() => this.props.history.push('/demos/edit')}>
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加Demo
                         </Button>
-                        <Button
-                            type="danger">
+                        <Button type="danger">
                             <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
                             批量删除
                         </Button>

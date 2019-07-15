@@ -22,37 +22,38 @@ class Articles extends Component {
                 title: '缩略图',
                 dataIndex: 'screenshot',
                 render: (text, record) => (
-                    <a href={"/blog/articles/" + record._id} className="thumbnail">
+                    <a href={'/blog/articles/' + record._id} className="thumbnail">
                         <img src={record.screenshot} alt="冷夜流星博客" width="100" height="60" />
                     </a>
-                )
+                ),
             },
             { title: '文章标题', dataIndex: 'title' },
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                render: (text, record) => (parseTime(record.createdAt))
+                render: (text, record) => parseTime(record.createdAt),
             },
             {
-                title: '分类', 
+                title: '分类',
                 dataIndex: 'category',
                 width: 100,
-                render: (text, record) => (record.category ? record.category.name : "未分类")
+                render: (text, record) => (record.category ? record.category.name : '未分类'),
             },
-            { 
-                title: '浏览次数', 
+            {
+                title: '浏览次数',
                 dataIndex: 'viewsCount',
-                width: 90
+                width: 90,
             },
-            { 
-                title: '评论数', 
+            {
+                title: '评论数',
                 dataIndex: 'commentCount',
-                width: 90
+                width: 90,
             },
             {
                 title: '状态',
                 dataIndex: 'isDraft',
-                render: (text, record) => (record.isDraft ? <Tag color="red">草稿</Tag> : <Tag color="green">已发布</Tag>)
+                render: (text, record) =>
+                    record.isDraft ? <Tag color="red">草稿</Tag> : <Tag color="green">已发布</Tag>,
             },
             {
                 title: '操作',
@@ -64,23 +65,26 @@ class Articles extends Component {
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => this.props.history.push('/content/articles/edit/' + record._id)}>
+                            onClick={() => this.props.history.push('/content/articles/edit/' + record._id)}
+                        >
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
-                        </Button>,
-                        <Popconfirm title="确认要删除？" onConfirm={() => this.deleteArticle(record._id)} okText="确定" cancelText="取消">
-                            <Button
-                                type="danger"
-                                size="small"
-                                title="删除">
+                        </Button>
+                        ,
+                        <Popconfirm
+                            title="确认要删除？"
+                            onConfirm={() => this.deleteArticle(record._id)}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" size="small" title="删除">
                                 <i className="fa fa-trash-o fa-fw"></i>删除
                             </Button>
                         </Popconfirm>
                     </div>
-                )
+                ),
             },
         ];
-
     }
     deleteArticle(_id) {
         axios.delete('/articles/' + _id).then(() => {
@@ -92,19 +96,17 @@ class Articles extends Component {
         this.setState({ loading: true });
         const query = {
             limit,
-            page
+            page,
         };
-        axios
-            .get('/articles?' + queryString.stringify(query))
-            .then((res) => {
-                const pagination = { ...this.state.pagination };
-                pagination.total = res.data.totalCount;
-                this.setState({
-                    articles: res.data.items,
-                    loading: false,
-                    pagination,
-                });
+        axios.get('/articles?' + queryString.stringify(query)).then(res => {
+            const pagination = { ...this.state.pagination };
+            pagination.total = res.data.totalCount;
+            this.setState({
+                articles: res.data.items,
+                loading: false,
+                pagination,
             });
+        });
     }
     handleTableChange(pagination) {
         const pager = { ...this.state.pagination };
@@ -119,22 +121,16 @@ class Articles extends Component {
     }
     render() {
         return (
-            <PageHeaderWrapper
-                title='文章列表'
-                content='控制台----文章列表'
-            >
+            <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
                 <div className="main-content">
                     <div className={styles.panel}>
                         <Row type="flex" justify="space-between" className={styles.moduleControl}>
                             <Col>
-                                <Button
-                                    type="primary"
-                                    onClick={() => this.props.history.push('/ticles/edit')}>
+                                <Button type="primary" onClick={() => this.props.history.push('/ticles/edit')}>
                                     <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                     添加文档
                                 </Button>
-                                <Button
-                                    type="danger">
+                                <Button type="danger">
                                     <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
                                     批量删除
                                 </Button>
@@ -147,11 +143,11 @@ class Articles extends Component {
                                                 <Input
                                                     type="text"
                                                     name="searchKey"
-                                                    placeholder="请输入需要查询的关键字" />
+                                                    placeholder="请输入需要查询的关键字"
+                                                />
                                             </Col>
                                             <Col>
-                                                <Button
-                                                    type="primary">
+                                                <Button type="primary">
                                                     <i className="fa fa-search fa-fw"></i>搜索
                                                 </Button>
                                             </Col>
@@ -169,14 +165,13 @@ class Articles extends Component {
                             dataSource={this.state.articles}
                             pagination={this.state.pagination}
                             loading={this.state.loading}
-                            onChange={(pagination) => this.handleTableChange(pagination)}
+                            onChange={pagination => this.handleTableChange(pagination)}
                         />
                     </div>
                 </div>
             </PageHeaderWrapper>
         );
     }
-
 }
 
 export default withRouter(Articles);

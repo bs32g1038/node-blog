@@ -5,7 +5,7 @@ import MenuList from './MenuList';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 import config from '../../configs/default.config';
-import { ReactComponent as IconLogo } from '../../assets/logo.svg'
+import { ReactComponent as IconLogo } from '../../assets/logo.svg';
 
 const { Sider } = Layout;
 
@@ -18,8 +18,8 @@ class SiderMenu extends Component {
                 ...state1,
                 ...state2,
                 firstHide: state.collapsed !== props.collapsed && props.collapsed, // 两个不等时赋值props属性值否则为false
-                openKey: state.openKey || (!props.collapsed && state1.openKey)
-            }
+                openKey: state.openKey || (!props.collapsed && state1.openKey),
+            };
         }
         return null;
     }
@@ -27,10 +27,10 @@ class SiderMenu extends Component {
         const { pathname } = props.location;
         return {
             openKey: pathname.substr(0, pathname.lastIndexOf('/')),
-            selectedKey: pathname
+            selectedKey: pathname,
         };
     };
-    static onCollapse = (collapsed) => {
+    static onCollapse = collapsed => {
         return {
             collapsed,
             mode: collapsed ? 'vertical' : 'inline',
@@ -40,20 +40,20 @@ class SiderMenu extends Component {
         mode: 'inline',
         openKey: '',
         selectedKey: '',
-        firstHide: true
+        firstHide: true,
     };
     componentDidMount() {
         const state = SiderMenu.setMenuOpen(this.props);
         this.setState(state);
-    };
+    }
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         });
-    }
+    };
     menuClick = e => {
         this.setState({
-            selectedKey: e.key
+            selectedKey: e.key,
         });
         const { popoverHide } = this.props; // 响应式布局控制小屏幕点击菜单时隐藏菜单操作
         popoverHide && popoverHide();
@@ -62,12 +62,12 @@ class SiderMenu extends Component {
         this.setState({
             openKey: v[v.length - 1],
             firstHide: false,
-        })
+        });
     };
     render() {
         const { selectedKey, openKey, firstHide, collapsed } = this.state;
-        const { routes } = this.props
-        const theme = 'light'
+        const { routes } = this.props;
+        const theme = 'light';
         const siderClassName = classNames(styles.sider, {
             [styles.fixSiderBar]: false,
             [styles.light]: theme === 'light',
@@ -104,7 +104,7 @@ class SiderMenu extends Component {
                     onOpenChange={this.openMenu}
                 />
             </Sider>
-        )
+        );
     }
 }
 
