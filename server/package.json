@@ -42,7 +42,7 @@
     "lint-staged": "^9.2.0",
     "log4js": "^4.4.0",
     "lru-cache": "^5.1.1",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^9.0.1",
     "markdown-it-link-attributes": "^2.1.0",
     "mongoose": "^5.6.3",
     "reflect-metadata": "^0.1.13",
