@@ -12,9 +12,10 @@ const Page = () => {
     );
 };
 
-Page.getInitialProps = async({ reduxStore, req }: any) => {
-
-    if (!isServer) { return {}; }
+Page.getInitialProps = async ({ reduxStore, req }: any) => {
+    if (!isServer) {
+        return {};
+    }
 
     await reduxStore.dispatch(fetchArticle(req.params.id));
     await reduxStore.dispatch(fetchRecentArticle());

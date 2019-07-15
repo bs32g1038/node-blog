@@ -58,14 +58,27 @@ const Header = (props: { userInfo: UserInfo }) => {
                 <h3 className="aim">web前端工程师</h3>
             </div>
             <ul className="person-info">
-                <li><strong>Age:</strong>2*岁</li>
-                <li><strong>Phone:</strong>185(*^_^*)7248</li>
-                <li><strong>Profession:</strong>计算机科学与技术</li>
+                <li>
+                    <strong>Age:</strong>2*岁
+                </li>
+                <li>
+                    <strong>Phone:</strong>185(*^_^*)7248
+                </li>
+                <li>
+                    <strong>Profession:</strong>计算机科学与技术
+                </li>
             </ul>
             <ul className="person-info">
-                <li><strong>Location:</strong>{userInfo.location}</li>
-                <li><strong>Email:</strong>bs32g1038@163.com</li>
-                <li><strong>Education:</strong>大学本科</li>
+                <li>
+                    <strong>Location:</strong>
+                    {userInfo.location}
+                </li>
+                <li>
+                    <strong>Email:</strong>bs32g1038@163.com
+                </li>
+                <li>
+                    <strong>Education:</strong>大学本科
+                </li>
             </ul>
             <div className="person-img">
                 <img src={require('../../assets/images/avatar.jpg')} alt="头像" />

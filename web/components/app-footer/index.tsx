@@ -18,7 +18,7 @@ const Footer = styled.footer`
     justify-content: space-between;
     background-color: #ffff;
     width: 100%;
-    .icon-icp{
+    .icon-icp {
         display: inline-block;
         vertical-align: middle;
         width: 15px;
@@ -74,7 +74,7 @@ const MobileTabbar = styled.div`
     background-color: #fff;
     border-top: 1px solid #e5e5e5;
     z-index: 9000;
-    .tabbar-item{
+    .tabbar-item {
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -89,7 +89,7 @@ const MobileTabbar = styled.div`
             color: #1989fa;
         }
     }
-    .tabbar-item__icon{
+    .tabbar-item__icon {
         position: relative;
         margin-bottom: 5px;
         font-size: 18px;
@@ -97,21 +97,21 @@ const MobileTabbar = styled.div`
 `;
 
 const HomeIcon = styled(HomeSvg)`
-    fill:#2B414D;
+    fill: #2b414d;
     width: 20px;
     height: 20px;
     cursor: pointer;
 `;
 
 const UserIcon = styled(UserSvg)`
-    fill:#2B414D;
+    fill: #2b414d;
     width: 20px;
     height: 20px;
     cursor: pointer;
 `;
 
 const GithubIcon = styled(GithubSvg)`
-    fill:#2B414D;
+    fill: #2b414d;
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -128,7 +128,7 @@ const LibLink = styled.a`
 `;
 
 const LibLogo = styled.img`
-    fill:#2B414D;
+    fill: #2b414d;
     width: 32px;
     height: 32px;
     cursor: pointer;
@@ -215,24 +215,29 @@ export const AppFooter = () => {
                 </svg>
             </BackTopBtn>
             <div>
+                <P>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</P>
                 <P>
-                    欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。
-                    </P>
-                <P>
-                    Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong> <strong>antdesign</strong>
+                    Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong>{' '}
+                    <strong>antdesign</strong>
                 </P>
                 <P>
                     <span>累计运行</span>
                     <span id="blog-runing-time"></span>
                 </P>
                 <P>
-                    <span>
-                        Copyright © 2016-2019</span>
+                    <span>Copyright © 2016-2019</span>
                     <a className="text-white" href="/blog">
                         <strong> {siteInfo.name} </strong>
                     </a>
                     <span>
-                        <a style={{ textDecoration: 'none', color: '#444' }} href={siteInfo.icpGovCn} rel="noopener noreferrer" target="_blank"><span className="icon-icp"></span> {siteInfo.icp} </a>
+                        <a
+                            style={{ textDecoration: 'none', color: '#444' }}
+                            href={siteInfo.icpGovCn}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >
+                            <span className="icon-icp"></span> {siteInfo.icp}{' '}
+                        </a>
                     </span>
                 </P>
             </div>
@@ -253,8 +258,17 @@ export const AppFooter = () => {
                 </P>
                 <Hr />
                 <P>
-                    博客已开源至<a href={siteInfo.github + '/node-blog'} rel="noopener noreferrer" target="_blank" className="app-github">Github</a>请大家多多关注
-                    </P>
+                    博客已开源至
+                    <a
+                        href={siteInfo.github + '/node-blog'}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="app-github"
+                    >
+                        Github
+                    </a>
+                    请大家多多关注
+                </P>
             </FooterRight>
         </Footer>
     );

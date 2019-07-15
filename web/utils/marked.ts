@@ -1,7 +1,7 @@
 import marked from 'marked';
 const renderer = new marked.Renderer();
 const rP = renderer.paragraph;
-renderer.paragraph = (text: any, level: any) => {
+renderer.paragraph = (text: any) => {
     text = rP(text);
     const regex = /@\((.+?)\)/g;
     return text.replace(regex, (str: any) => {

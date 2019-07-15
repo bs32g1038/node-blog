@@ -18,9 +18,10 @@ const Page = () => {
     );
 };
 
-Page.getInitialProps = async({ reduxStore, req }: any) => {
-
-    if (!isServer) { return {}; }
+Page.getInitialProps = async ({ reduxStore, req }: any) => {
+    if (!isServer) {
+        return {};
+    }
 
     await reduxStore.dispatch(fetchCategories());
     await reduxStore.dispatch(fetchArticles(req.query.page, req.query.limit, { cid: req.query.cid }));

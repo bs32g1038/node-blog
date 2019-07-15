@@ -16,4 +16,4 @@ const media = Object.keys(sizes).reduce((acc: any, label) => {
     return acc;
 }, {});
 
-export default media as { phone: any, tablet: any, desktop: any };
+export default media as { phone: any; tablet: any; desktop: any };

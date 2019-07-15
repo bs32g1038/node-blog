@@ -10,21 +10,21 @@ const sizes = {
 // Iterate through the sizes and create a media template
 export const media = Object.keys(sizes).reduce((acc: any, label) => {
     acc[label] = (...args: any) => css`
-      @media (max-width: ${sizes[label] / 16}em) {
-        ${css(...args)}
-      }
+        @media (max-width: ${sizes[label] / 16}em) {
+            ${css(...args)}
+        }
     `;
     return acc;
 }, {});
 
 const Xss = new jsxss.FilterXSS({
-    onIgnoreTagAttr: (tag: any, name: any, value: any, isWhiteAttr: any) => {
+    onIgnoreTagAttr: (tag: any, name: any, value: any) => {
         // 让 prettyprint 可以工作
         if (tag === 'pre' && name === 'class') {
             return name + '="' + jsxss.escapeAttrValue(value) + '"';
         }
         return '';
-    }
+    },
 });
 
 export const xss = (html: any) => {

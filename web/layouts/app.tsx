@@ -25,7 +25,11 @@ export default (props: { children: any }) => {
     const children = props.children;
     return (
         <div className="app">
-            <Global styles={css`${normalize()}`} />
+            <Global
+                styles={css`
+                    ${normalize()}
+                `}
+            />
             <Global
                 styles={{
                     body: {
@@ -34,37 +38,40 @@ export default (props: { children: any }) => {
                         fontSize: '14px',
                         lineHeight: '1.5',
                         margin: 0,
-                        overflowY: 'scroll'
+                        overflowY: 'scroll',
                     },
                     input: {
-                        font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif'
+                        font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif',
                     },
                     textarea: {
-                        font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif'
+                        font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif',
                     },
                 }}
             />
-            <Global styles={css`
-                html, body, #__next, .app {
-                    height: 100%;
-                    min-height: 100%;
-                    background-color: #f5f5f5;
-                }
-                .app {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                    width: 820px;
-                    margin: 0 auto;
-                    ${media.phone`
+            <Global
+                styles={css`
+                    html,
+                    body,
+                    #__next,
+                    .app {
+                        height: 100%;
+                        min-height: 100%;
+                        background-color: #f5f5f5;
+                    }
+                    .app {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        width: 820px;
+                        margin: 0 auto;
+                        ${media.phone`
                         width: 100%;
                     `};
-                }
-            `} />
+                    }
+                `}
+            />
             <AppHeader />
-            <PageWrap>
-                {children}
-            </PageWrap>
+            <PageWrap>{children}</PageWrap>
             <AppFooter />
         </div>
     );

@@ -19,7 +19,7 @@ const WidgetArea = styled.div`
             width: 100%;
         }
     `}
-    .list-grid{
+    .list-grid {
         width: 200px;
         ${media.phone`
             width: 100%;
@@ -49,7 +49,7 @@ const ListItem = styled.div`
     width: 100%;
     position: relative;
     padding: 9px 0;
-    &.list-nice-overlay{
+    &.list-nice-overlay {
         max-width: 25%;
         margin: 10px;
         padding: 0;
@@ -61,13 +61,13 @@ const ListItem = styled.div`
             padding: 8px 16px;
             z-index: 1;
         }
-        a{
-            color: #FFF;
+        a {
+            color: #fff;
             font-size: 14px;
-            text-decoration: none
+            text-decoration: none;
         }
-         .media{
-            max-width: 100%!important;
+        .media {
+            max-width: 100% !important;
         }
     }
 `;
@@ -76,7 +76,7 @@ const Media = styled.div`
     max-width: 28%;
     position: relative;
     width: 100%;
-    &:after{
+    &:after {
         content: '';
         display: block;
         padding-top: 100%;
@@ -96,14 +96,13 @@ const MediaContent = styled.a`
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: rgba(120, 120, 120, 0.1);
-
 `;
 
 const ListTitle = styled.a`
     text-decoration: none;
     color: #062743;
     text-decoration: none;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     font-size: 14px;
     overflow: hidden;
@@ -150,15 +149,21 @@ const Item = (props: Props) => {
                     style={{ backgroundImage: `url(${item.screenshot})` }}
                     rel="noopener noreferrer"
                     target="_blank"
-                >
-                </MediaContent>
+                ></MediaContent>
                 <div className="media-action">
                     <i className="iconfont icon-pic-s"></i>
                 </div>
             </Media>
             <ListContent>
                 <div className="list-body">
-                    <ListTitle href={`/blog/articles/${item._id}`} className="list-title text-sm h-2x" rel="noopener noreferrer" target="_blank">{item.title}</ListTitle>
+                    <ListTitle
+                        href={`/blog/articles/${item._id}`}
+                        className="list-title text-sm h-2x"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                        {item.title}
+                    </ListTitle>
                 </div>
                 <TextMuted>
                     <div>{parseTime(item.createdAt)}</div>
@@ -188,7 +193,7 @@ const getTop = (e: any) => {
 export default (props: { recentArticles: ItemProps[] }) => {
     const { recentArticles } = props;
     let arr = recentArticles;
-    if (Array.isArray(recentArticles) && (recentArticles.length <= 0)) {
+    if (Array.isArray(recentArticles) && recentArticles.length <= 0) {
         arr = new Array(5).fill(null);
     }
     const $dom = useRef(null);
@@ -213,11 +218,13 @@ export default (props: { recentArticles: ItemProps[] }) => {
             <section className="widget" ref={$dom}>
                 <WidgetTitle>最近文章</WidgetTitle>
                 <div className="list-grid list-grid-padding">
-                    {
-                        arr.map((item, index) => {
-                            return item ? <Item item={item} key={item._id}></Item> : <Loading key={`recommended_posts_loading_${index}`}></Loading>;
-                        })
-                    }
+                    {arr.map((item, index) => {
+                        return item ? (
+                            <Item item={item} key={item._id}></Item>
+                        ) : (
+                            <Loading key={`recommended_posts_loading_${index}`}></Loading>
+                        );
+                    })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
                         <img
                             src="https://www.vultr.com/media/banners/banner_300x250.png"

@@ -4,12 +4,12 @@ import { FETCH_ARTICLE, FETCH_RECENT_ARTICLES } from '../action-types';
 export const setState = (article: any, comments: any) => ({
     type: FETCH_ARTICLE,
     article,
-    comments
+    comments,
 });
 
 export const setRecentArticles = (recentArticles: any) => ({
     type: FETCH_RECENT_ARTICLES,
-    recentArticles
+    recentArticles,
 });
 
 export const fetchArticle = (id: string) => {
@@ -36,17 +36,19 @@ export interface Action {
 }
 
 export interface State {
-    article: {
-        _id: string;
-        title: string;
-        content: string;
-        summary: string;
-        screenshot: string;
-        category: string;
-        commentCount: number;
-        viewsCount: number;
-        isDeleted: boolean;
-    } | any;
+    article:
+        | {
+              _id: string;
+              title: string;
+              content: string;
+              summary: string;
+              screenshot: string;
+              category: string;
+              commentCount: number;
+              viewsCount: number;
+              isDeleted: boolean;
+          }
+        | any;
     comments: any[];
     recentArticles: any[];
 }
@@ -54,7 +56,7 @@ export interface State {
 const initialState: State = {
     article: {},
     comments: [],
-    recentArticles: []
+    recentArticles: [],
 };
 
 export default function(state: any = initialState, action: Action) {
@@ -64,14 +66,14 @@ export default function(state: any = initialState, action: Action) {
             return {
                 ...state,
                 article,
-                comments
+                comments,
             };
         }
         case FETCH_RECENT_ARTICLES: {
             const { recentArticles } = action;
             return {
                 ...state,
-                recentArticles
+                recentArticles,
             };
         }
         default:

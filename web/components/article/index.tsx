@@ -56,7 +56,9 @@ const C = (props: Props) => {
     return (
         <>
             <ArticleWrap>
-                <Head><title>{article.title + ' - ' + siteInfo.name}</title></Head>
+                <Head>
+                    <title>{article.title + ' - ' + siteInfo.name}</title>
+                </Head>
                 <ArticleItem loading={isLoading} article={article} comments={comments}></ArticleItem>
                 <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
             </ArticleWrap>
@@ -64,8 +66,6 @@ const C = (props: Props) => {
     );
 };
 
-export const Article = connect(
-    (state: { article: State, $G: any }) => ({
-        _DB: state.article
-    })
-)(withRouter(C) as any);
+export const Article = connect((state: { article: State; $G: any }) => ({
+    _DB: state.article,
+}))(withRouter(C) as any);

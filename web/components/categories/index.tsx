@@ -8,7 +8,7 @@ import NavLink from '../nav-link';
 const CategoriesWrap = styled.ul`
     align-items: center;
     background-color: #fff;
-    border-bottom: 1px solid rgba(178,186,194,.15);
+    border-bottom: 1px solid rgba(178, 186, 194, 0.15);
     display: flex;
     flex: 0 0 auto;
     font-size: 13px;
@@ -34,13 +34,13 @@ const ItemLink = styled.a`
     color: #90979c;
     text-decoration: none;
     cursor: pointer;
-    &.active{
+    &.active {
         position: relative;
         font-size: 14px;
         color: #333;
         color: #40404c;
         font-weight: 700;
-        &:after{
+        &:after {
             position: absolute;
             top: 100%;
             right: 0;
@@ -72,23 +72,20 @@ const C = (props: any) => {
                     <ItemLink>全部</ItemLink>
                 </NavLink>
             </Item>
-            {
-                categories.map((item: any) => (
-                    <Item key={item._id}>
-                        <NavLink exact={true} href={`/blog/categories/${item._id}`}>
-                            <ItemLink>
-                                {item.name}<span>({item.articleCount})</span>
-                            </ItemLink>
-                        </NavLink>
-                    </Item>
-                ))
-            }
+            {categories.map((item: any) => (
+                <Item key={item._id}>
+                    <NavLink exact={true} href={`/blog/categories/${item._id}`}>
+                        <ItemLink>
+                            {item.name}
+                            <span>({item.articleCount})</span>
+                        </ItemLink>
+                    </NavLink>
+                </Item>
+            ))}
         </CategoriesWrap>
     );
 };
 
-export const Categories = connect(
-    (state: State) => ({
-        _DB: state.categories
-    })
-)((C as any));
+export const Categories = connect((state: State) => ({
+    _DB: state.categories,
+}))(C as any);

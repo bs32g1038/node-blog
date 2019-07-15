@@ -4,7 +4,7 @@ declare module '*.svg' {
 }
 
 declare module 'marked' {
-    const Renderer: any
+    const Renderer: any;
     export default Renderer;
 }
 

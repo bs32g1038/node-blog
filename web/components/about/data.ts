@@ -19,8 +19,7 @@ export default {
             forkCount: 0,
             stargazersCount: 1,
             language: 'JavaScript',
-            description:
-                'react16 + react-router4 + redux + react-redux + react-thunk + ant design + create-react-app',
+            description: 'react16 + react-router4 + redux + react-redux + react-thunk + ant design + create-react-app',
         },
         {
             name: 'weapp-blog',

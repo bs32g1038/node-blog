@@ -11,14 +11,12 @@ import MarkdownBody from './markdown-body';
 const ArticleItem = styled.article`
     max-width: 570px;
     flex: 1 0 auto;
-    ${
-    media.phone`
+    ${media.phone`
             padding-left: 12px;
             padding-right: 12px;
             width: 100%;
             box-sizing: border-box;
-        `
-    }
+        `}
 `;
 
 const ArticleHeader = styled.div`
@@ -29,10 +27,10 @@ const Title = styled.h2`
     word-break: break-word;
     margin: 16px 0;
     font-size: 18px;
-    a{
+    a {
         display: inline-block;
         position: relative;
-        color: rgb(85,85,85);
+        color: rgb(85, 85, 85);
         border-bottom: none;
         vertical-align: top;
         text-decoration: none;
@@ -41,14 +39,14 @@ const Title = styled.h2`
 
 const Meta = styled.div`
     margin: 3px 0px 6px;
-    color: rgb(153,153,153);
-    font-family: Monda,"PingFang SC","Microsoft YaHei",sans-serif;
+    color: rgb(153, 153, 153);
+    font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     font-size: 12px;
     span {
         padding: 0 5px;
     }
     a {
-        color: rgb(153,153,153);
+        color: rgb(153, 153, 153);
         font-size: 12px;
         margin-left: 4px;
     }
@@ -74,9 +72,9 @@ const Copyright = styled.ul`
 const PrevNextArticle = styled.div`
     display: flex;
     justify-content: space-between;
-    p{
+    p {
         margin-right: 10px;
-        &:last-child{
+        &:last-child {
             margin-right: 0;
         }
     }
@@ -92,11 +90,11 @@ const Breadcrumbs = styled.div`
     color: #8a92a9;
     font-size: 12px;
     margin-bottom: 16px;
-    > .sep{
+    > .sep {
         margin: 0 5px;
         font-size: 14px;
     }
-    a{
+    a {
         text-decoration: none;
         color: #8a92a9;
         font-size: 12px;
@@ -119,11 +117,10 @@ const C = (props: Props) => {
                 </Link>
                 <span className="sep">›</span>
                 <Link href={'/blog/categories/' + (article.category && article.category._id)}>
-                    <a className="text-muted">{(article.category && article.category.name)}</a>
+                    <a className="text-muted">{article.category && article.category.name}</a>
                 </Link>
                 <span className="sep">›</span>
-                <span className="current">{article.title}
-                </span>
+                <span className="current">{article.title}</span>
             </Breadcrumbs>
             <ArticleHeader>
                 <Title>
@@ -133,7 +130,12 @@ const C = (props: Props) => {
                 </Title>
                 <Meta>
                     <span>发表于{parseTime(article.createdAt)}</span>
-                    <span>分类于<a href={`/blog/categories/${article.category && article.category._id}`}>{article.category && article.category.name}</a></span>
+                    <span>
+                        分类于
+                        <a href={`/blog/categories/${article.category && article.category._id}`}>
+                            {article.category && article.category.name}
+                        </a>
+                    </span>
                     <span>{article.commentCount}条评论</span>
                     <span>阅读次数{article.viewsCount}</span>
                 </Meta>
@@ -142,25 +144,39 @@ const C = (props: Props) => {
             <Copyright>
                 <li>
                     <strong>本文链接：</strong>
-                    <a href={config.domain + '/blog/articles/' + article._id}>{config.domain + '/blog/articles/' + article._id}</a>
+                    <a href={config.domain + '/blog/articles/' + article._id}>
+                        {config.domain + '/blog/articles/' + article._id}
+                    </a>
                 </li>
                 <li>
-                    <strong>版权声明：</strong>自由转载-署名-非商业性使用 | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。
+                    <strong>版权声明：</strong>自由转载-署名-非商业性使用 |{' '}
+                    <a
+                        href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                        CC BY-NC-SA 3.0 CN
+                    </a>{' '}
+                    许可协议。
                 </li>
             </Copyright>
             <PrevNextArticle>
-                {
-                    article.prev && <p>
+                {article.prev && (
+                    <p>
                         <strong>上一篇：</strong>
-                        <Link href={`/blog/articles/${article.prev._id}`} passHref={true}><a>{article.prev.title}</a></Link>
+                        <Link href={`/blog/articles/${article.prev._id}`} passHref={true}>
+                            <a>{article.prev.title}</a>
+                        </Link>
                     </p>
-                }
-                {
-                    article.next && <p>
+                )}
+                {article.next && (
+                    <p>
                         <strong>下一篇：</strong>
-                        <Link href={`/blog/articles/${article.next._id}`} passHref={true}><a>{article.next.title}</a></Link>
+                        <Link href={`/blog/articles/${article.next._id}`} passHref={true}>
+                            <a>{article.next.title}</a>
+                        </Link>
                     </p>
-                }
+                )}
             </PrevNextArticle>
             <Comment article={article} comments={comments}></Comment>
         </ArticleItem>
@@ -200,7 +216,10 @@ const loading = (
 );
 
 export default (props: Props) => {
-    return !props.loading && (Object.prototype.isPrototypeOf(props.article) && Object.keys(props.article).length > 0)
-        ?
-        <C {...props}></C> : loading;
+    return !props.loading &&
+        (Object.prototype.isPrototypeOf(props.article) && Object.keys(props.article).length > 0) ? (
+        <C {...props}></C>
+    ) : (
+        loading
+    );
 };

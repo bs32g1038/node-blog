@@ -9,7 +9,7 @@ const CommentsItem = styled.li`
     border-bottom: 1px solid #f5f5f5;
     padding: 10px;
     position: relative;
-    &:after{
+    &:after {
         content: attr(data-index);
         position: absolute;
         right: 10px;
@@ -21,7 +21,7 @@ const CommentsItem = styled.li`
 `;
 
 const Info = styled.div`
-    display:flex;
+    display: flex;
 `;
 
 const AvatarWrap = styled.div`
@@ -45,15 +45,13 @@ const Content = styled.div`
 const Meta = styled.div`
     color: #999;
     font-size: 12px;
-    >a {
+    > a {
         text-decoration: none;
         color: #999;
     }
 `;
 
-const User = styled.div`
-   
-`;
+const User = styled.div``;
 
 const NickName = styled.span`
     font-weight: 700;
@@ -109,16 +107,18 @@ const calcAvatarId = (name: any) => {
 const replyFn = (item: any) => (
     <Quote>
         <AvatarWrap>
-            <img src={item.identity === 0 ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg` : '/public/images/avatar.jpg'} />
+            <img
+                src={
+                    item.identity === 0
+                        ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
+                        : '/public/images/avatar.jpg'
+                }
+            />
         </AvatarWrap>
         <Content>
             <User>
-                <NickName>
-                    {item.nickName}
-                </NickName>
-                <UserSign isAdmin={item.identity !== 0}>
-                    {item.identity !== 0 ? '博主' : '游客'}
-                </UserSign>
+                <NickName>{item.nickName}</NickName>
+                <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
             </User>
             <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
             <Meta>发表于：{timeAgo(item.createdAt)}前</Meta>
@@ -126,7 +126,7 @@ const replyFn = (item: any) => (
     </Quote>
 );
 
-export const CommentItem = (props: { item: any, index: number }) => {
+export const CommentItem = (props: { item: any; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
 
     const item = props.item;
@@ -134,39 +134,36 @@ export const CommentItem = (props: { item: any, index: number }) => {
         <CommentsItem data-index={'# ' + (props.index + 1) + ' 楼层'}>
             <Info>
                 <AvatarWrap>
-                    <img src={item.identity === 0 ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg` : '/public/images/avatar.jpg'} />
+                    <img
+                        src={
+                            item.identity === 0
+                                ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
+                                : '/public/images/avatar.jpg'
+                        }
+                    />
                 </AvatarWrap>
                 <Content>
                     <User>
                         <NickName>{item.nickName}</NickName>
-                        <UserSign isAdmin={item.identity !== 0}>
-                            {item.identity !== 0 ? '博主' : '游客'}
-                        </UserSign>
+                        <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
                     </User>
                     <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
                     <Meta>
-                        <span className="ArticleComments-infoTime">
-                            发表于：{parseTime(item.createdAt)}
-                        </span>
+                        <span className="ArticleComments-infoTime">发表于：{parseTime(item.createdAt)}</span>
                         <span> | </span>
                         <a
                             href="javascript:;"
                             comment-id={item._id}
-                            onClick={() => (setShowCommentForm(showCommentForm ? '' : item._id))}
+                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
                         >
                             回复
-                            </a>
+                        </a>
                     </Meta>
                     {item.reply && replyFn(item.reply)}
                     <ReplyBox>
-                        {
-                            showCommentForm === item._id
-                            && <CommentForm
-                                url="/comments"
-                                articleId={item.article}
-                                replyId={item._id}
-                            />
-                        }
+                        {showCommentForm === item._id && (
+                            <CommentForm url="/comments" articleId={item.article} replyId={item._id} />
+                        )}
                     </ReplyBox>
                 </Content>
             </Info>

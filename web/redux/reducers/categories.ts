@@ -3,12 +3,12 @@ import { FETCH_CATEGORIES } from '../action-types';
 
 export const setCategories = (categories: any) => ({
     type: FETCH_CATEGORIES,
-    categories
+    categories,
 });
 
-export const fetchCategories = (page?: number, limit?: number) => {
+export const fetchCategories = () => {
     return (dispatch: any) => {
-        return api.fetchCategories().then((categories) => {
+        return api.fetchCategories().then(categories => {
             dispatch(setCategories(categories));
         });
     };
@@ -24,7 +24,7 @@ export interface State {
 }
 
 const initialState: State = {
-    categories: []
+    categories: [],
 };
 
 export default function(state: any = initialState, action: Action) {
@@ -33,7 +33,7 @@ export default function(state: any = initialState, action: Action) {
             const { categories } = action;
             return {
                 ...state,
-                categories
+                categories,
             };
         }
         default:

@@ -6,8 +6,8 @@ import { GithubSvg } from '../svgs/github-svg';
 import { SearchSvg } from '../svgs/search-svg';
 
 const Form = styled.form`
-    border: 1px solid hsla(0,0%,59.2%,.2);
-    background-color: rgba(227,231,236,.2);
+    border: 1px solid hsla(0, 0%, 59.2%, 0.2);
+    background-color: rgba(227, 231, 236, 0.2);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,7 +26,7 @@ const Input = styled.input`
     background-color: transparent;
     -webkit-appearance: textfield;
     outline-offset: -2px;
-    transition: width .2s ease;
+    transition: width 0.2s ease;
 `;
 
 const SearchIcon = styled(SearchSvg)`
@@ -38,7 +38,7 @@ const SearchIcon = styled(SearchSvg)`
 `;
 
 const GithubIcon = styled(GithubSvg)`
-    fill:#2B414D;
+    fill: #2b414d;
     width: 16px;
     height: 16px;
     cursor: pointer;
@@ -47,15 +47,15 @@ const GithubIcon = styled(GithubSvg)`
 
 const NavSearchDropdown = styled.div<{ active: boolean }>`
     position: absolute;
-    display: ${(props) => (props.active ? 'block' : 'none')};
+    display: ${props => (props.active ? 'block' : 'none')};
     top: 35px;
     padding: 0 12px 16px 12px;
-    height: ${(props) => (props.active ? 'auto' : 0)};
+    height: ${props => (props.active ? 'auto' : 0)};
     box-sizing: border-box;
     border-radius: 0 0 4px 4px;
     background-color: #fff;
-    box-shadow: 0 4px 16px rgba(193,205,241,.42);
-    transition: height .17s ease;
+    box-shadow: 0 4px 16px rgba(193, 205, 241, 0.42);
+    transition: height 0.17s ease;
     text-align: left;
     z-index: 2000;
     width: 100%;
@@ -91,11 +91,11 @@ const NavSearchProList = styled.ul`
         line-height: 36px;
         font-size: 12px;
         box-sizing: border-box;
-        &:hover{
+        &:hover {
             background-color: #ebf0fc;
         }
     }
-    li a{
+    li a {
         color: #0a1633;
         display: block;
         width: 100%;
@@ -151,7 +151,7 @@ export const SearchForm = (props: any) => {
             return Promise.resolve();
         }
         setIsLoading(true);
-        return Api.searchArticles(key).then((_) => {
+        return Api.searchArticles(key).then(_ => {
             if (_.data) {
                 if (key === '') {
                     cache[cacheEmptyKey] = _.data;
@@ -194,31 +194,43 @@ export const SearchForm = (props: any) => {
                 onBlur={onblur}
             />
             <SearchIcon />
-            <NavSearchDropdown className="nav-search-dropdown" active={isActiveNavSearchDropdown} onMouseDown={(event) => event.preventDefault()}>
-                <NavSearchPro>博客<span className="fold" onClick={foldNavList}>收起</span></NavSearchPro>
+            <NavSearchDropdown
+                className="nav-search-dropdown"
+                active={isActiveNavSearchDropdown}
+                onMouseDown={event => event.preventDefault()}
+            >
+                <NavSearchPro>
+                    博客
+                    <span className="fold" onClick={foldNavList}>
+                        收起
+                    </span>
+                </NavSearchPro>
                 <NavSearchProList id="nav-search-list" className="nav-search-list">
-                    {
-                        !isLoading && items.map((item: { _id: string, title: string }) => (
+                    {!isLoading &&
+                        items.map((item: { _id: string; title: string }) => (
                             <li key={item._id}>
-                                <Link href={'/blog/articles/' + item._id} passHref={true}>{item.title}</Link>
+                                <Link href={'/blog/articles/' + item._id} passHref={true}>
+                                    {item.title}
+                                </Link>
                             </li>
-                        ))
-                    }
-                    {
-                        isLoading
-                        &&
-                        <span className="loading-icon" style={{ backgroundImage: 'url(/static/spinner-64.gif)' }}></span>
-                    }
+                        ))}
+                    {isLoading && (
+                        <span
+                            className="loading-icon"
+                            style={{ backgroundImage: 'url(/static/spinner-64.gif)' }}
+                        ></span>
+                    )}
                 </NavSearchProList>
                 <div className="full-search-name"></div>
                 <NavSearchDc id="nav-search-dc" className="nav-search-dc">
-                    {
-                        isLoading
-                            ?
-                            <span>正在搜索数据...</span>
-                            :
-                            <span><GithubIcon></GithubIcon> {totalCount <= 0 ? '没有该搜索结果' : `共 ${totalCount} 条记录，可尝试其他关键字👍`}</span>
-                    }
+                    {isLoading ? (
+                        <span>正在搜索数据...</span>
+                    ) : (
+                        <span>
+                            <GithubIcon></GithubIcon>{' '}
+                            {totalCount <= 0 ? '没有该搜索结果' : `共 ${totalCount} 条记录，可尝试其他关键字👍`}
+                        </span>
+                    )}
                 </NavSearchDc>
             </NavSearchDropdown>
         </Form>

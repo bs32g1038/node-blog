@@ -11,14 +11,10 @@ const ActiveLink = (data: any) => {
     props.activeClassName = props.activeClassName || 'active';
     if (props.exact) {
         if (router.asPath === props.href && props.activeClassName) {
-            className = `${className !== null ? className : ''} ${
-                props.activeClassName
-                }`.trim();
+            className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
         }
     } else if (router.asPath.includes(props.href.split('?')[0]) && props.activeClassName) {
-        className = `${className !== null ? className : ''} ${
-            props.activeClassName
-            }`.trim();
+        className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
     }
 
     delete props.activeClassName;

@@ -12,8 +12,8 @@
     "dev": "cross-env NODE_ENV=development node server.js",
     "build": "next build",
     "start": "next start",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
-    "lint-fix": "tslint -p tsconfig.json -c tslint.json --fix"
+    "lint": "eslint --ignore-path .eslintignore .",
+    "format": "prettier **/**/*.{ts,tsx,js,jsx,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write"
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
@@ -43,10 +43,15 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.1.1",
     "@types/validator": "^10.11.1",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
     "clipboard": "^2.0.4",
     "codemirror": "^5.48.0",
     "crypto-js": "^3.1.9-1",
     "css-loader": "^3.0.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "file-loader": "^4.0.0",
     "helmet": "^3.18.0",
     "http-proxy-middleware": "^0.19.1",
@@ -54,8 +59,6 @@
     "lint-staged": "^9.2.0",
     "lru-cache": "^5.1.1",
     "prettier": "^1.18.2",
-    "tslint": "^5.18.0",
-    "tslint-react": "^4.0.0",
     "typescript": "^3.5.2",
     "url-loader": "^2.0.1"
   },
@@ -67,7 +70,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,css,html}": [
-      "prettier --tab-width 4 --trailing-comma es5 --single-quote --write",
+      "prettier --config ./.prettierrc --write",
       "git add"
     ],
     "yarn.lock": [

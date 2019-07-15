@@ -1,7 +1,9 @@
 import React from 'react';
 
 const uid = () => {
-    return Math.random().toString(36).substring(10);
+    return Math.random()
+        .toString(36)
+        .substring(10);
 };
 
 interface Props {
@@ -26,7 +28,7 @@ const defaultProps: Props = {
     animate: true,
     uniqueKey: '',
     style: null,
-    children: null
+    children: null,
 };
 export const ContentLoader = (P: Props) => {
     const props = { ...defaultProps, ...P };
@@ -34,7 +36,12 @@ export const ContentLoader = (P: Props) => {
     const idClip = props.uniqueKey ? props.uniqueKey + '-idClip' : uid();
     const idGradient = props.uniqueKey ? props.uniqueKey + '-idGradient' : uid();
     return (
-        <svg viewBox={`0 0 ${props.width} ${props.height}`} version="1.1" preserveAspectRatio={props.preserveAspectRatio} style={props.style}>
+        <svg
+            viewBox={`0 0 ${props.width} ${props.height}`}
+            version="1.1"
+            preserveAspectRatio={props.preserveAspectRatio}
+            style={props.style}
+        >
             <rect
                 style={{ fill: `url(#${idGradient})` }}
                 clipPath={`url(#${idClip})`}
@@ -42,67 +49,45 @@ export const ContentLoader = (P: Props) => {
                 y="0"
                 width={props.width}
                 height={props.height}
-            >
-            </rect>;
+            ></rect>
+            ;
             <defs>
                 <clipPath id={idClip}>
-                    {children || (
-                        <rect
-                            x="0"
-                            y="0"
-                            rx="5"
-                            ry="5"
-                            width={props.width}
-                            height={props.height}
-                        >
-                        </rect>
-                    )}
+                    {children || <rect x="0" y="0" rx="5" ry="5" width={props.width} height={props.height}></rect>}
                 </clipPath>
                 <linearGradient id={idGradient}>
-                    <stop
-                        offset="0%"
-                        stopColor={props.primaryColor}
-                    >
-                        {props.animate ?
+                    <stop offset="0%" stopColor={props.primaryColor}>
+                        {props.animate ? (
                             <animate
                                 attributeName="offset"
                                 values="-2; 1"
                                 dur={props.speed + 's'}
                                 repeatCount="indefinite"
-                            >
-                            </animate> : null
-                        }
+                            ></animate>
+                        ) : null}
                     </stop>
-                    <stop
-                        offset="50%"
-                        stopColor={props.secondaryColor}
-                    >
-                        {props.animate ?
+                    <stop offset="50%" stopColor={props.secondaryColor}>
+                        {props.animate ? (
                             <animate
                                 attributeName="offset"
                                 values="-1.5; 1.5"
                                 dur={props.speed + 's'}
                                 repeatCount="indefinite"
-                            >
-                            </animate> : null
-                        }
+                            ></animate>
+                        ) : null}
                     </stop>
-                    <stop
-                        offset="100%"
-                        stopColor={props.primaryColor}
-                    >
-                        {props.animate ?
+                    <stop offset="100%" stopColor={props.primaryColor}>
+                        {props.animate ? (
                             <animate
                                 attributeName="offset"
                                 values="-1; 2"
                                 dur={props.speed + 's'}
                                 repeatCount="indefinite"
-                            >
-                            </animate> : null
-                        }
+                            ></animate>
+                        ) : null}
                     </stop>
                 </linearGradient>
             </defs>
-        </svg >
+        </svg>
     );
 };

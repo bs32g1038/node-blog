@@ -19,16 +19,16 @@ const UL = styled.ul`
 const getList = (props: any) => {
     const q: { cid?: string } = props.router.query;
     const { articles } = props._DB;
-    return (q.cid ? articles[q.cid] : articles.blog);
+    return q.cid ? articles[q.cid] : articles.blog;
 };
 
-export const fetchData = (props: { router: any, dispatch: any }) => {
+export const fetchData = (props: { router: any; dispatch: any }) => {
     const { router } = props;
     const { page = 1, limit = 30, cid = '' } = router.query;
     return props.dispatch(fetchArticles(page, limit, { cid }));
 };
 
-const C = (props: { router: Router, dispatch: any }) => {
+const C = (props: { router: Router; dispatch: any }) => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const arts = getList(props);
@@ -51,18 +51,18 @@ const C = (props: { router: Router, dispatch: any }) => {
         <div>
             <Categories></Categories>
             <UL>
-                {
-                    articles.map((item: any, index: number) => (
-                        <ArticleItem loading={loading} item={item} key={item ? item._id : `article-item-loading-${index}`}></ArticleItem>
-                    ))
-                }
+                {articles.map((item: any, index: number) => (
+                    <ArticleItem
+                        loading={loading}
+                        item={item}
+                        key={item ? item._id : `article-item-loading-${index}`}
+                    ></ArticleItem>
+                ))}
             </UL>
         </div>
     );
 };
 
-export const Articles = connect(
-    (state: State) => ({
-        _DB: state.articles
-    })
-)(withRouter(C) as any) as any;
+export const Articles = connect((state: State) => ({
+    _DB: state.articles,
+}))(withRouter(C) as any) as any;

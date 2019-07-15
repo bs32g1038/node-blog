@@ -27,9 +27,15 @@ const Contribution = (props: ContributionProps) => {
     return (
         <>
             <p>Github {totalContributionLastYear} contributions in the last year</p>
-            <Global styles={css`${calendarHeatmapCss()}`} />
+            <Global
+                styles={css`
+                    ${calendarHeatmapCss()}
+                `}
+            />
             <CalendarHeatmap
-                startDate={(values[0] && values[0].year + '-' + values[0].month) || (new Date().getFullYear()) - 1 + '-1-1'}
+                startDate={
+                    (values[0] && values[0].year + '-' + values[0].month) || new Date().getFullYear() - 1 + '-1-1'
+                }
                 endDate={today}
                 values={values}
                 classForValue={(value: any) => {
@@ -65,8 +71,9 @@ const loading = (
 );
 
 export default (props: ContributionProps) => {
-    return props.values
-        ?
+    return props.values ? (
         <Contribution values={props.values} totalContributionLastYear={props.totalContributionLastYear}></Contribution>
-        : loading;
+    ) : (
+        loading
+    );
 };
