@@ -1,5 +1,5 @@
 {
-  "name": "ts-blog",
+  "name": "node-server",
   "version": "3.0.0",
   "description": "a blog server api",
   "private": true,
