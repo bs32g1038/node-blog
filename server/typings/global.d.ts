@@ -3,4 +3,4 @@ declare namespace NodeJS {
         __TOKEN__: string;
     }
 }
-declare var __TOKEN__: string;
+declare const __TOKEN__: string;

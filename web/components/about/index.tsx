@@ -35,7 +35,7 @@ const values = data.userCommits.contribution.map(item => {
     };
 });
 
-export const About = (props: any) => {
+export const About = () => {
     return (
         <AboutDiv className="about">
             <p className="bio">

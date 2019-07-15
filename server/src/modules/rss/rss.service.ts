@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import data2xml = require('data2xml');
-import config from '../../configs/index.config';
+import { RSS as RSSCONFIG, ADMIN_USER_INFO } from '../../configs/index.config';
 import * as MarkdownIt from 'markdown-it';
 import { InjectModel } from '@nestjs/mongoose';
 import { Article } from '../../models/article.model';
@@ -21,35 +21,35 @@ export class RssService {
     constructor(@InjectModel('article') private readonly articleModel: Model<Article>) {}
 
     async index() {
-        const rss_obj = {
+        const rssObj = {
             _attr: { version: '2.0' },
             channel: {
-                title: config.rss.title,
-                link: config.rss.link,
-                language: config.rss.language,
-                description: config.rss.description,
+                title: RSSCONFIG.title,
+                link: RSSCONFIG.link,
+                language: RSSCONFIG.language,
+                description: RSSCONFIG.description,
                 item: [],
             },
         };
 
         const articles = await this.articleModel.find({}, '', {
             skip: 0,
-            limit: config.rss.max_rss_items,
+            limit: RSSCONFIG.maxRssItems,
             sort: { createdAt: -1 },
         });
 
         articles.forEach(article => {
-            rss_obj.channel.item.push({
+            rssObj.channel.item.push({
                 title: article.title,
-                link: config.rss.link + '/articles/' + article._id,
-                guid: config.rss.link + '/articles/' + article._id,
+                link: RSSCONFIG.link + '/articles/' + article._id,
+                guid: RSSCONFIG.link + '/articles/' + article._id,
                 description: markdown.render(article.content),
-                author: config.user.email,
+                author: ADMIN_USER_INFO.email,
                 pubDate: article.createdAt,
             });
         });
 
-        let rssContent = convert('rss', rss_obj);
+        let rssContent = convert('rss', rssObj);
         rssContent = utf8ForXml(rssContent);
         return rssContent;
     }

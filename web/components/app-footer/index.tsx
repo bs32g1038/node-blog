@@ -5,6 +5,7 @@ import media from '../../utils/media';
 import { GithubSvg } from '../svgs/github-svg';
 import { HomeSvg } from '../svgs/home-svg';
 import { UserSvg } from '../svgs/user-svg';
+import NavLink from '../nav-link';
 
 const Footer = styled.footer`
     box-sizing: border-box;
@@ -74,6 +75,7 @@ const MobileTabbar = styled.div`
     background-color: #fff;
     border-top: 1px solid #e5e5e5;
     z-index: 9000;
+    display: none;
     .tabbar-item {
         display: flex;
         flex: 1;
@@ -270,6 +272,26 @@ export const AppFooter = () => {
                     请大家多多关注
                 </P>
             </FooterRight>
+            <MobileTabbar id="mobile-app-footer">
+                <NavLink className="tabbar-item" href="/blog">
+                    <div className="tabbar-item__icon">
+                        <HomeIcon></HomeIcon>
+                    </div>
+                    <div className="tabbar-item__text">博客</div>
+                </NavLink>
+                <NavLink className="tabbar-item" href="/about">
+                    <div className="tabbar-item__icon">
+                        <UserIcon></UserIcon>
+                    </div>
+                    <div className="tabbar-item__text">关于</div>
+                </NavLink>
+                <a className="tabbar-item" href={siteInfo.github} rel="noopener noreferrer" target="_blank">
+                    <div className="tabbar-item__icon">
+                        <GithubIcon></GithubIcon>
+                    </div>
+                    <div className="tabbar-item__text">Gituhub</div>
+                </a>
+            </MobileTabbar>
         </Footer>
     );
 };

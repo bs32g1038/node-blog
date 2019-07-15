@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import cheerio = require('cheerio');
 import axios from '../../utils/axios.util';
-import config from '../../configs/index.config';
+import { GITHUB_SECRET_KEY } from '../../configs/index.config';
 import * as LRU from 'lru-cache';
 import { GetUserDataDto, UserCommits, Contribution, UserInfo } from './about.dto';
 
 export const cache = new LRU();
 
-const handleUserCommits = (commits): UserCommits => {
+const handleUserCommits = (commits: any): UserCommits => {
     const $ = cheerio.load(commits);
     const contribution: Contribution[] = [];
     const parseSvg = $('.day');
@@ -80,7 +80,7 @@ const getUserRepos = async (username: string) => {
 @Injectable()
 export class AboutService {
     async getUserData(username: string): Promise<GetUserDataDto> {
-        const info: any = cache.get(config.github_secret_key);
+        const info: any = cache.get(GITHUB_SECRET_KEY);
         if (!info) {
             const obj: GetUserDataDto = {};
             const [userInfo, userRepos, userCommits] = await Promise.all([
@@ -91,7 +91,7 @@ export class AboutService {
             obj.userInfo = userInfo;
             obj.userRepos = userRepos;
             obj.userCommits = userCommits;
-            cache.set(config.github_secret_key, JSON.stringify(obj), 1000 * 60 * 60 * 12);
+            cache.set(GITHUB_SECRET_KEY, JSON.stringify(obj), 1000 * 60 * 60 * 12);
             return obj;
         }
         return JSON.parse(info);

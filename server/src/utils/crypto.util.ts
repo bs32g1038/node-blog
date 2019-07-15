@@ -3,8 +3,12 @@
  */
 import * as crypto from 'crypto-js';
 
-export const md5 = (str: string) => {
-    return crypto.MD5(str).toString(crypto.enc.Hex);
+export const md5 = (str: string | Buffer) => {
+    const isBuffer = Buffer.isBuffer(str);
+    if (isBuffer) {
+        str = str.toString('binary');
+    }
+    return crypto.MD5(str as string).toString(crypto.enc.Hex);
 };
 
 /**

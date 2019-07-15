@@ -158,15 +158,15 @@ const PreviewButton = styled.button`
     }
 `;
 
-const ErrorTipDiv = styled.p(_ => ({
-    color: '#721c24',
-    textAlign: 'center',
-    margin: '0 0 10px 0',
-    backgroundColor: '#f8d7da',
-    padding: '8px 0',
-    borderRadius: '4px',
-    border: '1px solid #f5c6cb',
-}));
+const ErrorTipDiv = styled.p`
+    color: #721c24;
+    text-align: center;
+    margin: 0 0 10px 0;
+    background-color: #f8d7da;
+    padding: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #f5c6cb;
+`;
 
 const EmotionWrap = styled.div`
     position: relative;

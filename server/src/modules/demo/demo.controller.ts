@@ -57,8 +57,8 @@ export class DemoController {
     }
 
     @Delete('/api/demos/:id')
-    @JoiValidationPipe(DemoController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(DemoController.idSchema)
     async deleteArticle(@Param() params: { id: string }) {
         return await this.demoService.deleteDemo(params.id);
     }

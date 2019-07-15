@@ -1,25 +1,18 @@
-import config from '../src/configs/index.config';
+import { TOKEN_SECRET_KEY } from '../src/configs/index.config';
 import jwt = require('jsonwebtoken');
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from '../src/database/database.module';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../src/filters/all-exceptions.filter';
 
 export const getToken = () => {
-    return jwt.sign(
-        {
-            account: 'test',
-            roles: ['admin'],
-        },
-        config.token_secret_key,
-        {
-            expiresIn: 60 * 60,
-        }
-    );
+    return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
+        expiresIn: 60 * 60,
+    });
 };
 
 export const verifyToken = str => {
-    return jwt.verify(str, config.token_secret_key);
+    return jwt.verify(str, TOKEN_SECRET_KEY);
 };
 
 export const initApp = async (metadata: ModuleMetadata) => {

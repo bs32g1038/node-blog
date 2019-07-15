@@ -1,9 +1,11 @@
 {
     "extends": [
         "eslint:recommended",
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint"
+        "prettier/@typescript-eslint",
+        "prettier/react"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -13,9 +15,17 @@
         "@typescript-eslint",
         "prettier"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+    },
     "rules": {
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/explicit-function-return-type": 0,
-        "prettier/prettier": "error"
+        "@typescript-eslint/explicit-member-accessibility": 0,
+        "prettier/prettier": "error",
+        "react/prop-types": 0,
+        "react/display-name": 0
     }
 }

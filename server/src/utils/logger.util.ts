@@ -1,21 +1,60 @@
 import * as path from 'path';
 import * as log4js from 'log4js';
+import { isProdMode } from '../configs/index.config';
+
+log4js.addLayout('json', config => {
+    return logEvent => {
+        return JSON.stringify(logEvent) + config.separator;
+    };
+});
 
 log4js.configure({
     appenders: {
         console: { type: 'console' },
-        file: {
+        requestInfoFile: {
             type: 'file',
-            filename: path.resolve(__dirname, '../../logs/cheese.log'),
-            maxLogSize: 3145728, // 3m
+            filename: path.resolve(__dirname, '../../logs/request-info.log'),
+            maxLogSize: 3 * 1024 * 1024,
             backups: 3,
             compress: true,
+            layout: { type: 'json', separator: ',' },
+        },
+        infoFile: {
+            type: 'file',
+            filename: path.resolve(__dirname, '../../logs/info.log'),
+            maxLogSize: 1024 * 1024,
+            backups: 3,
+            compress: true,
+            layout: { type: 'json', separator: ',' },
+        },
+        errorFile: {
+            type: 'file',
+            filename: path.resolve(__dirname, '../../logs/error.log'),
+            maxLogSize: 1024 * 1024,
+            backups: 3,
+            compress: true,
+            layout: { type: 'json', separator: ',' },
         },
     },
     categories: {
-        cheese: { appenders: ['file'], level: 'error' },
+        info: { appenders: ['infoFile'], level: 'info' },
+        error: { appenders: ['errorFile'], level: 'error' },
+        requestInfo: { appenders: ['requestInfoFile'], level: 'info' },
         default: { appenders: ['console'], level: 'debug' },
     },
 });
 
-export default process.env.NODE_ENV === 'production' ? log4js.getLogger('cheese') : log4js.getLogger('default');
+const consoleLogger = log4js.getLogger();
+
+export const requestInfoLogger = isProdMode ? log4js.getLogger('requestInfo') : consoleLogger;
+
+const infoLogger = isProdMode ? log4js.getLogger('info') : consoleLogger;
+
+const errorLogger = isProdMode ? log4js.getLogger('error') : consoleLogger;
+
+if (isProdMode) {
+    infoLogger.error = (message: any, ...args: any[]): void => {
+        errorLogger.error(message, args);
+    };
+}
+export default infoLogger;

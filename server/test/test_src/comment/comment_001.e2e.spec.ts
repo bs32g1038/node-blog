@@ -4,7 +4,7 @@ import { ArticleModule } from '../../../src/modules/article.module';
 import { ArticleService } from '../../../src/modules/article/article.service';
 import { LoginModule } from '../../../src/modules/login.module';
 import { INestApplication } from '@nestjs/common';
-import config from '../../../src/configs/index.config';
+import { ADMIN_USER_INFO } from '../../../src/configs/index.config';
 import { initApp } from '../../util';
 
 describe('comment_001', () => {
@@ -98,7 +98,7 @@ describe('comment_001', () => {
                 expect(a._id).toEqual('5c0f3e2b25349c1270e3a44c');
                 expect(a.pass).toEqual(comment.pass);
                 expect(a.identity).toEqual(1);
-                expect(a.nickName).toEqual(config.user.nickName);
+                expect(a.nickName).toEqual(ADMIN_USER_INFO.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
                 expect(a.article).toEqual(comment.article);

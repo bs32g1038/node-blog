@@ -11,15 +11,15 @@ import * as Joi from '@hapi/joi';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class ArticleController {
-    constructor(private readonly articleService: ArticleService) {}
+    public constructor(private readonly articleService: ArticleService) {}
 
-    static cIdSchema = {
+    public static cIdSchema = {
         cid: Joi.string()
             .default('')
             .max(50),
     };
 
-    static idSchema = {
+    public static idSchema = {
         id: Joi.string()
             .default('')
             .max(50),
@@ -27,20 +27,20 @@ export class ArticleController {
 
     @Post('/articles')
     @Roles('admin')
-    async create(@Body() createArticleDto: CreateArticleDto) {
+    public async create(@Body() createArticleDto: CreateArticleDto) {
         return await this.articleService.create(createArticleDto);
     }
 
     @Put('/articles/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() articleDto: UpdateArticleDto) {
+    public async update(@Param() params: { id: string }, @Body() articleDto: UpdateArticleDto) {
         return await this.articleService.update(params.id, articleDto);
     }
 
     @Get('/articles')
     @JoiValidationPipe(StandardPaginationSchema)
     @JoiValidationPipe(ArticleController.cIdSchema)
-    async getArticles(@Query() query: { page: number; limit: number; cid: string }) {
+    public async getArticles(@Query() query: { page: number; limit: number; cid: string }) {
         const q: { category?: string } = {};
         if (query.cid) {
             q.category = query.cid;
@@ -57,20 +57,20 @@ export class ArticleController {
     }
 
     @Get('/recentArticles')
-    async getRecentArticles(): Promise<Article[]> {
+    public async getRecentArticles(): Promise<Article[]> {
         return await this.articleService.getRandomArticles();
     }
 
     @Get('/articles/:id')
     @JoiValidationPipe(ArticleController.idSchema)
-    async getArticle(@Param() params: { id: string }, @Query() query: { md?: boolean }): Promise<Article> {
+    public async getArticle(@Param() params: { id: string }, @Query() query: { md?: boolean }): Promise<Article> {
         return await this.articleService.getArticle(params.id, query.md);
     }
 
     @Delete('/articles/:id')
-    @JoiValidationPipe(ArticleController.idSchema)
     @Roles('admin')
-    async deleteArticle(@Param() params: { id: string }): Promise<Article> {
+    @JoiValidationPipe(ArticleController.idSchema)
+    public async deleteArticle(@Param() params: { id: string }): Promise<Article> {
         return await this.articleService.deleteArticle(params.id);
     }
 }

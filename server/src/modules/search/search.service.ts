@@ -5,9 +5,9 @@ import { Article } from '../../models/article.model';
 
 @Injectable()
 export class SearchService {
-    constructor(@InjectModel('article') private readonly articleModel: Model<Article>) {}
+    public constructor(@InjectModel('article') private readonly articleModel: Model<Article>) {}
 
-    async getArticles(query: { key?: string }): Promise<Article[]> {
+    public async getArticles(query: { key?: string }): Promise<Article[]> {
         const filter = { isDeleted: false, title: new RegExp(query.key) };
         if (query.key) {
             return await this.articleModel.find(filter, 'title', {
@@ -25,7 +25,7 @@ export class SearchService {
         ]);
     }
 
-    async count(query) {
+    public async count(query) {
         const filter = { isDeleted: false, title: new RegExp(query.key) };
         return await this.articleModel.countDocuments(filter);
     }

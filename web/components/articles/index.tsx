@@ -35,7 +35,6 @@ const C = (props: { router: Router; dispatch: any }) => {
         if (arts && arts.length > 0) {
             return;
         }
-        const q: { cid?: string } = props.router.query;
         setLoading(true);
         setTimeout(() => {
             fetchData(props).then(() => {

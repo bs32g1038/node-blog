@@ -19,6 +19,16 @@ export class FileController {
             .max(50),
     };
 
+    static folderSchema = {
+        parentId: Joi.string()
+            .default('')
+            .max(50)
+            .allow(''),
+        name: Joi.string()
+            .min(1)
+            .max(50),
+    };
+
     @Post('/files')
     @Roles('admin')
     async create(@Body() createFileDto: CreateFileDto) {
@@ -49,17 +59,26 @@ export class FileController {
         };
     }
 
+    // 根据id，获取文件夹名称
     @Get('/files/getFolderName/:id')
-    @JoiValidationPipe(FileController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(FileController.idSchema)
     async getFile(@Param() params: { id: string }): Promise<File> {
         return await this.fileService.getFile(params.id);
     }
 
     @Delete('/files/:id')
-    @JoiValidationPipe(FileController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(FileController.idSchema)
     async deleteFile(@Param() params: { id: string }) {
         return await this.fileService.deleteFile(params.id);
+    }
+
+    @Post('/files/createFolder')
+    @Roles('admin')
+    @JoiValidationPipe(FileController.folderSchema)
+    async createFolder(@Body() body: { name: string; parentId: string }) {
+        const { name, parentId } = body;
+        return await this.fileService.createFolder(name, parentId);
     }
 }

@@ -33,17 +33,38 @@ export class FileService {
     }
 
     async getFile(id: string) {
-        const file = await this.fileModel.findById(id);
-        return file;
+        return await this.fileModel.findById(id);
     }
 
     async deleteFile(id: string) {
-        await this.fileModel.deleteOne({ _id: id });
+        const _file = await this.fileModel.findById(id);
+        if (_file) {
+            if (_file.parentId) {
+                await this.fileModel.updateOne({ _id: _file.parentId }, { $inc: { fileCount: -1 } });
+            }
+            await this.fileModel.deleteOne({ _id: id });
+        }
         return {};
     }
 
     async count(query) {
         const filter = { ...query };
         return await this.fileModel.countDocuments(filter);
+    }
+
+    async createFolder(name: string, parentId: string) {
+        return await await this.fileModel.create({
+            originalName: name,
+            name,
+            isdir: true,
+            category: 6,
+            parentId: parentId || null,
+            mimetype: '*',
+            size: 0,
+            suffix: '*',
+            fileName: '*',
+            filePath: '*',
+            fileCount: 0,
+        });
     }
 } /* istanbul ignore next */

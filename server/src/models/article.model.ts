@@ -11,6 +11,7 @@ export interface Article extends Document {
     commentCount: number;
     viewsCount: number;
     isDeleted: boolean;
+    isDraft: boolean;
 }
 
 export const ArticleSchema = new mongoose.Schema(
@@ -59,7 +60,7 @@ export const ArticleSchema = new mongoose.Schema(
         },
         isDraft: {
             type: Boolean,
-            isDraft: false,
+            default: false,
         },
     },
     {

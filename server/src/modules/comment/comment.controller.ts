@@ -7,7 +7,7 @@ import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { auth } from '../../utils/auth.util';
-import config from '../../configs/index.config';
+import { ADMIN_USER_INFO } from '../../configs/index.config';
 import * as Joi from '@hapi/joi';
 
 @Controller('/api')
@@ -32,9 +32,9 @@ export class CommentController {
         if (auth(req)) {
             Object.assign(createCommentDto, {
                 identity: 1,
-                nickName: config.user.nickName,
-                email: config.user.email,
-                location: config.user.location,
+                nickName: ADMIN_USER_INFO.nickName,
+                email: ADMIN_USER_INFO.email,
+                location: ADMIN_USER_INFO.location,
             });
         }
         return await this.commentService.create(createCommentDto);
@@ -78,8 +78,8 @@ export class CommentController {
     }
 
     @Delete('/comments/:id')
-    @JoiValidationPipe(CommentController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(CommentController.idSchema)
     async deleteComment(@Param() params: { id: string }) {
         return await this.commentService.deleteComment(params.id);
     }

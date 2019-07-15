@@ -10,7 +10,7 @@ instance.interceptors.response.use(
     config => {
         return config;
     },
-    error => {
+    () => {
         throw new RequestTimeoutException('请求超时！');
     }
 );

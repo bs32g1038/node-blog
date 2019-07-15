@@ -11,6 +11,8 @@ import { RssModule } from './modules/rss.module';
 import { LoginModule } from './modules/login.module';
 import { UploadModule } from './modules/upload.module';
 import { SearchModule } from './modules/search.module';
+import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
+import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 
 @Module({
     imports: [
@@ -28,4 +30,8 @@ import { SearchModule } from './modules/search.module';
         SearchModule,
     ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(RateLimitMiddleware).forRoutes('api');
+    }
+}

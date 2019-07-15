@@ -50,14 +50,15 @@ export class MediaController {
     }
 
     @Get('/medias/:id')
+    @Roles('admin')
     @JoiValidationPipe(MediaController.idSchema)
     async getMedia(@Param() params: { id: string }): Promise<Media> {
         return await this.mediaService.getMedia(params.id);
     }
 
     @Delete('/medias/:id')
-    @JoiValidationPipe(MediaController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(MediaController.idSchema)
     async deleteMedia(@Param() params: { id: string }) {
         return await this.mediaService.deleteMedia(params.id);
     }

@@ -216,10 +216,5 @@ const loading = (
 );
 
 export default (props: Props) => {
-    return !props.loading &&
-        (Object.prototype.isPrototypeOf(props.article) && Object.keys(props.article).length > 0) ? (
-        <C {...props}></C>
-    ) : (
-        loading
-    );
+    return !props.loading && (props.article && Object.keys(props.article).length > 0) ? <C {...props}></C> : loading;
 };

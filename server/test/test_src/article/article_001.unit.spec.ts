@@ -2,7 +2,6 @@ import { ArticleService } from '../../../src/modules/article/article.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategorySchema } from '../../../src/models/category.model';
 import { ArticleSchema } from '../../../src/models/article.model';
-import { DatabaseModule } from '../../database/database.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

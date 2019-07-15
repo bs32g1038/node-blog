@@ -51,8 +51,8 @@ export class CategoryController {
     }
 
     @Delete('/categories/:id')
-    @JoiValidationPipe(CategoryController.idSchema)
     @Roles('admin')
+    @JoiValidationPipe(CategoryController.idSchema)
     async deleteCategory(@Param() params: { id: string }) {
         return await this.categoryService.deleteCategory(params.id);
     }

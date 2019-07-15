@@ -1,12 +1,13 @@
 import jwt = require('jsonwebtoken');
-import config from '../configs/index.config';
+import { TOKEN_SECRET_KEY } from '../configs/index.config';
+import { UnauthorizedException } from '@nestjs/common';
 
 export const auth = req => {
     if (req.hasOwnProperty('headers') && req.headers.hasOwnProperty('authorization')) {
         try {
-            return jwt.verify(req.headers.authorization, config.token_secret_key);
+            return jwt.verify(req.headers.authorization, TOKEN_SECRET_KEY);
         } catch (err) {
-            return null;
+            throw new UnauthorizedException('尚未登录！！', err.message);
         }
     }
     return null;

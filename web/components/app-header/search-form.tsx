@@ -134,7 +134,7 @@ const NavSearchDc = styled.div`
     }
 `;
 
-export const SearchForm = (props: any) => {
+export const SearchForm = () => {
     const cacheEmptyKey = Symbol('cache init data');
     const cache = {};
     const $input = useRef<HTMLInputElement>(null);
@@ -176,7 +176,7 @@ export const SearchForm = (props: any) => {
             fetchData(e.currentTarget.value);
         }
     };
-    const foldNavList = (e: any) => {
+    const foldNavList = () => {
         setIsActiveNavSearchDropdown(false);
         if ($input.current) {
             $input.current.blur();

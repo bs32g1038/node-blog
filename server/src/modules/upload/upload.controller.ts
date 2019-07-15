@@ -1,23 +1,35 @@
-import { Controller, Post, UseGuards, Req, Res, Next } from '@nestjs/common';
+import { Controller, Post, UseGuards, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import { Request, Response, NextFunction } from 'express';
+import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import * as Joi from '@hapi/joi';
 
 @Controller()
 @UseGuards(RolesGuard)
 export class UploadController {
     constructor(private readonly uploadService: UploadService) {}
 
+    static parentIdSchema = {
+        parentId: Joi.string()
+            .default('')
+            .max(50)
+            .allow(''),
+    };
+
     @Post('/api/upload/image')
     @Roles('admin')
-    async uploadSingalImage(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
-        return await this.uploadService.uploadSingalImage(req, res, next);
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadSingalImage(@UploadedFile() file) {
+        return await this.uploadService.uploadSingalImage(file);
     }
 
     @Post('/api/upload/static-files')
     @Roles('admin')
-    async uploadStaticFile(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
-        return await this.uploadService.uploadStaticFile(req, res, next);
+    @JoiValidationPipe(UploadController.parentIdSchema)
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadStaticFile(@UploadedFile() file, @Query() query: { parentId: string }) {
+        return await this.uploadService.uploadStaticFile(file, query.parentId);
     }
 }

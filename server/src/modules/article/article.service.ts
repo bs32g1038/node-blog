@@ -43,13 +43,12 @@ export class ArticleService {
     }
 
     async update(id: string, data: UpdateArticleDto) {
-        const article: Article = await this.articleModel.findByIdAndUpdate({ _id: id }, data);
+        const article: Article = await this.articleModel.findByIdAndUpdate(id, data);
         if (!article) {
             throw new BadRequestException('找不到该文章！');
         }
-        await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         /* istanbul ignore next */
-        if (article.category && article.category.toString() === data.category) {
+        if (article.category && article.category.toString() !== data.category) {
             await Promise.all([
                 this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } }),
                 this.categoryModel.updateOne({ _id: data.category }, { $inc: { articleCount: 1 } }),
