@@ -52,15 +52,6 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "indent": [
-        1,
-        4
-      ]
-    }
-  },
   "browserslist": [],
   "husky": {
     "hooks": {
