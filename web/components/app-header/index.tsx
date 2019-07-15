@@ -9,7 +9,6 @@ import { LogoSvg } from '../svgs/logo-svg';
 import { RssSvg } from '../svgs/rss-svg';
 import { UserSvg } from '../svgs/user-svg';
 import { SearchForm } from './search-form';
-
 import media from '../../utils/media';
 
 const Container = styled.header`
@@ -208,6 +207,13 @@ const RssIcon = styled(_RIcon)`
     }
 `;
 
+const MobileSearchForm = styled(SearchForm)`
+    display: none;
+    ${media.phone`
+        display: flex;
+    `};
+`;
+
 export const AppHeader = () => {
     return (
         <Container>
@@ -218,7 +224,7 @@ export const AppHeader = () => {
                         <span>{siteInfo.name}</span>
                     </HomeNav>
                 </Link>
-                {/* <SearchForm></SearchForm> */}
+                <MobileSearchForm></MobileSearchForm>
                 <React.Fragment>
                     <Menu>
                         <UL className="nav">

@@ -14,7 +14,6 @@ const PageWrap = styled.div`
     flex: 1 0 auto;
     background-color: #fff;
     ${media.phone`
-        margin: 0 0 50px 0;
         width: 100%;
         -webkit-overflow-scrolling: touch;
         padding: 0;

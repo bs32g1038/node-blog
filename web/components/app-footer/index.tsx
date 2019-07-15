@@ -29,6 +29,7 @@ const Footer = styled.footer`
     }
     ${media.phone`
         width: 100%;
+        margin-bottom: 50px;
     `};
 `;
 
@@ -76,6 +77,9 @@ const MobileTabbar = styled.div`
     border-top: 1px solid #e5e5e5;
     z-index: 9000;
     display: none;
+    ${media.phone`
+        display: flex;
+    `};
     .tabbar-item {
         display: flex;
         flex: 1;
@@ -189,101 +193,92 @@ const loadTimeCountEvent = () => {
     setInterval(showRunTime, 1000);
 };
 
-const hiddenBarWhenAndorid = () => {
-    const originHeight = document.documentElement.clientHeight; // 浏览器当前的高度
-    window.onresize = () => {
-        const $e = document.getElementById('mobile-app-footer');
-        if ($e) {
-            if (document.documentElement.clientHeight < originHeight) {
-                $e.style.display = 'none';
-            } else {
-                $e.style.display = 'flex';
-            }
-        }
-    };
-};
-
 export const AppFooter = () => {
     useEffect(() => {
         loadBackTopBtnEvent();
         loadTimeCountEvent();
-        hiddenBarWhenAndorid();
     });
     return (
-        <Footer>
-            <BackTopBtn title="返回顶部" id="backTop">
-                <svg data-title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path>
-                </svg>
-            </BackTopBtn>
-            <div>
-                <P>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</P>
-                <P>
-                    Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong>{' '}
-                    <strong>antdesign</strong>
-                </P>
-                <P>
-                    <span>累计运行</span>
-                    <span id="blog-runing-time"></span>
-                </P>
-                <P>
-                    <span>Copyright © 2016-2019</span>
-                    <a className="text-white" href="/blog">
-                        <strong> {siteInfo.name} </strong>
-                    </a>
-                    <span>
+        <React.Fragment>
+            <Footer>
+                <BackTopBtn title="返回顶部" id="backTop">
+                    <svg data-title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path>
+                    </svg>
+                </BackTopBtn>
+                <div>
+                    <P>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</P>
+                    <P>
+                        Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong>{' '}
+                        <strong>antdesign</strong>
+                    </P>
+                    <P>
+                        <span>累计运行</span>
+                        <span id="blog-runing-time"></span>
+                    </P>
+                    <P>
+                        <span>Copyright © 2016-2019</span>
+                        <a className="text-white" href="/blog">
+                            <strong> {siteInfo.name} </strong>
+                        </a>
+                        <span>
+                            <a
+                                style={{ textDecoration: 'none', color: '#444' }}
+                                href={siteInfo.icpGovCn}
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                <span className="icon-icp"></span> {siteInfo.icp}{' '}
+                            </a>
+                        </span>
+                    </P>
+                </div>
+                <FooterRight>
+                    <P>
+                        <LibLink href="https://nestjs.com" rel="noopener noreferrer" target="_blank">
+                            <LibLogo src={require('../../assets/svgs/logo-nestjs.svg')} />
+                        </LibLink>
+                        <LibLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
+                            <LibLogo src={require('../../assets/svgs/logo-react.svg')} />
+                        </LibLink>
+                        <LibLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
+                            <LibLogo src={require('../../assets/svgs/logo-nodejs.svg')} />
+                        </LibLink>
+                        <LibLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
+                            <LibLogo src={require('../../assets/svgs/logo-ant-design.svg')} />
+                        </LibLink>
+                    </P>
+                    <Hr />
+                    <P>
+                        博客已开源至
                         <a
-                            style={{ textDecoration: 'none', color: '#444' }}
-                            href={siteInfo.icpGovCn}
+                            href={siteInfo.github + '/node-blog'}
                             rel="noopener noreferrer"
                             target="_blank"
+                            className="app-github"
                         >
-                            <span className="icon-icp"></span> {siteInfo.icp}{' '}
+                            Github
                         </a>
-                    </span>
-                </P>
-            </div>
-            <FooterRight>
-                <P>
-                    <LibLink href="https://nestjs.com" rel="noopener noreferrer" target="_blank">
-                        <LibLogo src={require('../../assets/svgs/logo-nestjs.svg')} />
-                    </LibLink>
-                    <LibLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
-                        <LibLogo src={require('../../assets/svgs/logo-react.svg')} />
-                    </LibLink>
-                    <LibLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
-                        <LibLogo src={require('../../assets/svgs/logo-nodejs.svg')} />
-                    </LibLink>
-                    <LibLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
-                        <LibLogo src={require('../../assets/svgs/logo-ant-design.svg')} />
-                    </LibLink>
-                </P>
-                <Hr />
-                <P>
-                    博客已开源至
-                    <a
-                        href={siteInfo.github + '/node-blog'}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        className="app-github"
-                    >
-                        Github
-                    </a>
-                    请大家多多关注
-                </P>
-            </FooterRight>
+                        请大家多多关注
+                    </P>
+                </FooterRight>
+            </Footer>
             <MobileTabbar id="mobile-app-footer">
-                <NavLink className="tabbar-item" href="/blog">
-                    <div className="tabbar-item__icon">
-                        <HomeIcon></HomeIcon>
-                    </div>
-                    <div className="tabbar-item__text">博客</div>
+                <NavLink href="/blog">
+                    <a className="tabbar-item">
+                        <div className="tabbar-item__icon">
+                            <HomeIcon></HomeIcon>
+                        </div>
+                        <div className="tabbar-item__text">博客</div>
+                    </a>
                 </NavLink>
-                <NavLink className="tabbar-item" href="/about">
-                    <div className="tabbar-item__icon">
-                        <UserIcon></UserIcon>
-                    </div>
-                    <div className="tabbar-item__text">关于</div>
+                <NavLink href="/about">
+                    <a className="tabbar-item">
+                        <div className="tabbar-item__icon">
+                            <UserIcon></UserIcon>
+                        </div>
+                        <div className="tabbar-item__text">关于</div>
+                    </a>
                 </NavLink>
                 <a className="tabbar-item" href={siteInfo.github} rel="noopener noreferrer" target="_blank">
                     <div className="tabbar-item__icon">
@@ -292,6 +287,6 @@ export const AppFooter = () => {
                     <div className="tabbar-item__text">Gituhub</div>
                 </a>
             </MobileTabbar>
-        </Footer>
+        </React.Fragment>
     );
 };

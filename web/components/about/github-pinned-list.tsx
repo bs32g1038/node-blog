@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import siteInfo from '../../config/site-info';
 import { ContentLoader } from '../content-loader';
+import media from '../../utils/media';
 
 const PinnedItemsList = styled.ol`
     display: flex;
@@ -18,6 +19,9 @@ const PinnedItemsList = styled.ol`
         border-radius: 3px;
         padding: 16px;
         box-sizing: border-box;
+        ${media.phone`
+            width: 100%;
+        `}
     }
     .pinned-item-list-item-content {
         display: flex;

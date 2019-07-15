@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Categories } from '../../components/categories';
 import { fetchArticles, State } from '../../redux/reducers/articles';
 import ArticleItem from './item';
+import media from '../../utils/media';
 
 const UL = styled.ul`
     display: flex;
@@ -14,6 +15,9 @@ const UL = styled.ul`
     list-style: none;
     margin: 0 -10px;
     padding: 0;
+    ${media.phone`
+        margin: 0;
+    `}
 `;
 
 const getList = (props: any) => {
@@ -47,7 +51,7 @@ const C = (props: { router: Router; dispatch: any }) => {
         articles = new Array(4).fill(null);
     }
     return (
-        <div>
+        <React.Fragment>
             <Categories></Categories>
             <UL>
                 {articles.map((item: any, index: number) => (
@@ -58,7 +62,7 @@ const C = (props: { router: Router; dispatch: any }) => {
                     ></ArticleItem>
                 ))}
             </UL>
-        </div>
+        </React.Fragment>
     );
 };
 

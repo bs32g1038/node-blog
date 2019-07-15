@@ -134,7 +134,7 @@ const NavSearchDc = styled.div`
     }
 `;
 
-export const SearchForm = () => {
+export const SearchForm = (props: { className?: string }) => {
     const cacheEmptyKey = Symbol('cache init data');
     const cache = {};
     const $input = useRef<HTMLInputElement>(null);
@@ -183,7 +183,7 @@ export const SearchForm = () => {
         }
     };
     return (
-        <Form className="search-form">
+        <Form className={`search-form ${props.className}`}>
             <Input
                 type="input"
                 placeholder="搜索更新啦"
