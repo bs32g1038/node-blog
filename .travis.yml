@@ -56,7 +56,11 @@ matrix:
     - env: nginx
       before_script:
         - cd ${TRAVIS_BUILD_DIR}/nginx
-      script: true
+      script:
+        - set -e 
+        - docker build -f Dockerfile -t bs32g1038/nginx:test .
+        - docker run bs32g1038/nginx:test
+        - docker stop $(docker ps -a -q)
       deploy:
         provider: script
         script: bash release-docker-image.sh
