@@ -12,6 +12,7 @@
     "dev": "cross-env NODE_ENV=development node server.js",
     "build": "next build",
     "start": "next start",
+    "start:prod": "cross-env NODE_ENV=production node server.js",
     "lint": "eslint **/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
     "format": "prettier **/**/*.{ts,tsx,js,jsx,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write"
   },
