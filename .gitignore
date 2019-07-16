@@ -5,8 +5,8 @@ logs/blog/*
 static
 !server/static
 server/static/upload/**
-web/static
-!web/static/images
+!web/static
+web/static/assets
 !.gitkeep
 dist
 *.lock
