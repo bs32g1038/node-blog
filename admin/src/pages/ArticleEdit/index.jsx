@@ -139,7 +139,7 @@ class ArticleEdit extends Component {
                                     multiple={false}
                                     name="file"
                                     listType="picture"
-                                    accept=".jpg,.png"
+                                    accept=".jpg,.jpeg,.png"
                                     headers={{ authorization: localStorage.getItem(config.tokenKey) }}
                                     onRemove={() => false}
                                     beforeUpload={this.beforeUpload}
