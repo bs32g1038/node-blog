@@ -13,3 +13,5 @@ dist
 *.log
 coverage
 .next
+build
+next-env.d.ts
