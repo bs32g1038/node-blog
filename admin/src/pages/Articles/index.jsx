@@ -126,7 +126,10 @@ class Articles extends Component {
                     <div className={styles.panel}>
                         <Row type="flex" justify="space-between" className={styles.moduleControl}>
                             <Col>
-                                <Button type="primary" onClick={() => this.props.history.push('/ticles/edit')}>
+                                <Button
+                                    type="primary"
+                                    onClick={() => this.props.history.push('/content/articles/edit')}
+                                >
                                     <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                     添加文档
                                 </Button>
