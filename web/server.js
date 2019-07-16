@@ -7,11 +7,14 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const helmet = require('helmet');
 
+let proxy = require('http-proxy-middleware');
+
 app.prepare().then(() => {
     const server = express();
     if (dev) {
-        let proxy = require('http-proxy-middleware');
         server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
+    } else {
+        server.use('/api', proxy({ target: 'http://www.lizc.net', changeOrigin: true }));
     }
     server.get('/blog', (req, res) => {
         return app.render(req, res, '/articles', { cid: req.params.id });
