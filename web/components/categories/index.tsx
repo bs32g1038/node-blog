@@ -63,7 +63,7 @@ const C = (props: any) => {
         if (cats.length <= 0) {
             props.dispatch(fetchCategories());
         }
-    });
+    }, [1]);
     const { categories = [] } = props._DB;
     return (
         <CategoriesWrap>
