@@ -3,43 +3,21 @@ const path = require('path');
 
 module.exports = {
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        config.module.rules = [
-            ...config.module.rules,
-            {
-                exclude: [
-                    /\.html$/,
-                    /\.(js|jsx|mjs)$/,
-                    /\.(ts|tsx)$/,
-                    /\.(vue)$/,
-                    /\.(less)$/,
-                    /\.(re)$/,
-                    /\.(s?css|sass)$/,
-                    /\.json$/,
-                    /\.bmp$/,
-                    /\.gif$/,
-                    /\.jpe?g$/,
-                    /\.png$/,
-                ],
-                loader: require.resolve('file-loader'),
-                options: {
-                    name: 'assets/[name].[hash:8].[ext]',
-                    publicPath: '/static',
-                    outputPath: path.resolve(__dirname, './static'),
-                    emitFile: true,
+        config.module.rules.push({
+            test: /\.(txt|png|svg|gif|bmp|jpe?g)$/,
+            use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        context: '',
+                        outputPath: 'static',
+                        publicPath: '_next/static',
+                        name: 'assets/[name].[hash:8].[ext]',
+                        limit: 1024 * 20, // 20kb
+                    },
                 },
-            },
-            {
-                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                loader: require.resolve('url-loader'),
-                options: {
-                    limit: 10000,
-                    name: 'assets/[name].[hash:8].[ext]',
-                    publicPath: '/static',
-                    outputPath: path.resolve(__dirname, './static'),
-                    emitFile: true,
-                },
-            },
-        ];
+            ],
+        });
         return config;
     },
 };
