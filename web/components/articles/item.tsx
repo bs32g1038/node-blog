@@ -188,8 +188,8 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     <Meta>
                         <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
                         <em className="cmt">·</em>
-                        <a href="javascript:;">阅读：{item.viewsCount}12</a> <em className="cmt">·</em>
-                        <a href="javascript:;">评论：{item.commentCount}2</a>
+                        <a href="javascript:;">阅读：{item.viewsCount}</a> <em className="cmt">·</em>
+                        <a href="javascript:;">评论：{item.commentCount}</a>
                     </Meta>
                 </Content>
             </Brief>
