@@ -3,5 +3,5 @@ export default {
     icp: '粤ICP备16021965号-2',
     icpGovCn: 'http://www.beian.miit.gov.cn',
     github: 'https://github.com/bs32g1038',
-    domain: 'http://www.lizc.me',
+    domain: 'http://www.lizc.net',
 };
