@@ -48,8 +48,7 @@ const FormInput: any = styled.input`
     box-sizing: border-box;
     border: none;
     border-bottom: 1px dashed #dedede;
-    width: 33.33%;
-    max-width: 184px;
+    margin-right: 5px;
     transition: all 0.4s ease;
     background-color: hsl(0, 0%, 96%);
     border: 1px solid #e5e5e5;
@@ -57,6 +56,9 @@ const FormInput: any = styled.input`
     &:focus {
         outline: none;
         border-bottom-color: #eb5055;
+    }
+    &:last-child {
+        margin-right: 0;
     }
     &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px #ffffff inset !important;
@@ -94,7 +96,6 @@ const PreviewPane = styled.div`
     width: 100%;
     min-width: 200px;
     min-height: 90px;
-    max-height: 90px;
     border: none;
     box-sizing: border-box;
     border-top: 1px dashed #dedede;
