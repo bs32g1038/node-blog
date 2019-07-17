@@ -1,22 +1,51 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import config from '../../config/site-info';
 import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
 import { ContentLoader } from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
+import message from '../message';
 
-const ArticleItem = styled.article`
-    max-width: 570px;
+export const MODE = {
+    normal: 'normal',
+    reading: 'reading',
+};
+
+const ArticleItem = styled.div<{ mode: string }>`
+    max-width: ${props => (props.mode === MODE.reading ? '100%' : '570px')};
     flex: 1 0 auto;
+    position: relative;
+    transition: max-width 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
     ${media.phone`
             padding-left: 12px;
             padding-right: 12px;
             width: 100%;
             box-sizing: border-box;
         `}
+`;
+
+const ModePanel = styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+`;
+
+const ModeButton = styled.button<{ active: boolean }>`
+    border: none;
+    background-color: transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 3px 5px;
+    margin-right: 5px;
+    outline: none;
+    font-size: 12px;
+    transition: color 0.2s ease-in, border 0.2s ease-in;
+    border: 1px solid ${props => (props.active ? '#f86422' : 'hsla(0, 0%, 59.2%, 0.2)')};
+    color: ${props => (props.active ? '#f86422' : '#999')};
+    ${props => props.active && 'pointer-events:none'};
 `;
 
 const ArticleHeader = styled.div`
@@ -105,12 +134,37 @@ interface Props {
     loading: boolean;
     article: any;
     comments: any[];
+    getReadMode: Function;
 }
 
 const C = (props: Props) => {
     const { article, comments } = props;
+    const [mode, setMode] = useState(MODE.normal);
+    if (typeof props.getReadMode === 'function') {
+        props.getReadMode(mode);
+    }
     return (
-        <ArticleItem>
+        <ArticleItem mode={mode}>
+            <ModePanel>
+                <ModeButton
+                    active={mode === MODE.normal}
+                    onClick={() => {
+                        message.success('已切换到常规模式！', 1500);
+                        setMode(MODE.normal);
+                    }}
+                >
+                    常规模式
+                </ModeButton>
+                <ModeButton
+                    active={mode === MODE.reading}
+                    onClick={() => {
+                        message.success('已切换到阅读模式！', 1500);
+                        setMode(MODE.reading);
+                    }}
+                >
+                    阅读模式
+                </ModeButton>
+            </ModePanel>
             <Breadcrumbs>
                 <Link href="/">
                     <a>首页</a>
@@ -184,35 +238,17 @@ const C = (props: Props) => {
 };
 
 const loading = (
-    <ArticleItem>
-        <ArticleHeader>
-            <ContentLoader width={720} height={20}>
-                <rect x="0" y="0" width="500" height="20"></rect>
-            </ContentLoader>
-            <Title>
-                <ContentLoader width={720} height={20}>
-                    <rect x="0" y="0" width="300" height="20"></rect>
-                </ContentLoader>
-            </Title>
-            <Meta>
-                <ContentLoader width={720} height={20}>
-                    <rect x="0" y="0" width="400" height="20"></rect>
-                </ContentLoader>
-            </Meta>
-        </ArticleHeader>
-        <ContentLoader width={720} height={320}>
-            <rect x="0" y="0" width="720" height="300"></rect>
-        </ContentLoader>
-        <ContentLoader width={720} height={110}>
-            <rect x="0" y="0" width="720" height="100"></rect>
-        </ContentLoader>
-        <ContentLoader width={720} height={50}>
-            <rect x="250" y="0" width="220" height="50"></rect>
-        </ContentLoader>
-        <ContentLoader width={720} height={120}>
-            <rect x="0" y="0" width="720" height="120"></rect>
-        </ContentLoader>
-    </ArticleItem>
+    <ContentLoader width={720} height={520} style={{ width: '100%', height: '520px' }}>
+        <rect x="0" y="0" width="320" height="20"></rect>
+        <rect x="0" y="40" width="420" height="30"></rect>
+        <rect x="600" y="20" width="120" height="60"></rect>
+        <rect x="0" y="90" width="320" height="20"></rect>
+        <rect x="0" y="130" width="720" height="30"></rect>
+        <rect x="0" y="150" width="720" height="120"></rect>
+        <rect x="0" y="290" width="720" height="20"></rect>
+        <rect x="0" y="330" width="720" height="50"></rect>
+        <rect x="0" y="400" width="720" height="120"></rect>
+    </ContentLoader>
 );
 
 export default (props: Props) => {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import siteInfo from '../../config/site-info';
 import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/article';
 import media from '../../utils/media';
-import ArticleItem from './article-item';
+import ArticleItem, { MODE } from './article-item';
 import WidgetArea from './widget-area';
 
 const ArticleWrap = styled.div`
@@ -41,6 +41,7 @@ const fetchData = (props: Props) => {
 
 const C = (props: Props) => {
     const [isLoading, setLoading] = useState(false);
+    const [mode, setMode] = useState(MODE.normal);
     useEffect(() => {
         const { _id = '' } = props._DB.article || {};
         if (_id !== props.router.query.id) {
@@ -59,8 +60,13 @@ const C = (props: Props) => {
                 <Head>
                     <title>{article.title + ' - ' + siteInfo.name}</title>
                 </Head>
-                <ArticleItem loading={isLoading} article={article} comments={comments}></ArticleItem>
-                <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
+                <ArticleItem
+                    getReadMode={(readMode: string) => setMode(readMode)}
+                    loading={isLoading}
+                    article={article}
+                    comments={comments}
+                ></ArticleItem>
+                {mode !== MODE.reading && <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>}
             </ArticleWrap>
         </>
     );
