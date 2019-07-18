@@ -1,16 +1,17 @@
 version: '3'
 services:
-  api:
+  server:
     build: ./server
     depends_on:
       - db
-    volumes:
-      - ../data/logs:/code/logs
-      - ../data/blog/upload:/code/static/upload
     command: npm run start:prod
+    environment:
+      - MONGODB_URL=mongodb://db:27017/blog_test
   web:
     build: ./web
     command: npm run start:prod
+    environment:
+      - PROXY_DOMAIN_NAME=http://server
   admin:
     build: ./admin
     command: npm run start:prod
@@ -23,13 +24,5 @@ services:
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - ../data/logs:/var/log/nginx
-      - ./nginx/certificate:/etc/nginx/certificate
   db:
     image: mongo:4.1
-    volumes:
-      - ../data/mongo-backup:/data/mongo-backup
-      - ../data/mongo-db:/data/db
-    ports:
-      - 27017:27017
