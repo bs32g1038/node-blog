@@ -44,7 +44,7 @@ class UserLogin extends Component {
                     <div className="header">
                         <img className="brand" src={require('../../assets/logo.svg')} alt="" />
                         <div className="header-title">
-                            <h2>WWW.LIZC.ME 的后台管理系统</h2>
+                            <h2>{config.title}</h2>
                             <p>轻量级 NODE BLOG 系统</p>
                         </div>
                     </div>
