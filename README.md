@@ -7,13 +7,12 @@ A simple, fast and easy-to-use blog
 
 **Demo :**
 
-[http://www.lizc.me](http://www.lizc.me "blog")
+[http://www.lizc.net](http://www.lizc.net "blog")
 
 **Screenshot :**
 
 ![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
 
-![screenshot-admin](https://github.com/bs32g1038/node-blog/blob/master/docs/images/admin.png?raw=true)
 
 ## Project introduction
 
@@ -29,10 +28,9 @@ A simple, fast and easy-to-use blog
 ## Project structure
 
 * nginx: used as gateway, unified port;
-* node-blog-api: provide blog server api, based one nodejs, mongodb;
-* react-blog: front-end ui;
-* react-admin: admin ui;
-* react-music-app: a simple music web app
+* server: provide blog server api, based one nodejs, mongodb;
+* web: front-end ui;
+* admin: admin ui;
 * docker-compose.yml: docker-compose config file
 
 ## Todo
@@ -86,19 +84,16 @@ for example:
 
 ```nginx
 upstream server {
-    server api:8080;
+    server server:8080;
 }
-upstream blog {
-    server blog:3000;
+upstream web {
+    server web:3000;
 }
 upstream admin {
     server admin:3002;
 }
-upstream music {
-    server music:7000;
-}
 
-# change the ```api,blog,admin,music``` to localhost or 127.0.0.1
+# change the ```server,web,admin``` to localhost or 127.0.0.1
 ```
 
 ## Environment dependence
