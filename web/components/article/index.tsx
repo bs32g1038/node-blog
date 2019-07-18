@@ -8,6 +8,8 @@ import { fetchArticle, fetchRecentArticle, State } from '../../redux/reducers/ar
 import media from '../../utils/media';
 import ArticleItem, { MODE } from './article-item';
 import WidgetArea from './widget-area';
+import AppLayout from '../../layouts/app';
+import { isServer } from '../../utils/helper';
 
 const ArticleWrap = styled.div`
     background-color: #fff;
@@ -55,7 +57,7 @@ const C = (props: Props) => {
     }, [props.router.query.id]);
     const { article, comments, recentArticles } = props._DB;
     return (
-        <>
+        <AppLayout>
             <ArticleWrap>
                 <Head>
                     <title>{article.title + ' - ' + siteInfo.name}</title>
@@ -68,8 +70,17 @@ const C = (props: Props) => {
                 ></ArticleItem>
                 {mode !== MODE.reading && <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>}
             </ArticleWrap>
-        </>
+        </AppLayout>
     );
+};
+
+C.getInitialProps = async ({ reduxStore, req }: any) => {
+    if (!isServer) {
+        return {};
+    }
+    await reduxStore.dispatch(fetchArticle(req.params.id));
+    await reduxStore.dispatch(fetchRecentArticle());
+    return {};
 };
 
 export const Article = connect((state: { article: State; $G: any }) => ({

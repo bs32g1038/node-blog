@@ -4,8 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Categories } from '../../components/categories';
 import { fetchArticles, State } from '../../redux/reducers/articles';
+import { fetchCategories } from '../../redux/reducers/categories';
 import ArticleItem from './item';
 import media from '../../utils/media';
+import { isServer } from '../../utils/helper';
+import Head from 'next/head';
+import siteInfo from '../../config/site-info';
+import AppLayout from '../../layouts/app';
 
 const UL = styled.ul`
     display: flex;
@@ -26,10 +31,10 @@ const getList = (props: any) => {
     return q.cid ? articles[q.cid] : articles.blog;
 };
 
-export const fetchData = (props: { router: any; dispatch: any }) => {
+export const fetchData = (props: { router: Router; dispatch: any }) => {
     const { router } = props;
     const { page = 1, limit = 30, cid = '' } = router.query;
-    return props.dispatch(fetchArticles(page, limit, { cid }));
+    return props.dispatch(fetchArticles(Number(page), Number(limit), { cid }));
 };
 
 const C = (props: { router: Router; dispatch: any }) => {
@@ -51,8 +56,11 @@ const C = (props: { router: Router; dispatch: any }) => {
         articles = new Array(4).fill(null);
     }
     return (
-        <React.Fragment>
-            <Categories></Categories>
+        <AppLayout>
+            <Head>
+                <title>{siteInfo.name + '-博客'}</title>
+            </Head>
+            <Categories key={props.router.query.cid}></Categories>
             <UL>
                 {articles.map((item: any, index: number) => (
                     <ArticleItem
@@ -62,10 +70,24 @@ const C = (props: { router: Router; dispatch: any }) => {
                     ></ArticleItem>
                 ))}
             </UL>
-        </React.Fragment>
+        </AppLayout>
     );
+};
+
+C.getInitialProps = async ({ reduxStore, req, query }: any) => {
+    if (!isServer) {
+        return {
+            router: {
+                query,
+            },
+        };
+    }
+    const q = req && req.query;
+    await reduxStore.dispatch(fetchCategories());
+    await reduxStore.dispatch(fetchArticles(q.page, q.limit, { cid: q.cid }));
+    return {};
 };
 
 export const Articles = connect((state: State) => ({
     _DB: state.articles,
-}))(withRouter(C) as any) as any;
+}))(withRouter(C as any)) as any;

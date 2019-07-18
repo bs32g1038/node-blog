@@ -74,7 +74,7 @@ const C = (props: any) => {
             </Item>
             {categories.map((item: any) => (
                 <Item key={item._id}>
-                    <NavLink exact={true} href={`/blog/categories/${item._id}`}>
+                    <NavLink exact={true} href={`/blog/articles?cid=${item._id}`}>
                         <ItemLink>
                             {item.name}
                             <span>({item.articleCount})</span>
