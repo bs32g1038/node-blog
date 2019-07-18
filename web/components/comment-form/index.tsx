@@ -102,7 +102,7 @@ const PreviewPane = styled.div`
     border-bottom: 1px dashed #dedede;
     overflow: auto;
     img {
-        max-width: 20px;
+        max-width: 30px;
         vertical-align: text-bottom;
     }
 `;
