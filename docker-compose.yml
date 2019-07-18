@@ -12,7 +12,7 @@ services:
       - MONGODB_URL=mongodb://db:27017/blog
   web:
     image: bs32g1038/node-blog-web:v2
-    command: npm run start:prod
+    command: DOMAIN=https://www.lizc.net npm run start:prod
   admin:
     image: bs32g1038/node-blog-admin:v2
     command: npm run start:prod
