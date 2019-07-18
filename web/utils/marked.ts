@@ -9,7 +9,7 @@ renderer.paragraph = (text: any) => {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
                 const name = r[1];
-                return `<img src="/public/images/emotion/${name}.png" />`;
+                return `<img src="/static/images/emotion/${name}.png" />`;
             }
         }
         return str;
