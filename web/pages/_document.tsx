@@ -25,10 +25,10 @@ class AppDocument extends Document {
                             __html: `
                             var _hmt = _hmt || [];
                             (function() {
-                                var hm = document.createElement("script");
-                                hm.src = "https://hm.baidu.com/hm.js?8316669be353451259d8b6f8b9207fae";
-                                var s = document.getElementsByTagName("script")[0]; 
-                                s.parentNode.insertBefore(hm, s);
+                              var hm = document.createElement("script");
+                              hm.src = "https://hm.baidu.com/hm.js?6f7e27c8345c16888b1454d3091382a5";
+                              var s = document.getElementsByTagName("script")[0]; 
+                              s.parentNode.insertBefore(hm, s);
                             })();
                         `,
                         }}
