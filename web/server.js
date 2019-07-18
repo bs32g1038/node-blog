@@ -18,7 +18,10 @@ app.prepare().then(() => {
         server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
         server.get('/static/upload/*', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
     } else {
-        server.use('/api', proxy({ target: process.env.DOMAIN || 'http://127.0.0.1:8080', changeOrigin: true }));
+        server.use(
+            '/api',
+            proxy({ target: process.env.PROXY_DOMAIN_NAME || 'http://127.0.0.1:8080', changeOrigin: true })
+        );
     }
     server.get('/static/*', (req, res) => {
         handle(req, res);
