@@ -2,7 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import withReduxStore from '../redux/with-redux-store';
-import versionInfo from '../../package.json';
+import versionInfo from '../package.json';
 
 class MyApp extends App {
     componentDidMount() {
