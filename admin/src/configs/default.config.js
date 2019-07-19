@@ -1,5 +1,5 @@
 export default {
-    title: '网站后台系统',
+    title: '博客后台管理',
     tokenKey: 'node-blog-bs32g1038@163.com',
     siteInfo: {
         name: '李志成的博客',
