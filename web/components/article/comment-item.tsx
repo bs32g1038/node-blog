@@ -137,8 +137,8 @@ export const CommentItem = (props: { item: any; index: number }) => {
                     <img
                         src={
                             item.identity === 0
-                                ? `/public/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
-                                : '/public/images/avatar.jpg'
+                                ? `/static/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
+                                : '/static/images/avatar.jpg'
                         }
                     />
                 </AvatarWrap>
