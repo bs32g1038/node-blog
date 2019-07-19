@@ -59,7 +59,7 @@ class GlobalHeader extends Component {
                                 rel="noopener noreferrer"
                                 className={styles.action}
                             >
-                                <Icon type="github" style={{ fontSize: '20px' }} /> Github
+                                <Icon type="github" style={{ fontSize: '24px' }} />
                             </a>
                         </Tooltip>
                         <HeaderDropdown overlay={menu}>
