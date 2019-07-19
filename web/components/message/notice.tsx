@@ -175,16 +175,15 @@ class Notice extends React.Component<any, any> {
     }
 
     removeNotice(key: string) {
-        const { notices } = this.state;
-        this.setState({
-            notices: notices.filter((notice: any) => {
+        this.setState((prevState: any) => ({
+            notices: prevState.notices.filter((notice: any) => {
                 if (notice.key === key) {
                     if (notice.onClose) setTimeout(notice.onClose, this.transitionTime);
                     return false;
                 }
                 return true;
             }),
-        });
+        }));
     }
 
     render() {
