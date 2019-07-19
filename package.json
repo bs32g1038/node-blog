@@ -9,6 +9,22 @@
     "name": "Jason Li",
     "email": "bs32g1038@163.com"
   },
+  "scripts": {
+    "precommit:web": "yarn --cwd ./web precommit",
+    "precommit:server": "yarn --cwd ./server precommit",
+    "precommit:admin": "yarn --cwd ./admin precommit",
+    "precommit": "yarn run precommit:web && yarn run precommit:server && yarn run precommit:admin",
+    "install:web": "yarn --cwd ./web install",
+    "install:server": "yarn --cwd ./server install",
+    "install:admin": "yarn --cwd ./admin install",
+    "postinstall": "yarn run install:web && yarn run install:server && yarn run install:admin"
+  },
   "devDependencies": {
+    "husky": "^3.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run precommit"
+    }
   }
 }

@@ -16,6 +16,7 @@
     "start:prod": "cross-env NODE_ENV=production node dist/main.js",
     "lint": "eslint src/**/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
     "format": "prettier **/**/*.{ts,js,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write",
+    "precommit": "lint-staged",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:cov": "cross-env NODE_ENV=test jest --coverage --forceExit",
@@ -109,11 +110,6 @@
       "ts-jest": {
         "tsConfig": "<rootDir>/tsconfig.json"
       }
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {

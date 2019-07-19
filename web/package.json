@@ -15,7 +15,8 @@
     "start": "next start",
     "start:prod": "cross-env NODE_ENV=production node server.js",
     "lint": "eslint **/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
-    "format": "prettier **/**/*.{ts,tsx,js,jsx,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write"
+    "format": "prettier **/**/*.{ts,tsx,js,jsx,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
@@ -58,7 +59,6 @@
     "file-loader": "^4.0.0",
     "helmet": "^3.18.0",
     "http-proxy-middleware": "^0.19.1",
-    "husky": "^3.0.0",
     "lint-staged": "^9.2.0",
     "lru-cache": "^5.1.1",
     "prettier": "^1.18.2",
@@ -66,11 +66,6 @@
     "url-loader": "^2.0.1"
   },
   "browserslist": [],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,css,html}": [
       "prettier --config ./.prettierrc --write",

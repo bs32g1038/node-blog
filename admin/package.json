@@ -15,8 +15,7 @@
         "test": "craco test",
         "eject": "craco eject",
         "start:prod": "node server.js",
-        "lint": "eslint src/**/*.{js,jsx} --ignore-path .eslintignore",
-        "format": "prettier **/**/*.{jsx,js,md,yml} --config ./.prettierrc --ignore-path ./.prettierignore --write"
+        "precommit": "lint-staged"
     },
     "dependencies": {
         "express": "^4.17.1"
@@ -33,7 +32,6 @@
         "dayjs": "^1.8.14",
         "eslint-plugin-prettier": "^3.1.0",
         "http-proxy-middleware": "^0.19.1",
-        "husky": "^3.0.0",
         "lint-staged": "^9.2.0",
         "markdown-it": "^9.0.1",
         "node-sass": "^4.12.0",
@@ -50,11 +48,6 @@
         "redux-thunk": "^2.3.0"
     },
     "browserslist": [],
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
         "*.{js,jsx,json,md,css,scss,html}": [
             "prettier --config ./.prettierrc --write",
