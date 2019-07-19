@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "license": "MIT",
+  "description": "A simple and whole blog",
   "author": {
     "name": "Jason Li",
     "email": "bs32g1038@163.com"
