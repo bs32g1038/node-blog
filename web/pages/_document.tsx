@@ -1,4 +1,5 @@
 import React from 'react';
+import versionInfo from '../../package.json';
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 
 /* eslint-disable */
@@ -6,6 +7,20 @@ class AppDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {
         const initialProps = await Document.getInitialProps(ctx);
         return { ...initialProps };
+    }
+    componentDidMount() {
+        const info = [
+            `Version: ${versionInfo.version}`,
+            `Author: ${versionInfo.author}`,
+            `Homepage: ${versionInfo.homepage}`,
+            `Description: ${versionInfo.description}`,
+            `Check out our code here: https://github.com/bs32g1038/node-blog`,
+            `Have a great day! 📣🐢`,
+        ];
+        for (const message of info) {
+            // eslint-disable-next-line no-console
+            console.log(message);
+        }
     }
     render() {
         return (
