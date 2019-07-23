@@ -67,13 +67,6 @@ const HomeNav: any = styled.a`
         font-weight: normal;
         font-style: normal;
     }
-    span {
-        font-family: siteitlefont;
-        font-size: 16px;
-        margin-left: 15px;
-        font-weight: 700;
-        color: #62656d;
-    }
     img {
         width: auto;
         height: 28px;
@@ -83,13 +76,20 @@ const HomeNav: any = styled.a`
     }
     ${media.phone`
         margin-left: 10px;
-        span{
-            display: block;
-            font-size: 14px;
-            color: #333;
-            text-align: center;
-            font-weight: 700;
-        }
+    `};
+`;
+
+const HomeTitle = styled.h1`
+    font-family: siteitlefont;
+    font-size: 16px;
+    margin-left: 15px;
+    color: #62656d;
+    ${media.phone`
+        display: block;
+        font-size: 14px;
+        color: #333;
+        text-align: center;
+        font-weight: 700;
     `};
 `;
 
@@ -116,6 +116,7 @@ const UL = styled.ul`
     list-style-type: none;
     text-align: center;
     padding: 0;
+    user-select: none;
     &.nav {
         justify-content: center;
         flex: 1 0 auto;
@@ -221,7 +222,7 @@ export const AppHeader = () => {
                 <Link href="/" as="/">
                     <HomeNav title={siteInfo.name}>
                         <LogoIcon></LogoIcon>
-                        <span>{siteInfo.name}</span>
+                        <HomeTitle title={siteInfo.name}>{siteInfo.name}</HomeTitle>
                     </HomeNav>
                 </Link>
                 <MobileSearchForm></MobileSearchForm>
