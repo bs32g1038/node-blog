@@ -17,6 +17,7 @@ const CategoriesWrap = styled.ul`
     border-bottom: 1px solid #ededee;
     margin-bottom: 8px;
     ${media.phone`
+        padding-top: 5px;
         margin-bottom: 0;
         white-space: nowrap;
         overflow-x: auto;

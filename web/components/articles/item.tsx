@@ -69,11 +69,6 @@ const Meta = styled.div`
     .cmt {
         margin-right: 5px;
     }
-    ${media.phone`
-        .cat {
-            display: none;
-        }
-    `};
 `;
 
 const Title = styled.a`

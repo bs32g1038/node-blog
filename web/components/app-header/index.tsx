@@ -22,7 +22,7 @@ const Container = styled.header`
         box-shadow: 0px 1px 3px 0px rgba(17,58,93,0.1);
         margin-bottom: 1px;
         .search-form {
-            margin: 0 20px 0 0;
+            margin: 0 10px 0 0;
             width: 100%;
             input{
                 width: 100%;
@@ -47,7 +47,6 @@ const MainWrap = styled.div`
     }
     ${media.phone`
         width: 100%;
-        height: 44px;
         padding: 0;
     `};
 `;
@@ -76,6 +75,8 @@ const HomeNav: any = styled.a`
     }
     ${media.phone`
         margin-left: 10px;
+        flex: 1 0 auto;
+        margin-right: 8px;
     `};
 `;
 
@@ -87,9 +88,8 @@ const HomeTitle = styled.h1`
     ${media.phone`
         display: block;
         font-size: 14px;
-        color: #333;
         text-align: center;
-        font-weight: 700;
+        margin-left: 8px;
     `};
 `;
 
@@ -122,21 +122,7 @@ const UL = styled.ul`
         flex: 1 0 auto;
     }
     ${media.phone`
-        position: absolute;
-        top: 44px;
-        left: 0;
-        right: 0;
-        text-align: left;
-        background-color: #f9f9f9;
         display: none;
-        z-index: 1000;
-        li{
-            display: block;
-            width: 100%;
-        }
-        span{
-            display: none;
-        }
     `};
 `;
 
