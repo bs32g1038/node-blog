@@ -1,37 +1,43 @@
-# node-blog
+<h1 align="center">Node Blog</h1>
+
+<div align="center">
 
 A simple, fast and easy-to-use blog
 
 [![Build Status](https://travis-ci.org/bs32g1038/node-blog.svg?branch=master)](https://travis-ci.org/bs32g1038/node-blog) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/context:javascript) 
 [![codecov](https://codecov.io/gh/bs32g1038/node-blog/branch/master/graph/badge.svg)](https://codecov.io/gh/bs32g1038/node-blog) ![GitHub](https://img.shields.io/github/license/bs32g1038/node-blog.svg)
 
-**Demo :**
+</div>
 
-[http://www.lizc.net](http://www.lizc.net "blog")
+![博客首页](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
 
-**Screenshot :**
+* **preview :** [http://www.lizc.net](http://www.lizc.net "blog")
 
-![screenshot-home](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
+## Features
 
-
-## Project introduction
-
-* Node-blog through Nodejs and express provide the Restful API
-* Data stored in Mongodb，Driven by Mongoose
-* Front-End and Back-End use of the React
-* Use powerful webpack to build projects
-* Ant design
-* Support server-side render
-* Responsive layout for mobile-side
+* 🐐 APi: Node-blog through Nodejs and express provide the Restful API
+* 🚜 Database: Data stored in Mongodb，Driven by Mongoose
+* 🔨 Powerful build: Use powerful webpack to build projects
+* 🍓 Framework support: React, Ant design, Express, ... 
+* 🌲 Nextjs: Support server-side render
+* 📲 Responsive: Responsive layout for mobile-side
+* ⚙️ Best Practices: Solid workflow to make your code healthy
 * ......
 
-## Project structure
-
-* nginx: used as gateway, unified port;
-* server: provide blog server api, based one nodejs, mongodb;
-* web: front-end ui;
-* admin: admin ui;
-* docker-compose.yml: docker-compose config file
+## Structure
+```
+ROOT
+│
+├─nginx // used as gateway, unified port
+│
+├─server // provide blog server api, based one nodejs, mongodb
+│
+├─web // front-end ui
+│
+├─admin // admin ui
+│
+├─docker-compose.yml // docker-compose config file
+```
 
 ## Todo
 - [ ] Article tags (I not  think it is a very useful function,but you can realize it easily by yourself) 
@@ -103,6 +109,14 @@ Operating System: Linux, OS X or Windows.
 Node.js Runtime: 8.x or newer; it is recommended that you use LTS Releases.
 
 database: mongdb 4.x or newer;
+
+## Browsers support
+
+Modern browsers and IE11.
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| --- | --- | --- | --- | --- |
+| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
 ## Thank you：
 
