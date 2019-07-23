@@ -184,8 +184,7 @@ const GithubIcon = styled(GithubSvg)`
 
 const LogoIcon = styled(LogoSvg)`
     fill: #2b414d;
-    width: 32px;
-    height: 32px;
+    width: 40px;
     cursor: pointer;
 `;
 
