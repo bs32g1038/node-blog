@@ -3,6 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import withReduxStore from '../redux/with-redux-store';
 import versionInfo from '../package.json';
+import siteInfo from '../config/site-info';
 
 class MyApp extends App {
     componentDidMount() {
@@ -11,7 +12,7 @@ class MyApp extends App {
             `Author: ${versionInfo.author.name + ' - ' + versionInfo.author.email}`,
             `Homepage: ${versionInfo.homepage}`,
             `Description: ${versionInfo.description}`,
-            `Check out our code here: https://github.com/bs32g1038/node-blog`,
+            `Check out our code here: ${siteInfo.projectGithub}`,
             `Have a great day! 📣🐢`,
         ];
         for (const message of info) {

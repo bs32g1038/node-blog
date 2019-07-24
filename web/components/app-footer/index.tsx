@@ -252,7 +252,7 @@ export const AppFooter = () => {
                     <P>
                         博客已开源至
                         <a
-                            href={siteInfo.github + '/node-blog'}
+                            href={siteInfo.projectGithub}
                             rel="noopener noreferrer"
                             target="_blank"
                             className="app-github"
