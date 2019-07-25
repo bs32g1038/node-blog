@@ -86,6 +86,7 @@ export default class Medias extends Component {
                                     <Card
                                         loading={this.state.loading}
                                         key={'aaa' + index}
+                                        className={styles.card}
                                         cover={
                                             !item._id || this.state.loading ? (
                                                 false
@@ -103,8 +104,10 @@ export default class Medias extends Component {
                                                 title="查看大图"
                                                 href={'//' + window.location.host + item.filePath + '/' + item.fileName}
                                                 target="_blank"
+                                                className={styles.button + ' ' + styles.buttonView}
                                             >
-                                                查看大图
+                                                <i className="fa fa-eye fa-fw" style={{ color: '#fff' }}></i>
+                                                大图
                                             </Button>,
                                             <Button
                                                 key="copyButton"
@@ -114,9 +117,10 @@ export default class Medias extends Component {
                                                 data-clipboard-text={
                                                     window.location.host + item.filePath + '/' + item.fileName
                                                 }
-                                                className="btnCopy"
+                                                className={styles.button}
                                             >
-                                                复制url
+                                                <i className="fa fa-link fa-fw" style={{ color: '#fff' }}></i>
+                                                复制
                                             </Button>,
                                             <Popconfirm
                                                 key="confirmButton"
@@ -125,8 +129,14 @@ export default class Medias extends Component {
                                                 okText="确定"
                                                 cancelText="取消"
                                             >
-                                                <Button type="danger" size="small" title="删除">
-                                                    <i className="fa fa-trash-o fa-fw"></i>删除
+                                                <Button
+                                                    type="danger"
+                                                    size="small"
+                                                    title="删除"
+                                                    className={styles.button}
+                                                >
+                                                    <i className="fa fa-trash-o fa-fw" style={{ color: '#fff' }}></i>
+                                                    删除
                                                 </Button>
                                             </Popconfirm>,
                                         ]}
