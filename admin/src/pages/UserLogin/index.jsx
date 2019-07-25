@@ -24,7 +24,7 @@ class UserLogin extends Component {
                 axios.post('/login', { key: str }).then(res => {
                     message.success('登陆成功！');
                     localStorage.setItem(config.tokenKey, res.data.token);
-                    history.push('/content/articles');
+                    history.push('/dashboard/analysis');
                 });
             }
         });
