@@ -1,25 +1,32 @@
 import * as api from '../../api/article';
 import { FETCH_ARTICLES } from '../action-types';
 
-export const setArticles = (articles: any, cid: string) => ({
+export const getArticlesCacheKey = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
+    return page + '#' + limit + '#' + filter.cid;
+};
+
+export const setArticles = (items: any, totalCount: number, cacheKey: string) => ({
     type: FETCH_ARTICLES,
-    articles,
-    cid,
+    items,
+    totalCount,
+    cacheKey,
 });
 
 export const fetchArticles = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
     return (dispatch: any) => {
         return api.fetchArticles(page, limit, filter).then(res => {
-            const articles = res.items;
-            return dispatch(setArticles(articles, filter.cid));
+            const items = res.items;
+            const totalCount = res.totalCount;
+            return dispatch(setArticles(items, totalCount, getArticlesCacheKey(page, limit, filter)));
         });
     };
 };
 
 export interface Action {
     type?: string;
-    articles?: any[];
-    cid: string;
+    items?: any[];
+    totalCount: number;
+    cacheKey: string;
 }
 
 export interface State {
@@ -33,12 +40,12 @@ const initialState: State = {
 export default function(state: any = initialState, action: Action) {
     switch (action.type) {
         case FETCH_ARTICLES: {
-            const { articles, cid } = action;
+            const { items, totalCount, cacheKey } = action;
             return {
                 ...state,
-                articles: {
-                    ...state.articles,
-                    ...{ [cid ? cid : 'blog']: articles },
+                [cacheKey]: {
+                    items,
+                    totalCount,
                 },
             };
         }

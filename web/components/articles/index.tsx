@@ -3,7 +3,7 @@ import { Router, withRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Categories } from '../../components/categories';
-import { fetchArticles, State } from '../../redux/reducers/articles';
+import { fetchArticles, State, getArticlesCacheKey } from '../../redux/reducers/articles';
 import { fetchCategories } from '../../redux/reducers/categories';
 import ArticleItem from './item';
 import media from '../../utils/media';
@@ -11,6 +11,7 @@ import { isServer } from '../../utils/helper';
 import Head from 'next/head';
 import siteInfo from '../../config/site-info';
 import AppLayout from '../../layouts/app';
+import Pagination from '../pagination';
 
 const UL = styled.ul`
     display: flex;
@@ -25,23 +26,26 @@ const UL = styled.ul`
     `}
 `;
 
-const getList = (props: any) => {
-    const q: { cid?: string } = props.router.query;
-    const { articles } = props._DB;
-    return q.cid ? articles[q.cid] : articles.blog;
+const LIMIT = 12;
+
+const getData = (props: any) => {
+    const { page = 1, limit = LIMIT, cid = '' } = props.router.query;
+    const articles = props._DB;
+    return articles[getArticlesCacheKey(page, limit, { cid })] || {};
 };
 
 export const fetchData = (props: { router: Router; dispatch: any }) => {
     const { router } = props;
-    const { page = 1, limit = 30, cid = '' } = router.query;
+    const { page = 1, limit = LIMIT, cid = '' } = router.query;
     return props.dispatch(fetchArticles(Number(page), Number(limit), { cid }));
 };
 
 const C = (props: { router: Router; dispatch: any }) => {
     const [loading, setLoading] = useState(false);
+    const page = Number(props.router.query.page || 1);
     useEffect(() => {
-        const arts = getList(props);
-        if (arts && arts.length > 0) {
+        const { items } = getData(props);
+        if (items && items.length > 0) {
             return;
         }
         setLoading(true);
@@ -51,9 +55,9 @@ const C = (props: { router: Router; dispatch: any }) => {
             });
         }, 250);
     }, [props.router.query]);
-    let articles = getList(props);
-    if (!articles || loading) {
-        articles = new Array(4).fill(null);
+    let { items, totalCount } = getData(props);
+    if (!items || loading) {
+        items = new Array(4).fill(null);
     }
     return (
         <AppLayout>
@@ -62,7 +66,7 @@ const C = (props: { router: Router; dispatch: any }) => {
             </Head>
             <Categories key={props.router.query.cid}></Categories>
             <UL>
-                {articles.map((item: any, index: number) => (
+                {items.map((item: any, index: number) => (
                     <ArticleItem
                         loading={loading}
                         item={item}
@@ -70,6 +74,7 @@ const C = (props: { router: Router; dispatch: any }) => {
                     ></ArticleItem>
                 ))}
             </UL>
+            <Pagination current={page} pageSize={LIMIT} total={totalCount}></Pagination>
         </AppLayout>
     );
 };
