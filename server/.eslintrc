@@ -1,4 +1,11 @@
 {
+    "root": true,
+    "env": {
+        "es6": true,
+        "node": true,
+        "commonjs": true,
+        "browser": true
+    },
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
