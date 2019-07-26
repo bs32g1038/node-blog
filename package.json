@@ -3,17 +3,16 @@
   "version": "2.0.0",
   "description": "A simple and whole blog",
   "homepage": "https://www.lizc.net",
-  "private": true,
   "license": "MIT",
   "author": {
     "name": "Jason Li",
     "email": "bs32g1038@163.com"
   },
   "scripts": {
-    "precommit:web": "yarn --cwd ./web precommit",
-    "precommit:server": "yarn --cwd ./server precommit",
-    "precommit:admin": "yarn --cwd ./admin precommit",
-    "precommit": "yarn run precommit:web && yarn run precommit:server && yarn run precommit:admin",
+    "lint-staged:web": "yarn --cwd ./web lint-staged",
+    "lint-staged:server": "yarn --cwd ./server lint-staged",
+    "lint-staged:admin": "yarn --cwd ./admin lint-staged",
+    "lint-staged": "yarn run lint-staged:web && yarn run lint-staged:server && yarn run lint-staged:admin",
     "install:web": "yarn --cwd ./web install",
     "install:server": "yarn --cwd ./server install",
     "install:admin": "yarn --cwd ./admin install",
@@ -24,7 +23,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run precommit"
+      "pre-commit": "npm run lint-staged"
     }
   }
 }

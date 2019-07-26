@@ -15,7 +15,7 @@
         "test": "craco test",
         "eject": "craco eject",
         "start:prod": "node server.js",
-        "precommit": "lint-staged",
+        "lint-staged": "lint-staged",
         "lint": "eslint src/**/*.{js,jsx} --ignore-path .eslintignore"
     },
     "dependencies": {
