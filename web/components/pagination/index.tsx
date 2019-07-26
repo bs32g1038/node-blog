@@ -46,8 +46,8 @@ const PaginationEllipsis = styled.span`
 const getPage = (current: number, pageCount: number) => {
     // 获取分页页码
     const listCount = 6;
-    let pageList = [];
-    let currentPage = current;
+    const pageList = [];
+    const currentPage = current;
     let showPrevMore = false;
     let showNextMore = false;
     if (pageCount > listCount) {
@@ -60,11 +60,11 @@ const getPage = (current: number, pageCount: number) => {
     }
     if (showPrevMore && !showNextMore) {
         const start = pageCount - listCount + 2;
-        for (var i = start; i < pageCount; i++) {
+        for (let i = start; i < pageCount; i++) {
             pageList.push(i);
         }
     } else if (!showPrevMore && showNextMore) {
-        for (var i = 2; i < listCount; i++) {
+        for (let i = 2; i < listCount; i++) {
             pageList.push(i);
         }
     } else if (showPrevMore && showNextMore) {
@@ -73,7 +73,7 @@ const getPage = (current: number, pageCount: number) => {
             pageList.push(i);
         }
     } else {
-        for (var i = 2; i < pageCount; i++) {
+        for (let i = 2; i < pageCount; i++) {
             pageList.push(i);
         }
     }
