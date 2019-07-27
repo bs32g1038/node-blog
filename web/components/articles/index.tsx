@@ -45,7 +45,7 @@ const C = (props: { router: Router; dispatch: any }) => {
     const page = Number(props.router.query.page || 1);
     useEffect(() => {
         const { items } = getData(props);
-        if (items && items.length > 0) {
+        if (items && items.length > 0 && items[0] !== null) {
             return;
         }
         setLoading(true);
