@@ -17,7 +17,7 @@ const Footer = styled.footer`
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
-    background-color: #ffff;
+    background-color: #fff;
     width: 100%;
     .icon-icp {
         display: inline-block;
