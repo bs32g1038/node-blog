@@ -24,6 +24,7 @@ const ArticleItem = styled.div<{ mode: string }>`
             padding-right: 12px;
             width: 100%;
             box-sizing: border-box;
+            padding-bottom: 20px;
         `}
 `;
 
@@ -31,6 +32,9 @@ const ModePanel = styled.div`
     position: absolute;
     right: 0;
     top: 0;
+    ${media.phone`
+            display: none;
+        `}
 `;
 
 const ModeButton = styled.button<{ active: boolean }>`
@@ -67,7 +71,7 @@ const Title = styled.h2`
 `;
 
 const Meta = styled.div`
-    margin: 3px 0px 6px;
+    margin: 3px 0 0 -5px;
     color: rgb(153, 153, 153);
     font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     font-size: 12px;
@@ -119,6 +123,9 @@ const Breadcrumbs = styled.div`
     color: #8a92a9;
     font-size: 12px;
     margin-bottom: 16px;
+    ${media.phone`
+            padding-top: 20px;
+        `}
     > .sep {
         margin: 0 5px;
         font-size: 14px;
