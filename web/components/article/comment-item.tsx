@@ -18,14 +18,14 @@ const CommentsItem = styled.li`
         content: attr(data-index);
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 12px;
         text-align: center;
         color: #d5cbcb;
         font-size: 12px;
     }
     ${media.phone`
         &:after {
-            display: none;
+            top: 10px;
         }
     `}
 `;
@@ -56,6 +56,16 @@ const AvatarWrap = styled.div`
             vertical-align: inherit;
         }
     }
+    ${media.phone`
+        width: 32px;
+        height: 32px;
+        img {
+            width: 32px;
+            height: auto;
+            vertical-align: middle;
+            border-radius: 4px;
+        }
+    `}
 `;
 
 const Content = styled.div`
@@ -65,21 +75,14 @@ const Content = styled.div`
 const Meta = styled.div`
     color: #999;
     font-size: 12px;
-    margin-right: 60px;
+    margin-right: 55px;
     > a {
         text-decoration: none;
         color: #999;
-        margin-right: 12px;
     }
     &.quote {
         margin-right: 0;
     }
-    ${media.phone`
-        margin-right: 0;
-        a {
-            margin-right: 5px;
-        }
-    `}
 `;
 
 const User = styled.div`
@@ -88,15 +91,26 @@ const User = styled.div`
     justify-content: space-between;
 `;
 
-const NickName = styled.span`
-    font-weight: 700;
-    word-wrap: break-word;
-    color: #6d757a;
+const InfoWrap = styled.div`
     display: flex;
     align-items: center;
+    color: #6d757a;
+    font-weight: 700;
     ${media.phone`
         .tip {
-            display: none;
+            font-size: 12px;
+        }
+    `}
+`;
+
+const NickName = styled.span`
+    ${media.phone`
+        font-size: 12px;
+        &.quote {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 60px;
         }
     `}
 `;
@@ -108,15 +122,13 @@ const InfoTime = styled.span`
 `;
 
 const UserSign: any = styled.span`
-    margin-left: 5px;
     color: #999;
-    /* background-color: rgba(58, 165, 208, 0.8); */
-    padding: 0 4px;
     border-radius: 5px;
     font-size: 12px;
     display: inline-block;
     ${(props: any) => props.isAdmin && 'background-color: rgba(250, 90, 60, .95)'};
-    border-bottom: 1px solid #999;
+    color: #b5a9a9;
+    font-weight: normal;
 `;
 
 const ItemContent = styled.div`
@@ -139,6 +151,9 @@ const Quote = styled.div`
     margin-top: 10px;
     border-radius: 5px;
     display: flex;
+    ${media.phone`
+        padding: 10px;
+    `}
 `;
 
 const ReplyBox = styled.div`
@@ -155,14 +170,17 @@ const replyFn = (item: any) => {
         <Quote>
             <Content>
                 <User>
-                    <NickName>
+                    <InfoWrap>
                         <span className="tip">回复给：</span>
                         <AvatarWrap className="quote">
                             <img src={avatarSrc} />
                         </AvatarWrap>
-                        {item.nickName}
+                        <NickName className="quote">{item.nickName}</NickName>
+                        <UserSign isAdmin={item.identity !== 0}>
+                            &nbsp;·&nbsp;{item.identity !== 0 ? '博主' : '游客'}
+                        </UserSign>
                         <InfoTime>&nbsp;·&nbsp;{timeAgo(item.createdAt)}</InfoTime>
-                    </NickName>
+                    </InfoWrap>
                     <Meta className="quote">
                         <a
                             href="javascript:;"
@@ -173,7 +191,6 @@ const replyFn = (item: any) => {
                         >
                             {showContent ? '折叠' : '展开'}
                         </a>
-                        <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
                     </Meta>
                 </User>
                 {showContent && (
@@ -200,10 +217,13 @@ export const CommentItem = (props: { item: any; index: number }) => {
                 </AvatarWrap>
                 <Content>
                     <User>
-                        <NickName>
-                            {item.nickName}
+                        <InfoWrap>
+                            <NickName>{item.nickName}</NickName>
+                            <UserSign isAdmin={item.identity !== 0}>
+                                &nbsp;·&nbsp;{item.identity !== 0 ? '博主' : '游客'}
+                            </UserSign>
                             <InfoTime>&nbsp;·&nbsp;{timeAgo(item.createdAt)}</InfoTime>
-                        </NickName>
+                        </InfoWrap>
                         <Meta>
                             <a
                                 style={{ color: '#f86422' }}
@@ -213,7 +233,6 @@ export const CommentItem = (props: { item: any; index: number }) => {
                             >
                                 回复
                             </a>
-                            <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
                         </Meta>
                     </User>
                     {item.reply && replyFn(item.reply)}
