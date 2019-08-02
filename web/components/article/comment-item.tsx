@@ -1,9 +1,13 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { xss } from '../../utils/helper';
 import marked from '../../utils/marked';
 import { parseTime, timeAgo } from '../../utils/time';
+import GHAT from '../../utils/generate-avatar';
 import { CommentForm } from '../comment-form';
+import md5 from 'crypto-js/md5';
+
+const ghat = new GHAT();
 
 const CommentsItem = styled.li`
     border-bottom: 1px solid #f5f5f5;
@@ -96,51 +100,41 @@ const ReplyBox = styled.div`
     margin-top: 10px;
 `;
 
-const calcAvatarId = (name: any) => {
-    let sum = 0;
-    for (const c of name) {
-        sum = sum + c.charCodeAt();
-    }
-    return sum % 15;
+const replyFn = (item: any) => {
+    const [avatarSrc, setAvatarSrc] = useState('');
+    useEffect(() => {
+        setAvatarSrc(ghat.getImage(md5(item.nickName).toString()) || '');
+    }, item._id);
+    return (
+        <Quote>
+            <AvatarWrap>
+                <img src={avatarSrc} />
+            </AvatarWrap>
+            <Content>
+                <User>
+                    <NickName>{item.nickName}</NickName>
+                    <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
+                </User>
+                <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
+                <Meta>发表于：{timeAgo(item.createdAt)}前</Meta>
+            </Content>
+        </Quote>
+    );
 };
-
-const replyFn = (item: any) => (
-    <Quote>
-        <AvatarWrap>
-            <img
-                src={
-                    item.identity === 0
-                        ? `/static/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
-                        : '/static/images/avatar.jpg'
-                }
-            />
-        </AvatarWrap>
-        <Content>
-            <User>
-                <NickName>{item.nickName}</NickName>
-                <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
-            </User>
-            <ItemContent dangerouslySetInnerHTML={{ __html: xss(marked(item.content)) }}></ItemContent>
-            <Meta>发表于：{timeAgo(item.createdAt)}前</Meta>
-        </Content>
-    </Quote>
-);
 
 export const CommentItem = (props: { item: any; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
+    const [avatarSrc, setAvatarSrc] = useState('');
+    useEffect(() => {
+        setAvatarSrc(ghat.getImage(md5(props.item.nickName).toString()) || '');
+    }, props.item._id);
 
     const item = props.item;
     return (
         <CommentsItem data-index={'# ' + (props.index + 1) + ' 楼层'}>
             <Info>
                 <AvatarWrap>
-                    <img
-                        src={
-                            item.identity === 0
-                                ? `/static/images/comment-avatars/avatar-${calcAvatarId(item.nickName)}.jpg`
-                                : '/static/images/avatar.jpg'
-                        }
-                    />
+                    <img src={avatarSrc} />
                 </AvatarWrap>
                 <Content>
                     <User>
