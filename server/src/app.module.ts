@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './database/database.module';
+import { AdminLogModule } from './modules/adminlog.module';
 import { DashboardModule } from './modules/dashboard.module';
 import { ArticleModule } from './modules/article.module';
 import { CategoryModule } from './modules/category.module';
@@ -19,6 +20,7 @@ import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 @Module({
     imports: [
         DatabaseModule,
+        AdminLogModule,
         DashboardModule,
         ArticleModule,
         CategoryModule,

@@ -83,4 +83,10 @@ export class CommentController {
     async deleteComment(@Param() params: { id: string }) {
         return await this.commentService.deleteComment(params.id);
     }
+
+    @Get('/recent-comments')
+    @Roles('admin')
+    async recentComments() {
+        return await this.commentService.recentComments();
+    }
 }

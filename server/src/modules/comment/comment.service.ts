@@ -58,4 +58,8 @@ export class CommentService {
         const filter = { ...query };
         return await this.commentModel.countDocuments(filter);
     }
+
+    async recentComments() {
+        return this.getComments({}, { limit: 10 });
+    }
 } /* istanbul ignore next */

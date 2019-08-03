@@ -6,6 +6,8 @@ import * as Joi from '@hapi/joi';
 import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
+import { AdminLog } from '../../models/adminlog.model';
+import { AdminLogService } from '../adminLog/adminlog.service';
 
 const schema = Joi.object().keys({
     account: Joi.string()
@@ -22,7 +24,13 @@ const schema = Joi.object().keys({
 
 @Injectable()
 export class LoginService {
-    constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
+    adminLogService: AdminLogService;
+    constructor(
+        @InjectModel('user') private readonly userModel: Model<User>,
+        @InjectModel('adminlog') private readonly adminLogModel: Model<AdminLog>
+    ) {
+        this.adminLogService = new AdminLogService(this.adminLogModel);
+    }
 
     async getFirstLoginInfo() {
         /**
@@ -67,6 +75,11 @@ export class LoginService {
             password: getDerivedKey(password),
         });
         if (user) {
+            this.adminLogService.create({
+                data: `用户：${user.account} 登录后台系统`,
+                type: '系统登录',
+                user: user._id,
+            });
             return {
                 token: jwt.sign({ account, roles: ['admin'] }, TOKEN_SECRET_KEY, {
                     expiresIn: 60 * 60,
