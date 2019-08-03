@@ -7,7 +7,7 @@ import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 import { AdminLog } from '../../models/adminlog.model';
-import { AdminLogService } from '../adminLog/adminlog.service';
+import { AdminLogService } from '../adminlog/adminlog.service';
 
 const schema = Joi.object().keys({
     account: Joi.string()
