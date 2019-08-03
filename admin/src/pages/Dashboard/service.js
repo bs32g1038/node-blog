@@ -11,3 +11,11 @@ export async function getUserLoginInfo() {
 export async function getSystemInfo() {
     return axios.get('/dashboard/system-info');
 }
+
+export async function getRecentComments() {
+    return axios.get('/recent-comments');
+}
+
+export async function getRecentAdminLogs() {
+    return axios.get('/recent-admin-logs');
+}

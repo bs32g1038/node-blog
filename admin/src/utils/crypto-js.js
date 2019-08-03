@@ -9,3 +9,5 @@ export const encrypt = str => {
     let encrypted = crypto.AES.encrypt(str, s);
     return s1 + encrypted.toString() + s2;
 };
+
+export const md5 = crypto.MD5;

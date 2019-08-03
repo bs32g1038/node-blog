@@ -78,7 +78,7 @@
     }
 }
 
-.projectList {
+.recentCommentList {
     :global {
         .ant-card-head {
             padding: 0;
@@ -128,5 +128,97 @@
             float: right;
             color: #333;
         }
+    }
+}
+
+.commentMsg {
+    font-size: 14px;
+    padding: 20px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.commentInfo {
+    margin-bottom: 10px;
+}
+
+.contentTitle {
+    color: #878d99;
+    font-style: italic;
+}
+.timestamp {
+    color: #999;
+    font-size: 14px;
+    margin-top: 1px;
+}
+
+.commentLogo {
+    width: 40px;
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+}
+
+.commentText {
+    border-radius: 5px;
+    position: relative;
+    padding: 10px;
+    margin: 5px 0 0 50px;
+    color: #5a5e66;
+    background-color: #edf2fc;
+    font-size: 14px;
+    &:before,
+    &:after {
+        position: absolute;
+        right: 100%;
+        top: 15px;
+        border: solid transparent;
+        border-right-color: #edf2fc;
+        content: ' ';
+        height: 0;
+        width: 0;
+        pointer-events: none;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    &:before {
+        border-width: 6px;
+        margin-top: -6px;
+    }
+    &:after {
+        border-width: 5px;
+        margin-top: -5px;
+    }
+}
+
+.navPanel {
+    :global {
+        .ant-card-head {
+            padding: 0;
+        }
+    }
+}
+.serverState {
+    :global {
+        .ant-card-head {
+            padding: 0;
+        }
+        .ant-card-body {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
+
+.linkGroup {
+    padding: 20px 0 8px 0;
+    font-size: 0;
+    & > a {
+        display: inline-block;
+        width: 30%;
+        margin-right: 8px;
+        margin-bottom: 13px;
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 14px;
+        padding: 0 6px;
     }
 }
