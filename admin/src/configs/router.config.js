@@ -25,7 +25,12 @@ export default [
         component: BasicLayout,
         routes: [
             {
-                path: ['/', '/dashboard'],
+                path: '/',
+                exact: true,
+                component: () => <Redirect push to="/dashboard/analysis" />,
+            },
+            {
+                path: '/dashboard',
                 exact: true,
                 component: () => <Redirect push to="/dashboard/analysis" />,
             },

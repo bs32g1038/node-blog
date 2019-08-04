@@ -61,14 +61,14 @@ class SiderMenu extends Component {
     };
     menuClick = e => {
         this.setState({
-            selectedKey: e.key,
+            selectedKey: Array.isArray(e.key) ? e.key : [e.key],
         });
         const { popoverHide } = this.props; // 响应式布局控制小屏幕点击菜单时隐藏菜单操作
         popoverHide && popoverHide();
     };
     openMenu = v => {
         this.setState({
-            openKey: v,
+            openKey: Array.isArray(v) ? v : [v],
             firstHide: false,
         });
     };
