@@ -10,6 +10,9 @@ import './styles/index.scss';
 import history from './utils/history';
 import UserLogin from './pages/UserLogin';
 import ScrollTop from './components/ScrollTop';
+import { isLogin } from './utils/is-login';
+
+isLogin();
 
 ReactDOM.render(
     <Provider store={store}>
