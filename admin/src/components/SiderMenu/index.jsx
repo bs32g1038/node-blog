@@ -6,6 +6,7 @@ import styles from './index.module.scss';
 import classNames from 'classnames';
 import config from '../../configs/default.config';
 import { ReactComponent as IconLogo } from '../../assets/logo.svg';
+import { getDefaultCollapsedSubMenus, getFlatMenuKeys, getSelectedMenuKeys } from './util';
 
 const { Sider } = Layout;
 
@@ -25,9 +26,13 @@ class SiderMenu extends Component {
     }
     static setMenuOpen = props => {
         const { pathname } = props.location;
+        const flatMenuKeys = getDefaultCollapsedSubMenus({ ...props, flatMenuKeys: getFlatMenuKeys(props.routes) });
         return {
-            openKey: pathname.substr(0, pathname.lastIndexOf('/')),
-            selectedKey: pathname,
+            openKey: getDefaultCollapsedSubMenus({
+                ...props,
+                flatMenuKeys: flatMenuKeys.slice(1, flatMenuKeys.length - 1),
+            }),
+            selectedKey: getSelectedMenuKeys(flatMenuKeys, pathname),
         };
     };
     static onCollapse = collapsed => {
@@ -44,7 +49,10 @@ class SiderMenu extends Component {
     };
     componentDidMount() {
         const state = SiderMenu.setMenuOpen(this.props);
-        this.setState(state);
+        this.setState({
+            firstHide: false,
+            ...state,
+        });
     }
     toggle = () => {
         this.setState({
@@ -60,7 +68,7 @@ class SiderMenu extends Component {
     };
     openMenu = v => {
         this.setState({
-            openKey: v[v.length - 1],
+            openKey: v,
             firstHide: false,
         });
     };
@@ -99,8 +107,8 @@ class SiderMenu extends Component {
                     menus={routes}
                     onClick={this.menuClick}
                     mode={this.state.mode}
-                    selectedKeys={[selectedKey]}
-                    openKeys={firstHide ? null : [openKey]}
+                    selectedKeys={selectedKey}
+                    openKeys={firstHide ? null : openKey}
                     onOpenChange={this.openMenu}
                 />
             </Sider>
