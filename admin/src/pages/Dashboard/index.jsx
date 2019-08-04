@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            systemInfoLoading: false,
+            loading: false,
             statisticalInfo: {},
             userInfo: {},
             systemInfo: {},
@@ -80,7 +80,7 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         this.setState(() => ({
-            systemInfoLoading: true,
+            loading: true,
         }));
         Promise.all([
             api.getStatisticalInfo(),
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
                 systemInfo: res3.data,
                 recentComments: res4.data,
                 recentAdminLogs: res5.data,
-                systemInfoLoading: false,
+                loading: false,
             }));
         });
     }
@@ -124,6 +124,7 @@ class Dashboard extends React.Component {
                             title="近期评论"
                             bordered={false}
                             bodyStyle={{ padding: 0 }}
+                            loading={this.state.loading}
                         >
                             <div>
                                 {this.state.recentComments.map(item => (
@@ -157,6 +158,7 @@ class Dashboard extends React.Component {
                                         </div>
                                         <div className="random-logo">
                                             <img
+                                                alt=""
                                                 className={styles.commentLogo}
                                                 src={ghat.getImage(md5(item.nickName).toString())}
                                             />
@@ -174,6 +176,7 @@ class Dashboard extends React.Component {
                             title="便捷导航"
                             bordered={false}
                             bodyStyle={{ padding: 0 }}
+                            loading={this.state.loading}
                         >
                             <div className={styles.linkGroup}>
                                 {links.map(link => (
@@ -189,7 +192,7 @@ class Dashboard extends React.Component {
                             style={{ marginBottom: 24 }}
                             bordered={false}
                             title="服务器状态"
-                            loading={this.state.systemInfoLoading}
+                            loading={this.state.loading}
                         >
                             <div className={styles.chart}>
                                 <p>
@@ -219,7 +222,7 @@ class Dashboard extends React.Component {
                             style={{ marginBottom: 24 }}
                             bordered={false}
                             title="操作日志"
-                            loading={this.state.systemInfoLoading}
+                            loading={this.state.loading}
                         >
                             <div className={styles.chart}>
                                 {this.state.recentAdminLogs.map(item => (
