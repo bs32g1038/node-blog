@@ -131,30 +131,30 @@ export default [
                 ],
             },
             {
-                path: '/demos',
+                path: '/code',
                 title: '代码管理',
                 icon: 'codepen',
                 component: RouteView,
                 routes: [
                     {
-                        path: '/demos',
+                        path: '/code/demos',
                         title: '代码demo',
                         component: RouteView,
                         routes: [
                             {
-                                path: '/demos',
+                                path: '/code/demos',
                                 exact: true,
                                 component: Demos,
                             },
                             {
                                 title: '添加demo',
-                                path: '/demos/edit',
+                                path: '/code/demos/edit',
                                 exact: true,
                                 component: DemoEdit,
                             },
                             {
                                 title: '编辑demo',
-                                path: '/demos/edit/:id',
+                                path: '/code/demos/edit/:id',
                                 exact: true,
                                 component: DemoEdit,
                             },
@@ -164,13 +164,13 @@ export default [
                         ],
                     },
                     {
-                        path: '/demos/static-files',
+                        path: '/code/static-files',
                         title: '静态文件',
                         exact: true,
                         component: StaticFiles,
                     },
                     {
-                        path: '/demos/static-files/:folderId',
+                        path: '/code/static-files/:folderId',
                         exact: true,
                         component: StaticFiles,
                     },
@@ -186,7 +186,7 @@ export default [
                 component: RouteView,
                 routes: [
                     {
-                        path: '/medias',
+                        path: '/medias/images',
                         title: '图片列表',
                         exact: true,
                         component: Medias,

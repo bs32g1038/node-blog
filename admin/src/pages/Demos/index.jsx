@@ -97,7 +97,7 @@ export default class Demos extends Component {
             <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
                 <div className="main-content">
                     <div className="panel">
-                        <Button type="primary" onClick={() => this.props.history.push('/demos/edit')}>
+                        <Button type="primary" onClick={() => this.props.history.push('/code/demos/edit')}>
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加Demo
                         </Button>

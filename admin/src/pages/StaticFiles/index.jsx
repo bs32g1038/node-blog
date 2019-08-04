@@ -31,7 +31,7 @@ class StaticFiles extends Component {
                 dataIndex: 'originalName',
                 render: (text, record) => {
                     return record.isdir ? (
-                        <Link to={'/demos/static-files/' + record._id}>
+                        <Link to={'/code/static-files/' + record._id}>
                             <span>
                                 <i className="fa fa-folder fa-fw"></i>
                                 {record.originalName}
@@ -252,7 +252,7 @@ class StaticFiles extends Component {
                                         padding: '3px 8px',
                                         borderRadius: '2px',
                                     }}
-                                    to="/demos/static-files"
+                                    to="/code/static-files"
                                 >
                                     返回上一级
                                 </Link>
