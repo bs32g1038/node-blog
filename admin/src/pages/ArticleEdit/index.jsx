@@ -15,7 +15,6 @@ class ArticleEdit extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            screenshot: '/static/images/default.jpg',
             article: {},
             categories: [],
         };
@@ -96,13 +95,15 @@ class ArticleEdit extends Component {
         const category = article.category || {};
         const categoryOptions =
             categories && categories.map(category => <Option key={category._id}>{category.name}</Option>);
-        let fileList = [
-            {
-                uid: -1,
-                status: 'done',
-                url: this.state.screenshot,
-            },
-        ];
+        let fileList = this.state.screenshot
+            ? [
+                  {
+                      uid: -1,
+                      status: 'done',
+                      url: this.state.screenshot,
+                  },
+              ]
+            : [];
         return (
             <PageHeaderWrapper
                 title={article._id ? '文章编辑' : '添加文章'}
@@ -127,11 +128,12 @@ class ArticleEdit extends Component {
                                 initialValue: category._id,
                             })(<Select placeholder="请选择一个分类">{categoryOptions}</Select>)}
                         </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="上传图片：">
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="封面图片：">
                             {getFieldDecorator('screenshot', {
                                 initialValue: fileList,
                                 valuePropName: 'fileList',
                                 getValueFromEvent: this.handleUpload,
+                                rules: [{ required: true, message: '封面图片不能为空!' }],
                             })(
                                 <Upload
                                     disabled={false}
@@ -153,6 +155,7 @@ class ArticleEdit extends Component {
                         <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章摘要：">
                             {getFieldDecorator('summary', {
                                 initialValue: article.summary,
+                                rules: [{ required: true, message: '文章摘要不能为空!' }],
                             })(
                                 <TextArea placeholder="请输入文章摘要" autosize={{ minRows: 2, maxRows: 6 }}></TextArea>
                             )}
@@ -160,6 +163,7 @@ class ArticleEdit extends Component {
                         <FormItem label="文章详情：" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
                             {getFieldDecorator('content', {
                                 initialValue: article.content || '',
+                                rules: [{ required: true, message: '文章详情不能为空!' }],
                             })(<MdEdit />)}
                         </FormItem>
                         <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
