@@ -3,6 +3,8 @@ import BasicLayout from '../layouts/BasicLayout';
 import RouteView from '../layouts/RouteView';
 import { Redirect } from 'react-router-dom';
 
+import Exception404 from '../components/Exception404';
+
 import {
     Dashboard,
     Articles,
@@ -48,46 +50,78 @@ export default [
                 routes: [
                     {
                         path: '/content/articles',
-                        exact: true,
                         title: '文章管理',
-                        component: Articles,
-                    },
-                    {
-                        path: '/content/articles/edit',
-                        exact: true,
-                        component: ArticleEdit,
-                    },
-                    {
-                        path: '/content/articles/edit/:id',
-                        exact: true,
-                        component: ArticleEdit,
+                        component: RouteView,
+                        routes: [
+                            {
+                                path: '/content/articles',
+                                exact: true,
+                                component: Articles,
+                            },
+                            {
+                                title: '添加文章',
+                                path: '/content/articles/edit',
+                                exact: true,
+                                component: ArticleEdit,
+                            },
+                            {
+                                title: '编辑文章',
+                                path: '/content/articles/edit/:id',
+                                exact: true,
+                                component: ArticleEdit,
+                            },
+                            {
+                                component: Exception404,
+                            },
+                        ],
                     },
                     {
                         path: '/content/categories',
-                        exact: true,
                         title: '分类管理',
-                        component: Categories,
-                    },
-                    {
-                        path: '/content/categories/edit',
-                        exact: true,
-                        component: CategoryEdit,
-                    },
-                    {
-                        path: '/content/categories/edit/:id',
-                        exact: true,
-                        component: CategoryEdit,
+                        component: RouteView,
+                        routes: [
+                            {
+                                path: '/content/categories',
+                                exact: true,
+                                component: Categories,
+                            },
+                            {
+                                title: '添加分类',
+                                path: '/content/categories/edit',
+                                exact: true,
+                                component: CategoryEdit,
+                            },
+                            {
+                                title: '编辑分类',
+                                path: '/content/categories/edit/:id',
+                                exact: true,
+                                component: CategoryEdit,
+                            },
+                            {
+                                component: Exception404,
+                            },
+                        ],
                     },
                     {
                         path: '/content/comments',
                         title: '评论管理',
-                        exact: true,
-                        component: Comments,
-                    },
-                    {
-                        path: '/content/comments/reply/:id',
-                        exact: true,
-                        component: CommentReply,
+                        component: RouteView,
+                        routes: [
+                            {
+                                path: '/content/comments',
+                                exact: true,
+                                component: Comments,
+                            },
+                            {
+                                title: '回复评论',
+                                path: '/content/comments/reply/:id',
+                                exact: true,
+                                component: CommentReply,
+                            },
+                            {
+                                component: Exception404,
+                            },
+                        ],
                     },
                 ],
             },
@@ -100,18 +134,29 @@ export default [
                     {
                         path: '/demos',
                         title: '代码demo',
-                        exact: true,
-                        component: Demos,
-                    },
-                    {
-                        path: '/demos/edit',
-                        exact: true,
-                        component: DemoEdit,
-                    },
-                    {
-                        path: '/demos/edit/:id',
-                        exact: true,
-                        component: DemoEdit,
+                        component: RouteView,
+                        routes: [
+                            {
+                                path: '/demos',
+                                exact: true,
+                                component: Demos,
+                            },
+                            {
+                                title: '添加demo',
+                                path: '/demos/edit',
+                                exact: true,
+                                component: DemoEdit,
+                            },
+                            {
+                                title: '编辑demo',
+                                path: '/demos/edit/:id',
+                                exact: true,
+                                component: DemoEdit,
+                            },
+                            {
+                                component: Exception404,
+                            },
+                        ],
                     },
                     {
                         path: '/demos/static-files',
@@ -123,6 +168,9 @@ export default [
                         path: '/demos/static-files/:folderId',
                         exact: true,
                         component: StaticFiles,
+                    },
+                    {
+                        component: Exception404,
                     },
                 ],
             },
@@ -138,7 +186,13 @@ export default [
                         exact: true,
                         component: Medias,
                     },
+                    {
+                        component: Exception404,
+                    },
                 ],
+            },
+            {
+                component: Exception404,
             },
         ],
     },
