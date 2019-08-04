@@ -9,13 +9,14 @@ import store from './store';
 import './styles/index.scss';
 import history from './utils/history';
 import UserLogin from './pages/UserLogin';
+import ScrollTop from './components/ScrollTop';
 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Switch>
                 <Route exact path="/user/login" component={UserLogin} />
-                {renderRoutes(routes)}
+                <ScrollTop>{renderRoutes(routes)}</ScrollTop>
             </Switch>
         </Router>
     </Provider>,
