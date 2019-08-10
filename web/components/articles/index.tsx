@@ -84,9 +84,9 @@ C.getInitialProps = async ({ reduxStore, req, query }: any) => {
             },
         };
     }
-    const q = req && req.query;
     await reduxStore.dispatch(fetchCategories());
-    await reduxStore.dispatch(fetchArticles(q.page, q.limit, { cid: q.cid }));
+    const { page = 1, limit = LIMIT, cid = '' } = req && req.query;
+    await reduxStore.dispatch(fetchArticles(Number(page), Number(limit), { cid }));
     return {};
 };
 
