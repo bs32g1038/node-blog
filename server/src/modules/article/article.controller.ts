@@ -24,6 +24,10 @@ export class ArticleController {
             .max(50),
     };
 
+    public static deleteArticlesSchema = {
+        articleIds: Joi.array().items(Joi.string()),
+    };
+
     @Post('/articles')
     @Roles('admin')
     public async create(@Body() article: Article) {
@@ -71,5 +75,12 @@ export class ArticleController {
     @JoiValidationPipe(ArticleController.idSchema)
     public async deleteArticle(@Param() params: { id: string }): Promise<Article> {
         return await this.articleService.deleteArticle(params.id);
+    }
+
+    @Delete('/articles')
+    @Roles('admin')
+    @JoiValidationPipe(ArticleController.deleteArticlesSchema)
+    deleteArticles(@Body() body: { articleIds: string[] }): Promise<any> {
+        return this.articleService.batchDelete(body.articleIds);
     }
 }
