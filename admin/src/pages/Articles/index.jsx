@@ -13,6 +13,7 @@ class Articles extends Component {
         this.state = {
             articles: [],
             pagination: {},
+            selectedRowKeys: [],
             loading: false,
         };
     }
@@ -92,6 +93,23 @@ class Articles extends Component {
             this.fetchData();
         });
     }
+    batchDeleteArticle() {
+        if (this.state.selectedRowKeys.length <= 0) {
+            message.info('请选择要删除的文章');
+            return;
+        }
+        axios
+            .delete('/articles', {
+                data: { articleIds: this.state.selectedRowKeys },
+            })
+            .then(res => {
+                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                    message.success('删除文章成功！');
+                    return this.fetchData();
+                }
+                return message.error('删除文章失败，请重新尝试。');
+            });
+    }
     fetchData(page = 1, limit = 10) {
         this.setState({ loading: true });
         const query = {
@@ -116,10 +134,18 @@ class Articles extends Component {
         });
         this.fetchData(pagination.current, pagination.pageSize);
     }
+    onSelectChange(selectedRowKeys) {
+        this.setState({ selectedRowKeys });
+    }
     componentDidMount() {
         this.fetchData();
     }
     render() {
+        const { selectedRowKeys } = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange.bind(this),
+        };
         return (
             <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
                 <div className="main-content">
@@ -133,7 +159,7 @@ class Articles extends Component {
                                     <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                     添加文档
                                 </Button>
-                                <Button type="danger">
+                                <Button type="danger" onClick={() => this.batchDeleteArticle()}>
                                     <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
                                     批量删除
                                 </Button>
@@ -163,7 +189,7 @@ class Articles extends Component {
                     <div className="table-wrapper">
                         <Table
                             rowKey={record => record._id}
-                            rowSelection={{}}
+                            rowSelection={rowSelection}
                             columns={this.getTableColums()}
                             dataSource={this.state.articles}
                             pagination={this.state.pagination}
