@@ -116,4 +116,15 @@ export class ArticleService {
         const filter = { isDeleted: false, ...query };
         return await this.articleModel.countDocuments(filter);
     }
+
+    // 批量删除文章
+    public async batchDelete(articleIds: string[]) {
+        return this.articleModel.find({ _id: { $in: articleIds } }).then(async articles => {
+            /* istanbul ignore next */
+            await articles.map(async (article: Article) => {
+                return await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
+            });
+            return this.articleModel.deleteMany({ _id: { $in: articleIds } });
+        });
+    }
 } /* istanbul ignore next */
