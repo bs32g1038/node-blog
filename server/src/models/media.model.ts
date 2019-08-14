@@ -1,19 +1,26 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface Media extends Document {
-    _id: string;
-    originalName: string;
-    name: string;
-    mimetype: string;
-    size: number;
-    suffix: string;
-    fileName: string;
-    filePath: string;
-    type: string;
+export interface Media {
+    readonly _id?: string;
+    readonly originalName?: string;
+    readonly name?: string;
+    readonly mimetype?: string;
+    readonly size?: number;
+    readonly suffix?: string;
+    readonly fileName?: string;
+    readonly filePath?: string;
+    readonly type?: string;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const MediaSchema = new mongoose.Schema(
+export interface MediaDocument extends Media, Document {
+    readonly _id: string;
+}
+
+const MediaSchema = new mongoose.Schema(
     {
         originalName: {
             type: String,
@@ -53,3 +60,7 @@ export const MediaSchema = new mongoose.Schema(
         timestamps: true,
     }
 ).index({ createdAt: -1 });
+
+export const MediaModel = mongoose.model('media', MediaSchema, 'media');
+
+export const MediaModelProvider = getProviderByModel(MediaModel);

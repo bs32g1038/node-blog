@@ -1,15 +1,22 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { sha1 } from '../utils/crypto.util';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface User extends Document {
-    _id: string;
-    type: string;
-    account: string;
-    password: string;
+export interface User {
+    readonly _id?: string;
+    readonly type?: string;
+    readonly account?: string;
+    readonly password?: string;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const UserSchema = new mongoose.Schema(
+export interface UserDocument extends User, Document {
+    readonly _id: string;
+}
+
+const UserSchema = new mongoose.Schema(
     {
         type: {
             type: String,
@@ -36,3 +43,7 @@ export const UserSchema = new mongoose.Schema(
         timestamps: true,
     }
 ).index({ createdAt: -1 });
+
+export const UserModel = mongoose.model('user', UserSchema, 'user');
+
+export const UserModelProvider = getProviderByModel(UserModel);

@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
-import { InjectModel } from '@nestjs/mongoose';
-import { File } from '../../models/file.model';
-import { Media } from '../../models/media.model';
+import { InjectModel } from '../../utils/model.util';
+import { FileDocument, FileModel } from '../../models/file.model';
+import { MediaDocument, MediaModel } from '../../models/media.model';
 import { md5 } from '../../utils/crypto.util';
 import * as fs from 'fs';
 import * as util from 'util';
@@ -18,8 +18,8 @@ MulterModule.register({
 @Injectable()
 export class UploadService {
     public constructor(
-        @InjectModel('file') private readonly fileModel: Model<File>,
-        @InjectModel('media') private readonly mediaModel: Model<Media>
+        @InjectModel(FileModel) private readonly fileModel: Model<FileDocument>,
+        @InjectModel(MediaModel) private readonly mediaModel: Model<MediaDocument>
     ) {}
 
     public async uploadSingalImage(file: Express.Multer.File) {

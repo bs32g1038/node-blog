@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { CreateMediaDto, UpdateMediaDto } from './media.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { MediaService } from './media.service';
 import { Media } from '../../models/media.model';
@@ -21,14 +20,14 @@ export class MediaController {
 
     @Post('/medias')
     @Roles('admin')
-    async create(@Body() createMediaDto: CreateMediaDto) {
-        return await this.mediaService.create(createMediaDto);
+    async create(@Body() media: Media) {
+        return await this.mediaService.create(media);
     }
 
     @Put('/medias/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() fileDto: UpdateMediaDto) {
-        return await this.mediaService.update(params.id, fileDto);
+    async update(@Param() params: { id: string }, @Body() media: Media) {
+        return await this.mediaService.update(params.id, media);
     }
 
     @Get('/medias')

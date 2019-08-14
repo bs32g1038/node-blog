@@ -1,20 +1,27 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface Comment extends Document {
-    _id: string;
-    nickName: string;
-    email: string;
-    website: string;
-    reply: string;
-    article: string;
-    location: string;
-    pass: boolean;
-    content: string;
-    identity: number;
+export interface Comment {
+    readonly _id?: string;
+    readonly nickName?: string;
+    readonly email?: string;
+    readonly website?: string;
+    readonly reply?: string;
+    readonly article?: string;
+    readonly location?: string;
+    readonly pass?: boolean;
+    readonly content?: string;
+    readonly identity?: number;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const CommentSchema = new mongoose.Schema(
+export interface CommentDocument extends Comment, Document {
+    readonly _id: string;
+}
+
+const CommentSchema = new mongoose.Schema(
     {
         nickName: {
             type: String,
@@ -68,3 +75,7 @@ export const CommentSchema = new mongoose.Schema(
         timestamps: true,
     }
 ).index({ createdAt: -1 });
+
+export const CommentModel = mongoose.model('comment', CommentSchema, 'comment');
+
+export const CommentModelProvider = getProviderByModel(CommentModel);

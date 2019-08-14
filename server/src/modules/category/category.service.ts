@@ -1,19 +1,17 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Category } from '../../models/category.model';
-import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
+import { InjectModel } from '../../utils/model.util';
+import { Category, CategoryDocument, CategoryModel } from '../../models/category.model';
 
 @Injectable()
 export class CategoryService {
-    constructor(@InjectModel('category') private readonly categoryModel: Model<Category>) {}
+    constructor(@InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>) {}
 
-    async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-        const category: Category = await this.categoryModel.create(createCategoryDto);
-        return category;
+    async create(newCategory: Category): Promise<Category> {
+        return await this.categoryModel.create(newCategory);
     }
 
-    async update(id: string, data: UpdateCategoryDto) {
+    async update(id: string, data: Category): Promise<Category> {
         await this.categoryModel.updateOne({ _id: id }, data);
         return await this.categoryModel.findById(id);
     }
@@ -28,8 +26,7 @@ export class CategoryService {
     }
 
     async getCategory(id: string) {
-        const category = await this.categoryModel.findById(id);
-        return category;
+        return await this.categoryModel.findById(id);
     }
 
     async deleteCategory(id: string) {

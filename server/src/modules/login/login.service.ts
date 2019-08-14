@@ -1,12 +1,12 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../../models/user.model';
+import { InjectModel } from '../../utils/model.util';
 import * as Joi from '@hapi/joi';
 import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import jwt = require('jsonwebtoken');
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
-import { AdminLog } from '../../models/adminlog.model';
+import { UserDocument, UserModel } from '../../models/user.model';
+import { AdminLogDocument, AdminLogModel } from '../../models/adminlog.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
 
 const schema = Joi.object().keys({
@@ -24,13 +24,11 @@ const schema = Joi.object().keys({
 
 @Injectable()
 export class LoginService {
-    adminLogService: AdminLogService;
     constructor(
-        @InjectModel('user') private readonly userModel: Model<User>,
-        @InjectModel('adminlog') private readonly adminLogModel: Model<AdminLog>
-    ) {
-        this.adminLogService = new AdminLogService(this.adminLogModel);
-    }
+        private readonly adminLogService: AdminLogService,
+        @InjectModel(UserModel) private readonly userModel: Model<UserDocument>,
+        @InjectModel(AdminLogModel) private readonly adminLogModel: Model<AdminLogDocument>
+    ) {}
 
     async getFirstLoginInfo() {
         /**

@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Req } from '@nestjs/common';
-import { CreateCommentDto, UpdateCommentDto } from './comment.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { CommentService } from './comment.service';
 import { Comment } from '../../models/comment.model';
@@ -28,22 +27,22 @@ export class CommentController {
     };
 
     @Post('/comments')
-    async create(@Req() req, @Body() createCommentDto: CreateCommentDto) {
+    async create(@Req() req, @Body() comment: Comment) {
         if (auth(req)) {
-            Object.assign(createCommentDto, {
+            Object.assign(comment, {
                 identity: 1,
                 nickName: ADMIN_USER_INFO.nickName,
                 email: ADMIN_USER_INFO.email,
                 location: ADMIN_USER_INFO.location,
             });
         }
-        return await this.commentService.create(createCommentDto);
+        return await this.commentService.create(comment);
     }
 
     @Put('/comments/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() categoryDto: UpdateCommentDto) {
-        return await this.commentService.update(params.id, categoryDto);
+    async update(@Param() params: { id: string }, @Body() comment: Comment) {
+        return await this.commentService.update(params.id, comment);
     }
 
     @Get('/comments')

@@ -1,6 +1,5 @@
 import { DemoService } from '../../../src/modules/demo/demo.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DemoSchema } from '../../../src/models/demo.model';
+import { DemoModelProvider } from '../../../src/models/demo.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -10,8 +9,7 @@ describe('demo_001_unit', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [MongooseModule.forFeature([{ name: 'demo', schema: DemoSchema, collection: 'demo' }])],
-            providers: [DemoService],
+            providers: [DemoModelProvider, DemoService],
         });
         demoService = app.get<DemoService>(DemoService);
     });

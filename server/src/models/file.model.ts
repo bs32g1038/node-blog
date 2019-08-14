@@ -1,22 +1,29 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface File extends Document {
-    _id: string;
-    originalName: string;
-    name: string;
-    mimetype: string;
-    size: number;
-    suffix: string;
-    fileName: string;
-    filePath: string;
-    isdir: boolean;
-    category: number;
-    parentId: string;
-    fileCount: number;
+export interface File {
+    readonly _id?: string;
+    readonly originalName?: string;
+    readonly name?: string;
+    readonly mimetype?: string;
+    readonly size?: number;
+    readonly suffix?: string;
+    readonly fileName?: string;
+    readonly filePath?: string;
+    readonly isdir?: boolean;
+    readonly category?: number;
+    readonly parentId?: string;
+    readonly fileCount?: number;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const FileSchema = new mongoose.Schema(
+export interface FileDocument extends File, Document {
+    readonly _id: string;
+}
+
+const FileSchema = new mongoose.Schema(
     {
         originalName: {
             type: String,
@@ -69,3 +76,7 @@ export const FileSchema = new mongoose.Schema(
         timestamps: true,
     }
 ).index({ createdAt: -1 });
+
+export const FileModel = mongoose.model('file', FileSchema, 'file');
+
+export const FileModelProvider = getProviderByModel(FileModel);

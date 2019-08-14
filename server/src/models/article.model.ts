@@ -1,20 +1,27 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface Article extends Document {
-    _id: string;
-    title: string;
-    content: string;
-    summary: string;
-    screenshot: string;
-    category: string;
-    commentCount: number;
-    viewsCount: number;
-    isDeleted: boolean;
-    isDraft: boolean;
+export interface Article {
+    readonly _id?: string;
+    readonly title: string;
+    readonly content: string;
+    readonly summary: string;
+    readonly screenshot?: string;
+    readonly category: string;
+    readonly commentCount?: number;
+    readonly viewsCount?: number;
+    readonly isDeleted?: boolean;
+    readonly isDraft?: boolean;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const ArticleSchema = new mongoose.Schema(
+export interface ArticleDocument extends Article, Document {
+    readonly _id: string;
+}
+
+const ArticleSchema = new mongoose.Schema(
     {
         title: {
             type: String,
@@ -67,3 +74,7 @@ export const ArticleSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+export const ArticleModel = mongoose.model('article', ArticleSchema, 'article');
+
+export const ArticleModelProvider = getProviderByModel(ArticleModel);

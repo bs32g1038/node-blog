@@ -1,13 +1,21 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface AdminLog extends Document {
-    user: string;
-    type: string;
-    data: string;
+export interface AdminLog {
+    readonly _id?: string;
+    readonly user?: string;
+    readonly type?: string;
+    readonly data?: string;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const AdminLogSchema = new mongoose.Schema(
+export interface AdminLogDocument extends AdminLog, Document {
+    readonly _id: string;
+}
+
+const AdminLogSchema = new mongoose.Schema(
     {
         type: {
             type: String,
@@ -27,3 +35,7 @@ export const AdminLogSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+export const AdminLogModel = mongoose.model('adminlog', AdminLogSchema, 'adminlog');
+
+export const AdminLogModelProvider = getProviderByModel(AdminLogModel);

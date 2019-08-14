@@ -17,7 +17,7 @@ export const verifyToken = str => {
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const module = await Test.createTestingModule({
-        imports: [DatabaseModule, ...metadata.imports],
+        imports: [DatabaseModule, ...(metadata.imports || [])],
         providers: metadata.providers,
     }).compile();
     const app = module.createNestApplication();

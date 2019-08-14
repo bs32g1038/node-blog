@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Header } from '@nestjs/common';
-import { CreateDemoDto, UpdateDemoDto } from './demo.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { DemoService } from './demo.service';
 import { Demo } from '../../models/demo.model';
@@ -23,14 +22,14 @@ export class DemoController {
 
     @Post('/api/demos')
     @Roles('admin')
-    async create(@Body() createDemoDto: CreateDemoDto) {
-        return await this.demoService.create(createDemoDto);
+    async create(@Body() demo: Demo) {
+        return await this.demoService.create(demo);
     }
 
     @Put('/api/demos/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() demoDto: UpdateDemoDto) {
-        return await this.demoService.update(params.id, demoDto);
+    async update(@Param() params: { id: string }, @Body() demo: Demo) {
+        return await this.demoService.update(params.id, demo);
     }
 
     @Get('/api/demos')

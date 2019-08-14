@@ -8,7 +8,8 @@ import { initApp } from '../../util';
 
 describe('article_004', () => {
     let app: INestApplication;
-    const category_id: string = mongoose.Types.ObjectId();
+    const categoryId = mongoose.Types.ObjectId();
+    const time = new Date().toISOString();
 
     beforeAll(async () => {
         app = await initApp({
@@ -16,7 +17,7 @@ describe('article_004', () => {
         });
         const categoryService = app.get<CategoryService>(CategoryService);
         await categoryService.create({
-            _id: category_id,
+            _id: categoryId,
             articleCount: 10,
             order: 0,
             name: 'test',
@@ -25,7 +26,6 @@ describe('article_004', () => {
         });
     });
 
-    const time = new Date().toISOString();
     const article = {
         _id: mongoose.Types.ObjectId(),
         isDraft: false,
@@ -36,7 +36,7 @@ describe('article_004', () => {
         content: '```html```\ntest\n```',
         summary: 'test',
         screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
-        category: category_id,
+        category: categoryId,
         createdAt: time,
         updatedAt: time,
         __v: 0,
