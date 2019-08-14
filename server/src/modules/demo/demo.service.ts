@@ -1,21 +1,19 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Demo } from '../../models/demo.model';
-import { CreateDemoDto, UpdateDemoDto } from './demo.dto';
+import { InjectModel } from '../../utils/model.util';
+import { Demo, DemoDocument, DemoModel } from '../../models/demo.model';
 
 @Injectable()
 export class DemoService {
-    constructor(@InjectModel('demo') private readonly demoModel: Model<Demo>) {}
+    constructor(@InjectModel(DemoModel) private readonly demoModel: Model<DemoDocument>) {}
 
-    async create(createDemoDto: CreateDemoDto): Promise<Demo> {
-        const demo: Demo = await this.demoModel.create(createDemoDto);
+    async create(newDemo: Demo): Promise<Demo> {
+        const demo: Demo = await this.demoModel.create(newDemo);
         return demo;
     }
 
-    async update(id: string, data: UpdateDemoDto) {
-        const demo: Demo = await this.demoModel.findByIdAndUpdate({ _id: id }, data);
-        return demo;
+    async update(id: string, data: Demo) {
+        return await this.demoModel.findByIdAndUpdate({ _id: id }, data);
     }
 
     async getDemos(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Demo[]> {

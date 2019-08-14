@@ -1,14 +1,21 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface Category extends Document {
-    _id: string;
-    name: string;
-    order: number;
-    articleCount: number;
+export interface Category {
+    readonly _id?: string | mongoose.Types.ObjectId;
+    readonly name?: string;
+    readonly order?: number;
+    readonly articleCount?: number;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
 }
 
-export const CategorySchema = new mongoose.Schema(
+export interface CategoryDocument extends Category, Document {
+    readonly _id: string;
+}
+
+const CategorySchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -31,3 +38,7 @@ export const CategorySchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+export const CategoryModel = mongoose.model('category', CategorySchema, 'category');
+
+export const CategoryModelProvider = getProviderByModel(CategoryModel);

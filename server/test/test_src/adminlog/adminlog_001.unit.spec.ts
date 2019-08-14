@@ -1,6 +1,5 @@
 import { AdminLogService } from '../../../src/modules/adminlog/adminlog.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AdminLogSchema } from '../../../src/models/adminlog.model';
+import { AdminLogModelProvider } from '../../../src/models/adminlog.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -10,10 +9,7 @@ describe('AdminLogService', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([{ name: 'adminlog', schema: AdminLogSchema, collection: 'adminlog' }]),
-            ],
-            providers: [AdminLogService],
+            providers: [AdminLogModelProvider, AdminLogService],
         });
         adminLogService = app.get<AdminLogService>(AdminLogService);
     });

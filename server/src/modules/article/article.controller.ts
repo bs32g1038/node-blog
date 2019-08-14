@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { CreateArticleDto, UpdateArticleDto } from './article.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { ArticleService } from './article.service';
 import { Article } from '../../models/article.model';
@@ -27,14 +26,14 @@ export class ArticleController {
 
     @Post('/articles')
     @Roles('admin')
-    public async create(@Body() createArticleDto: CreateArticleDto) {
-        return await this.articleService.create(createArticleDto);
+    public async create(@Body() article: Article) {
+        return await this.articleService.create(article);
     }
 
     @Put('/articles/:id')
     @Roles('admin')
-    public async update(@Param() params: { id: string }, @Body() articleDto: UpdateArticleDto) {
-        return await this.articleService.update(params.id, articleDto);
+    public async update(@Param() params: { id: string }, @Body() article: Article) {
+        return await this.articleService.update(params.id, article);
     }
 
     @Get('/articles')

@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { CategoryService } from './category.service';
 import { Category } from '../../models/category.model';
@@ -21,14 +20,14 @@ export class CategoryController {
 
     @Post('/categories')
     @Roles('admin')
-    async create(@Body() createCategoryDto: CreateCategoryDto) {
-        return await this.categoryService.create(createCategoryDto);
+    async create(@Body() category: Category) {
+        return await this.categoryService.create(category);
     }
 
     @Put('/categories/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() categoryDto: UpdateCategoryDto) {
-        return await this.categoryService.update(params.id, categoryDto);
+    async update(@Param() params: { id: string }, @Body() category: Category) {
+        return await this.categoryService.update(params.id, category);
     }
 
     @Get('/categories')

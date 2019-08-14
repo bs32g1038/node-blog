@@ -1,29 +1,28 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Comment } from '../../models/comment.model';
-import { Article } from '../../models/article.model';
-import { CreateCommentDto, UpdateCommentDto } from './comment.dto';
+import { InjectModel } from '../../utils/model.util';
+import { Comment, CommentDocument, CommentModel } from '../../models/comment.model';
+import { ArticleDocument, ArticleModel } from '../../models/article.model';
 import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class CommentService {
     constructor(
-        @InjectModel('comment') private readonly commentModel: Model<Comment>,
-        @InjectModel('article') private readonly articleModel: Model<Article>
+        @InjectModel(CommentModel) private readonly commentModel: Model<CommentDocument>,
+        @InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>
     ) {}
 
-    async create(commentDto: CreateCommentDto) {
-        const article = await this.articleModel.findById(commentDto.article);
+    async create(newComment: Comment) {
+        const article = await this.articleModel.findById(newComment.article);
         if (!article) {
             throw new BadRequestException('[article]文章id为错误数据');
         }
-        const comment: Comment = await this.commentModel.create(commentDto);
+        const comment: Comment = await this.commentModel.create(newComment);
         await this.articleModel.updateOne({ _id: article._id }, { $inc: { commentCount: 1 } });
         return comment;
     }
 
-    async update(id: string, data: UpdateCommentDto) {
+    async update(id: string, data: Comment) {
         await this.commentModel.updateOne({ _id: id }, data);
         return await this.commentModel.findById(id);
     }

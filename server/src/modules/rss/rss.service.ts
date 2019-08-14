@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import data2xml = require('data2xml');
 import { RSS as RSSCONFIG, ADMIN_USER_INFO } from '../../configs/index.config';
 import * as MarkdownIt from 'markdown-it';
-import { InjectModel } from '@nestjs/mongoose';
-import { Article } from '../../models/article.model';
+import { InjectModel } from '../../utils/model.util';
+import { ArticleDocument, ArticleModel } from '../../models/article.model';
 import { Model } from 'mongoose';
 
 const markdown = new MarkdownIt();
@@ -18,7 +18,7 @@ function utf8ForXml(inputStr) {
 
 @Injectable()
 export class RssService {
-    constructor(@InjectModel('article') private readonly articleModel: Model<Article>) {}
+    constructor(@InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>) {}
 
     async index() {
         const rssObj = {

@@ -1,9 +1,8 @@
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Article } from '../../models/article.model';
-import { Category } from '../../models/category.model';
-import { CreateArticleDto, UpdateArticleDto } from './article.dto';
+import { InjectModel } from '../../utils/model.util';
+import { Article, ArticleDocument, ArticleModel } from '../../models/article.model';
+import { CategoryDocument, CategoryModel } from '../../models/category.model';
 import * as MarkdownIt from 'markdown-it';
 import hljs = require('highlight.js');
 import mila = require('markdown-it-link-attributes');
@@ -29,12 +28,12 @@ export { markdown };
 @Injectable()
 export class ArticleService {
     constructor(
-        @InjectModel('article') private readonly articleModel: Model<Article>,
-        @InjectModel('category') private readonly categoryModel: Model<Category>
+        @InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>,
+        @InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>
     ) {}
 
-    async create(createArticleDto: CreateArticleDto): Promise<Article> {
-        const article: Article = await this.articleModel.create(createArticleDto);
+    async create(articleDocument: Article) {
+        const article = await this.articleModel.create(articleDocument);
         /* istanbul ignore next */
         if (article.category) {
             await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
@@ -42,8 +41,8 @@ export class ArticleService {
         return article;
     }
 
-    async update(id: string, data: UpdateArticleDto) {
-        const article: Article = await this.articleModel.findByIdAndUpdate(id, data);
+    async update(_id: string, data: Article) {
+        const article = await this.articleModel.findOneAndUpdate({ _id }, data);
         if (!article) {
             throw new BadRequestException('找不到该文章！');
         }
@@ -81,31 +80,25 @@ export class ArticleService {
 
         if (article) {
             const data = article.toObject();
-
             if (isRenderHtml) {
                 data.content = markdown.render(data.content);
             }
-
             const [prev, next] = await Promise.all([
                 this.articleModel.findOne({ _id: { $gt: id } }, 'title'),
                 this.articleModel.findOne({ _id: { $lt: id } }, 'title', { sort: { id: -1 } }),
             ]);
-
             data.prev = prev;
             data.next = next;
             return data;
         }
+
         return article;
     }
 
     async getRandomArticles(size = 9) {
         return await this.articleModel.aggregate([
-            {
-                $sample: { size },
-            },
-            {
-                $project: { title: 1, screenshot: 1, createdAt: 1 },
-            },
+            { $sample: { size } },
+            { $project: { title: 1, screenshot: 1, createdAt: 1 } },
         ]);
     }
 

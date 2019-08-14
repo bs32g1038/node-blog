@@ -1,21 +1,18 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { File } from '../../models/file.model';
-import { CreateFileDto, UpdateFileDto } from './file.dto';
+import { InjectModel } from '../../utils/model.util';
+import { File, FileDocument, FileModel } from '../../models/file.model';
 
 @Injectable()
 export class FileService {
-    constructor(@InjectModel('file') private readonly fileModel: Model<File>) {}
+    constructor(@InjectModel(FileModel) private readonly fileModel: Model<FileDocument>) {}
 
-    async create(createFileDto: CreateFileDto): Promise<File> {
-        const file: File = await this.fileModel.create(createFileDto);
-        return file;
+    async create(newFile: File): Promise<File> {
+        return await this.fileModel.create(newFile);
     }
 
-    async update(id: string, data: UpdateFileDto) {
-        const file: File = await this.fileModel.findByIdAndUpdate({ _id: id }, data);
-        return file;
+    async update(id: string, data: File) {
+        return await this.fileModel.findByIdAndUpdate({ _id: id }, data);
     }
 
     async getFiles(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<File[]> {

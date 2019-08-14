@@ -1,6 +1,5 @@
 import { MediaService } from '../../../src/modules/media/media.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { MediaSchema } from '../../../src/models/media.model';
+import { MediaModelProvider } from '../../../src/models/media.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -10,8 +9,7 @@ describe('MediaService', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [MongooseModule.forFeature([{ name: 'media', schema: MediaSchema, collection: 'media' }])],
-            providers: [MediaService],
+            providers: [MediaModelProvider, MediaService],
         });
         mediaService = app.get<MediaService>(MediaService);
     });
@@ -23,7 +21,7 @@ describe('MediaService', () => {
 
     it('getMedias undefined undefined', async () => {
         try {
-            const arr = await mediaService.getMedias(undefined, undefined);
+            await mediaService.getMedias(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }

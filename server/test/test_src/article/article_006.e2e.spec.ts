@@ -1,6 +1,5 @@
 import * as request from 'supertest';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CategorySchema } from '../../../src/models/category.model';
+import { CategoryModelProvider } from '../../../src/models/category.model';
 import { ArticleModule } from '../../../src/modules/article.module';
 import { CategoryService } from '../../../src/modules/category/category.service';
 import { INestApplication } from '@nestjs/common';
@@ -9,18 +8,17 @@ import * as mongoose from 'mongoose';
 
 describe('article_006', () => {
     let app: INestApplication;
-    const category_id = mongoose.Types.ObjectId();
+    const categoryId = mongoose.Types.ObjectId();
+    const time = new Date().toISOString();
+
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                ArticleModule,
-                MongooseModule.forFeature([{ name: 'category', schema: CategorySchema, collection: 'category' }]),
-            ],
-            providers: [CategoryService],
+            imports: [ArticleModule],
+            providers: [CategoryModelProvider, CategoryService],
         });
         const categoryService = app.get<CategoryService>(CategoryService);
         const category = {
-            _id: category_id,
+            _id: categoryId,
             articleCount: 10,
             order: 0,
             name: 'test',
@@ -31,7 +29,6 @@ describe('article_006', () => {
         categoryService.create(category);
     });
 
-    const time = new Date().toISOString();
     const article = {
         _id: mongoose.Types.ObjectId(),
         isDraft: false,
@@ -40,7 +37,7 @@ describe('article_006', () => {
         isDeleted: false,
         title: 'test',
         content: '```html```\ntest\n```',
-        category: category_id,
+        category: categoryId,
         summary: 'test',
         screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         createdAt: time,

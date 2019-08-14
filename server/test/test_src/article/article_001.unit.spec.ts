@@ -1,7 +1,6 @@
 import { ArticleService } from '../../../src/modules/article/article.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CategorySchema } from '../../../src/models/category.model';
-import { ArticleSchema } from '../../../src/models/article.model';
+import { CategoryModelProvider } from '../../../src/models/category.model';
+import { ArticleModelProvider } from '../../../src/models/article.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -11,13 +10,7 @@ describe('ArticleService', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([
-                    { name: 'article', schema: ArticleSchema, collection: 'article' },
-                    { name: 'category', schema: CategorySchema, collection: 'category' },
-                ]),
-            ],
-            providers: [ArticleService],
+            providers: [ArticleModelProvider, CategoryModelProvider, ArticleService],
         });
         articleService = app.get<ArticleService>(ArticleService);
     });

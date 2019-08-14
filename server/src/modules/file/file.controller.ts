@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { CreateFileDto, UpdateFileDto } from './file.dto';
 import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { FileService } from './file.service';
 import { File } from '../../models/file.model';
@@ -31,14 +30,14 @@ export class FileController {
 
     @Post('/files')
     @Roles('admin')
-    async create(@Body() createFileDto: CreateFileDto) {
-        return await this.fileService.create(createFileDto);
+    async create(@Body() file: File) {
+        return await this.fileService.create(file);
     }
 
     @Put('/files/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() fileDto: UpdateFileDto) {
-        return await this.fileService.update(params.id, fileDto);
+    async update(@Param() params: { id: string }, @Body() file: File) {
+        return await this.fileService.update(params.id, file);
     }
 
     @Get('/files')

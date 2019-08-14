@@ -1,7 +1,6 @@
 import { CommentService } from '../../../src/modules/comment/comment.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ArticleSchema } from '../../../src/models/article.model';
-import { CommentSchema } from '../../../src/models/comment.model';
+import { ArticleModelProvider } from '../../../src/models/article.model';
+import { CommentModelProvider } from '../../../src/models/comment.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -11,13 +10,7 @@ describe('comment_001_unit', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [
-                MongooseModule.forFeature([
-                    { name: 'article', schema: ArticleSchema, collection: 'article' },
-                    { name: 'comment', schema: CommentSchema, collection: 'comment' },
-                ]),
-            ],
-            providers: [CommentService],
+            providers: [ArticleModelProvider, CommentModelProvider, CommentService],
         });
         commentService = app.get<CommentService>(CommentService);
     });

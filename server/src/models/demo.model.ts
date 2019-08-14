@@ -1,11 +1,18 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
+import { getProviderByModel } from '../utils/model.util';
 
-export interface Demo extends Document {
-    _id: string;
-    title: string;
-    content: string;
-    visitCount: number;
+export interface Demo {
+    readonly _id?: string;
+    readonly title?: string;
+    readonly content?: string;
+    readonly visitCount?: number;
+    readonly createdAt?: string | Date;
+    readonly updatedAt?: string | Date;
+}
+
+export interface DemoDocument extends Demo, Document {
+    readonly _id: string;
 }
 
 export const DemoSchema = new mongoose.Schema(
@@ -29,3 +36,7 @@ export const DemoSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+export const DemoModel = mongoose.model('demo', DemoSchema, 'demo');
+
+export const DemoModelProvider = getProviderByModel(DemoModel);

@@ -1,6 +1,5 @@
 import { FileService } from '../../../src/modules/file/file.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { FileSchema } from '../../../src/models/file.model';
+import { FileModelProvider } from '../../../src/models/file.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
@@ -10,8 +9,7 @@ describe('file_001_unit', () => {
 
     beforeAll(async () => {
         app = await initApp({
-            imports: [MongooseModule.forFeature([{ name: 'file', schema: FileSchema, collection: 'file' }])],
-            providers: [FileService],
+            providers: [FileModelProvider, FileService],
         });
         fileService = app.get<FileService>(FileService);
     });

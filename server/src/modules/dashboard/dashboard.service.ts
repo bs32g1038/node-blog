@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { Comment } from '../../models/comment.model';
-import { Category } from '../../models/category.model';
-import { Article } from '../../models/article.model';
+import { CommentDocument, CommentModel } from '../../models/comment.model';
+import { CategoryDocument, CategoryModel } from '../../models/category.model';
+import { ArticleDocument, ArticleModel } from '../../models/article.model';
 import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectModel } from '../../utils/model.util';
 import * as os from 'os';
 
 @Injectable()
 export class DashboardService {
     constructor(
-        @InjectModel('article') private readonly articleModel: Model<Article>,
-        @InjectModel('comment') private readonly commentModel: Model<Comment>,
-        @InjectModel('category') private readonly categoryModel: Model<Category>
+        @InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>,
+        @InjectModel(CommentModel) private readonly commentModel: Model<CommentDocument>,
+        @InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>
     ) {}
 
     async getStatisticalInfo() {
