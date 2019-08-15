@@ -25,7 +25,7 @@ describe('comment_003', () => {
         __v: 0,
     };
 
-    it('/POST /api/comments 200', async () => {
+    it('/POST /api/comments 400', async () => {
         return request(app.getHttpServer())
             .post('/api/comments')
             .send(comment)
