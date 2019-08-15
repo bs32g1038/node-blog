@@ -61,4 +61,8 @@ export class CommentService {
     async recentComments() {
         return this.getComments({}, { limit: 10 });
     }
+
+    async batchDelete(commentIds: string[]) {
+        return this.commentModel.deleteMany({ _id: { $in: commentIds } });
+    }
 } /* istanbul ignore next */
