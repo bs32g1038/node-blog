@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
 import queryString from 'query-string';
-import { parseTime } from '../../utils/time';
+import { timeAgo } from '../../utils/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '../../components/PageHeaderWrapper';
 
@@ -9,7 +9,10 @@ export default class Comments extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            pagination: {},
             comments: [],
+            selectedRowKeys: [],
+            loading: false,
         };
     }
     getTableColums() {
@@ -17,7 +20,7 @@ export default class Comments extends Component {
             {
                 title: '昵称',
                 dataIndex: 'nickName',
-                width: 90,
+                width: 140,
             },
             {
                 title: 'email',
@@ -27,18 +30,13 @@ export default class Comments extends Component {
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                width: 100,
-                render: (text, record) => parseTime(record.createdAt),
-            },
-            {
-                title: '内容',
-                dataIndex: 'content',
+                width: 140,
+                render: (text, record) => timeAgo(record.createdAt),
             },
             {
                 title: '文章标题',
                 dataIndex: 'article',
-                width: 120,
-                render: (text, record) => record.article.title,
+                render: (text, record) => (record.article && record.article.title) || '--',
             },
             {
                 title: '操作',
@@ -72,58 +70,111 @@ export default class Comments extends Component {
         ];
     }
     deleteComment(_id) {
-        const { location } = this.props;
         axios.delete('/comments/' + _id).then(() => {
             message.success('删除评论成功');
-            this.fetchData(location);
+            this.fetchData();
         });
     }
-    fetchData(location) {
-        const q = queryString.parse(location.search);
+    batchDeleteComment() {
+        if (this.state.selectedRowKeys.length <= 0) {
+            message.info('请选择要删除的评论');
+            return;
+        }
+        axios
+            .delete('/comments', {
+                data: { commentIds: this.state.selectedRowKeys },
+            })
+            .then(res => {
+                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                    message.success('删除评论成功！');
+                    return this.fetchData();
+                }
+                return message.error('删除评论失败，请重新尝试。');
+            });
+    }
+    fetchData(page = 1, limit = 10) {
+        this.setState({ loading: true });
         const query = {
-            limit: 10,
-            page: 1,
-            ...q,
+            limit,
+            page,
         };
         axios.get('/comments?' + queryString.stringify(query)).then(res => {
-            this.setState({ comments: res.data.items });
+            const pagination = { ...this.state.pagination };
+            pagination.total = res.data.totalCount;
+            this.setState({
+                comments: res.data.items,
+                loading: false,
+                pagination,
+            });
         });
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.location.search !== this.props.location.search) {
-            this.fetchData(nextProps.location);
-        }
+    handleTableChange(pagination) {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        this.fetchData(pagination.current, pagination.pageSize);
+    }
+    onSelectChange(selectedRowKeys) {
+        this.setState({ selectedRowKeys });
     }
     componentDidMount() {
-        this.fetchData(this.props.location);
+        this.fetchData();
     }
     render() {
+        const { selectedRowKeys } = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange.bind(this),
+        };
         const expandedRowKeys = this.state.comments.map(item => item._id);
         return (
             <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
                 <div className="main-content">
                     <div className="panel">
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                            批量删除
-                        </Button>
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            onConfirm={() => this.batchDeleteComment()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger">
+                                <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
                     </div>
                     <div className="table-wrapper">
                         <Table
                             rowKey={record => record._id}
-                            rowSelection={{}}
+                            rowSelection={rowSelection}
                             columns={this.getTableColums()}
+                            loading={this.state.loading}
                             dataSource={this.state.comments}
-                            expandedRowRender={record =>
-                                record.reply && (
-                                    <p style={{ margin: 0 }}>
-                                        <span style={{ color: 'rgb(234, 102, 102)' }}>
-                                            回复给@({record.reply.nickName})
-                                        </span>
-                                        《{record.reply.content}》
-                                    </p>
-                                )
-                            }
+                            onChange={pagination => this.handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条评论数据`,
+                            }}
+                            expandedRowRender={record => {
+                                return (
+                                    <React.Fragment>
+                                        <p style={{ margin: '10px 0' }}>
+                                            <span style={{ color: '#1890ff' }}>内容：</span>
+                                            {record.content}
+                                        </p>
+                                        {record.reply && (
+                                            <p style={{ margin: 0 }}>
+                                                <span style={{ color: 'rgb(234, 102, 102)' }}>
+                                                    回复给@({record.reply.nickName})
+                                                </span>
+                                                《{record.reply.content}》
+                                            </p>
+                                        )}
+                                    </React.Fragment>
+                                );
+                            }}
                             expandedRowKeys={expandedRowKeys}
                         />
                     </div>

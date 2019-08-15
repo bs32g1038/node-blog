@@ -14,16 +14,20 @@ import * as Joi from '@hapi/joi';
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
-    static idSchema = {
+    public static idSchema = {
         id: Joi.string()
             .default('')
             .max(50),
     };
 
-    static articleIdSchema = {
+    public static articleIdSchema = {
         articleId: Joi.string()
             .default('')
             .max(50),
+    };
+
+    public static deleteCommentsSchema = {
+        commentIds: Joi.array().items(Joi.string().required()),
     };
 
     @Post('/comments')
@@ -87,5 +91,13 @@ export class CommentController {
     @Roles('admin')
     async recentComments() {
         return await this.commentService.recentComments();
+    }
+
+    @Delete('/comments')
+    @Roles('admin')
+    @JoiValidationPipe(CommentController.deleteCommentsSchema)
+    deleteComments(@Body() body: { commentIds: string[] }): Promise<any> {
+        console.log(body);
+        return this.commentService.batchDelete(body.commentIds);
     }
 }
