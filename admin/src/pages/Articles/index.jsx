@@ -159,10 +159,17 @@ class Articles extends Component {
                                     <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                                     添加文档
                                 </Button>
-                                <Button type="danger" onClick={() => this.batchDeleteArticle()}>
-                                    <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                                    批量删除
-                                </Button>
+                                <Popconfirm
+                                    title="确认要删除？"
+                                    onConfirm={() => this.batchDeleteArticle()}
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <Button type="danger">
+                                        <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                        批量删除
+                                    </Button>
+                                </Popconfirm>
                             </Col>
                             <Col style={{ flex: '1 0 auto' }} justify="end">
                                 <form action="/admin/manage/contentList" className={styles.searchForm}>
