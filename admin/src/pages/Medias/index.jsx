@@ -65,12 +65,6 @@ export default class Medias extends Component {
         return (
             <PageHeaderWrapper title="媒体文件列表" content="控制台----媒体文件列表">
                 <div className="main-content">
-                    <div className="panel">
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                            批量删除
-                        </Button>
-                    </div>
                     <div className="table-wrapper">
                         {(this.state.loading || this.state.medias.length <= 0) && (
                             <Alert

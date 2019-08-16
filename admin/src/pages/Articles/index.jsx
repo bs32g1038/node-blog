@@ -15,6 +15,7 @@ class Articles extends Component {
             pagination: {},
             selectedRowKeys: [],
             loading: false,
+            visible: false,
         };
     }
     getTableColums() {
@@ -94,10 +95,6 @@ class Articles extends Component {
         });
     }
     batchDeleteArticle() {
-        if (this.state.selectedRowKeys.length <= 0) {
-            message.info('请选择要删除的文章');
-            return;
-        }
         axios
             .delete('/articles', {
                 data: { articleIds: this.state.selectedRowKeys },
@@ -105,6 +102,9 @@ class Articles extends Component {
             .then(res => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success('删除文章成功！');
+                    this.setState({
+                        selectedRowKeys: [],
+                    });
                     return this.fetchData();
                 }
                 return message.error('删除文章失败，请重新尝试。');
@@ -161,6 +161,17 @@ class Articles extends Component {
                                 </Button>
                                 <Popconfirm
                                     title="确认要删除？"
+                                    placement="right"
+                                    visible={this.state.visible}
+                                    onVisibleChange={() => {
+                                        if (this.state.selectedRowKeys.length <= 0) {
+                                            message.info('请选择要删除的文章');
+                                            return;
+                                        }
+                                        this.setState({
+                                            visible: !this.state.visible,
+                                        });
+                                    }}
                                     onConfirm={() => this.batchDeleteArticle()}
                                     okText="确定"
                                     cancelText="取消"

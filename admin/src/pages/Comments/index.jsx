@@ -13,6 +13,7 @@ export default class Comments extends Component {
             comments: [],
             selectedRowKeys: [],
             loading: false,
+            visiable: false,
         };
     }
     getTableColums() {
@@ -76,10 +77,6 @@ export default class Comments extends Component {
         });
     }
     batchDeleteComment() {
-        if (this.state.selectedRowKeys.length <= 0) {
-            message.info('请选择要删除的评论');
-            return;
-        }
         axios
             .delete('/comments', {
                 data: { commentIds: this.state.selectedRowKeys },
@@ -87,6 +84,9 @@ export default class Comments extends Component {
             .then(res => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success('删除评论成功！');
+                    this.setState({
+                        selectedRowKeys: [],
+                    });
                     return this.fetchData();
                 }
                 return message.error('删除评论失败，请重新尝试。');
@@ -136,6 +136,16 @@ export default class Comments extends Component {
                         <Popconfirm
                             title="确认要删除？"
                             placement="right"
+                            visible={this.state.visiable}
+                            onVisibleChange={() => {
+                                if (this.state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的评论');
+                                    return;
+                                }
+                                this.setState({
+                                    visiable: !this.state.visiable,
+                                });
+                            }}
                             onConfirm={() => this.batchDeleteComment()}
                             okText="确定"
                             cancelText="取消"
