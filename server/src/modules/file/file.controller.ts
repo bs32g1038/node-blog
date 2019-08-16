@@ -12,13 +12,13 @@ import * as Joi from '@hapi/joi';
 export class FileController {
     constructor(private readonly fileService: FileService) {}
 
-    static idSchema = {
+    public static idSchema = {
         id: Joi.string()
             .default('')
             .max(50),
     };
 
-    static folderSchema = {
+    public static folderSchema = {
         parentId: Joi.string()
             .default('')
             .max(50)
@@ -26,6 +26,10 @@ export class FileController {
         name: Joi.string()
             .min(1)
             .max(50),
+    };
+
+    public static deleteFilesSchema = {
+        fileIds: Joi.array().items(Joi.string().required()),
     };
 
     @Post('/files')
@@ -79,5 +83,12 @@ export class FileController {
     async createFolder(@Body() body: { name: string; parentId: string }) {
         const { name, parentId } = body;
         return await this.fileService.createFolder(name, parentId);
+    }
+
+    @Delete('/files')
+    @Roles('admin')
+    @JoiValidationPipe(FileController.deleteFilesSchema)
+    deleteArticles(@Body() body: { fileIds: string[] }): Promise<any> {
+        return this.fileService.batchDelete(body.fileIds);
     }
 }
