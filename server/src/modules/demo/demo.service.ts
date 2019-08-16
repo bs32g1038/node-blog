@@ -44,4 +44,8 @@ export class DemoService {
         const filter = { ...query };
         return await this.demoModel.countDocuments(filter);
     }
+
+    public async batchDelete(demoIds: string[]) {
+        return this.demoModel.deleteMany({ _id: { $in: demoIds } });
+    }
 } /* istanbul ignore next */

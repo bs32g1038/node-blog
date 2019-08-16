@@ -10,6 +10,10 @@ export default class Demos extends Component {
         super(props);
         this.state = {
             demos: [],
+            pagination: {},
+            selectedRowKeys: [],
+            loading: false,
+            visible: false,
         };
     }
     getTableColums() {
@@ -53,7 +57,7 @@ export default class Demos extends Component {
                         ,
                         <Popconfirm
                             title="确认要删除？"
-                            onConfirm={() => this.deleteCategory(record._id)}
+                            onConfirm={() => this.deleteDemo(record._id)}
                             okText="确定"
                             cancelText="取消"
                         >
@@ -66,33 +70,66 @@ export default class Demos extends Component {
             },
         ];
     }
-    deleteCategory(_id) {
-        const { location } = this.props;
+    deleteDemo(_id) {
         axios.delete('/demos/' + _id).then(() => {
-            message.success('删除分类成功');
-            this.fetchData(location);
+            message.success('删除demo成功');
+            this.fetchData();
         });
     }
-    fetchData(location) {
-        const q = queryString.parse(location.search);
+    batchDeleteDemo() {
+        axios
+            .delete('/demos', {
+                data: { demoIds: this.state.selectedRowKeys },
+            })
+            .then(res => {
+                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                    message.success('删除demo成功！');
+                    this.setState({
+                        selectedRowKeys: [],
+                    });
+                    return this.fetchData();
+                }
+                return message.error('删除demo失败，请重新尝试。');
+            });
+    }
+    fetchData(page = 1, limit = 10) {
+        this.setState({
+            loading: true,
+        });
         const query = {
-            limit: 10,
-            page: 1,
-            ...q,
+            limit,
+            page,
         };
         axios.get('/demos?' + queryString.stringify(query)).then(res => {
-            this.setState({ demos: res.data.items });
+            const pagination = { ...this.state.pagination };
+            pagination.total = res.data.totalCount;
+            this.setState({
+                demos: res.data.items,
+                loading: false,
+                pagination,
+            });
         });
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.location.search !== this.props.location.search) {
-            this.fetchData(nextProps.location);
-        }
+    handleTableChange(pagination) {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        this.fetchData(pagination.current, pagination.pageSize);
+    }
+    onSelectChange(selectedRowKeys) {
+        this.setState({ selectedRowKeys });
     }
     componentDidMount() {
-        this.fetchData(this.props.location);
+        this.fetchData();
     }
     render() {
+        const { selectedRowKeys } = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange.bind(this),
+        };
         return (
             <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
                 <div className="main-content">
@@ -101,17 +138,40 @@ export default class Demos extends Component {
                             <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             添加Demo
                         </Button>
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                            批量删除
-                        </Button>
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            visible={this.state.visible}
+                            onVisibleChange={() => {
+                                if (this.state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的demo');
+                                    return;
+                                }
+                                this.setState({
+                                    visible: !this.state.visible,
+                                });
+                            }}
+                            onConfirm={() => this.batchDeleteDemo()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger">
+                                <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
                     </div>
                     <div className="table-wrapper">
                         <Table
                             rowKey={record => record._id}
-                            rowSelection={{}}
+                            rowSelection={rowSelection}
                             columns={this.getTableColums()}
                             dataSource={this.state.demos}
+                            loading={this.state.loading}
+                            onChange={pagination => this.handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条数据`,
+                            }}
                         />
                     </div>
                 </div>

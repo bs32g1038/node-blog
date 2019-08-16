@@ -14,10 +14,14 @@ import hljs = require('highlight.js'); // https://highlightjs.org/
 export class DemoController {
     constructor(private readonly demoService: DemoService) {}
 
-    static idSchema = {
+    public static idSchema = {
         id: Joi.string()
             .default('')
             .max(50),
+    };
+
+    public static deleteDemosSchema = {
+        demoIds: Joi.array().items(Joi.string().required()),
     };
 
     @Post('/api/demos')
@@ -60,6 +64,13 @@ export class DemoController {
     @JoiValidationPipe(DemoController.idSchema)
     async deleteArticle(@Param() params: { id: string }) {
         return await this.demoService.deleteDemo(params.id);
+    }
+
+    @Delete('/api/demos')
+    @Roles('admin')
+    @JoiValidationPipe(DemoController.deleteDemosSchema)
+    deleteArticles(@Body() body: { demoIds: string[] }): Promise<any> {
+        return this.demoService.batchDelete(body.demoIds);
     }
 
     @Get('/demos/:id')
