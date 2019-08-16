@@ -97,7 +97,6 @@ export class CommentController {
     @Roles('admin')
     @JoiValidationPipe(CommentController.deleteCommentsSchema)
     deleteComments(@Body() body: { commentIds: string[] }): Promise<any> {
-        console.log(body);
         return this.commentService.batchDelete(body.commentIds);
     }
 }
