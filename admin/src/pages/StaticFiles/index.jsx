@@ -18,10 +18,12 @@ class StaticFiles extends Component {
             files: [],
             visible: false,
             pagination: {},
+            selectedRowKeys: [],
             loading: false,
             clipboard: null,
             isShowNewFolderDialog: false,
             folderName: '',
+            delConfirmVisible: false,
         };
     }
     getTableColums() {
@@ -111,6 +113,22 @@ class StaticFiles extends Component {
             this.fetchData();
         });
     }
+    batchDeleteFile() {
+        axios
+            .delete('/files', {
+                data: { fileIds: this.state.selectedRowKeys },
+            })
+            .then(res => {
+                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                    message.success('删除文件成功！');
+                    this.setState({
+                        selectedRowKeys: [],
+                    });
+                    return this.fetchData();
+                }
+                return message.error('删除文件失败，请重新尝试。');
+            });
+    }
     fetchData(page = 1, limit = 10) {
         this.setState({ loading: true });
         const query = {
@@ -175,6 +193,9 @@ class StaticFiles extends Component {
         });
         this.fetchData(pagination.current, pagination.pageSize);
     }
+    onSelectChange(selectedRowKeys) {
+        this.setState({ selectedRowKeys });
+    }
     componentDidMount() {
         const c = new Clipboard('.btnCopy');
         this.setState({
@@ -196,12 +217,10 @@ class StaticFiles extends Component {
         this.state.clipboard.destroy();
     }
     render() {
+        const { selectedRowKeys } = this.state;
         const rowSelection = {
-            onChange: () => {},
-            getCheckboxProps: record => ({
-                disabled: record.key === 'Disabled User',
-                name: record.name,
-            }),
+            selectedRowKeys,
+            onChange: this.onSelectChange.bind(this),
         };
         const uploadProps = {
             name: 'file',
@@ -237,10 +256,28 @@ class StaticFiles extends Component {
                                 新建文件夹
                             </Button>
                         )}
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                            批量删除
-                        </Button>
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            visible={this.state.delConfirmVisible}
+                            onVisibleChange={() => {
+                                if (this.state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的文件');
+                                    return;
+                                }
+                                this.setState({
+                                    delConfirmVisible: !this.state.delConfirmVisible,
+                                });
+                            }}
+                            onConfirm={() => this.batchDeleteFile()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger">
+                                <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
                         {this.props.match.params.folderId && (
                             <>
                                 <span style={{ marginLeft: '20px' }}>当前目录为：{this.state.folderName}</span>
@@ -317,9 +354,11 @@ class StaticFiles extends Component {
                             rowSelection={rowSelection}
                             columns={this.getTableColums()}
                             dataSource={this.state.files}
-                            pagination={this.state.pagination}
                             loading={this.state.loading}
                             onChange={pagination => this.handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条数据`,
+                            }}
                         />
                     </div>
                 </div>

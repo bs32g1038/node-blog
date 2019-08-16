@@ -44,6 +44,10 @@ export class FileService {
         return {};
     }
 
+    public async batchDelete(fileIds: string[]) {
+        return this.fileModel.deleteMany({ _id: { $in: fileIds } });
+    }
+
     async count(query) {
         const filter = { ...query };
         return await this.fileModel.countDocuments(filter);
