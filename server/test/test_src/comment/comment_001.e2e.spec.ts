@@ -114,7 +114,7 @@ describe('comment_001', () => {
             .get('/api/comments')
             .expect(200)
             .then(res => {
-                expect(res.body.totalCount).toEqual(2);
+                expect(res.body.totalCount).toBeGreaterThanOrEqual(2);
                 const a = res.body.items[0];
                 expect(a._id).toEqual(comment._id);
                 expect(a.pass).toEqual(comment.pass);

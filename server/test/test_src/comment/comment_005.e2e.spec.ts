@@ -1,6 +1,7 @@
 import * as request from 'supertest';
 import { CommentModule } from '../../../src/modules/comment.module';
 import { ArticleModule } from '../../../src/modules/article.module';
+import { ArticleService } from '../../../src/modules/article/article.service';
 import { LoginModule } from '../../../src/modules/login.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
@@ -9,10 +10,29 @@ import * as mongoose from 'mongoose';
 describe('comment_005', () => {
     let app: INestApplication;
 
+    const time = new Date().toISOString();
+    const article = {
+        _id: mongoose.Types.ObjectId(),
+        isDraft: false,
+        commentCount: 1,
+        viewsCount: 1,
+        isDeleted: false,
+        title: 'test',
+        content: 'test',
+        summary: 'test',
+        screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
+        category: '5c0a1317244b3c01b464a3ec',
+        createdAt: time,
+        updatedAt: time,
+        __v: 0,
+    };
+
     beforeAll(async () => {
         app = await initApp({
             imports: [CommentModule, ArticleModule, LoginModule],
         });
+        const articleService = app.get<ArticleService>(ArticleService);
+        await articleService.create(article);
     });
 
     const comment = {
@@ -22,8 +42,7 @@ describe('comment_005', () => {
         nickName: 'test',
         email: 'test@test.com',
         content: 'test',
-        article: '5c0f3e2b25349c1270e734ec',
-        reply: '5c404fe4d7264e6bd09fbbfa',
+        article: article._id,
         website: 'http://www.test.com',
         __v: 0,
     };

@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
 
 export interface Article {
-    readonly _id?: string;
+    readonly _id?: string | mongoose.Types.ObjectId;
     readonly title: string;
     readonly content: string;
     readonly summary: string;
