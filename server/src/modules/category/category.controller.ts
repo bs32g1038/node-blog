@@ -12,10 +12,14 @@ import * as Joi from '@hapi/joi';
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
-    static idSchema = {
+    public static idSchema = {
         id: Joi.string()
             .default('')
             .max(50),
+    };
+
+    public static deleteCategoriesSchema = {
+        categoryIds: Joi.array().items(Joi.string().required()),
     };
 
     @Post('/categories')
@@ -54,5 +58,12 @@ export class CategoryController {
     @JoiValidationPipe(CategoryController.idSchema)
     async deleteCategory(@Param() params: { id: string }) {
         return await this.categoryService.deleteCategory(params.id);
+    }
+
+    @Delete('/categories')
+    @Roles('admin')
+    @JoiValidationPipe(CategoryController.deleteCategoriesSchema)
+    deleteArticles(@Body() body: { categoryIds: string[] }): Promise<any> {
+        return this.categoryService.batchDelete(body.categoryIds);
     }
 }
