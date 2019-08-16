@@ -51,7 +51,7 @@ describe('file_001', () => {
             .expect(403);
     });
 
-    it('/POST /api/files 200', async () => {
+    it('/POST /api/files 201', async () => {
         return request(app.getHttpServer())
             .post('/api/files')
             .set('authorization', __TOKEN__)

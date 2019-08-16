@@ -6,13 +6,14 @@ import { LoginModule } from '../../../src/modules/login.module';
 import { INestApplication } from '@nestjs/common';
 import { ADMIN_USER_INFO } from '../../../src/configs/index.config';
 import { initApp } from '../../util';
+import * as mongoose from 'mongoose';
 
 describe('comment_001', () => {
     let app: INestApplication;
 
     const time = new Date().toISOString();
     const article = {
-        _id: '5c0f3e2b25349c1270e734ec',
+        _id: mongoose.Types.ObjectId().toString(),
         isDraft: false,
         commentCount: 1,
         viewsCount: 1,
@@ -36,14 +37,14 @@ describe('comment_001', () => {
     });
 
     const comment = {
-        _id: '5c0f3e2b25349c1270e7a4ec',
+        _id: mongoose.Types.ObjectId().toString(),
         pass: true,
         identity: 0,
         nickName: 'test',
         email: 'test@test.com',
         content: 'test',
         reply: '5c404fe4d7264e6bd09fbbfa',
-        article: '5c0f3e2b25349c1270e734ec',
+        article: article._id,
         website: 'http://www.test.com',
         createdAt: time,
         updatedAt: time,
@@ -115,7 +116,10 @@ describe('comment_001', () => {
             .expect(200)
             .then(res => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(2);
-                const a = res.body.items[0];
+                const arr = res.body.items.filter(item => {
+                    return item._id === comment._id;
+                });
+                const a = arr[0];
                 expect(a._id).toEqual(comment._id);
                 expect(a.pass).toEqual(comment.pass);
                 expect(a.identity).toEqual(comment.identity);
