@@ -1,6 +1,6 @@
 {
   "name": "node-server",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "a blog server api",
   "private": true,
   "license": "MIT",

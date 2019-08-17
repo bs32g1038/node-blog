@@ -1,6 +1,6 @@
 {
     "name": "react-admin",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "description": "A simple and whole react blog admin",
     "homepage": "http://admin.lizc.net",
     "private": true,
