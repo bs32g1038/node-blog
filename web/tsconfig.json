@@ -36,7 +36,8 @@
     ".next",
     "static",
     "public",
-    "assets"
+    "assets",
+    "next.config.js"
   ],
   "types": [
     "typePatches",

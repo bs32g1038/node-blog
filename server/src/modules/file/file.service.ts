@@ -54,7 +54,7 @@ export class FileService {
     }
 
     async createFolder(name: string, parentId: string) {
-        return await await this.fileModel.create({
+        return await this.fileModel.create({
             originalName: name,
             name,
             isdir: true,

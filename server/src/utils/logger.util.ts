@@ -53,8 +53,10 @@ const infoLogger = isProdMode ? log4js.getLogger('info') : consoleLogger;
 const errorLogger = isProdMode ? log4js.getLogger('error') : consoleLogger;
 
 if (isProdMode) {
-    infoLogger.error = (message: any, ...args: any[]): void => {
-        errorLogger.error(message, args);
-    };
+    Object.assign(infoLogger, {
+        error: (message: any, ...args: any[]): void => {
+            errorLogger.error(message, args);
+        },
+    });
 }
 export default infoLogger;

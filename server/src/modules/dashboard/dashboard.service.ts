@@ -27,7 +27,7 @@ export class DashboardService {
         };
     }
 
-    async getSystemInfo() {
+    getSystemInfo() {
         const arch = os.arch();
         const cpus = os.cpus();
         const freemem = os.freemem();

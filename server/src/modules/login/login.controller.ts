@@ -20,7 +20,7 @@ export class LoginController {
 
     @Get('/api/is-login')
     @Roles('admin')
-    async isLogin() {
+    isLogin() {
         return { isLogin: true };
     }
 }

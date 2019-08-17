@@ -16,7 +16,7 @@ export class DashboardController {
 
     @Get('system-info')
     @Roles('admin')
-    async getSystemInfo() {
-        return await this.dashboardService.getSystemInfo();
+    getSystemInfo() {
+        return this.dashboardService.getSystemInfo();
     }
 }

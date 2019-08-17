@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { Article, ArticleDocument, ArticleModel } from '../../models/article.model';
 import { CategoryDocument, CategoryModel } from '../../models/category.model';
@@ -121,7 +121,7 @@ export class ArticleService {
     public async batchDelete(articleIds: string[]) {
         return this.articleModel.find({ _id: { $in: articleIds } }).then(async articles => {
             /* istanbul ignore next */
-            await articles.map(async (article: Article) => {
+            articles.map(async (article: Article) => {
                 return await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
             });
             return this.articleModel.deleteMany({ _id: { $in: articleIds } });

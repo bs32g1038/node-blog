@@ -9,14 +9,14 @@ export interface Options {
 
 export function debounce<F extends Procedure>(
     func: F,
-    waitMilliseconds: number = 50,
+    waitMilliseconds = 50,
     options: Options = {
         isImmediate: false,
     }
 ): F {
     let timeoutId: NodeJS.Timeout | undefined;
-    return function(this: any, ...args: any[]) {
-        const context = this;
+    return function(t: any, ...args: any[]) {
+        const context = t;
         const doLater = () => {
             timeoutId = undefined;
             if (!options.isImmediate) {
