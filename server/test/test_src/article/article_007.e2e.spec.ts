@@ -39,7 +39,7 @@ describe('article_007', () => {
         content: '```html```\ntest\n```',
         category: categoryId,
         summary: 'test',
-        screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
+        screenshot: 'http://www.lizc.net/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         createdAt: time,
         updatedAt: time,
         __v: 0,

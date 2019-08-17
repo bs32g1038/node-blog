@@ -7,7 +7,7 @@ const links = [
     {
         key: '博客首页',
         title: '博客首页',
-        href: 'https://www.lizc.me',
+        href: 'https://www.lizc.net',
         blankTarget: true,
     },
     {

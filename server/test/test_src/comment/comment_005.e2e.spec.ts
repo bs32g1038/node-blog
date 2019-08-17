@@ -20,7 +20,7 @@ describe('comment_005', () => {
         title: 'test',
         content: 'test',
         summary: 'test',
-        screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
+        screenshot: 'http://www.lizc.net/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         category: '5c0a1317244b3c01b464a3ec',
         createdAt: time,
         updatedAt: time,

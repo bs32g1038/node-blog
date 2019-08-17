@@ -35,7 +35,7 @@ describe('article_004', () => {
         title: 'test',
         content: '```html```\ntest\n```',
         summary: 'test',
-        screenshot: 'http://www.lizc.me/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
+        screenshot: 'http://www.lizc.net/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
         category: categoryId,
         createdAt: time,
         updatedAt: time,
