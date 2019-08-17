@@ -32,7 +32,7 @@ export const ADMIN_USER_INFO = {
 
 export const RSS = {
     title: '李志成的个人网站',
-    link: 'http://www.lizc.me',
+    link: 'http://www.lizc.net',
     language: 'zh-cn',
     description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！',
     maxRssItems: 50,

@@ -312,7 +312,7 @@ export class DemoController {
 
                 <div id="footer">
                     <p class="foot_p footer-p">
-                        Designed &amp; Powerd by <a href="http://www.lizc.me" target="_blank">李成</a>
+                        Designed &amp; Powerd by <a href="http://www.lizc.net" target="_blank">李成</a>
                         <br>
                         Copyright © 2016-2019 Lizc博客
                         <br><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备16021965号-2</a>

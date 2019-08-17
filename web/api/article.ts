@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import axios from '../utils/axios';
 
-export const fetchArticles = (page: number = 1, limit: number = 10, filter: { cid: string }) => {
+export const fetchArticles = (page = 1, limit = 10, filter: { cid: string }) => {
     const query: any = { fields: '-content,category.name', limit, page };
     if (filter.cid) {
         query.cid = filter.cid;
