@@ -7,6 +7,7 @@ import * as api from './service';
 import GHAT from '../../utils/generate-avatar';
 import { md5 } from '../../utils/crypto-js';
 import { timeAgo } from '../../utils/time';
+import { render } from '../../utils/marked';
 
 const ghat = new GHAT();
 
@@ -163,7 +164,14 @@ class Dashboard extends React.Component {
                                                 src={ghat.getImage(md5(item.nickName).toString())}
                                             />
                                         </div>
-                                        <div className={styles.commentText}>{item.content}</div>
+                                        <div className={styles.commentText}>
+                                            <div
+                                                className="markdown-body"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: render(item.content),
+                                                }}
+                                            ></div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

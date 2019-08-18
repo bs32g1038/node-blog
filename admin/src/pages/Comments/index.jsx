@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
 import queryString from 'query-string';
+import { render } from '../../utils/marked';
 import { timeAgo } from '../../utils/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '../../components/PageHeaderWrapper';
@@ -172,15 +173,27 @@ export default class Comments extends Component {
                                     <React.Fragment>
                                         <p style={{ margin: '10px 0' }}>
                                             <span style={{ color: '#1890ff' }}>内容：</span>
-                                            {record.content}
                                         </p>
+                                        <div
+                                            className="markdown-body"
+                                            dangerouslySetInnerHTML={{
+                                                __html: render(record.content),
+                                            }}
+                                        ></div>
                                         {record.reply && (
-                                            <p style={{ margin: 0 }}>
-                                                <span style={{ color: 'rgb(234, 102, 102)' }}>
-                                                    回复给@({record.reply.nickName})
-                                                </span>
-                                                《{record.reply.content}》
-                                            </p>
+                                            <React.Fragment>
+                                                <p style={{ margin: '10px 0' }}>
+                                                    <span style={{ color: 'rgb(234, 102, 102)' }}>
+                                                        回复给@({record.reply.nickName})
+                                                    </span>
+                                                </p>
+                                                <div
+                                                    className="markdown-body"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: render(record.reply.content),
+                                                    }}
+                                                ></div>
+                                            </React.Fragment>
                                         )}
                                     </React.Fragment>
                                 );

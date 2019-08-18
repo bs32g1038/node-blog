@@ -32,9 +32,11 @@
         "crypto-js": "^3.1.9-1",
         "dayjs": "^1.8.15",
         "eslint-plugin-prettier": "^3.1.0",
+        "github-markdown-css": "^3.0.1",
         "http-proxy-middleware": "^0.19.1",
         "lint-staged": "^9.2.1",
         "markdown-it": "^9.1.0",
+        "markdown-it-for-inline": "^0.1.1",
         "node-sass": "^4.12.0",
         "prettier": "^1.18.2",
         "query-string": "^6.8.2",
@@ -46,7 +48,8 @@
         "react-router-dom": "^5.0.1",
         "react-scripts": "3.1.1",
         "redux": "^4.0.4",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "xss": "^1.0.6"
     },
     "browserslist": [],
     "lint-staged": {

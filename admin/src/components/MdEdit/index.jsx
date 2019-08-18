@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MarkdownIt from 'markdown-it';
+import 'github-markdown-css';
 import './index.scss';
 import axios from '../../axios';
 const CM = require('codemirror');
