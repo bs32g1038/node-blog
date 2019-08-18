@@ -93,3 +93,9 @@ pre,
 code {
     font-family: 'PT Mono', consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', monospace;
 }
+
+.markdown-body img.emoji {
+    width: 32px;
+    vertical-align: bottom;
+    background-color: transparent;
+}

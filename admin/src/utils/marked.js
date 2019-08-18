@@ -17,7 +17,7 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
                 const name = r[1];
-                return `<img src="${config.siteInfo.webDomain}/static/images/emotion/${name}.png" />`;
+                return `<img class="emoji" src="${config.siteInfo.webDomain}/static/images/emotion/${name}.png" />`;
             }
         }
         return str;
@@ -25,6 +25,10 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
 });
 
 const Xss = new jsxss.FilterXSS({
+    whiteList: {
+        ...jsxss.whiteList,
+        img: ['class', 'src', 'alt'],
+    },
     onIgnoreTagAttr: (tag, name, value) => {
         // 让 prettyprint 可以工作
         if (tag === 'pre' && name === 'class') {
