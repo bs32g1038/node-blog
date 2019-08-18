@@ -7,6 +7,7 @@ import SiderMenu from '../components/SiderMenu';
 import styles from './BasicLayout.module.scss';
 import { renderRoutes } from 'react-router-config';
 import Context from './MenuContext';
+import getPageTitle from './getPageTitle';
 
 const { Content } = Layout;
 
@@ -36,6 +37,8 @@ class BasicLayout extends React.Component {
         collapsed: false,
     };
     render() {
+        console.log(this.props);
+        const pageTitle = getPageTitle(this.props);
         const { route, navTheme, layout: PropsLayout, isMobile, menuData, fixedHeader } = this.props;
         const isTop = PropsLayout === 'topmenu';
         const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -68,7 +71,7 @@ class BasicLayout extends React.Component {
         );
         return (
             <React.Fragment>
-                <DocumentTitle title={''}>
+                <DocumentTitle title={pageTitle}>
                     <Context.Provider value={this.getContext()}>{layout}</Context.Provider>
                 </DocumentTitle>
             </React.Fragment>
