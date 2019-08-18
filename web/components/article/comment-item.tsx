@@ -134,6 +134,8 @@ const UserSign: any = styled.span`
 const ItemContent = styled.div`
     font-size: 14px;
     line-height: 1.5;
+    word-break: break-all;
+    word-wrap: break-word;
     p {
         margin: 5px 0;
         img {
