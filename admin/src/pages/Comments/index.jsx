@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import { render } from '../../utils/marked';
 import { timeAgo } from '../../utils/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '../../components/PageHeaderWrapper';
+import styles from './style.module.scss';
+import GHAT from '../../utils/generate-avatar';
+import { md5 } from '../../utils/crypto-js';
+
+const ghat = new GHAT();
 
 export default class Comments extends Component {
     constructor(props) {
@@ -171,30 +177,50 @@ export default class Comments extends Component {
                             expandedRowRender={record => {
                                 return (
                                     <React.Fragment>
-                                        <p style={{ margin: '10px 0' }}>
-                                            <span style={{ color: '#1890ff' }}>内容：</span>
-                                        </p>
+                                        {record.reply && (
+                                            <div className={styles.commentReply}>
+                                                <div style={{ margin: '10px 0' }} className={styles.commentReplyHeader}>
+                                                    <div className={styles.commentReplyLeft}>
+                                                        <div className={styles.randomLogo}>
+                                                            <img
+                                                                alt=""
+                                                                className={styles.commentLogo}
+                                                                src={ghat.getImage(
+                                                                    md5(record.reply.nickName).toString()
+                                                                )}
+                                                            />
+                                                        </div>
+                                                        <Link to={'/content/comments/reply/' + record.reply._id}>
+                                                            {record.reply.nickName}
+                                                        </Link>
+                                                    </div>
+                                                    <span className={styles.timestamp + ' pull-right'}>
+                                                        <i className="fa fa-clock-o fa-fw"></i>
+                                                        <span>{timeAgo(record.reply.createdAt)}</span>
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    className={styles.commentReplyContent + ' markdown-body'}
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: render(record.reply.content),
+                                                    }}
+                                                ></div>
+                                                <Button
+                                                    href={'/content/comments/reply/' + record.reply._id}
+                                                    className={styles.commentReplyA}
+                                                    type="primary"
+                                                    size="small"
+                                                >
+                                                    <i className="fa fa-reply fa-fw"></i> 回复
+                                                </Button>
+                                            </div>
+                                        )}
                                         <div
                                             className="markdown-body"
                                             dangerouslySetInnerHTML={{
                                                 __html: render(record.content),
                                             }}
                                         ></div>
-                                        {record.reply && (
-                                            <React.Fragment>
-                                                <p style={{ margin: '10px 0' }}>
-                                                    <span style={{ color: 'rgb(234, 102, 102)' }}>
-                                                        回复给@({record.reply.nickName})
-                                                    </span>
-                                                </p>
-                                                <div
-                                                    className="markdown-body"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: render(record.reply.content),
-                                                    }}
-                                                ></div>
-                                            </React.Fragment>
-                                        )}
                                     </React.Fragment>
                                 );
                             }}
