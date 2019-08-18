@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it';
 import iterator from 'markdown-it-for-inline';
 import jsxss from 'xss';
-import { siteInfo } from '../configs/default.config';
+import config from '../configs/default.config';
 
 const markdown = new MarkdownIt();
 
@@ -17,7 +17,7 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
                 const name = r[1];
-                return `<img src="${siteInfo.webDomain}/static/images/emotion/${name}.png" />`;
+                return `<img src="${config.siteInfo.webDomain}/static/images/emotion/${name}.png" />`;
             }
         }
         return str;
