@@ -85,6 +85,9 @@ export default class Categories extends Component {
             });
     }
     fetchData(page = 1, limit = 100) {
+        this.setState({
+            loading: true,
+        });
         const query = {
             limit,
             page,
@@ -146,7 +149,7 @@ export default class Categories extends Component {
                             rowKey={record => record._id}
                             rowSelection={rowSelection}
                             columns={this.getTableColums()}
-                            loading={this.loading}
+                            loading={this.state.loading}
                             dataSource={this.state.categories}
                         />
                     </div>
