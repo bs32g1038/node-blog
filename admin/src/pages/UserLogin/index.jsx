@@ -80,7 +80,7 @@ class UserLogin extends Component {
                     <div className="nodeblog">
                         Powered by{' '}
                         <a
-                            href={config.siteInfo.domain}
+                            href={config.siteInfo.webDomain}
                             title="轻量级nodeblog博客系统"
                             rel="noopener noreferrer"
                             target="_blank"
