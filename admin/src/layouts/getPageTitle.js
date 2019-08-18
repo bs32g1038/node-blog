@@ -4,7 +4,7 @@ import config from '../configs/default.config';
 let route;
 export const matchParamsPath = (pathname, routes) => {
     if (routes) {
-        routes.map(item => {
+        routes.forEach(item => {
             if (pathToRegexp(item.path || '/all').test(pathname)) {
                 route = item;
             } else if (item.routes) {
@@ -19,15 +19,7 @@ export const matchParamsPath = (pathname, routes) => {
 };
 
 const getPageTitle = (props, ignoreTile) => {
-    const {
-        location,
-        route,
-        formatMessage,
-        title = config.title,
-        menu = {
-            locale: false,
-        },
-    } = props;
+    const { location, route, title = config.title } = props;
     const pageTitle = ignoreTile ? '' : title;
     if (!location.pathname) {
         return pageTitle;
@@ -37,13 +29,6 @@ const getPageTitle = (props, ignoreTile) => {
         return pageTitle;
     }
     let pageName = currRouterData.title;
-    if (menu.locale && currRouterData.locale && formatMessage) {
-        pageName = formatMessage({
-            id: currRouterData.locale || '',
-            defaultMessage: currRouterData.title,
-        });
-    }
-
     if (!pageName) {
         return pageTitle;
     }
