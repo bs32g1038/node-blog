@@ -385,12 +385,6 @@ const Div = styled.div`
         margin-left: 0;
     }
 
-    code,
-    pre {
-        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
-        font-size: 12px;
-    }
-
     pre {
         margin-bottom: 0;
         margin-top: 0;
@@ -712,37 +706,6 @@ const Div = styled.div`
         word-break: normal;
     }
 
-    .highlight {
-        margin-bottom: 16px;
-    }
-
-    .highlight pre {
-        margin-bottom: 0;
-        word-break: normal;
-    }
-
-    .highlight pre,
-    pre {
-        background-color: #f6f8fa;
-        border-radius: 3px;
-        font-size: 85%;
-        line-height: 1.45;
-        overflow: auto;
-        padding: 16px;
-    }
-
-    pre code {
-        background-color: transparent;
-        border: 0;
-        display: inline;
-        line-height: inherit;
-        margin: 0;
-        max-width: auto;
-        overflow: visible;
-        padding: 0;
-        word-wrap: normal;
-    }
-
     .commit-tease-sha {
         color: #444d56;
         display: inline-block;
@@ -964,6 +927,7 @@ const Div = styled.div`
     pre,
     code {
         font-family: ${theme.codeFamily};
+        font-size: 13px;
     }
     img {
         box-sizing: border-box;
@@ -974,7 +938,6 @@ const Div = styled.div`
         margin: 0 auto;
     }
     pre {
-        overflow: auto;
         margin: 20px 0;
         padding: 36px 0 0;
         font-size: 13px;
@@ -984,6 +947,12 @@ const Div = styled.div`
         background-color: #f7f7f7;
         position: relative;
         border-radius: 3px;
+        code {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #f0f0f0;
+        }
         :after {
             content: ' ';
             position: absolute;
@@ -997,12 +966,6 @@ const Div = styled.div`
             z-index: 3;
             left: 10px;
         }
-        code {
-            display: block;
-            overflow-x: auto;
-            padding: 0.5em;
-            background: #f0f0f0;
-        }
     }
     blockquote {
         margin: 0;
@@ -1010,12 +973,6 @@ const Div = styled.div`
         padding: 0 15px;
         color: #666;
         border-left: 4px solid #ddd;
-        background: #f0f0f0;
-    }
-    .hljs {
-        display: block;
-        overflow-x: auto;
-        padding: 0.5em;
         background: #f0f0f0;
     }
     .hljs,
