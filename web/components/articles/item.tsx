@@ -5,12 +5,14 @@ import media from '../../utils/media';
 import { parseTime } from '../../utils/time';
 import { ContentLoader } from '../content-loader';
 import { LazyLoad } from '../lazy-load';
+import * as theme from '../../theme';
 
 const ArticleItem = styled.li`
-    padding: 0.2rem 0;
-    max-width: 25%;
-    flex: 1 0 auto;
+    padding: 15px 0 20px;
     position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
     ${media.phone`
         width: 100%;
         max-width: 100%;
@@ -31,10 +33,13 @@ const ArticleItem = styled.li`
 
 const Brief = styled.div`
     display: block;
-    line-height: 32px;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 10px;
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    margin-right: 20px;
     ${media.phone`
         display: flex;
         flex-direction: row-reverse;
@@ -54,14 +59,17 @@ const Content = styled.div`
 `;
 
 const Meta = styled.div`
-    color: #999;
+    color: ${theme.textColorSecondary};
     font-size: 12px;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
     > a {
-        color: #999;
+        color: ${theme.textColorSecondary};
         font-size: 12px;
         text-decoration: none;
     }
     &.time {
+        font-size: 13px;
         ${media.phone`
             display: none;
         `};
@@ -72,12 +80,12 @@ const Meta = styled.div`
 `;
 
 const Title = styled.a`
-    color: rgb(85, 85, 85);
+    color: ${theme.headingColor};
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 18px;
     &:hover {
         color: '#007fff';
     }
@@ -92,7 +100,8 @@ const Title = styled.a`
 
 const ThumbWrap = styled.div`
     height: auto;
-    width: 100%;
+    height: 100px;
+    width: 150px;
     position: relative;
     position: relative;
     display: block;
@@ -100,9 +109,9 @@ const ThumbWrap = styled.div`
     padding: 0;
     flex-shrink: 0;
     border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     ${media.phone`
-        width: 80px;
-        height: 80px;
+       display: none;
     `}
     img {
         width: 100%;
@@ -115,7 +124,7 @@ const ThumbWrap = styled.div`
     &:after {
         content: '';
         display: block;
-        padding-top: 66.66666%;
+        padding-top: 100;
         box-sizing: border-box;
     }
 `;
@@ -134,22 +143,26 @@ const ThumbA = styled.a`
     background-color: rgba(120, 120, 120, 0.1);
 `;
 
+const SummaryWrap = styled.div`
+    display: flex;
+`;
+
 const Summary = styled.p`
     margin: 0;
     word-wrap: break-word;
     margin-top: 4px;
-    font-size: 12px;
-    color: #93999f;
-    word-break: break-all;
+    font-size: 14px;
+    color: ${theme.textColor};
     word-wrap: break-word;
     overflow: hidden;
-    transition: 0.3s all linear;
-    text-overflow: -o-ellipsis-lastline;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    max-height: 48px;
-    line-height: 24px;
+    ${media.phone`
+        text-overflow: -o-ellipsis-lastline;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        max-height: 48px;
+        line-height: 24px;
+    `}
 `;
 
 const Loading = () => (
@@ -166,28 +179,26 @@ const Item: SFC<{ item: any }> = (props: any) => {
     return (
         <ArticleItem>
             <Brief>
-                <ThumbWrap>
-                    <LazyLoad component={ThumbA}>
-                        <img src={item.screenshot} />
-                    </LazyLoad>
-                </ThumbWrap>
                 <Content>
-                    <Meta className="time">
-                        <strong>TIME</strong>
-                        <em>·</em> {parseTime(item.createdAt)}
-                    </Meta>
                     <Link href={`/blog/articles/${item._id}`} passHref={true}>
                         <Title>{item.title}</Title>
                     </Link>
-                    <Summary>{item.summary}</Summary>
                     <Meta>
+                        <span className="cat">发布于 {parseTime(item.createdAt)} </span>
+                        <em className="cmt">·</em>
                         <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
                         <em className="cmt">·</em>
                         <a href="javascript:;">阅读：{item.viewsCount}</a> <em className="cmt">·</em>
                         <a href="javascript:;">评论：{item.commentCount}</a>
                     </Meta>
+                    <Summary>{item.summary}</Summary>
                 </Content>
             </Brief>
+            <ThumbWrap>
+                <LazyLoad component={ThumbA}>
+                    <img src={item.screenshot} />
+                </LazyLoad>
+            </ThumbWrap>
         </ArticleItem>
     );
 };

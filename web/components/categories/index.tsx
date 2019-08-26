@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchCategories, State } from '../../redux/reducers/categories';
 import media from '../../utils/media';
 import NavLink from '../nav-link';
+import * as theme from '../../theme';
 
 const CategoriesWrap = styled.ul`
     align-items: center;
@@ -15,7 +16,6 @@ const CategoriesWrap = styled.ul`
     margin: 0;
     padding: 0 10px 15px;
     border-bottom: 1px solid #ededee;
-    margin-bottom: 8px;
     ${media.phone`
         padding-top: 5px;
         margin-bottom: 0;
@@ -32,14 +32,13 @@ const Item = styled.li`
 `;
 
 const ItemLink = styled.a`
-    color: #90979c;
+    color: ${theme.textColor};
     text-decoration: none;
     cursor: pointer;
     &.active {
         position: relative;
         font-size: 14px;
-        color: #333;
-        color: #40404c;
+        color: ${theme.headingColor};
         font-weight: 700;
         &:after {
             position: absolute;

@@ -6,10 +6,11 @@ import { GithubSvg } from '../svgs/github-svg';
 import { HomeSvg } from '../svgs/home-svg';
 import { UserSvg } from '../svgs/user-svg';
 import NavLink from '../nav-link';
+import * as theme from '../../theme';
 
 const Footer = styled.footer`
     box-sizing: border-box;
-    color: #8590a6;
+    color: ${theme.textColorSecondary};
     flex: 0 0 auto;
     font-size: 12px;
     font-weight: normal;
@@ -40,7 +41,8 @@ const P = styled.p`
     margin: 0;
     > a {
         text-decoration: none;
-        color: #34495e;
+        color: ${theme.textColor};
+        font-weight: bolder;
     }
 `;
 

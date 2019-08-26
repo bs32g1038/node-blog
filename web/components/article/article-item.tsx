@@ -56,14 +56,14 @@ const ArticleHeader = styled.div`
     margin-bottom: 20px;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
     word-break: break-word;
     margin: 16px 0;
-    font-size: 18px;
+    font-size: 32px;
     a {
         display: inline-block;
         position: relative;
-        color: rgb(85, 85, 85);
+        color: rgb(0, 0, 0, 0.85);
         border-bottom: none;
         vertical-align: top;
         text-decoration: none;
@@ -72,7 +72,7 @@ const Title = styled.h2`
 
 const Meta = styled.div`
     margin: 3px 0 0 -5px;
-    color: rgb(153, 153, 153);
+    color: rgb(0, 0, 0, 0.45);
     font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     font-size: 12px;
     span {

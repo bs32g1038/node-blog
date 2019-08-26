@@ -14,13 +14,12 @@ import AppLayout from '../../layouts/app';
 import Pagination from '../pagination';
 
 const UL = styled.ul`
-    display: flex;
     flex-wrap: wrap;
     background-color: #fff;
     flex: 1 0 auto;
     list-style: none;
-    margin: 0 -10px;
     padding: 0;
+    margin: 0;
     ${media.phone`
         margin: 0;
     `}
