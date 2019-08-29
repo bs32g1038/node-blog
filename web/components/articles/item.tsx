@@ -139,9 +139,9 @@ const ThumbWrap = styled.div`
 const ThumbImg = styled.div`
     height: 100px;
     width: 150px;
-    background-size: contain;
-    background-position: 50% 50%;
     background-color: #fff;
+    background-size: cover;
+    background-position: 100% 100%;
 `;
 
 const Summary = styled.p`
