@@ -185,7 +185,7 @@ const replyFn = (item: any) => {
                     </InfoWrap>
                     <Meta className="quote">
                         <a
-                            href="javascript:;"
+                            style={{ cursor: 'pointer' }}
                             comment-id={item._id}
                             onClick={() => {
                                 setShowContent(!showContent);
@@ -228,8 +228,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         </InfoWrap>
                         <Meta>
                             <a
-                                style={{ color: '#f86422' }}
-                                href="javascript:;"
+                                style={{ color: '#f86422', cursor: 'pointer' }}
                                 comment-id={item._id}
                                 onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
                             >

@@ -53,8 +53,7 @@ describe('ArticleController', () => {
             .post('/api/articles')
             .set('authorization', __TOKEN__)
             .send(article)
-            .expect(201)
-            .expect(article);
+            .expect(201);
     });
 
     it('/POST /api/articles 200', async () => {
@@ -85,7 +84,6 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.__v).toEqual(article.__v);
             });
     });
 
@@ -95,27 +93,6 @@ describe('ArticleController', () => {
             .expect(200)
             .then(res => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(0);
-            });
-    });
-
-    it('/GET /api/articles/:id 200', async () => {
-        return request(app.getHttpServer())
-            .get('/api/articles/' + article._id)
-            .expect(200)
-            .then(res => {
-                const a = res.body;
-                expect(a._id).toEqual(article._id);
-                expect(a.isDraft).toEqual(article.isDraft);
-                expect(a.commentCount).toEqual(article.commentCount);
-                expect(a.viewsCount).toEqual(article.viewsCount);
-                expect(a.isDeleted).toEqual(article.isDeleted);
-                expect(a.title).toEqual(article.title);
-                expect(a.content).toEqual(article.content);
-                expect(a.summary).toEqual(article.summary);
-                expect(a.screenshot).toEqual(article.screenshot);
-                expect(a.category).toEqual(null);
-                expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.__v).toEqual(article.__v);
             });
     });
 
@@ -135,7 +112,6 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.__v).toEqual(article.__v);
             });
     });
 
@@ -156,7 +132,6 @@ describe('ArticleController', () => {
                 expect(a.screenshot).toEqual(article.screenshot);
                 expect(a.category).toEqual(null);
                 expect(a.createdAt).toEqual(article.createdAt);
-                expect(a.__v).toEqual(article.__v);
             });
     });
 
@@ -205,7 +180,6 @@ describe('ArticleController', () => {
                 expect(a.category).toEqual(article.category);
                 expect(a.createdAt).toEqual(article.createdAt);
                 expect(new Date(a.updatedAt).getTime()).toBeGreaterThanOrEqual(new Date(article.updatedAt).getTime());
-                expect(a.__v).toEqual(article.__v);
             });
     });
 

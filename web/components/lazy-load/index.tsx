@@ -8,7 +8,7 @@ const getTop = (e: any) => {
     }
     return T;
 };
-export const LazyLoad = (props: { tag?: string; component: any; children: any }) => {
+export const LazyLoad = (props: { tag?: string; component?: any; children?: any }) => {
     const [tag] = useState(props.tag || 'img');
     const [attrs, setAttrs] = useState({});
     const $dom = useRef(null);

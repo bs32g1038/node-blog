@@ -7,7 +7,7 @@ const DB_CONNECTION_TOKEN = Symbol('DB_CONNECTION_TOKEN');
 
 const Connection = {
     provide: DB_CONNECTION_TOKEN,
-    useFactory: async () => {
+    useFactory: () => {
         const RECONNET_INTERVAL = 500;
 
         if (!isTestMode) {

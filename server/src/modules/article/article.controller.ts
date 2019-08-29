@@ -31,7 +31,15 @@ export class ArticleController {
     @Post('/articles')
     @Roles('admin')
     public async create(@Body() article: Article) {
-        return await this.articleService.create(article);
+        const a = 'tesaaat';
+        return await this.articleService.create({
+            title: '原生 js 模拟实现 es6 中的 Promise',
+            category: '5d67597dc8459c575823725c',
+            tags: ['tstetet'],
+            screenshot: '/static/upload/2019/628eed36b4d05397b0c30967011185c5.jpg',
+            summary: 'testst',
+            content: 'test',
+        });
     }
 
     @Put('/articles/:id')
@@ -43,10 +51,12 @@ export class ArticleController {
     @Get('/articles')
     @JoiValidationPipe(StandardPaginationSchema)
     @JoiValidationPipe(ArticleController.cIdSchema)
-    public async getArticles(@Query() query: { page: number; limit: number; cid: string }) {
-        const q: { category?: string } = {};
+    public async getArticles(@Query() query: { page: number; limit: number; cid: string; tag: string }) {
+        const q: { category?: string; tag?: string } = {};
         if (query.cid) {
             q.category = query.cid;
+        } else if (query.tag) {
+            q.tag = query.tag;
         }
         const items = await this.articleService.getArticles(q, {
             skip: Number(query.page),

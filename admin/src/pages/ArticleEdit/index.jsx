@@ -4,6 +4,7 @@ import config from '../../configs/default.config';
 import { Form, Input, Upload, Select, Button, message } from 'antd';
 import MdEdit from '../../components/MdEdit';
 import axios from '../../axios';
+import EditableTagGroup from '../../components/EditableTagGroup';
 import PageHeaderWrapper from '../../components/PageHeaderWrapper';
 import './style.scss';
 
@@ -127,6 +128,11 @@ class ArticleEdit extends Component {
                                 rules: [{ required: true, message: '分类不能为空!' }],
                                 initialValue: category._id,
                             })(<Select placeholder="请选择一个分类">{categoryOptions}</Select>)}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标签：">
+                            {getFieldDecorator('tags', {
+                                initialValue: article.tags,
+                            })(<EditableTagGroup />)}
                         </FormItem>
                         <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="封面图片：">
                             {getFieldDecorator('screenshot', {

@@ -177,7 +177,7 @@ const C = (props: Props) => {
                     <a>首页</a>
                 </Link>
                 <span className="sep">›</span>
-                <Link href={'/blog/categories/' + (article.category && article.category._id)}>
+                <Link href={'/blog/articles?cid=' + (article.category && article.category._id)}>
                     <a className="text-muted">{article.category && article.category.name}</a>
                 </Link>
                 <span className="sep">›</span>

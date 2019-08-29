@@ -57,11 +57,19 @@ export class ArticleService {
     }
 
     async getArticles(
-        query: { category?: string },
+        query: { category?: string; tag?: string },
         option: { skip?: number; limit?: number; sort?: object }
     ): Promise<Article[]> {
         const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
-        const filter = { isDeleted: false, ...query };
+        let filter: any = { isDeleted: false };
+        if (query.tag) {
+            filter = {
+                ...filter,
+                tags: { $elemMatch: { $eq: query.tag } },
+            };
+        } else {
+            filter = { ...filter, ...query };
+        }
         return await this.articleModel
             .find(filter, '-content', {
                 skip: (skip - 1) * limit,
@@ -77,6 +85,30 @@ export class ArticleService {
                 $inc: { viewsCount: 1 },
             })
             .populate('category');
+
+        // 插入日阅读量
+        /* istanbul ignore next */
+        const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
+        const arr: any = article.dayReadings;
+        let isExist = false;
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
+            if (item.timestamp === curDayTime) {
+                arr.set(i, {
+                    count: item.count + 1,
+                    timestamp: item.timestamp,
+                });
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist) {
+            arr.addToSet({
+                count: 0,
+                timestamp: curDayTime,
+            });
+        }
+        article.save();
 
         if (article) {
             const data = article.toObject();
