@@ -1,44 +1,49 @@
 import * as request from 'supertest';
+import { CategoryModelProvider } from '../../../src/models/category.model';
 import { ArticleModule } from '../../../src/modules/article.module';
+import { CategoryService } from '../../../src/modules/category/category.service';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
+import * as mongoose from 'mongoose';
 
 describe('article_002', () => {
     let app: INestApplication;
+    const categoryId = mongoose.Types.ObjectId();
+    const time = new Date().toISOString();
 
     beforeAll(async () => {
-        app = await initApp({ imports: [ArticleModule] });
+        app = await initApp({
+            imports: [ArticleModule],
+            providers: [CategoryModelProvider, CategoryService],
+        });
+        const categoryService = app.get<CategoryService>(CategoryService);
+        const category = {
+            _id: categoryId,
+            articleCount: 10,
+            order: 0,
+            name: 'test',
+            createdAt: time,
+            updatedAt: time,
+            __v: 0,
+        };
+        categoryService.create(category);
     });
 
-    const time = new Date().toISOString();
     const article = {
-        _id: '5c0a1117244b3c01b464a3ec',
-        isDraft: false,
-        commentCount: 1,
-        viewsCount: 1,
-        isDeleted: false,
+        _id: mongoose.Types.ObjectId(),
         title: 'test',
-        content: '```html```\ntest\n```',
+        category: categoryId,
+        tags: ['test'],
+        screenshot: '/static/upload/2019/628eed36b4d05397b0c30967011185c5.jpg',
         summary: 'test',
-        screenshot: 'http://www.lizc.net/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
-        category: '5c0a1317244b3c01b464a3ec',
-        createdAt: time,
-        updatedAt: time,
-        __v: 0,
+        content: 'test',
     };
 
-    it('/POST /api/articles 200', async () => {
+    it('/POST /api/articles 403', async () => {
         return request(app.getHttpServer())
             .post('/api/articles')
-            .set('authorization', __TOKEN__)
             .send(article)
-            .expect(201);
-    });
-
-    it('/GET /api/articles/:id?md=true 200', async () => {
-        return request(app.getHttpServer())
-            .get('/api/articles/' + article._id + '?md=true')
-            .expect(200);
+            .expect(403);
     });
 
     afterAll(async () => {

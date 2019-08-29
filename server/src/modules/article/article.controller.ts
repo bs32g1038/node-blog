@@ -31,15 +31,7 @@ export class ArticleController {
     @Post('/articles')
     @Roles('admin')
     public async create(@Body() article: Article) {
-        const a = 'tesaaat';
-        return await this.articleService.create({
-            title: '原生 js 模拟实现 es6 中的 Promise',
-            category: '5d67597dc8459c575823725c',
-            tags: ['tstetet'],
-            screenshot: '/static/upload/2019/628eed36b4d05397b0c30967011185c5.jpg',
-            summary: 'testst',
-            content: 'test',
-        });
+        return await this.articleService.create(article);
     }
 
     @Put('/articles/:id')

@@ -89,26 +89,28 @@ export class ArticleService {
         // 插入日阅读量
         /* istanbul ignore next */
         const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
-        const arr: any = article.dayReadings;
-        let isExist = false;
-        for (let i = 0; i < arr.length; i++) {
-            const item = arr[i];
-            if (item.timestamp === curDayTime) {
-                arr.set(i, {
-                    count: item.count + 1,
-                    timestamp: item.timestamp,
-                });
-                isExist = true;
-                break;
+        if (article && article.dayReadings) {
+            const arr: any = article.dayReadings;
+            let isExist = false;
+            for (let i = 0; i < arr.length; i++) {
+                const item = arr[i];
+                if (item.timestamp === curDayTime) {
+                    arr.set(i, {
+                        count: item.count + 1,
+                        timestamp: item.timestamp,
+                    });
+                    isExist = true;
+                    break;
+                }
             }
+            if (!isExist) {
+                arr.addToSet({
+                    count: 0,
+                    timestamp: curDayTime,
+                });
+            }
+            article.save();
         }
-        if (!isExist) {
-            arr.addToSet({
-                count: 0,
-                timestamp: curDayTime,
-            });
-        }
-        article.save();
 
         if (article) {
             const data = article.toObject();
