@@ -7,6 +7,7 @@ import * as MarkdownIt from 'markdown-it';
 import hljs = require('highlight.js');
 import mila = require('markdown-it-link-attributes');
 
+/* istanbul ignore next */
 const markdown = new MarkdownIt({
     highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
@@ -87,8 +88,9 @@ export class ArticleService {
             .populate('category');
 
         // 插入日阅读量
-        /* istanbul ignore next */
         const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
+
+        /* istanbul ignore next */
         if (article && article.dayReadings) {
             const arr: any = article.dayReadings;
             let isExist = false;
@@ -114,6 +116,7 @@ export class ArticleService {
 
         if (article) {
             const data = article.toObject();
+            /* istanbul ignore next */
             if (isRenderHtml) {
                 data.content = markdown.render(data.content);
             }
