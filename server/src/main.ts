@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
-import './models/index.model';
 import { AppModule } from './app.module';
 import { resolve } from 'path';
 import * as helmet from 'helmet';
