@@ -16,11 +16,11 @@ export const normalizeY = ({ value = 1, min = 1, max = 28 }) => {
     const part1000 = part * 1000;
 
     if (1 < value && value < part10) {
-        return value / part10 + 1;
+        return (value / part10) * part + 1;
     } else if (value < part100) {
-        return value / part100 + 10;
+        return (value / part100) * part + 10;
     } else if (value < part1000) {
-        return value / part1000 + 19;
+        return (value / part1000) * part + 19;
     } else {
         return max;
     }
