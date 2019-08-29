@@ -28,15 +28,15 @@ const UL = styled.ul`
 const LIMIT = 12;
 
 const getData = (props: any) => {
-    const { page = 1, limit = LIMIT, cid = '' } = props.router.query;
+    const { page = 1, limit = LIMIT, cid = '', tag = '' } = props.router.query;
     const articles = props._DB;
-    return articles[getArticlesCacheKey(page, limit, { cid })] || { items: new Array(4).fill(null) };
+    return articles[getArticlesCacheKey(page, limit, { cid, tag })] || { items: new Array(4).fill(null) };
 };
 
 export const fetchData = (props: { router: Router; dispatch: any }) => {
     const { router } = props;
-    const { page = 1, limit = LIMIT, cid = '' } = router.query;
-    return props.dispatch(fetchArticles(Number(page), Number(limit), { cid }));
+    const { page = 1, limit = LIMIT, cid = '', tag = '' } = router.query;
+    return props.dispatch(fetchArticles(Number(page), Number(limit), { cid, tag }));
 };
 
 const C = (props: { router: Router; dispatch: any }) => {
@@ -84,8 +84,8 @@ C.getInitialProps = async ({ reduxStore, req, query }: any) => {
         };
     }
     await reduxStore.dispatch(fetchCategories());
-    const { page = 1, limit = LIMIT, cid = '' } = req && req.query;
-    await reduxStore.dispatch(fetchArticles(Number(page), Number(limit), { cid }));
+    const { page = 1, limit = LIMIT, cid = '', tag = '' } = req && req.query;
+    await reduxStore.dispatch(fetchArticles(Number(page), Number(limit), { cid, tag }));
     return {};
 };
 

@@ -6,9 +6,10 @@ import { parseTime } from '../../utils/time';
 import { ContentLoader } from '../content-loader';
 import { LazyLoad } from '../lazy-load';
 import * as theme from '../../theme';
+import Trend from '../Trend';
 
 const ArticleItem = styled.li`
-    padding: 15px 0 20px;
+    padding: 15px 0 10px;
     position: relative;
     display: flex;
     align-items: center;
@@ -61,8 +62,8 @@ const Content = styled.div`
 const Meta = styled.div`
     color: ${theme.textColorSecondary};
     font-size: 12px;
-    margin-top: 0.8em;
-    margin-bottom: 0.8em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     > a {
         color: ${theme.textColorSecondary};
         font-size: 12px;
@@ -98,6 +99,14 @@ const Title = styled.a`
     `};
 `;
 
+const RightContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    ${media.phone`
+       display: none;
+    `}
+`;
+
 const ThumbWrap = styled.div`
     height: auto;
     height: 100px;
@@ -110,9 +119,7 @@ const ThumbWrap = styled.div`
     flex-shrink: 0;
     border-radius: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    ${media.phone`
-       display: none;
-    `}
+    margin-bottom: 5px;
     img {
         width: 100%;
         height: auto;
@@ -124,33 +131,22 @@ const ThumbWrap = styled.div`
     &:after {
         content: '';
         display: block;
-        padding-top: 100;
+        padding-top: 100%;
         box-sizing: border-box;
     }
 `;
 
-const ThumbA = styled.a`
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: 0;
-    border-radius: 2px;
-    background-size: cover;
-    background-repeat: no-repeat;
+const ThumbImg = styled.div`
+    height: 100px;
+    width: 150px;
+    background-size: contain;
     background-position: 50% 50%;
-    background-color: rgba(120, 120, 120, 0.1);
-`;
-
-const SummaryWrap = styled.div`
-    display: flex;
+    background-color: #fff;
 `;
 
 const Summary = styled.p`
     margin: 0;
     word-wrap: break-word;
-    margin-top: 4px;
     font-size: 14px;
     color: ${theme.textColor};
     word-wrap: break-word;
@@ -163,6 +159,25 @@ const Summary = styled.p`
         max-height: 48px;
         line-height: 24px;
     `}
+`;
+
+const Tags = styled.div`
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 1.4em;
+    svg {
+        display: inline-block;
+        fill: #757070;
+    }
+`;
+
+const Tag = styled.a`
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: capitalize;
+    text-decoration: none;
+    font-size: 13px;
 `;
 
 const Loading = () => (
@@ -188,17 +203,34 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         <em className="cmt">·</em>
                         <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
                         <em className="cmt">·</em>
-                        <a href="javascript:;">阅读：{item.viewsCount}</a> <em className="cmt">·</em>
-                        <a href="javascript:;">评论：{item.commentCount}</a>
+                        <a>阅读：{item.viewsCount}</a> <em className="cmt">·</em>
+                        <a>评论：{item.commentCount}</a>
                     </Meta>
                     <Summary>{item.summary}</Summary>
+                    {item.tags.length > 0 && (
+                        <Tags>
+                            <svg viewBox="0 0 32 32" height="16" width="16">
+                                <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>
+                            </svg>
+                            {item.tags.map((name: any) => (
+                                <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag' + name}>
+                                    <Tag>{name}</Tag>
+                                </Link>
+                            ))}
+                        </Tags>
+                    )}
                 </Content>
             </Brief>
-            <ThumbWrap>
-                <LazyLoad component={ThumbA}>
-                    <img src={item.screenshot} />
-                </LazyLoad>
-            </ThumbWrap>
+            <RightContent>
+                <ThumbWrap>
+                    <LazyLoad tag={'div'}>
+                        <ThumbImg style={{ backgroundImage: `url(${item.screenshot} )` }} />
+                    </LazyLoad>
+                </ThumbWrap>
+                <div title={item.title + ' 访问趋势'}>
+                    <Trend data={[1, 1, ...item.dayReadings.map((tmp: any) => tmp.count), 1, 1]} />
+                </div>
+            </RightContent>
         </ArticleItem>
     );
 };

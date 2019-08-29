@@ -1,8 +1,12 @@
 import * as api from '../../api/article';
 import { FETCH_ARTICLES } from '../action-types';
 
-export const getArticlesCacheKey = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
-    return page + '#' + limit + '#' + filter.cid;
+export const getArticlesCacheKey = (
+    page?: number,
+    limit?: number,
+    filter: { cid: string; tag: string } = { cid: '', tag: '' }
+) => {
+    return page + '#' + limit + '#' + filter.cid + '#' + filter.tag;
 };
 
 export const setArticles = (items: any, totalCount: number, cacheKey: string) => ({
@@ -12,7 +16,11 @@ export const setArticles = (items: any, totalCount: number, cacheKey: string) =>
     cacheKey,
 });
 
-export const fetchArticles = (page?: number, limit?: number, filter: { cid: string } = { cid: '' }) => {
+export const fetchArticles = (
+    page?: number,
+    limit?: number,
+    filter: { cid: string; tag: string } = { cid: '', tag: '' }
+) => {
     return (dispatch: any) => {
         return api.fetchArticles(page, limit, filter).then(res => {
             const items = res.items;

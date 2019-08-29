@@ -6,7 +6,7 @@ import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 import * as mongoose from 'mongoose';
 
-describe('article_006', () => {
+describe('article_0012', () => {
     let app: INestApplication;
     const categoryId = mongoose.Types.ObjectId();
     const time = new Date().toISOString();
@@ -31,58 +31,26 @@ describe('article_006', () => {
 
     const article = {
         _id: mongoose.Types.ObjectId(),
-        isDraft: false,
-        commentCount: 1,
-        viewsCount: 1,
-        isDeleted: false,
         title: 'test',
-        content: '```html```\ntest\n```',
         category: categoryId,
+        tags: ['test'],
+        screenshot: '/static/upload/2019/628eed36b4d05397b0c30967011185c5.jpg',
         summary: 'test',
-        screenshot: 'http://www.lizc.net/static/upload/2019/027c4f5561d385b0b0a5338706694570.jpg',
-        createdAt: time,
-        updatedAt: time,
-        __v: 0,
+        content: 'test',
     };
 
-    it('/DELETE /api/articles 400', async () => {
+    it('/POST /api/articles 201', async () => {
         return request(app.getHttpServer())
-            .delete('/api/articles')
+            .post('/api/articles')
             .set('authorization', __TOKEN__)
-            .send({
-                articleIds: '',
-            })
-            .expect(400);
+            .send(article)
+            .expect(201);
     });
 
-    it('/DELETE /api/articles 200 []', async () => {
+    it('/DELETE /api/articles/:id 403', async () => {
         return request(app.getHttpServer())
-            .delete('/api/articles')
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [],
-            })
-            .expect(200);
-    });
-
-    it('/DELETE /api/articles 200 [mongoose.Types.ObjectId()]', async () => {
-        return request(app.getHttpServer())
-            .delete('/api/articles')
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [mongoose.Types.ObjectId()],
-            })
-            .expect(200);
-    });
-
-    it('/DELETE /api/articles 200 [...]', async () => {
-        return request(app.getHttpServer())
-            .delete('/api/articles')
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [article._id],
-            })
-            .expect(200);
+            .delete('/api/articles/' + article._id)
+            .expect(403);
     });
 
     afterAll(async () => {

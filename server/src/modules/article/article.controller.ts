@@ -43,10 +43,12 @@ export class ArticleController {
     @Get('/articles')
     @JoiValidationPipe(StandardPaginationSchema)
     @JoiValidationPipe(ArticleController.cIdSchema)
-    public async getArticles(@Query() query: { page: number; limit: number; cid: string }) {
-        const q: { category?: string } = {};
+    public async getArticles(@Query() query: { page: number; limit: number; cid: string; tag: string }) {
+        const q: { category?: string; tag?: string } = {};
         if (query.cid) {
             q.category = query.cid;
+        } else if (query.tag) {
+            q.tag = query.tag;
         }
         const items = await this.articleService.getArticles(q, {
             skip: Number(query.page),

@@ -7,6 +7,7 @@ import * as MarkdownIt from 'markdown-it';
 import hljs = require('highlight.js');
 import mila = require('markdown-it-link-attributes');
 
+/* istanbul ignore next */
 const markdown = new MarkdownIt({
     highlight: (str, lang) => {
         if (lang && hljs.getLanguage(lang)) {
@@ -57,11 +58,19 @@ export class ArticleService {
     }
 
     async getArticles(
-        query: { category?: string },
+        query: { category?: string; tag?: string },
         option: { skip?: number; limit?: number; sort?: object }
     ): Promise<Article[]> {
         const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
-        const filter = { isDeleted: false, ...query };
+        let filter: any = { isDeleted: false };
+        if (query.tag) {
+            filter = {
+                ...filter,
+                tags: { $elemMatch: { $eq: query.tag } },
+            };
+        } else {
+            filter = { ...filter, ...query };
+        }
         return await this.articleModel
             .find(filter, '-content', {
                 skip: (skip - 1) * limit,
@@ -78,8 +87,36 @@ export class ArticleService {
             })
             .populate('category');
 
+        // 插入日阅读量
+        const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
+
+        /* istanbul ignore next */
+        if (article && article.dayReadings) {
+            const arr: any = article.dayReadings;
+            let isExist = false;
+            for (let i = 0; i < arr.length; i++) {
+                const item = arr[i];
+                if (item.timestamp === curDayTime) {
+                    arr.set(i, {
+                        count: item.count + 1,
+                        timestamp: item.timestamp,
+                    });
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                arr.addToSet({
+                    count: 0,
+                    timestamp: curDayTime,
+                });
+            }
+            article.save();
+        }
+
         if (article) {
             const data = article.toObject();
+            /* istanbul ignore next */
             if (isRenderHtml) {
                 data.content = markdown.render(data.content);
             }

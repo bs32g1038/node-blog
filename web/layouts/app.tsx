@@ -46,6 +46,9 @@ export default (props: { children: any }) => {
                     textarea: {
                         font: '400 14px/16px -apple-system, Monda, PingFang SC, Microsoft YaHei, sans-serif',
                     },
+                    a: {
+                        userSelect: 'none',
+                    },
                 }}
             />
             <Global

@@ -15,6 +15,11 @@ export interface Article {
     readonly isDraft?: boolean;
     readonly createdAt?: string | Date;
     readonly updatedAt?: string | Date;
+    readonly tags?: string[];
+    readonly dayReadings?: Array<{
+        count?: number;
+        timestamp: number;
+    }>;
 }
 
 export interface ArticleDocument extends Article, Document {
@@ -61,6 +66,8 @@ const ArticleSchema = new mongoose.Schema(
             max: 100000,
             default: 0,
         },
+        //标签
+        tags: { type: [String], index: true },
         isDeleted: {
             type: Boolean,
             default: false,
@@ -69,6 +76,18 @@ const ArticleSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        dayReadings: [
+            {
+                count: {
+                    type: Number,
+                    max: 100000,
+                    default: 0,
+                    required: true,
+                },
+                // eslint-disable-next-line @typescript-eslint/unbound-method
+                timestamp: { type: Number, required: true },
+            },
+        ],
     },
     {
         timestamps: true,
