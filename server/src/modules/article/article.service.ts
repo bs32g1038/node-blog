@@ -1,6 +1,7 @@
 import { Model } from 'mongoose';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
+import { incArticleDayReadingCount } from '../write.day.reading.module';
 import { Article, ArticleDocument, ArticleModel } from '../../models/article.model';
 import { CategoryDocument, CategoryModel } from '../../models/category.model';
 import * as MarkdownIt from 'markdown-it';
@@ -87,31 +88,8 @@ export class ArticleService {
             })
             .populate('category');
 
-        // 插入日阅读量
-        const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
-
-        /* istanbul ignore next */
-        if (article && article.dayReadings) {
-            const arr: any = article.dayReadings;
-            let isExist = false;
-            for (let i = 0; i < arr.length; i++) {
-                const item = arr[i];
-                if (item.timestamp === curDayTime) {
-                    arr.set(i, {
-                        count: item.count + 1,
-                        timestamp: item.timestamp,
-                    });
-                    isExist = true;
-                    break;
-                }
-            }
-            if (!isExist) {
-                arr.addToSet({
-                    count: 0,
-                    timestamp: curDayTime,
-                });
-            }
-            article.save();
+        if (article && article._id) {
+            incArticleDayReadingCount(article._id);
         }
 
         if (article) {

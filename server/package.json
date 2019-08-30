@@ -96,7 +96,8 @@
       "!./src/pipes/joi.validation.pipe.ts",
       "!./src/filters/all-exceptions.filter.ts",
       "!./src/middlewares/rate-limit.middleware.ts",
-      "!./src/database/database.module.ts"
+      "!./src/database/database.module.ts",
+      "!./src/modules/write.day.reading.module.ts"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": [
