@@ -14,6 +14,7 @@ import { LoginModule } from './modules/login.module';
 import { UploadModule } from './modules/upload.module';
 import { SearchModule } from './modules/search.module';
 import { UserModule } from './modules/user.module';
+import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 
@@ -34,6 +35,7 @@ import { NestModule, MiddlewareConsumer } from '@nestjs/common';
         UploadModule,
         SearchModule,
         UserModule,
+        WriteDayReadingModule,
     ],
 })
 export class AppModule implements NestModule {
