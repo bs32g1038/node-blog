@@ -9,6 +9,7 @@ const NavLinks = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
 `;
 
 const PageNumbers = styled.a`
