@@ -967,14 +967,6 @@ const Div = styled.div`
             left: 10px;
         }
     }
-    blockquote {
-        margin: 0;
-        padding: 0;
-        padding: 0 15px;
-        color: #666;
-        border-left: 4px solid #ddd;
-        background: #f0f0f0;
-    }
     .hljs,
     .hljs-subst {
         color: #444;
