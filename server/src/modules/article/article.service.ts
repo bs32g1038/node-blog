@@ -89,7 +89,7 @@ export class ArticleService {
             .populate('category');
 
         if (article && article._id) {
-            incArticleDayReadingCount(article._id);
+            incArticleDayReadingCount(article._id, (article.dayReadings && article.dayReadings.length) || 0);
         }
 
         if (article) {

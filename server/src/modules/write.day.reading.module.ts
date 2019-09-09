@@ -5,10 +5,19 @@ import { ArticleModelProvider, ArticleDocument, ArticleModel } from '../models/a
 import * as LRU from 'lru-cache';
 const cache = new LRU();
 
-export const incArticleDayReadingCount = (articleId: string) => {
+/**
+ * 把文章 每天浏览数 写入缓存
+ * 当 文章dayReadings数组的长度 超过 14 时 不再写入缓存。
+ * @param articleId 文章id
+ * @param dayReadingsLen 文章dayReadings数组的长度
+ */
+export const incArticleDayReadingCount = (articleId: string, dayReadingsLen: number) => {
+    if (dayReadingsLen >= 14) {
+        return;
+    }
     const curDayTime = new Date(new Date().toLocaleDateString()).getTime();
     const key = articleId + '#' + curDayTime;
-    const count = <number>cache.get(key);
+    const count = cache.get(key) as number;
     if (count) {
         cache.set(key, count + 1);
     } else {
@@ -26,18 +35,21 @@ export const incArticleDayReadingCount = (articleId: string) => {
     providers: [ArticleModelProvider],
 })
 export class WriteDayReadingModule {
+    isInserting = false;
+
     constructor(@InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>) {
         // 执行定时器
         this.timingWrite();
     }
 
+    /**
+     *  count <= 0 直接删除 key
+     * @param key
+     */
     async writeToDb(key: string) {
         const [articleId, timestamp] = key.split('#');
 
-        const count = <number>cache.get(key);
-        if (count <= 0) {
-            return;
-        }
+        const count = cache.get(key) as number;
 
         const res = await this.articleModel.update(
             { _id: articleId, 'dayReadings.timestamp': timestamp },
@@ -48,8 +60,7 @@ export class WriteDayReadingModule {
             await this.articleModel.update({ _id: articleId }, { $addToSet: { dayReadings: { timestamp, count } } });
         }
 
-        // 处理缓存中的数据
-        const result = <number>cache.get(key) - count;
+        const result = (cache.get(key) as number) - count;
         if (result <= 0) {
             cache.del(key);
         } else {
@@ -57,12 +68,23 @@ export class WriteDayReadingModule {
         }
     }
 
-    // 定时写入
+    /**
+     * 定时写入，每5分钟执行一次检测
+     * 加全局锁(isInserting)，防止数据超时，导致写入数据异常
+     */
     timingWrite() {
         setInterval(() => {
-            cache.keys().map((key: string) => {
-                this.writeToDb(key);
+            if (this.isInserting) {
+                return;
+            }
+            this.isInserting = true;
+            Promise.all(
+                cache.keys().map(async (key: string) => {
+                    return await this.writeToDb(key);
+                })
+            ).then(() => {
+                this.isInserting = false;
             });
-        }, 1000 * 60 * 5); // 每5分钟执行一次检测
+        }, 1000 * 60 * 5);
     }
 }
