@@ -22,7 +22,7 @@
     "@emotion/core": "^10.0.16",
     "@emotion/styled": "^10.0.15",
     "axios": "^0.19.0",
-    "cross-env": "^5.2.0",
+    "cross-env": "^6.0.3",
     "dayjs": "^1.8.15",
     "emotion": "^10.0.14",
     "emotion-server": "^10.0.9",
