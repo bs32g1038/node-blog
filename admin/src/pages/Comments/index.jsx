@@ -205,14 +205,14 @@ export default class Comments extends Component {
                                                         __html: render(record.reply.content),
                                                     }}
                                                 ></div>
-                                                <Button
-                                                    href={'/content/comments/reply/' + record.reply._id}
+                                                <Link
+                                                    to={'/content/comments/reply/' + record.reply._id}
                                                     className={styles.commentReplyA}
                                                     type="primary"
                                                     size="small"
                                                 >
                                                     <i className="fa fa-reply fa-fw"></i> 回复
-                                                </Button>
+                                                </Link>
                                             </div>
                                         )}
                                         <div
