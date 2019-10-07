@@ -193,7 +193,7 @@ const C = (props: Props) => {
                     <span>发表于{parseTime(article.createdAt)}</span>
                     <span>
                         分类于
-                        <a href={`/blog/categories/${article.category && article.category._id}`}>
+                        <a href={`/blog/articles?cid=${article.category && article.category._id}`}>
                             {article.category && article.category.name}
                         </a>
                     </span>
