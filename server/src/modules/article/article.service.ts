@@ -100,7 +100,7 @@ export class ArticleService {
             }
             const [prev, next] = await Promise.all([
                 this.articleModel.findOne({ _id: { $gt: id } }, 'title'),
-                this.articleModel.findOne({ _id: { $lt: id } }, 'title', { sort: { id: -1 } }),
+                this.articleModel.findOne({ _id: { $lt: id } }, 'title', { sort: { id: 1 } }),
             ]);
             data.prev = prev;
             data.next = next;
