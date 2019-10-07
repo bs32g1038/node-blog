@@ -41,7 +41,7 @@
     "log4js": "^5.2.0",
     "lru-cache": "^5.1.1",
     "markdown-it": "^10.0.0",
-    "markdown-it-link-attributes": "^2.1.0",
+    "markdown-it-link-attributes": "^3.0.0",
     "mongoose": "^5.7.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3"
