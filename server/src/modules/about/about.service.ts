@@ -33,7 +33,7 @@ const handleUserCommits = (commits: any): UserCommits => {
 };
 
 const getUserInfo = async (username: string): Promise<UserInfo> => {
-    return axios.get(`https://api.github.com/users/${username}`).then((res: any) => {
+    return await axios.get(`https://api.github.com/users/${username}`).then((res: any) => {
         const data = res.data;
         const info = new UserInfo();
         info.name = data.name;
@@ -59,7 +59,7 @@ const getUsercommits = (username: string) => {
  * @param {Date} createdAt
  */
 const getUserRepos = async (username: string) => {
-    return axios.get(`https://api.github.com/users/${username}/repos`).then(res => {
+    return await axios.get(`https://api.github.com/users/${username}/repos`).then(res => {
         return res.data
             .map((item: any) => {
                 if (item.fork) {

@@ -146,10 +146,11 @@ export default class Medias extends Component {
                         <Row type="flex" justify="end" style={{ marginTop: '20px' }}>
                             <Pagination
                                 showTotal={total => `共 ${total} 条数据`}
-                                showSizeChanger
-                                onShowSizeChange={(current, pageSize) => this.onShowSizeChange(current, pageSize)}
+                                showSizeChanger={true}
                                 defaultCurrent={this.state.pagination.current}
                                 total={this.state.pagination.total}
+                                onShowSizeChange={(current, pageSize) => this.onShowSizeChange(current, pageSize)}
+                                onChange={(current, pageSize) => this.onShowSizeChange(current, pageSize)}
                             />
                         </Row>
                     </div>
