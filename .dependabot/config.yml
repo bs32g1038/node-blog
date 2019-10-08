@@ -4,11 +4,23 @@ update_configs:
   - package_manager: "javascript"
     directory: "/server"
     update_schedule: "live"
+    target_branch: "dev"
+    allowed_updates:
+      - match:
+          update_type: "security"
 
   - package_manager: "javascript"
     directory: "/web"
     update_schedule: "live"
+    target_branch: "dev"
+    allowed_updates:
+      - match:
+          update_type: "security"
 
   - package_manager: "javascript"
     directory: "/admin"
     update_schedule: "live"
+    target_branch: "dev"
+    allowed_updates:
+      - match:
+          update_type: "security"
