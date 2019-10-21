@@ -19,8 +19,8 @@ before_script:
   - npm install codecov -g
 
 script:
-  - npm run test:cov
   - npm run build
+  - npm run test:cov
   - codecov
 
 deploy:
