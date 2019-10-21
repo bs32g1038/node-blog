@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Layout, Menu, Icon } from 'antd';
 const { Sider } = Layout;
@@ -6,6 +6,8 @@ import styled from '@emotion/styled';
 import IconLogo from '@blog/client/admin/assets/logo.svg';
 import config from '@blog/client/admin/configs/default.config';
 import menus from '@blog/client/admin/configs/menu-config';
+import { getDefaultCollapsedSubMenus, getFlatMenuKeys, getSelectedMenuKeys } from './util';
+import { useRouter } from 'next/router';
 
 const WrapDiv = styled.div`
     .ant-menu-light {
@@ -94,8 +96,48 @@ interface Props {
     collapsed: boolean;
 }
 
+const setMenuOpen = props => {
+    const { pathname } = props.router;
+    const flatMenuKeys = getDefaultCollapsedSubMenus({ ...props, flatMenuKeys: getFlatMenuKeys(menus) });
+    return {
+        openKey: getDefaultCollapsedSubMenus({
+            ...props,
+            flatMenuKeys: flatMenuKeys.slice(1, flatMenuKeys.length - 1),
+        }),
+        selectedKey: getSelectedMenuKeys(flatMenuKeys, pathname),
+    };
+};
+
 export default (props: Props) => {
     const { collapsed } = props;
+    const [state, setState] = useState({
+        mode: 'inline',
+        openKey: [],
+        selectedKey: '',
+        firstHide: true,
+    });
+    const router = useRouter();
+    const menuClick = e => {
+        setState(data => ({
+            ...data,
+            selectedKey: Array.isArray(e.key) ? e.key : [e.key],
+        }));
+    };
+    const openMenu = (v: any) => {
+        setState(data => ({
+            ...data,
+            openKey: Array.isArray(v) ? v : [v],
+            firstHide: false,
+        }));
+    };
+    useEffect(() => {
+        setState(data => ({
+            ...data,
+            firstHide: false,
+            ...setMenuOpen({ router }),
+        }));
+    }, [1]);
+    const { selectedKey, openKey, firstHide } = state;
     return (
         <WrapDiv>
             <Sider
@@ -119,7 +161,15 @@ export default (props: Props) => {
                         <h1>{config.title}</h1>
                     </LogoDiv>
                 </Link>
-                <MenuList theme="light" mode="inline"></MenuList>
+                <MenuList
+                    theme="light"
+                    mode="inline"
+                    key="Menu"
+                    onClick={menuClick}
+                    selectedKeys={selectedKey}
+                    openKeys={firstHide ? null : openKey}
+                    onOpenChange={openMenu}
+                ></MenuList>
             </Sider>
         </WrapDiv>
     );
