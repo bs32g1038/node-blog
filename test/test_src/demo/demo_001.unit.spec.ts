@@ -21,7 +21,7 @@ describe('demo_001_unit', () => {
 
     it('getDemos undefined undefined', async () => {
         try {
-            const arr = await demoService.getDemos(undefined, undefined);
+            await demoService.getDemos(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }

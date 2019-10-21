@@ -53,7 +53,7 @@ describe('article_009', () => {
             .expect(200)
             .then(res => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
-                const arr = res.body.items.filter(item => {
+                res.body.items.filter(item => {
                     return item._id === article._id;
                 });
             });

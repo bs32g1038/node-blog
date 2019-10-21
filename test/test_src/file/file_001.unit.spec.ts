@@ -21,7 +21,7 @@ describe('file_001_unit', () => {
 
     it('getFiles undefined undefined', async () => {
         try {
-            const arr = await fileService.getFiles(undefined, undefined);
+            await fileService.getFiles(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }

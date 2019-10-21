@@ -27,7 +27,7 @@ describe('AboutController', () => {
                     expect(response.body).toEqual({ statusCode: 408, error: 'Request Timeout', message: '请求超时！' });
                 }
             })
-            .catch(err => {
+            .catch(() => {
                 expect(1).toEqual(1);
             });
     });

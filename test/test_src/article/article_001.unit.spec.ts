@@ -22,7 +22,7 @@ describe('ArticleService', () => {
 
     it('getArticles undefined undefined', async () => {
         try {
-            const arr = await articleService.getArticles(undefined, undefined);
+            await articleService.getArticles(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }

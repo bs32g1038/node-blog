@@ -21,7 +21,7 @@ describe('CategoryService', () => {
 
     it('getCategories undefined undefined', async () => {
         try {
-            const arr = await categoryService.getCategories(undefined, undefined);
+            await categoryService.getCategories(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }

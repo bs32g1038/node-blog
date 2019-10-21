@@ -22,7 +22,7 @@ describe('comment_001_unit', () => {
 
     it('getComments undefined undefined', async () => {
         try {
-            const arr = await commentService.getComments(undefined, undefined);
+            await commentService.getComments(undefined, undefined);
         } catch (error) {
             expect(error).toEqual(error);
         }
