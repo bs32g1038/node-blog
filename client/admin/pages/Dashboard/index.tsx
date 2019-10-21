@@ -13,17 +13,17 @@ const links = [
     {
         icon: 'fa-edit',
         title: '文章管理',
-        href: '/content/articles',
+        href: '/admin/content/articles',
     },
     {
         icon: 'fa-plus',
         title: '添加文章',
-        href: '/content/articles/edit',
+        href: '/admin/content/articles/edit',
     },
     {
         icon: 'fa-comment',
         title: '评论管理',
-        href: '/content/comments',
+        href: '/admin/content/comments',
     },
 ];
 

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  server:
+    build: ./docker
+    depends_on:
+      - db
+    command: npm run start:prod
+    environment:
+      - MONGODB_URL=mongodb://db:27017/blog_test
+  db:
+    image: mongo:4.1

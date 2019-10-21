@@ -1,12 +1,5 @@
 import pathToRegexp from 'path-to-regexp';
-
-export function urlToList(url) {
-    if (!url || url === '/') {
-        return ['/'];
-    }
-    const urlList = url.split('/').filter(i => i);
-    return urlList.map((urlItem, index) => `/${urlList.slice(0, index + 1).join('/')}`);
-}
+import { urlToList } from '@blog/client/admin/utils/path-tools';
 
 export const getFlatMenuKeys = (menuData = []) => {
     let keys = [];

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import { PageHeader, Tabs, Typography } from 'antd';
 import GridContent from './GridContent';
-import { getFlatMenuKeys, getMenuMatches, itemRender } from './breadcrumb';
+import { getBreadCrumbRoutes, itemRender } from './breadcrumb';
 const { Title } = Typography;
 import { WrapperDiv, WideDiv, ChildrenContentDiv } from './style';
 import menus from '@blog/client/admin/configs/menu-config';
@@ -47,11 +47,6 @@ const PageHeaderWrapper = ({
     router,
     ...restProps
 }: Props) => {
-    const breadcrumbs = getMenuMatches(getFlatMenuKeys(menus), router.pathname);
-    breadcrumbs.unshift({
-        path: '/',
-        breadcrumbName: '首页',
-    });
     return (
         <div style={{ margin: '-24px -24px 0' }}>
             <WrapperDiv>
@@ -68,7 +63,7 @@ const PageHeaderWrapper = ({
                         key="pageheader"
                         breadcrumb={{
                             itemRender,
-                            routes: breadcrumbs,
+                            routes: getBreadCrumbRoutes(menus, router),
                         }}
                         footer={renderFooter(restProps)}
                     >

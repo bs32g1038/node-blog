@@ -1,0 +1,17 @@
+version: '3'
+services:
+  server:
+    image: bs32g1038/node-blog:v3
+    depends_on:
+      - db
+    volumes:
+      - ../data/logs:/code/logs
+      - ../data/blog/upload:/code/public/static/upload
+    command: npm run start:prod --MONGODB_HOSTNAME=db
+    environment:
+      - MONGODB_URL=mongodb://db:27017/blog
+  db:
+    image: mongo:4.1
+    volumes:
+      - ../data/mongo-backup:/data/mongo-backup
+      - ../data/mongo-db:/data/db

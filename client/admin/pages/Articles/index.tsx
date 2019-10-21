@@ -19,7 +19,7 @@ const ModuleControlRow = styled(Row)`
 
 const SearchForm = styled.form`
     button {
-        margin-right: 8px;
+        margin-left: 8px;
     }
 `;
 

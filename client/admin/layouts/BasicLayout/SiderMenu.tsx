@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import IconLogo from '@blog/client/admin/assets/logo.svg';
 import config from '@blog/client/admin/configs/default.config';
 import menus from '@blog/client/admin/configs/menu-config';
-import { getDefaultCollapsedSubMenus, getFlatMenuKeys, getSelectedMenuKeys } from './util';
+import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from './util';
 import { useRouter } from 'next/router';
 
 const WrapDiv = styled.div`
@@ -155,7 +155,7 @@ export default (props: Props) => {
                     boxShadow: '2px 0 8px 0 rgba(29,35,41,.05)',
                 }}
             >
-                <Link href="/admin/dashboard" passHref={true}>
+                <Link href="/admin/dashboard/analysis" passHref={true}>
                     <LogoDiv>
                         <img src={IconLogo} />
                         <h1>{config.title}</h1>

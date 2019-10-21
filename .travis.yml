@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+  - "10.16.0"
+
+services:
+  - mongodb
+  - docker
+
+cache:
+  timeout: 1000
+  directories:
+    - $HOME/.npm-cache
+    - $HOME/.npm-prefix
+    - $HOME/.npm
+
+before_script:
+  - npm install
+  - npm install codecov -g
+
+script:
+  - npm run test:cov
+  - npm run build
+  - codecov
+
+deploy:
+  provider: script
+  script: bash docker/release.sh
+  on:
+    branch: master

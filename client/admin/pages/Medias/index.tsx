@@ -53,7 +53,9 @@ export default () => {
         });
         fetchData();
         return () => {
-            state.clipboard.destroy();
+            if (state.clipboard) {
+                state.clipboard.destroy();
+            }
         };
     }, [1]);
     return (
