@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { MediaModule } from '../../../server/modules/media.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';

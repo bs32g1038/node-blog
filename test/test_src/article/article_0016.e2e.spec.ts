@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { CategoryModelProvider } from '../../../server/models/category.model';
 import { ArticleModule } from '../../../server/modules/article.module';
 import { CategoryService } from '../../../server/modules/category/category.service';

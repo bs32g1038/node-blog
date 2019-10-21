@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { AboutModule } from '../../../server/modules/about.module';
 import { GetUserDataDto } from '../../../server/modules/about/about.dto';
 import { INestApplication } from '@nestjs/common';

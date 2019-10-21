@@ -1,8 +1,8 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { FileModule } from '../../../server/modules/file.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 describe('file_003', () => {
     let app: INestApplication;

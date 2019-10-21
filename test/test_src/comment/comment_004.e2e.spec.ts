@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { CommentModule } from '../../../server/modules/comment.module';
 import { ArticleModule } from '../../../server/modules/article.module';
 import { LoginModule } from '../../../server/modules/login.module';

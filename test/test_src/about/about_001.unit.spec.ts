@@ -1,7 +1,7 @@
 import { AboutService, cache } from '../../../server/modules/about/about.service';
 import axios from '../../../server/utils/axios.util';
-import  path from 'path';
-import  fs from 'fs';
+import path from 'path';
+import fs from 'fs';
 
 describe('AboutController', () => {
     let aboutService: AboutService;

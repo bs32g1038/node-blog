@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { RssModule } from '../../../server/modules/rss.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';

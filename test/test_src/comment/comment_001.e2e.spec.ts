@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { CommentModule } from '../../../server/modules/comment.module';
 import { ArticleModule } from '../../../server/modules/article.module';
 import { ArticleService } from '../../../server/modules/article/article.service';
@@ -6,7 +6,7 @@ import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';
 import { ADMIN_USER_INFO } from '../../../server/configs/index.config';
 import { initApp } from '../../util';
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 describe('comment_001', () => {
     let app: INestApplication;

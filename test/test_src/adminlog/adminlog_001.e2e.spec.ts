@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { AdminLogModule } from '../../../server/modules/adminlog.module';
 import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';

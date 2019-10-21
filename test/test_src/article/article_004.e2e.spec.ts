@@ -1,7 +1,7 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { ArticleModule } from '../../../server/modules/article.module';
 import { INestApplication } from '@nestjs/common';
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { initApp } from '../../util';
 
 describe('article_004', () => {

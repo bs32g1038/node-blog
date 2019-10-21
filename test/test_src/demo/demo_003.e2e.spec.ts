@@ -1,4 +1,4 @@
-import  request from 'supertest';
+import request from 'supertest';
 import { DemoModule } from '../../../server/modules/demo.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';

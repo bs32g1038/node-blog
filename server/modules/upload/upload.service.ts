@@ -40,7 +40,7 @@ export class UploadService {
 
         // 图片处理
         const basePath = path.join(process.cwd(), `/public` + filePath);
-       
+
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }
@@ -94,7 +94,7 @@ export class UploadService {
             });
         }
         const basePath = path.join(process.cwd(), `/public` + filePath);
-       
+
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }
