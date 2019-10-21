@@ -1,5 +1,5 @@
-import { MediaService } from '../../../src/modules/media/media.service';
-import { MediaModelProvider } from '../../../src/models/media.model';
+import { MediaService } from '../../../server/modules/media/media.service';
+import { MediaModelProvider } from '../../../server/models/media.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

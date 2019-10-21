@@ -45,4 +45,4 @@ export class DashboardService {
             hostname,
         };
     }
-} /* istanbul ignore next */
+}

@@ -1,6 +1,6 @@
-import { CommentService } from '../../../src/modules/comment/comment.service';
-import { ArticleModelProvider } from '../../../src/models/article.model';
-import { CommentModelProvider } from '../../../src/models/comment.model';
+import { CommentService } from '../../../server/modules/comment/comment.service';
+import { ArticleModelProvider } from '../../../server/models/article.model';
+import { CommentModelProvider } from '../../../server/models/comment.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

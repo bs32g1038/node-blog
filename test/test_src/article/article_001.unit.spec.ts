@@ -1,6 +1,6 @@
-import { ArticleService } from '../../../src/modules/article/article.service';
-import { CategoryModelProvider } from '../../../src/models/category.model';
-import { ArticleModelProvider } from '../../../src/models/article.model';
+import { ArticleService } from '../../../server/modules/article/article.service';
+import { CategoryModelProvider } from '../../../server/models/category.model';
+import { ArticleModelProvider } from '../../../server/models/article.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

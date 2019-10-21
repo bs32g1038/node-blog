@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import { MediaModule } from '../../../src/modules/media.module';
+import  request from 'supertest';
+import { MediaModule } from '../../../server/modules/media.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

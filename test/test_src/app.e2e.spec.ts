@@ -1,4 +1,4 @@
-import { AppModule } from '../../src/app.module';
+import { AppModule } from '../../server/app.module';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 

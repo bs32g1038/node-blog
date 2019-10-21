@@ -1,11 +1,11 @@
-import * as request from 'supertest';
-import { CategoryModelProvider } from '../../../src/models/category.model';
-import { ArticleModule } from '../../../src/modules/article.module';
-import { CategoryService } from '../../../src/modules/category/category.service';
+import  request from 'supertest';
+import { CategoryModelProvider } from '../../../server/models/category.model';
+import { ArticleModule } from '../../../server/modules/article.module';
+import { CategoryService } from '../../../server/modules/category/category.service';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
-import * as mongoose from 'mongoose';
-import { markdown } from '../../../src/modules/article/article.service';
+import  mongoose from 'mongoose';
+import { markdown } from '../../../server/modules/article/article.service';
 
 describe('article_0011', () => {
     let app: INestApplication;

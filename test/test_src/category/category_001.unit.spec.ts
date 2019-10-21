@@ -1,5 +1,5 @@
-import { CategoryService } from '../../../src/modules/category/category.service';
-import { CategoryModelProvider } from '../../../src/models/category.model';
+import { CategoryService } from '../../../server/modules/category/category.service';
+import { CategoryModelProvider } from '../../../server/models/category.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

@@ -1,5 +1,5 @@
-import { FileService } from '../../../src/modules/file/file.service';
-import { FileModelProvider } from '../../../src/models/file.model';
+import { FileService } from '../../../server/modules/file/file.service';
+import { FileModelProvider } from '../../../server/models/file.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

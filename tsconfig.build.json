@@ -6,6 +6,5 @@
         "target": "esnext",
         "isolatedModules": false,
         "noEmit": false
-    },
-    "include": ["server/**/*.ts"]
+    }
 }

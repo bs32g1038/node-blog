@@ -65,4 +65,4 @@ export class CommentService {
     async batchDelete(commentIds: string[]) {
         return this.commentModel.deleteMany({ _id: { $in: commentIds } });
     }
-} /* istanbul ignore next */
+}

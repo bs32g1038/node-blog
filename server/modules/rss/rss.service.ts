@@ -69,4 +69,4 @@ export class RssService {
         rssContent = utf8ForXml(rssContent);
         return rssContent;
     }
-} /* istanbul ignore next */
+}

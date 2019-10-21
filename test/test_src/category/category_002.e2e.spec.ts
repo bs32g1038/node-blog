@@ -1,9 +1,9 @@
-import * as request from 'supertest';
-import { CategoryModule } from '../../../src/modules/category.module';
-import { LoginModule } from '../../../src/modules/login.module';
+import  request from 'supertest';
+import { CategoryModule } from '../../../server/modules/category.module';
+import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
-import * as mongoose from 'mongoose';
+import  mongoose from 'mongoose';
 
 describe('category_002', () => {
     let app: INestApplication;

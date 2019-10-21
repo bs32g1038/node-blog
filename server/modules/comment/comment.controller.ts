@@ -59,7 +59,7 @@ export class CommentController {
         if (query.articleId) {
             q.article = query.articleId;
         }
-        /* istanbul ignore next */
+       
         if (!auth(req)) {
             field = '-email';
         }

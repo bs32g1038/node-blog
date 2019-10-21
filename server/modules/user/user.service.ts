@@ -10,4 +10,4 @@ export class UserService {
     async getUserByAccount(account: string) {
         return this.userModel.findOne({ account }, '-password');
     }
-} /* istanbul ignore next */
+}

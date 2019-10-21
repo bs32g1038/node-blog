@@ -29,4 +29,4 @@ export class SearchService {
         const filter = { isDeleted: false, title: new RegExp(query.key) };
         return await this.articleModel.countDocuments(filter);
     }
-} /* istanbul ignore next */
+}

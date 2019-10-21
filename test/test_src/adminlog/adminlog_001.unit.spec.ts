@@ -1,5 +1,5 @@
-import { AdminLogService } from '../../../src/modules/adminlog/adminlog.service';
-import { AdminLogModelProvider } from '../../../src/models/adminlog.model';
+import { AdminLogService } from '../../../server/modules/adminlog/adminlog.service';
+import { AdminLogModelProvider } from '../../../server/models/adminlog.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

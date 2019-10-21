@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import { UploadModule } from '../../../src/modules/upload.module';
+import  request from 'supertest';
+import { UploadModule } from '../../../server/modules/upload.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

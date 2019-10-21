@@ -1,6 +1,6 @@
-import * as request from 'supertest';
-import { AdminLogModule } from '../../../src/modules/adminlog.module';
-import { LoginModule } from '../../../src/modules/login.module';
+import  request from 'supertest';
+import { AdminLogModule } from '../../../server/modules/adminlog.module';
+import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

@@ -68,4 +68,4 @@ export class FileService {
             fileCount: 0,
         });
     }
-} /* istanbul ignore next */
+}

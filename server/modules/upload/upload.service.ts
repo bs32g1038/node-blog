@@ -39,8 +39,8 @@ export class UploadService {
         const filePath = '/static/upload/' + new Date().getFullYear();
 
         // 图片处理
-        const basePath = path.resolve(process.cwd(), `/public` + filePath);
-        /* istanbul ignore next */
+        const basePath = path.join(process.cwd(), `/public` + filePath);
+       
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }
@@ -93,8 +93,8 @@ export class UploadService {
                 }
             });
         }
-        const basePath = path.resolve(process.cwd(), `/public` + filePath);
-        /* istanbul ignore next */
+        const basePath = path.join(process.cwd(), `/public` + filePath);
+       
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
         }
@@ -123,4 +123,4 @@ export class UploadService {
             url: filePath + fileName,
         };
     }
-} /* istanbul ignore next */
+}

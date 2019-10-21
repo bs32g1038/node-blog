@@ -1,9 +1,9 @@
-import { TOKEN_SECRET_KEY } from '../src/configs/index.config';
+import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import jwt = require('jsonwebtoken');
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
-import { DatabaseModule } from '../src/database/database.module';
+import { DatabaseModule } from '../server/database/database.module';
 import { Test } from '@nestjs/testing';
-import { AllExceptionsFilter } from '../src/filters/all-exceptions.filter';
+import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {

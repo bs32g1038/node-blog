@@ -44,4 +44,4 @@ export class MediaService {
         const filter = { ...query };
         return await this.mediaModel.countDocuments(filter);
     }
-} /* istanbul ignore next */
+}

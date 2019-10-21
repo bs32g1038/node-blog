@@ -1,7 +1,7 @@
-import * as request from 'supertest';
-import { LoginModule } from '../../../src/modules/login.module';
+import request from 'supertest';
+import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';
-import { encrypt } from '../../../src/utils/crypto.util';
+import { encrypt } from '../../../server/utils/crypto.util';
 import { verifyToken } from '../../util';
 import { initApp } from '../../util';
 
@@ -85,7 +85,7 @@ describe('login_001', () => {
             });
     });
 
-    it('/POST /api/login 200 test account or password error', async () => {
+    it('/POST /api/login 400 test account or password error', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
             .send({
@@ -96,11 +96,7 @@ describe('login_001', () => {
                     })
                 ),
             })
-            .then(res => {
-                expect(res.body).toEqual({
-                    msg: '用户名或者密码输入有误，请重新检查后再登陆！',
-                });
-            });
+            .expect(400);
     });
 
     it('/GET /api/getFirstLoginInfo 200', async () => {

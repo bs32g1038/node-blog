@@ -130,15 +130,15 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "collectCoverageFrom": [
-      "./src/**/*.{js,ts}",
-      "!./src/main.ts",
-      "!./src/configs/index.config.ts",
-      "!./src/utils/**",
-      "!./src/pipes/joi.validation.pipe.ts",
-      "!./src/filters/all-exceptions.filter.ts",
-      "!./src/middlewares/rate-limit.middleware.ts",
-      "!./src/database/database.module.ts",
-      "!./src/modules/write.day.reading.module.ts"
+      "./server/**/*.{js,ts}",
+      "!./server/main.ts",
+      "!./server/configs/index.config.ts",
+      "!./server/utils/**",
+      "!./server/pipes/joi.validation.pipe.ts",
+      "!./server/filters/all-exceptions.filter.ts",
+      "!./server/middlewares/rate-limit.middleware.ts",
+      "!./server/database/database.module.ts",
+      "!./server/modules/write.day.reading.module.ts"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": [
@@ -149,7 +149,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.json"
+        "tsConfig": "<rootDir>/tsconfig.build.json"
       }
     }
   },

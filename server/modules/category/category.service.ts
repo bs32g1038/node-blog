@@ -37,4 +37,4 @@ export class CategoryService {
     public async batchDelete(categoryIds: string[]) {
         return this.categoryModel.deleteMany({ _id: { $in: categoryIds } });
     }
-} /* istanbul ignore next */
+}

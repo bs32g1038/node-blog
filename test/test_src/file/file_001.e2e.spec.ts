@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import { FileModule } from '../../../src/modules/file.module';
+import  request from 'supertest';
+import { FileModule } from '../../../server/modules/file.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

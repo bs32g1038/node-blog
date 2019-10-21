@@ -1,12 +1,12 @@
-import * as request from 'supertest';
-import { CommentModule } from '../../../src/modules/comment.module';
-import { ArticleModule } from '../../../src/modules/article.module';
-import { ArticleService } from '../../../src/modules/article/article.service';
-import { LoginModule } from '../../../src/modules/login.module';
+import  request from 'supertest';
+import { CommentModule } from '../../../server/modules/comment.module';
+import { ArticleModule } from '../../../server/modules/article.module';
+import { ArticleService } from '../../../server/modules/article/article.service';
+import { LoginModule } from '../../../server/modules/login.module';
 import { INestApplication } from '@nestjs/common';
-import { ADMIN_USER_INFO } from '../../../src/configs/index.config';
+import { ADMIN_USER_INFO } from '../../../server/configs/index.config';
 import { initApp } from '../../util';
-import * as mongoose from 'mongoose';
+import  mongoose from 'mongoose';
 
 describe('comment_001', () => {
     let app: INestApplication;

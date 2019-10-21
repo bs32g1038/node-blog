@@ -1,9 +1,9 @@
-import * as request from 'supertest';
-import { ArticleModule } from '../../../src/modules/article.module';
-import { CategoryModule } from '../../../src/modules/category.module';
+import  request from 'supertest';
+import { ArticleModule } from '../../../server/modules/article.module';
+import { CategoryModule } from '../../../server/modules/category.module';
 import { INestApplication } from '@nestjs/common';
-import { CategoryService } from '../../../src/modules/category/category.service';
-import * as mongoose from 'mongoose';
+import { CategoryService } from '../../../server/modules/category/category.service';
+import  mongoose from 'mongoose';
 import { initApp } from '../../util';
 
 describe('article_003', () => {

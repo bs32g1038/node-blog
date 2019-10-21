@@ -48,4 +48,4 @@ export class DemoService {
     public async batchDelete(demoIds: string[]) {
         return this.demoModel.deleteMany({ _id: { $in: demoIds } });
     }
-} /* istanbul ignore next */
+}

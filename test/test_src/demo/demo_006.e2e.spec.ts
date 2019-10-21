@@ -1,8 +1,8 @@
-import * as request from 'supertest';
-import { DemoModule } from '../../../src/modules/demo.module';
+import  request from 'supertest';
+import { DemoModule } from '../../../server/modules/demo.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
-import * as mongoose from 'mongoose';
+import  mongoose from 'mongoose';
 
 describe('demo_006', () => {
     let app: INestApplication;

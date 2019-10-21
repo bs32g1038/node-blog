@@ -1,5 +1,5 @@
-import { DemoService } from '../../../src/modules/demo/demo.service';
-import { DemoModelProvider } from '../../../src/models/demo.model';
+import { DemoService } from '../../../server/modules/demo/demo.service';
+import { DemoModelProvider } from '../../../server/models/demo.model';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 

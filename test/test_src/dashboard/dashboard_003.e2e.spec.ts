@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import { DashboardModule } from '../../../src/modules/dashboard.module';
+import  request from 'supertest';
+import { DashboardModule } from '../../../server/modules/dashboard.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../../util';
 
