@@ -16,7 +16,9 @@ import { SearchModule } from './modules/search.module';
 import { UserModule } from './modules/user.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
+import { SSRModule } from '../client/server';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { isProdMode } from './configs/index.config';
 
 @Module({
     imports: [
@@ -36,6 +38,7 @@ import { NestModule, MiddlewareConsumer } from '@nestjs/common';
         SearchModule,
         UserModule,
         WriteDayReadingModule,
+        ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],
 })
 export class AppModule implements NestModule {
