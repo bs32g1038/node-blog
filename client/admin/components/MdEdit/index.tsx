@@ -10,15 +10,13 @@ let codeMirror = null;
 let _currentCodemirrorValue = null;
 
 export default (props: any) => {
+    const MarkdownContent = props.value;
     const [state, setState] = useState({
-        MarkdownContent: props.value || '',
         isPreview: false,
     });
-
     const getCodeMirror = () => {
         return codeMirror;
     };
-
     const _replaceSelection = (cm: any, format: any) => {
         const startPoint = cm.getCursor('start');
         const endPoint = cm.getCursor('end');
@@ -119,13 +117,13 @@ export default (props: any) => {
     useEffect(() => {
         codeMirror = CM.fromTextArea(document.getElementById('codemirror'), getOptions());
         codeMirror.on('change', doc => codemirrorValueChanged(doc));
-        _currentCodemirrorValue = props.value || '';
+        codeMirror.setValue(props.value);
         return () => {
             if (codeMirror) {
                 codeMirror.toTextArea();
             }
         };
-    }, [1]);
+    }, [props.value]);
     return (
         <WrapDiv>
             <div className="MdEditor">
@@ -184,7 +182,7 @@ export default (props: any) => {
                         <div
                             className="preview markdown-body"
                             dangerouslySetInnerHTML={{
-                                __html: state.MarkdownContent,
+                                __html: marked(MarkdownContent),
                             }}
                         ></div>
                     )}

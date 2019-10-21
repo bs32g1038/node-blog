@@ -10,6 +10,7 @@ import GHAT from '@blog/client/libs/generate-avatar';
 import { md5 } from '@blog/client/admin/utils/crypto-js';
 import Router from 'next/router';
 import Link from 'next/link';
+import { PanelDiv } from '@blog/client/admin/styles';
 
 const ghat = new GHAT();
 
@@ -146,7 +147,7 @@ export default props => {
     return (
         <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
             <div className="main-content">
-                <div className="panel">
+                <PanelDiv className="panel">
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
@@ -170,7 +171,7 @@ export default props => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                </div>
+                </PanelDiv>
                 <div className="table-wrapper">
                     <Table
                         rowKey={record => record._id}

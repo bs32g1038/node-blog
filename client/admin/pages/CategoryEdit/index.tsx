@@ -7,7 +7,10 @@ import Router, { useRouter } from 'next/router';
 
 const CategoryEdit = props => {
     const [state, setState] = useState({
-        category: {},
+        category: {
+            _id: '',
+            name: '',
+        },
     });
     const router = useRouter();
     useEffect(() => {

@@ -13,7 +13,7 @@ export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });
     app.use(helmet());
     app.use(json({ limit: '20mb' }));
-    app.useStaticAssets(resolve(__dirname, '../static'), { prefix: '/static/' });
+    app.useStaticAssets(resolve(__dirname, '../public/static'), { prefix: '/static/' });
     app.use(log4js.connectLogger(requestInfoLogger, { level: 'info' }));
     app.useGlobalFilters(new AllExceptionsFilter());
     return await app.listen(APP_SERVER.port);

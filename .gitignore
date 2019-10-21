@@ -45,4 +45,13 @@ lerna-debug.log*
 # production
 /build
 
+.cache
+logs/blog/*
+static
+!public/static
+public/static/upload/**
+!.gitkeep
+dist
 *.lock
+*.log
+coverage

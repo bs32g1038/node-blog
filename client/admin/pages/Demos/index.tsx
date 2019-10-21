@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
-import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
+import Router from 'next/router';
 
 export default () => {
     const [state, setState] = useState({
-        categories: [],
+        demos: [],
+        pagination: { current: 1, total: 0 },
         selectedRowKeys: [],
         loading: false,
         visible: false,
     });
-    const fetchData = (page = 1, limit = 100) => {
+    const fetchData = (page = 1, limit = 10) => {
         setState(data => ({
             ...data,
             loading: true,
@@ -23,38 +24,48 @@ export default () => {
             limit,
             page,
         };
-        axios.get('/categories?' + queryString.stringify(query)).then(res => {
-            if (res.data && res.data.length > 0) {
-                setState(data => ({
-                    ...data,
-                    categories: res.data,
-                    loading: false,
-                }));
-            }
+        axios.get('/demos?' + queryString.stringify(query)).then(res => {
+            const pagination = { ...state.pagination };
+            pagination.total = res.data.totalCount;
+            setState(data => ({
+                ...data,
+                demos: res.data.items,
+                loading: false,
+                pagination,
+            }));
         });
     };
-    const deleteCategory = _id => {
-        axios.delete('/categories/' + _id).then(() => {
-            message.success('删除分类成功');
+    const deleteDemo = _id => {
+        axios.delete('/demos/' + _id).then(() => {
+            message.success('删除demo成功');
             fetchData();
         });
     };
-    const batchDeleteCategory = () => {
+    const batchDeleteDemo = () => {
         axios
-            .delete('/categories', {
-                data: { categoryIds: state.selectedRowKeys },
+            .delete('/demos', {
+                data: { demoIds: state.selectedRowKeys },
             })
             .then(res => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
-                    message.success('删除分类成功！');
+                    message.success('删除demo成功！');
                     setState(data => ({
                         ...data,
                         selectedRowKeys: [],
                     }));
                     return fetchData();
                 }
-                return message.error('删除分类失败，请重新尝试。');
+                return message.error('删除demo失败，请重新尝试。');
             });
+    };
+    const handleTableChange = pagination => {
+        const pager = { ...state.pagination };
+        pager.current = pagination.current;
+        setState(data => ({
+            ...data,
+            pagination: pager,
+        }));
+        fetchData(pagination.current, pagination.pageSize);
     };
     const onSelectChange = selectedRowKeys => {
         setState(data => ({
@@ -69,7 +80,7 @@ export default () => {
         return [
             {
                 title: '名称',
-                dataIndex: 'name',
+                dataIndex: 'title',
             },
             {
                 title: '创建时间',
@@ -77,28 +88,36 @@ export default () => {
                 render: (text, record) => parseTime(record.createdAt),
             },
             {
-                title: '文章数量',
-                dataIndex: 'articleCount',
-            },
-            {
                 title: '操作',
                 key: 'operation',
-                width: 180,
+                width: 300,
                 render: (text, record) => (
                     <div>
                         <Button
                             type="primary"
                             size="small"
                             title="编辑"
-                            onClick={() => Router.push('/admin/content/categories/edit/' + record._id)}
+                            onClick={() => Router.push('/admin/code/demos/edit/' + record._id)}
                         >
                             <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>
                         ,
+                        <Button
+                            target="_blank"
+                            type="primary"
+                            style={{ backgroundColor: 'rgb(94, 181, 96)', border: '1px solid rgb(94, 181, 96)' }}
+                            size="small"
+                            title="预览"
+                            href={'/demos/' + record._id}
+                        >
+                            <i className="fa fa-location-arrow fa-fw"></i>
+                            预览
+                        </Button>
+                        ,
                         <Popconfirm
                             title="确认要删除？"
-                            onConfirm={() => deleteCategory(record._id)}
+                            onConfirm={() => deleteDemo(record._id)}
                             okText="确定"
                             cancelText="取消"
                         >
@@ -117,12 +136,12 @@ export default () => {
         onChange: onSelectChange.bind(this),
     };
     return (
-        <PageHeaderWrapper title="文章分类列表" content="控制台----分类列表">
+        <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
             <div className="main-content">
-                <PanelDiv style={{ marginBottom: '20px' }}>
-                    <Button type="primary" onClick={() => Router.push('/admin/content/categories/edit')}>
+                <PanelDiv className="panel">
+                    <Button type="primary" onClick={() => Router.push('/admin/code/demos/edit')}>
                         <i className="fa fa-plus-square fa-fw">&nbsp;</i>
-                        添加分类
+                        添加Demo
                     </Button>
                     <Popconfirm
                         title="确认要删除？"
@@ -130,7 +149,7 @@ export default () => {
                         visible={state.visible}
                         onVisibleChange={() => {
                             if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的分类');
+                                message.info('请选择要删除的demo');
                                 return;
                             }
                             setState(data => ({
@@ -138,7 +157,7 @@ export default () => {
                                 visible: !state.visible,
                             }));
                         }}
-                        onConfirm={() => batchDeleteCategory()}
+                        onConfirm={() => batchDeleteDemo()}
                         okText="确定"
                         cancelText="取消"
                     >
@@ -150,11 +169,15 @@ export default () => {
                 </PanelDiv>
                 <div className="table-wrapper">
                     <Table
-                        rowKey={(record: any) => record._id}
+                        rowKey={record => record._id}
                         rowSelection={rowSelection}
                         columns={getTableColums()}
+                        dataSource={state.demos}
                         loading={state.loading}
-                        dataSource={state.categories}
+                        onChange={pagination => handleTableChange(pagination)}
+                        pagination={{
+                            showTotal: total => `共 ${total} 条数据`,
+                        }}
                     />
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Router, { useRouter } from 'next/router';
 import config from '@blog/client/admin/configs/default.config';
 import { Form, Input, Upload, Select, Button, message } from 'antd';
@@ -7,6 +7,12 @@ import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
+
+const MdEditInput = forwardRef((props, _ref) => (
+    <div>
+        <MdEdit {...props} />
+    </div>
+));
 
 const PanelDiv = styled.div`
     .ant-upload-list-picture {
@@ -37,6 +43,9 @@ const PanelDiv = styled.div`
     }
     .ant-upload-list-picture .ant-upload-list-item-name,
     .ant-upload-list-picture-card .ant-upload-list-item-name {
+        display: none;
+    }
+    .ant-upload-list-item-card-actions {
         display: none;
     }
     .ant-upload-list-picture .ant-upload-list-item-progress,
@@ -154,6 +163,7 @@ const C = props => {
               },
           ]
         : [];
+    console.log(fileList);
     return (
         <PanelDiv>
             <PageHeaderWrapper
@@ -213,14 +223,14 @@ const C = props => {
                                 initialValue: article.summary,
                                 rules: [{ required: true, message: '文章摘要不能为空!' }],
                             })(
-                                <TextArea placeholder="请输入文章摘要" autosize={{ minRows: 2, maxRows: 6 }}></TextArea>
+                                <TextArea placeholder="请输入文章摘要" autoSize={{ minRows: 2, maxRows: 6 }}></TextArea>
                             )}
                         </FormItem>
                         <FormItem label="文章详情：" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
                             {getFieldDecorator('content', {
                                 initialValue: article.content || '',
                                 rules: [{ required: true, message: '文章详情不能为空!' }],
-                            })(<MdEdit />)}
+                            })(<MdEditInput />)}
                         </FormItem>
                         <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                             <Button type="primary" htmlType="submit">

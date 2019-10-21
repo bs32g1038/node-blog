@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
-import { parseTime } from '@blog/client/admin/utils/time';
+import { parseTime } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
