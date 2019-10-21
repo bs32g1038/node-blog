@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 const { Content } = Layout;
 import SiderMenu from './SiderMenu';
 import Header from './Header';
 import Footer from './Footer';
+import { isLogin } from '@blog/client/admin/utils/is-login';
 
 interface Props {
     children: React.ReactNode;
@@ -19,6 +20,11 @@ export default (props: Props) => {
             collapsed: !state.collapsed,
         });
     };
+
+    useEffect(() => {
+        isLogin();
+    }, [1]);
+
     return (
         <Layout style={{ marginLeft: state.collapsed ? 80 : 240 }}>
             <SiderMenu collapsed={state.collapsed}></SiderMenu>

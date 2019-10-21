@@ -39,7 +39,7 @@ export class UploadService {
         const filePath = '/static/upload/' + new Date().getFullYear();
 
         // 图片处理
-        const basePath = path.resolve(__dirname, `../../../public` + filePath);
+        const basePath = path.resolve(process.cwd(), `/public` + filePath);
         /* istanbul ignore next */
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);
@@ -93,7 +93,7 @@ export class UploadService {
                 }
             });
         }
-        const basePath = path.resolve(__dirname, `../../../public` + filePath);
+        const basePath = path.resolve(process.cwd(), `/public` + filePath);
         /* istanbul ignore next */
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath);

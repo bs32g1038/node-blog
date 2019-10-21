@@ -6,7 +6,7 @@ import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 const FormItem = Form.Item;
 import Router, { useRouter } from 'next/router';
 
-const MdEditInput = forwardRef((props, _ref) => (
+const MdEditInput = forwardRef(props => (
     <div>
         <MdEdit {...props} />
     </div>

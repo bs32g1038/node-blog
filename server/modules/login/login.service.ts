@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import Joi from '@hapi/joi';
 import { TOKEN_SECRET_KEY } from '../../configs/index.config';
@@ -82,8 +82,6 @@ export class LoginService {
                 }),
             };
         }
-        return {
-            msg: '用户名或者密码输入有误，请重新检查后再登陆！',
-        };
+        throw new BadRequestException('用户名或者密码输入有误，请重新检查后再登陆！');
     }
 } /* istanbul ignore next */

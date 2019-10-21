@@ -14,7 +14,7 @@ import { PanelDiv } from '@blog/client/admin/styles';
 
 const ghat = new GHAT();
 
-export default props => {
+export default () => {
     const [state, setState] = useState({
         pagination: { current: 1, total: 0 },
         comments: [],

@@ -1,7 +1,9 @@
 /* eslint-disable */
 let createNotification = () => ({
     // 此处用于避免服务器端渲染，导致dom节点undefined问题
-    addNotice: (notice: any) => {return notice},
+    addNotice: (notice: any) => {
+        return notice;
+    },
 });
 
 if (typeof window !== 'undefined') {

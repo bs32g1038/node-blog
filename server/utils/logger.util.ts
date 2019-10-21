@@ -2,6 +2,8 @@ import path from 'path';
 import log4js from 'log4js';
 import { isProdMode } from '../configs/index.config';
 
+const basePath = process.cwd();
+
 log4js.addLayout('json', config => {
     return logEvent => {
         return JSON.stringify(logEvent) + config.separator;
@@ -13,7 +15,7 @@ log4js.configure({
         console: { type: 'console' },
         requestInfoFile: {
             type: 'file',
-            filename: path.resolve(__dirname, '../../logs/request-info.log'),
+            filename: path.resolve(basePath, '/logs/request-info.log'),
             maxLogSize: 3 * 1024 * 1024,
             backups: 3,
             compress: true,
@@ -21,7 +23,7 @@ log4js.configure({
         },
         infoFile: {
             type: 'file',
-            filename: path.resolve(__dirname, '../../logs/info.log'),
+            filename: path.resolve(basePath, '/logs/info.log'),
             maxLogSize: 1024 * 1024,
             backups: 3,
             compress: true,
@@ -29,7 +31,7 @@ log4js.configure({
         },
         errorFile: {
             type: 'file',
-            filename: path.resolve(__dirname, '../../logs/error.log'),
+            filename: path.resolve(basePath, '/logs/error.log'),
             maxLogSize: 1024 * 1024,
             backups: 3,
             compress: true,

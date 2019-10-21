@@ -8,7 +8,6 @@ import RecentCommentList from './RecentCommentList';
 import NavPanel from './NavPanel';
 import ServerStatePanel from './ServerStatePanel';
 import LoginLogPanel from './LoginLogPanel';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 const links = [
     {

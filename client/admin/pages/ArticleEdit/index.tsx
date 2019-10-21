@@ -8,7 +8,7 @@ import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
 
-const MdEditInput = forwardRef((props, _ref) => (
+const MdEditInput = forwardRef(props => (
     <div>
         <MdEdit {...props} />
     </div>

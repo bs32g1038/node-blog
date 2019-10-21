@@ -18,7 +18,7 @@ A simple, fast and easy-to-use blog
 * 🐐 APi: Node-blog through Nodejs and express provide the Restful API
 * 🚜 Database: Data stored in Mongodb，Driven by Mongoose
 * 🔨 Powerful build: Use powerful webpack to build projects
-* 🍓 Framework support: React, Ant design, Express, ... 
+* 🍓 Framework support: React, Ant design, Express, Typescript, ... 
 * 🌲 Nextjs: Support server-side render
 * 📲 Responsive: Responsive layout for mobile-side
 * ⚙️ Best Practices: Solid workflow to make your code healthy
@@ -28,19 +28,19 @@ A simple, fast and easy-to-use blog
 ```
 ROOT
 │
-├─nginx // used as gateway, unified port
-│
 ├─server // provide blog server api, based one nodejs, mongodb
 │
-├─web // front-end ui
+client // client ui
 │
-├─admin // admin ui
+├──web // front-end ui
+│
+├──admin // admin ui
 │
 ├─docker-compose.yml // docker-compose config file
 ```
 
 ## Todo
-- [ ] Article tags (I not  think it is a very useful function,but you can realize it easily by yourself) 
+- [x] Article tags
 - [x] Writing new article in browser
 - [x] Comments
 - [x] Search support
@@ -67,12 +67,12 @@ npm run dev     // development mode
 
 **4, build dist**
 ```
-npm run build   // build dist for frontend
+npm run build   // build dist for server and client
 ```
 
 ## Deploy
 
-The project has integrated related suites, such as nginx dockerfile, docker-compose.yml. So you can easy to deploy the project.
+The project has integrated related suites, such as client ui, dockerfile, docker-compose.yml. So you can easy to deploy the project.
 
 * First: I recommend that you debug locally and make changes to configuration information, such as database information and personal information.
 
@@ -80,27 +80,11 @@ The project has integrated related suites, such as nginx dockerfile, docker-comp
 
 **However!!!⚠**
 
-If you don't want to use docker, you must to ```cd``` the relative item and run ```npm install or yarn install``` command.
+If you don't want to use docker, you must to ```cd``` the current item and run ```npm install or yarn install``` command.
 
-At the same, When finish install, you need to run ```npm run start:prod``` command.
+At the same time, when finish install, you need to run ```npm run start:prod``` command.
 
-Finally start nginx, before you may need to modify several areas of nginx config.
-
-for example:
-
-```nginx
-upstream server {
-    server server:8080;
-}
-upstream web {
-    server web:3000;
-}
-upstream admin {
-    server admin:3002;
-}
-
-# change the ```server,web,admin``` to localhost or 127.0.0.1
-```
+Besides, you may need to install ```mongodb```,before you run the application.
 
 ## Environment dependence
 
