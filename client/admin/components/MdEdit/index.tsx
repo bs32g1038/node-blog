@@ -6,6 +6,9 @@ import CM from 'codemirror';
 import { WrapDiv } from './style';
 require('codemirror/mode/markdown/markdown');
 
+let codeMirror = null;
+let _currentCodemirrorValue = null;
+
 export default (props: any) => {
     const [state, setState] = useState({
         MarkdownContent: props.value || '',
@@ -13,7 +16,7 @@ export default (props: any) => {
     });
 
     const getCodeMirror = () => {
-        return this.codeMirror;
+        return codeMirror;
     };
 
     const _replaceSelection = (cm: any, format: any) => {
@@ -52,7 +55,7 @@ export default (props: any) => {
         };
     };
     const preview = () => {
-        const MarkdownContent = marked(this._currentCodemirrorValue);
+        const MarkdownContent = marked(_currentCodemirrorValue);
         if (state.isPreview) {
             setState(data => ({
                 ...data,
@@ -96,7 +99,7 @@ export default (props: any) => {
     };
     const codemirrorValueChanged = doc => {
         const newValue = doc.getValue();
-        this._currentCodemirrorValue = newValue;
+        _currentCodemirrorValue = newValue;
         props.onChange && props.onChange(newValue);
     };
     const getOptions = () => {
@@ -114,12 +117,12 @@ export default (props: any) => {
         );
     };
     useEffect(() => {
-        this.codeMirror = CM.fromTextArea(document.getElementById('codemirror'), getOptions());
-        this.codeMirror.on('change', doc => codemirrorValueChanged(doc));
-        this._currentCodemirrorValue = props.value || '';
+        codeMirror = CM.fromTextArea(document.getElementById('codemirror'), getOptions());
+        codeMirror.on('change', doc => codemirrorValueChanged(doc));
+        _currentCodemirrorValue = props.value || '';
         return () => {
-            if (this.codeMirror) {
-                this.codeMirror.toTextArea();
+            if (codeMirror) {
+                codeMirror.toTextArea();
             }
         };
     }, [1]);

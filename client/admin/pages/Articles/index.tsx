@@ -6,7 +6,6 @@ import { parseTime } from '@blog/client/admin/utils/time';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 const PanelDiv = styled.div`
     margin-bottom: 20px;
@@ -171,75 +170,69 @@ export default () => {
         onChange: onSelectChange.bind(this),
     };
     return (
-        <BasicLayout>
-            <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
-                <div className="main-content">
-                    <PanelDiv>
-                        <ModuleControlRow type="flex" justify="space-between">
-                            <Col>
-                                <Button type="primary" onClick={() => Router.push('/admin/content/articles/edit')}>
-                                    <i className="fa fa-plus-square fa-fw">&nbsp;</i>
-                                    添加文档
+        <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
+            <div className="main-content">
+                <PanelDiv>
+                    <ModuleControlRow type="flex" justify="space-between">
+                        <Col>
+                            <Button type="primary" onClick={() => Router.push('/admin/content/articles/edit')}>
+                                <i className="fa fa-plus-square fa-fw">&nbsp;</i>
+                                添加文档
+                            </Button>
+                            <Popconfirm
+                                title="确认要删除？"
+                                placement="right"
+                                visible={state.visible}
+                                onVisibleChange={() => {
+                                    if (state.selectedRowKeys.length <= 0) {
+                                        message.info('请选择要删除的文章');
+                                        return;
+                                    }
+                                    setState(data => ({
+                                        ...data,
+                                        visible: !state.visible,
+                                    }));
+                                }}
+                                onConfirm={() => batchDeleteArticle()}
+                                okText="确定"
+                                cancelText="取消"
+                            >
+                                <Button type="danger">
+                                    <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                    批量删除
                                 </Button>
-                                <Popconfirm
-                                    title="确认要删除？"
-                                    placement="right"
-                                    visible={state.visible}
-                                    onVisibleChange={() => {
-                                        if (state.selectedRowKeys.length <= 0) {
-                                            message.info('请选择要删除的文章');
-                                            return;
-                                        }
-                                        setState(data => ({
-                                            ...data,
-                                            visible: !state.visible,
-                                        }));
-                                    }}
-                                    onConfirm={() => batchDeleteArticle()}
-                                    okText="确定"
-                                    cancelText="取消"
-                                >
-                                    <Button type="danger">
-                                        <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
-                                        批量删除
-                                    </Button>
-                                </Popconfirm>
-                            </Col>
-                            <Col style={{ flex: '1 0 auto' }}>
-                                <SearchForm action="/admin/manage/contentList">
-                                    <div className="search-input-group">
-                                        <Row type="flex" justify="end">
-                                            <Col>
-                                                <Input
-                                                    type="text"
-                                                    name="searchKey"
-                                                    placeholder="请输入需要查询的关键字"
-                                                />
-                                            </Col>
-                                            <Col>
-                                                <Button type="primary">
-                                                    <i className="fa fa-search fa-fw"></i>搜索
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </SearchForm>
-                            </Col>
-                        </ModuleControlRow>
-                    </PanelDiv>
-                    <div className="table-wrapper">
-                        <Table
-                            rowKey={record => record._id}
-                            rowSelection={rowSelection}
-                            columns={getTableColums()}
-                            dataSource={state.articles}
-                            pagination={state.pagination}
-                            loading={state.loading}
-                            onChange={pagination => handleTableChange(pagination)}
-                        />
-                    </div>
+                            </Popconfirm>
+                        </Col>
+                        <Col style={{ flex: '1 0 auto' }}>
+                            <SearchForm action="/admin/manage/contentList">
+                                <div className="search-input-group">
+                                    <Row type="flex" justify="end">
+                                        <Col>
+                                            <Input type="text" name="searchKey" placeholder="请输入需要查询的关键字" />
+                                        </Col>
+                                        <Col>
+                                            <Button type="primary">
+                                                <i className="fa fa-search fa-fw"></i>搜索
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </SearchForm>
+                        </Col>
+                    </ModuleControlRow>
+                </PanelDiv>
+                <div className="table-wrapper">
+                    <Table
+                        rowKey={record => record._id}
+                        rowSelection={rowSelection}
+                        columns={getTableColums()}
+                        dataSource={state.articles}
+                        pagination={state.pagination}
+                        loading={state.loading}
+                        onChange={pagination => handleTableChange(pagination)}
+                    />
                 </div>
-            </PageHeaderWrapper>
-        </BasicLayout>
+            </div>
+        </PageHeaderWrapper>
     );
 };

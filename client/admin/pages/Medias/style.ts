@@ -1,9 +1,11 @@
-.mediaList {
+import styled from '@emotion/styled';
+import { Row, Button, Popconfirm, message, Alert, Pagination, Card } from 'antd';
+
+export const MediaListRow = styled(Row)`
     flex-wrap: wrap;
     margin-left: -10px;
     margin-right: -10px;
-
-    :global(.ant-card) {
+    .ant-card {
         margin-right: 10px;
         margin-left: 10px;
         box-sizing: border-box;
@@ -11,7 +13,7 @@
         width: calc(33.333% - 20px);
     }
 
-    :global(.ant-card-cover) {
+    .ant-card-cover {
         padding: 10px;
         height: 183px;
 
@@ -24,14 +26,14 @@
         }
     }
 
-    :global(.ant-card-meta-title) {
+    .ant-card-meta-title {
         white-space: normal;
         word-break: break-all;
     }
-}
+`;
 
-.card {
-    :global(.ant-card-body) {
+export const WrapCard = styled(Card)`
+    .ant-card-body {
         height: 108px;
     }
     .button {
@@ -43,7 +45,7 @@
             margin-right: 5px;
         }
     }
-    .buttonView {
+    .button-view {
         color: #fff;
         border: 1px solid #4caf50;
         background-color: #4caf50;
@@ -53,4 +55,4 @@
             opacity: 0.9;
         }
     }
-}
+`;

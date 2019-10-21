@@ -2,7 +2,8 @@ import React from 'react';
 import { Tag, Input, Icon } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 
-export default class EditableTagGroup extends React.Component {
+export default class EditableTagGroup extends React.Component<any, any> {
+    input: any;
     static getDerivedStateFromProps(nextProps) {
         // Should be a controlled component.
         if ('value' in nextProps) {
@@ -92,7 +93,7 @@ export default class EditableTagGroup extends React.Component {
                                 opacity: 0,
                                 type: 'from',
                                 duration: 100,
-                                onComplete: e => {
+                                onComplete: (e: any) => {
                                     e.target.style = '';
                                 },
                             }}

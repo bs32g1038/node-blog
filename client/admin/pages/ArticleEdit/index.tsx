@@ -5,7 +5,6 @@ import { Form, Input, Upload, Select, Button, message } from 'antd';
 import MdEdit from '@blog/client/admin/components/MdEdit';
 import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
 
@@ -52,7 +51,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
 
-export default props => {
+const C = props => {
     const [state, setState] = useState({
         article: {
             _id: '',
@@ -156,87 +155,84 @@ export default props => {
           ]
         : [];
     return (
-        <BasicLayout>
-            <PanelDiv>
-                <PageHeaderWrapper
-                    title={article._id ? '文章编辑' : '添加文章'}
-                    content={
-                        <>
-                            <i className="fa fa-edit fa-fw"></i>
-                            <strong>控制台----文章添加或编辑</strong>
-                        </>
-                    }
-                >
-                    <div className="main-content">
-                        <Form onSubmit={e => publish(e)} style={{ marginTop: '20px' }}>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标题：">
-                                {getFieldDecorator('title', {
-                                    rules: [{ required: true, message: '标题不能为空！' }],
-                                    initialValue: article.title,
-                                })(<Input type="text" />)}
-                            </FormItem>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="文章分类：">
-                                {getFieldDecorator('category', {
-                                    rules: [{ required: true, message: '分类不能为空!' }],
-                                    initialValue: category._id,
-                                })(<Select placeholder="请选择一个分类">{categoryOptions}</Select>)}
-                            </FormItem>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标签：">
-                                {getFieldDecorator('tags', {
-                                    initialValue: article.tags,
-                                })(<EditableTagGroup />)}
-                            </FormItem>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="封面图片：">
-                                {getFieldDecorator('screenshot', {
-                                    initialValue: fileList,
-                                    valuePropName: 'fileList',
-                                    getValueFromEvent: handleUpload,
-                                    rules: [{ required: true, message: '封面图片不能为空!' }],
-                                })(
-                                    <Upload
-                                        disabled={false}
-                                        action="/api/upload/image"
-                                        multiple={false}
-                                        name="file"
-                                        listType="picture"
-                                        accept=".jpg,.jpeg,.png"
-                                        headers={{ authorization: localStorage.getItem(config.tokenKey) }}
-                                        onRemove={() => false}
-                                        beforeUpload={beforeUpload}
-                                    >
-                                        <Button>
-                                            <i className="fa fa-arrow-up"></i>点击上传
-                                        </Button>
-                                    </Upload>
-                                )}
-                            </FormItem>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章摘要：">
-                                {getFieldDecorator('summary', {
-                                    initialValue: article.summary,
-                                    rules: [{ required: true, message: '文章摘要不能为空!' }],
-                                })(
-                                    <TextArea
-                                        placeholder="请输入文章摘要"
-                                        autosize={{ minRows: 2, maxRows: 6 }}
-                                    ></TextArea>
-                                )}
-                            </FormItem>
-                            <FormItem label="文章详情：" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
-                                {getFieldDecorator('content', {
-                                    initialValue: article.content || '',
-                                    rules: [{ required: true, message: '文章详情不能为空!' }],
-                                })(<MdEdit />)}
-                            </FormItem>
-                            <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
-                                <Button type="primary" htmlType="submit">
-                                    发布
-                                </Button>
-                                <Button style={{ marginLeft: '10px' }}>存为草稿</Button>
-                            </FormItem>
-                        </Form>
-                    </div>
-                </PageHeaderWrapper>
-            </PanelDiv>
-        </BasicLayout>
+        <PanelDiv>
+            <PageHeaderWrapper
+                title={article._id ? '文章编辑' : '添加文章'}
+                content={
+                    <>
+                        <i className="fa fa-edit fa-fw"></i>
+                        <strong>控制台----文章添加或编辑</strong>
+                    </>
+                }
+            >
+                <div className="main-content">
+                    <Form onSubmit={e => publish(e)} style={{ marginTop: '20px' }}>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标题：">
+                            {getFieldDecorator('title', {
+                                rules: [{ required: true, message: '标题不能为空！' }],
+                                initialValue: article.title,
+                            })(<Input type="text" />)}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="文章分类：">
+                            {getFieldDecorator('category', {
+                                rules: [{ required: true, message: '分类不能为空!' }],
+                                initialValue: category._id,
+                            })(<Select placeholder="请选择一个分类">{categoryOptions}</Select>)}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标签：">
+                            {getFieldDecorator('tags', {
+                                initialValue: article.tags,
+                            })(<EditableTagGroup />)}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="封面图片：">
+                            {getFieldDecorator('screenshot', {
+                                initialValue: fileList,
+                                valuePropName: 'fileList',
+                                getValueFromEvent: handleUpload,
+                                rules: [{ required: true, message: '封面图片不能为空!' }],
+                            })(
+                                <Upload
+                                    disabled={false}
+                                    action="/api/upload/image"
+                                    multiple={false}
+                                    name="file"
+                                    listType="picture"
+                                    accept=".jpg,.jpeg,.png"
+                                    headers={{ authorization: localStorage.getItem(config.tokenKey) }}
+                                    onRemove={() => false}
+                                    beforeUpload={beforeUpload}
+                                >
+                                    <Button>
+                                        <i className="fa fa-arrow-up"></i>点击上传
+                                    </Button>
+                                </Upload>
+                            )}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章摘要：">
+                            {getFieldDecorator('summary', {
+                                initialValue: article.summary,
+                                rules: [{ required: true, message: '文章摘要不能为空!' }],
+                            })(
+                                <TextArea placeholder="请输入文章摘要" autosize={{ minRows: 2, maxRows: 6 }}></TextArea>
+                            )}
+                        </FormItem>
+                        <FormItem label="文章详情：" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
+                            {getFieldDecorator('content', {
+                                initialValue: article.content || '',
+                                rules: [{ required: true, message: '文章详情不能为空!' }],
+                            })(<MdEdit />)}
+                        </FormItem>
+                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
+                            <Button type="primary" htmlType="submit">
+                                发布
+                            </Button>
+                            <Button style={{ marginLeft: '10px' }}>存为草稿</Button>
+                        </FormItem>
+                    </Form>
+                </div>
+            </PageHeaderWrapper>
+        </PanelDiv>
     );
 };
+
+export default Form.create()(C);
