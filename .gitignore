@@ -1,17 +1,57 @@
+# compiled output
+/dist
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+.env*
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dependencies
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
 .cache
-node_modules
-.vscode
 logs/blog/*
 static
-!server/static
-server/static/upload/**
-!web/static
-web/static/assets
+!public/static
+public/static/upload/**
 !.gitkeep
 dist
 *.lock
 *.log
 coverage
-.next
-build
-next-env.d.ts
