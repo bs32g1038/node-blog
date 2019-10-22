@@ -16,6 +16,5 @@ jobs:
         name: bs32g1038/node-blog:v3
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: $HOME/docker/Dockerfile
       env:
         CI: true
