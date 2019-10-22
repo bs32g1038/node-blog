@@ -10,6 +10,10 @@ jobs:
         node-version: [10.x]
     steps:
     - uses: actions/checkout@master
+    - name: Launch MongoDB
+      uses: wbari/start-mongoDB@master
+      with:
+        mongoDBVersion: 4.0
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@master
       with:
