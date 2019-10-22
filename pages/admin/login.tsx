@@ -1,2 +1,2 @@
-import dynamic from 'next/dynamic';
-export default dynamic(() => import('../../client/admin/pages/UserLogin'));
+import UserLogin from '@blog/client/admin/pages/UserLogin';
+export default UserLogin;

@@ -221,7 +221,6 @@ export const CommentForm = (props: Props) => {
     };
     const showPreview = () => {
         setIsShowPreview(!isShowPreview);
-        console.log(previewHtml);
         renderMakrdown(previewHtml);
     };
     const insertEmotion = (event: any) => {

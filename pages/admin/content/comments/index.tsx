@@ -1,12 +1,11 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
-const DynamicComponent = dynamic(() => import('@blog/client/admin/pages/Comments'), { ssr: false });
+import Comments from '@blog/client/admin/pages/Comments';
 
 export default () => {
     return (
         <BasicLayout>
-            <DynamicComponent></DynamicComponent>
+            <Comments></Comments>
         </BasicLayout>
     );
 };

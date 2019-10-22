@@ -2,7 +2,8 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import Router, { useRouter } from 'next/router';
 import config from '@blog/client/admin/configs/default.config';
 import { Form, Input, Upload, Select, Button, message } from 'antd';
-import MdEdit from '@blog/client/admin/components/MdEdit';
+import dynamic from 'next/dynamic';
+const MdEdit = dynamic(() => import('@blog/client/admin/components/MdEdit'), { ssr: false });
 import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
@@ -163,7 +164,6 @@ const C = props => {
               },
           ]
         : [];
-    console.log(fileList);
     return (
         <PanelDiv>
             <PageHeaderWrapper

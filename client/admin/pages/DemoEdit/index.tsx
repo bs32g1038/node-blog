@@ -1,6 +1,7 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import axios from '@blog/client/admin/axios';
-import MdEdit from '@blog/client/admin/components/MdEdit';
+import dynamic from 'next/dynamic';
+const MdEdit = dynamic(() => import('@blog/client/admin/components/MdEdit'), { ssr: false });
 import { Form, Input, Button, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 const FormItem = Form.Item;
