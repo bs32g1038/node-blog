@@ -15,7 +15,7 @@ log4js.configure({
         console: { type: 'console' },
         requestInfoFile: {
             type: 'file',
-            filename: path.resolve(basePath, '/logs/request-info.log'),
+            filename: path.join(basePath, '/logs/request-info.log'),
             maxLogSize: 3 * 1024 * 1024,
             backups: 3,
             compress: true,
@@ -23,7 +23,7 @@ log4js.configure({
         },
         infoFile: {
             type: 'file',
-            filename: path.resolve(basePath, '/logs/info.log'),
+            filename: path.join(basePath, '/logs/info.log'),
             maxLogSize: 1024 * 1024,
             backups: 3,
             compress: true,
@@ -31,7 +31,7 @@ log4js.configure({
         },
         errorFile: {
             type: 'file',
-            filename: path.resolve(basePath, '/logs/error.log'),
+            filename: path.join(basePath, '/logs/error.log'),
             maxLogSize: 1024 * 1024,
             backups: 3,
             compress: true,
