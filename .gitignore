@@ -42,9 +42,6 @@ lerna-debug.log*
 /.next/
 /out/
 
-# production
-/build
-
 .cache
 logs/blog/*
 static
