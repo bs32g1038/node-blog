@@ -223,9 +223,12 @@ const Item: SFC<{ item: any }> = (props: any) => {
             </Brief>
             <RightContent>
                 <ThumbWrap>
-                    <LazyLoad tag={'div'}>
-                        <ThumbImg style={{ backgroundImage: `url(${item.screenshot} )` }} />
-                    </LazyLoad>
+                    <LazyLoad
+                        component={ThumbImg}
+                        attrs={{
+                            style: { backgroundImage: `url(${item.screenshot})` },
+                        }}
+                    ></LazyLoad>
                 </ThumbWrap>
                 <div title={item.title + ' 访问趋势'}>
                     <Trend data={[1, 1, ...item.dayReadings.map((tmp: any) => tmp.count), 1, 1]} />

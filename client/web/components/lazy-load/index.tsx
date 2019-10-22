@@ -8,15 +8,14 @@ const getTop = (e: any) => {
     }
     return T;
 };
-export const LazyLoad = (props: { tag?: string; component?: any; children?: any }) => {
-    const [tag] = useState(props.tag || 'img');
+export const LazyLoad = (props: { component: any; attrs: any }) => {
     const [attrs, setAttrs] = useState({});
     const $dom = useRef(null);
     const load = (): any => {
         const H = window.innerHeight;
         const S = document.documentElement.scrollTop || document.body.scrollTop;
         if (H + S > getTop($dom.current)) {
-            setAttrs(props);
+            setAttrs(props.attrs);
         }
     };
     useEffect(() => {
@@ -27,8 +26,5 @@ export const LazyLoad = (props: { tag?: string; component?: any; children?: any 
         };
     }, [1]);
     const Component = props.component;
-    if (Component) {
-        return <Component {...attrs} ref={$dom}></Component>;
-    }
-    return tag === 'img' ? <img {...attrs} ref={$dom} /> : <a {...attrs} ref={$dom} />;
+    return <Component {...attrs} ref={$dom}></Component>;
 };
