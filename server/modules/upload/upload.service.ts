@@ -1,3 +1,5 @@
+import path from 'path';
+import multr from 'multer';
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
@@ -5,11 +7,7 @@ import { InjectModel } from '../../utils/model.util';
 import { FileDocument, FileModel } from '../../models/file.model';
 import { MediaDocument, MediaModel } from '../../models/media.model';
 import { md5 } from '../../utils/crypto.util';
-import fs from 'fs';
-import util from 'util';
-import path from 'path';
-import multr from 'multer';
-const fswriteFile = util.promisify(fs.writeFile);
+import { creteUploadFile } from '../../utils/upload.util';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -36,15 +34,9 @@ export class UploadService {
         }
         const name = md5(file.buffer);
         const fileName = name + suffix;
-        const filePath = '/static/upload/' + new Date().getFullYear();
 
         // 图片处理
-        const basePath = path.join(process.cwd(), `/public` + filePath);
-
-        if (!fs.existsSync(basePath)) {
-            fs.mkdirSync(basePath);
-        }
-        await fswriteFile(basePath + '/' + fileName, file.buffer);
+        const url = await creteUploadFile(fileName, file.buffer);
         const _file = await this.mediaModel.create({
             originalName,
             name,
@@ -52,10 +44,9 @@ export class UploadService {
             size,
             suffix,
             fileName,
-            filePath,
+            filePath: url.replace(`/${fileName}`, ''),
             type: 'image',
         });
-        const url = filePath + '/' + fileName;
         return {
             _id: _file._id,
             url,
@@ -69,7 +60,7 @@ export class UploadService {
         const suffix = path.extname(file.originalname);
         const name = md5(file.buffer);
         const fileName = name + suffix;
-        const filePath = '/static/upload/' + new Date().getFullYear();
+
         let category = 6;
         if (mimetype.toLowerCase().includes('mp4')) {
             category = 1;
@@ -93,12 +84,8 @@ export class UploadService {
                 }
             });
         }
-        const basePath = path.join(process.cwd(), `/public` + filePath);
-
-        if (!fs.existsSync(basePath)) {
-            fs.mkdirSync(basePath);
-        }
-        await fswriteFile(basePath + '/' + fileName, file.buffer);
+        // 文件处理
+        const url = await creteUploadFile(fileName, file.buffer);
         if (parentId) {
             await this.fileModel.updateOne(
                 { _id: parentId },
@@ -114,13 +101,13 @@ export class UploadService {
             size,
             suffix,
             fileName,
-            filePath,
+            filePath: url.replace(`/${fileName}`, ''),
             category,
             parentId: parentId || null,
         });
         return {
             _id: _file._id,
-            url: filePath + fileName,
+            url,
         };
     }
 }
