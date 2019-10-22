@@ -217,7 +217,7 @@ export const SearchForm = (props: { className?: string }) => {
                     {isLoading && (
                         <span
                             className="loading-icon"
-                            style={{ backgroundImage: 'url(/static/spinner-64.gif)' }}
+                            style={{ backgroundImage: `url(${require('./spinner-64.gif')})` }}
                         ></span>
                     )}
                 </NavSearchProList>
