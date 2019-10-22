@@ -2,13 +2,11 @@ name: Node Blog CI
 
 on:
   push:
-    branches:
-    - master
-    - dev
+    branches-ignore:
+    - release
   pull_request:
-    branches:
-    - master
-    - dev
+    branches-ignore:
+    - release
 
 jobs:
   build:
