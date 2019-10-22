@@ -35,3 +35,7 @@ jobs:
         codecov
       env:
         CI: true
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@master
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
