@@ -1,6 +1,6 @@
 {
   "name": "node-blog",
-  "version": "2.5.0",
+  "version": "3.0.0beta-1",
   "description": "A simple and whole blog",
   "homepage": "https://www.lizc.net",
   "license": "MIT",
@@ -9,21 +9,157 @@
     "email": "bs32g1038@163.com"
   },
   "scripts": {
-    "lint-staged:web": "yarn --cwd ./web lint-staged",
-    "lint-staged:server": "yarn --cwd ./server lint-staged",
-    "lint-staged:admin": "yarn --cwd ./admin lint-staged",
-    "lint-staged": "yarn run lint-staged:web && yarn run lint-staged:server && yarn run lint-staged:admin",
-    "install:web": "yarn --cwd ./web install",
-    "install:server": "yarn --cwd ./server install",
-    "install:admin": "yarn --cwd ./admin install",
-    "postinstall": "yarn run install:web && yarn run install:server && yarn run install:admin"
+    "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
+    "dev:server": "cross-env NODE_ENV=development concurrently --handle-input \"wait-on dist/server/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
+    "dev:web": "node client/dev.server.js",
+    "build": "concurrently \"npm run build:server\" \" npm run build:web \"",
+    "build:server": "rimraf dist && tsc -p tsconfig.build.json",
+    "build:web": "next build",
+    "start:prod": "cross-env NODE_ENV=production node dist/server/main.js",
+    "lint": "eslint **/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
+    "format": "prettier **/**/*.{ts,tsx,js,jsx} --config ./.prettierrc --ignore-path ./.prettierignore --write",
+    "start:debug": "nodemon --config nodemon-debug.json",
+    "prestart:prod": "rimraf dist && npm run build",
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:cov": "cross-env NODE_ENV=test jest --coverage --forceExit",
+    "test:debug": "cross-env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+  },
+  "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "@nestjs/common": "^6.8.3",
+    "@nestjs/core": "^6.8.3",
+    "@nestjs/platform-express": "^6.8.3",
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "cross-env": "^6.0.3",
+    "crypto-js": "^3.1.9-1",
+    "data2xml": "^1.3.4",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.0.0",
+    "helmet": "^3.21.1",
+    "highlight.js": "^9.15.10",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^5.2.2",
+    "lru-cache": "^5.1.1",
+    "markdown-it": "^10.0.0",
+    "markdown-it-link-attributes": "^3.0.0",
+    "mongoose": "^5.7.5",
+    "next": "^9.1.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.3",
+    "validator": "^11.1.0",
+    "xss": "^1.0.6"
   },
   "devDependencies": {
-    "husky": "^3.0.1"
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "@nestjs/testing": "^6.8.3",
+    "@types/cheerio": "^0.22.13",
+    "@types/crypto-js": "^3.1.43",
+    "@types/express": "^4.17.1",
+    "@types/hapi__joi": "^15.0.4",
+    "@types/helmet": "^0.0.44",
+    "@types/highlight.js": "^9.12.3",
+    "@types/jest": "^24.0.19",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/lru-cache": "^5.1.0",
+    "@types/markdown-it": "^0.0.9",
+    "@types/mongoose": "^5.5.22",
+    "@types/multer": "^1.3.10",
+    "@types/node": "^12.11.1",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.2",
+    "@types/react-redux": "^7.1.5",
+    "@types/supertest": "^2.0.8",
+    "@types/validator": "^10.11.3",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "@zeit/next-css": "^1.0.1",
+    "antd": "^3.24.2",
+    "babel-plugin-import": "^1.12.2",
+    "clipboard": "^2.0.4",
+    "codemirror": "^5.49.0",
+    "concurrently": "^5.0.0",
+    "dayjs": "^1.8.16",
+    "emotion": "^10.0.17",
+    "emotion-server": "^10.0.17",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "github-markdown-css": "^3.0.1",
+    "http-proxy-middleware": "^0.20.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
+    "markdown-it-for-inline": "^0.1.1",
+    "nodemon": "^1.19.4",
+    "null-loader": "^3.0.0",
+    "prettier": "^1.18.2",
+    "query-string": "^6.8.3",
+    "rc-tween-one": "^2.6.5",
+    "react": "^16.10.2",
+    "react-calendar-heatmap": "^1.8.1",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "react-tooltip": "^3.11.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "rimraf": "^3.0.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "24.1.0",
+    "ts-node": "8.4.1",
+    "tsconfig-paths": "3.9.0",
+    "tslint": "5.20.0",
+    "tslint-react": "^4.1.0",
+    "typescript": "3.6.3",
+    "url-loader": "^2.2.0",
+    "wait-on": "^3.3.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "./server/**/*.{js,ts}",
+      "!./server/main.ts",
+      "!./server/configs/index.config.ts",
+      "!./server/utils/**",
+      "!./server/pipes/joi.validation.pipe.ts",
+      "!./server/filters/all-exceptions.filter.ts",
+      "!./server/middlewares/rate-limit.middleware.ts",
+      "!./server/database/database.module.ts",
+      "!./server/modules/write.day.reading.module.ts"
+    ],
+    "globalSetup": "<rootDir>/test/setup-globals.ts",
+    "setupFiles": [
+      "<rootDir>/test/setup-files.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/default-timeout.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.build.json"
+      }
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,scss,html}": [
+      "prettier --config ./.prettierrc --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   }
 }

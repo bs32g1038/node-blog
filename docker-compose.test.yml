@@ -1,28 +1,11 @@
 version: '3'
 services:
   server:
-    build: ./server
+    build: ./docker
     depends_on:
       - db
     command: npm run start:prod
     environment:
       - MONGODB_URL=mongodb://db:27017/blog_test
-  web:
-    build: ./web
-    command: npm run start:prod
-    environment:
-      - PROXY_DOMAIN_NAME=http://server
-  admin:
-    build: ./admin
-    command: npm run start:prod
-  nginx:
-    build: ./nginx
-    depends_on:
-      - server
-      - web
-      - admin
-    ports:
-      - 80:80
-      - 443:443
   db:
     image: mongo:4.1

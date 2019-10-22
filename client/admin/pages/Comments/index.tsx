@@ -1,0 +1,232 @@
+import React, { useEffect, useState } from 'react';
+import axios from '@blog/client/admin/axios';
+import queryString from 'query-string';
+import marked from '@blog/client/libs/marked';
+import { timeAgo } from '@blog/client/libs/time';
+import { Table, Button, Popconfirm, message } from 'antd';
+import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
+import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction } from './style';
+import GHAT from '@blog/client/libs/generate-avatar';
+import { md5 } from '@blog/client/admin/utils/crypto-js';
+import Router from 'next/router';
+import Link from 'next/link';
+import { PanelDiv } from '@blog/client/admin/styles';
+
+const ghat = new GHAT();
+
+export default () => {
+    const [state, setState] = useState({
+        pagination: { current: 1, total: 0 },
+        comments: [],
+        selectedRowKeys: [],
+        loading: false,
+        visiable: false,
+    });
+
+    const fetchData = (page = 1, limit = 10) => {
+        setState(data => ({
+            ...data,
+            loading: true,
+        }));
+        const query = {
+            limit,
+            page,
+        };
+        axios.get('/comments?' + queryString.stringify(query)).then(res => {
+            const pagination = { ...state.pagination };
+            pagination.total = res.data.totalCount;
+            setState(data => ({
+                ...data,
+                comments: res.data.items,
+                loading: false,
+                pagination,
+            }));
+        });
+    };
+    const deleteComment = _id => {
+        axios.delete('/comments/' + _id).then(() => {
+            message.success('删除评论成功');
+            fetchData();
+        });
+    };
+    const batchDeleteComment = () => {
+        axios
+            .delete('/comments', {
+                data: { commentIds: state.selectedRowKeys },
+            })
+            .then(res => {
+                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                    message.success('删除评论成功！');
+                    setState(data => ({
+                        ...data,
+                        selectedRowKeys: [],
+                    }));
+                    return fetchData();
+                }
+                return message.error('删除评论失败，请重新尝试。');
+            });
+    };
+    const handleTableChange = pagination => {
+        const pager = { ...state.pagination };
+        pager.current = pagination.current;
+        setState(data => ({
+            ...data,
+            pagination: pager,
+        }));
+        fetchData(pagination.current, pagination.pageSize);
+    };
+    const onSelectChange = selectedRowKeys => {
+        setState(data => ({
+            ...data,
+            selectedRowKeys,
+        }));
+    };
+    useEffect(() => {
+        fetchData();
+    }, [1]);
+    const getTableColums = () => {
+        return [
+            {
+                title: '昵称',
+                dataIndex: 'nickName',
+                width: 140,
+            },
+            {
+                title: 'email',
+                dataIndex: 'email',
+                width: 100,
+            },
+            {
+                title: '创建时间',
+                dataIndex: 'createdAt',
+                width: 140,
+                render: (text, record) => timeAgo(record.createdAt),
+            },
+            {
+                title: '文章标题',
+                dataIndex: 'article',
+                render: (text, record) => (record.article && record.article.title) || '--',
+            },
+            {
+                title: '操作',
+                key: 'operation',
+                width: 180,
+                render: (text, record) => (
+                    <div>
+                        <Button
+                            type="primary"
+                            size="small"
+                            title="编辑"
+                            onClick={() => Router.push('/admin/content/comments/reply/' + record._id)}
+                        >
+                            <i className="fa fa-edit fa-fw"></i>
+                            回复
+                        </Button>
+                        ,
+                        <Popconfirm
+                            title="确认要删除？"
+                            onConfirm={() => deleteComment(record._id)}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" size="small" title="删除">
+                                <i className="fa fa-trash-o fa-fw"></i>删除
+                            </Button>
+                        </Popconfirm>
+                    </div>
+                ),
+            },
+        ];
+    };
+    const { selectedRowKeys } = state;
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange.bind(this),
+    };
+    const expandedRowKeys = state.comments.map(item => item._id);
+    return (
+        <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
+            <div className="main-content">
+                <PanelDiv className="panel">
+                    <Popconfirm
+                        title="确认要删除？"
+                        placement="right"
+                        visible={state.visiable}
+                        onVisibleChange={() => {
+                            if (state.selectedRowKeys.length <= 0) {
+                                message.info('请选择要删除的评论');
+                                return;
+                            }
+                            setState(data => ({
+                                ...data,
+                                visiable: !state.visiable,
+                            }));
+                        }}
+                        onConfirm={() => batchDeleteComment()}
+                        okText="确定"
+                        cancelText="取消"
+                    >
+                        <Button type="danger">
+                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                            批量删除
+                        </Button>
+                    </Popconfirm>
+                </PanelDiv>
+                <div className="table-wrapper">
+                    <Table
+                        rowKey={record => record._id}
+                        rowSelection={rowSelection}
+                        columns={getTableColums()}
+                        loading={state.loading}
+                        dataSource={state.comments}
+                        onChange={pagination => handleTableChange(pagination)}
+                        pagination={{
+                            showTotal: total => `共 ${total} 条评论数据`,
+                        }}
+                        expandedRowRender={record => {
+                            return (
+                                <React.Fragment>
+                                    {record.reply && (
+                                        <ReplyListItem>
+                                            <UserAvatar>
+                                                <img src={ghat.getImage(md5(record.reply.nickName).toString())} />
+                                            </UserAvatar>
+                                            <ReplyContent>
+                                                <ReplyInfo>
+                                                    <BaseInfo>
+                                                        <div className="reply-author">{record.reply.nickName}</div>
+                                                        <a className="reply-time">
+                                                            在 {timeAgo(record.reply.createdAt)} 评论
+                                                        </a>
+                                                    </BaseInfo>
+                                                    <UserAction>
+                                                        <Link
+                                                            href={'/admin/content/comments/reply/' + record.reply._id}
+                                                        >
+                                                            <a className="reply-action">回复</a>
+                                                        </Link>
+                                                    </UserAction>
+                                                </ReplyInfo>
+                                                <MarkdownText
+                                                    className="markdown-body"
+                                                    dangerouslySetInnerHTML={{ __html: marked(record.reply.content) }}
+                                                ></MarkdownText>
+                                            </ReplyContent>
+                                        </ReplyListItem>
+                                    )}
+                                    <div
+                                        className="markdown-body"
+                                        dangerouslySetInnerHTML={{
+                                            __html: marked(record.content),
+                                        }}
+                                    ></div>
+                                </React.Fragment>
+                            );
+                        }}
+                        expandedRowKeys={expandedRowKeys}
+                    />
+                </div>
+            </div>
+        </PageHeaderWrapper>
+    );
+};
