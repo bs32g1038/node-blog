@@ -10,6 +10,8 @@ services:
     command: npm run start:prod --MONGODB_HOSTNAME=db
     environment:
       - MONGODB_URL=mongodb://db:27017/blog
+    ports:
+      - 8080:8080
   db:
     image: mongo:4.1
     volumes:

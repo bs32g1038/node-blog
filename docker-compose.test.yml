@@ -7,5 +7,7 @@ services:
     command: npm run start:prod
     environment:
       - MONGODB_URL=mongodb://db:27017/blog_test
+    ports:
+      - 8080:8080
   db:
     image: mongo:4.1
