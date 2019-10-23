@@ -3,6 +3,7 @@ import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
+import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
@@ -43,14 +44,14 @@ export default () => {
             page,
         };
         axios.get('/articles?' + queryString.stringify(query)).then(res => {
-            const pagination = { ...state.pagination };
-            pagination.total = res.data.totalCount;
+            const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
             setState(data => ({
                 ...data,
                 articles: res.data.items,
                 loading: false,
                 pagination,
             }));
+            scrollIntoView('article-panel');
         });
     };
     const deleteArticle = _id => {
@@ -172,7 +173,7 @@ export default () => {
     return (
         <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
             <div className="main-content">
-                <PanelDiv>
+                <PanelDiv id="article-panel">
                     <ModuleControlRow type="flex" justify="space-between">
                         <Col>
                             <Button type="primary" onClick={() => Router.push('/admin/content/articles/edit')}>
