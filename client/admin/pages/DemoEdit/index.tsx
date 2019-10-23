@@ -13,7 +13,7 @@ const DemoEdit = props => {
             _id: '',
             title: '',
             content:
-                '```html\n<div class="test">测试数据</div>\n```\n\n```css\n.test { border: 1px solid #ccc }\n```\n\n```javascript\nconsole.log("元素带有一个边框") \n```',
+                '```head\n<style>div { font-size: 14px }</style>\n```\n\n```html\n<div class="test">测试数据</div>\n```\n\n```css\n.test { border: 1px solid #ccc }\n```\n\n```javascript\nconsole.log("元素带有一个边框") \n```',
         },
     });
     const router = useRouter();
