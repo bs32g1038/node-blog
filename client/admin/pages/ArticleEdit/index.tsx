@@ -9,12 +9,6 @@ import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
 
-const MdEditInput = forwardRef(props => (
-    <div>
-        <MdEdit {...props} />
-    </div>
-));
-
 const PanelDiv = styled.div`
     .ant-upload-list-picture {
         width: auto;
@@ -208,7 +202,11 @@ const C = props => {
                                     name="file"
                                     listType="picture"
                                     accept=".jpg,.jpeg,.png"
-                                    headers={{ authorization: localStorage.getItem(config.tokenKey) }}
+                                    headers={{
+                                        authorization:
+                                            typeof localStorage !== 'undefined' &&
+                                            localStorage.getItem(config.tokenKey),
+                                    }}
                                     onRemove={() => false}
                                     beforeUpload={beforeUpload}
                                 >
@@ -230,7 +228,7 @@ const C = props => {
                             {getFieldDecorator('content', {
                                 initialValue: article.content || '',
                                 rules: [{ required: true, message: '文章详情不能为空!' }],
-                            })(<MdEditInput />)}
+                            })(<MdEdit />)}
                         </FormItem>
                         <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                             <Button type="primary" htmlType="submit">

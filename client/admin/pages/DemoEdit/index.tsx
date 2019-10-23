@@ -7,18 +7,13 @@ import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 const FormItem = Form.Item;
 import Router, { useRouter } from 'next/router';
 
-const MdEditInput = forwardRef(props => (
-    <div>
-        <MdEdit {...props} />
-    </div>
-));
-
 const DemoEdit = props => {
     const [state, setState] = useState({
         demo: {
             _id: '',
             title: '',
-            content: '',
+            content:
+                '```html\n<div class="test">测试数据</div>\n```\n\n```css\n.test { border: 1px solid #ccc }\n```\n\n```javascript\nconsole.log("元素带有一个边框") \n```',
         },
     });
     const router = useRouter();
@@ -78,8 +73,8 @@ const DemoEdit = props => {
                                     required: true,
                                 },
                             ],
-                            initialValue: demo.content || '',
-                        })(<MdEditInput />)}
+                            initialValue: demo.content,
+                        })(<MdEdit />)}
                     </FormItem>
                     <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                         <Button type="primary" htmlType="submit">
