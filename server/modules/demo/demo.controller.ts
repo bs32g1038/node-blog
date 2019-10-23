@@ -78,7 +78,8 @@ export class DemoController {
     async renderDemoShowPage(@Param() params: { id: string }) {
         const { id } = params;
         const demo = await this.demoService.getDemo(id);
-        const code: { html: string; css: string; javascript: string } = {
+        const code: { head: string; html: string; css: string; javascript: string } = {
+            head: '',
             html: '',
             css: '',
             javascript: '',
@@ -86,6 +87,9 @@ export class DemoController {
         const markdown: any = new MarkdownIt({
             highlight(str, lang) {
                 switch (lang) {
+                    case 'head':
+                        code.head = str;
+                        break;
                     case 'html':
                         code.html = str;
                         break;
@@ -301,6 +305,7 @@ export class DemoController {
                 <style>
                     ${data.code && data.code.css}
                 </style>
+                ${data.code && data.code.head}
             </head>
 
             <body>
