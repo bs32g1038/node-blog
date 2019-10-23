@@ -68,7 +68,7 @@ const UserLogin = (props: FormComponentProps) => {
                 <div className="nodeblog">
                     Powered by
                     <a
-                        href={config.siteInfo.webDomain}
+                        href={config.siteInfo.domain}
                         title="轻量级nodeblog博客系统"
                         rel="noopener noreferrer"
                         target="_blank"

@@ -4,5 +4,5 @@ export default {
     icpGovCn: 'http://www.beian.miit.gov.cn',
     github: 'https://github.com/bs32g1038',
     projectGithub: 'https://github.com/bs32g1038/node-blog',
-    domain: 'http://www.lizc.net',
+    domain: process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000' : 'https://www.lizc.net',
 };

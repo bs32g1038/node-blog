@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
+import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
+import config from '@blog/client/admin/configs/default.config';
 import Clipboard from 'clipboard';
 import { Row, Button, Popconfirm, message, Alert, Pagination, Card } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
@@ -27,6 +29,7 @@ export default () => {
             setState(data => ({ ...data, medias: res.data.items, loading: false, pagination }));
         });
     };
+
     const deleteFile = _id => {
         axios.delete('/medias/' + _id).then(() => {
             message.success('删除文件成功');
@@ -40,10 +43,11 @@ export default () => {
             ...data,
             pagination: pager,
         }));
+        scrollIntoView('media-row');
         fetchData(current, pageSize);
     };
     useEffect(() => {
-        const c = new Clipboard('.btnCopy');
+        const c = new Clipboard('.copyButton');
         setState(data => ({
             ...data,
             clipboard: c,
@@ -70,7 +74,7 @@ export default () => {
                             type="success"
                         />
                     )}
-                    <MediaListRow type="flex">
+                    <MediaListRow type="flex" id="media-row">
                         {state.medias.map((item, index) => {
                             return (
                                 <WrapCard
@@ -88,7 +92,7 @@ export default () => {
                                             key="viewButton"
                                             size="small"
                                             title="查看大图"
-                                            href={'//' + window.location.host + item.filePath + '/' + item.fileName}
+                                            href={config.siteInfo.domain + item.filePath + '/' + item.fileName}
                                             target="_blank"
                                             className="button button-view"
                                         >
@@ -101,9 +105,9 @@ export default () => {
                                             size="small"
                                             title="复制"
                                             data-clipboard-text={
-                                                window.location.host + item.filePath + '/' + item.fileName
+                                                config.siteInfo.domain + item.filePath + '/' + item.fileName
                                             }
-                                            className="button"
+                                            className="button copyButton"
                                         >
                                             <i className="fa fa-link fa-fw" style={{ color: '#fff' }}></i>
                                             复制

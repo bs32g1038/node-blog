@@ -63,7 +63,7 @@ const Title = styled.h1`
     a {
         display: inline-block;
         position: relative;
-        color: rgb(0, 0, 0, 0.85);
+        color: rgba(0, 0, 0, 0.85);
         border-bottom: none;
         vertical-align: top;
         text-decoration: none;
@@ -72,7 +72,7 @@ const Title = styled.h1`
 
 const Meta = styled.div`
     margin: 3px 0 0 -5px;
-    color: rgb(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.45);
     font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     font-size: 12px;
     span {

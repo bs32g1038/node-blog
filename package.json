@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
     "dev:server": "cross-env NODE_ENV=development concurrently --handle-input \"wait-on dist/server/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
-    "dev:web": "node client/dev.server.js",
+    "dev:web": "cross-env NODE_ENV=development node client/dev.server.js",
     "build": "concurrently \"npm run build:server\" \" npm run build:web \"",
     "build:server": "rimraf dist && tsc -p tsconfig.build.json",
     "build:web": "next build && node ./build/remove-css-link.js",
@@ -48,6 +48,7 @@
     "next": "^9.1.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
+    "scroll-into-view-if-needed": "^2.2.20",
     "validator": "^11.1.0",
     "xss": "^1.0.6"
   },

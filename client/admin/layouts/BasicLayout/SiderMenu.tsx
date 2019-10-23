@@ -163,7 +163,7 @@ export default (props: Props) => {
                 </Link>
                 <MenuList
                     theme="light"
-                    mode="inline"
+                    mode={collapsed ? 'vertical' : 'inline'}
                     key="Menu"
                     onClick={menuClick}
                     selectedKeys={selectedKey}

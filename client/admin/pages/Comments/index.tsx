@@ -8,6 +8,7 @@ import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction } from './style';
 import GHAT from '@blog/client/libs/generate-avatar';
 import { md5 } from '@blog/client/admin/utils/crypto-js';
+import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
 import Router from 'next/router';
 import Link from 'next/link';
 import { PanelDiv } from '@blog/client/admin/styles';
@@ -41,6 +42,7 @@ export default () => {
                 loading: false,
                 pagination,
             }));
+            scrollIntoView('comments-panel');
         });
     };
     const deleteComment = _id => {
@@ -147,7 +149,7 @@ export default () => {
     return (
         <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
             <div className="main-content">
-                <PanelDiv className="panel">
+                <PanelDiv className="panel" id="comments-panel">
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
