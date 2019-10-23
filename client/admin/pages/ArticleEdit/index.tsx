@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import config from '@blog/client/admin/configs/default.config';
 import { Form, Input, Upload, Select, Button, message } from 'antd';
