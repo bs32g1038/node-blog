@@ -123,7 +123,10 @@ export default (props: any) => {
                 codeMirror.toTextArea();
             }
         };
-    }, [props.value]);
+    }, [1]);
+    if (codeMirror && codeMirror.getValue() === '' && props.value !== '') {
+        codeMirror.setValue(props.value);
+    }
     return (
         <WrapDiv>
             <div className="MdEditor">
