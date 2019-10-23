@@ -14,7 +14,7 @@ app.prepare().then(() => {
     });
 
     server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
-    server.get('/static/*', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
+    server.get(/^\/static\//, proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
 
     server.get('/blog/articles/:id', (req, res) => {
         return app.render(req, res, '/blog/article', { id: req.params.id });
