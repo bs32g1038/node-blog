@@ -28,7 +28,11 @@ export default (props: Props) => {
     return (
         <Layout style={{ marginLeft: state.collapsed ? 80 : 240 }}>
             <SiderMenu collapsed={state.collapsed}></SiderMenu>
-            <Layout>
+            <Layout
+                style={{
+                    minHeight: '100vh',
+                }}
+            >
                 <Header
                     collapsed={state.collapsed}
                     onCollapse={() => {
