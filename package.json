@@ -49,7 +49,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
     "scroll-into-view-if-needed": "^2.2.20",
-    "validator": "^11.1.0",
+    "validator": "^12.0.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {
