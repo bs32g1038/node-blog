@@ -22,7 +22,7 @@ export const ExtraContent = styled.div`
         position: relative;
         display: inline-block;
         padding: 0 32px;
-        > p:first-child {
+        > p:first-of-type {
             margin-bottom: 4px;
             color: #999;
             font-size: 14px;

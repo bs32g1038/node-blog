@@ -500,11 +500,11 @@ const Div = styled.div`
         display: table;
     }
 
-    > :first-child {
+    > :first-of-type {
         margin-top: 0 !important;
     }
 
-    > :last-child {
+    > :last-of-type {
         margin-bottom: 0 !important;
     }
 
@@ -538,11 +538,11 @@ const Div = styled.div`
         padding: 0 1em;
     }
 
-    blockquote > :first-child {
+    blockquote > :first-of-type {
         margin-top: 0;
     }
 
-    blockquote > :last-child {
+    blockquote > :last-of-type {
         margin-bottom: 0;
     }
 
@@ -666,7 +666,7 @@ const Div = styled.div`
         border-top: 1px solid #c6cbd1;
     }
 
-    table tr:nth-child(2n) {
+    table tr:nth-of-tyype(2n) {
         background-color: #f6f8fa;
     }
 

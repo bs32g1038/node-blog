@@ -14,15 +14,15 @@ import hljs from 'highlight.js'; // https://highlightjs.org/
 export class DemoController {
     constructor(private readonly demoService: DemoService) {}
 
-    public static idSchema = {
+    public static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static deleteDemosSchema = {
+    public static deleteDemosSchema = Joi.object({
         demoIds: Joi.array().items(Joi.string().required()),
-    };
+    });
 
     @Post('/api/demos')
     @Roles('admin')

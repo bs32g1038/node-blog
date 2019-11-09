@@ -7,12 +7,12 @@ import Joi from '@hapi/joi';
 export class SearchController {
     constructor(private readonly searchService: SearchService) {}
 
-    static keySchema = {
+    static keySchema = Joi.object({
         key: Joi.string()
             .default('')
             .max(50)
             .allow(''),
-    };
+    });
 
     @Get('')
     @JoiValidationPipe(SearchController.keySchema)

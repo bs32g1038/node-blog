@@ -11,12 +11,12 @@ import Joi from '@hapi/joi';
 export class UploadController {
     constructor(private readonly uploadService: UploadService) {}
 
-    static parentIdSchema = {
+    static parentIdSchema = Joi.object({
         parentId: Joi.string()
             .default('')
             .max(50)
             .allow(''),
-    };
+    });
 
     @Post('/api/upload/image')
     @Roles('admin')

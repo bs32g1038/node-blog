@@ -15,21 +15,21 @@ import Joi from '@hapi/joi';
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
-    public static idSchema = {
+    public static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static articleIdSchema = {
+    public static articleIdSchema = Joi.object({
         articleId: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static deleteCommentsSchema = {
+    public static deleteCommentsSchema = Joi.object({
         commentIds: Joi.array().items(Joi.string().required()),
-    };
+    });
 
     @Post('/comments')
     async create(@Req() req: Request, @Body() comment: Comment) {

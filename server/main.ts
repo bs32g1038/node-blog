@@ -1,13 +1,13 @@
+import { json } from 'body-parser';
+import helmet from 'helmet';
+import log4js from 'log4js';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import { AppModule } from './app.module';
-import helmet from 'helmet';
-import { json } from 'body-parser';
+import { APP_SERVER } from './configs/index.config';
+import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
 import { staticAssetsPath } from './utils/path.util';
-import { APP_SERVER } from './configs/index.config';
-import log4js from 'log4js';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });

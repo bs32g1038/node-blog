@@ -12,11 +12,11 @@ import Joi from '@hapi/joi';
 export class MediaController {
     constructor(private readonly mediaService: MediaService) {}
 
-    static idSchema = {
+    static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
     @Post('/medias')
     @Roles('admin')

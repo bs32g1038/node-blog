@@ -3,10 +3,10 @@ import { PipeTransform, Injectable, BadRequestException, UsePipes } from '@nestj
 
 @Injectable()
 export class JoiValidationPipeTransform implements PipeTransform {
-    public constructor(private readonly schema: object) {}
+    public constructor(private readonly schema: Joi.ObjectSchema) {}
 
     public transform(value: any) {
-        const { error } = Joi.validate(value, this.schema, { allowUnknown: true });
+        const { error } = this.schema.validate(value, { allowUnknown: true });
         if (error) {
             throw new BadRequestException('Validation failed' + error);
         }
@@ -14,4 +14,4 @@ export class JoiValidationPipeTransform implements PipeTransform {
     }
 }
 
-export const JoiValidationPipe = (schema: object) => UsePipes(new JoiValidationPipeTransform(schema));
+export const JoiValidationPipe = (schema: Joi.ObjectSchema) => UsePipes(new JoiValidationPipeTransform(schema));
