@@ -74,7 +74,7 @@ class GHAT {
         };
     }
 
-    drawImage(...args: (any)[]) {
+    drawImage(...args: any[]) {
         if (this.draw) {
             this.draw.fillRect(args[0], args[1], args[2], args[3]);
         }

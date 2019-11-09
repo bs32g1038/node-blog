@@ -73,9 +73,10 @@ const CommentReply = props => {
                         <span className="ant-form-text">{comment.content}</span>
                     </FormItem>
                     <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="回复内容：">
-                        {getFieldDecorator('content', {})(
-                            <TextArea placeholder="请输入回复内容" autosize={{ minRows: 2, maxRows: 6 }}></TextArea>
-                        )}
+                        {getFieldDecorator(
+                            'content',
+                            {}
+                        )(<TextArea placeholder="请输入回复内容" autosize={{ minRows: 2, maxRows: 6 }}></TextArea>)}
                     </FormItem>
                     <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                         <Button type="primary" htmlType="submit">

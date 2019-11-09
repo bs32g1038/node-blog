@@ -46,7 +46,7 @@ export class LoginService {
         const account = U.account;
         const password = U.password;
         const count = await this.userModel.count({});
-        const result = Joi.validate(U, schema);
+        const result = schema.validate(U);
         if (count <= 0) {
             /**
              * 首次登陆，即为管理员账号，仅一次。

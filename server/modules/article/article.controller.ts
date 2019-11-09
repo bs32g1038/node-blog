@@ -12,21 +12,21 @@ import Joi from '@hapi/joi';
 export class ArticleController {
     public constructor(private readonly articleService: ArticleService) {}
 
-    public static cIdSchema = {
+    public static cIdSchema = Joi.object({
         cid: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static idSchema = {
+    public static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static deleteArticlesSchema = {
+    public static deleteArticlesSchema = Joi.object({
         articleIds: Joi.array().items(Joi.string()),
-    };
+    });
 
     @Post('/articles')
     @Roles('admin')

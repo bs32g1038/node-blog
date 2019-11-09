@@ -12,13 +12,13 @@ import Joi from '@hapi/joi';
 export class FileController {
     constructor(private readonly fileService: FileService) {}
 
-    public static idSchema = {
+    public static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static folderSchema = {
+    public static folderSchema = Joi.object({
         parentId: Joi.string()
             .default('')
             .max(50)
@@ -26,11 +26,11 @@ export class FileController {
         name: Joi.string()
             .min(1)
             .max(50),
-    };
+    });
 
-    public static deleteFilesSchema = {
+    public static deleteFilesSchema = Joi.object({
         fileIds: Joi.array().items(Joi.string().required()),
-    };
+    });
 
     @Post('/files')
     @Roles('admin')

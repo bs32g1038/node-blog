@@ -12,15 +12,15 @@ import Joi from '@hapi/joi';
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
-    public static idSchema = {
+    public static idSchema = Joi.object({
         id: Joi.string()
             .default('')
             .max(50),
-    };
+    });
 
-    public static deleteCategoriesSchema = {
+    public static deleteCategoriesSchema = Joi.object({
         categoryIds: Joi.array().items(Joi.string().required()),
-    };
+    });
 
     @Post('/categories')
     @Roles('admin')

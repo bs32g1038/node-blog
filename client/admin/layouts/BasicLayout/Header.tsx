@@ -37,7 +37,7 @@ const RightDiv = styled.div`
         &:hover {
             color: #61b3e6;
         }
-        &:nth-child(10) {
+        &:nth-of-type(10) {
             margin-right: 0;
         }
         i {
