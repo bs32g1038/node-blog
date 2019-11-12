@@ -500,14 +500,6 @@ const Div = styled.div`
         display: table;
     }
 
-    > :first-of-type {
-        margin-top: 0 !important;
-    }
-
-    > :last-of-type {
-        margin-bottom: 0 !important;
-    }
-
     a:not([href]) {
         color: inherit;
         text-decoration: none;
