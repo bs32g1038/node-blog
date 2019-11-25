@@ -18,9 +18,10 @@ const ModuleControlRow = styled(Row)`
     }
 `;
 
-const SearchForm = styled.form`
+const SearchWrap = styled.div`
     button {
         margin-left: 8px;
+        margin-right: 0;
     }
 `;
 
@@ -34,14 +35,17 @@ export default () => {
         selectedRowKeys: [],
         loading: false,
         visible: false,
+        searchKey: '',
+        isResetFetch: false,
     });
     const fetchData = (page = 1, limit = 10) => {
         setState(data => {
-            return { ...data, loading: true };
+            return { ...data, isResetFetch: false, loading: true };
         });
         const query = {
             limit,
             page,
+            title: state.searchKey,
         };
         axios.get('/articles?' + queryString.stringify(query)).then(res => {
             const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
@@ -84,7 +88,7 @@ export default () => {
                 dataIndex: 'screenshot',
                 render: (text, record) => (
                     <a href={'/blog/articles/' + record._id} className="thumbnail">
-                        <img src={record.screenshot} alt="冷夜流星博客" width="100" height="60" />
+                        <img src={record.screenshot} width="100" height="60" />
                     </a>
                 ),
             },
@@ -164,7 +168,7 @@ export default () => {
     };
     useEffect(() => {
         fetchData();
-    }, [1]);
+    }, [state.isResetFetch]);
     const { selectedRowKeys } = state;
     const rowSelection = {
         selectedRowKeys,
@@ -205,20 +209,51 @@ export default () => {
                             </Popconfirm>
                         </Col>
                         <Col style={{ flex: '1 0 auto' }}>
-                            <SearchForm action="/admin/manage/contentList">
+                            <SearchWrap>
                                 <div className="search-input-group">
                                     <Row type="flex" justify="end">
                                         <Col>
-                                            <Input type="text" name="searchKey" placeholder="请输入需要查询的关键字" />
+                                            <Input
+                                                type="text"
+                                                name="searchTitle"
+                                                placeholder="请输入文章标题关键词"
+                                                value={state.searchKey}
+                                                onChange={e => {
+                                                    const value = e.currentTarget.value;
+                                                    setState(val => ({
+                                                        ...val,
+                                                        searchKey: value,
+                                                    }));
+                                                }}
+                                            />
                                         </Col>
                                         <Col>
-                                            <Button type="primary">
-                                                <i className="fa fa-search fa-fw"></i>搜索
+                                            <Button
+                                                type="primary"
+                                                onClick={() => {
+                                                    fetchData();
+                                                }}
+                                            >
+                                                <i className="fa fa-search fa-fw"></i>查询
+                                            </Button>
+                                        </Col>
+                                        <Col>
+                                            <Button
+                                                type="primary"
+                                                onClick={() => {
+                                                    setState(value => ({
+                                                        ...value,
+                                                        searchKey: '',
+                                                        isResetFetch: true,
+                                                    }));
+                                                }}
+                                            >
+                                                <i className="fa fa-search fa-fw"></i>重置
                                             </Button>
                                         </Col>
                                     </Row>
                                 </div>
-                            </SearchForm>
+                            </SearchWrap>
                         </Col>
                     </ModuleControlRow>
                 </PanelDiv>
