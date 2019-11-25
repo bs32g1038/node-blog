@@ -1,0 +1,20 @@
+name: Release Docker CI
+
+on:
+  push:
+    branches:
+    - release
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: bs32g1038/node-blog:v3
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      env:
+        CI: true
