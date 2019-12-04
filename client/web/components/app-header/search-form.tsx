@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
+import Link from '../link';
 import React, { useRef, useState } from 'react';
 import * as Api from '../../api/article';
 import { GithubSvg } from '../svgs/github-svg';

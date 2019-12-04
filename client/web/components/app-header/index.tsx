@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import Link from 'next/link';
+import Link from '../link';
 import siteInfo from '../../config/site-info';
 import NavLink from '../nav-link';
 import { GithubSvg } from '../svgs/github-svg';

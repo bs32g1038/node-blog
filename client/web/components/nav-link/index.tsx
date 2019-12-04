@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '../link';
 import { withRouter } from 'next/router';
 import React, { Children } from 'react';
 import queryString from 'query-string';

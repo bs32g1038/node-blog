@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
+import Link from '../link';
 import React, { useState } from 'react';
 import config from '../../config/site-info';
 import media from '../../utils/media';
