@@ -1,7 +1,9 @@
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
-import { isEmail, isEmpty, isURL } from 'validator';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import isURL from 'validator/lib/isURL';
 import axios from '../../utils/axios';
 import { media, xss } from '../../utils/helper';
 import marked from '../../../libs/marked';
