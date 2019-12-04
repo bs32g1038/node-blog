@@ -37,6 +37,7 @@ module.exports = withCss({
                         publicPath: '_next/static',
                         name: 'assets/[name].[hash:8].[ext]',
                         limit: 1024 * 20, // 20kb
+                        esModule: false,
                     },
                 },
             ],

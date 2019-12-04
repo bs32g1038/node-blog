@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
+import Link from '../link';
 import { ArrowSvg } from '../svgs/arrow-svg';
 
 const NavLinks = styled.div`

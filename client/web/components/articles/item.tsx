@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
+import Link from '../link';
 import React, { SFC } from 'react';
 import media from '../../utils/media';
 import { parseTime } from '../../../libs/time';
@@ -195,7 +195,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
         <ArticleItem>
             <Brief>
                 <Content>
-                    <Link href={`/blog/articles/${item._id}`} passHref={true}>
+                    <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
                         <Title>{item.title}</Title>
                     </Link>
                     <Meta>
