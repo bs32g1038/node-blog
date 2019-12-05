@@ -113,7 +113,7 @@
     "tsconfig-paths": "3.9.0",
     "tslint": "5.20.1",
     "tslint-react": "^4.1.0",
-    "typescript": "3.7.2",
+    "typescript": "3.7.3",
     "url-loader": "^3.0.0",
     "wait-on": "^3.3.0"
   },
