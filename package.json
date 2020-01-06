@@ -25,7 +25,7 @@
     "test:debug": "cross-env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
-    "@hapi/joi": "^16.1.8",
+    "@hapi/joi": "^17.0.0",
     "@nestjs/common": "^6.10.10",
     "@nestjs/core": "^6.10.10",
     "@nestjs/platform-express": "^6.10.10",
