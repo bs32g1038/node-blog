@@ -38,7 +38,7 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.21.2",
     "highlight.js": "^9.16.2",
-    "husky": "^3.1.0",
+    "husky": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.1.0",
     "lru-cache": "^5.1.1",
