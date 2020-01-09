@@ -8,5 +8,5 @@
         "isolatedModules": false,
         "noEmit": false
     },
-    "include": ["server/*.ts"]
+    "include": ["server/*.ts", "test/*.ts", "next-env.d.ts",]
 }

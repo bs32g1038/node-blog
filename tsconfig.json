@@ -42,6 +42,8 @@
     "server/*.ts",
     "client/*.ts",
     "client/*.tsx",
-    "pages/*.tsx"
+    "pages/*.tsx",
+    "test/*.ts",
+    "typings/*.d.ts"
   ]
 }
