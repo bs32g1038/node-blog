@@ -150,7 +150,8 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.build.json"
+        "tsConfig": "<rootDir>/tsconfig.build.json",
+        "diagnostics": false
       }
     }
   },
