@@ -7,6 +7,5 @@
         "target": "esnext",
         "isolatedModules": false,
         "noEmit": false
-    },
-    "include": ["server/*.ts", "test/*.ts", "next-env.d.ts",]
+    }
 }
