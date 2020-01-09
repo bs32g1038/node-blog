@@ -1,4 +1,4 @@
-FROM node:10.16.0-alpine
+FROM node:12.14.1-alpine3.9
 WORKDIR /code
 COPY ./package.json /code
 RUN yarn install
