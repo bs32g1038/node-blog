@@ -16,9 +16,9 @@ export class DashboardService {
 
     async getStatisticalInfo() {
         const [articleCount, categoryCount, commentCount] = await Promise.all([
-            this.articleModel.count({}),
-            this.categoryModel.count({}),
-            this.commentModel.count({}),
+            this.articleModel.countDocuments({}),
+            this.categoryModel.countDocuments({}),
+            this.commentModel.countDocuments({}),
         ]);
         return {
             articleCount,

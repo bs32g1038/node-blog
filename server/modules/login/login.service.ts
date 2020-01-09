@@ -32,7 +32,7 @@ export class LoginService {
         /**
          * 判断是否是首次登陆。首次则提示信息
          */
-        const count = await this.userModel.count({});
+        const count = await this.userModel.countDocuments({});
         if (count <= 0) {
             return {
                 msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！',
@@ -45,7 +45,7 @@ export class LoginService {
         const U = JSON.parse(decrypt(data.key));
         const account = U.account;
         const password = U.password;
-        const count = await this.userModel.count({});
+        const count = await this.userModel.countDocuments({});
         const result = schema.validate(U);
         if (count <= 0) {
             /**
