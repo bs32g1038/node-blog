@@ -38,7 +38,8 @@
     ".next",
     "static",
     "public",
-    "assets"
+    "assets",
+    "package.json"
   ],
   "types": [
     "typePatches",
