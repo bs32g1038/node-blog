@@ -90,7 +90,7 @@ Besides, you may need to install ```mongodb```,before you run the application.
 
 Operating System: Linux, OS X or Windows.
 
-Node.js Runtime: 8.x or newer; it is recommended that you use LTS Releases.
+Node.js Runtime: 12.x or newer; it is recommended that you use LTS Releases.
 
 database: mongdb 4.x or newer;
 
