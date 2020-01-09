@@ -32,9 +32,8 @@ const Connection = {
         return mongoose.connect(MONGODB.uri, {
             useCreateIndex: true,
             useNewUrlParser: true,
-            autoReconnect: true,
             useFindAndModify: false,
-            reconnectInterval: RECONNET_INTERVAL,
+            useUnifiedTopology: true,
         });
     },
 };
