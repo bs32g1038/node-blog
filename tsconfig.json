@@ -39,7 +39,9 @@
   ],
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "server/*.ts",
+    "client/*.ts",
+    "client/*.tsx",
+    "pages/*.tsx"
   ]
 }
