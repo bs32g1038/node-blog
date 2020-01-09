@@ -33,14 +33,6 @@
     "jsx": "preserve",
     "isolatedModules": true
   },
-  "exclude": [
-    "node_modules",
-    ".next",
-    "static",
-    "public",
-    "assets",
-    "package.json"
-  ],
   "types": [
     "typePatches",
     "node"
