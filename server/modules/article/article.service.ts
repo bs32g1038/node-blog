@@ -62,9 +62,10 @@ export class ArticleService {
         const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
         let filter: any = { isDeleted: false };
         if (query.tag) {
+            const reg = new RegExp(query.tag, 'i'); // 不区分大小写
             filter = {
                 ...filter,
-                tags: { $elemMatch: { $eq: query.tag } },
+                tags: { $elemMatch: { $regex: reg } },
             };
         } else {
             filter = { ...filter, ...query };
