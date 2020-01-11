@@ -39,11 +39,11 @@
   ],
   "include": [
     "next-env.d.ts",
-    "server/*.ts",
-    "client/*.ts",
-    "client/*.tsx",
-    "pages/*.tsx",
-    "test/*.ts",
-    "typings/*.d.ts"
+    "server/**/*.ts",
+    "client/**/*.ts",
+    "client/**/*.tsx",
+    "pages/**/*.tsx",
+    "test/**/*.ts",
+    "typings/**/*.d.ts"
   ]
 }
