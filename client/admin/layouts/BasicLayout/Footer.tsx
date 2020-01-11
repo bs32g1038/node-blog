@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { Icon, BackTop } from 'antd';
+import { CopyrightOutlined, GithubOutlined } from '@ant-design/icons';
+import { BackTop } from 'antd';
 import styled from '@emotion/styled';
 
 const Footer = styled.footer`
@@ -26,7 +27,7 @@ const links = [
     },
     {
         key: 'github',
-        title: <Icon type="github" />,
+        title: <GithubOutlined />,
         href: 'https://github.com/bs32g1038/node-blog',
         blankTarget: true,
     },
@@ -40,7 +41,7 @@ const links = [
 
 const copyright = (
     <Fragment>
-        Copyright <Icon type="copyright" /> 2019 Node blog bs32g1038@163.com 体验技术部出品
+        Copyright <CopyrightOutlined /> 2019 Node blog bs32g1038@163.com 体验技术部出品
     </Fragment>
 );
 

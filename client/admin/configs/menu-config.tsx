@@ -1,8 +1,11 @@
+import React from 'react';
+import { DashboardOutlined, FormOutlined, CodepenOutlined, AppstoreOutlined } from '@ant-design/icons';
+
 export default [
     {
         path: '/admin/dashboard',
         title: '仪表盘',
-        icon: 'dashboard',
+        icon: <DashboardOutlined />,
         childMenus: [
             {
                 path: '/admin/dashboard/analysis',
@@ -13,7 +16,7 @@ export default [
     {
         path: '/admin/content',
         title: '博客管理',
-        icon: 'form',
+        icon: <FormOutlined />,
         childMenus: [
             {
                 path: '/admin/content/articles',
@@ -63,7 +66,7 @@ export default [
     {
         path: '/admin/code',
         title: '代码管理',
-        icon: 'codepen',
+        icon: <CodepenOutlined />,
         childMenus: [
             {
                 path: '/admin/code/demos',
@@ -95,7 +98,7 @@ export default [
     {
         path: '/admin/medias',
         title: '媒体管理',
-        icon: 'appstore',
+        icon: <AppstoreOutlined />,
         childMenus: [
             {
                 path: '/admin/medias/images',

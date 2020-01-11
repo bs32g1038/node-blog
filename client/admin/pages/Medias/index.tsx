@@ -74,7 +74,7 @@ export default () => {
                             type="success"
                         />
                     )}
-                    <MediaListRow type="flex" id="media-row">
+                    <MediaListRow id="media-row">
                         {state.medias.map((item, index) => {
                             return (
                                 <WrapCard
@@ -134,7 +134,7 @@ export default () => {
                             );
                         })}
                     </MediaListRow>
-                    <Row type="flex" justify="end" style={{ marginTop: '20px' }}>
+                    <Row justify="end" style={{ marginTop: '20px' }}>
                         <Pagination
                             showTotal={total => `共 ${total} 条数据`}
                             showSizeChanger={true}

@@ -4,27 +4,26 @@ import dynamic from 'next/dynamic';
 const MdEdit = dynamic(() => import('@blog/client/admin/components/MdEdit'), { ssr: false });
 import { Form, Input, Button, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
-const FormItem = Form.Item;
 import Router, { useRouter } from 'next/router';
 
-const DemoEdit = props => {
-    const [state, setState] = useState({
-        demo: {
-            _id: '',
-            title: '',
-            content:
-                '```head\n<style>div { font-size: 14px }</style>\n```\n\n```html\n<div class="test">测试数据</div>\n```\n\n```css\n.test { border: 1px solid #ccc }\n```\n\n```javascript\nconsole.log("元素带有一个边框") \n```',
-        },
+export default () => {
+    const [demo, setDemo] = useState({
+        _id: '',
+        title: '',
+        content:
+            '```head\n<style>div { font-size: 14px }</style>\n```\n\n```html\n<div class="test">测试数据</div>\n```\n\n```css\n.test { border: 1px solid #ccc }\n```\n\n```javascript\nconsole.log("元素带有一个边框") \n```',
     });
     const router = useRouter();
+    const [form] = Form.useForm();
     useEffect(() => {
         const { id } = router.query;
         if (id) {
             axios.get('/demos/' + id).then(res => {
-                setState(data => ({
+                setDemo(data => ({
                     ...data,
-                    demo: res.data,
+                    ...res.data,
                 }));
+                form.setFieldsValue(res.data);
             });
         }
     }, [1]);
@@ -34,57 +33,54 @@ const DemoEdit = props => {
     const updatedemo = (id, data) => {
         return axios.put('/demos/' + id, data);
     };
-    const publish = e => {
-        e.preventDefault();
+    const publish = data => {
         const { id } = router.query;
-        props.form.validateFields((err, data) => {
-            if (!err) {
-                const p = id ? updatedemo(id, data) : createdemo(data);
-                p.then(() => {
-                    message.success('提交成功');
-                    Router.push('/admin/code/demos');
-                });
-            }
+        const p = id ? updatedemo(id, data) : createdemo(data);
+        p.then(() => {
+            message.success('提交成功');
+            Router.push('/admin/code/demos');
         });
     };
-    const demo = state.demo;
-    const { getFieldDecorator } = props.form;
     return (
         <PageHeaderWrapper title={demo._id ? 'demo编辑' : 'demo分类'} content="控制台----demo添加或编辑">
             <div className="main-content">
-                <Form onSubmit={e => publish(e)} style={{ marginTop: '20px' }}>
-                    <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="demo标题：">
-                        {getFieldDecorator('title', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Demo标题长度要在1-25个字符之间！',
-                                    min: 1,
-                                    max: 25,
-                                },
-                            ],
-                            initialValue: demo.title || '',
-                        })(<Input type="text" placeholder="请输入demo标题：" />)}
-                    </FormItem>
-                    <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="代码：">
-                        {getFieldDecorator('content', {
-                            rules: [
-                                {
-                                    required: true,
-                                },
-                            ],
-                            initialValue: demo.content,
-                        })(<MdEdit />)}
-                    </FormItem>
-                    <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
+                <Form form={form} onFinish={publish} style={{ marginTop: '20px' }} initialValues={{ content: '' }}>
+                    <Form.Item
+                        name="title"
+                        labelCol={{ span: 3 }}
+                        wrapperCol={{ span: 10 }}
+                        label="demo标题："
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Demo标题长度要在1-25个字符之间！',
+                                min: 1,
+                                max: 25,
+                            },
+                        ]}
+                    >
+                        <Input type="text" placeholder="请输入demo标题：" />
+                    </Form.Item>
+                    <Form.Item
+                        name="content"
+                        labelCol={{ span: 3 }}
+                        wrapperCol={{ span: 10 }}
+                        label="代码："
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <MdEdit />
+                    </Form.Item>
+                    <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                         <Button type="primary" htmlType="submit">
                             发布
                         </Button>
-                    </FormItem>
+                    </Form.Item>
                 </Form>
             </div>
         </PageHeaderWrapper>
     );
 };
-
-export default Form.create()(DemoEdit);

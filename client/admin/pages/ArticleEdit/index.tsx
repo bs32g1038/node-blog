@@ -51,43 +51,43 @@ const PanelDiv = styled.div`
     }
 `;
 
-const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
 
-const C = props => {
-    const [state, setState] = useState({
-        article: {
-            _id: '',
-            title: '',
-            category: null,
-            tags: '',
-            summary: '',
-            content: '',
-        },
-        categories: [],
-        screenshot: '',
-    });
+export default () => {
+    const [categories, setCategories] = useState([]);
     const router = useRouter();
+    const [form] = Form.useForm();
     useEffect(() => {
         const { id } = router.query;
         if (id) {
             axios.all([axios.get('/articles/' + id), axios.get('/categories/')]).then(
                 axios.spread((aRes, cRes) => {
-                    setState(data => ({
-                        ...data,
-                        article: aRes.data,
-                        categories: cRes.data,
-                        screenshot: aRes.data.screenshot,
-                    }));
+                    setCategories(cRes.data);
+                    const article = aRes.data;
+                    const category = article.category || {};
+                    const fileList = article.screenshot
+                        ? [
+                              {
+                                  uid: -1,
+                                  status: 'done',
+                                  url: article.screenshot,
+                              },
+                          ]
+                        : [];
+                    form.setFieldsValue({
+                        title: article.title,
+                        category: category._id,
+                        screenshot: fileList,
+                        tags: article.tags,
+                        content: article.content || '',
+                        summary: article.summary,
+                    });
                 })
             );
         } else {
             axios.get('/categories/').then(res => {
-                setState(data => ({
-                    ...data,
-                    categories: res.data,
-                }));
+                setCategories(res.data);
             });
         }
     }, [1]);
@@ -127,41 +127,31 @@ const C = props => {
         return axios.put('/articles/' + id, data);
     };
 
-    const publish = e => {
-        e.preventDefault();
+    const publish = data => {
         const { id } = router.query;
-        props.form.validateFields((err, data) => {
-            Object.assign(data, {
-                screenshot: data.screenshot[0].url,
-            });
-            if (!err) {
-                const p = id ? updateArticle(id, data) : createArticle(data);
-                p.then(() => {
-                    alert('提交成功');
-                    Router.push('/admin/content/articles');
-                });
-            }
+
+        Object.assign(data, {
+            screenshot: data.screenshot[0].url,
+        });
+        const p = id ? updateArticle(id, data) : createArticle(data);
+        p.then(() => {
+            message.success('提交成功 ！');
+            Router.push('/admin/content/articles');
         });
     };
 
-    const { article, categories } = state;
-    const { getFieldDecorator } = props.form;
-    const category = article.category || {};
     const categoryOptions =
-        categories && categories.map(category => <Option key={category._id}>{category.name}</Option>);
-    const fileList = state.screenshot
-        ? [
-              {
-                  uid: -1,
-                  status: 'done',
-                  url: state.screenshot,
-              },
-          ]
-        : [];
+        categories &&
+        categories.map(category => (
+            <Option key={category._id} value={category._id}>
+                {category.name}
+            </Option>
+        ));
+    const { id } = router.query;
     return (
         <PanelDiv>
             <PageHeaderWrapper
-                title={article._id ? '文章编辑' : '添加文章'}
+                title={id ? '文章编辑' : '添加文章'}
                 content={
                     <>
                         <i className="fa fa-edit fa-fw"></i>
@@ -170,77 +160,83 @@ const C = props => {
                 }
             >
                 <div className="main-content">
-                    <Form onSubmit={e => publish(e)} style={{ marginTop: '20px' }}>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标题：">
-                            {getFieldDecorator('title', {
-                                rules: [{ required: true, message: '标题不能为空！' }],
-                                initialValue: article.title,
-                            })(<Input type="text" />)}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="文章分类：">
-                            {getFieldDecorator('category', {
-                                rules: [{ required: true, message: '分类不能为空!' }],
-                                initialValue: category._id,
-                            })(<Select placeholder="请选择一个分类">{categoryOptions}</Select>)}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标签：">
-                            {getFieldDecorator('tags', {
-                                initialValue: article.tags,
-                            })(<EditableTagGroup />)}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 3 }} label="封面图片：">
-                            {getFieldDecorator('screenshot', {
-                                initialValue: fileList,
-                                valuePropName: 'fileList',
-                                getValueFromEvent: handleUpload,
-                                rules: [{ required: true, message: '封面图片不能为空!' }],
-                            })(
-                                <Upload
-                                    disabled={false}
-                                    action="/api/upload/image"
-                                    multiple={false}
-                                    name="file"
-                                    listType="picture"
-                                    accept=".jpg,.jpeg,.png"
-                                    headers={{
-                                        authorization:
-                                            typeof localStorage !== 'undefined' &&
-                                            localStorage.getItem(config.tokenKey),
-                                    }}
-                                    onRemove={() => false}
-                                    beforeUpload={beforeUpload}
-                                >
-                                    <Button>
-                                        <i className="fa fa-arrow-up"></i>点击上传
-                                    </Button>
-                                </Upload>
-                            )}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章摘要：">
-                            {getFieldDecorator('summary', {
-                                initialValue: article.summary,
-                                rules: [{ required: true, message: '文章摘要不能为空!' }],
-                            })(
-                                <TextArea placeholder="请输入文章摘要" autoSize={{ minRows: 2, maxRows: 6 }}></TextArea>
-                            )}
-                        </FormItem>
-                        <FormItem label="文章详情：" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
-                            {getFieldDecorator('content', {
-                                initialValue: article.content || '',
-                                rules: [{ required: true, message: '文章详情不能为空!' }],
-                            })(<MdEdit />)}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
+                    <Form form={form} onFinish={publish} style={{ marginTop: '20px' }} initialValues={{ content: '' }}>
+                        <Form.Item
+                            name="title"
+                            labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 10 }}
+                            label="文章标题："
+                            rules={[{ required: true, message: '标题不能为空！' }]}
+                        >
+                            <Input type="text" />
+                        </Form.Item>
+                        <Form.Item
+                            name="category"
+                            labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 4 }}
+                            label="文章分类："
+                            rules={[{ required: true, message: '分类不能为空!' }]}
+                        >
+                            <Select placeholder="请选择一个分类">{categoryOptions}</Select>
+                        </Form.Item>
+                        <Form.Item name="tags" labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="文章标签：">
+                            <EditableTagGroup />
+                        </Form.Item>
+                        <Form.Item
+                            name="screenshot"
+                            labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 3 }}
+                            label="封面图片："
+                            rules={[{ required: true, message: '封面图片不能为空!' }]}
+                            valuePropName="fileList"
+                            getValueFromEvent={handleUpload}
+                        >
+                            <Upload
+                                disabled={false}
+                                action="/api/upload/image"
+                                multiple={false}
+                                name="file"
+                                listType="picture"
+                                accept=".jpg,.jpeg,.png"
+                                headers={{
+                                    authorization:
+                                        typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
+                                }}
+                                onRemove={() => false}
+                                beforeUpload={beforeUpload}
+                            >
+                                <Button>
+                                    <i className="fa fa-arrow-up"></i>点击上传
+                                </Button>
+                            </Upload>
+                        </Form.Item>
+                        <Form.Item
+                            name="summary"
+                            labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 10 }}
+                            label="文章摘要："
+                            rules={[{ required: true, message: '文章摘要不能为空!' }]}
+                        >
+                            <TextArea placeholder="请输入文章摘要" autoSize={{ minRows: 2, maxRows: 6 }}></TextArea>
+                        </Form.Item>
+                        <Form.Item
+                            name="content"
+                            label="文章详情："
+                            labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
+                            rules={[{ required: true, message: '文章详情不能为空!' }]}
+                        >
+                            <MdEdit />
+                        </Form.Item>
+                        <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                             <Button type="primary" htmlType="submit">
                                 发布
                             </Button>
                             <Button style={{ marginLeft: '10px' }}>存为草稿</Button>
-                        </FormItem>
+                        </Form.Item>
                     </Form>
                 </div>
             </PageHeaderWrapper>
         </PanelDiv>
     );
 };
-
-export default Form.create()(C);

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Menu, Icon, Layout, Tooltip, Avatar as _Avatar, Dropdown } from 'antd';
+import {
+    MenuFoldOutlined as MenuFoldOutlinedIcon,
+    MenuUnfoldOutlined as MenuUnfoldOutlinedIcon,
+    GithubOutlined,
+    LogoutOutlined,
+} from '@ant-design/icons';
+import { Menu, Layout, Tooltip, Avatar as _Avatar, Dropdown } from 'antd';
 import config from '../../configs/default.config';
 import Router from 'next/router';
 import styled from '@emotion/styled';
@@ -11,7 +17,8 @@ const Header = styled(Layout.Header)`
     z-index: 2;
 `;
 
-const TriggerIcon = styled(Icon)`
+const TriggerIcon = styled.div`
+    display: inline-block;
     font-size: 18px;
     line-height: 64px;
     padding: 0 24px;
@@ -105,21 +112,23 @@ export default (props: Props) => {
     const menu = (
         <Menu selectedKeys={[]} onClick={menuClick}>
             <Menu.Item key="logout">
-                <Icon type="logout" />
+                <LogoutOutlined />
                 退出登录
             </Menu.Item>
         </Menu>
     );
     return (
         <Header>
-            <TriggerIcon type={state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={toggle} />
+            <TriggerIcon onClick={toggle}>
+                {state.collapsed ? <MenuUnfoldOutlinedIcon /> : <MenuFoldOutlinedIcon />}
+            </TriggerIcon>
             <span style={{ paddingLeft: '40px' }}>
                 <strong>亲爱的主人，欢迎你回来！</strong>
             </span>
             <RightDiv>
                 <Tooltip title="help">
                     <a target="_blank" href={config.siteInfo.github} rel="noopener noreferrer" className="action">
-                        <Icon type="github" style={{ fontSize: '24px' }} />
+                        <GithubOutlined style={{ fontSize: '24px' }} />
                     </a>
                 </Tooltip>
                 <Dropdown overlay={menu}>

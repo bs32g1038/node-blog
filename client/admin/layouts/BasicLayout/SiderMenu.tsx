@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Icon } from 'antd';
+// import { Legacy } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import styled from '@emotion/styled';
 import IconLogo from '@blog/client/admin/assets/logo.svg';
@@ -57,7 +58,7 @@ const MenuList = props => {
         <Menu.Item key={item.path}>
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
                 <a>
-                    {item.icon && <Icon type={item.icon} />}
+                    {item.icon}
                     <span className="nav-text">{item.title}</span>
                 </a>
             </Link>
@@ -68,7 +69,7 @@ const MenuList = props => {
             key={item.path}
             title={
                 <span>
-                    {item.icon && <Icon type={item.icon} />}
+                    {item.icon}
                     <span className="nav-text">{item.title}</span>
                 </span>
             }

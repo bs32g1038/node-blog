@@ -178,7 +178,7 @@ export default () => {
         <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
             <div className="main-content">
                 <PanelDiv id="article-panel">
-                    <ModuleControlRow type="flex" justify="space-between">
+                    <ModuleControlRow justify="space-between">
                         <Col>
                             <Button type="primary" onClick={() => Router.push('/admin/content/articles/edit')}>
                                 <i className="fa fa-plus-square fa-fw">&nbsp;</i>
@@ -211,7 +211,7 @@ export default () => {
                         <Col style={{ flex: '1 0 auto' }}>
                             <SearchWrap>
                                 <div className="search-input-group">
-                                    <Row type="flex" justify="end">
+                                    <Row justify="end">
                                         <Col>
                                             <Input
                                                 type="text"

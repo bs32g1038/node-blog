@@ -1,5 +1,6 @@
 import React from 'react';
-import { Tag, Input, Icon } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Tag, Input } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 
 export default class EditableTagGroup extends React.Component<any, any> {
@@ -118,7 +119,7 @@ export default class EditableTagGroup extends React.Component<any, any> {
                 )}
                 {!inputVisible && (
                     <Tag onClick={this.showInput} style={{ background: '#fff', borderStyle: 'dashed' }}>
-                        <Icon type="plus" /> 新建标签
+                        <PlusOutlined /> 新建标签
                     </Tag>
                 )}
             </div>

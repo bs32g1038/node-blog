@@ -4,16 +4,14 @@ import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import Clipboard from 'clipboard';
 import Link from 'next/link';
-import { Table, Button, Popconfirm, message, Upload, Icon, Modal, Form, Input } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+import { Form, Table, Button, Popconfirm, message, Upload, Modal, Input } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import config from '@blog/client/admin/configs/default.config';
 import { useRouter } from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 
-const FormItem = Form.Item;
-const Dragger = Upload.Dragger;
-
-const StaticFiles = props => {
+export default () => {
     const [state, setState] = useState({
         files: [],
         visible: false,
@@ -110,13 +108,8 @@ const StaticFiles = props => {
             }));
         });
     };
-    const handleNewFloderOk = e => {
-        e.preventDefault();
-        props.form.validateFields((err, data) => {
-            if (!err) {
-                createFolder(data.name);
-            }
-        });
+    const handleNewFloderOk = data => {
+        createFolder(data.name);
     };
     const handleTableChange = pagination => {
         const pager = { ...state.pagination };
@@ -247,7 +240,9 @@ const StaticFiles = props => {
         name: 'file',
         multiple: true,
         action: '/api/upload/static-files?parentId=' + (folderId || ''),
-        headers: { authorization: localStorage.getItem(config.tokenKey) || '' },
+        headers: {
+            authorization: (typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey)) || '',
+        },
         onChange(info) {
             const status = info.file.status;
             if (status !== 'uploading') {
@@ -260,7 +255,6 @@ const StaticFiles = props => {
             }
         },
     };
-    const { getFieldDecorator } = props.form;
     return (
         <PageHeaderWrapper title="静态文件列表" content="控制台----静态文件列表">
             <div className="main-content">
@@ -344,16 +338,16 @@ const StaticFiles = props => {
                         }))
                     }
                 >
-                    <Dragger {...uploadProps}>
+                    <Upload.Dragger {...uploadProps}>
                         <p className="ant-upload-drag-icon">
-                            <Icon type="inbox" />
+                            <InboxOutlined />
                         </p>
                         <p className="ant-upload-text">Click or drag file to this area to upload</p>
                         <p className="ant-upload-hint">
                             Support for a single or bulk upload. Strictly prohibit from uploading company data or other
                             band files
                         </p>
-                    </Dragger>
+                    </Upload.Dragger>
                 </Modal>
                 <Modal
                     title="新建文件夹"
@@ -366,25 +360,28 @@ const StaticFiles = props => {
                     }
                     footer={null}
                 >
-                    <Form onSubmit={e => handleNewFloderOk(e)}>
-                        <FormItem labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="文件夹名称：">
-                            {getFieldDecorator('name', {
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: '文件夹名称长度要在1-25个字符之间！',
-                                        min: 1,
-                                        max: 25,
-                                    },
-                                ],
-                                initialValue: null,
-                            })(<Input type="text" width="100%" />)}
-                        </FormItem>
-                        <FormItem labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="操作：">
+                    <Form onFinish={handleNewFloderOk}>
+                        <Form.Item
+                            name="name"
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 10 }}
+                            label="文件夹名称："
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '文件夹名称长度要在1-25个字符之间！',
+                                    min: 1,
+                                    max: 25,
+                                },
+                            ]}
+                        >
+                            <Input type="text" width="100%" />
+                        </Form.Item>
+                        <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="操作：">
                             <Button type="primary" htmlType="submit">
                                 新建
                             </Button>
-                        </FormItem>
+                        </Form.Item>
                     </Form>
                 </Modal>
                 <div className="table-wrapper">
@@ -404,5 +401,3 @@ const StaticFiles = props => {
         </PageHeaderWrapper>
     );
 };
-
-export default Form.create()(StaticFiles);

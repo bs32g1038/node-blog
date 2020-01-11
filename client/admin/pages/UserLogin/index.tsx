@@ -2,27 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Router, { withRouter } from 'next/router';
 import axios from '@blog/client/admin/axios';
 import config from '@blog/client/admin/configs/default.config';
-import { Form, Input, Button, Alert, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto-js';
 import { SignIn, SignInMain, SignInPanel, SignInHeader, SignInTitle } from './style';
 
-const FormItem = Form.Item;
-
-const UserLogin = (props: FormComponentProps) => {
-    const { getFieldDecorator } = props.form;
+const UserLogin = () => {
     const [firstLoginTip, setFirstLoginTip] = useState('');
-    const handleLogin = e => {
-        e.preventDefault();
-        props.form.validateFields((err, data) => {
-            const str = encrypt(JSON.stringify(data));
-            if (!err) {
-                axios.post('/login', { key: str }).then(res => {
-                    message.success('登陆成功！');
-                    localStorage.setItem(config.tokenKey, res.data.token);
-                    Router.push('/admin/dashboard/analysis');
-                });
-            }
+    const handleLogin = data => {
+        const str = encrypt(JSON.stringify(data));
+        axios.post('/login', { key: str }).then(res => {
+            message.success('登陆成功！');
+            localStorage.setItem(config.tokenKey, res.data.token);
+            Router.push('/admin/dashboard/analysis');
         });
     };
     useEffect(() => {
@@ -47,22 +38,30 @@ const UserLogin = (props: FormComponentProps) => {
                     {firstLoginTip && (
                         <Alert message={firstLoginTip} type="warning" style={{ margin: '0 20px 20px 20px' }} />
                     )}
-                    <Form onSubmit={e => handleLogin(e)} className="login-form">
-                        <FormItem label="账号：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
-                            {getFieldDecorator('account', {
-                                rules: [{ required: true, message: 'Please input your username!' }],
-                            })(<Input placeholder="请输入账户" />)}
-                        </FormItem>
-                        <FormItem label="密码：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(<Input type="password" placeholder="请填写密码" />)}
-                        </FormItem>
-                        <FormItem label="操作：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                    <Form onFinish={handleLogin} className="login-form">
+                        <Form.Item
+                            name="account"
+                            label="账号："
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                            rules={[{ required: true, message: 'Please input your username!' }]}
+                        >
+                            <Input placeholder="请输入账户" />
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            label="密码："
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                        >
+                            <Input type="password" placeholder="请填写密码" />
+                        </Form.Item>
+                        <Form.Item label="操作：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 登陆
                             </Button>
-                        </FormItem>
+                        </Form.Item>
                     </Form>
                 </SignInPanel>
                 <div className="nodeblog">
@@ -81,4 +80,4 @@ const UserLogin = (props: FormComponentProps) => {
     );
 };
 
-export default withRouter(Form.create<FormComponentProps>()(UserLogin) as any);
+export default withRouter(UserLogin);
