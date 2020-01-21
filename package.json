@@ -116,7 +116,7 @@
     "tslint-react": "^4.1.0",
     "typescript": "3.7.4",
     "url-loader": "^3.0.0",
-    "wait-on": "^3.3.0"
+    "wait-on": "^4.0.0"
   },
   "jest": {
     "moduleFileExtensions": [
