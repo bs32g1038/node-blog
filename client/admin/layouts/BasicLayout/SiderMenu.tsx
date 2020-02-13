@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-// import { Legacy } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 const { Sider } = Layout;
 import styled from '@emotion/styled';

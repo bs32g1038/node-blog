@@ -6,6 +6,8 @@ import Header from './Header';
 import Footer from './Footer';
 import { isLogin } from '@blog/client/admin/utils/is-login';
 
+import 'antd/dist/antd.css';
+
 interface Props {
     children: React.ReactNode;
 }

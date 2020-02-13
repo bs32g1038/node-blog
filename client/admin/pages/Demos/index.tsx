@@ -6,6 +6,7 @@ import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { PanelDiv } from '@blog/client/admin/styles';
 import Router from 'next/router';
+import { EyeFilled, PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 
 export default () => {
     const [state, setState] = useState({
@@ -97,9 +98,9 @@ export default () => {
                             type="primary"
                             size="small"
                             title="编辑"
+                            icon={<EditFilled />}
                             onClick={() => Router.push('/admin/code/demos/edit/' + record._id)}
                         >
-                            <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>
                         ,
@@ -110,8 +111,8 @@ export default () => {
                             size="small"
                             title="预览"
                             href={'/demos/' + record._id}
+                            icon={<EyeFilled />}
                         >
-                            <i className="fa fa-location-arrow fa-fw"></i>
                             预览
                         </Button>
                         ,
@@ -121,8 +122,8 @@ export default () => {
                             okText="确定"
                             cancelText="取消"
                         >
-                            <Button type="danger" size="small" title="删除">
-                                <i className="fa fa-trash-o fa-fw"></i>删除
+                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
+                                删除
                             </Button>
                         </Popconfirm>
                     </div>
@@ -139,8 +140,11 @@ export default () => {
         <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
             <div className="main-content">
                 <PanelDiv className="panel">
-                    <Button type="primary" onClick={() => Router.push('/admin/code/demos/edit')}>
-                        <i className="fa fa-plus-square fa-fw">&nbsp;</i>
+                    <Button
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        onClick={() => Router.push('/admin/code/demos/edit')}
+                    >
                         添加Demo
                     </Button>
                     <Popconfirm
@@ -161,8 +165,7 @@ export default () => {
                         okText="确定"
                         cancelText="取消"
                     >
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                        <Button type="danger" icon={<DeleteFilled />}>
                             批量删除
                         </Button>
                     </Popconfirm>

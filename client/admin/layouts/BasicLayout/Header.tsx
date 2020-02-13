@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     MenuFoldOutlined as MenuFoldOutlinedIcon,
     MenuUnfoldOutlined as MenuUnfoldOutlinedIcon,
-    GithubOutlined,
+    QuestionCircleOutlined,
     LogoutOutlined,
 } from '@ant-design/icons';
 import { Menu, Layout, Tooltip, Avatar as _Avatar, Dropdown } from 'antd';
@@ -41,27 +41,17 @@ const RightDiv = styled.div`
         margin: 0 15px;
         font-size: 24px;
         cursor: pointer;
-        &:hover {
-            color: #61b3e6;
-        }
         &:nth-of-type(10) {
             margin-right: 0;
         }
-        i {
-            margin: 20px 8px 20px 0;
-            vertical-align: top !important;
-        }
     }
     .action {
-        display: inline-block;
         height: 100%;
         padding: 0 12px;
         cursor: pointer;
         transition: all 0.3s;
-        > i {
-            color: rgba(0, 0, 0, 0.65);
-            vertical-align: middle;
-        }
+        display: flex;
+        align-items: center;
         &:hover {
             background: rgba(0, 0, 0, 0.025);
         }
@@ -126,9 +116,9 @@ export default (props: Props) => {
                 <strong>亲爱的主人，欢迎你回来！</strong>
             </span>
             <RightDiv>
-                <Tooltip title="help">
+                <Tooltip title="帮助">
                     <a target="_blank" href={config.siteInfo.github} rel="noopener noreferrer" className="action">
-                        <GithubOutlined style={{ fontSize: '24px' }} />
+                        <QuestionCircleOutlined style={{ fontSize: '18px' }} />
                     </a>
                 </Tooltip>
                 <Dropdown overlay={menu}>

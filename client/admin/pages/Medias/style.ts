@@ -39,20 +39,14 @@ export const WrapCard = styled(Card)`
     .button {
         display: inline-block;
         width: auto;
-        i {
-            display: inline-block;
-            width: auto;
-            margin-right: 5px;
-        }
     }
     .button-view {
         color: #fff;
-        border: 1px solid #4caf50;
-        background-color: #4caf50;
-        transition: opacity 0.5s ease-in;
+        border: 1px solid #52c41a;
+        background-color: #52c41a;
         &:hover {
-            color: #fff;
-            opacity: 0.9;
+            border: 1px solid #73d13d;
+            background-color: #73d13d;
         }
     }
 `;

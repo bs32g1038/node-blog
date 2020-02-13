@@ -39,8 +39,7 @@ export default (props: Props) => {
         >
             <LinkGroupDiv>
                 {links.map((link: any) => (
-                    <Button key={`linkGroup-item-${link.id || link.title}`} href={link.href}>
-                        <i className={`fa fa-fw ${link.icon}`}></i>
+                    <Button key={`linkGroup-item-${link.id || link.title}`} href={link.href} icon={link.icon}>
                         {link.title}
                     </Button>
                 ))}

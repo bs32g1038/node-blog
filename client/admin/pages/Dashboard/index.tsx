@@ -8,20 +8,21 @@ import RecentCommentList from './RecentCommentList';
 import NavPanel from './NavPanel';
 import ServerStatePanel from './ServerStatePanel';
 import LoginLogPanel from './LoginLogPanel';
+import { PlusOutlined, CommentOutlined, EditFilled } from '@ant-design/icons';
 
 const links = [
     {
-        icon: 'fa-edit',
+        icon: <EditFilled />,
         title: '文章管理',
         href: '/admin/content/articles',
     },
     {
-        icon: 'fa-plus',
+        icon: <PlusOutlined />,
         title: '添加文章',
         href: '/admin/content/articles/edit',
     },
     {
-        icon: 'fa-comment',
+        icon: <CommentOutlined />,
         title: '评论管理',
         href: '/admin/content/comments',
     },
@@ -89,13 +90,13 @@ export default () => {
             extraContent={<ExtraContent statisticalInfo={state.statisticalInfo} />}
         >
             <Row gutter={24}>
-                <Col xl={16} lg={24} md={24} sm={24} xs={24}>
+                <Col xl={15} lg={24} md={24} sm={24} xs={24}>
                     <RecentCommentList
                         loading={state.loading}
                         recentComments={state.recentComments}
                     ></RecentCommentList>
                 </Col>
-                <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+                <Col xl={9} lg={24} md={24} sm={24} xs={24}>
                     <NavPanel loading={state.loading} links={links}></NavPanel>
                     <ServerStatePanel loading={state.loading} systemInfo={state.systemInfo}></ServerStatePanel>
                     <LoginLogPanel loading={state.loading} recentAdminLogs={state.recentAdminLogs}></LoginLogPanel>

@@ -8,6 +8,7 @@ import Clipboard from 'clipboard';
 import { Row, Button, Popconfirm, message, Alert, Pagination, Card } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { MediaListRow, WrapCard } from './style';
+import { EyeFilled, CopyFilled, DeleteFilled } from '@ant-design/icons';
 const { Meta } = Card;
 
 export default () => {
@@ -79,7 +80,7 @@ export default () => {
                             return (
                                 <WrapCard
                                     loading={state.loading}
-                                    key={'aaa' + index}
+                                    key={item.id}
                                     cover={
                                         !item._id || state.loading ? (
                                             false
@@ -95,8 +96,8 @@ export default () => {
                                             href={config.siteInfo.domain + item.filePath + '/' + item.fileName}
                                             target="_blank"
                                             className="button button-view"
+                                            icon={<EyeFilled />}
                                         >
-                                            <i className="fa fa-eye fa-fw" style={{ color: '#fff' }}></i>
                                             大图
                                         </Button>,
                                         <Button
@@ -108,8 +109,8 @@ export default () => {
                                                 config.siteInfo.domain + item.filePath + '/' + item.fileName
                                             }
                                             className="button copyButton"
+                                            icon={<CopyFilled />}
                                         >
-                                            <i className="fa fa-link fa-fw" style={{ color: '#fff' }}></i>
                                             复制
                                         </Button>,
                                         <Popconfirm
@@ -119,8 +120,13 @@ export default () => {
                                             okText="确定"
                                             cancelText="取消"
                                         >
-                                            <Button type="danger" size="small" title="删除" className="button">
-                                                <i className="fa fa-trash-o fa-fw" style={{ color: '#fff' }}></i>
+                                            <Button
+                                                type="danger"
+                                                size="small"
+                                                title="删除"
+                                                className="button"
+                                                icon={<DeleteFilled />}
+                                            >
                                                 删除
                                             </Button>
                                         </Popconfirm>,

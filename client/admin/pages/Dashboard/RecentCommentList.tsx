@@ -6,6 +6,7 @@ import GHAT from '@blog/client/libs/generate-avatar';
 import { md5 } from '@blog/client/admin/utils/crypto-js';
 import { timeAgo } from '@blog/client/libs/time';
 const ghat = new GHAT();
+import { ClockCircleOutlined } from '@ant-design/icons';
 
 const RecentCommentListCard = styled(Card)`
     .ant-card-head {
@@ -66,11 +67,17 @@ const CommentMsgDiv = styled.div`
 
 const CommentInfoDiv = styled.div`
     margin-bottom: 10px;
+    display: flex;
 `;
 
 const CommentContentTitleA = styled.a`
     color: #878d99;
     font-style: italic;
+    max-width: 240px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 const TimestampSpan = styled.span`
@@ -136,7 +143,7 @@ export default (props: Props) => {
                 {recentComments.map(item => (
                     <CommentMsgDiv key={item._id}>
                         <CommentInfoDiv>
-                            <span>
+                            <span style={{ flex: '1 0 auto', display: 'flex' }}>
                                 <span>
                                     <strong>{item.nickName}</strong>
                                 </span>
@@ -157,7 +164,11 @@ export default (props: Props) => {
                                 )}
                             </span>
                             <TimestampSpan>
-                                <i className="fa fa-clock-o fa-fw"></i>
+                                <ClockCircleOutlined
+                                    style={{
+                                        marginRight: '5px',
+                                    }}
+                                />
                                 <span>{timeAgo(item.createdAt)}</span>
                             </TimestampSpan>
                         </CommentInfoDiv>

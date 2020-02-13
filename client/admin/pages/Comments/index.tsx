@@ -5,13 +5,13 @@ import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
-import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction } from './style';
+import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction, Tip } from './style';
 import GHAT from '@blog/client/libs/generate-avatar';
 import { md5 } from '@blog/client/admin/utils/crypto-js';
 import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
 import Router from 'next/router';
-import Link from 'next/link';
 import { PanelDiv } from '@blog/client/admin/styles';
+import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined } from '@ant-design/icons';
 
 const ghat = new GHAT();
 
@@ -119,9 +119,9 @@ export default () => {
                             type="primary"
                             size="small"
                             title="编辑"
+                            icon={<EditFilled />}
                             onClick={() => Router.push('/admin/content/comments/reply/' + record._id)}
                         >
-                            <i className="fa fa-edit fa-fw"></i>
                             回复
                         </Button>
                         ,
@@ -131,8 +131,8 @@ export default () => {
                             okText="确定"
                             cancelText="取消"
                         >
-                            <Button type="danger" size="small" title="删除">
-                                <i className="fa fa-trash-o fa-fw"></i>删除
+                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
+                                删除
                             </Button>
                         </Popconfirm>
                     </div>
@@ -168,8 +168,7 @@ export default () => {
                         okText="确定"
                         cancelText="取消"
                     >
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                        <Button type="danger" icon={<DeleteFilled />}>
                             批量删除
                         </Button>
                     </Popconfirm>
@@ -202,11 +201,17 @@ export default () => {
                                                         </a>
                                                     </BaseInfo>
                                                     <UserAction>
-                                                        <Link
-                                                            href={'/admin/content/comments/reply/' + record.reply._id}
+                                                        <Button
+                                                            size="small"
+                                                            icon={<SendOutlined />}
+                                                            onClick={() => {
+                                                                Router.push(
+                                                                    '/admin/content/comments/reply/' + record.reply._id
+                                                                );
+                                                            }}
                                                         >
-                                                            <a className="reply-action">回复</a>
-                                                        </Link>
+                                                            回复
+                                                        </Button>
                                                     </UserAction>
                                                 </ReplyInfo>
                                                 <MarkdownText
@@ -216,12 +221,18 @@ export default () => {
                                             </ReplyContent>
                                         </ReplyListItem>
                                     )}
-                                    <div
-                                        className="markdown-body"
-                                        dangerouslySetInnerHTML={{
-                                            __html: marked(record.content),
-                                        }}
-                                    ></div>
+                                    <div style={{ padding: '0 20px' }}>
+                                        <Tip className="tip">
+                                            <CommentOutlined />
+                                            评论内容：
+                                        </Tip>
+                                        <div
+                                            className="markdown-body"
+                                            dangerouslySetInnerHTML={{
+                                                __html: marked(record.content),
+                                            }}
+                                        ></div>
+                                    </div>
                                 </React.Fragment>
                             );
                         }}
