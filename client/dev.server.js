@@ -13,6 +13,7 @@ app.prepare().then(() => {
         handle(req, res);
     });
 
+    server.use('/demos', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
     server.use('/api', proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
     server.get(/^\/static\//, proxy({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
 

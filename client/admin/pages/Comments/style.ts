@@ -4,8 +4,8 @@ export const ReplyListItem = styled.div`
     display: flex;
     position: relative;
     padding: 16px 20px 16px 20px;
-    border-left: 2px solid #bf6263;
-    background-color: #f0f2f5;
+    border: 1px dashed #d1d5da;
+    background-color: #fff;
     margin-bottom: 20px;
 `;
 
@@ -13,11 +13,11 @@ export const UserAvatar = styled.div`
     width: 40px;
     min-width: 40px;
     height: 40px;
-    border-radius: 3px;
+    border-radius: 50%;
     img {
-        width: 40px;
-        min-width: 40px;
-        border-radius: 3px;
+        width: 100%;
+        min-width: 100%;
+        border-radius: 50%;
         overflow: hidden;
         line-height: 1;
         vertical-align: middle;
@@ -27,60 +27,38 @@ export const UserAvatar = styled.div`
 export const ReplyContent = styled.div`
     width: 100%;
     margin-left: 16px;
-    border: 1px solid #d1d5da;
     border-radius: 3px;
     position: relative;
-    &:after,
-    &:before {
-        position: absolute;
-        top: 11px;
-        right: 100%;
-        left: -16px;
-        display: block;
-        width: 0;
-        height: 0;
-        pointer-events: none;
-        content: ' ';
-        border-color: transparent;
-        border-style: solid solid outset;
-    }
-    &:before {
-        border-width: 8px;
-        border-right-color: #d1d5da;
-    }
-    &:after {
-        margin-top: 1px;
-        margin-left: 2px;
-        border-width: 7px;
-        border-right-color: #f6f8fa;
-    }
 `;
 
 export const ReplyInfo = styled.div`
     display: flex;
     align-items: center;
-    background-color: #f6f8fa;
-    border-bottom: 1px solid #d1d5da;
     padding-right: 16px;
-    padding-left: 16px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+`;
+
+export const Tip = styled.div`
+    margin-bottom: 10px;
+    svg {
+        margin-right: 6px;
+    }
 `;
 
 export const BaseInfo = styled.div`
     flex: 1 0 auto;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
     a {
         color: rgba(0, 0, 0, 0.65);
-        font-size: 14px;
+        font-size: 12px;
     }
     .reply-author {
         font-weight: 700;
         margin-right: 5px;
     }
     .reply-time {
-        font-size: 13px;
+        font-size: 12px;
     }
 `;
 export const UserAction = styled.div`
@@ -100,6 +78,6 @@ export const UserAction = styled.div`
 
 export const MarkdownText = styled.div`
     font-size: 14px;
-    padding: 15px;
+    padding: 15px 0;
     background-color: #fff;
 `;

@@ -4,7 +4,7 @@ import { BackTop } from 'antd';
 import styled from '@emotion/styled';
 
 const Footer = styled.footer`
-    margin: 48px 0 24px 0;
+    margin: 30px 0 24px 0;
     padding: 0 16px;
     text-align: center;
     .links {
@@ -31,17 +31,13 @@ const links = [
         href: 'https://github.com/bs32g1038/node-blog',
         blankTarget: true,
     },
-    {
-        key: 'react-admin-kit',
-        title: 'react-admin-kit',
-        href: 'https://github.com/bs32g1038/react-admin-kit',
-        blankTarget: true,
-    },
 ];
 
 const copyright = (
     <Fragment>
-        Copyright <CopyrightOutlined /> 2019 Node blog bs32g1038@163.com 体验技术部出品
+        Copyright <CopyrightOutlined style={{ fontSize: '12px' }} /> {new Date().getFullYear()}
+        &nbsp;JsonLi&nbsp;
+        <strong>bs32g1038@163.com</strong> 体验技术部出品
     </Fragment>
 );
 

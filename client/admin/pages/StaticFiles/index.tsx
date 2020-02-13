@@ -10,6 +10,15 @@ import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import config from '@blog/client/admin/configs/default.config';
 import { useRouter } from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
+import {
+    CloudUploadOutlined,
+    PlusOutlined,
+    CopyFilled,
+    DeleteFilled,
+    FolderFilled,
+    PictureFilled,
+    FileFilled,
+} from '@ant-design/icons';
 
 export default () => {
     const [state, setState] = useState({
@@ -135,18 +144,18 @@ export default () => {
                     return record.isdir ? (
                         <Link href={'/admin/code/static-files/' + record._id} passHref={true}>
                             <a>
-                                <i className="fa fa-folder fa-fw"></i>
+                                <FolderFilled style={{ marginRight: '4px' }} />
                                 {record.originalName}
                             </a>
                         </Link>
                     ) : record.category === 3 ? (
                         <span>
-                            <i className="fa fa-photo fa-fw"></i>
+                            <PictureFilled style={{ marginRight: '4px' }} />
                             {record.originalName}
                         </span>
                     ) : (
                         <span>
-                            <i className="fa fa-file fa-fw"></i>
+                            <FileFilled style={{ marginRight: '4px' }} />
                             {record.originalName}
                         </span>
                     );
@@ -155,7 +164,7 @@ export default () => {
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                width: 200,
+                width: 160,
                 render: (text, record) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
             },
             {
@@ -177,7 +186,7 @@ export default () => {
             {
                 title: '操作',
                 key: 'operation',
-                width: 200,
+                width: 190,
                 render: (text, record) => (
                     <div>
                         {!record.isdir && (
@@ -188,6 +197,7 @@ export default () => {
                                 data-clipboard-text={record.filePath + record.fileName}
                                 className="btnCopy"
                                 style={{ marginRight: '5px' }}
+                                icon={<CopyFilled />}
                             >
                                 复制url
                             </Button>
@@ -198,8 +208,8 @@ export default () => {
                             okText="确定"
                             cancelText="取消"
                         >
-                            <Button type="danger" size="small" title="删除">
-                                <i className="fa fa-trash-o fa-fw"></i>删除
+                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
+                                删除
                             </Button>
                         </Popconfirm>
                     </div>
@@ -261,6 +271,7 @@ export default () => {
                 <PanelDiv className="panel">
                     <Button
                         type="primary"
+                        icon={<CloudUploadOutlined />}
                         onClick={() =>
                             setState(data => ({
                                 ...data,
@@ -268,12 +279,12 @@ export default () => {
                             }))
                         }
                     >
-                        <i className="fa fa-arrow-up fa-fw">&nbsp;</i>
                         上传
                     </Button>
                     {!folderId && (
                         <Button
                             type="primary"
+                            icon={<PlusOutlined />}
                             onClick={() =>
                                 setState(data => ({
                                     ...data,
@@ -281,7 +292,6 @@ export default () => {
                                 }))
                             }
                         >
-                            <i className="fa fa-plus-square fa-fw">&nbsp;</i>
                             新建文件夹
                         </Button>
                     )}
@@ -303,8 +313,7 @@ export default () => {
                         okText="确定"
                         cancelText="取消"
                     >
-                        <Button type="danger">
-                            <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                        <Button type="danger" icon={<DeleteFilled />}>
                             批量删除
                         </Button>
                     </Popconfirm>

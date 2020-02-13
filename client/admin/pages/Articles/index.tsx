@@ -7,6 +7,7 @@ import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
+import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
 
 const PanelDiv = styled.div`
     margin-bottom: 20px;
@@ -130,9 +131,9 @@ export default () => {
                             type="primary"
                             size="small"
                             title="编辑"
+                            icon={<EditFilled />}
                             onClick={() => Router.push('/admin/content/articles/edit/' + record._id)}
                         >
-                            <i className="fa fa-edit fa-fw"></i>
                             编辑
                         </Button>
                         ,
@@ -142,8 +143,8 @@ export default () => {
                             okText="确定"
                             cancelText="取消"
                         >
-                            <Button type="danger" size="small" title="删除">
-                                <i className="fa fa-trash-o fa-fw"></i>删除
+                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
+                                删除
                             </Button>
                         </Popconfirm>
                     </div>
@@ -180,8 +181,11 @@ export default () => {
                 <PanelDiv id="article-panel">
                     <ModuleControlRow justify="space-between">
                         <Col>
-                            <Button type="primary" onClick={() => Router.push('/admin/content/articles/edit')}>
-                                <i className="fa fa-plus-square fa-fw">&nbsp;</i>
+                            <Button
+                                type="primary"
+                                icon={<PlusOutlined />}
+                                onClick={() => Router.push('/admin/content/articles/edit')}
+                            >
                                 添加文档
                             </Button>
                             <Popconfirm
@@ -202,8 +206,7 @@ export default () => {
                                 okText="确定"
                                 cancelText="取消"
                             >
-                                <Button type="danger">
-                                    <i className="fa fa-fw fa-trash-o fa-fw">&nbsp;</i>
+                                <Button type="danger" icon={<DeleteFilled />}>
                                     批量删除
                                 </Button>
                             </Popconfirm>
@@ -230,16 +233,18 @@ export default () => {
                                         <Col>
                                             <Button
                                                 type="primary"
+                                                icon={<SearchOutlined />}
                                                 onClick={() => {
                                                     fetchData();
                                                 }}
                                             >
-                                                <i className="fa fa-search fa-fw"></i>查询
+                                                查询
                                             </Button>
                                         </Col>
                                         <Col>
                                             <Button
                                                 type="primary"
+                                                icon={<HighlightOutlined />}
                                                 onClick={() => {
                                                     setState(value => ({
                                                         ...value,
@@ -248,7 +253,7 @@ export default () => {
                                                     }));
                                                 }}
                                             >
-                                                <i className="fa fa-search fa-fw"></i>重置
+                                                重置
                                             </Button>
                                         </Col>
                                     </Row>
