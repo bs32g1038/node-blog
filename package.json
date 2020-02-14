@@ -135,6 +135,7 @@
     "collectCoverageFrom": [
       "./server/**/*.{js,ts}",
       "!./server/main.ts",
+      "!./server/app.module.ts",
       "!./server/configs/index.config.ts",
       "!./server/utils/**",
       "!./server/pipes/joi.validation.pipe.ts",
