@@ -123,9 +123,16 @@ export class ArticleService {
         return null;
     }
 
-    async count(query: object) {
-        const filter = { isDeleted: false, ...query };
-        return await this.articleModel.countDocuments(filter);
+    async count(query: any) {
+        let filter = { ...query };
+        if (filter.tag) {
+            const reg = new RegExp(filter.tag, 'i'); // 不区分大小写
+            filter = {
+                tags: { $elemMatch: { $regex: reg } },
+            };
+            delete filter.tag;
+        }
+        return await this.articleModel.countDocuments({ isDeleted: false, ...filter });
     }
 
     // 批量删除文章

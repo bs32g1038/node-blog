@@ -38,7 +38,7 @@ export class DemoController {
 
     @Get('/api/demos')
     @JoiValidationPipe(StandardPaginationSchema)
-    async getArticles(@Query() query: { page: number; limit: number }) {
+    async getDemos(@Query() query: { page: number; limit: number }) {
         const items = await this.demoService.getDemos(
             {},
             {
@@ -55,14 +55,14 @@ export class DemoController {
 
     @Get('/api/demos/:id')
     @JoiValidationPipe(DemoController.idSchema)
-    async getArticle(@Param() params: { id: string }): Promise<Demo | null> {
+    async getDemo(@Param() params: { id: string }): Promise<Demo | null> {
         return await this.demoService.getDemo(params.id);
     }
 
     @Delete('/api/demos/:id')
     @Roles('admin')
     @JoiValidationPipe(DemoController.idSchema)
-    async deleteArticle(@Param() params: { id: string }) {
+    async deleteDemo(@Param() params: { id: string }) {
         return await this.demoService.deleteDemo(params.id);
     }
 

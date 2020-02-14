@@ -69,7 +69,14 @@ export class ArticleController {
     }
 
     @Get('/articles/:id')
-    @JoiValidationPipe(ArticleController.idSchema)
+    @JoiValidationPipe(
+        Joi.object({
+            id: Joi.string()
+                .default('')
+                .max(50),
+            md: Joi.boolean().default(false),
+        })
+    )
     public async getArticle(@Param() params: { id: string }, @Query() query: { md?: boolean }): Promise<Article> {
         return await this.articleService.getArticle(params.id, query.md);
     }
