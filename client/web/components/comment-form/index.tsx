@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import isURL from 'validator/lib/isURL';
 import axios from '../../utils/axios';
-import { media, xss } from '../../utils/helper';
+import { media } from '../../utils/helper';
 import marked from '../../../libs/marked';
 
 const bounce = keyframes`
@@ -88,6 +88,7 @@ const Textarea: any = styled.textarea`
     padding: 10px;
     display: block;
     resize: none;
+    line-height: 1.5;
     ${(props: any) => (props.isError ? { animation: `${bounce} 1s ease infinite` } : '')};
     &:focus {
         outline: none;
@@ -103,6 +104,7 @@ const PreviewPane = styled.div`
     border-top: 1px dashed #dedede;
     border-bottom: 1px dashed #dedede;
     overflow: auto;
+    padding: 10px;
     img {
         max-width: 30px;
         vertical-align: text-bottom;
@@ -223,7 +225,6 @@ export const CommentForm = (props: Props) => {
     };
     const showPreview = () => {
         setIsShowPreview(!isShowPreview);
-        renderMakrdown(previewHtml);
     };
     const insertEmotion = (event: any) => {
         if (event.target.nodeName.toLowerCase() === 'img') {
@@ -340,7 +341,7 @@ export const CommentForm = (props: Props) => {
                     rows={3}
                     placeholder="留点空白给你说~"
                 ></Textarea>
-                {isShowPreview && <PreviewPane dangerouslySetInnerHTML={{ __html: xss(previewHtml) }}></PreviewPane>}
+                {isShowPreview && <PreviewPane dangerouslySetInnerHTML={{ __html: previewHtml }}></PreviewPane>}
                 {errorText && <ErrorTipDiv>{errorText}</ErrorTipDiv>}
                 <Footer>
                     {isShowEmotion && (
