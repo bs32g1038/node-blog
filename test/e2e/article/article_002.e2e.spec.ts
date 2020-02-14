@@ -56,6 +56,18 @@ describe('article_002_e2e', () => {
             .expect(200);
     });
 
+    /**
+     * 更新文章内容分类id
+     */
+    const newCategory = getObjectId();
+    it(template({ status: 200, body: { ...article, category: newCategory } }), async () => {
+        return request(app.getHttpServer())
+            .put(getURL(article._id))
+            .set('authorization', __TOKEN__)
+            .send({ ...article, category: newCategory })
+            .expect(200);
+    });
+
     afterAll(async () => {
         await app.close();
     });

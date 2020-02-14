@@ -3,7 +3,7 @@ import { ArticleModule } from '../../../server/modules/article.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, formatJestItNameE2e, generateUrl } from '../../util';
 import { ArticleModel } from '../../models';
-import { getArticle } from '../../faker';
+import { getArticle, getObjectId } from '../../faker';
 import { TIP_UNAUTHORIZED_DELETE } from '../../constant';
 
 /**
@@ -40,6 +40,18 @@ describe('article_007_e2e', () => {
     it(template({ status: 200, params: { id: article._id } }), async () => {
         return request(app.getHttpServer())
             .delete(getURL(article._id))
+            .set('authorization', __TOKEN__)
+            .expect(200)
+            .expect({});
+    });
+
+    /**
+     * 文章不存在，测试用例
+     */
+    const testId = getObjectId();
+    it(template({ status: 200, params: { id: testId } }), async () => {
+        return request(app.getHttpServer())
+            .delete(getURL(testId))
             .set('authorization', __TOKEN__)
             .expect(200)
             .expect({});

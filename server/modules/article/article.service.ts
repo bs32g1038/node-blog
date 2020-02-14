@@ -35,9 +35,7 @@ export class ArticleService {
 
     async create(articleDocument: Article) {
         const article = await this.articleModel.create(articleDocument);
-        if (article.category) {
-            await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
-        }
+        await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         return article;
     }
 
@@ -117,7 +115,7 @@ export class ArticleService {
     async deleteArticle(id: string) {
         const article = await this.articleModel.findById(id);
         await this.articleModel.deleteOne({ _id: id });
-        if (article && article.category) {
+        if (article) {
             await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         }
         return null;

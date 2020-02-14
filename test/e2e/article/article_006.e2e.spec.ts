@@ -25,10 +25,14 @@ const template = ({ status = 200, params = {} }) => {
 describe('article_006_e2e', () => {
     let app: INestApplication;
     const article = getArticle();
+    const article1 = getArticle({ content: '```html\ntest\n```\n```css\ntest\n```\n```javascript\ntest\n```' });
+    const article2 = getArticle({ content: '```\ntest\n```' });
 
     beforeAll(async () => {
         app = await initApp({ imports: [ArticleModule] });
         await ArticleModel.create(article);
+        await ArticleModel.create(article1);
+        await ArticleModel.create(article2);
     });
 
     const randomId = getObjectId();
@@ -59,6 +63,32 @@ describe('article_006_e2e', () => {
             .then(res => {
                 const a = res.body;
                 expect(a.content).toEqual(article.content);
+            });
+    });
+
+    /**
+     * markdown 内容带```lang content ```
+     */
+    it(template({ status: 200, params: { id: article1._id, md: true } }), async () => {
+        return request(app.getHttpServer())
+            .get(`${getURL(article1._id)}md=true`)
+            .expect(200)
+            .then(res => {
+                const a = res.body;
+                expect(a.content).toEqual(markdown.render(article1.content));
+            });
+    });
+
+    /**
+     * markdown 内容带``` content ```
+     */
+    it(template({ status: 200, params: { id: article2._id, md: true } }), async () => {
+        return request(app.getHttpServer())
+            .get(`${getURL(article2._id)}md=true`)
+            .expect(200)
+            .then(res => {
+                const a = res.body;
+                expect(a.content).toEqual(markdown.render(article2.content));
             });
     });
 

@@ -24,6 +24,7 @@ const template = ({ status = 200, params = {}, message = '', body = {} }) => {
 describe('article_001_e2e', () => {
     let app: INestApplication;
     const article = getArticle();
+    const article1 = getArticle({ category: null });
 
     beforeAll(async () => {
         app = await initApp({
@@ -44,6 +45,17 @@ describe('article_001_e2e', () => {
             .set('authorization', __TOKEN__)
             .send(article)
             .expect(201);
+    });
+
+    /**
+     * 当category字段为null时，测试用例
+     */
+    it(template({ status: 400, body: article1 }), async () => {
+        return request(app.getHttpServer())
+            .post(getURL())
+            .set('authorization', __TOKEN__)
+            .send(article1)
+            .expect(400);
     });
 
     afterAll(async () => {

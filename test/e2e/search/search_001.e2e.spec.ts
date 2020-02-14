@@ -50,7 +50,7 @@ describe('search_001_e2e', () => {
 
     it(template({ status: 200, params: { key: 'test' } }), async () => {
         return request(app.getHttpServer())
-            .get(getURL({ key: '' }))
+            .get(getURL({ key: 'test' }))
             .expect(200)
             .then(res => {
                 expect(Array.isArray(res.body.items)).toEqual(true);

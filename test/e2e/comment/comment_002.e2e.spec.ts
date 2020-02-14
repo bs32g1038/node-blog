@@ -53,6 +53,20 @@ describe('comment_002', () => {
             });
     });
 
+    /**
+     * 授权后，评论列表获取，测试用例
+     */
+    it(template({ status: 200, params: { page: 1, limit: 20 } }), async () => {
+        return request(app.getHttpServer())
+            .get(getURL({ page: 1, limit: 20 }))
+            .set('authorization', __TOKEN__)
+            .expect(200)
+            .then(res => {
+                expect(res.body.totalCount).toBeGreaterThanOrEqual(50);
+                expect(isExpectPass(res.body.items, comments, ['_id', 'nickName', 'content']));
+            });
+    });
+
     it(template({ status: 200, params: { articleId: article._id } }), async () => {
         return request(app.getHttpServer())
             .get(getURL({ articleId: article._id }))

@@ -78,7 +78,6 @@ export class CommentController {
     @Get('/comments/:id')
     @JoiValidationPipe(CommentController.idSchema)
     async getComment(@Param() params: { id: string }): Promise<Comment | null> {
-        console.log(params.id, '============');
         return await this.commentService.getComment(params.id);
     }
 

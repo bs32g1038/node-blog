@@ -25,12 +25,23 @@ describe('comment_001_e2e', () => {
     const article = getArticle();
     const comment = getComment({ article: article._id });
     const comment1 = getComment({ article: article._id });
+    const testComment1 = getComment({ article: null });
 
     beforeAll(async () => {
         app = await initApp({
             imports: [CommentModule],
         });
         await ArticleModel.create(article);
+    });
+
+    /**
+     * 评论内容字段中的 article 为 null，测试用例
+     */
+    it(template({ status: 400, body: testComment1, message: '文章id不应该为空' }), async () => {
+        return request(app.getHttpServer())
+            .post(getURL())
+            .send(testComment1)
+            .expect(400);
     });
 
     it(template({ status: 201, body: comment, message: '普通用户创建' }), async () => {
