@@ -9,6 +9,7 @@
     "email": "bs32g1038@163.com"
   },
   "scripts": {
+    "init:dev:data": "cross-env NODE_ENV=development tsc -p tsconfig.build.json && node dist/scripts/init_faker_data.js",
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
     "dev:server": "cross-env NODE_ENV=development concurrently --handle-input \"wait-on dist/server/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
     "dev:web": "cross-env NODE_ENV=development node client/dev.server.js",
