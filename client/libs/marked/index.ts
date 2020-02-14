@@ -30,7 +30,7 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
 const Xss = new jsxss.FilterXSS({
     whiteList: {
         ...jsxss.whiteList,
-        img: ['class', 'src', 'alt'],
+        img: ['class', 'src', 'alt', 'style'],
     },
     onIgnoreTagAttr: (tag, name, value) => {
         // 让 prettyprint 可以工作
