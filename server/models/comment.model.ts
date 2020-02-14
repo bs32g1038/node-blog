@@ -65,6 +65,7 @@ const CommentSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
+        // 管理员身份为1，0为游客
         identity: {
             type: Number,
             max: 4,

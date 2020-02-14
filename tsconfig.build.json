@@ -25,5 +25,5 @@
         "baseUrl": "./"
     },
     "exclude": ["node_modules", ".next", "static", "public", "assets", "node_modules", "dist", "test"],
-    "include": ["server/*.ts"]
+    "include": ["server/*.ts", "scripts"]
 }

@@ -9,6 +9,7 @@
     "email": "bs32g1038@163.com"
   },
   "scripts": {
+    "init:dev:data": "cross-env NODE_ENV=development tsc -p tsconfig.build.json && node dist/scripts/init_faker_data.js",
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
     "dev:server": "cross-env NODE_ENV=development concurrently --handle-input \"wait-on dist/server/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
     "dev:web": "cross-env NODE_ENV=development node client/dev.server.js",
@@ -29,6 +30,7 @@
     "@nestjs/common": "^6.11.6",
     "@nestjs/core": "^6.11.6",
     "@nestjs/platform-express": "^6.11.6",
+    "@types/faker": "^4.1.9",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.0",
@@ -36,6 +38,7 @@
     "data2xml": "^1.3.4",
     "express": "^4.17.1",
     "express-rate-limit": "^5.0.0",
+    "faker": "^4.1.0",
     "helmet": "^3.21.2",
     "highlight.js": "^9.18.1",
     "husky": "^4.2.3",
@@ -133,6 +136,7 @@
     "collectCoverageFrom": [
       "./server/**/*.{js,ts}",
       "!./server/main.ts",
+      "!./server/app.module.ts",
       "!./server/configs/index.config.ts",
       "!./server/utils/**",
       "!./server/pipes/joi.validation.pipe.ts",
