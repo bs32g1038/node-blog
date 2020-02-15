@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
+import marked from '@blog/client/libs/marked';
 import { Form, Input, Button, message } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import Router, { useRouter } from 'next/router';
@@ -23,7 +24,9 @@ export default () => {
         if (id) {
             axios.get('/comments/' + id).then(res => {
                 const comment = res.data;
-                form.setFieldsValue(comment);
+                form.setFieldsValue({
+                    article: comment.article._id,
+                });
                 setComment(comment);
             });
         }
@@ -58,9 +61,24 @@ export default () => {
                         <span className="ant-form-text">{comment.article && comment.article.title}</span>
                     </Form.Item>
                     <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="内容：">
-                        <span className="ant-form-text">{comment.content}</span>
+                        <span
+                            className="ant-form-text"
+                            dangerouslySetInnerHTML={{ __html: marked(comment.content) }}
+                        ></span>
                     </Form.Item>
-                    <Form.Item name="content" labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="回复内容：">
+                    <Form.Item
+                        name="content"
+                        labelCol={{ span: 3 }}
+                        wrapperCol={{ span: 10 }}
+                        label="回复内容："
+                        rules={[
+                            {
+                                required: true,
+                                message: '回复内容不能为空！',
+                                min: 1,
+                            },
+                        ]}
+                    >
                         <Input.TextArea
                             placeholder="请输入回复内容"
                             autoSize={{ minRows: 2, maxRows: 6 }}
