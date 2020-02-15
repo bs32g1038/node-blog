@@ -60,7 +60,13 @@ cd **
 npm install
 ```
 
-**3，run app**
+**3，init database data**
+```
+// this will generate the faker data to database
+npm run init:dev:data
+```
+
+**4，run app**
 ```
 npm run dev     // development mode
 ```
