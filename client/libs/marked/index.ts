@@ -6,7 +6,9 @@ import iterator from 'markdown-it-for-inline';
 import jsxss from 'xss';
 import siteInfo from '../../configs/site-info';
 
-const markdown = new MarkdownIt();
+const markdown = new MarkdownIt({
+    breaks: true,
+});
 
 markdown.renderer.rules.text = function(tokens, idx /*, options, env */) {
     return tokens[idx].content;
@@ -20,7 +22,7 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
                 const name = r[1];
-                return `<img class="emoji" src="${siteInfo.domain}/static/images/emotion/${name}.png" style="width: 24px; height: 24px; vertical-align: bottom;" />`;
+                return `<img class="emoji" src="${siteInfo.domain}/static/images/emotion/${name}.png" style="width:24px;height:24px;vertical-align: bottom;" />`;
             }
         }
         return str;
@@ -31,6 +33,13 @@ const Xss = new jsxss.FilterXSS({
     whiteList: {
         ...jsxss.whiteList,
         img: ['class', 'src', 'alt', 'style'],
+    },
+    css: {
+        whiteList: {
+            'vertical-align': /^bottom$/,
+            width: true,
+            height: true,
+        },
     },
     onIgnoreTagAttr: (tag, name, value) => {
         // 让 prettyprint 可以工作
