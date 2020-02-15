@@ -76,7 +76,7 @@ export default () => {
                         />
                     )}
                     <MediaListRow id="media-row">
-                        {state.medias.map((item, index) => {
+                        {state.medias.map(item => {
                             return (
                                 <WrapCard
                                     loading={state.loading}

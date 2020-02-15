@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { ArticleModule } from '../../../server/modules/article.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateUrl, formatJestItNameE2e, isExpectPass } from '../../util';
+import { initApp, generateUrl, formatJestItNameE2e } from '../../util';
 import { ArticleModel, Article } from '../../models';
 import { getArticle } from '../../faker';
 
