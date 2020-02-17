@@ -6,6 +6,7 @@ import media from '../../utils/media';
 import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
 import md5 from 'crypto-js/md5';
+import { Collapse, Box, Badge, Text, Heading } from '@chakra-ui/core';
 
 const ghat = new GHAT();
 
@@ -94,7 +95,6 @@ const InfoWrap = styled.div`
     display: flex;
     align-items: center;
     color: #6d757a;
-    font-weight: 700;
     .separator {
         color: #b5a9a9;
         font-weight: normal;
@@ -145,13 +145,6 @@ const ItemContent = styled.div`
     line-height: 1.5;
     word-break: break-all;
     word-wrap: break-word;
-    p {
-        margin: 5px 0;
-        img {
-            width: 20px;
-            vertical-align: bottom;
-        }
-    }
 `;
 
 const Quote = styled.div`
@@ -179,7 +172,7 @@ const replyFn = (item: any) => {
     }, [item._id]);
     return (
         <Quote>
-            <Content>
+            <Box width="100%">
                 <User>
                     <InfoWrap>
                         <span className="tip">回复给：</span>
@@ -188,7 +181,15 @@ const replyFn = (item: any) => {
                         </AvatarWrap>
                         <NickName className="quote">{item.nickName}</NickName>
                         <span className="separator">&nbsp;·&nbsp;</span>
-                        <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
+                        {item.identity !== 0 ? (
+                            <Badge fontWeight="normal" fontSize={12} variant="outline" variantColor="" color="red.500">
+                                博主
+                            </Badge>
+                        ) : (
+                            <Badge fontWeight="normal" fontSize={12} variant="outline" variantColor="" color="gray.500">
+                                游客
+                            </Badge>
+                        )}
                         <span className="separator">&nbsp;·&nbsp;</span>
                         <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
                     </InfoWrap>
@@ -204,8 +205,10 @@ const replyFn = (item: any) => {
                         </a>
                     </Meta>
                 </User>
-                {showContent && <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>}
-            </Content>
+                <Collapse mt={4} isOpen={showContent}>
+                    <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
+                </Collapse>
+            </Box>
         </Quote>
     );
 };
@@ -227,20 +230,33 @@ export const CommentItem = (props: { item: any; index: number }) => {
                 <Content>
                     <User>
                         <InfoWrap>
-                            <NickName>{item.nickName}</NickName>
+                            <Box color="gray.500" fontWeight="bold" fontSize={14}>
+                                {item.nickName}
+                            </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
-                            <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
+                            {item.identity !== 0 ? (
+                                <Badge fontSize={12} variant="outline" variantColor="" color="red.500">
+                                    博主
+                                </Badge>
+                            ) : (
+                                <Badge fontSize={12} variant="outline" variantColor="" color="gray.500">
+                                    游客
+                                </Badge>
+                            )}
                             <span className="separator">&nbsp;·&nbsp;</span>
-                            <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
+                            <Text color="gray.500" fontSize={12}>
+                                {timeAgo(item.createdAt)}
+                            </Text>
                         </InfoWrap>
                         <Meta>
-                            <a
-                                style={{ color: '#f86422', cursor: 'pointer' }}
+                            <Text
+                                color="red.500"
+                                cursor="pointer"
                                 comment-id={item._id}
                                 onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
                             >
                                 回复
-                            </a>
+                            </Text>
                         </Meta>
                     </User>
                     {item.reply && replyFn(item.reply)}

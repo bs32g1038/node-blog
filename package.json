@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.0-alpha.19",
+    "@chakra-ui/core": "^0.5.2",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@nestjs/testing": "^6.11.6",
@@ -88,6 +89,7 @@
     "dayjs": "^1.8.20",
     "emotion": "^10.0.27",
     "emotion-server": "^10.0.27",
+    "emotion-theming": "^10.0.27",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -99,6 +101,7 @@
     "markdown-it-for-inline": "^0.1.1",
     "nodemon": "^2.0.2",
     "null-loader": "^3.0.0",
+    "polished": "^3.4.4",
     "prettier": "^1.19.1",
     "query-string": "^6.10.1",
     "rc-tween-one": "^2.6.8",

@@ -8,6 +8,19 @@ import { ContentLoader } from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from './markdown-body';
 import message from '../message';
+import {
+    Icon,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    Text,
+    Link as UiLink,
+    Flex,
+    List,
+    ListItem,
+    ListIcon,
+    Heading,
+} from '@chakra-ui/core';
 
 export const MODE = {
     normal: 'normal',
@@ -56,87 +69,6 @@ const ArticleHeader = styled.div`
     margin-bottom: 20px;
 `;
 
-const Title = styled.h1`
-    word-break: break-word;
-    margin: 16px 0;
-    font-size: 32px;
-    a {
-        display: inline-block;
-        position: relative;
-        color: rgba(0, 0, 0, 0.85);
-        border-bottom: none;
-        vertical-align: top;
-        text-decoration: none;
-    }
-`;
-
-const Meta = styled.div`
-    margin: 3px 0 0 -5px;
-    color: rgba(0, 0, 0, 0.45);
-    font-family: Monda, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    font-size: 12px;
-    span {
-        padding: 0 5px;
-    }
-    a {
-        color: rgb(153, 153, 153);
-        font-size: 12px;
-        margin-left: 4px;
-    }
-`;
-
-const Copyright = styled.ul`
-    color: #444;
-    padding: 5px 12px;
-    list-style: none;
-    font-size: 13px;
-    background-color: #efefef;
-    border-radius: 3px;
-    line-height: 1.8;
-    border: 1px solid #e5e5e5;
-    a {
-        white-space: pre-wrap;
-        word-break: break-all;
-        text-decoration: none;
-        color: inherit;
-    }
-`;
-
-const PrevNextArticle = styled.div`
-    display: flex;
-    justify-content: space-between;
-    p {
-        margin-right: 10px;
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-    a {
-        white-space: pre-wrap;
-        word-break: break-all;
-        text-decoration: none;
-        color: inherit;
-    }
-`;
-
-const Breadcrumbs = styled.div`
-    color: #8a92a9;
-    font-size: 12px;
-    margin-bottom: 16px;
-    ${media.phone`
-            padding-top: 20px;
-        `}
-    > .sep {
-        margin: 0 5px;
-        font-size: 14px;
-    }
-    a {
-        text-decoration: none;
-        color: #8a92a9;
-        font-size: 12px;
-    }
-`;
-
 interface Props {
     loading: boolean;
     article: any;
@@ -172,73 +104,104 @@ const C = (props: Props) => {
                     阅读模式
                 </ModeButton>
             </ModePanel>
-            <Breadcrumbs>
-                <Link href="/">
-                    <a>首页</a>
-                </Link>
-                <span className="sep">›</span>
-                <Link href={'/blog/articles?cid=' + (article.category && article.category._id)}>
-                    <a className="text-muted">{article.category && article.category.name}</a>
-                </Link>
-                <span className="sep">›</span>
-                <span className="current">{article.title}</span>
-            </Breadcrumbs>
-            <ArticleHeader>
-                <Title>
-                    <Link href={`/blog/articles/${article._id}`} passHref={true}>
-                        <a>{article.title}</a>
+            <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
+                <BreadcrumbItem>
+                    <Link href="/">
+                        <BreadcrumbLink fontSize={12} color="gray.500">
+                            首页
+                        </BreadcrumbLink>
                     </Link>
-                </Title>
-                <Meta>
-                    <span>发表于{parseTime(article.createdAt)}</span>
-                    <span>
-                        分类于
-                        <a href={`/blog/articles?cid=${article.category && article.category._id}`}>
+                </BreadcrumbItem>
+                <BreadcrumbItem>
+                    <Link href={'/blog/articles?cid=' + (article.category && article.category._id)}>
+                        <BreadcrumbLink fontSize={12} color="gray.500">
                             {article.category && article.category.name}
-                        </a>
-                    </span>
-                    <span>{article.commentCount}条评论</span>
-                    <span>阅读次数{article.viewsCount}</span>
-                </Meta>
+                        </BreadcrumbLink>
+                    </Link>
+                </BreadcrumbItem>
+                <BreadcrumbItem isCurrentPage>
+                    <BreadcrumbLink fontSize={12} color="gray.500">
+                        {article.title}
+                    </BreadcrumbLink>
+                </BreadcrumbItem>
+            </Breadcrumb>
+            <ArticleHeader>
+                <Link href={`/blog/articles/${article._id}`} passHref={true}>
+                    <Heading as="h2" size="xl" my={[4]}>
+                        {article.title}
+                    </Heading>
+                </Link>
+                <Flex fontSize={12} flexWrap="wrap">
+                    <Text color="gray.500" mr={1}>
+                        发表于{parseTime(article.createdAt)}
+                    </Text>
+                    <Text color="gray.500" mr={1}>
+                        分类于
+                        <Link href={`/blog/articles?cid=${article.category && article.category._id}`}>
+                            <Text as="a" color="gray.500" cursor="pointer">
+                                {article.category && article.category.name}
+                            </Text>
+                        </Link>
+                    </Text>
+                    <Text color="gray.500" mr={1}>
+                        {article.commentCount}条评论
+                    </Text>
+                    <Text color="gray.500">阅读次数{article.viewsCount}</Text>
+                </Flex>
             </ArticleHeader>
             <MarkdownBody content={article.content}></MarkdownBody>
-            <Copyright>
-                <li>
+            <List
+                // styleType="disc"
+                spacing={3}
+                fontSize={13}
+                mb={4}
+                px={4}
+                py={2}
+                backgroundColor="#efefef"
+                // border="1px"
+                borderRadius="md"
+                borderColor="#e5e5e5"
+            >
+                <ListItem mb={1}>
                     <strong>本文链接：</strong>
-                    <a href={config.domain + '/blog/articles/' + article._id}>
-                        {config.domain + '/blog/articles/' + article._id}
-                    </a>
-                </li>
-                <li>
-                    <strong>版权声明：</strong>自由转载-署名-非商业性使用 |{' '}
-                    <a
-                        href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                    >
-                        CC BY-NC-SA 3.0 CN
-                    </a>{' '}
-                    许可协议。
-                </li>
-            </Copyright>
-            <PrevNextArticle>
+                    <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
+                        <UiLink color="gray.600" isTruncated={true}>
+                            {config.domain + '/blog/articles/' + article._id}
+                        </UiLink>
+                    </Link>
+                </ListItem>
+                <ListItem>
+                    <strong>版权声明：</strong>
+                    <Text color="gray.600" as="span">
+                        自由转载-署名-非商业性使用
+                        <Text mx={1} as="i">
+                            |
+                        </Text>
+                        <UiLink mr={1} href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" isExternal={true}>
+                            CC BY-NC-SA 3.0 CN
+                        </UiLink>
+                        许可协议。
+                    </Text>
+                </ListItem>
+            </List>
+            <Flex justifyContent="space-between" fontSize={13}>
                 {article.prev && (
-                    <p>
+                    <Text isTruncated={true} width="45%" mr={5}>
                         <strong>上一篇：</strong>
                         <Link href={`/blog/articles/${article.prev._id}`} passHref={true}>
-                            <a>{article.prev.title}</a>
+                            <UiLink>{article.prev.title}</UiLink>
                         </Link>
-                    </p>
+                    </Text>
                 )}
                 {article.next && (
-                    <p>
+                    <Text isTruncated={true} width="45%">
                         <strong>下一篇：</strong>
                         <Link href={`/blog/articles/${article.next._id}`} passHref={true}>
-                            <a>{article.next.title}</a>
+                            <UiLink>{article.next.title}</UiLink>
                         </Link>
-                    </p>
+                    </Text>
                 )}
-            </PrevNextArticle>
+            </Flex>
             <Comment article={article} comments={comments}></Comment>
         </ArticleItem>
     );

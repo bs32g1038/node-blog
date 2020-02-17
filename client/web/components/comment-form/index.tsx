@@ -7,6 +7,11 @@ import isURL from 'validator/lib/isURL';
 import axios from '../../utils/axios';
 import { media } from '../../utils/helper';
 import marked from '../../../libs/marked';
+import { Avatar, Text, Textarea, Flex, Heading, Alert, AlertIcon, Button } from '@chakra-ui/core';
+import md5 from 'crypto-js/md5';
+import GHAT from '../../../libs/generate-avatar';
+const ghat = new GHAT();
+import { useToast, Box } from '@chakra-ui/core';
 
 const bounce = keyframes`
   from, 20%, 53%, 80%, to {
@@ -32,67 +37,8 @@ const CommentFormWrap = styled.form`
     flex-direction: column;
 `;
 
-const FormGroup = styled.div`
-    display: flex;
-    flex: 1 0 auto;
-    margin-bottom: 10px;
-    border-radius: 2px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-`;
-
-const FormInput: any = styled.input`
-    color: #333;
-    flex: 1 0 auto;
-    font-size: 13px;
-    padding: 3px 3px 0 5px;
-    height: 36px;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px dashed #dedede;
-    margin-right: 5px;
-    transition: all 0.4s ease;
-    background-color: hsl(0, 0%, 96%);
-    border: 1px solid #e5e5e5;
-    ${(props: any) => (props.isError ? { animation: `${bounce} 1s ease infinite` } : '')};
-    &:focus {
-        outline: none;
-        border-bottom-color: #eb5055;
-    }
-    &:last-child {
-        margin-right: 0;
-    }
-    &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px #ffffff inset !important;
-        -webkit-text-fill-color: #3e3e3e !important;
-    }
-    ${media.phone`
-        width: 100%;
-        max-width: inherit;
-        margin-bottom: 5px;
-    `}
-`;
-
 const ContentWrap = styled.div`
-    border: 1px solid #e5e5e5;
-    background-color: hsl(0, 0%, 96%);
-`;
-
-const Textarea: any = styled.textarea`
-    width: 100%;
-    min-width: 200px;
-    min-height: 90px;
-    border: none;
-    box-sizing: border-box;
-    background-color: hsl(0, 0%, 96%);
-    padding: 10px;
-    display: block;
-    resize: none;
-    line-height: 1.5;
-    ${(props: any) => (props.isError ? { animation: `${bounce} 1s ease infinite` } : '')};
-    &:focus {
-        outline: none;
-    }
+    /* display: flex; */
 `;
 
 const PreviewPane = styled.div`
@@ -101,19 +47,21 @@ const PreviewPane = styled.div`
     min-height: 90px;
     border: none;
     box-sizing: border-box;
-    border-top: 1px dashed #dedede;
     border-bottom: 1px dashed #dedede;
     overflow: auto;
     padding: 10px;
     img {
         max-width: 30px;
         vertical-align: text-bottom;
+        display: inline-block;
     }
 `;
 
 const Footer = styled.div`
     transition: all 0.4s ease-in;
-    background-color: #d5d5d5;
+    /* background-color: #d5d5d5; */
+    flex: 1 0 auto;
+    margin-top: 6px;
 `;
 
 const ButtonSubmitWrap = styled.div`
@@ -209,19 +157,15 @@ interface Props {
 }
 
 export const CommentForm = (props: Props) => {
+    const toast = useToast();
     const [isShowEmotion, setIsShowEmotion] = useState(false);
-    const [nickNameError, setNickNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [websiteError, setWebsiteError] = useState(false);
-    const [contentError, setContentError] = useState(false);
-    const [errorText, setErrorText] = useState('');
+    const [content, setContent] = useState('');
     const [buttonLoading, setButtonLoading] = useState(false);
-    const $content = useRef({ value: '', oninput: (_: any) => _ });
     const $form = useRef(null);
     const [isShowPreview, setIsShowPreview] = useState(false);
     const [previewHtml, setPreviewHtml] = useState('');
-    const renderMakrdown = (str: string) => {
-        setPreviewHtml(marked(str));
+    const renderMakrdown = () => {
+        setPreviewHtml(marked(content));
     };
     const showPreview = () => {
         setIsShowPreview(!isShowPreview);
@@ -230,71 +174,28 @@ export const CommentForm = (props: Props) => {
         if (event.target.nodeName.toLowerCase() === 'img') {
             const $li = event.target.parentNode;
             const text = $li.getAttribute('data-input').trim();
-            $content.current.value = $content.current.value + text;
-            renderMakrdown($content.current.value);
+            setContent(val => val + text);
+            renderMakrdown();
         }
     };
     useEffect(() => {
         const info = localStorage.getItem(USER_COMMENT_INFO);
         if (info) {
-            const $nickName: any = document.getElementById('nickName');
-            const $email: any = document.getElementById('email');
-            const $website: any = document.getElementById('website');
-            const data: any = JSON.parse(info);
-            $nickName.value = data.nickName;
-            $email.value = data.email;
-            $website.value = data.website;
+            // const $nickName: any = document.getElementById('nickName');
+            // const $email: any = document.getElementById('email');
+            // const $website: any = document.getElementById('website');
+            // const data: any = JSON.parse(info);
+            // $nickName.value = data.nickName;
+            // $email.value = data.email;
+            // $website.value = data.website;
         }
-        $content.current.oninput = () => {
-            renderMakrdown($content.current.value);
-        };
     }, [1]);
 
     const submit = (): any => {
-        const form: any = $form.current;
-        const elements: [{ name: string; value: string }] = form.elements;
         const data: any = {
             article: props.articleId,
+            content,
         };
-        for (const ele of Array.from(elements)) {
-            if (ele.name) {
-                data[ele.name] = ele.value;
-            }
-        }
-        const lay = () =>
-            setTimeout(() => {
-                setNickNameError(false);
-                setEmailError(false);
-                setWebsiteError(false);
-                setContentError(false);
-            }, 800);
-        if (isEmpty(data.nickName)) {
-            setNickNameError(true);
-            lay();
-            return false;
-        } else if (!isEmail(data.email)) {
-            setEmailError(true);
-            lay();
-            return false;
-        } else if (!isEmpty(data.website) && !isURL(data.website)) {
-            setWebsiteError(true);
-            lay();
-            return false;
-        } else if (isEmpty(data.content)) {
-            setContentError(true);
-            lay();
-            return false;
-        }
-
-        localStorage.setItem(
-            USER_COMMENT_INFO,
-            JSON.stringify({
-                nickName: data.nickName,
-                email: data.email,
-                website: data.website,
-            })
-        );
-
         if (props.replyId) {
             Object.assign(data, {
                 reply: props.replyId,
@@ -309,40 +210,87 @@ export const CommentForm = (props: Props) => {
             .catch(err => {
                 const res = err.response;
                 if (res.status === 422) {
-                    setErrorText('内容长度必须在1-250个字符之间！');
-                    setButtonLoading(false);
                 } else if (res.status === 429) {
-                    setErrorText('对不起！您的ip存在异常行为，系统已暂时禁止提交！');
                     setButtonLoading(false);
                 } else {
-                    setErrorText('sorry！系统异常，正在修复中。。。');
                     setButtonLoading(false);
                 }
+                toast({
+                    position: 'top',
+                    title: '提交评论失败！',
+                    status: 'error',
+                    duration: 6000,
+                    isClosable: true,
+                    render: () => (
+                        // <Alert
+                        //     fontWeight="medium"
+                        //     status="error"
+                        //     fontSize={12}
+                        //     color="white"
+                        //     mt={4}
+                        //     px={4}
+                        //     py={2}
+                        //     borderRadius="md"
+                        //     variant="solid"
+                        // >
+                        //     <AlertIcon size="12px" />
+                        //     提交失败！
+                        // </Alert>
+                        <Box
+                            backgroundColor="rgba(255, 255, 255, 0.9);"
+                            fontWeight="medium"
+                            border="1px solid #dcdcdc"
+                            borderTop="2px solid #f86422"
+                            fontSize={14}
+                            box-shadow="0 4px 12px rgba(0, 0, 0, 0.15);"
+                            color="#454545;"
+                            mt={4}
+                            px={5}
+                            py={2}
+                            borderRadius="md"
+                        >
+                            提交失败！
+                        </Box>
+                    ),
+                });
             });
     };
     return (
         <CommentFormWrap ref={$form}>
-            <FormGroup>
-                <FormInput isError={nickNameError} id="nickName" name="nickName" placeholder="昵称" type="text" />
-                <FormInput isError={emailError} id="email" name="email" placeholder="邮箱" type="text" />
-                <FormInput
-                    isError={websiteError}
-                    id="website"
-                    name="website"
-                    placeholder="网址 http(s)://"
-                    type="text"
+            <Alert status="info" variant="subtle" fontSize={12} mb={3} backgroundColor="#efefef">
+                <AlertIcon size="12px" />
+                当前评论模式：游客模式，系统将自动生成相关数据信息
+            </Alert>
+            <Flex pb={3} alignItems="center">
+                <Text color="gray.600" fontSize={13} mr={1}>
+                    游客账户：
+                </Text>
+                <Avatar
+                    borderRadius="md"
+                    size="xs"
+                    name="Dan Abrahmov"
+                    backgroundColor="#fff"
+                    src={ghat.getImage(md5('lc_youke_003412').toString()) || ''}
                 />
-            </FormGroup>
+                <Text color="gray.600" fontSize={13} ml={2}>
+                    lc_youke_003412
+                </Text>
+            </Flex>
             <ContentWrap>
                 <Textarea
-                    isError={contentError}
-                    ref={$content}
+                    focusBorderColor="none"
+                    fontSize={14}
                     name="content"
-                    rows={3}
+                    borderRadius={0}
                     placeholder="留点空白给你说~"
+                    resize="none"
+                    value={content}
+                    onChange={event => {
+                        setContent(event.target.value);
+                        setPreviewHtml(marked(event.target.value));
+                    }}
                 ></Textarea>
                 {isShowPreview && <PreviewPane dangerouslySetInnerHTML={{ __html: previewHtml }}></PreviewPane>}
-                {errorText && <ErrorTipDiv>{errorText}</ErrorTipDiv>}
                 <Footer>
                     {isShowEmotion && (
                         <EmotionWrap>
@@ -651,6 +599,17 @@ export const CommentForm = (props: Props) => {
                             </EmoticonList>
                         </EmotionWrap>
                     )}
+                    {/* <Button variant="outline" size="sm" fontSize={14} variantColor="green" mt={1} ml={2}>
+                        <svg className="Zi Zi--Emotion" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M7.523 13.5h8.954c-.228 2.47-2.145 4-4.477 4-2.332 0-4.25-1.53-4.477-4zM12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zm0-1.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zm-3-8a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                        </svg>
+                    </Button>
+                    <Button size="sm" fontSize={14} variantColor="green" mt={1} ml={2}>
+                        {isShowPreview ? '关闭预览' : '预览'}
+                    </Button>
+                    <Button size="sm" fontSize={14} variantColor="green" mt={1} ml={2}>
+                        提 交
+                    </Button> */}
                     <ButtonSubmitWrap>
                         <span>🚀support markdown (*￣▽￣*)ブ</span>
                         <ButtonGroup>

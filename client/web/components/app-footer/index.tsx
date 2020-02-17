@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 import { GithubSvg } from '../svgs/github-svg';
@@ -7,6 +7,7 @@ import { HomeSvg } from '../svgs/home-svg';
 import { UserSvg } from '../svgs/user-svg';
 import NavLink from '../nav-link';
 import * as theme from '../../theme';
+import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Tooltip } from '@chakra-ui/core';
 
 const Footer = styled.footer`
     box-sizing: border-box;
@@ -59,9 +60,11 @@ const BackTopBtn = styled.div`
     height: 40px;
     line-height: 40px;
     background-color: #fff;
+    transition: all 0.5s ease;
     svg {
         fill: #8590a6;
         vertical-align: middle;
+        display: inline-block;
     }
     ${media.phone`
         display: none;
@@ -141,6 +144,7 @@ const LibLogo = styled.img`
     height: 32px;
     cursor: pointer;
     margin: 0 6px;
+    display: inline-block;
 `;
 
 const Hr = styled.hr`
@@ -196,6 +200,14 @@ const loadTimeCountEvent = () => {
 };
 
 export const AppFooter = () => {
+    const { colorMode } = useColorMode();
+    const [style, setStyle] = useState<any>({});
+    useEffect(() => {
+        setStyle({
+            bgColor: { light: 'white', dark: 'gray.700' }[colorMode],
+            color: { light: 'gray.600', dark: 'gray.50' }[colorMode],
+        });
+    }, [colorMode]);
     useEffect(() => {
         loadBackTopBtnEvent();
         loadTimeCountEvent();
@@ -203,11 +215,13 @@ export const AppFooter = () => {
     return (
         <React.Fragment>
             <Footer>
-                <BackTopBtn title="返回顶部" id="backTop">
-                    <svg data-title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                        <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path>
-                    </svg>
-                </BackTopBtn>
+                <Tooltip aria-label="back top" hasArrow={true} showDelay={110} label="返回顶部" placement="right">
+                    <BackTopBtn aria-label="返回顶部" id="backTop">
+                        <svg data-title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path>
+                        </svg>
+                    </BackTopBtn>
+                </Tooltip>
                 <div>
                     <P>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</P>
                     <P>
