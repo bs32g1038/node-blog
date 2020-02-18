@@ -13,7 +13,7 @@ import siteInfo from '../../config/site-info';
 import AppLayout from '../../layouts/app';
 import Pagination from '../pagination';
 
-const UL = styled.ul`
+const UL = styled.div`
     flex-wrap: wrap;
     background-color: #fff;
     flex: 1 0 auto;

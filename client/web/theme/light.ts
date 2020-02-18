@@ -7,7 +7,7 @@ import { lighten, darken } from 'polished';
 const primaryColor = 'rgba(68, 181, 99, 0.8)';
 
 const bannerBg = '#fff';
-const contentBg = '#f8f8f8';
+const contentBg = theme.colors.white;
 const contentBoxBg = '#FFFFFF';
 const fontColor = primaryColor;
 const sidebarBg = '#23292E';
@@ -25,6 +25,19 @@ const github = {
         borderColor: {
             ...theme.colors.gray,
         },
+    },
+    articles: {
+        bg: contentBg,
+        color: theme.colors.gray[600],
+        secondaryText: theme.colors.gray[400],
+        borderColor: theme.colors.gray[100],
+    },
+    categories: {
+        color: theme.colors.gray[600],
+    },
+    footer: {
+        bg: '#fff',
+        text: theme.colors.gray[600],
     },
     name: 'github',
     logoText: descText,
@@ -92,12 +105,7 @@ const github = {
         cardBorder: '#e6e6e6',
         cardBorderHover: primaryColor,
     },
-    footer: {
-        text: '#c7c7c7',
-        hover: '#949CB5',
-        title: '#77706B',
-        bottomBg: '#252325',
-    },
+
     sidebar: {
         bg: sidebarBg,
         activeBar: '#87a791',

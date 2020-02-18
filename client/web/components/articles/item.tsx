@@ -7,6 +7,8 @@ import { ContentLoader } from '../content-loader';
 import { LazyLoad } from '../lazy-load';
 import * as theme from '../../theme';
 import Trend from '../Trend';
+import { Flex, Box, Text, Heading } from '@chakra-ui/core';
+import Icon from '../icon';
 
 const ArticleItem = styled.li`
     padding: 15px 0 10px;
@@ -136,10 +138,10 @@ const ThumbWrap = styled.div`
     }
 `;
 
-const ThumbImg = styled.div`
+const ThumbImg = styled(Box)`
     height: 100px;
     width: 150px;
-    background-color: #fff;
+    background-color: 'theme.articles.bg';
     background-size: cover;
     background-position: 100% 100%;
 `;
@@ -192,37 +194,55 @@ const Loading = () => (
 const Item: SFC<{ item: any }> = (props: any) => {
     const item = props.item;
     return (
-        <ArticleItem>
+        <Flex
+            bg="theme.articles.bg"
+            borderStyle="solid"
+            borderBottomWidth="1px"
+            borderBottomColor="theme.articles.borderColor"
+            pb={2}
+            pt={4}
+        >
             <Brief>
                 <Content>
                     <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
-                        <Title>{item.title}</Title>
+                        <Heading as="h2" color="theme.articles.color" fontSize={18} cursor="pointer">
+                            {item.title}
+                        </Heading>
                     </Link>
-                    <Meta>
+                    <Text color="theme.articles.secondaryText" fontSize={12} my={2}>
                         <span className="cat">发布于 {parseTime(item.createdAt)} </span>
                         <em className="cmt">·</em>
                         <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
                         <em className="cmt">·</em>
                         <a>阅读：{item.viewsCount}</a> <em className="cmt">·</em>
                         <a>评论：{item.commentCount}</a>
-                    </Meta>
-                    <Summary>{item.summary}</Summary>
+                    </Text>
+                    <Text fontSize={14} color="theme.articles.color">
+                        {item.summary}
+                    </Text>
                     {item.tags.length > 0 && (
-                        <Tags>
-                            <svg viewBox="0 0 32 32" height="16" width="16">
-                                <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>
-                            </svg>
+                        <Flex fontSize={13} alignItems="center" mt={3}>
+                            <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
                             {item.tags.map((name: any) => (
                                 <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag' + name}>
-                                    <Tag>{name}</Tag>
+                                    <Text color="theme.articles.secondaryText" as="span" ml={1}>
+                                        {name}
+                                    </Text>
                                 </Link>
                             ))}
-                        </Tags>
+                        </Flex>
                     )}
                 </Content>
             </Brief>
             <RightContent>
                 <ThumbWrap>
+                    {/* <Box
+                                height="100px"
+                                width="150px"
+                                bg="theme.articles.bg"
+                                backgroundSize="cover"
+                                backgroundPosition="100% 100%"
+                            ></Box> */}
                     <LazyLoad
                         component={ThumbImg}
                         attrs={{
@@ -234,7 +254,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     <Trend data={[1, 1, ...item.dayReadings.map((tmp: any) => tmp.count), 1, 1]} />
                 </div>
             </RightContent>
-        </ArticleItem>
+        </Flex>
     );
 };
 

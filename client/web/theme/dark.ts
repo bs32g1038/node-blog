@@ -7,7 +7,6 @@ import { theme } from '@chakra-ui/core';
 const primaryColor = '#756b49';
 
 const bannerBg = '#3D3B3E';
-const contentBg = '#2B292C';
 const contentBoxBg = '#312f31';
 const fontColor = primaryColor;
 const sidebarBg = '#211F22';
@@ -15,6 +14,9 @@ const markdownFont = '#7F8189';
 
 const descText = '#736f6f';
 const primaryMate = '#cc8651';
+
+const contentBg = theme.colors.gray[700];
+const primaryTextColor = theme.colors.gray[400];
 
 // https://www.slant.co/topics/7880/viewpoints/10/~dark-themes-for-text-editors~monokai-pro
 const monokai = {
@@ -26,6 +28,19 @@ const monokai = {
             100: theme.colors.gray[700],
             200: theme.colors.gray[500],
         },
+    },
+    articles: {
+        bg: contentBg,
+        color: theme.colors.gray[400],
+        secondaryText: theme.colors.gray[500],
+        borderColor: theme.colors.gray[600],
+    },
+    categories: {
+        color: theme.colors.gray[400],
+    },
+    footer: {
+        bg: contentBg,
+        text: theme.colors.gray[500],
     },
     name: 'monokai',
     logoText: descText,
@@ -96,12 +111,6 @@ const monokai = {
         cardBg: bannerBg,
         cardBorder: lighten(0.08, contentBoxBg),
         cardBorderHover: lighten(0.1, contentBoxBg),
-    },
-    footer: {
-        text: darken(0.05, descText),
-        hover: lighten(0.1, descText),
-        title: '#77706B',
-        bottomBg: '#252325',
     },
     sidebar: {
         bg: sidebarBg,

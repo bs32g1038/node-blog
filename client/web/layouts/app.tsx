@@ -8,7 +8,7 @@ import * as theme from '../theme';
 import _theme from '../theme';
 import dark from '../theme/dark';
 import light from '../theme/light';
-import { ThemeProvider, CSSReset, ColorModeProvider, useColorMode } from '@chakra-ui/core';
+import { ThemeProvider, CSSReset, ColorModeProvider, useColorMode, Box } from '@chakra-ui/core';
 
 const PageWrap = styled.div`
     padding: 20px;
@@ -32,25 +32,13 @@ export default (props: { children: any }) => {
     });
     const { colorMode } = useColorMode();
     useEffect(() => {
-        let t = null;
-        if (colorMode === 'light') {
-            t = {
-                ..._theme,
-                colors: {
-                    ..._theme.colors,
-                    theme: light,
-                },
-            };
-        } else {
-            t = {
-                ..._theme,
-                colors: {
-                    ..._theme.colors,
-                    theme: dark,
-                },
-            };
-        }
-        setTheme(t);
+        setTheme(val => ({
+            ...val,
+            colors: {
+                ..._theme.colors,
+                theme: colorMode === 'light' ? light : dark,
+            },
+        }));
     }, [colorMode]);
     return (
         <ThemeProvider theme={theme}>
@@ -64,7 +52,7 @@ export default (props: { children: any }) => {
                         .app {
                             height: 100%;
                             min-height: 100%;
-                            background-color: #f5f5f5;
+                            background-color: ${colorMode === 'light' ? '#f5f5f5' : '#141414'};
                         }
                         .app {
                             display: flex;
@@ -80,7 +68,9 @@ export default (props: { children: any }) => {
                     `}
                 />
                 <AppHeader />
-                <PageWrap>{children}</PageWrap>
+                <Box bg="theme.articles.bg" p={5} flex="1 0 auto">
+                    {children}
+                </Box>
                 <AppFooter />
             </div>
         </ThemeProvider>

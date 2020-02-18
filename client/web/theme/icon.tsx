@@ -211,6 +211,14 @@ const customIcons = {
         ),
         viewBox: '0 0 480 480.00108',
     },
+
+    /**
+     * tag
+     */
+    tag: {
+        path: <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>,
+        viewBox: '0 0 32 32',
+    },
 };
 
 export default customIcons;
