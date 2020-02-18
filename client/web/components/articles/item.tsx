@@ -10,30 +10,6 @@ import Trend from '../Trend';
 import { Flex, Box, Text, Heading } from '@chakra-ui/core';
 import Icon from '../icon';
 
-const ArticleItem = styled.li`
-    padding: 15px 0 10px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #efefef;
-    ${media.phone`
-        width: 100%;
-        max-width: 100%;
-        padding: 0;
-        &:after {
-            content: '';
-            position: absolute;
-            border-bottom: 1px solid #e5e5e5;
-            transform-origin: 0 0; /* 以左上角为基点 */
-            transform: scaleY(.5); /* 缩放50% */
-            box-sizing: border-box;
-            bottom: 0;
-            left: 0;
-            right: 0
-        }
-    `};
-`;
-
 const Brief = styled.div`
     display: block;
     overflow: hidden;
@@ -58,46 +34,6 @@ const Content = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    `};
-`;
-
-const Meta = styled.div`
-    color: ${theme.textColorSecondary};
-    font-size: 12px;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    > a {
-        color: ${theme.textColorSecondary};
-        font-size: 12px;
-        text-decoration: none;
-    }
-    &.time {
-        font-size: 13px;
-        ${media.phone`
-            display: none;
-        `};
-    }
-    .cmt {
-        margin-right: 5px;
-    }
-`;
-
-const Title = styled.a`
-    color: ${theme.headingColor};
-    font-weight: 700;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    font-size: 18px;
-    &:hover {
-        color: '#007fff';
-    }
-    ${media.phone`
-        font-size: 16px;
-        white-space: normal;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
     `};
 `;
 
@@ -141,45 +77,9 @@ const ThumbWrap = styled.div`
 const ThumbImg = styled(Box)`
     height: 100px;
     width: 150px;
-    background-color: 'theme.articles.bg';
+    background-color: ${(props: any) => props.theme.colors.theme.imageBg};
     background-size: cover;
     background-position: 100% 100%;
-`;
-
-const Summary = styled.p`
-    margin: 0;
-    word-wrap: break-word;
-    font-size: 14px;
-    color: ${theme.textColor};
-    word-wrap: break-word;
-    overflow: hidden;
-    ${media.phone`
-        text-overflow: -o-ellipsis-lastline;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        max-height: 48px;
-        line-height: 24px;
-    `}
-`;
-
-const Tags = styled.div`
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    margin-top: 1.4em;
-    svg {
-        display: inline-block;
-        fill: #757070;
-    }
-`;
-
-const Tag = styled.a`
-    margin-left: 10px;
-    color: rgba(0, 0, 0, 0.45);
-    text-transform: capitalize;
-    text-decoration: none;
-    font-size: 13px;
 `;
 
 const Loading = () => (
@@ -199,41 +99,60 @@ const Item: SFC<{ item: any }> = (props: any) => {
             borderStyle="solid"
             borderBottomWidth="1px"
             borderBottomColor="theme.articles.borderColor"
-            pb={2}
-            pt={4}
+            pb={4}
+            pt={5}
+            alignItems="center"
+            isTruncated={true}
         >
-            <Brief>
-                <Content>
-                    <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
-                        <Heading as="h2" color="theme.articles.color" fontSize={18} cursor="pointer">
-                            {item.title}
-                        </Heading>
-                    </Link>
-                    <Text color="theme.articles.secondaryText" fontSize={12} my={2}>
-                        <span className="cat">发布于 {parseTime(item.createdAt)} </span>
-                        <em className="cmt">·</em>
-                        <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
-                        <em className="cmt">·</em>
-                        <a>阅读：{item.viewsCount}</a> <em className="cmt">·</em>
-                        <a>评论：{item.commentCount}</a>
+            <Box ml={3} mr={4} width="100%">
+                <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
+                    <Heading
+                        as="h2"
+                        color="theme.articles.titleColor"
+                        fontSize={18}
+                        cursor="pointer"
+                        whiteSpace="normal"
+                    >
+                        {item.title}
+                    </Heading>
+                </Link>
+                <Text color="theme.articles.secondaryText" fontSize={12} my={3}>
+                    <span className="cat">发布于 {parseTime(item.createdAt)}</span>
+                    <Text as="em" ml={1} mr={1}>
+                        ·
                     </Text>
-                    <Text fontSize={14} color="theme.articles.color">
-                        {item.summary}
+                    <span className="cat">{(item.category && item.category.name) || '暂无分类'}</span>{' '}
+                    <Text as="em" ml={1} mr={1}>
+                        ·
                     </Text>
-                    {item.tags.length > 0 && (
-                        <Flex fontSize={13} alignItems="center" mt={3}>
-                            <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
-                            {item.tags.map((name: any) => (
-                                <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag' + name}>
-                                    <Text color="theme.articles.secondaryText" as="span" ml={1}>
-                                        {name}
-                                    </Text>
-                                </Link>
-                            ))}
-                        </Flex>
-                    )}
-                </Content>
-            </Brief>
+                    <a>阅读：{item.viewsCount}</a>
+                    <Text as="em" ml={1} mr={1}>
+                        ·
+                    </Text>
+                    <a>评论：{item.commentCount}</a>
+                </Text>
+                <Text
+                    lineHeight={2}
+                    fontSize={14}
+                    color="theme.articles.color"
+                    wordBreak="break-all"
+                    whiteSpace="normal"
+                >
+                    {item.summary}
+                </Text>
+                {item.tags.length > 0 && (
+                    <Flex fontSize={13} alignItems="center" mt={3}>
+                        <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
+                        {item.tags.map((name: any) => (
+                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag' + name}>
+                                <Text color="theme.articles.secondaryText" as="span" ml={1}>
+                                    {name}
+                                </Text>
+                            </Link>
+                        ))}
+                    </Flex>
+                )}
+            </Box>
             <RightContent>
                 <ThumbWrap>
                     {/* <Box

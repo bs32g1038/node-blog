@@ -43,7 +43,13 @@ const C = (props: any) => {
     }, [1]);
     const { categories = [] } = props._DB;
     return (
-        <Box flex="0 0 auto;" fontSize={13} mb={-4}>
+        <Box
+            flex="0 0 auto;"
+            fontSize={13}
+            borderBottomWidth="1px"
+            borderStyle="solid"
+            borderBottomColor="theme.categories.border"
+        >
             <Box display="inline-block" mt={2} mb={4}>
                 <NavLink exact={true} href="/blog">
                     <ItemLink color="theme.categories.color">全部</ItemLink>

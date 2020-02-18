@@ -9,6 +9,7 @@ import Comment from './comment';
 import MarkdownBody from './markdown-body';
 import message from '../message';
 import {
+    Box,
     Icon,
     Breadcrumb,
     BreadcrumbItem,
@@ -83,8 +84,8 @@ const C = (props: Props) => {
         props.getReadMode(mode);
     }
     return (
-        <ArticleItem mode={mode}>
-            <ModePanel>
+        <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
+            {/* <ModePanel>
                 <ModeButton
                     active={mode === MODE.normal}
                     onClick={() => {
@@ -103,7 +104,7 @@ const C = (props: Props) => {
                 >
                     阅读模式
                 </ModeButton>
-            </ModePanel>
+            </ModePanel> */}
             <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
                 <BreadcrumbItem>
                     <Link href="/">
@@ -149,30 +150,30 @@ const C = (props: Props) => {
                     <Text color="gray.500">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </ArticleHeader>
-            <MarkdownBody content={article.content}></MarkdownBody>
+            <Box color="theme.article.primaryText">
+                <MarkdownBody content={article.content}></MarkdownBody>
+            </Box>
             <List
-                // styleType="disc"
                 spacing={3}
                 fontSize={13}
                 mb={4}
                 px={4}
                 py={2}
-                backgroundColor="#efefef"
-                // border="1px"
+                backgroundColor="theme.blackground"
                 borderRadius="md"
                 borderColor="#e5e5e5"
             >
-                <ListItem mb={1}>
-                    <strong>本文链接：</strong>
+                <ListItem mb={1} color="theme.article.secondaryText">
+                    <Text as="strong">本文链接：</Text>
                     <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
-                        <UiLink color="gray.600" isTruncated={true}>
+                        <UiLink color="theme.article.secondaryText" isTruncated={true}>
                             {config.domain + '/blog/articles/' + article._id}
                         </UiLink>
                     </Link>
                 </ListItem>
-                <ListItem>
-                    <strong>版权声明：</strong>
-                    <Text color="gray.600" as="span">
+                <ListItem color="theme.article.secondaryText">
+                    <Text as="strong">版权声明：</Text>
+                    <Text color="theme.article.secondaryText" as="span">
                         自由转载-署名-非商业性使用
                         <Text mx={1} as="i">
                             |
@@ -184,10 +185,10 @@ const C = (props: Props) => {
                     </Text>
                 </ListItem>
             </List>
-            <Flex justifyContent="space-between" fontSize={13}>
+            <Flex justifyContent="space-between" fontSize={13} color="theme.article.primaryText">
                 {article.prev && (
                     <Text isTruncated={true} width="45%" mr={5}>
-                        <strong>上一篇：</strong>
+                        <Text as="strong">上一篇：</Text>
                         <Link href={`/blog/articles/${article.prev._id}`} passHref={true}>
                             <UiLink>{article.prev.title}</UiLink>
                         </Link>
@@ -195,7 +196,7 @@ const C = (props: Props) => {
                 )}
                 {article.next && (
                     <Text isTruncated={true} width="45%">
-                        <strong>下一篇：</strong>
+                        <Text as="strong">下一篇：</Text>
                         <Link href={`/blog/articles/${article.next._id}`} passHref={true}>
                             <UiLink>{article.next.title}</UiLink>
                         </Link>
@@ -203,7 +204,7 @@ const C = (props: Props) => {
                 )}
             </Flex>
             <Comment article={article} comments={comments}></Comment>
-        </ArticleItem>
+        </Box>
     );
 };
 

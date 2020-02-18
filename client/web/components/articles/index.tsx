@@ -15,7 +15,6 @@ import Pagination from '../pagination';
 
 const UL = styled.div`
     flex-wrap: wrap;
-    background-color: #fff;
     flex: 1 0 auto;
     list-style: none;
     padding: 0;

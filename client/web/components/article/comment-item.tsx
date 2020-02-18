@@ -7,11 +7,12 @@ import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
 import md5 from 'crypto-js/md5';
 import { Collapse, Box, Badge, Text, Heading } from '@chakra-ui/core';
+import MarkdownBody from './markdown-body';
+import { css } from 'emotion';
 
 const ghat = new GHAT();
 
 const CommentsItem = styled.li`
-    border-bottom: 1px solid #f5f5f5;
     padding: 10px;
     position: relative;
     &:after {
@@ -140,7 +141,7 @@ const UserSign: any = styled.span`
     `};
 `;
 
-const ItemContent = styled.div`
+const ItemContent = styled(MarkdownBody)`
     font-size: 14px;
     line-height: 1.5;
     word-break: break-all;
@@ -171,45 +172,55 @@ const replyFn = (item: any) => {
         setAvatarSrc(ghat.getImage(md5(item.nickName).toString()) || '');
     }, [item._id]);
     return (
-        <Quote>
-            <Box width="100%">
-                <User>
-                    <InfoWrap>
-                        <span className="tip">回复给：</span>
-                        <AvatarWrap className="quote">
-                            <img src={avatarSrc} />
-                        </AvatarWrap>
-                        <NickName className="quote">{item.nickName}</NickName>
-                        <span className="separator">&nbsp;·&nbsp;</span>
-                        {item.identity !== 0 ? (
-                            <Badge fontWeight="normal" fontSize={12} variant="outline" variantColor="" color="red.500">
-                                博主
-                            </Badge>
-                        ) : (
-                            <Badge fontWeight="normal" fontSize={12} variant="outline" variantColor="" color="gray.500">
-                                游客
-                            </Badge>
-                        )}
-                        <span className="separator">&nbsp;·&nbsp;</span>
-                        <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
-                    </InfoWrap>
-                    <Meta className="quote">
-                        <a
-                            style={{ cursor: 'pointer' }}
-                            comment-id={item._id}
-                            onClick={() => {
-                                setShowContent(!showContent);
-                            }}
+        <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={14} mt={2} mb={2}>
+            <User>
+                <InfoWrap>
+                    <span className="tip">回复给：</span>
+                    <AvatarWrap className="quote">
+                        <img src={avatarSrc} />
+                    </AvatarWrap>
+                    <NickName className="quote">{item.nickName}</NickName>
+                    <span className="separator">&nbsp;·&nbsp;</span>
+                    {item.identity !== 0 ? (
+                        <Badge
+                            fontWeight="normal"
+                            fontSize={12}
+                            variant="outline"
+                            variantColor=""
+                            color="theme.article.badgeAuthorColor"
                         >
-                            {showContent ? '折叠' : '展开'}
-                        </a>
-                    </Meta>
-                </User>
-                <Collapse mt={4} isOpen={showContent}>
-                    <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
-                </Collapse>
-            </Box>
-        </Quote>
+                            博主
+                        </Badge>
+                    ) : (
+                        <Badge
+                            fontWeight="normal"
+                            fontSize={12}
+                            variant="outline"
+                            variantColor=""
+                            color="theme.article.badgeVisitorColor"
+                        >
+                            游客
+                        </Badge>
+                    )}
+                    <span className="separator">&nbsp;·&nbsp;</span>
+                    <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
+                </InfoWrap>
+                <Meta className="quote">
+                    <a
+                        style={{ cursor: 'pointer' }}
+                        comment-id={item._id}
+                        onClick={() => {
+                            setShowContent(!showContent);
+                        }}
+                    >
+                        {showContent ? '折叠' : '展开'}
+                    </a>
+                </Meta>
+            </User>
+            <Collapse mt={4} isOpen={showContent}>
+                <ItemContent content={marked(item.content)}></ItemContent>
+            </Collapse>
+        </Box>
     );
 };
 
@@ -222,7 +233,25 @@ export const CommentItem = (props: { item: any; index: number }) => {
 
     const item = props.item;
     return (
-        <CommentsItem data-index={'# ' + (props.index + 1) + ' 楼层'}>
+        <Box
+            data-index={'# ' + (props.index + 1) + ' 楼层'}
+            p={2}
+            pt={4}
+            borderBottom="1px"
+            borderBottomColor="theme.border"
+            position="relative"
+            className={css`
+                &:after {
+                    content: attr(data-index);
+                    position: absolute;
+                    right: 10px;
+                    top: 19px;
+                    text-align: center;
+                    color: #d5cbcb;
+                    font-size: 12px;
+                }
+            `}
+        >
             <Info>
                 <AvatarWrap>
                     <img src={avatarSrc} />
@@ -230,16 +259,26 @@ export const CommentItem = (props: { item: any; index: number }) => {
                 <Content>
                     <User>
                         <InfoWrap>
-                            <Box color="gray.500" fontWeight="bold" fontSize={14}>
+                            <Box color="theme.primaryText" fontWeight="bold" fontSize={14}>
                                 {item.nickName}
                             </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
                             {item.identity !== 0 ? (
-                                <Badge fontSize={12} variant="outline" variantColor="" color="red.500">
+                                <Badge
+                                    fontSize={12}
+                                    variant="outline"
+                                    variantColor=""
+                                    color="theme.article.badgeAuthorColor"
+                                >
                                     博主
                                 </Badge>
                             ) : (
-                                <Badge fontSize={12} variant="outline" variantColor="" color="gray.500">
+                                <Badge
+                                    fontSize={12}
+                                    variant="outline"
+                                    variantColor=""
+                                    color="theme.article.badgeVisitorColor"
+                                >
                                     游客
                                 </Badge>
                             )}
@@ -260,7 +299,18 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         </Meta>
                     </User>
                     {item.reply && replyFn(item.reply)}
-                    <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
+                    <Box
+                        color="theme.primaryText"
+                        className={css`
+                            h1,
+                            h2,
+                            h3 {
+                                border-color: rgba(255, 255, 255, 0.2);
+                            }
+                        `}
+                    >
+                        <ItemContent content={marked(item.content)}></ItemContent>
+                    </Box>
                     <ReplyBox>
                         {showCommentForm === item._id && (
                             <CommentForm url="/comments" articleId={item.article} replyId={item._id} />
@@ -268,6 +318,6 @@ export const CommentItem = (props: { item: any; index: number }) => {
                     </ReplyBox>
                 </Content>
             </Info>
-        </CommentsItem>
+        </Box>
     );
 };

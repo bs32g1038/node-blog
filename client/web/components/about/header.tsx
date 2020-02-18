@@ -6,7 +6,6 @@ const AboutHeader = styled.div`
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
-    border-bottom: 2px solid #444;
     align-items: center;
     ${media.phone`
         flex-wrap: wrap;

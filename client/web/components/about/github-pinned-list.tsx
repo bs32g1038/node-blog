@@ -15,7 +15,6 @@ const PinnedItemsList = styled.ol`
     .pinned-item-list-item {
         margin-bottom: 16px;
         width: calc(50% - 8px);
-        background-color: #f6f7fa;
         border-radius: 3px;
         padding: 16px;
         box-sizing: border-box;

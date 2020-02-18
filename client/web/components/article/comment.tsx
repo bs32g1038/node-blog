@@ -25,7 +25,7 @@ const comemnt = (props: { article: any; comments: any }) => {
     const comments = props.comments;
     return (
         <CommentsWrap>
-            <Heading as="h3" size="lg" my={[4]} textAlign="center" color="gray.600">
+            <Heading as="h3" size="lg" my={[4]} textAlign="center" color="theme.primaryText">
                 --发表评论--
             </Heading>
             <CommentForm url="/comments" articleId={article._id} />

@@ -15,7 +15,7 @@ const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
             overflow="auto"
             borderBottomWidth="1px"
             borderStyle="solid"
-            borderBottomColor="theme.header.borderColor.200"
+            borderBottomColor="theme.header.borderColor"
             position="relative"
         >
             {!isLoading &&

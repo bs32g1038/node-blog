@@ -12,7 +12,6 @@ import AppLayout from '../../layouts/app';
 import { isServer } from '../../utils/helper';
 
 const ArticleWrap = styled.div`
-    background-color: #fff;
     display: flex;
     ${media.phone`
         display: block;

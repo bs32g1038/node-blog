@@ -11,7 +11,6 @@ const Div = styled.div`
 
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    color: rgba(0, 0, 0, 0.85);
     font-size: 14px;
     line-height: 1.5;
     word-wrap: break-word;
@@ -355,7 +354,6 @@ const Div = styled.div`
     p {
         margin-bottom: 10px;
         margin-top: 0;
-        color: rgba(0, 0, 0, 0.65);
     }
 
     blockquote {
@@ -663,7 +661,6 @@ const Div = styled.div`
     }
 
     img {
-        background-color: #fff;
         box-sizing: content-box;
         max-width: 100%;
     }
@@ -924,7 +921,6 @@ const Div = styled.div`
     img {
         box-sizing: border-box;
         margin: auto;
-        padding: 3px;
         max-width: 100%;
         height: auto;
         margin: 0 auto;

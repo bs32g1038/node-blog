@@ -18,7 +18,7 @@ export const AppHeader = () => {
             alignItems="center"
             borderBottomWidth="1px"
             borderStyle="solid"
-            borderBottomColor="theme.header.borderColor.100"
+            borderBottomColor="theme.header.headerBorderBottomColor"
             flex="0 0 auto"
             display="flex"
             height="60px"

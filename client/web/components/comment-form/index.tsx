@@ -257,27 +257,36 @@ export const CommentForm = (props: Props) => {
     };
     return (
         <CommentFormWrap ref={$form}>
-            <Alert status="info" variant="subtle" fontSize={12} mb={3} backgroundColor="#efefef">
+            <Alert
+                status="info"
+                color="theme.primaryText"
+                variant="subtle"
+                fontSize={13}
+                mb={3}
+                backgroundColor="theme.blackground"
+            >
                 <AlertIcon size="12px" />
                 当前评论模式：游客模式，系统将自动生成相关数据信息
             </Alert>
-            <Flex pb={3} alignItems="center">
-                <Text color="gray.600" fontSize={13} mr={1}>
+            <Flex pb={3} alignItems="center" color="theme.primaryText">
+                <Text fontSize={13} mr={1}>
                     游客账户：
                 </Text>
                 <Avatar
                     borderRadius="md"
                     size="xs"
                     name="Dan Abrahmov"
-                    backgroundColor="#fff"
+                    backgroundColor="theme.blackground"
                     src={ghat.getImage(md5('lc_youke_003412').toString()) || ''}
                 />
-                <Text color="gray.600" fontSize={13} ml={2}>
+                <Text fontSize={13} ml={2}>
                     lc_youke_003412
                 </Text>
             </Flex>
-            <ContentWrap>
+            <Box color="theme.primaryText">
                 <Textarea
+                    bg="theme.blackground"
+                    color="theme.primaryText"
                     focusBorderColor="none"
                     fontSize={14}
                     name="content"
@@ -630,7 +639,7 @@ export const CommentForm = (props: Props) => {
                         </ButtonGroup>
                     </ButtonSubmitWrap>
                 </Footer>
-            </ContentWrap>
+            </Box>
         </CommentFormWrap>
     );
 };
