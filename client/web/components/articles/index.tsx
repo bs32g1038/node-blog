@@ -30,7 +30,7 @@ const LIMIT = 12;
 const getData = (props: any) => {
     const { page = 1, limit = LIMIT, cid = '', tag = '' } = props.router.query;
     const articles = props._DB;
-    return articles[getArticlesCacheKey(page, limit, { cid, tag })] || { items: new Array(4).fill(null) };
+    return articles[getArticlesCacheKey(page, limit, { cid, tag })] || { items: new Array(10).fill(null) };
 };
 
 export const fetchData = (props: { router: Router; dispatch: any }) => {

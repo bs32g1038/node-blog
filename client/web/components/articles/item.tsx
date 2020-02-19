@@ -7,8 +7,7 @@ import Icon from '../icon';
 import Trend from '../Trend';
 import { LazyLoad } from '../lazy-load';
 import { parseTime } from '../../../libs/time';
-import { ContentLoader } from '../content-loader';
-import Skeleton from '../skeleton';
+import ListStyleLoader from '../list-style-loader';
 
 const ThumbWrap = styled.div`
     height: auto;
@@ -46,32 +45,6 @@ const ThumbImg = styled(Box)`
     background-size: cover;
     background-position: 100% 100%;
 `;
-
-const Loading = () => (
-    <Box mt={5} mb={5}>
-        <Flex justifyContent="space-between" mb={4}>
-            <Skeleton width="20%" height="20px" mr={5}></Skeleton>
-            <Skeleton width="60%" height="20px" mr={5}></Skeleton>
-            <Skeleton width="20%" height="20px"></Skeleton>
-        </Flex>
-        <Flex justifyContent="space-between" mb={4}>
-            <Skeleton flex="1 0 auto" height="20px" mr={5}></Skeleton>
-            <Skeleton flex="1 0 auto" height="20px" mr={5}></Skeleton>
-            <Skeleton flex="1 0 auto" height="20px"></Skeleton>
-        </Flex>
-        <Flex justifyContent="space-between" mb={4}>
-            <Skeleton width="20%" height="20px" mr={5}></Skeleton>
-            <Skeleton width="60%" height="20px" mr={5}></Skeleton>
-            <Skeleton width="20%" height="20px"></Skeleton>
-        </Flex>
-    </Box>
-    // <ContentLoader width={375} height={114} uniqueKey={'article-item'} style={{ height: '114px' }}>
-    //     <rect x="20" y="20" width="240" height="14"></rect>
-    //     <rect x="20" y="44" width="280" height="14"></rect>
-    //     <rect x="20" y="70" width="190" height="14"></rect>
-    //     <rect x="20" y="94" width="335" height="14"></rect>
-    // </ContentLoader>
-);
 
 const Item: SFC<{ item: any }> = (props: any) => {
     const item = props.item;
@@ -154,14 +127,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
 };
 
 const C: SFC<{ item: any; loading: boolean }> = (props: any) => {
-    // return !props.loading && props.item ? (
-    //     <Item item={props.item}></Item>
-    // ) : (
-    //     <li>
-    //         <Loading></Loading>
-    //     </li>
-    // );
-    return <Loading></Loading>;
+    return !props.loading && props.item ? <Item item={props.item}></Item> : <ListStyleLoader></ListStyleLoader>;
 };
 
 export default C;

@@ -2,7 +2,6 @@ import Link from '../link';
 import React, { useState } from 'react';
 import config from '../../config/site-info';
 import { parseTime } from '../../../libs/time';
-import { ContentLoader } from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
 import {
@@ -18,6 +17,7 @@ import {
     ListItem,
     Heading,
 } from '@chakra-ui/core';
+import ListStyleLoader from '../list-style-loader';
 
 export const MODE = {
     normal: 'normal',
@@ -141,20 +141,14 @@ const C = (props: Props) => {
     );
 };
 
-const loading = (
-    <ContentLoader width={720} height={520} style={{ width: '100%', height: '520px' }}>
-        <rect x="0" y="0" width="320" height="20"></rect>
-        <rect x="0" y="40" width="420" height="30"></rect>
-        <rect x="600" y="20" width="120" height="60"></rect>
-        <rect x="0" y="90" width="320" height="20"></rect>
-        <rect x="0" y="130" width="720" height="30"></rect>
-        <rect x="0" y="150" width="720" height="120"></rect>
-        <rect x="0" y="290" width="720" height="20"></rect>
-        <rect x="0" y="330" width="720" height="50"></rect>
-        <rect x="0" y="400" width="720" height="120"></rect>
-    </ContentLoader>
-);
-
 export default (props: Props) => {
-    return !props.loading && props.article && Object.keys(props.article).length > 0 ? <C {...props}></C> : loading;
+    return !props.loading && props.article && Object.keys(props.article).length > 0 ? (
+        <C {...props}></C>
+    ) : (
+        <Box width="100%">
+            {new Array(8).fill(true).map((_, index) => (
+                <ListStyleLoader key={index}></ListStyleLoader>
+            ))}
+        </Box>
+    );
 };

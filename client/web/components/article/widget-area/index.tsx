@@ -6,7 +6,7 @@ import UiLink from '../../ui-link';
 import media from '../../../utils/media';
 import { parseTime } from '../../../../libs/time';
 import { useFixedTopInScroll } from '../../../hook';
-import { ContentLoader } from '../../content-loader';
+import ListStyleLoader from '../../list-style-loader';
 
 const WidgetArea = styled.div`
     width: 200px;
@@ -103,14 +103,6 @@ const Item = (props: Props) => {
     );
 };
 
-const Loading = () => (
-    <ContentLoader width={240} height={85}>
-        <rect x="0" y="0" width="100" height="85"></rect>
-        <rect x="120" y="0" width="120" height="40"></rect>
-        <rect x="120" y="75" width="60" height="10"></rect>
-    </ContentLoader>
-);
-
 export default (props: { recentArticles: ItemProps[] }) => {
     const { recentArticles } = props;
     let arr = recentArticles;
@@ -129,7 +121,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                         return item ? (
                             <Item item={item} key={item._id}></Item>
                         ) : (
-                            <Loading key={`recommended_posts_loading_${index}`}></Loading>
+                            <ListStyleLoader key={`recommended_posts_loading_${index}`}></ListStyleLoader>
                         );
                     })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
