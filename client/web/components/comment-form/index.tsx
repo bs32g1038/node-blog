@@ -24,7 +24,6 @@ import MarkdownBody from '../markdown-body';
 import axios from '../../utils/axios';
 import marked from '../../../libs/marked';
 import GHAT from '../../../libs/generate-avatar';
-import Icon from '../icon';
 
 const ghat = new GHAT();
 

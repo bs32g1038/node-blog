@@ -6,7 +6,7 @@ import media from '../utils/media';
 import _theme from '../theme';
 import light from '../theme/light';
 import dark from '../theme/dark';
-import { ThemeProvider, CSSReset, ColorModeProvider, useColorMode, Box } from '@chakra-ui/core';
+import { ThemeProvider, CSSReset, useColorMode, Box } from '@chakra-ui/core';
 
 export default (props: { children: any }) => {
     const children = props.children;

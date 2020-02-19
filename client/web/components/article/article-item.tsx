@@ -1,13 +1,10 @@
-import styled from '@emotion/styled';
 import Link from '../link';
 import React, { useState } from 'react';
 import config from '../../config/site-info';
-import media from '../../utils/media';
 import { parseTime } from '../../../libs/time';
 import { ContentLoader } from '../content-loader';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
-import message from '../message';
 import {
     Box,
     Icon,
@@ -19,7 +16,6 @@ import {
     Flex,
     List,
     ListItem,
-    ListIcon,
     Heading,
 } from '@chakra-ui/core';
 
@@ -27,48 +23,6 @@ export const MODE = {
     normal: 'normal',
     reading: 'reading',
 };
-
-const ArticleItem = styled.div<{ mode: string }>`
-    max-width: ${props => (props.mode === MODE.reading ? '100%' : '570px')};
-    flex: 1 0 auto;
-    position: relative;
-    transition: max-width 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-    ${media.phone`
-            padding-left: 12px;
-            padding-right: 12px;
-            width: 100%;
-            box-sizing: border-box;
-            padding-bottom: 20px;
-        `}
-`;
-
-const ModePanel = styled.div`
-    position: absolute;
-    right: 0;
-    top: 0;
-    ${media.phone`
-            display: none;
-        `}
-`;
-
-const ModeButton = styled.button<{ active: boolean }>`
-    border: none;
-    background-color: transparent;
-    border-radius: 3px;
-    cursor: pointer;
-    padding: 3px 5px;
-    margin-right: 5px;
-    outline: none;
-    font-size: 12px;
-    transition: color 0.2s ease-in, border 0.2s ease-in;
-    border: 1px solid ${props => (props.active ? '#f86422' : 'hsla(0, 0%, 59.2%, 0.2)')};
-    color: ${props => (props.active ? '#f86422' : '#999')};
-    ${props => props.active && 'pointer-events:none'};
-`;
-
-const ArticleHeader = styled.div`
-    margin-bottom: 20px;
-`;
 
 interface Props {
     loading: boolean;
@@ -126,7 +80,7 @@ const C = (props: Props) => {
                     </BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-            <ArticleHeader>
+            <Box mb={5}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
                     <Heading as="h2" size="xl" my={[4]}>
                         {article.title}
@@ -149,7 +103,7 @@ const C = (props: Props) => {
                     </Text>
                     <Text color="gray.500">阅读次数{article.viewsCount}</Text>
                 </Flex>
-            </ArticleHeader>
+            </Box>
             <Box color="theme.article.primaryText">
                 <MarkdownBody content={article.content}></MarkdownBody>
             </Box>

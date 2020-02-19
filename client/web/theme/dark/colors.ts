@@ -1,6 +1,5 @@
 import tinycolor from 'tinycolor2';
 import {
-    presetDarkPalettes,
     red,
     volcano,
     gold,

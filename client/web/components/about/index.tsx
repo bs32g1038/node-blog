@@ -33,7 +33,7 @@ export const About = () => {
                 ></GithubContribution>
             </Box>
             <GithubPinnedList userRepos={data.userRepos}></GithubPinnedList>
-            <p>上面是我众多开源项目中的几个， 更多的开源项目在github上。希望我的项目能够帮助到你。</p>
+            <Box mt={3}>上面是我众多开源项目中的几个， 更多的开源项目在github上。希望我的项目能够帮助到你。</Box>
         </Box>
     );
 };

@@ -1,10 +1,10 @@
 import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { ColorModeProvider } from '@chakra-ui/core';
 import withReduxStore from '../client/web/redux/with-redux-store';
 import versionInfo from '../package.json';
 import siteInfo from '../client/web/config/site-info';
-import { ThemeProvider, CSSReset, ColorModeProvider, useColorMode } from '@chakra-ui/core';
 
 class MyApp extends App {
     componentDidMount() {

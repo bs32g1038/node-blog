@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Flex } from '@chakra-ui/core';
 import Link from '../link';
-import Icon from '../Icon';
+import Icon from '../icon';
 import UiLink from '../ui-link';
 
 const PageNumbers = styled(UiLink)`
