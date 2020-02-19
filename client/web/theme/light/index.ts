@@ -1,7 +1,6 @@
 /*
- * a theme inspired by github
+ * 亮主题
  */
-import { theme } from '@chakra-ui/core';
 import colors from './colors';
 
 const mainBgColor = '#fff';
@@ -40,6 +39,12 @@ const light = {
         text: colors.secondaryText,
     },
     imageBg: 'white',
+    pagination: {
+        bg: '#f4f5f9',
+    },
+    backTop: {
+        bg: 'white',
+    },
 };
 
 export default light;

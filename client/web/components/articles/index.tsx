@@ -12,6 +12,7 @@ import Head from 'next/head';
 import siteInfo from '../../config/site-info';
 import AppLayout from '../../layouts/app';
 import Pagination from '../pagination';
+import { Box, Flex } from '@chakra-ui/core';
 
 const UL = styled.div`
     flex-wrap: wrap;
@@ -69,7 +70,9 @@ const CArticles = (props: { router: Router; dispatch: any }) => {
                     ></ArticleItem>
                 ))}
             </UL>
-            <Pagination current={page} pageSize={LIMIT} total={totalCount}></Pagination>
+            <Flex justifyContent="center" mt={5}>
+                <Pagination current={page} pageSize={LIMIT} total={totalCount}></Pagination>
+            </Flex>
         </AppLayout>
     );
 };

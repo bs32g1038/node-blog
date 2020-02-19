@@ -38,7 +38,7 @@ export const getArticle = (obj = {}) => {
     return {
         _id: mongoose.Types.ObjectId().toString(),
         title: faker.name.title(),
-        content: faker.lorem.text(),
+        content: faker.lorem.paragraphs(),
         summary: faker.lorem.paragraph(),
         screenshot: faker.image.imageUrl(),
         category: categories[Math.floor(Math.random() * categories.length)]._id.toString(),

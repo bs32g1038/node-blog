@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
-import { debounce } from '../../../libs/debounce';
-import media from '../../utils/media';
-import { parseTime } from '../../../libs/time';
-import { ContentLoader } from '../content-loader';
+import { debounce } from '../../../../libs/debounce';
+import media from '../../../utils/media';
+import { parseTime } from '../../../../libs/time';
+import { ContentLoader } from '../../content-loader';
+import { Collapse, Box, Badge, Text, Heading } from '@chakra-ui/core';
 
 const WidgetArea = styled.div`
     width: 200px;
@@ -216,7 +217,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
     return (
         <WidgetArea className={isFixed ? 'fixed' : ''}>
             <section className="widget" ref={$dom}>
-                <WidgetTitle>最近文章</WidgetTitle>
+                <Heading as="h3">最近文章</Heading>
                 <div className="list-grid list-grid-padding">
                     {arr.map((item, index) => {
                         return item ? (

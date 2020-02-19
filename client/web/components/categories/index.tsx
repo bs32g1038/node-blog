@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories, State } from '../../redux/reducers/categories';
-import media from '../../utils/media';
 import NavLink from '../nav-link';
-import * as theme from '../../theme';
-import { Flex, Box, Text, Divider, Heading, Link } from '@chakra-ui/core';
+import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
+import { useRouter } from 'next/router';
+import Router from 'next/router';
 
 const ItemLink = styled(Link)`
     text-decoration: none;
@@ -41,14 +41,16 @@ const C = (props: any) => {
             props.dispatch(fetchCategories());
         }
     }, [1]);
+    const router = useRouter();
     const { categories = [] } = props._DB;
     return (
         <Box
-            flex="0 0 auto;"
+            flex="0 0 auto"
             fontSize={13}
             borderBottomWidth="1px"
             borderStyle="solid"
             borderBottomColor="theme.categories.border"
+            pb={3}
         >
             <Box display="inline-block" mt={2} mb={4}>
                 <NavLink exact={true} href="/blog">
@@ -65,6 +67,18 @@ const C = (props: any) => {
                     </NavLink>
                 </Box>
             ))}
+            {router.query.tag && (
+                <Box>
+                    <Tag>
+                        <TagLabel>{router.query.tag}</TagLabel>
+                        <TagCloseButton
+                            onClick={() => {
+                                Router.push('/blog/articles');
+                            }}
+                        />
+                    </Tag>
+                </Box>
+            )}
         </Box>
     );
 };

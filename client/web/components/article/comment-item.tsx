@@ -7,7 +7,7 @@ import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
 import md5 from 'crypto-js/md5';
 import { Collapse, Box, Badge, Text, Heading } from '@chakra-ui/core';
-import MarkdownBody from './markdown-body';
+import MarkdownBody from '../markdown-body';
 import { css } from 'emotion';
 
 const ghat = new GHAT();

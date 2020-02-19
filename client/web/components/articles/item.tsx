@@ -1,49 +1,13 @@
 import styled from '@emotion/styled';
-import Link from '../link';
 import React, { SFC } from 'react';
-import media from '../../utils/media';
+import { Flex, Box, Text, Heading } from '@chakra-ui/core';
+import Link from '../link';
+import UiLink from '../ui-link';
+import Icon from '../icon';
+import Trend from '../Trend';
+import { LazyLoad } from '../lazy-load';
 import { parseTime } from '../../../libs/time';
 import { ContentLoader } from '../content-loader';
-import { LazyLoad } from '../lazy-load';
-import * as theme from '../../theme';
-import Trend from '../Trend';
-import { Flex, Box, Text, Heading } from '@chakra-ui/core';
-import Icon from '../icon';
-
-const Brief = styled.div`
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 10px;
-    line-height: 1.5;
-    display: block;
-    width: 100%;
-    margin-right: 20px;
-    ${media.phone`
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        margin: 18px;
-    `};
-`;
-
-const Content = styled.div`
-    width: 100%;
-    ${media.phone`
-        margin-right: 14px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    `};
-`;
-
-const RightContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    ${media.phone`
-       display: none;
-    `}
-`;
 
 const ThumbWrap = styled.div`
     height: auto;
@@ -103,6 +67,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
             pt={5}
             alignItems="center"
             isTruncated={true}
+            key={item._id}
         >
             <Box ml={3} mr={4} width="100%">
                 <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
@@ -144,24 +109,17 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     <Flex fontSize={13} alignItems="center" mt={3}>
                         <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
                         {item.tags.map((name: any) => (
-                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag' + name}>
-                                <Text color="theme.articles.secondaryText" as="span" ml={1}>
+                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_000000' + name}>
+                                <UiLink color="theme.articles.secondaryText" ml={1}>
                                     {name}
-                                </Text>
+                                </UiLink>
                             </Link>
                         ))}
                     </Flex>
                 )}
             </Box>
-            <RightContent>
+            <Flex flexDirection="column">
                 <ThumbWrap>
-                    {/* <Box
-                                height="100px"
-                                width="150px"
-                                bg="theme.articles.bg"
-                                backgroundSize="cover"
-                                backgroundPosition="100% 100%"
-                            ></Box> */}
                     <LazyLoad
                         component={ThumbImg}
                         attrs={{
@@ -172,7 +130,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                 <div title={item.title + ' 访问趋势'}>
                     <Trend data={[1, 1, ...item.dayReadings.map((tmp: any) => tmp.count), 1, 1]} />
                 </div>
-            </RightContent>
+            </Flex>
         </Flex>
     );
 };

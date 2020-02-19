@@ -6,7 +6,7 @@ import media from '../../utils/media';
 import { parseTime } from '../../../libs/time';
 import { ContentLoader } from '../content-loader';
 import Comment from './comment';
-import MarkdownBody from './markdown-body';
+import MarkdownBody from '../markdown-body';
 import message from '../message';
 import {
     Box,
@@ -162,18 +162,17 @@ const C = (props: Props) => {
                 backgroundColor="theme.blackground"
                 borderRadius="md"
                 borderColor="#e5e5e5"
+                color="theme.article.primaryText"
             >
-                <ListItem mb={1} color="theme.article.secondaryText">
+                <ListItem mb={1}>
                     <Text as="strong">本文链接：</Text>
                     <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
-                        <UiLink color="theme.article.secondaryText" isTruncated={true}>
-                            {config.domain + '/blog/articles/' + article._id}
-                        </UiLink>
+                        <UiLink isTruncated={true}>{config.domain + '/blog/articles/' + article._id}</UiLink>
                     </Link>
                 </ListItem>
-                <ListItem color="theme.article.secondaryText">
+                <ListItem>
                     <Text as="strong">版权声明：</Text>
-                    <Text color="theme.article.secondaryText" as="span">
+                    <Text as="span">
                         自由转载-署名-非商业性使用
                         <Text mx={1} as="i">
                             |

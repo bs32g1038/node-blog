@@ -1,5 +1,5 @@
 /*
- * a theme inspired by github
+ * 黑暗主题
  */
 import colors from './colors';
 
@@ -39,6 +39,12 @@ const light = {
         text: colors.secondaryText,
     },
     imageBg: 'rgb(25, 25, 25)',
+    pagination: {
+        bg: colors.grey[6],
+    },
+    backTop: {
+        bg: colors.grey[6],
+    },
 };
 
 export default light;

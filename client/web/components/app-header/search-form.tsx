@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import * as Api from '../../api/article';
 import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/core';
 import Icon from '../icon';
+import { debounce } from 'lodash';
 
 const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
     const { isLoading, items } = props;
@@ -111,8 +112,10 @@ export const SearchForm = () => {
             }
         });
     };
+    const debounceFetchData = debounce(fetchData, 50);
+
     const onfocus = () => {
-        fetchData('');
+        debounceFetchData('');
         setIsActiveNavSearchDropdown(true);
     };
     const onblur = () => {
@@ -120,7 +123,7 @@ export const SearchForm = () => {
     };
     const oninput = (e: any) => {
         if (e.target) {
-            fetchData(e.target.value);
+            debounceFetchData(e.target.value);
         }
     };
     const foldNavList = () => {

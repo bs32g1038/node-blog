@@ -1,21 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Flex } from '@chakra-ui/core';
 import Link from '../link';
-import { ArrowSvg } from '../svgs/arrow-svg';
+import Icon from '../Icon';
+import UiLink from '../ui-link';
 
-const NavLinks = styled.div`
-    position: relative;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-`;
-
-const PageNumbers = styled.a`
+const PageNumbers = styled(UiLink)`
     position: relative;
     display: inline-block;
-    background-color: #f4f5f9;
+    background-color: ${(props: any) => props.theme.colors.theme.pagination.bg};
     padding: 0.5rem 0.875rem;
     margin: 0 0.5rem 0 0;
     font-size: 12px;
@@ -27,15 +20,6 @@ const PageNumbers = styled.a`
         color: #fff;
         background-color: #4eb77d;
         pointer-events: none;
-    }
-`;
-
-const ArrowIcon = styled(ArrowSvg)`
-    width: 12px;
-    vertical-align: middle;
-    fill: #444;
-    &.rotate180 {
-        transform: rotate(180deg);
     }
 `;
 
@@ -96,11 +80,11 @@ export default (props: Props) => {
     const pageCount = Math.ceil(total / pageSize);
     const { showPrevMore, showNextMore, pageList } = getPage(current, pageCount);
     return pageCount > 1 ? (
-        <NavLinks>
+        <Flex>
             {current > 1 && (
                 <Link href={`/blog/articles?page=${current - 1}`}>
                     <PageNumbers>
-                        <ArrowIcon></ArrowIcon>
+                        <Icon name="arrow"></Icon>
                     </PageNumbers>
                 </Link>
             )}
@@ -126,11 +110,11 @@ export default (props: Props) => {
             {current < pageCount && (
                 <Link href={`/blog/articles?page=${current + 1}`}>
                     <PageNumbers>
-                        <ArrowIcon className="rotate180"></ArrowIcon>
+                        <Icon name="arrow" transform="rotate(180deg)"></Icon>
                     </PageNumbers>
                 </Link>
             )}
-        </NavLinks>
+        </Flex>
     ) : (
         <div style={{ display: 'none' }}></div>
     );
