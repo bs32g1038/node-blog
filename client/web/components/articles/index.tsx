@@ -12,7 +12,7 @@ import Head from 'next/head';
 import siteInfo from '../../config/site-info';
 import AppLayout from '../../layouts/app';
 import Pagination from '../pagination';
-import { Box, Flex } from '@chakra-ui/core';
+import { Flex } from '@chakra-ui/core';
 
 const UL = styled.div`
     flex-wrap: wrap;

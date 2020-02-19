@@ -6,30 +6,11 @@ import media from '../../utils/media';
 import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
 import md5 from 'crypto-js/md5';
-import { Collapse, Box, Badge, Text, Heading } from '@chakra-ui/core';
+import { Collapse, Box, Badge, Text } from '@chakra-ui/core';
 import MarkdownBody from '../markdown-body';
 import { css } from 'emotion';
 
 const ghat = new GHAT();
-
-const CommentsItem = styled.li`
-    padding: 10px;
-    position: relative;
-    &:after {
-        content: attr(data-index);
-        position: absolute;
-        right: 10px;
-        top: 12px;
-        text-align: center;
-        color: #d5cbcb;
-        font-size: 12px;
-    }
-    ${media.phone`
-        &:after {
-            top: 10px;
-        }
-    `}
-`;
 
 const Info = styled.div`
     display: flex;
@@ -125,40 +106,11 @@ const InfoTime = styled.span`
     font-weight: normal;
 `;
 
-const UserSign: any = styled.span`
-    color: #999;
-    font-size: 12px;
-    display: inline-block;
-    color: #b5a9a9;
-    font-weight: normal;
-    ${(props: any) =>
-        props.isAdmin &&
-        `
-        background-color: rgba(250, 90, 60, .95);
-        color: #fff;
-        padding: 0 3px;
-        border-radius: 3px;
-    `};
-`;
-
 const ItemContent = styled(MarkdownBody)`
     font-size: 14px;
     line-height: 1.5;
     word-break: break-all;
     word-wrap: break-word;
-`;
-
-const Quote = styled.div`
-    background-color: #f5f5f5;
-    font-size: 14px;
-    margin-bottom: 10px;
-    padding: 10px 20px 10px 20px;
-    margin-top: 10px;
-    border-radius: 5px;
-    display: flex;
-    ${media.phone`
-        padding: 10px;
-    `}
 `;
 
 const ReplyBox = styled.div`

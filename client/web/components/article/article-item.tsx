@@ -33,32 +33,12 @@ interface Props {
 
 const C = (props: Props) => {
     const { article, comments } = props;
-    const [mode, setMode] = useState(MODE.normal);
+    const [mode] = useState(MODE.normal);
     if (typeof props.getReadMode === 'function') {
         props.getReadMode(mode);
     }
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
-            {/* <ModePanel>
-                <ModeButton
-                    active={mode === MODE.normal}
-                    onClick={() => {
-                        message.success('已切换到常规模式！', 1500);
-                        setMode(MODE.normal);
-                    }}
-                >
-                    常规模式
-                </ModeButton>
-                <ModeButton
-                    active={mode === MODE.reading}
-                    onClick={() => {
-                        message.success('已切换到阅读模式！', 1500);
-                        setMode(MODE.reading);
-                    }}
-                >
-                    阅读模式
-                </ModeButton>
-            </ModePanel> */}
             <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
                 <BreadcrumbItem>
                     <Link href="/">

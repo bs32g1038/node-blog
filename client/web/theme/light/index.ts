@@ -45,6 +45,11 @@ const light = {
     backTop: {
         bg: 'white',
     },
+    skeleton: {
+        bgStart: colors.blackground,
+        bgEnd: colors.primaryText,
+        border: colors.blackground,
+    },
 };
 
 export default light;
