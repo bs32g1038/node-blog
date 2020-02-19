@@ -1,6 +1,5 @@
 import React from 'react';
 import siteInfo from '../../config/site-info';
-import { ContentLoader } from '../content-loader';
 import { Flex, Box, Heading, Text } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
@@ -75,18 +74,6 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
     );
 };
 
-const Loading = () => (
-    <ContentLoader width={960} height={150} style={{ height: '150px' }}>
-        <rect x="0" y="10" rx="2" ry="2" width="700" height="20"></rect>
-        <rect x="0" y="40" rx="2" ry="2" width="860" height="20"></rect>
-        <rect x="0" y="70" rx="2" ry="2" width="160" height="20"></rect>
-        <rect x="180" y="70" rx="2" ry="2" width="360" height="20"></rect>
-        <rect x="560" y="70" rx="2" ry="2" width="200" height="20"></rect>
-        <rect x="0" y="100" rx="2" ry="2" width="760" height="20"></rect>
-        <rect x="0" y="130" rx="2" ry="2" width="960" height="20"></rect>
-    </ContentLoader>
-);
-
 export default (props: UserReposProps) => {
     const { userRepos } = props;
     let arr = userRepos;
@@ -97,13 +84,9 @@ export default (props: UserReposProps) => {
         <>
             <Text mb={3}>Github开源项目</Text>
             <Flex flexWrap="wrap" justifyContent="space-between">
-                {arr.map((item: UserRepoItem, index: number) =>
-                    item ? (
-                        <PinnedListItem item={item} key={item.name}></PinnedListItem>
-                    ) : (
-                        <Loading key={`PinnedListItem-${index}`}></Loading>
-                    )
-                )}
+                {arr.map((item: UserRepoItem) => (
+                    <PinnedListItem item={item} key={item.name}></PinnedListItem>
+                ))}
             </Flex>
         </>
     );

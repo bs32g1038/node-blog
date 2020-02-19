@@ -43,7 +43,7 @@ const light = {
         bg: colors.grey[6],
     },
     backTop: {
-        bg: colors.grey[6],
+        bg: mainBgColor,
     },
 };
 

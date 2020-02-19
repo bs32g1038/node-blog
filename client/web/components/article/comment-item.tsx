@@ -1,120 +1,21 @@
-import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { Collapse, Box, Badge, Text, Flex, Image } from '@chakra-ui/core';
+import md5 from 'crypto-js/md5';
+import { css } from 'emotion';
 import marked from '../../../libs/marked';
 import { timeAgo } from '../../../libs/time';
-import media from '../../utils/media';
 import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
-import md5 from 'crypto-js/md5';
-import { Collapse, Box, Badge, Text } from '@chakra-ui/core';
 import MarkdownBody from '../markdown-body';
-import { css } from 'emotion';
 
 const ghat = new GHAT();
-
-const Info = styled.div`
-    display: flex;
-`;
-
-const AvatarWrap = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    margin-right: 10px;
-    margin-top: 5px;
-    img {
-        width: 40px;
-        height: auto;
-        vertical-align: middle;
-        border-radius: 4px;
-    }
-    &.quote {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-top: 0;
-        img {
-            width: 16px;
-            vertical-align: inherit;
-        }
-    }
-    ${media.phone`
-        width: 32px;
-        height: 32px;
-        img {
-            width: 32px;
-            height: auto;
-            vertical-align: middle;
-            border-radius: 4px;
-        }
-    `}
-`;
-
-const Content = styled.div`
-    width: 100%;
-`;
-
-const Meta = styled.div`
-    color: #999;
-    font-size: 12px;
-    margin-right: 55px;
-    > a {
-        text-decoration: none;
-        color: #999;
-    }
-    &.quote {
-        margin-right: 0;
-    }
-`;
-
-const User = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-const InfoWrap = styled.div`
-    display: flex;
-    align-items: center;
-    color: #6d757a;
-    .separator {
-        color: #b5a9a9;
-        font-weight: normal;
-    }
-    ${media.phone`
-        .tip {
-            font-size: 12px;
-        }
-    `}
-`;
-
-const NickName = styled.span`
-    ${media.phone`
-        font-size: 12px;
-        &.quote {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            max-width: 60px;
-        }
-    `}
-`;
-
-const InfoTime = styled.span`
-    color: #999;
-    font-size: 12px;
-    font-weight: normal;
-`;
 
 const ItemContent = styled(MarkdownBody)`
     font-size: 14px;
     line-height: 1.5;
     word-break: break-all;
     word-wrap: break-word;
-`;
-
-const ReplyBox = styled.div`
-    margin-top: 10px;
 `;
 
 const replyFn = (item: any) => {
@@ -125,13 +26,13 @@ const replyFn = (item: any) => {
     }, [item._id]);
     return (
         <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={14} mt={2} mb={2}>
-            <User>
-                <InfoWrap>
-                    <span className="tip">回复给：</span>
-                    <AvatarWrap className="quote">
-                        <img src={avatarSrc} />
-                    </AvatarWrap>
-                    <NickName className="quote">{item.nickName}</NickName>
+            <Flex justifyContent="space-between" alignItems="center">
+                <Flex alignItems="center">
+                    <Text as="span">回复给：</Text>
+                    <Image src={avatarSrc} size="16px" borderRadius="md" mr={1}></Image>
+                    <Box color="theme.primaryText" fontSize={14} isTruncated={true} maxW="180px">
+                        {item.nickName}
+                    </Box>
                     <span className="separator">&nbsp;·&nbsp;</span>
                     {item.identity !== 0 ? (
                         <Badge
@@ -155,20 +56,23 @@ const replyFn = (item: any) => {
                         </Badge>
                     )}
                     <span className="separator">&nbsp;·&nbsp;</span>
-                    <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
-                </InfoWrap>
-                <Meta className="quote">
-                    <a
-                        style={{ cursor: 'pointer' }}
-                        comment-id={item._id}
-                        onClick={() => {
-                            setShowContent(!showContent);
-                        }}
-                    >
-                        {showContent ? '折叠' : '展开'}
-                    </a>
-                </Meta>
-            </User>
+                    <Text color="gray.500" fontSize={12}>
+                        {timeAgo(item.createdAt)}
+                    </Text>
+                </Flex>
+                <Box
+                    userSelect="none"
+                    color="theme.secondaryText"
+                    fontSize={12}
+                    style={{ cursor: 'pointer' }}
+                    comment-id={item._id}
+                    onClick={() => {
+                        setShowContent(!showContent);
+                    }}
+                >
+                    {showContent ? '折叠' : '展开'}
+                </Box>
+            </Flex>
             <Collapse mt={4} isOpen={showContent}>
                 <ItemContent content={marked(item.content)}></ItemContent>
             </Collapse>
@@ -204,14 +108,18 @@ export const CommentItem = (props: { item: any; index: number }) => {
                 }
             `}
         >
-            <Info>
-                <AvatarWrap>
-                    <img src={avatarSrc} />
-                </AvatarWrap>
-                <Content>
-                    <User>
-                        <InfoWrap>
-                            <Box color="theme.primaryText" fontWeight="bold" fontSize={14}>
+            <Flex>
+                <Image src={avatarSrc} size="40px" borderRadius="4px" mt="5px" mr="10px"></Image>
+                <Box width="100%">
+                    <Flex justifyContent="space-between" alignItems="center">
+                        <Flex alignItems="center">
+                            <Box
+                                color="theme.primaryText"
+                                fontWeight="bold"
+                                fontSize={14}
+                                isTruncated={true}
+                                maxW="180px"
+                            >
                                 {item.nickName}
                             </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
@@ -238,18 +146,19 @@ export const CommentItem = (props: { item: any; index: number }) => {
                             <Text color="gray.500" fontSize={12}>
                                 {timeAgo(item.createdAt)}
                             </Text>
-                        </InfoWrap>
-                        <Meta>
-                            <Text
-                                color="red.500"
-                                cursor="pointer"
-                                comment-id={item._id}
-                                onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
-                            >
-                                回复
-                            </Text>
-                        </Meta>
-                    </User>
+                        </Flex>
+                        <Box
+                            userSelect="none"
+                            fontSize={12}
+                            mr="55px"
+                            color="red.500"
+                            cursor="pointer"
+                            comment-id={item._id}
+                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
+                        >
+                            回复
+                        </Box>
+                    </Flex>
                     {item.reply && replyFn(item.reply)}
                     <Box
                         color="theme.primaryText"
@@ -263,13 +172,13 @@ export const CommentItem = (props: { item: any; index: number }) => {
                     >
                         <ItemContent content={marked(item.content)}></ItemContent>
                     </Box>
-                    <ReplyBox>
+                    <Box mt={3}>
                         {showCommentForm === item._id && (
                             <CommentForm url="/comments" articleId={item.article} replyId={item._id} />
                         )}
-                    </ReplyBox>
-                </Content>
-            </Info>
+                    </Box>
+                </Box>
+            </Flex>
         </Box>
     );
 };

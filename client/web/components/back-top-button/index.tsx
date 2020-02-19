@@ -31,8 +31,8 @@ export default () => {
             <Box
                 aria-label="返回顶部"
                 bg="theme.backTop.bg"
+                color="theme.primaryText"
                 className={css`
-                    color: #333;
                     cursor: pointer;
                     position: absolute;
                     right: -40px;

@@ -229,7 +229,7 @@ export const CommentForm = (props: Props) => {
                         <span>🚀support markdown (*￣▽￣*)ブ</span>
                         <ButtonGroup spacing={4} color="theme.primaryText">
                             <Button
-                                variantColor="gray"
+                                bg="theme.blackground"
                                 variant="solid"
                                 size="xs"
                                 fontWeight="normal"
@@ -239,7 +239,7 @@ export const CommentForm = (props: Props) => {
                             </Button>
                             <Button
                                 fontWeight="normal"
-                                variantColor="gray"
+                                bg="theme.blackground"
                                 variant="solid"
                                 size="xs"
                                 onClick={() => showPreview()}

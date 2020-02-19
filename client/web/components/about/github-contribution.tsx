@@ -2,7 +2,6 @@ import { css, Global } from '@emotion/core';
 import React from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
-import { ContentLoader } from '../content-loader';
 import { Text } from '@chakra-ui/core';
 
 const calendarHeatmapCss = () => {
@@ -62,19 +61,13 @@ const Contribution = (props: ContributionProps) => {
     );
 };
 
-const loading = (
-    <ContentLoader width={720} height={100} style={{ height: '100px' }}>
-        <rect x="0" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="190" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="370" y="10" rx="2" ry="2" width="160" height="100"></rect>
-        <rect x="550" y="10" rx="2" ry="2" width="160" height="100"></rect>
-    </ContentLoader>
-);
-
 export default (props: ContributionProps) => {
-    return props.values ? (
-        <Contribution values={props.values} totalContributionLastYear={props.totalContributionLastYear}></Contribution>
-    ) : (
-        loading
+    return (
+        props.values && (
+            <Contribution
+                values={props.values}
+                totalContributionLastYear={props.totalContributionLastYear}
+            ></Contribution>
+        )
     );
 };
