@@ -1,61 +1,65 @@
-import tinycolor from 'tinycolor2';
-import {
-    red,
-    volcano,
-    gold,
-    yellow,
-    lime,
-    green,
-    cyan,
-    blue,
-    geekblue,
-    purple,
-    magenta,
-    grey,
-} from '@ant-design/colors';
+import { rgba, darken } from 'polished';
 
-// const { red, volcano, gold, yellow, lime, green, cyan, blue, geekblue, purple, magenta, grey } = presetDarkPalettes,
+const mainBgColor = '#141414';
+const red = '#ff7a45';
+const gray = '#8c8c8c';
 
-const gray = {
-    1: '#fff',
-    2: '#fafafa',
-    3: '#f5f5f5',
-    4: '#f0f0f0',
-};
+/**
+ * 主要颜色
+ */
+const title = rgba(255, 255, 255, 0.85);
+const primaryText = rgba(255, 255, 255, 0.65);
+const secondaryText = rgba(255, 255, 255, 0.45);
+const disabal = rgba(255, 255, 255, 0.25);
+const border = rgba(255, 255, 255, 0.15);
+const dividers = rgba(255, 255, 255, 0.06);
+const blackground = rgba(255, 255, 255, 0.04);
 
 export default {
-    title: tinycolor('white')
-        .setAlpha(0.85)
-        .toPercentageRgbString(),
-    primaryText: tinycolor('white')
-        .setAlpha(0.65)
-        .toPercentageRgbString(),
-    secondaryText: tinycolor('white')
-        .setAlpha(0.45)
-        .toPercentageRgbString(),
-    disabal: tinycolor('white')
-        .setAlpha(0.3)
-        .toPercentageRgbString(),
-    border: tinycolor('#fff')
-        .setAlpha(0.2)
-        .toPercentageRgbString(),
-    dividers: tinycolor('white')
-        .setAlpha(0.12)
-        .toPercentageRgbString(),
-    blackground: tinycolor('black')
-        .setAlpha(0.8)
-        .toPercentageRgbString(),
-    red,
-    volcano,
-    gold,
-    yellow,
-    lime,
-    green,
-    cyan,
-    blue,
-    geekblue,
-    purple,
-    magenta,
-    grey,
-    gray,
+    title,
+    primaryText,
+    secondaryText,
+    disabal,
+    border,
+    dividers,
+    blackground,
+    header: {
+        fill: gray,
+        color: title,
+        bg: mainBgColor,
+        borderColor: border,
+        headerBorderBottomColor: border,
+        boxShadowColor: darken(0.42, gray),
+    },
+    articles: {
+        bg: mainBgColor,
+        titleColor: title,
+        color: primaryText,
+        secondaryText: secondaryText,
+        borderColor: border,
+    },
+    article: {
+        bg: mainBgColor,
+        titleColor: title,
+        primaryText: primaryText,
+        secondaryText: secondaryText,
+        borderColor: gray,
+        badgeAuthorColor: red,
+        badgeVisitorColor: gray,
+    },
+    categories: {
+        border: border,
+        color: primaryText,
+    },
+    footer: {
+        bg: mainBgColor,
+        text: secondaryText,
+    },
+    imageBg: darken(0.45, gray),
+    pagination: {
+        bg: darken(0.4, gray),
+    },
+    backTop: {
+        bg: mainBgColor,
+    },
 };

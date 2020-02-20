@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import * as theme from '../../theme';
 
 const Div = styled.div`
     @font-face {
@@ -915,7 +914,7 @@ const Div = styled.div`
 
     pre,
     code {
-        font-family: ${theme.codeFamily};
+        font-family: ${(props: any) => props.theme.codeFamily};
         font-size: 13px;
     }
     img {

@@ -3,29 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { AppFooter } from '../components/app-footer';
 import { AppHeader } from '../components/app-header';
 import media from '../utils/media';
-import _theme from '../theme';
 import light from '../theme/light';
 import dark from '../theme/dark';
 import { ThemeProvider, CSSReset, useColorMode, Box } from '@chakra-ui/core';
 
 export default (props: { children: any }) => {
     const children = props.children;
-    const [theme, setTheme] = useState<any>({
-        ..._theme,
-        colors: {
-            ..._theme.colors,
-            theme: light,
-        },
-    });
+    const [theme, setTheme] = useState<any>(light);
     const { colorMode } = useColorMode();
     useEffect(() => {
-        setTheme(val => ({
-            ...val,
-            colors: {
-                ..._theme.colors,
-                theme: colorMode === 'light' ? light : dark,
-            },
-        }));
+        setTheme(() => (colorMode === 'light' ? light : dark));
     }, [colorMode]);
     return (
         <ThemeProvider theme={theme}>

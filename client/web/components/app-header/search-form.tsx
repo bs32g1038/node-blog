@@ -5,6 +5,7 @@ import * as Api from '../../api/article';
 import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/core';
 import Icon from '../icon';
 import { debounce } from 'lodash';
+import { useTheme } from 'emotion-theming';
 
 const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
     const { isLoading, items } = props;
@@ -83,6 +84,7 @@ const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) =
 };
 
 export const SearchForm = () => {
+    const theme: any = useTheme();
     const cacheEmptyKey = Symbol('cache init data');
     const cache = {};
     const $input = useRef<HTMLInputElement>(null);
@@ -175,9 +177,11 @@ export const SearchForm = () => {
                     px="12px"
                     pb="16px"
                     borderRadius="0 0 4px 4px"
-                    boxShadow="0 4px 16px rgba(193, 205, 241, 0.42)"
                     textAlign="left"
                     width="100%"
+                    className={css`
+                        box-shadow: 0 4px 16px ${theme.colors.theme.header.boxShadowColor};
+                    `}
                 >
                     <Box color="theme.header.color" py={2} pl={2} width="100%" fontSize={12}>
                         博客
