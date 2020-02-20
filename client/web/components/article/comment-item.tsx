@@ -36,7 +36,6 @@ const replyFn = (item: any) => {
                             fontWeight="normal"
                             fontSize={12}
                             variant="outline"
-                            variantColor=""
                             color="theme.article.badgeAuthorColor"
                         >
                             博主
@@ -46,7 +45,6 @@ const replyFn = (item: any) => {
                             fontWeight="normal"
                             fontSize={12}
                             variant="outline"
-                            variantColor=""
                             color="theme.article.badgeVisitorColor"
                         >
                             游客
@@ -121,21 +119,11 @@ export const CommentItem = (props: { item: any; index: number }) => {
                             </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
                             {item.identity !== 0 ? (
-                                <Badge
-                                    fontSize={12}
-                                    variant="outline"
-                                    variantColor=""
-                                    color="theme.article.badgeAuthorColor"
-                                >
+                                <Badge fontSize={12} variant="outline" color="theme.article.badgeAuthorColor">
                                     博主
                                 </Badge>
                             ) : (
-                                <Badge
-                                    fontSize={12}
-                                    variant="outline"
-                                    variantColor=""
-                                    color="theme.article.badgeVisitorColor"
-                                >
+                                <Badge fontSize={12} variant="outline" color="theme.article.badgeVisitorColor">
                                     游客
                                 </Badge>
                             )}

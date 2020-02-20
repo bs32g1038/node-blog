@@ -138,7 +138,6 @@ export const CommentForm = (props: Props) => {
                         width="20px"
                         color="theme.primaryText"
                         variant="solid"
-                        variantColor=""
                         aria-label="tip"
                         icon="question-outline"
                         size="sm"
