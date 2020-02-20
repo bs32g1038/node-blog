@@ -12,22 +12,16 @@ import {
     Tooltip,
     IconButton,
 } from '@chakra-ui/core';
-import md5 from 'crypto-js/md5';
-import aes from 'crypto-js/aes';
 import isLength from 'validator/lib/isLength';
-import encUtf8 from 'crypto-js/enc-utf8';
 import { Box, ButtonGroup } from '@chakra-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import Emoji from './emoji';
 import { debounce } from 'lodash';
+import { USER_COMMENT_INFO_KEY, USER_COMMENT_INFO_ENCRYPT_KEY } from './constant';
 import MarkdownBody from '../markdown-body';
 import axios from '../../utils/axios';
+import { aesDecrypt, aesEncrypt, gernateAvatarImage } from '../../utils/helper';
 import marked from '../../../libs/marked';
-import GHAT from '../../../libs/generate-avatar';
-
-const ghat = new GHAT();
-
-const USER_COMMENT_INFO = 'user_comment_info';
 
 interface Props {
     url: string;
@@ -70,9 +64,9 @@ export const CommentForm = (props: Props) => {
         renderMakrdown();
     };
     useEffect(() => {
-        const info = localStorage.getItem(USER_COMMENT_INFO);
+        const info = localStorage.getItem(USER_COMMENT_INFO_KEY);
         if (info) {
-            const realData = aes.decrypt(info, USER_COMMENT_INFO).toString(encUtf8);
+            const realData = aesDecrypt(info, USER_COMMENT_INFO_ENCRYPT_KEY);
             const data: any = JSON.parse(realData);
             setUserInfo(data);
         } else {
@@ -82,7 +76,10 @@ export const CommentForm = (props: Props) => {
                 nickName,
                 email: 'visitor@lizc.email',
             };
-            localStorage.setItem(USER_COMMENT_INFO, aes.encrypt(JSON.stringify(data), USER_COMMENT_INFO).toString());
+            localStorage.setItem(
+                USER_COMMENT_INFO_KEY,
+                aesEncrypt(JSON.stringify(data), USER_COMMENT_INFO_ENCRYPT_KEY)
+            );
             setUserInfo(data);
         }
     }, [1]);
@@ -166,7 +163,7 @@ export const CommentForm = (props: Props) => {
                     size="xs"
                     name="Dan Abrahmov"
                     backgroundColor="theme.blackground"
-                    src={ghat.getImage(md5(userInfo.nickName).toString()) || ''}
+                    src={gernateAvatarImage(userInfo.nickName) || ''}
                 />
                 <Text fontSize={13} ml={2}>
                     {userInfo.nickName}

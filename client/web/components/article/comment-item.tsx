@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Collapse, Box, Badge, Text, Flex, Image } from '@chakra-ui/core';
-import md5 from 'crypto-js/md5';
 import { css } from 'emotion';
 import marked from '../../../libs/marked';
 import { timeAgo } from '../../../libs/time';
-import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
 import MarkdownBody from '../markdown-body';
-
-const ghat = new GHAT();
+import { gernateAvatarImage } from '../../utils/helper';
 
 const ItemContent = styled(MarkdownBody)`
     font-size: 14px;
@@ -22,7 +19,7 @@ const replyFn = (item: any) => {
     const [avatarSrc, setAvatarSrc] = useState('');
     const [showContent, setShowContent] = useState(false);
     useEffect(() => {
-        setAvatarSrc(ghat.getImage(md5(item.nickName).toString()) || '');
+        setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
         <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={14} mt={2} mb={2}>
@@ -84,7 +81,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
     const [avatarSrc, setAvatarSrc] = useState('');
     useEffect(() => {
-        setAvatarSrc(ghat.getImage(md5(props.item.nickName).toString()) || '');
+        setAvatarSrc(gernateAvatarImage(props.item.nickName) || '');
     }, [props.item._id]);
 
     const item = props.item;

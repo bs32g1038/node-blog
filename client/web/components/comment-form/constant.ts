@@ -1,0 +1,2 @@
+export const USER_COMMENT_INFO_KEY = 'USER_COMMENT_INFO_KEY';
+export const USER_COMMENT_INFO_ENCRYPT_KEY = '<span>DO NOT MODiFY THIS KEY !</span>';
