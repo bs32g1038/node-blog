@@ -98,7 +98,7 @@ const C = (props: Props) => {
                 borderColor="#e5e5e5"
                 color="theme.article.primaryText"
             >
-                <ListItem mb={1}>
+                <ListItem mb={1} isTruncated={true}>
                     <Text as="strong">本文链接：</Text>
                     <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
                         <UiLink isTruncated={true}>{config.domain + '/blog/articles/' + article._id}</UiLink>

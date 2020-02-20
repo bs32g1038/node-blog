@@ -25,14 +25,14 @@ export const AppHeader = () => {
             px={5}
         >
             <Link href="/" as="/">
-                <HomeNav title={siteInfo.name}>
+                <HomeNav title={siteInfo.name} mr={[0, 6]}>
                     <Icon fill="theme.header.fill" size="40px" name="logo" mr={2}></Icon>
                     <Heading as="h1" title={siteInfo.name} fontSize={16} fontFamily="siteitlefont">
                         {siteInfo.name}
                     </Heading>
                 </HomeNav>
             </Link>
-            <Box display="flex" flex="1 0 auto" justifyContent="flex-start">
+            <Box display={['none', 'flex']} flex="1 0 auto" justifyContent="flex-start">
                 <NavLink href="/blog">
                     <NavA flex="1 0 auto">
                         <Flex alignItems="center" justifyContent="center">
@@ -68,6 +68,7 @@ export const AppHeader = () => {
             <Flex alignItems="center" ml={5}>
                 <SearchForm></SearchForm>
                 <Button
+                    display={['none', 'block']}
                     ml={5}
                     mr={5}
                     _focus={{
@@ -81,7 +82,7 @@ export const AppHeader = () => {
                 >
                     <Icon size="24px" name={colorMode === 'light' ? 'moon' : 'sun'} />
                 </Button>
-                <UiLink href="https://github.com/bs32g1038" isExternal={true}>
+                <UiLink display={['none', 'block']} href="https://github.com/bs32g1038" isExternal={true}>
                     <Icon fill="theme.header.fill" size="24px" name="github"></Icon>
                 </UiLink>
             </Flex>

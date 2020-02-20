@@ -2,24 +2,20 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
-import { GithubSvg } from '../svgs/github-svg';
-import { HomeSvg } from '../svgs/home-svg';
-import { UserSvg } from '../svgs/user-svg';
 import NavLink from '../nav-link';
 import BackTopBtn from '../back-top-button';
 import BlogRuningTime from '../blog-runing-time';
-import { Flex, Box, Text, Divider } from '@chakra-ui/core';
+import { Flex, Box, Text, Divider, useColorMode } from '@chakra-ui/core';
 import UiLink from '../ui-link';
+import Icon from '../icon';
 
-const MobileTabbar = styled.div`
+const MobileTabbar = styled(Box)`
     position: fixed;
     bottom: 0;
     left: 0;
     display: flex;
     width: 100%;
     height: 50px;
-    background-color: #fff;
-    border-top: 1px solid #e5e5e5;
     z-index: 9000;
     display: none;
     ${media.phone`
@@ -38,6 +34,9 @@ const MobileTabbar = styled.div`
         text-decoration: none;
         &.active {
             color: #1989fa;
+            svg {
+                fill: #1989fa !important;
+            }
         }
     }
     .tabbar-item__icon {
@@ -45,27 +44,6 @@ const MobileTabbar = styled.div`
         margin-bottom: 5px;
         font-size: 18px;
     }
-`;
-
-const HomeIcon = styled(HomeSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-`;
-
-const UserIcon = styled(UserSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-`;
-
-const GithubIcon = styled(GithubSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
 `;
 
 const LibLogo = styled.img`
@@ -103,6 +81,7 @@ const loadTimeCountEvent = () => {
 };
 
 export const AppFooter = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
     useEffect(() => {
         loadTimeCountEvent();
     });
@@ -116,6 +95,7 @@ export const AppFooter = () => {
                 fontSize={12}
                 bg="theme.footer.bg"
                 color="theme.footer.text"
+                mb={['50px', 0]}
             >
                 <BackTopBtn></BackTopBtn>
                 <Box>
@@ -165,11 +145,11 @@ export const AppFooter = () => {
                     </Text>
                 </Flex>
             </Flex>
-            <MobileTabbar id="mobile-app-footer">
+            <MobileTabbar borderTop={1} borderStyle="solid" borderTopColor="theme.border" bg="theme.mobileFooter.bg">
                 <NavLink href="/blog">
                     <a className="tabbar-item">
                         <div className="tabbar-item__icon">
-                            <HomeIcon></HomeIcon>
+                            <Icon fill="theme.primaryText" size="24px" name="home" />
                         </div>
                         <div className="tabbar-item__text">博客</div>
                     </a>
@@ -177,14 +157,20 @@ export const AppFooter = () => {
                 <NavLink href="/about">
                     <a className="tabbar-item">
                         <div className="tabbar-item__icon">
-                            <UserIcon></UserIcon>
+                            <Icon fill="theme.primaryText" size="24px" name="user" />
                         </div>
                         <div className="tabbar-item__text">关于</div>
                     </a>
                 </NavLink>
+                <a className="tabbar-item" onClick={() => toggleColorMode()}>
+                    <div className="tabbar-item__icon">
+                        <Icon size="24px" fill="theme.primaryText" name={colorMode === 'light' ? 'moon' : 'sun'} />
+                    </div>
+                    <div className="tabbar-item__text">主题</div>
+                </a>
                 <a className="tabbar-item" href={siteInfo.github} rel="noopener noreferrer" target="_blank">
                     <div className="tabbar-item__icon">
-                        <GithubIcon></GithubIcon>
+                        <Icon size="24px" name="github" fill="theme.primaryText" />
                     </div>
                     <div className="tabbar-item__text">Gituhub</div>
                 </a>

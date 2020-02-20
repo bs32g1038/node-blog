@@ -9,7 +9,7 @@ interface UserInfo {
 const Header = (props: { userInfo: UserInfo }) => {
     const { userInfo } = props;
     return (
-        <Flex py={2} alignItems="center">
+        <Flex py={2} alignItems="center" flexWrap="wrap">
             <Box flex="1 0 auto">
                 <Heading as="h2">{userInfo.name}</Heading>
                 <Text>web前端工程师</Text>

@@ -67,4 +67,10 @@ export default {
         bgEnd: primaryText,
         border: blackground,
     },
+    markdown: {
+        border,
+    },
+    mobileFooter: {
+        bg: white,
+    },
 };

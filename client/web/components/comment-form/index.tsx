@@ -17,10 +17,10 @@ import { Box, ButtonGroup } from '@chakra-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import Emoji from './emoji';
 import { debounce } from 'lodash';
-import { USER_COMMENT_INFO_KEY, USER_COMMENT_INFO_ENCRYPT_KEY } from './constant';
+import { USER_COMMENT_INFO_KEY } from './constant';
 import MarkdownBody from '../markdown-body';
 import axios from '../../utils/axios';
-import { aesDecrypt, aesEncrypt, gernateAvatarImage } from '../../utils/helper';
+import { gernateAvatarImage } from '../../utils/helper';
 import marked from '../../../libs/marked';
 
 interface Props {
@@ -69,8 +69,7 @@ export const CommentForm = (props: Props) => {
     useEffect(() => {
         const info = localStorage.getItem(USER_COMMENT_INFO_KEY);
         if (info) {
-            const realData = aesDecrypt(info, USER_COMMENT_INFO_ENCRYPT_KEY);
-            const data: any = JSON.parse(realData);
+            const data: any = JSON.parse(info);
             setUserInfo(data);
         } else {
             const ids = uuidv4().split('-');
@@ -79,10 +78,7 @@ export const CommentForm = (props: Props) => {
                 nickName,
                 email: 'visitor@lizc.email',
             };
-            localStorage.setItem(
-                USER_COMMENT_INFO_KEY,
-                aesEncrypt(JSON.stringify(data), USER_COMMENT_INFO_ENCRYPT_KEY)
-            );
+            localStorage.setItem(USER_COMMENT_INFO_KEY, JSON.stringify(data));
             setUserInfo(data);
         }
     }, [1]);
@@ -140,8 +136,12 @@ export const CommentForm = (props: Props) => {
                         variant="solid"
                         aria-label="tip"
                         icon="question-outline"
+                        bg="transparent"
                         size="sm"
                         verticalAlign="text-bottom"
+                        _hover={{
+                            backgroundColor: 'none',
+                        }}
                         _focus={{
                             boxShadow: 'none',
                         }}
@@ -217,8 +217,15 @@ export const CommentForm = (props: Props) => {
                             ></Emoji>
                         </Box>
                     </Collapse>
-                    <Flex justifyContent="space-between" fontSize={14} alignItems="center">
-                        <span>🚀support markdown (*￣▽￣*)ブ</span>
+                    <Flex
+                        flexDirection={['column', 'row']}
+                        justifyContent="space-between"
+                        fontSize={14}
+                        alignItems="center"
+                    >
+                        <Text as="span" mb={['10px', '0']}>
+                            🚀support markdown (*￣▽￣*)ブ
+                        </Text>
                         <ButtonGroup spacing={4} color="theme.primaryText">
                             <Button
                                 bg="theme.blackground"

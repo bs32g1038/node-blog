@@ -15,6 +15,30 @@ const ItemContent = styled(MarkdownBody)`
     word-wrap: break-word;
 `;
 
+const getBadgeVisitorOrAuthor = identity => {
+    return identity !== 0 ? (
+        <Badge
+            fontWeight="normal"
+            fontSize={12}
+            boxShadow="none"
+            variant="outline"
+            color="theme.article.badgeAuthorColor"
+        >
+            博主
+        </Badge>
+    ) : (
+        <Badge
+            fontWeight="normal"
+            fontSize={12}
+            boxShadow="none"
+            variant="outline"
+            color="theme.article.badgeVisitorColor"
+        >
+            游客
+        </Badge>
+    );
+};
+
 const replyFn = (item: any) => {
     const [avatarSrc, setAvatarSrc] = useState('');
     const [showContent, setShowContent] = useState(false);
@@ -27,29 +51,11 @@ const replyFn = (item: any) => {
                 <Flex alignItems="center">
                     <Text as="span">回复给：</Text>
                     <Image src={avatarSrc} size="16px" borderRadius="md" mr={1}></Image>
-                    <Box color="theme.primaryText" fontSize={14} isTruncated={true} maxW="180px">
+                    <Box color="theme.primaryText" fontSize={14} isTruncated={true} maxW={['110px', '180px']}>
                         {item.nickName}
                     </Box>
                     <span className="separator">&nbsp;·&nbsp;</span>
-                    {item.identity !== 0 ? (
-                        <Badge
-                            fontWeight="normal"
-                            fontSize={12}
-                            variant="outline"
-                            color="theme.article.badgeAuthorColor"
-                        >
-                            博主
-                        </Badge>
-                    ) : (
-                        <Badge
-                            fontWeight="normal"
-                            fontSize={12}
-                            variant="outline"
-                            color="theme.article.badgeVisitorColor"
-                        >
-                            游客
-                        </Badge>
-                    )}
+                    {getBadgeVisitorOrAuthor(item.identity)}
                     <span className="separator">&nbsp;·&nbsp;</span>
                     <Text color="gray.500" fontSize={12}>
                         {timeAgo(item.createdAt)}
@@ -91,12 +97,13 @@ export const CommentItem = (props: { item: any; index: number }) => {
             borderBottom="1px"
             borderBottomColor="theme.border"
             position="relative"
+            fontSize={[12, 14]}
             className={css`
                 &:after {
                     content: attr(data-index);
                     position: absolute;
                     right: 10px;
-                    top: 19px;
+                    top: 18px;
                     text-align: center;
                     color: #d5cbcb;
                     font-size: 12px;
@@ -111,22 +118,14 @@ export const CommentItem = (props: { item: any; index: number }) => {
                             <Box
                                 color="theme.primaryText"
                                 fontWeight="bold"
-                                fontSize={14}
                                 isTruncated={true}
-                                maxW="180px"
+                                maxW={['110px', '180px']}
+                                fontSize={[12, 14]}
                             >
                                 {item.nickName}
                             </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
-                            {item.identity !== 0 ? (
-                                <Badge fontSize={12} variant="outline" color="theme.article.badgeAuthorColor">
-                                    博主
-                                </Badge>
-                            ) : (
-                                <Badge fontSize={12} variant="outline" color="theme.article.badgeVisitorColor">
-                                    游客
-                                </Badge>
-                            )}
+                            {getBadgeVisitorOrAuthor(item.identity)}
                             <span className="separator">&nbsp;·&nbsp;</span>
                             <Text color="gray.500" fontSize={12}>
                                 {timeAgo(item.createdAt)}
@@ -145,16 +144,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         </Box>
                     </Flex>
                     {item.reply && replyFn(item.reply)}
-                    <Box
-                        color="theme.primaryText"
-                        className={css`
-                            h1,
-                            h2,
-                            h3 {
-                                border-color: rgba(255, 255, 255, 0.2);
-                            }
-                        `}
-                    >
+                    <Box color="theme.primaryText">
                         <ItemContent content={marked(item.content)}></ItemContent>
                     </Box>
                     <Box mt={3}>

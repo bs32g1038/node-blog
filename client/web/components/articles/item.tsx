@@ -101,7 +101,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
                         {item.tags.map((name: any) => (
                             <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_000000' + name}>
-                                <UiLink color="theme.articles.secondaryText" ml={1}>
+                                <UiLink color="theme.articles.secondaryText" ml={2}>
                                     {name}
                                 </UiLink>
                             </Link>
@@ -109,7 +109,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     </Flex>
                 )}
             </Box>
-            <Flex flexDirection="column">
+            <Flex flexDirection="column" display={['none', 'flex']}>
                 <ThumbWrap>
                     <LazyLoad
                         component={ThumbImg}

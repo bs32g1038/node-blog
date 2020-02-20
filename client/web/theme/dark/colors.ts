@@ -1,4 +1,4 @@
-import { rgba, darken } from 'polished';
+import { rgba, darken, rgb } from 'polished';
 
 const mainBgColor = '#141414';
 const red = '#ff7a45';
@@ -61,5 +61,11 @@ export default {
     },
     backTop: {
         bg: mainBgColor,
+    },
+    markdown: {
+        border,
+    },
+    mobileFooter: {
+        bg: rgb(23, 23, 23),
     },
 };

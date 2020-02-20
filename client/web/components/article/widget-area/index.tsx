@@ -3,32 +3,9 @@ import React from 'react';
 import { css } from 'emotion';
 import { Box, Flex, Text, Heading } from '@chakra-ui/core';
 import UiLink from '../../ui-link';
-import media from '../../../utils/media';
 import { parseTime } from '../../../../libs/time';
-import { useFixedTopInScroll } from '../../../hook';
 import ListStyleLoader from '../../list-style-loader';
-
-const WidgetArea = styled.div`
-    width: 200px;
-    margin-left: 20px;
-    min-width: 200px;
-    ${media.phone`
-        width: 100%;
-        box-sizing: border-box;
-        margin-left: 0;
-        padding-left: 14px;
-        padding-right: 10px;
-        .widget{
-            width: 100%;
-        }
-    `}
-    &.fixed {
-        position: fixed;
-        top: 0;
-        right: 50%;
-        margin-right: -400px;
-    }
-`;
+import { useFixedTopInScroll } from '../../../hook';
 
 const Media = styled.div`
     max-width: 28%;
@@ -104,15 +81,30 @@ const Item = (props: Props) => {
 };
 
 export default (props: { recentArticles: ItemProps[] }) => {
+    const [$dom, isFixed] = useFixedTopInScroll();
     const { recentArticles } = props;
     let arr = recentArticles;
     if (Array.isArray(recentArticles) && recentArticles.length <= 0) {
         arr = new Array(5).fill(null);
     }
-    const [$dom, isFixed] = useFixedTopInScroll();
     return (
-        <WidgetArea className={isFixed ? 'fixed' : ''}>
-            <Box as="section" ref={$dom}>
+        <Box
+            minW="200px"
+            width="200px"
+            pl={5}
+            display={['none', 'block']}
+            ref={$dom}
+            className={
+                isFixed &&
+                css`
+                    position: fixed;
+                    top: 0;
+                    right: 50%;
+                    margin-right: -400px;
+                `
+            }
+        >
+            <Box as="section">
                 <Heading as="h3" fontSize="1.2rem" pt={2} pb={2} color="theme.primaryText">
                     最近文章
                 </Heading>
@@ -136,6 +128,6 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     </a>
                 </Box>
             </Box>
-        </WidgetArea>
+        </Box>
     );
 };
