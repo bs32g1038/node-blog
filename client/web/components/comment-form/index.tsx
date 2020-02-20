@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
     Avatar,
     Text,
@@ -34,6 +34,7 @@ export const CommentForm = (props: Props) => {
         nickName: '',
         email: '',
     });
+    const $textarea = useRef(null);
     const [content, setContent] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isShowEmotion, setIsShowEmotion] = useState(false);
@@ -49,10 +50,6 @@ export const CommentForm = (props: Props) => {
         }),
         [1]
     );
-
-    const renderMakrdown = () => {
-        setPreviewHtml(marked(content));
-    };
     const showPreview = () => {
         if (!isShowPreview) {
             setPreviewHtml(marked(content));
@@ -60,8 +57,14 @@ export const CommentForm = (props: Props) => {
         setIsShowPreview(!isShowPreview);
     };
     const onEmojiInput = (text: string) => {
-        setContent(val => val + text);
-        renderMakrdown();
+        setContent(val => {
+            const d = val + text;
+            if ($textarea.current) {
+                $textarea.current.value = d;
+            }
+            setPreviewHtml(marked(d));
+            return d;
+        });
     };
     useEffect(() => {
         const info = localStorage.getItem(USER_COMMENT_INFO_KEY);
@@ -105,15 +108,7 @@ export const CommentForm = (props: Props) => {
             .then(() => {
                 location.reload();
             })
-            .catch(err => {
-                const res = err.response;
-                if (res.status === 422) {
-                    setButtonLoading(false);
-                } else if (res.status === 429) {
-                    setButtonLoading(false);
-                } else {
-                    setButtonLoading(false);
-                }
+            .catch(() => {
                 setErrorMessage('服务器开小差去了，请尝试刷新页面，再进行提交！');
             });
     };
@@ -191,6 +186,7 @@ export const CommentForm = (props: Props) => {
                     focusBorderColor="none"
                     fontSize={14}
                     name="content"
+                    ref={$textarea}
                     borderRadius={0}
                     placeholder="留点空白给你说~"
                     resize="none"
