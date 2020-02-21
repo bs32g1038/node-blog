@@ -1,10 +1,20 @@
-import { applyMiddleware, createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import articles from './reducers/articles';
+import categories from './reducers/categories';
+import article from './reducers/article';
 
-const initializeStore = (preloadedState?: any) => {
-    const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
-    return store;
-};
+const rootReducer = combineReducers({
+    articles,
+    categories,
+    article,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+function initializeStore(_initialState: RootState) {
+    return createStore(rootReducer, _initialState, composeWithDevTools(applyMiddleware(thunk)));
+}
 
 export default initializeStore;

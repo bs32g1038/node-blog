@@ -1,63 +1,88 @@
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import * as api from '../../api/article';
-import { FETCH_ARTICLES } from '../action-types';
 
-export const getArticlesCacheKey = (
-    page?: number,
-    limit?: number,
-    filter: { cid: string; tag: string } = { cid: '', tag: '' }
-) => {
-    return page + '#' + limit + '#' + filter.cid + '#' + filter.tag;
-};
+const LIMIT = 10;
 
-export const setArticles = (items: any, totalCount: number, cacheKey: string) => ({
-    type: FETCH_ARTICLES,
-    items,
-    totalCount,
-    cacheKey,
-});
-
-export const fetchArticles = (
-    page?: number,
-    limit?: number,
-    filter: { cid: string; tag: string } = { cid: '', tag: '' }
-) => {
-    return (dispatch: any) => {
-        return api.fetchArticles(page, limit, filter).then(res => {
-            const items = res.items;
-            const totalCount = res.totalCount;
-            return dispatch(setArticles(items, totalCount, getArticlesCacheKey(page, limit, filter)));
-        });
-    };
-};
-
-export interface Action {
-    type?: string;
+interface State {
+    cache?: {};
     items?: any[];
     totalCount: number;
-    cacheKey: string;
-}
-
-export interface State {
-    articles: any;
+    isLoading: boolean;
+    limit: number;
 }
 
 const initialState: State = {
-    articles: {},
+    items: [],
+    totalCount: 0,
+    isLoading: false,
+    cache: {},
+    limit: LIMIT,
 };
 
-export default function(state: any = initialState, action: Action) {
-    switch (action.type) {
-        case FETCH_ARTICLES: {
-            const { items, totalCount, cacheKey } = action;
-            return {
-                ...state,
-                [cacheKey]: {
-                    items,
-                    totalCount,
-                },
-            };
-        }
-        default:
-            return state;
-    }
+interface ArticlesDataLoaded {
+    items?: any[];
+    totalCount: number;
+    key: string;
 }
+
+interface LoadingDataLoaded {
+    isLoading: boolean;
+}
+
+interface CacheDataLoaded {
+    key: string;
+    data: {};
+}
+
+const articles = createSlice({
+    name: 'articles',
+    initialState,
+    reducers: {
+        setArticles(state, action: PayloadAction<ArticlesDataLoaded>) {
+            const { items, totalCount } = action.payload;
+            state.items = items;
+            state.totalCount = totalCount;
+        },
+        setLoading(state, action: PayloadAction<LoadingDataLoaded>) {
+            const { isLoading } = action.payload;
+            state.isLoading = isLoading;
+        },
+        setDataInCache(state, action: PayloadAction<ArticlesDataLoaded>) {
+            const { items, totalCount, key } = action.payload;
+            state.items = items;
+            state.totalCount = totalCount;
+            state.cache[key] = {
+                items,
+                totalCount,
+            };
+        },
+    },
+});
+
+export const { setArticles, setLoading, setDataInCache } = articles.actions;
+
+export default articles.reducer;
+
+export const getArticlesCacheKey = (page?: number, filter: { cid: string; tag: string } = { cid: '', tag: '' }) => {
+    return page + '#' + LIMIT + '#' + filter.cid + '#' + filter.tag;
+};
+
+/**
+ * 该函数具有缓存数据功能，根据page，limit，以及filter组合成缓存key
+ */
+export const fetchArticles = (page?: number, filter: { cid: string; tag: string } = { cid: '', tag: '' }) => {
+    return (dispatch: Dispatch<PayloadAction<any>>) => {
+        dispatch(setLoading({ isLoading: true }));
+        return api.fetchArticles(page, LIMIT, filter).then(res => {
+            const items = res.items;
+            const totalCount = res.totalCount;
+            const data = {
+                items,
+                totalCount,
+                key: getArticlesCacheKey(page, filter),
+            };
+            dispatch(setDataInCache(data));
+            dispatch(setLoading({ isLoading: false }));
+        });
+    };
+};

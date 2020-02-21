@@ -1,5 +1,5 @@
 import Link from '../link';
-import React, { useState } from 'react';
+import React from 'react';
 import config from '../../config/site-info';
 import { parseTime } from '../../../libs/time';
 import Comment from './comment';
@@ -17,26 +17,14 @@ import {
     ListItem,
     Heading,
 } from '@chakra-ui/core';
-import ListStyleLoader from '../list-style-loader';
-
-export const MODE = {
-    normal: 'normal',
-    reading: 'reading',
-};
 
 interface Props {
-    loading: boolean;
     article: any;
     comments: any[];
-    getReadMode: Function;
 }
 
-const C = (props: Props) => {
+export default (props: Props) => {
     const { article, comments } = props;
-    const [mode] = useState(MODE.normal);
-    if (typeof props.getReadMode === 'function') {
-        props.getReadMode(mode);
-    }
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
@@ -137,18 +125,6 @@ const C = (props: Props) => {
                 )}
             </Flex>
             <Comment article={article} comments={comments}></Comment>
-        </Box>
-    );
-};
-
-export default (props: Props) => {
-    return !props.loading && props.article && Object.keys(props.article).length > 0 ? (
-        <C {...props}></C>
-    ) : (
-        <Box width="100%">
-            {new Array(8).fill(true).map((_, index) => (
-                <ListStyleLoader key={index}></ListStyleLoader>
-            ))}
         </Box>
     );
 };

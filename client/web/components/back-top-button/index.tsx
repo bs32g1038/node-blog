@@ -27,7 +27,7 @@ export default () => {
         }
     }, [1]);
     return (
-        <Tooltip aria-label="back top" hasArrow={true} showDelay={110} label="返回顶部" placement="right">
+        <Tooltip aria-label="back top" hasArrow={true} label="返回顶部" placement="right">
             <Box
                 display={['none', 'block']}
                 aria-label="返回顶部"

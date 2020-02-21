@@ -5,7 +5,7 @@ import { Box, Flex, Text, Heading } from '@chakra-ui/core';
 import UiLink from '../../ui-link';
 import { parseTime } from '../../../../libs/time';
 import ListStyleLoader from '../../list-style-loader';
-import { useFixedTopInScroll } from '../../../hook';
+import { useFixedTopInScroll } from '../../../hook/useFixedTopInScroll';
 
 const Media = styled.div`
     max-width: 28%;

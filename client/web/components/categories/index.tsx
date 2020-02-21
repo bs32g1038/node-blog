@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchCategories, State } from '../../redux/reducers/categories';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '../../redux/reducers/categories';
+import { RootState } from '../../redux/store';
 import NavLink from '../nav-link';
 import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
@@ -34,15 +35,16 @@ const ItemLink = styled(Link)`
     }
 `;
 
-const C = (props: any) => {
+export default () => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const { items } = useSelector((state: RootState) => state.categories);
     useEffect(() => {
-        const cats = props._DB.categories || [];
+        const cats = items || [];
         if (cats.length <= 0) {
-            props.dispatch(fetchCategories());
+            dispatch(fetchCategories());
         }
     }, [1]);
-    const router = useRouter();
-    const { categories = [] } = props._DB;
     return (
         <Box
             flex="0 0 auto"
@@ -50,6 +52,7 @@ const C = (props: any) => {
             borderBottomWidth="1px"
             borderStyle="solid"
             borderBottomColor="theme.categories.border"
+            px={3}
             pb={3}
         >
             <Box display="inline-block" mt={2} mb={4}>
@@ -57,7 +60,7 @@ const C = (props: any) => {
                     <ItemLink color="theme.categories.color">全部</ItemLink>
                 </NavLink>
             </Box>
-            {categories.map((item: any) => (
+            {items.map((item: any) => (
                 <Box key={item._id} display="inline-block" ml={5} mb={4} mt={2}>
                     <NavLink exact={true} href={`/blog/articles?cid=${item._id}`}>
                         <ItemLink color="theme.categories.color">
@@ -82,7 +85,3 @@ const C = (props: any) => {
         </Box>
     );
 };
-
-export const Categories = connect((state: State) => ({
-    _DB: state.categories,
-}))(C as any);
