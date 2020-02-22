@@ -1,64 +1,43 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
+import { Controller, Get, Post, Delete, Put, UseGuards } from '@nestjs/common';
 import { MediaService } from './media.service';
-import { Media } from '../../models/media.model';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Media, MediaJoiSchema } from '../../models/media.model';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import Joi from '@hapi/joi';
+import { JoiParam, JoiQuery, JoiBody } from '../../decorators/joi.decorator';
+import { ObjectIdSchema, StandardPaginationSchema } from '../../joi';
 
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class MediaController {
     constructor(private readonly mediaService: MediaService) {}
 
-    static idSchema = Joi.object({
-        id: Joi.string()
-            .default('')
-            .max(50),
-    });
-
     @Post('/medias')
     @Roles('admin')
-    async create(@Body() media: Media) {
+    async create(@JoiBody(MediaJoiSchema) media: Media) {
         return await this.mediaService.create(media);
     }
 
     @Put('/medias/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() media: Media) {
+    async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(MediaJoiSchema) media: Media) {
         return await this.mediaService.update(params.id, media);
     }
 
     @Get('/medias')
     @Roles('admin')
-    @JoiValidationPipe(StandardPaginationSchema)
-    async getMedias(@Query() query: { page: number; limit: number }) {
-        const items = await this.mediaService.getMedias(
-            {},
-            {
-                skip: Number(query.page),
-                limit: Number(query.limit),
-            }
-        );
-        const totalCount = await this.mediaService.count({});
-        return {
-            items,
-            totalCount,
-        };
+    async getMedias(@JoiQuery(StandardPaginationSchema) query: { page: number; limit: number }) {
+        return await this.mediaService.getMediaList(query);
     }
 
     @Get('/medias/:id')
     @Roles('admin')
-    @JoiValidationPipe(MediaController.idSchema)
-    async getMedia(@Param() params: { id: string }): Promise<Media | null> {
+    async getMedia(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Media | null> {
         return await this.mediaService.getMedia(params.id);
     }
 
     @Delete('/medias/:id')
     @Roles('admin')
-    @JoiValidationPipe(MediaController.idSchema)
-    async deleteMedia(@Param() params: { id: string }) {
+    async deleteMedia(@JoiParam(ObjectIdSchema) params: { id: string }) {
         return await this.mediaService.deleteMedia(params.id);
     }
 }

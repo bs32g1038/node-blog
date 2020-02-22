@@ -72,7 +72,7 @@ export default (props: Props) => {
                     <Text color="gray.500">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </Box>
-            <Box color="theme.article.primaryText">
+            <Box color="theme.article.primaryText" mb={5}>
                 <MarkdownBody content={article.content}></MarkdownBody>
             </Box>
             <List

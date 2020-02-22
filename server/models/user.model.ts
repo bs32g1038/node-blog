@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { sha1 } from '../utils/crypto.util';
 import { getProviderByModel } from '../utils/model.util';
+import paginate, { ModelPaginate } from '../mongoose/paginate';
+import Joi from '../joi';
 
 export interface User {
     readonly _id?: string;
@@ -16,6 +18,15 @@ export interface UserDocument extends User, Document {
     readonly _id: string;
 }
 
+export const UserJoiSchema = {
+    account: Joi.string()
+        .min(1)
+        .max(20),
+    password: Joi.string()
+        .min(1)
+        .max(20),
+};
+
 const UserSchema = new mongoose.Schema(
     {
         type: {
@@ -28,6 +39,7 @@ const UserSchema = new mongoose.Schema(
         account: {
             type: String,
             unique: true,
+            maxlength: 20,
             trim: true,
             lowercase: true,
             required: true,
@@ -35,7 +47,9 @@ const UserSchema = new mongoose.Schema(
         // 密码
         password: {
             type: String,
+            maxlength: 20,
             set: sha1,
+            trim: true,
             required: true,
         },
     },
@@ -44,6 +58,12 @@ const UserSchema = new mongoose.Schema(
     }
 ).index({ createdAt: -1 });
 
-export const UserModel = mongoose.model('user', UserSchema, 'user');
+UserSchema.plugin(paginate);
+
+const UserModel: ModelPaginate<UserDocument> = mongoose.model('user', UserSchema, 'user');
+
+export type IUserModel = typeof UserModel;
+
+export { UserModel };
 
 export const UserModelProvider = getProviderByModel(UserModel);

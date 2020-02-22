@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
+import Joi from '../joi';
 
 export interface Category {
     readonly _id?: string | mongoose.Types.ObjectId;
@@ -11,6 +12,12 @@ export interface Category {
     readonly updatedAt?: string | Date;
 }
 
+export const CategoryJoiSchema = {
+    name: Joi.string()
+        .min(1)
+        .max(80),
+};
+
 export interface CategoryDocument extends Category, Document {
     readonly _id: string;
 }
@@ -19,8 +26,9 @@ const CategorySchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            min: [1],
-            max: 150,
+            minlength: 1,
+            maxlength: 80,
+            trim: true,
             required: true,
         },
         order: {
@@ -30,7 +38,6 @@ const CategorySchema = new mongoose.Schema(
         },
         articleCount: {
             type: Number,
-            max: 10000,
             default: 0,
         },
     },

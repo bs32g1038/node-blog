@@ -7,10 +7,10 @@ import ArticleItem from './item';
 import Pagination from '../pagination';
 import AppLayout from '../../layouts/app';
 import siteInfo from '../../config/site-info';
-import { isServer } from '../../utils/helper';
 import { useFetchArticles } from '../../hook/useFetchArticles';
 import { fetchArticles } from '../../redux/reducers/articles';
 import { fetchCategories } from '../../redux/reducers/categories';
+import { isServer } from '../../utils/helper';
 
 const Page = () => {
     const { page, items, totalCount, isLoading, limit } = useFetchArticles();
@@ -43,18 +43,18 @@ const Page = () => {
     );
 };
 
-Page.getInitialProps = async ({ reduxStore, req, query }: any) => {
+Page.getInitialProps = async ({ reduxStore, req }: any) => {
     if (!isServer) {
-        return {
-            router: {
-                query,
-            },
-        };
+        return { isServer };
     }
-    await reduxStore.dispatch(fetchCategories());
-    const { page = 1, cid = '', tag = '' } = req && req.query;
-    await reduxStore.dispatch(fetchArticles(Number(page), { cid, tag }));
-    return {};
+    try {
+        await reduxStore.dispatch(fetchCategories());
+        const { page = 1, cid = '', tag = '' } = req && req.query;
+        await reduxStore.dispatch(fetchArticles(Number(page), { cid, tag }));
+    } catch (err) {
+        //
+    }
+    return { isServer };
 };
 
 export default Page;

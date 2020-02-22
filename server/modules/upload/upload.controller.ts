@@ -1,22 +1,15 @@
-import { Controller, Post, UseGuards, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
+import { Controller, Post, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
-import Joi from '@hapi/joi';
+import { JoiQuery } from '../../decorators/joi.decorator';
+import { generateObjectIdSchema } from '../../joi';
 
 @Controller()
 @UseGuards(RolesGuard)
 export class UploadController {
     constructor(private readonly uploadService: UploadService) {}
-
-    static parentIdSchema = Joi.object({
-        parentId: Joi.string()
-            .default('')
-            .max(50)
-            .allow(''),
-    });
 
     @Post('/api/upload/image')
     @Roles('admin')
@@ -27,9 +20,11 @@ export class UploadController {
 
     @Post('/api/upload/static-files')
     @Roles('admin')
-    @JoiValidationPipe(UploadController.parentIdSchema)
     @UseInterceptors(FileInterceptor('file'))
-    async uploadStaticFile(@UploadedFile() file: any, @Query() query: { parentId: string }) {
+    async uploadStaticFile(
+        @UploadedFile() file: any,
+        @JoiQuery(generateObjectIdSchema('parentId')) query: { parentId: string }
+    ) {
         return await this.uploadService.uploadStaticFile(file, query.parentId);
     }
 }

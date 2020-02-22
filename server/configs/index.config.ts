@@ -37,3 +37,13 @@ export const RSS = {
     description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！',
     maxRssItems: 50,
 };
+
+export const API_COMMENT_POST_RATE_LIMIT = {
+    windowMs: 60 * 60 * 1000, // 间隔时间 1 个小时
+    max: 30, // 每个 ip 最多 30 条，在间隔时间范围内
+};
+
+export const API_REQUEST_RATE_LIMIT = {
+    windowMs: 60 * 60 * 1000, // 间隔时间 1 个小时
+    max: 5000, // 每个 ip 最多 5000 次请求，在间隔时间范围内
+};

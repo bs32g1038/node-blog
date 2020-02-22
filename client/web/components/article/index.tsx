@@ -8,6 +8,7 @@ import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
 import AppLayout from '../../layouts/app';
 import { Flex } from '@chakra-ui/core';
+import { isServer } from '../../utils/helper';
 
 const Page = () => {
     const { article, comments, recentArticles } = useSelector((state: RootState) => state.article);
@@ -25,9 +26,13 @@ const Page = () => {
 };
 
 Page.getInitialProps = async ({ reduxStore, req }: any) => {
-    await reduxStore.dispatch(fetchArticle(req.params.id));
-    await reduxStore.dispatch(fetchRecentArticle());
-    return {};
+    try {
+        await reduxStore.dispatch(fetchArticle(req.params.id));
+        await reduxStore.dispatch(fetchRecentArticle());
+    } catch (error) {
+        //
+    }
+    return { isServer };
 };
 
 export default Page;

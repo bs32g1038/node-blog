@@ -1,81 +1,55 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Header } from '@nestjs/common';
-import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
+import { Controller, Get, Post, Delete, Put, UseGuards, Header } from '@nestjs/common';
 import { DemoService } from './demo.service';
-import { Demo } from '../../models/demo.model';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Demo, DemoJoiSchema } from '../../models/demo.model';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import Joi from '@hapi/joi';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js'; // https://highlightjs.org/
+import { ObjectIdSchema, generateObjectIdsSchema, StandardPaginationSchema } from '../../joi';
+import { JoiParam, JoiQuery, JoiBody } from '../../decorators/joi.decorator';
 
 @Controller()
 @UseGuards(RolesGuard)
 export class DemoController {
     constructor(private readonly demoService: DemoService) {}
 
-    public static idSchema = Joi.object({
-        id: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static deleteDemosSchema = Joi.object({
-        demoIds: Joi.array().items(Joi.string().required()),
-    });
-
     @Post('/api/demos')
     @Roles('admin')
-    async create(@Body() demo: Demo) {
+    async create(@JoiBody(DemoJoiSchema) demo: Demo) {
         return await this.demoService.create(demo);
     }
 
     @Put('/api/demos/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() demo: Demo) {
+    async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(DemoJoiSchema) demo: Demo) {
         return await this.demoService.update(params.id, demo);
     }
 
     @Get('/api/demos')
-    @JoiValidationPipe(StandardPaginationSchema)
-    async getDemos(@Query() query: { page: number; limit: number }) {
-        const items = await this.demoService.getDemos(
-            {},
-            {
-                skip: Number(query.page),
-                limit: Number(query.limit),
-            }
-        );
-        const totalCount = await this.demoService.count({});
-        return {
-            items,
-            totalCount,
-        };
+    async getDemos(@JoiQuery(StandardPaginationSchema) query: { page: number; limit: number }) {
+        return await this.demoService.getDemoList(query);
     }
 
     @Get('/api/demos/:id')
-    @JoiValidationPipe(DemoController.idSchema)
-    async getDemo(@Param() params: { id: string }): Promise<Demo | null> {
+    async getDemo(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Demo | null> {
         return await this.demoService.getDemo(params.id);
     }
 
     @Delete('/api/demos/:id')
     @Roles('admin')
-    @JoiValidationPipe(DemoController.idSchema)
-    async deleteDemo(@Param() params: { id: string }) {
+    async deleteDemo(@JoiParam(ObjectIdSchema) params: { id: string }) {
         return await this.demoService.deleteDemo(params.id);
     }
 
     @Delete('/api/demos')
     @Roles('admin')
-    @JoiValidationPipe(DemoController.deleteDemosSchema)
-    deleteArticles(@Body() body: { demoIds: string[] }): Promise<any> {
+    deleteArticles(@JoiBody(generateObjectIdsSchema('demoIds')) body: { demoIds: string[] }): Promise<any> {
         return this.demoService.batchDelete(body.demoIds);
     }
 
     @Get('/demos/:id')
     @Header('Content-Type', 'text/html')
-    async renderDemoShowPage(@Param() params: { id: string }) {
+    async renderDemoShowPage(@JoiParam(ObjectIdSchema) params: { id: string }) {
         const { id } = params;
         const demo = await this.demoService.getDemo(id);
         const code: { head: string; html: string; css: string; javascript: string } = {

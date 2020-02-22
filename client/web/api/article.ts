@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import axios from '../utils/axios';
 
 export const fetchArticles = (page = 1, limit = 10, filter: { cid: string; tag: string }) => {
-    const query: any = { fields: '-content,category.name', limit, page };
+    const query: any = { limit, page };
     if (filter.cid) {
         query.cid = filter.cid;
     } else if (filter.tag) {
@@ -14,7 +14,7 @@ export const fetchArticles = (page = 1, limit = 10, filter: { cid: string; tag: 
 };
 
 export const fetchArticle = (id: string) => {
-    const query = { fields: '-summary,category.name', md: true };
+    const query = { md: true };
     const articlePrmoise = axios.get('/articles/' + id + '?' + queryString.stringify(query));
     const commentsPrmoise = axios.get('/comments?articleId=' + id);
     return Promise.all([articlePrmoise, commentsPrmoise]).then(arr => {

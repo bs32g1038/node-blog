@@ -63,23 +63,25 @@ export const { setArticles, setLoading, setDataInCache } = articles.actions;
 
 export default articles.reducer;
 
-export const getArticlesCacheKey = (page?: number, filter: { cid: string; tag: string } = { cid: '', tag: '' }) => {
-    return page + '#' + LIMIT + '#' + filter.cid + '#' + filter.tag;
+export const getArticlesCacheKey = (page?: number, filter?: { cid: string; tag: string }) => {
+    const { cid = '', tag = '' } = filter;
+    return page + '#' + LIMIT + '#' + cid + '#' + tag;
 };
 
 /**
  * 该函数具有缓存数据功能，根据page，limit，以及filter组合成缓存key
  */
-export const fetchArticles = (page?: number, filter: { cid: string; tag: string } = { cid: '', tag: '' }) => {
+export const fetchArticles = (page?: number, filter?: { cid: string; tag: string }) => {
+    const { cid = '', tag = '' } = filter;
     return (dispatch: Dispatch<PayloadAction<any>>) => {
         dispatch(setLoading({ isLoading: true }));
-        return api.fetchArticles(page, LIMIT, filter).then(res => {
+        return api.fetchArticles(page, LIMIT, { cid, tag }).then(res => {
             const items = res.items;
             const totalCount = res.totalCount;
             const data = {
                 items,
                 totalCount,
-                key: getArticlesCacheKey(page, filter),
+                key: getArticlesCacheKey(page, { cid, tag }),
             };
             dispatch(setDataInCache(data));
             dispatch(setLoading({ isLoading: false }));

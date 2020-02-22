@@ -4,6 +4,7 @@ import { isArray } from 'lodash';
 import { fetchArticles, getArticlesCacheKey, setArticles } from '../redux/reducers/articles';
 import { RootState } from '../redux/store';
 import { useEffect } from 'react';
+import { isEqual } from 'lodash';
 
 export const useFetchArticles = () => {
     const router = useRouter();
@@ -14,10 +15,12 @@ export const useFetchArticles = () => {
     const { items, totalCount, isLoading, cache, limit } = useSelector((state: RootState) => state.articles);
     useEffect(() => {
         const key = getArticlesCacheKey(page, { cid, tag });
-        if (cache[key]) {
-            dispatch(setArticles(cache[key]));
-        } else {
-            dispatch(fetchArticles(Number(page), { cid, tag }));
+        if (!isEqual(cache[key], items)) {
+            if (cache[key]) {
+                dispatch(setArticles(cache[key]));
+            } else {
+                dispatch(fetchArticles(Number(page), { cid, tag }));
+            }
         }
     }, [router.query]);
     return {

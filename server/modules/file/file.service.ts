@@ -1,32 +1,40 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { File, FileDocument, FileModel } from '../../models/file.model';
+import { File, FileModel, IFileModel, FileJoiSchema } from '../../models/file.model';
+import { QueryRules } from '../../utils/mongoose.query.util';
+import { checkEntityIsValid } from '../../utils/helper';
 
 @Injectable()
 export class FileService {
-    constructor(@InjectModel(FileModel) private readonly fileModel: Model<FileDocument>) {}
+    constructor(@InjectModel(FileModel) private readonly fileModel: IFileModel) {}
 
     async create(newFile: File): Promise<File> {
+        checkEntityIsValid(newFile, FileJoiSchema);
         return await this.fileModel.create(newFile);
     }
 
     async update(id: string, data: File) {
-        return await this.fileModel.findByIdAndUpdate({ _id: id }, data);
+        return await this.fileModel.findByIdAndUpdate({ _id: id }, data, { runValidators: true });
     }
 
-    async getFiles(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<File[]> {
-        const { skip = 1, limit = 10, sort = {} } = option;
-        const filter = { ...query };
-        return await this.fileModel.find(
-            filter,
-            {},
+    async getFileList(options: {
+        parentId?: string;
+        skip?: number;
+        limit?: number;
+        sort?: {};
+    }): Promise<{ items: File[]; totalCount: number }> {
+        const { parentId, skip = 1, limit = 10, sort = {} } = options;
+        const q = new QueryRules(
+            { parentId },
             {
-                skip: (skip - 1) * limit,
-                limit,
-                sort,
+                parentId: (str: string) => ({ parentId: str }),
             }
         );
+        return await this.fileModel.paginate(q, '', {
+            skip,
+            limit,
+            sort,
+        });
     }
 
     async getFile(id: string) {
@@ -46,11 +54,6 @@ export class FileService {
 
     public async batchDelete(fileIds: string[]) {
         return this.fileModel.deleteMany({ _id: { $in: fileIds } });
-    }
-
-    async count(query) {
-        const filter = { ...query };
-        return await this.fileModel.countDocuments(filter);
     }
 
     async createFolder(name: string, parentId: string) {

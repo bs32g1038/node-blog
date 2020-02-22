@@ -1,62 +1,45 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
+import { Controller, Get, Post, Delete, Put, UseGuards } from '@nestjs/common';
 import { ArticleService } from './article.service';
-import { Article } from '../../models/article.model';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Article, ArticleJoiSchema } from '../../models/article.model';
 import { Roles } from '../../decorators/roles.decorator';
+import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import Joi from '@hapi/joi';
+import Joi, { ObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
 
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class ArticleController {
     public constructor(private readonly articleService: ArticleService) {}
 
-    public static cIdSchema = Joi.object({
-        cid: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static idSchema = Joi.object({
-        id: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static deleteArticlesSchema = Joi.object({
-        articleIds: Joi.array().items(Joi.string()),
-    });
-
     @Post('/articles')
     @Roles('admin')
-    public async create(@Body() article: Article) {
+    public async create(@JoiBody(ArticleJoiSchema) article: Article) {
         return await this.articleService.create(article);
     }
 
     @Put('/articles/:id')
     @Roles('admin')
-    public async update(@Param() params: { id: string }, @Body() article: Article) {
+    public async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(ArticleJoiSchema) article: Article) {
         return await this.articleService.update(params.id, article);
     }
 
     @Get('/articles')
-    @JoiValidationPipe(StandardPaginationSchema)
-    @JoiValidationPipe(ArticleController.cIdSchema)
-    public async getArticles(@Query() query: { page: number; limit: number; cid: string; tag: string; title: string }) {
-        const q: { category?: string; tag?: string; title?: RegExp } = {};
-        if (query.cid) {
-            q.category = query.cid;
-        } else if (query.tag) {
-            q.tag = query.tag;
-        } else if (query.title) {
-            q.title = new RegExp(query.title);
+    public async getArticles(
+        @JoiQuery({
+            cid: Joi.objectId(),
+            tag: Joi.string().max(10),
+            title: Joi.string().max(15),
+            ...StandardPaginationSchema,
+        })
+        query: {
+            page: number;
+            limit: number;
+            cid: string;
+            tag: string;
+            title: string;
         }
-        const items = await this.articleService.getArticles(q, {
-            skip: Number(query.page),
-            limit: Number(query.limit),
-        });
-        const totalCount = await this.articleService.count(q);
+    ) {
+        const { items, totalCount } = await this.articleService.getArticleList(query);
         return {
             items,
             totalCount,
@@ -69,29 +52,22 @@ export class ArticleController {
     }
 
     @Get('/articles/:id')
-    @JoiValidationPipe(
-        Joi.object({
-            id: Joi.string()
-                .default('')
-                .max(50),
-            md: Joi.boolean().default(false),
-        })
-    )
-    public async getArticle(@Param() params: { id: string }, @Query() query: { md?: boolean }): Promise<Article> {
+    public async getArticle(
+        @JoiParam(ObjectIdSchema) params: { id: string },
+        @JoiQuery({ md: Joi.boolean().default(false) }) query: { md?: boolean }
+    ): Promise<Article> {
         return await this.articleService.getArticle(params.id, query.md);
     }
 
     @Delete('/articles/:id')
     @Roles('admin')
-    @JoiValidationPipe(ArticleController.idSchema)
-    public async deleteArticle(@Param() params: { id: string }): Promise<Article | null> {
+    public async deleteArticle(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Article | null> {
         return await this.articleService.deleteArticle(params.id);
     }
 
     @Delete('/articles')
     @Roles('admin')
-    @JoiValidationPipe(ArticleController.deleteArticlesSchema)
-    deleteArticles(@Body() body: { articleIds: string[] }): Promise<any> {
+    deleteArticles(@JoiBody(generateObjectIdsSchema('articleIds')) body: { articleIds: string[] }): Promise<any> {
         return this.articleService.batchDelete(body.articleIds);
     }
 }

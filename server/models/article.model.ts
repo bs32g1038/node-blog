@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
+import paginate, { ModelPaginate } from '../mongoose/paginate';
+import Joi from '../joi';
 
 export interface Article {
-    readonly _id?: string | mongoose.Types.ObjectId;
+    readonly _id?: string;
     readonly title: string;
     readonly content: string;
     readonly summary: string;
@@ -22,6 +24,34 @@ export interface Article {
     }>;
 }
 
+export const ArticleJoiSchema = {
+    title: Joi.string()
+        .min(1)
+        .max(80),
+    content: Joi.string()
+        .min(1)
+        .max(800),
+    summary: Joi.string()
+        .min(1)
+        .max(80),
+    screenshot: Joi.string()
+        .min(1)
+        .max(100),
+    category: Joi.string()
+        .min(1)
+        .max(30),
+    tags: Joi.array().items(Joi.string()),
+};
+
+const DayReadings = new mongoose.Schema({
+    count: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+    timestamp: { type: Number, required: true },
+});
+
 export interface ArticleDocument extends Article, Document {
     readonly _id: string;
 }
@@ -30,25 +60,29 @@ const ArticleSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            min: [1],
-            max: 150,
+            minlength: 1,
+            maxlength: 80,
+            trim: true,
             required: true,
         },
         content: {
             type: String,
-            min: [1],
-            max: 8000,
+            minlength: 1,
+            maxlength: 800,
+            trim: true,
             required: true,
         },
         summary: {
             type: String,
-            min: [1],
-            max: 2000,
+            minlength: 1,
+            maxlength: 300,
+            trim: true,
             required: true,
         },
         screenshot: {
             type: String,
-            max: 200,
+            maxlength: 100,
+            trim: true,
             default: '',
         },
         category: {
@@ -67,7 +101,10 @@ const ArticleSchema = new mongoose.Schema(
             default: 0,
         },
         //标签
-        tags: { type: [String], index: true },
+        tags: {
+            type: [{ type: String, maxlength: 10, lowercase: true, trim: true, index: true }],
+            index: true,
+        },
         isDeleted: {
             type: Boolean,
             default: false,
@@ -76,24 +113,19 @@ const ArticleSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        dayReadings: [
-            {
-                count: {
-                    type: Number,
-                    max: 100000,
-                    default: 0,
-                    required: true,
-                },
-                // eslint-disable-next-line @typescript-eslint/unbound-method
-                timestamp: { type: Number, required: true },
-            },
-        ],
+        dayReadings: [DayReadings],
     },
     {
         timestamps: true,
     }
 );
 
-export const ArticleModel = mongoose.model('article', ArticleSchema, 'article');
+ArticleSchema.plugin(paginate);
+
+const ArticleModel: ModelPaginate<ArticleDocument> = mongoose.model('article', ArticleSchema, 'article');
+
+export type IArticleModel = typeof ArticleModel;
+
+export { ArticleModel };
 
 export const ArticleModelProvider = getProviderByModel(ArticleModel);

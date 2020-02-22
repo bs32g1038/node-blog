@@ -3,8 +3,7 @@ import data2xml from 'data2xml';
 import { RSS as RSSCONFIG, ADMIN_USER_INFO } from '../../configs/index.config';
 import MarkdownIt from 'markdown-it';
 import { InjectModel } from '../../utils/model.util';
-import { ArticleDocument, ArticleModel, Article } from '../../models/article.model';
-import { Model } from 'mongoose';
+import { ArticleModel, Article, IArticleModel } from '../../models/article.model';
 
 const markdown = new MarkdownIt();
 
@@ -18,7 +17,7 @@ function utf8ForXml(inputStr: string) {
 
 @Injectable()
 export class RssService {
-    constructor(@InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>) {}
+    constructor(@InjectModel(ArticleModel) private readonly articleModel: IArticleModel) {}
 
     async index() {
         const rssObj: {

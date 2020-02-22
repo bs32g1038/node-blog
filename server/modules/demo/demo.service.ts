@@ -1,33 +1,33 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Demo, DemoDocument, DemoModel } from '../../models/demo.model';
+import { Demo, DemoModel, IDemoModel, DemoJoiSchema } from '../../models/demo.model';
+import { checkEntityIsValid } from '../../utils/helper';
 
 @Injectable()
 export class DemoService {
-    constructor(@InjectModel(DemoModel) private readonly demoModel: Model<DemoDocument>) {}
+    constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
 
     async create(newDemo: Demo): Promise<Demo> {
+        checkEntityIsValid(newDemo, DemoJoiSchema);
         const demo: Demo = await this.demoModel.create(newDemo);
         return demo;
     }
 
     async update(id: string, data: Demo) {
-        return await this.demoModel.findByIdAndUpdate({ _id: id }, data);
+        return await this.demoModel.findByIdAndUpdate({ _id: id }, data, { runValidators: true });
     }
 
-    async getDemos(query: {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Demo[]> {
-        const { skip = 1, limit = 10, sort = {} } = option;
-        const filter = { ...query };
-        return await this.demoModel.find(
-            filter,
-            {},
-            {
-                skip: (skip - 1) * limit,
-                limit,
-                sort,
-            }
-        );
+    async getDemoList(options: {
+        skip?: number;
+        limit?: number;
+        sort?: object;
+    }): Promise<{ items: Demo[]; totalCount: number }> {
+        const { skip = 1, limit = 10, sort = {} } = options;
+        return await this.demoModel.paginate({}, '', {
+            skip,
+            limit,
+            sort,
+        });
     }
 
     async getDemo(id: string) {
@@ -38,11 +38,6 @@ export class DemoService {
     async deleteDemo(id: string) {
         await this.demoModel.deleteOne({ _id: id });
         return {};
-    }
-
-    async count(query) {
-        const filter = { ...query };
-        return await this.demoModel.countDocuments(filter);
     }
 
     public async batchDelete(demoIds: string[]) {

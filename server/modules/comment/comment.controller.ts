@@ -1,39 +1,24 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { Request } from 'express';
-import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
 import { CommentService } from './comment.service';
-import { Comment } from '../../models/comment.model';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Comment, CommentJoiSchema } from '../../models/comment.model';
 import { Roles } from '../../decorators/roles.decorator';
+import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { auth } from '../../utils/auth.util';
 import { ADMIN_USER_INFO } from '../../configs/index.config';
-import Joi from '@hapi/joi';
+import { ObjectIdSchema, generateObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
+import { omit } from 'lodash';
 
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
-    public static idSchema = Joi.object({
-        id: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static articleIdSchema = Joi.object({
-        articleId: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static deleteCommentsSchema = Joi.object({
-        commentIds: Joi.array().items(Joi.string().required()),
-    });
-
     @Post('/comments')
-    async create(@Req() req: Request, @Body() comment: Comment) {
-        if (auth(req)) {
+    async create(@Req() req: Request, @JoiBody(CommentJoiSchema) comment: Comment) {
+        const isAuth = auth(req);
+        if (isAuth) {
             Object.assign(comment, {
                 identity: 1,
                 nickName: ADMIN_USER_INFO.nickName,
@@ -41,34 +26,37 @@ export class CommentController {
                 location: ADMIN_USER_INFO.location,
             });
         }
-        return await this.commentService.create(comment);
+        const data = await this.commentService.create(comment);
+        if (!isAuth) {
+            return omit(data.toJSON(), 'email');
+        }
+        return data;
     }
 
     @Put('/comments/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() comment: Comment) {
+    async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(CommentJoiSchema) comment: Comment) {
         return await this.commentService.update(params.id, comment);
     }
 
     @Get('/comments')
-    @JoiValidationPipe(StandardPaginationSchema)
-    @JoiValidationPipe(CommentController.articleIdSchema)
-    async getComments(@Req() req: Request, @Query() query: { page: number; limit: number; articleId: string }) {
-        let field = '';
-        const q: { article?: string } = {};
-        if (query.articleId) {
-            q.article = query.articleId;
+    async getComments(
+        @Req() req: Request,
+        @JoiQuery({ ...StandardPaginationSchema, ...generateObjectIdSchema('articleId') })
+        query: {
+            page: number;
+            limit: number;
+            articleId: string;
         }
-
+    ) {
+        let field = '';
         if (!auth(req)) {
             field = '-email';
         }
-        const items = await this.commentService.getComments(q, {
+        const { items, totalCount } = await this.commentService.getCommentList({
+            ...query,
             field,
-            skip: Number(query.page),
-            limit: Number(query.limit),
         });
-        const totalCount = await this.commentService.count(q);
         return {
             items,
             totalCount,
@@ -76,15 +64,13 @@ export class CommentController {
     }
 
     @Get('/comments/:id')
-    @JoiValidationPipe(CommentController.idSchema)
-    async getComment(@Param() params: { id: string }): Promise<Comment | null> {
+    async getComment(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Comment | null> {
         return await this.commentService.getComment(params.id);
     }
 
     @Delete('/comments/:id')
     @Roles('admin')
-    @JoiValidationPipe(CommentController.idSchema)
-    async deleteComment(@Param() params: { id: string }) {
+    async deleteComment(@JoiParam(ObjectIdSchema) params: { id: string }) {
         return await this.commentService.deleteComment(params.id);
     }
 
@@ -96,8 +82,7 @@ export class CommentController {
 
     @Delete('/comments')
     @Roles('admin')
-    @JoiValidationPipe(CommentController.deleteCommentsSchema)
-    deleteComments(@Body() body: { commentIds: string[] }): Promise<any> {
+    deleteComments(@JoiBody(generateObjectIdsSchema('commentIds')) body: { commentIds: string[] }): Promise<any> {
         return this.commentService.batchDelete(body.commentIds);
     }
 }

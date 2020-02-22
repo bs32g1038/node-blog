@@ -1,6 +1,6 @@
-import Joi from '@hapi/joi';
+import Joi from '../joi';
 
-export const StandardPaginationSchema = Joi.object().keys({
+export const StandardPaginationSchema = {
     page: Joi.number()
         .default(1)
         .min(1)
@@ -9,4 +9,4 @@ export const StandardPaginationSchema = Joi.object().keys({
         .default(10)
         .min(10)
         .max(1000),
-});
+};

@@ -1,69 +1,54 @@
-import { Controller, Get, Post, Body, Query, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { StandardPaginationSchema } from '../../validations/standard.pagination.validation';
+import { Controller, Get, Post, Delete, Put, UseGuards } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { Category } from '../../models/category.model';
-import { JoiValidationPipe } from '../../pipes/joi.validation.pipe';
+import { Category, CategoryJoiSchema } from '../../models/category.model';
 import { Roles } from '../../decorators/roles.decorator';
+import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import Joi from '@hapi/joi';
+import { ObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
+import { checkEntityIsValid } from '../../utils/helper';
 
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
-    public static idSchema = Joi.object({
-        id: Joi.string()
-            .default('')
-            .max(50),
-    });
-
-    public static deleteCategoriesSchema = Joi.object({
-        categoryIds: Joi.array().items(Joi.string().required()),
-    });
-
     @Post('/categories')
     @Roles('admin')
-    async create(@Body() category: Category) {
+    async create(@JoiBody(CategoryJoiSchema) category: Category) {
+        checkEntityIsValid(category, CategoryJoiSchema);
         return await this.categoryService.create(category);
     }
 
     @Put('/categories/:id')
     @Roles('admin')
-    async update(@Param() params: { id: string }, @Body() category: Category) {
+    async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(CategoryJoiSchema) category: Category) {
         return await this.categoryService.update(params.id, category);
     }
 
     @Get('/categories')
-    @JoiValidationPipe(StandardPaginationSchema)
-    async getCategoris(@Query() query: { page: number; limit: number }): Promise<Category[]> {
-        return await this.categoryService.getCategories(
-            {},
-            {
-                skip: Number(query.page),
-                limit: Number(query.limit),
-                sort: {},
-            }
-        );
+    async getCategoris(
+        @JoiQuery(StandardPaginationSchema) query: { page: number; limit: number }
+    ): Promise<Category[]> {
+        return await this.categoryService.getCategories({
+            skip: query.page,
+            limit: query.limit,
+        });
     }
 
     @Get('/categories/:id')
-    @JoiValidationPipe(CategoryController.idSchema)
-    async getCategory(@Param() params: { id: string }): Promise<Category | null> {
+    async getCategory(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Category | null> {
         return await this.categoryService.getCategory(params.id);
     }
 
     @Delete('/categories/:id')
     @Roles('admin')
-    @JoiValidationPipe(CategoryController.idSchema)
-    async deleteCategory(@Param() params: { id: string }) {
+    async deleteCategory(@JoiParam(ObjectIdSchema) params: { id: string }) {
         return await this.categoryService.deleteCategory(params.id);
     }
 
     @Delete('/categories')
     @Roles('admin')
-    @JoiValidationPipe(CategoryController.deleteCategoriesSchema)
-    deleteArticles(@Body() body: { categoryIds: string[] }): Promise<any> {
+    deleteArticles(@JoiBody(generateObjectIdsSchema('categoryIds')) body: { categoryIds: string[] }): Promise<any> {
         return this.categoryService.batchDelete(body.categoryIds);
     }
 }

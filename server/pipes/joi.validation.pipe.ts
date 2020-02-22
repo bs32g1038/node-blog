@@ -1,12 +1,12 @@
-import Joi from '@hapi/joi';
-import { PipeTransform, Injectable, BadRequestException, UsePipes } from '@nestjs/common';
+import Joi from '../joi';
+import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class JoiValidationPipeTransform implements PipeTransform {
-    public constructor(private readonly schema: Joi.ObjectSchema) {}
+    public constructor(private readonly schema: object) {}
 
-    public transform(value: any) {
-        const { error } = this.schema.validate(value, { allowUnknown: true });
+    public transform(data: any) {
+        const { error, value } = Joi.object(this.schema).validate(data, { stripUnknown: true });
         if (error) {
             throw new BadRequestException('Validation failed' + error);
         }
@@ -14,4 +14,4 @@ export class JoiValidationPipeTransform implements PipeTransform {
     }
 }
 
-export const JoiValidationPipe = (schema: Joi.ObjectSchema) => UsePipes(new JoiValidationPipeTransform(schema));
+export const JoiValidationPipe = (schema: object) => new JoiValidationPipeTransform(schema);

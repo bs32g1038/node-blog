@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
+import paginate, { ModelPaginate } from '../mongoose/paginate';
+import Joi from '../joi';
 
 export interface Demo {
     readonly _id?: string;
@@ -11,6 +13,13 @@ export interface Demo {
     readonly updatedAt?: string | Date;
 }
 
+export const DemoJoiSchema = {
+    title: Joi.string()
+        .min(1)
+        .max(80),
+    content: Joi.string().max(800),
+};
+
 export interface DemoDocument extends Demo, Document {
     readonly _id: string;
 }
@@ -19,12 +28,15 @@ export const DemoSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            min: [1],
-            max: 150,
+            minlength: 1,
+            maxlength: 80,
+            trim: true,
             required: true,
         },
         content: {
             type: String,
+            maxlength: 800,
+            trim: true,
             required: true,
         },
         visitCount: {
@@ -37,6 +49,12 @@ export const DemoSchema = new mongoose.Schema(
     }
 );
 
-export const DemoModel = mongoose.model('demo', DemoSchema, 'demo');
+DemoSchema.plugin(paginate);
+
+const DemoModel: ModelPaginate<DemoDocument> = mongoose.model('demo', DemoSchema, 'demo');
+
+export type IDemoModel = typeof DemoModel;
+
+export { DemoModel };
 
 export const DemoModelProvider = getProviderByModel(DemoModel);
