@@ -19,6 +19,6 @@ export const generateObjectIdsSchema = (field: string) => {
         throw new Error('generate object id schema, field can not empty');
     }
     return {
-        [field]: Joi.array().items(Joi.objectId()),
+        [field]: Joi.array().items(Joi.objectId().required()),
     };
 };

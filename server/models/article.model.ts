@@ -30,17 +30,17 @@ export const ArticleJoiSchema = {
         .max(80),
     content: Joi.string()
         .min(1)
-        .max(800),
+        .max(2000),
     summary: Joi.string()
         .min(1)
-        .max(80),
+        .max(1000),
     screenshot: Joi.string()
         .min(1)
         .max(100),
     category: Joi.string()
         .min(1)
         .max(30),
-    tags: Joi.array().items(Joi.string()),
+    tags: Joi.array().items(Joi.string().max(20)),
 };
 
 const DayReadings = new mongoose.Schema({
@@ -68,14 +68,14 @@ const ArticleSchema = new mongoose.Schema(
         content: {
             type: String,
             minlength: 1,
-            maxlength: 800,
+            maxlength: 2000,
             trim: true,
             required: true,
         },
         summary: {
             type: String,
             minlength: 1,
-            maxlength: 300,
+            maxlength: 1000,
             trim: true,
             required: true,
         },
@@ -102,7 +102,7 @@ const ArticleSchema = new mongoose.Schema(
         },
         //标签
         tags: {
-            type: [{ type: String, maxlength: 10, lowercase: true, trim: true, index: true }],
+            type: [{ type: String, maxlength: 20, lowercase: true, trim: true, index: true }],
             index: true,
         },
         isDeleted: {

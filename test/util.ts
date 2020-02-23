@@ -30,10 +30,18 @@ export const initApp = async (metadata: ModuleMetadata) => {
 /**
  * 格式化jest测试中的it的name，如 it('Method: get, Url: /api/test, ...', fn)
  */
-export const formatJestItNameE2e = ({ method = '', url = '', status = 200, message = '', body = {}, params = {} }) => {
-    return `Method: ${method} Url: ${url} Status: ${status} params: ${JSON.stringify(
-        params
-    )} ${message} ${JSON.stringify(body)}`;
+export const formatJestItNameE2e = ({
+    method = '',
+    url = '',
+    status = 200,
+    message = '',
+    body = {},
+    params = {},
+    query = {},
+}) => {
+    return `Method: ${method} Url: ${url} Status: ${status} params: ${JSON.stringify(params)} query: ${JSON.stringify(
+        query
+    )} ${message} ${JSON.stringify(body)} \n -------------------------------------`;
 };
 
 /**
@@ -60,4 +68,12 @@ export const isExpectPass = (arr1: any[], arr2: any[], fields: string[]) => {
             return rs;
         }
     }
+};
+
+export const generateDataList = (fn: () => void, len = 0) => {
+    const arr = [];
+    for (let i = 0; i < len; i++) {
+        arr.push(fn());
+    }
+    return arr;
 };

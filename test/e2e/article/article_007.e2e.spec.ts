@@ -1,63 +1,41 @@
-import request from 'supertest';
 import { ArticleModule } from '../../../server/modules/article.module';
-import { INestApplication } from '@nestjs/common';
-import { initApp, formatJestItNameE2e, generateUrl } from '../../util';
-import { ArticleModel } from '../../models';
+import { ArticleModel } from '../../../server/models/article.model';
 import { getArticle, getObjectId } from '../../faker';
-import { TIP_UNAUTHORIZED_DELETE } from '../../constant';
+import { e2eTest } from '../../e2e-test';
 
-/**
- * 文章 删除单个条目 api 测试
- */
-const TEST = {
-    url: '/api/articles/:id',
-    method: 'delete',
-};
+const article = getArticle();
 
-const getURL = (id: string) => {
-    return generateUrl({ url: TEST.url, params: { id } });
-};
+e2eTest(
+    {
+        testName: 'article_006_e2e 删除单个文章 delete api 测试',
+        url: '/api/articles/:id',
+        method: 'delete',
+        modules: [ArticleModule],
+        async initData() {
+            await ArticleModel.create(article);
+        },
+    },
+    test => {
+        const randomId = getObjectId();
+        test({
+            status: 403,
+            params: { id: randomId },
+            message: '未授权，执行删除操作！',
+        });
 
-const template = ({ status = 200, params = {}, message = '' }) => {
-    return formatJestItNameE2e({ method: TEST.method, url: TEST.url, status, params, message });
-};
+        test({
+            status: 200,
+            isLogin: true,
+            params: { id: article._id },
+            message: '合法数据',
+        });
 
-describe('article_007_e2e', () => {
-    let app: INestApplication;
-    const article = getArticle();
-
-    beforeAll(async () => {
-        app = await initApp({ imports: [ArticleModule] });
-        await ArticleModel.create(article);
-    });
-
-    it(template({ status: 403, params: { id: article._id }, message: TIP_UNAUTHORIZED_DELETE }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL(article._id))
-            .expect(403);
-    });
-
-    it(template({ status: 200, params: { id: article._id } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL(article._id))
-            .set('authorization', __TOKEN__)
-            .expect(200)
-            .expect({});
-    });
-
-    /**
-     * 文章不存在，测试用例
-     */
-    const testId = getObjectId();
-    it(template({ status: 200, params: { id: testId } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL(testId))
-            .set('authorization', __TOKEN__)
-            .expect(200)
-            .expect({});
-    });
-
-    afterAll(async () => {
-        await app.close();
-    });
-});
+        const testId = getObjectId();
+        test({
+            status: 200,
+            isLogin: true,
+            params: { id: testId },
+            message: '文章不存在，测试用例',
+        });
+    }
+);
