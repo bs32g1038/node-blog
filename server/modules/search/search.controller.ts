@@ -12,7 +12,8 @@ export class SearchController {
         @JoiQuery({
             key: Joi.string()
                 .default('')
-                .max(50),
+                .max(10)
+                .allow(''),
         })
         query: {
             key: string;
