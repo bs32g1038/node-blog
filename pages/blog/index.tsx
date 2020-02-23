@@ -1,2 +1,2 @@
-import { Articles } from '../../client/web/components/articles';
+import Articles from '../../client/web/components/articles';
 export default Articles;

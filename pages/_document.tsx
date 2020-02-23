@@ -26,7 +26,7 @@ class AppDocument extends Document {
                             var _hmt = _hmt || [];
                             (function() {
                               var hm = document.createElement("script");
-                              hm.src = "https://hm.baidu.com/hm.js?6f7e27c8345c16888b1454d3091382a5";
+                              hm.src = "https://hm.baidu.com/hm.js?ff62c5e1c5159c0b837c6a9d27016497";
                               var s = document.getElementsByTagName("script")[0]; 
                               s.parentNode.insertBefore(hm, s);
                             })();

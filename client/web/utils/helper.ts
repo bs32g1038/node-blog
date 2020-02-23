@@ -1,5 +1,9 @@
 import { css } from '@emotion/core';
 import jsxss from 'xss';
+import md5 from 'crypto-js/md5';
+import GHAT from '../../libs/generate-avatar';
+
+const ghat = new GHAT();
 
 const sizes = {
     desktop: 992,
@@ -32,3 +36,7 @@ export const xss = (html: any) => {
 };
 
 export const isServer = typeof window === 'undefined';
+
+export const gernateAvatarImage = (str: string) => {
+    return ghat.getImage(md5(str).toString());
+};

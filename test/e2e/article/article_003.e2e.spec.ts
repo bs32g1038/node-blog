@@ -1,86 +1,53 @@
-import request from 'supertest';
 import { ArticleModule } from '../../../server/modules/article.module';
-import { INestApplication } from '@nestjs/common';
-import { initApp, generateUrl, formatJestItNameE2e } from '../../util';
-import { ArticleModel } from '../../models';
+import { ArticleModel } from '../../../server/models/article.model';
 import { getArticle, getObjectId } from '../../faker';
-import { TIP_UNAUTHORIZED_DELETE } from '../../constant';
+import { e2eTest } from '../../e2e-test';
 
-/**
- * 文章 批量删除条目 api 测试
- */
-const TEST = {
-    url: '/api/articles',
-    method: 'delete',
-};
+const article = getArticle();
 
-const getURL = () => {
-    return generateUrl({ url: TEST.url });
-};
-
-const template = ({ status = 200, params = {}, message = '', body = {} }) => {
-    return formatJestItNameE2e({ method: TEST.method, url: TEST.url, status, params, message, body });
-};
-
-describe('article_003_e2e', () => {
-    let app: INestApplication;
-    const article = getArticle();
-
-    beforeAll(async () => {
-        app = await initApp({
-            imports: [ArticleModule],
+e2eTest(
+    {
+        testName: 'article_003_e2e 文章批量删除 delete api 测试',
+        url: '/api/articles',
+        method: 'delete',
+        modules: [ArticleModule],
+        async initData() {
+            await ArticleModel.create(article);
+        },
+    },
+    test => {
+        test({
+            status: 403,
+            message: '未授权，执行删除操作！',
         });
-        ArticleModel.create(article);
-    });
 
-    it(template({ status: 403, message: TIP_UNAUTHORIZED_DELETE }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL())
-            .expect(403);
-    });
+        test({
+            status: 400,
+            isLogin: true,
+            body: { articleIds: '' },
+            message: '测试 articleIds 应该是数组！',
+        });
 
-    it(template({ status: 400, params: { articleIds: '' } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL())
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: '',
-            })
-            .expect(400);
-    });
+        test({
+            status: 400,
+            isLogin: true,
+            body: { articleIds: [] },
+            message: '测试 articleIds 为空数组！',
+        });
 
-    it(template({ status: 200, params: { articleIds: [] } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL())
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [],
-            })
-            .expect(200);
-    });
+        const testId = getObjectId();
+        test({
+            status: 200,
+            isLogin: true,
+            body: { articleIds: [testId] },
+            message: `测试 articleIds 数组中不存在的文章id`,
+        });
 
-    const testId = getObjectId();
-    it(template({ status: 200, params: { articleIds: [testId] } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL())
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [testId],
-            })
-            .expect(200);
-    });
-
-    it(template({ status: 200, params: { articleIds: [article._id] } }), async () => {
-        return request(app.getHttpServer())
-            .delete(getURL())
-            .set('authorization', __TOKEN__)
-            .send({
-                articleIds: [article._id],
-            })
-            .expect(200);
-    });
-
-    afterAll(async () => {
-        await app.close();
-    });
-});
+        test({
+            status: 200,
+            isLogin: true,
+            body: { articleIds: [article._id] },
+            message: `合法数据`,
+        });
+    }
+);

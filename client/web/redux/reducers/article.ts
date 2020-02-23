@@ -1,41 +1,7 @@
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import * as api from '../../api/article';
-import { FETCH_ARTICLE, FETCH_RECENT_ARTICLES } from '../action-types';
 
-export const setState = (article: any, comments: any) => ({
-    type: FETCH_ARTICLE,
-    article,
-    comments,
-});
-
-export const setRecentArticles = (recentArticles: any) => ({
-    type: FETCH_RECENT_ARTICLES,
-    recentArticles,
-});
-
-export const fetchArticle = (id: string) => {
-    return (dispatch: any) => {
-        return api.fetchArticle(id).then((data: any) => {
-            dispatch(setState(data.article, data.comments));
-        });
-    };
-};
-
-export const fetchRecentArticle = () => {
-    return (dispatch: any) => {
-        return api.fetchRecentArticles().then((data: any) => {
-            dispatch(setRecentArticles(data));
-        });
-    };
-};
-
-export interface Action {
-    type?: string;
-    article?: {};
-    comments?: any[];
-    recentArticles: any[];
-}
-
-export interface State {
+interface State {
     article:
         | {
               _id: string;
@@ -59,24 +25,41 @@ const initialState: State = {
     recentArticles: [],
 };
 
-export default function(state: any = initialState, action: Action) {
-    switch (action.type) {
-        case FETCH_ARTICLE: {
-            const { article, comments } = action;
-            return {
-                ...state,
-                article,
-                comments,
-            };
-        }
-        case FETCH_RECENT_ARTICLES: {
-            const { recentArticles } = action;
-            return {
-                ...state,
-                recentArticles,
-            };
-        }
-        default:
-            return state;
-    }
+interface ArticleDataLoaded {
+    article: {};
+    comments: any[];
 }
+
+interface RecentArticlesDataLoaded {
+    recentArticles: any[];
+}
+
+const article = createSlice({
+    name: 'article',
+    initialState,
+    reducers: {
+        setArticle(state, action: PayloadAction<ArticleDataLoaded>) {
+            const { article, comments } = action.payload;
+            state.article = article;
+            state.comments = comments;
+        },
+        setRecentArticles(state, action: PayloadAction<RecentArticlesDataLoaded>) {
+            const { recentArticles } = action.payload;
+            state.recentArticles = recentArticles;
+        },
+    },
+});
+
+export const { setArticle, setRecentArticles } = article.actions;
+
+export default article.reducer;
+
+export const fetchArticle = (id: string) => async (dispatch: Dispatch<PayloadAction<ArticleDataLoaded>>) => {
+    const data = await api.fetchArticle(id);
+    return dispatch(setArticle({ article: data.article, comments: data.comments }));
+};
+
+export const fetchRecentArticle = () => async (dispatch: Dispatch<PayloadAction<RecentArticlesDataLoaded>>) => {
+    const data = await api.fetchRecentArticles();
+    return dispatch(setRecentArticles({ recentArticles: data }));
+};

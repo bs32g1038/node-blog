@@ -1,4 +1,3 @@
-import { Model, Document } from 'mongoose';
 import { Inject } from '@nestjs/common';
 
 const DB_MODEL_TOKEN_SUFFIX = 'db_model_token';
@@ -8,7 +7,7 @@ export function getModelToken(modelName: string): string {
 }
 
 // 根据 Model 获取 Provider
-export const getProviderByModel = (model: Model<Document>) => {
+export const getProviderByModel = (model: any) => {
     return {
         provide: model.modelName + DB_MODEL_TOKEN_SUFFIX,
         useValue: model,
@@ -16,6 +15,6 @@ export const getProviderByModel = (model: Model<Document>) => {
 };
 
 // 注入器
-export const InjectModel = <T extends Document>(model: Model<T>) => {
+export const InjectModel = (model: any) => {
     return Inject(getModelToken(model.modelName));
 };

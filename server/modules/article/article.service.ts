@@ -2,11 +2,13 @@ import { Model } from 'mongoose';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '../write.day.reading.module';
-import { Article, ArticleDocument, ArticleModel } from '../../models/article.model';
+import { Article, ArticleModel, IArticleModel, ArticleJoiSchema } from '../../models/article.model';
 import { CategoryDocument, CategoryModel } from '../../models/category.model';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import mila from 'markdown-it-link-attributes';
+import { QueryRules } from '../../utils/mongoose.query.util';
+import { checkEntityIsValid } from '../../utils/helper';
 
 const markdown: any = new MarkdownIt({
     highlight: (str, lang) => {
@@ -29,18 +31,21 @@ export { markdown };
 @Injectable()
 export class ArticleService {
     constructor(
-        @InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>,
+        @InjectModel(ArticleModel) private readonly articleModel: IArticleModel,
         @InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>
     ) {}
 
     async create(articleDocument: Article) {
+        checkEntityIsValid(articleDocument, ArticleJoiSchema);
         const article = await this.articleModel.create(articleDocument);
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         return article;
     }
 
     async update(_id: string, data: Article) {
-        const article = await this.articleModel.findOneAndUpdate({ _id }, data);
+        const article = await this.articleModel.findOneAndUpdate({ _id }, data, {
+            runValidators: true,
+        });
         if (!article) {
             throw new BadRequestException('找不到该文章！');
         }
@@ -53,28 +58,28 @@ export class ArticleService {
         return article;
     }
 
-    async getArticles(
-        query: { category?: string; tag?: string },
-        option: { skip?: number; limit?: number; sort?: object }
-    ): Promise<Article[]> {
-        const { skip = 1, limit = 10, sort = { createdAt: -1 } } = option;
-        let filter: any = { isDeleted: false };
-        if (query.tag) {
-            const reg = new RegExp(query.tag, 'i'); // 不区分大小写
-            filter = {
-                ...filter,
-                tags: { $elemMatch: { $regex: reg } },
-            };
-        } else {
-            filter = { ...filter, ...query };
-        }
-        return await this.articleModel
-            .find(filter, '-content', {
-                skip: (skip - 1) * limit,
-                limit,
-                sort,
-            })
-            .populate('category');
+    async getArticleList(options: {
+        cid?: string;
+        tag?: string;
+        skip?: number;
+        limit?: number;
+        sort?: object;
+        title?: string;
+    }) {
+        const { skip = 1, limit = 10, sort = { createdAt: -1 } } = options;
+        const q = new QueryRules(options, {
+            cid: (str: string) => ({ category: str }),
+            tag: (str: string) => ({ tags: { $elemMatch: { $regex: new RegExp(str, 'i') } } }),
+            title: (str: string) => ({ title: new RegExp(str) }),
+        }).generateQuery();
+        const query = { isDeleted: false, ...q };
+        const { items, totalCount } = await this.articleModel.paginate(query, '-content', {
+            skip,
+            limit,
+            sort,
+            populate: [{ path: 'category' }],
+        });
+        return { items, totalCount };
     }
 
     async getArticle(id: string, isRenderHtml = false) {
@@ -119,18 +124,6 @@ export class ArticleService {
             await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         }
         return null;
-    }
-
-    async count(query: any) {
-        let filter = { ...query };
-        if (filter.tag) {
-            const reg = new RegExp(filter.tag, 'i'); // 不区分大小写
-            filter = {
-                tags: { $elemMatch: { $regex: reg } },
-            };
-            delete filter.tag;
-        }
-        return await this.articleModel.countDocuments({ isDeleted: false, ...filter });
     }
 
     // 批量删除文章

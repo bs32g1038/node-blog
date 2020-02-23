@@ -1,212 +1,83 @@
-import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { Collapse, Box, Badge, Text, Flex, Image } from '@chakra-ui/core';
+import { css } from 'emotion';
 import marked from '../../../libs/marked';
 import { timeAgo } from '../../../libs/time';
-import media from '../../utils/media';
-import GHAT from '../../../libs/generate-avatar';
 import { CommentForm } from '../comment-form';
-import md5 from 'crypto-js/md5';
+import MarkdownBody from '../markdown-body';
+import { gernateAvatarImage } from '../../utils/helper';
 
-const ghat = new GHAT();
-
-const CommentsItem = styled.li`
-    border-bottom: 1px solid #f5f5f5;
-    padding: 10px;
-    position: relative;
-    &:after {
-        content: attr(data-index);
-        position: absolute;
-        right: 10px;
-        top: 12px;
-        text-align: center;
-        color: #d5cbcb;
-        font-size: 12px;
-    }
-    ${media.phone`
-        &:after {
-            top: 10px;
-        }
-    `}
-`;
-
-const Info = styled.div`
-    display: flex;
-`;
-
-const AvatarWrap = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    margin-right: 10px;
-    margin-top: 5px;
-    img {
-        width: 40px;
-        height: auto;
-        vertical-align: middle;
-        border-radius: 4px;
-    }
-    &.quote {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-top: 0;
-        img {
-            width: 16px;
-            vertical-align: inherit;
-        }
-    }
-    ${media.phone`
-        width: 32px;
-        height: 32px;
-        img {
-            width: 32px;
-            height: auto;
-            vertical-align: middle;
-            border-radius: 4px;
-        }
-    `}
-`;
-
-const Content = styled.div`
-    width: 100%;
-`;
-
-const Meta = styled.div`
-    color: #999;
-    font-size: 12px;
-    margin-right: 55px;
-    > a {
-        text-decoration: none;
-        color: #999;
-    }
-    &.quote {
-        margin-right: 0;
-    }
-`;
-
-const User = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-const InfoWrap = styled.div`
-    display: flex;
-    align-items: center;
-    color: #6d757a;
-    font-weight: 700;
-    .separator {
-        color: #b5a9a9;
-        font-weight: normal;
-    }
-    ${media.phone`
-        .tip {
-            font-size: 12px;
-        }
-    `}
-`;
-
-const NickName = styled.span`
-    ${media.phone`
-        font-size: 12px;
-        &.quote {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            max-width: 60px;
-        }
-    `}
-`;
-
-const InfoTime = styled.span`
-    color: #999;
-    font-size: 12px;
-    font-weight: normal;
-`;
-
-const UserSign: any = styled.span`
-    color: #999;
-    font-size: 12px;
-    display: inline-block;
-    color: #b5a9a9;
-    font-weight: normal;
-    ${(props: any) =>
-        props.isAdmin &&
-        `
-        background-color: rgba(250, 90, 60, .95);
-        color: #fff;
-        padding: 0 3px;
-        border-radius: 3px;
-    `};
-`;
-
-const ItemContent = styled.div`
+const ItemContent = styled(MarkdownBody)`
     font-size: 14px;
     line-height: 1.5;
     word-break: break-all;
     word-wrap: break-word;
-    p {
-        margin: 5px 0;
-        img {
-            width: 20px;
-            vertical-align: bottom;
-        }
-    }
 `;
 
-const Quote = styled.div`
-    background-color: #f5f5f5;
-    font-size: 14px;
-    margin-bottom: 10px;
-    padding: 10px 20px 10px 20px;
-    margin-top: 10px;
-    border-radius: 5px;
-    display: flex;
-    ${media.phone`
-        padding: 10px;
-    `}
-`;
-
-const ReplyBox = styled.div`
-    margin-top: 10px;
-`;
+const getBadgeVisitorOrAuthor = identity => {
+    return identity !== 0 ? (
+        <Badge
+            fontWeight="normal"
+            fontSize={12}
+            boxShadow="none"
+            variant="outline"
+            color="theme.article.badgeAuthorColor"
+        >
+            博主
+        </Badge>
+    ) : (
+        <Badge
+            fontWeight="normal"
+            fontSize={12}
+            boxShadow="none"
+            variant="outline"
+            color="theme.article.badgeVisitorColor"
+        >
+            游客
+        </Badge>
+    );
+};
 
 const replyFn = (item: any) => {
     const [avatarSrc, setAvatarSrc] = useState('');
     const [showContent, setShowContent] = useState(false);
     useEffect(() => {
-        setAvatarSrc(ghat.getImage(md5(item.nickName).toString()) || '');
+        setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <Quote>
-            <Content>
-                <User>
-                    <InfoWrap>
-                        <span className="tip">回复给：</span>
-                        <AvatarWrap className="quote">
-                            <img src={avatarSrc} />
-                        </AvatarWrap>
-                        <NickName className="quote">{item.nickName}</NickName>
-                        <span className="separator">&nbsp;·&nbsp;</span>
-                        <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
-                        <span className="separator">&nbsp;·&nbsp;</span>
-                        <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
-                    </InfoWrap>
-                    <Meta className="quote">
-                        <a
-                            style={{ cursor: 'pointer' }}
-                            comment-id={item._id}
-                            onClick={() => {
-                                setShowContent(!showContent);
-                            }}
-                        >
-                            {showContent ? '折叠' : '展开'}
-                        </a>
-                    </Meta>
-                </User>
-                {showContent && <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>}
-            </Content>
-        </Quote>
+        <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={14} mt={2} mb={2}>
+            <Flex justifyContent="space-between" alignItems="center">
+                <Flex alignItems="center">
+                    <Text as="span">回复给：</Text>
+                    <Image src={avatarSrc} size="16px" borderRadius="md" mr={1}></Image>
+                    <Box color="theme.primaryText" fontSize={14} isTruncated={true} maxW={['110px', '180px']}>
+                        {item.nickName}
+                    </Box>
+                    <span className="separator">&nbsp;·&nbsp;</span>
+                    {getBadgeVisitorOrAuthor(item.identity)}
+                    <span className="separator">&nbsp;·&nbsp;</span>
+                    <Text color="gray.500" fontSize={12}>
+                        {timeAgo(item.createdAt)}
+                    </Text>
+                </Flex>
+                <Box
+                    userSelect="none"
+                    color="theme.secondaryText"
+                    fontSize={12}
+                    style={{ cursor: 'pointer' }}
+                    comment-id={item._id}
+                    onClick={() => {
+                        setShowContent(!showContent);
+                    }}
+                >
+                    {showContent ? '折叠' : '展开'}
+                </Box>
+            </Flex>
+            <Collapse mt={4} isOpen={showContent}>
+                <ItemContent content={marked(item.content)}></ItemContent>
+            </Collapse>
+        </Box>
     );
 };
 
@@ -214,44 +85,75 @@ export const CommentItem = (props: { item: any; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
     const [avatarSrc, setAvatarSrc] = useState('');
     useEffect(() => {
-        setAvatarSrc(ghat.getImage(md5(props.item.nickName).toString()) || '');
+        setAvatarSrc(gernateAvatarImage(props.item.nickName) || '');
     }, [props.item._id]);
 
     const item = props.item;
     return (
-        <CommentsItem data-index={'# ' + (props.index + 1) + ' 楼层'}>
-            <Info>
-                <AvatarWrap>
-                    <img src={avatarSrc} />
-                </AvatarWrap>
-                <Content>
-                    <User>
-                        <InfoWrap>
-                            <NickName>{item.nickName}</NickName>
-                            <span className="separator">&nbsp;·&nbsp;</span>
-                            <UserSign isAdmin={item.identity !== 0}>{item.identity !== 0 ? '博主' : '游客'}</UserSign>
-                            <span className="separator">&nbsp;·&nbsp;</span>
-                            <InfoTime>{timeAgo(item.createdAt)}</InfoTime>
-                        </InfoWrap>
-                        <Meta>
-                            <a
-                                style={{ color: '#f86422', cursor: 'pointer' }}
-                                comment-id={item._id}
-                                onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
+        <Box
+            data-index={'# ' + (props.index + 1) + ' 楼层'}
+            p={2}
+            pt={4}
+            borderBottom="1px"
+            borderBottomColor="theme.border"
+            position="relative"
+            fontSize={[12, 14]}
+            className={css`
+                &:after {
+                    content: attr(data-index);
+                    position: absolute;
+                    right: 10px;
+                    top: 18px;
+                    text-align: center;
+                    color: #d5cbcb;
+                    font-size: 12px;
+                }
+            `}
+        >
+            <Flex>
+                <Image src={avatarSrc} size="40px" borderRadius="4px" mt="5px" mr="10px"></Image>
+                <Box width="100%">
+                    <Flex justifyContent="space-between" alignItems="center">
+                        <Flex alignItems="center">
+                            <Box
+                                color="theme.primaryText"
+                                fontWeight="bold"
+                                isTruncated={true}
+                                maxW={['110px', '180px']}
+                                fontSize={[12, 14]}
                             >
-                                回复
-                            </a>
-                        </Meta>
-                    </User>
+                                {item.nickName}
+                            </Box>
+                            <span className="separator">&nbsp;·&nbsp;</span>
+                            {getBadgeVisitorOrAuthor(item.identity)}
+                            <span className="separator">&nbsp;·&nbsp;</span>
+                            <Text color="gray.500" fontSize={12}>
+                                {timeAgo(item.createdAt)}
+                            </Text>
+                        </Flex>
+                        <Box
+                            userSelect="none"
+                            fontSize={12}
+                            mr="55px"
+                            color="red.500"
+                            cursor="pointer"
+                            comment-id={item._id}
+                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
+                        >
+                            回复
+                        </Box>
+                    </Flex>
                     {item.reply && replyFn(item.reply)}
-                    <ItemContent dangerouslySetInnerHTML={{ __html: marked(item.content) }}></ItemContent>
-                    <ReplyBox>
+                    <Box color="theme.primaryText">
+                        <ItemContent content={marked(item.content)}></ItemContent>
+                    </Box>
+                    <Box mt={3}>
                         {showCommentForm === item._id && (
                             <CommentForm url="/comments" articleId={item.article} replyId={item._id} />
                         )}
-                    </ReplyBox>
-                </Content>
-            </Info>
-        </CommentsItem>
+                    </Box>
+                </Box>
+            </Flex>
+        </Box>
     );
 };

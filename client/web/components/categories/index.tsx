@@ -1,44 +1,22 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchCategories, State } from '../../redux/reducers/categories';
-import media from '../../utils/media';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '../../redux/reducers/categories';
+import { RootState } from '../../redux/store';
 import NavLink from '../nav-link';
-import * as theme from '../../theme';
+import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
+import { useRouter } from 'next/router';
+import Router from 'next/router';
 
-const CategoriesWrap = styled.ul`
-    align-items: center;
-    background-color: #fff;
-    border-bottom: 1px solid rgba(178, 186, 194, 0.15);
-    display: flex;
-    flex: 0 0 auto;
-    font-size: 13px;
-    margin: 0;
-    padding: 0 10px 15px;
-    border-bottom: 1px solid #ededee;
-    ${media.phone`
-        padding-top: 5px;
-        margin-bottom: 0;
-        white-space: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        box-sizing: border-box;
-    `};
-`;
-
-const Item = styled.li`
-    display: inline-block;
-    margin: 7px 20px 7px 0;
-`;
-
-const ItemLink = styled.a`
-    color: ${theme.textColor};
+const ItemLink = styled(Link)`
     text-decoration: none;
     cursor: pointer;
+    &:hover {
+        text-decoration: none;
+    }
     &.active {
         position: relative;
         font-size: 14px;
-        color: ${theme.headingColor};
         font-weight: 700;
         &:after {
             position: absolute;
@@ -57,35 +35,53 @@ const ItemLink = styled.a`
     }
 `;
 
-const C = (props: any) => {
+export default () => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const { items } = useSelector((state: RootState) => state.categories);
     useEffect(() => {
-        const cats = props._DB.categories || [];
+        const cats = items || [];
         if (cats.length <= 0) {
-            props.dispatch(fetchCategories());
+            dispatch(fetchCategories());
         }
     }, [1]);
-    const { categories = [] } = props._DB;
     return (
-        <CategoriesWrap>
-            <Item>
+        <Box
+            flex="0 0 auto"
+            fontSize={13}
+            borderBottomWidth="1px"
+            borderStyle="solid"
+            borderBottomColor="theme.categories.border"
+            px={3}
+            pb={3}
+        >
+            <Box display="inline-block" mt={2} mb={4}>
                 <NavLink exact={true} href="/blog">
-                    <ItemLink>全部</ItemLink>
+                    <ItemLink color="theme.categories.color">全部</ItemLink>
                 </NavLink>
-            </Item>
-            {categories.map((item: any) => (
-                <Item key={item._id}>
+            </Box>
+            {items.map((item: any) => (
+                <Box key={item._id} display="inline-block" ml={5} mb={4} mt={2}>
                     <NavLink exact={true} href={`/blog/articles?cid=${item._id}`}>
-                        <ItemLink>
+                        <ItemLink color="theme.categories.color">
                             {item.name}
                             <span>({item.articleCount})</span>
                         </ItemLink>
                     </NavLink>
-                </Item>
+                </Box>
             ))}
-        </CategoriesWrap>
+            {router.query.tag && (
+                <Box>
+                    <Tag>
+                        <TagLabel>{router.query.tag}</TagLabel>
+                        <TagCloseButton
+                            onClick={() => {
+                                Router.push('/blog/articles');
+                            }}
+                        />
+                    </Tag>
+                </Box>
+            )}
+        </Box>
     );
 };
-
-export const Categories = connect((state: State) => ({
-    _DB: state.categories,
-}))(C as any);

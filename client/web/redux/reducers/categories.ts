@@ -1,42 +1,34 @@
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import * as api from '../../api/category';
-import { FETCH_CATEGORIES } from '../action-types';
 
-export const setCategories = (categories: any) => ({
-    type: FETCH_CATEGORIES,
-    categories,
-});
-
-export const fetchCategories = () => {
-    return (dispatch: any) => {
-        return api.fetchCategories().then(categories => {
-            dispatch(setCategories(categories));
-        });
-    };
-};
-
-export interface Action {
-    type?: string;
-    categories?: any[];
-}
-
-export interface State {
-    categories: any;
+interface State {
+    items: any[];
 }
 
 const initialState: State = {
-    categories: [],
+    items: [],
 };
 
-export default function(state: any = initialState, action: Action) {
-    switch (action.type) {
-        case FETCH_CATEGORIES: {
-            const { categories } = action;
-            return {
-                ...state,
-                categories,
-            };
-        }
-        default:
-            return state;
-    }
+interface CategoriesDataLoaded {
+    items: any[];
 }
+
+const categories = createSlice({
+    name: 'categories',
+    initialState,
+    reducers: {
+        setCategories(state, action: PayloadAction<CategoriesDataLoaded>) {
+            const { items } = action.payload;
+            state.items = items;
+        },
+    },
+});
+
+export const { setCategories } = categories.actions;
+
+export default categories.reducer;
+
+export const fetchCategories = () => async (dispatch: Dispatch<PayloadAction<CategoriesDataLoaded>>) => {
+    const data = await api.fetchCategories();
+    return dispatch(setCategories({ items: data }));
+};

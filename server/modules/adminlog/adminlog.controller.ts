@@ -1,7 +1,9 @@
-import { Controller, Query, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AdminLogService } from './adminlog.service';
 import { Roles } from '../../decorators/roles.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
+import { JoiQuery } from '../../decorators/joi.decorator';
+import { StandardPaginationSchema } from '../../joi';
 
 @Controller()
 @UseGuards(RolesGuard)
@@ -10,19 +12,8 @@ export class AdminLogController {
 
     @Get('/api/admin-logs')
     @Roles('admin')
-    async getAdminLogs(@Query() query: { page: number; limit: number; cid: string }) {
-        const items = await this.adminLogService.getAdminLogs(
-            {},
-            {
-                skip: Number(query.page),
-                limit: Number(query.limit),
-            }
-        );
-        const totalCount = await this.adminLogService.count({});
-        return {
-            items,
-            totalCount,
-        };
+    async getAdminLogs(@JoiQuery(StandardPaginationSchema) query: { page: number; limit: number }) {
+        return await this.adminLogService.getAdminLogs(query);
     }
 
     @Get('/api/recent-admin-logs')

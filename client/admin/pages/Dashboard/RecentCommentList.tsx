@@ -70,6 +70,13 @@ const CommentInfoDiv = styled.div`
     display: flex;
 `;
 
+const NickName = styled.div`
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 130px;
+`;
+
 const CommentContentTitleA = styled.a`
     color: #878d99;
     font-style: italic;
@@ -144,9 +151,9 @@ export default (props: Props) => {
                     <CommentMsgDiv key={item._id}>
                         <CommentInfoDiv>
                             <span style={{ flex: '1 0 auto', display: 'flex' }}>
-                                <span>
+                                <NickName>
                                     <strong>{item.nickName}</strong>
-                                </span>
+                                </NickName>
                                 &nbsp;在&nbsp;
                                 <CommentContentTitleA
                                     href={`/blog/articles/${item._id}`}
@@ -156,9 +163,9 @@ export default (props: Props) => {
                                     {item.article && item.article.title}
                                 </CommentContentTitleA>
                                 {item.reply ? (
-                                    <span>
+                                    <NickName>
                                         &nbsp;回复&nbsp;<strong>{item.reply.nickName}</strong>&nbsp;
-                                    </span>
+                                    </NickName>
                                 ) : (
                                     <span>&nbsp;说：&nbsp;</span>
                                 )}

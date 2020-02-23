@@ -12,16 +12,15 @@ export class CategoryService {
     }
 
     async update(id: string, data: Category): Promise<Category | null> {
-        await this.categoryModel.updateOne({ _id: id }, data);
+        await this.categoryModel.updateOne({ _id: id }, data, { runValidators: true });
         return await this.categoryModel.findById(id);
     }
 
-    async getCategories(query: {} = {}, option: { skip?: number; limit?: number; sort?: object }): Promise<Category[]> {
-        const { skip = 1, limit = 100, sort = {} } = option;
-        return await this.categoryModel.find(query, '', {
+    async getCategories(options: { skip?: number; limit?: number }): Promise<Category[]> {
+        const { skip = 1, limit = 100 } = options;
+        return await this.categoryModel.find({}, '', {
             skip: (skip - 1) * limit,
             limit,
-            sort,
         });
     }
 

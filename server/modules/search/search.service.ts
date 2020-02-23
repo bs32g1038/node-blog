@@ -1,21 +1,23 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Article, ArticleDocument, ArticleModel } from '../../models/article.model';
+import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
+import { QueryRules } from '../../utils/mongoose.query.util';
 
 @Injectable()
 export class SearchService {
-    public constructor(@InjectModel(ArticleModel) private readonly articleModel: Model<ArticleDocument>) {}
+    public constructor(@InjectModel(ArticleModel) private readonly articleModel: IArticleModel) {}
 
-    public async getArticles(query: { key?: string }): Promise<Article[]> {
-        if (query.key) {
-            const filter = { isDeleted: false, title: new RegExp(query.key) };
-            return await this.articleModel.find(filter, 'title', {
+    public async getArticleList(options: { key?: string }): Promise<{ items: Article[]; totalCount: number }> {
+        if (options.key) {
+            const q = new QueryRules(options, {
+                key: (str: string) => ({ title: new RegExp(str) }),
+            });
+            return await this.articleModel.paginate({ ...q, isDeleted: false }, 'title', {
                 skip: 0,
                 limit: 20,
             });
         }
-        return await this.articleModel.aggregate([
+        const items = await this.articleModel.aggregate([
             {
                 $sample: { size: 4 },
             },
@@ -23,10 +25,9 @@ export class SearchService {
                 $project: { title: 1 },
             },
         ]);
-    }
-
-    public async count(query: { key: string }) {
-        const filter = { isDeleted: false, title: new RegExp(query.key) };
-        return await this.articleModel.countDocuments(filter);
+        return {
+            items,
+            totalCount: items.length,
+        };
     }
 }

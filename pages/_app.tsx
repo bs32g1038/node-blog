@@ -1,6 +1,7 @@
 import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { ColorModeProvider } from '@chakra-ui/core';
 import withReduxStore from '../client/web/redux/with-redux-store';
 import versionInfo from '../package.json';
 import siteInfo from '../client/web/config/site-info';
@@ -24,7 +25,9 @@ class MyApp extends App {
         const { Component, pageProps, reduxStore } = this.props as any;
         return (
             <Provider store={reduxStore}>
-                <Component {...pageProps} />
+                <ColorModeProvider>
+                    <Component {...pageProps} />
+                </ColorModeProvider>
             </Provider>
         );
     }

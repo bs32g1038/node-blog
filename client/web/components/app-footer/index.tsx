@@ -2,81 +2,20 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
-import { GithubSvg } from '../svgs/github-svg';
-import { HomeSvg } from '../svgs/home-svg';
-import { UserSvg } from '../svgs/user-svg';
 import NavLink from '../nav-link';
-import * as theme from '../../theme';
+import BackTopBtn from '../back-top-button';
+import BlogRuningTime from '../blog-runing-time';
+import { Flex, Box, Text, Divider, useColorMode } from '@chakra-ui/core';
+import UiLink from '../ui-link';
+import Icon from '../icon';
 
-const Footer = styled.footer`
-    box-sizing: border-box;
-    color: ${theme.textColorSecondary};
-    flex: 0 0 auto;
-    font-size: 12px;
-    font-weight: normal;
-    position: relative;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-    width: 100%;
-    .icon-icp {
-        display: inline-block;
-        vertical-align: middle;
-        width: 15px;
-        height: 15px;
-        background: url(${require('../../assets/images/icp.png')}) no-repeat;
-        background-size: 100%;
-    }
-    ${media.phone`
-        width: 100%;
-        margin-bottom: 50px;
-    `};
-`;
-
-const P = styled.p`
-    word-break: break-all;
-    word-wrap: break-word;
-    line-height: 1.8;
-    margin: 0;
-    > a {
-        text-decoration: none;
-        color: ${theme.textColor};
-        font-weight: bolder;
-    }
-`;
-
-const BackTopBtn = styled.div`
-    color: #333;
-    cursor: pointer;
-    position: absolute;
-    right: -40px;
-    bottom: 40px;
-    text-align: center;
-    width: 44px;
-    background: #fff;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #fff;
-    svg {
-        fill: #8590a6;
-        vertical-align: middle;
-    }
-    ${media.phone`
-        display: none;
-    `};
-`;
-
-const MobileTabbar = styled.div`
+const MobileTabbar = styled(Box)`
     position: fixed;
     bottom: 0;
     left: 0;
     display: flex;
     width: 100%;
     height: 50px;
-    background-color: #fff;
-    border-top: 1px solid #e5e5e5;
     z-index: 9000;
     display: none;
     ${media.phone`
@@ -95,6 +34,9 @@ const MobileTabbar = styled.div`
         text-decoration: none;
         &.active {
             color: #1989fa;
+            svg {
+                fill: #1989fa !important;
+            }
         }
     }
     .tabbar-item__icon {
@@ -104,71 +46,14 @@ const MobileTabbar = styled.div`
     }
 `;
 
-const HomeIcon = styled(HomeSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-`;
-
-const UserIcon = styled(UserSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-`;
-
-const GithubIcon = styled(GithubSvg)`
-    fill: #2b414d;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-`;
-
-const FooterRight = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-`;
-
-const LibLink = styled.a`
-    cursor: pointer;
-`;
-
 const LibLogo = styled.img`
     fill: #2b414d;
     width: 32px;
     height: 32px;
     cursor: pointer;
     margin: 0 6px;
+    display: inline-block;
 `;
-
-const Hr = styled.hr`
-    width: 100%;
-`;
-
-const loadBackTopBtnEvent = () => {
-    let timer: any = null;
-    const backTopEl = document.getElementById('backTop');
-    if (backTopEl) {
-        backTopEl.onclick = () => {
-            cancelAnimationFrame(timer);
-            timer = requestAnimationFrame(function fn() {
-                const t = document.documentElement && document.documentElement.scrollTop;
-                const oTop = document.body.scrollTop || t || 0;
-                if (oTop > 0) {
-                    const p = oTop - 100;
-                    if (document.documentElement) {
-                        document.body.scrollTop = document.documentElement.scrollTop = p;
-                    }
-                    timer = requestAnimationFrame(fn);
-                } else {
-                    cancelAnimationFrame(timer);
-                }
-            });
-        };
-    }
-};
 
 /**
  * 底部时间计数逻辑实现
@@ -196,80 +81,75 @@ const loadTimeCountEvent = () => {
 };
 
 export const AppFooter = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
     useEffect(() => {
-        loadBackTopBtnEvent();
         loadTimeCountEvent();
     });
     return (
         <React.Fragment>
-            <Footer>
-                <BackTopBtn title="返回顶部" id="backTop">
-                    <svg data-title="回到顶部" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                        <path d="M16.036 19.59a1 1 0 0 1-.997.995H9.032a.996.996 0 0 1-.997-.996v-7.005H5.03c-1.1 0-1.36-.633-.578-1.416L11.33 4.29a1.003 1.003 0 0 1 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.005z"></path>
-                    </svg>
-                </BackTopBtn>
-                <div>
-                    <P>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</P>
-                    <P>
+            <Flex
+                flex="0 0 auto"
+                position="relative"
+                justifyContent="space-between"
+                p={4}
+                fontSize={12}
+                bg="theme.footer.bg"
+                color="theme.footer.text"
+                mb={['50px', 0]}
+            >
+                <BackTopBtn></BackTopBtn>
+                <Box>
+                    <Text mb={1}>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</Text>
+                    <Text mb={1}>
                         Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong>{' '}
                         <strong>antdesign</strong>
-                    </P>
-                    <P>
+                    </Text>
+                    <Text mb={1}>
                         <span>累计运行</span>
-                        <span id="blog-runing-time"></span>
-                    </P>
-                    <P>
+                        <BlogRuningTime></BlogRuningTime>
+                    </Text>
+                    <Text mb={1}>
                         <span>Copyright © 2016-2019</span>
-                        <a className="text-white" href="/blog">
+                        <UiLink className="text-white" href="/blog">
                             <strong> {siteInfo.name} </strong>
-                        </a>
+                        </UiLink>
                         <span>
-                            <a
-                                style={{ textDecoration: 'none', color: '#444' }}
-                                href={siteInfo.icpGovCn}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                <span className="icon-icp"></span> {siteInfo.icp}{' '}
-                            </a>
+                            <UiLink href={siteInfo.icpGovCn} isExternal={true}>
+                                <span className="icon-icp"></span> {siteInfo.icp}
+                            </UiLink>
                         </span>
-                    </P>
-                </div>
-                <FooterRight>
-                    <P>
-                        <LibLink href="https://nestjs.com" rel="noopener noreferrer" target="_blank">
+                    </Text>
+                </Box>
+                <Flex justifyContent="space-between" flexDirection="column">
+                    <Flex alignItems="center">
+                        <UiLink href="https://nestjs.com" isExternal={true}>
                             <LibLogo src={require('../../assets/svgs/logo-nestjs.svg')} />
-                        </LibLink>
-                        <LibLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
+                        </UiLink>
+                        <UiLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
                             <LibLogo src={require('../../assets/svgs/logo-react.svg')} />
-                        </LibLink>
-                        <LibLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
+                        </UiLink>
+                        <UiLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
                             <LibLogo src={require('../../assets/svgs/logo-nodejs.svg')} />
-                        </LibLink>
-                        <LibLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
+                        </UiLink>
+                        <UiLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
                             <LibLogo src={require('../../assets/svgs/logo-ant-design.svg')} />
-                        </LibLink>
-                    </P>
-                    <Hr />
-                    <P>
+                        </UiLink>
+                    </Flex>
+                    <Divider />
+                    <Text>
                         博客已开源至
-                        <a
-                            href={siteInfo.projectGithub}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            className="app-github"
-                        >
-                            Github
-                        </a>
+                        <UiLink href={siteInfo.projectGithub}>
+                            <strong> Github </strong>
+                        </UiLink>
                         请大家多多关注
-                    </P>
-                </FooterRight>
-            </Footer>
-            <MobileTabbar id="mobile-app-footer">
+                    </Text>
+                </Flex>
+            </Flex>
+            <MobileTabbar borderTop={1} borderStyle="solid" borderTopColor="theme.border" bg="theme.mobileFooter.bg">
                 <NavLink href="/blog">
                     <a className="tabbar-item">
                         <div className="tabbar-item__icon">
-                            <HomeIcon></HomeIcon>
+                            <Icon fill="theme.primaryText" size="24px" name="home" />
                         </div>
                         <div className="tabbar-item__text">博客</div>
                     </a>
@@ -277,14 +157,20 @@ export const AppFooter = () => {
                 <NavLink href="/about">
                     <a className="tabbar-item">
                         <div className="tabbar-item__icon">
-                            <UserIcon></UserIcon>
+                            <Icon fill="theme.primaryText" size="24px" name="user" />
                         </div>
                         <div className="tabbar-item__text">关于</div>
                     </a>
                 </NavLink>
+                <a className="tabbar-item" onClick={() => toggleColorMode()}>
+                    <div className="tabbar-item__icon">
+                        <Icon size="24px" fill="theme.primaryText" name={colorMode === 'light' ? 'moon' : 'sun'} />
+                    </div>
+                    <div className="tabbar-item__text">主题</div>
+                </a>
                 <a className="tabbar-item" href={siteInfo.github} rel="noopener noreferrer" target="_blank">
                     <div className="tabbar-item__icon">
-                        <GithubIcon></GithubIcon>
+                        <Icon size="24px" name="github" fill="theme.primaryText" />
                     </div>
                     <div className="tabbar-item__text">Gituhub</div>
                 </a>

@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
+import paginate, { ModelPaginate } from '../mongoose/paginate';
+import Joi from '../joi';
 
 export interface Comment {
     readonly _id?: string;
@@ -17,6 +19,21 @@ export interface Comment {
     readonly updatedAt?: string | Date;
 }
 
+export const CommentJoiSchema = {
+    nickName: Joi.string()
+        .min(1)
+        .max(80),
+    email: Joi.string().email(),
+    content: Joi.string()
+        .min(1)
+        .max(500),
+    reply: Joi.objectId(),
+    article: Joi.objectId(),
+    identity: Joi.number()
+        .min(0)
+        .max(4),
+};
+
 export interface CommentDocument extends Comment, Document {
     readonly _id: string;
 }
@@ -25,25 +42,29 @@ const CommentSchema = new mongoose.Schema(
     {
         nickName: {
             type: String,
-            min: [1],
-            max: 150,
+            minlength: 1,
+            maxlength: 80,
+            trim: true,
             required: true,
         },
         email: {
             type: String,
-            min: [1],
-            max: 150,
+            minlength: 1,
+            maxlength: 80,
+            trim: true,
             required: true,
         },
         website: {
             type: String,
-            max: 150,
+            maxlength: 80,
+            trim: true,
             default: '',
         },
         content: {
             type: String,
-            min: [1],
-            max: 1000,
+            minlength: 1,
+            maxlength: 500,
+            trim: true,
             required: true,
         },
         reply: {
@@ -58,7 +79,8 @@ const CommentSchema = new mongoose.Schema(
         },
         location: {
             type: String,
-            max: 150,
+            maxlength: 80,
+            trim: true,
             default: '',
         },
         pass: {
@@ -77,6 +99,12 @@ const CommentSchema = new mongoose.Schema(
     }
 ).index({ createdAt: -1 });
 
-export const CommentModel = mongoose.model('comment', CommentSchema, 'comment');
+CommentSchema.plugin(paginate);
+
+const CommentModel: ModelPaginate<CommentDocument> = mongoose.model('comment', CommentSchema, 'comment');
+
+export type ICommentModel = typeof CommentModel;
+
+export { CommentModel };
 
 export const CommentModelProvider = getProviderByModel(CommentModel);
