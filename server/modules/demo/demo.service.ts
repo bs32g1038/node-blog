@@ -18,13 +18,13 @@ export class DemoService {
     }
 
     async getDemoList(options: {
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: object;
     }): Promise<{ items: Demo[]; totalCount: number }> {
-        const { skip = 1, limit = 10, sort = {} } = options;
+        const { page = 1, limit = 10, sort = {} } = options;
         return await this.demoModel.paginate({}, '', {
-            skip,
+            page,
             limit,
             sort,
         });

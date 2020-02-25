@@ -31,15 +31,15 @@ export class CommentService {
 
     async getCommentList(options: {
         articleId?: string;
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: object;
         field?: string;
     }): Promise<{ items: Comment[]; totalCount: number }> {
-        const { articleId, skip = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = options;
+        const { articleId, page = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = options;
         const q = new QueryRules({ articleId }, { articleId: (id: string) => ({ article: id }) }).generateQuery();
         return await this.commentModel.paginate(q, field, {
-            skip,
+            page,
             limit,
             sort,
             populate: [

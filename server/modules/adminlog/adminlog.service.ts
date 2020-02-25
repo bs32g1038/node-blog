@@ -8,13 +8,13 @@ export class AdminLogService {
     constructor(@InjectModel(AdminLogModel) private readonly adminLogModel: IAdminLogModel) {}
 
     async getAdminLogs(options: {
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: object;
     }): Promise<{ items: AdminLog[]; totalCount: number }> {
-        const { skip = 1, limit = 100, sort = { createdAt: -1 } } = options;
+        const { page = 1, limit = 100, sort = { createdAt: -1 } } = options;
         return await this.adminLogModel.paginate({}, '', {
-            skip,
+            page,
             limit,
             sort,
         });

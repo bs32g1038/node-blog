@@ -6,7 +6,7 @@ type Paginate<T> = {
         query: any,
         field: any,
         options: {
-            skip?: number;
+            page?: number;
             limit?: number;
             sort?: object;
             populate?: { path: string | any; select?: string | any }[];
@@ -24,15 +24,15 @@ export default (schema: mongoose.Schema) => {
         query: any,
         field: any,
         options: {
-            skip: number;
+            page: number;
             limit: number;
             sort: object;
             populate: { path: string | any; select?: string | any }[];
         }
     ) {
-        const { skip, limit, sort } = options;
+        const { page, limit, sort } = options;
         let $FD = this.find(query, field, {
-            skip: (skip - 1) * limit,
+            skip: (page - 1) * limit,
             limit: limit,
             sort: sort,
         });

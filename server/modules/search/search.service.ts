@@ -13,7 +13,7 @@ export class SearchService {
                 key: (str: string) => ({ title: new RegExp(str) }),
             }).generateQuery();
             return await this.articleModel.paginate({ ...q, isDeleted: false }, 'title', {
-                skip: 1,
+                page: 1,
                 limit: 20,
             });
         }
