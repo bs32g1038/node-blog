@@ -15,6 +15,7 @@ A simple, fast and easy-to-use blog
 
 ## Features
 
+* 🌙☀ Theme: Support light and dark themes
 * 🐐 APi: Node-blog through Nodejs and express provide the Restful API
 * 🚜 Database: Data stored in Mongodb，Driven by Mongoose
 * 🔨 Powerful build: Use powerful webpack to build projects
@@ -45,6 +46,7 @@ client // client ui
 - [x] Comments
 - [x] Search support
 - [x] Mobile web support
+- [x] Light theme &  Dark theme
 - [x] Other support ...
 
 ## Development
