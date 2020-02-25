@@ -25,18 +25,21 @@ export interface Article {
 
 export const ArticleJoiSchema = {
     title: Joi.string()
+        .trim()
         .min(1)
         .max(80),
     content: Joi.string()
+        .trim()
         .min(1)
-        .max(2000),
+        .max(3000),
     summary: Joi.string()
+        .trim()
         .min(1)
         .max(1000),
-    screenshot: Joi.string().max(100),
-    category: Joi.string()
-        .min(1)
-        .max(30),
+    screenshot: Joi.string()
+        .trim()
+        .max(100),
+    category: Joi.objectId(),
     tags: Joi.array().items(Joi.string().max(20)),
 };
 
@@ -65,7 +68,7 @@ const ArticleSchema = new mongoose.Schema(
         content: {
             type: String,
             minlength: 1,
-            maxlength: 2000,
+            maxlength: 3000,
             trim: true,
             required: true,
         },

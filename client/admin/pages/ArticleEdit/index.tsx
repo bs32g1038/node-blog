@@ -189,7 +189,7 @@ export default () => {
                             labelCol={{ span: 3 }}
                             wrapperCol={{ span: 10 }}
                             label="文章标题："
-                            rules={[{ required: true, message: '标题不能为空！' }]}
+                            rules={[{ required: true, message: '标题不能为空！，且最多80个字符!', max: 80 }]}
                         >
                             <Input type="text" />
                         </Form.Item>
@@ -308,7 +308,7 @@ export default () => {
                             labelCol={{ span: 3 }}
                             wrapperCol={{ span: 10 }}
                             label="文章摘要："
-                            rules={[{ required: true, message: '文章摘要不能为空!' }]}
+                            rules={[{ required: true, message: '文章摘要不能为空，且最多200个字符!', max: 200 }]}
                         >
                             <TextArea placeholder="请输入文章摘要" autoSize={{ minRows: 2, maxRows: 6 }}></TextArea>
                         </Form.Item>
@@ -317,7 +317,7 @@ export default () => {
                             label="文章详情："
                             labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
-                            rules={[{ required: true, message: '文章详情不能为空!' }]}
+                            rules={[{ required: true, message: '文章详情不能为空，且最多3000个字符!', max: 3000 }]}
                         >
                             <MdEdit />
                         </Form.Item>
@@ -325,7 +325,6 @@ export default () => {
                             <Button type="primary" htmlType="submit">
                                 发布
                             </Button>
-                            <Button style={{ marginLeft: '10px' }}>存为草稿</Button>
                         </Form.Item>
                     </Form>
                 </div>

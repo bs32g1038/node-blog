@@ -26,6 +26,6 @@ export class AdminLogService {
     }
 
     async getRecentAdminLogs() {
-        return this.adminLogModel.find({}, { limit: 10 });
+        return this.adminLogModel.find({}, '', { limit: 10 });
     }
 }
