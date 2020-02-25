@@ -8,7 +8,7 @@ import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 import { UserDocument, UserModel } from '../../models/user.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
 
-const schema = Joi.object().keys({
+const schema = Joi.object({
     account: Joi.string()
         .min(3)
         .max(30)
@@ -52,9 +52,9 @@ export class LoginService {
              * 首次登陆，即为管理员账号，仅一次。
              */
             if (result.error) {
-                return {
-                    msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！' + result.error.message,
-                };
+                throw new BadRequestException(
+                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！' + result.error.message
+                );
             }
             await this.userModel.create({
                 account,

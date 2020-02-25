@@ -27,11 +27,12 @@ export const CommentJoiSchema = {
     content: Joi.string()
         .min(1)
         .max(500),
-    reply: Joi.objectId(),
+    reply: [Joi.equal(null), Joi.objectId()],
     article: Joi.objectId(),
     identity: Joi.number()
         .min(0)
         .max(4),
+    website: Joi.string().allow(''),
 };
 
 export interface CommentDocument extends Comment, Document {

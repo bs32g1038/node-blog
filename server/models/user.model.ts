@@ -24,7 +24,7 @@ export const UserJoiSchema = {
         .max(20),
     password: Joi.string()
         .min(1)
-        .max(20),
+        .max(40),
 };
 
 const UserSchema = new mongoose.Schema(
@@ -47,7 +47,7 @@ const UserSchema = new mongoose.Schema(
         // 密码
         password: {
             type: String,
-            maxlength: 20,
+            maxlength: 40,
             set: sha1,
             trim: true,
             required: true,

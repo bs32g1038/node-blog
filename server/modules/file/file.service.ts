@@ -9,7 +9,7 @@ export class FileService {
     constructor(@InjectModel(FileModel) private readonly fileModel: IFileModel) {}
 
     async create(newFile: File): Promise<File> {
-        checkEntityIsValid(newFile, FileJoiSchema);
+        checkEntityIsValid(newFile, FileJoiSchema, ['parentId', 'isdir']);
         return await this.fileModel.create(newFile);
     }
 
@@ -24,12 +24,7 @@ export class FileService {
         sort?: {};
     }): Promise<{ items: File[]; totalCount: number }> {
         const { parentId, skip = 1, limit = 10, sort = {} } = options;
-        const q = new QueryRules(
-            { parentId },
-            {
-                parentId: (str: string) => ({ parentId: str }),
-            }
-        );
+        const q = new QueryRules({ parentId }, { parentId: (str: string) => ({ parentId: str }) }).generateQuery();
         return await this.fileModel.paginate(q, '', {
             skip,
             limit,

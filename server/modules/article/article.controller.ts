@@ -27,8 +27,8 @@ export class ArticleController {
     public async getArticles(
         @JoiQuery({
             cid: Joi.objectId(),
-            tag: Joi.string().max(10),
-            title: Joi.string().max(10),
+            tag: Joi.string().max(20),
+            title: Joi.string().max(80),
             ...StandardPaginationSchema,
         })
         query: {
