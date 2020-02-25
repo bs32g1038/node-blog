@@ -13,7 +13,6 @@ export interface Article {
     readonly category: string;
     readonly commentCount?: number;
     readonly viewsCount?: number;
-    readonly isDeleted?: boolean;
     readonly isDraft?: boolean;
     readonly createdAt?: string | Date;
     readonly updatedAt?: string | Date;
@@ -34,9 +33,7 @@ export const ArticleJoiSchema = {
     summary: Joi.string()
         .min(1)
         .max(1000),
-    screenshot: Joi.string()
-        .min(1)
-        .max(100),
+    screenshot: Joi.string().max(100),
     category: Joi.string()
         .min(1)
         .max(30),
@@ -83,7 +80,6 @@ const ArticleSchema = new mongoose.Schema(
             type: String,
             maxlength: 100,
             trim: true,
-            default: '',
         },
         category: {
             type: mongoose.Schema.Types.ObjectId,
@@ -92,22 +88,21 @@ const ArticleSchema = new mongoose.Schema(
         },
         commentCount: {
             type: Number,
-            max: 100000,
             default: 0,
         },
         viewsCount: {
             type: Number,
-            max: 100000,
             default: 0,
         },
         //标签
         tags: {
-            type: [{ type: String, maxlength: 20, lowercase: true, trim: true, index: true }],
+            type: [{ type: String, maxlength: 20, lowercase: true, trim: true }],
             index: true,
         },
         isDeleted: {
             type: Boolean,
             default: false,
+            select: false,
         },
         isDraft: {
             type: Boolean,
