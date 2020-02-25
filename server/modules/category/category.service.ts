@@ -21,6 +21,7 @@ export class CategoryService {
         return await this.categoryModel.find({}, '', {
             page: (page - 1) * limit,
             limit,
+            sort: { createdAt: -1 },
         });
     }
 
