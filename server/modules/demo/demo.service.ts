@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { Demo, DemoModel, IDemoModel, DemoJoiSchema } from '../../models/demo.model';
 import { checkEntityIsValid } from '../../utils/helper';
@@ -41,6 +41,11 @@ export class DemoService {
     }
 
     public async batchDelete(demoIds: string[]) {
-        return this.demoModel.deleteMany({ _id: { $in: demoIds } });
+        return this.demoModel.find({ _id: { $in: demoIds } }).then(async demos => {
+            if (demos.length <= 0) {
+                throw new BadRequestException();
+            }
+            return this.demoModel.deleteMany({ _id: { $in: demoIds } });
+        });
     }
 }

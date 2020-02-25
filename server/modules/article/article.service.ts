@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '../write.day.reading.module';
 import { Article, ArticleModel, IArticleModel, ArticleJoiSchema } from '../../models/article.model';
@@ -89,6 +89,10 @@ export class ArticleService {
             })
             .populate('category');
 
+        if (!article) {
+            throw new NotFoundException('没有该文章');
+        }
+
         if (article && article._id) {
             incArticleDayReadingCount(article._id, (article.dayReadings && article.dayReadings.length) || 0);
         }
@@ -120,15 +124,19 @@ export class ArticleService {
     async deleteArticle(id: string) {
         const article = await this.articleModel.findById(id);
         await this.articleModel.deleteOne({ _id: id });
-        if (article) {
-            await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
+        if (!article) {
+            throw new NotFoundException();
         }
+        await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         return null;
     }
 
     // 批量删除文章
     public async batchDelete(articleIds: string[]) {
         return this.articleModel.find({ _id: { $in: articleIds } }).then(async articles => {
+            if (articles.length <= 0) {
+                throw new NotFoundException('没有可删除的文章条目');
+            }
             articles.map(async (article: Article) => {
                 return await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
             });

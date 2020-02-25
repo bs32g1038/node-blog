@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { Category, CategoryDocument, CategoryModel } from '../../models/category.model';
 
@@ -34,6 +34,11 @@ export class CategoryService {
     }
 
     public async batchDelete(categoryIds: string[]) {
-        return this.categoryModel.deleteMany({ _id: { $in: categoryIds } });
+        return this.categoryModel.find({ _id: { $in: categoryIds } }).then(async categories => {
+            if (categories.length <= 0) {
+                throw new BadRequestException();
+            }
+            return this.categoryModel.deleteMany({ _id: { $in: categoryIds } });
+        });
     }
 }

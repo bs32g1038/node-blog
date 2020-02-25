@@ -34,7 +34,6 @@ export const FileJoiSchema = {
     category: Joi.number(),
     isdir: Joi.boolean(),
     parentId: Joi.string(),
-    fileCount: Joi.number(),
 };
 
 export interface FileDocument extends File, Document {

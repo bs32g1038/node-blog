@@ -9,4 +9,5 @@ module.exports = async () => {
         useUnifiedTopology: true,
     });
     await conn.connection.dropDatabase();
+    await conn.disconnect();
 };

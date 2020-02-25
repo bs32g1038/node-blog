@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { Comment, ICommentModel, CommentModel, CommentJoiSchema } from '../../models/comment.model';
 import { IArticleModel, ArticleModel } from '../../models/article.model';
@@ -14,8 +14,8 @@ export class CommentService {
     ) {}
 
     async create(newComment: Comment) {
-        checkEntityIsValid(newComment, CommentJoiSchema, ['reply', 'identity']);
-        const article = await this.articleModel.findById(newComment.article);
+        const data: Comment = checkEntityIsValid(newComment, CommentJoiSchema, ['reply', 'identity']);
+        const article = await this.articleModel.findById(data.article);
         if (!article) {
             throw new BadRequestException('[article]文章id为错误数据');
         }
@@ -64,6 +64,11 @@ export class CommentService {
     }
 
     async batchDelete(commentIds: string[]) {
-        return this.commentModel.deleteMany({ _id: { $in: commentIds } });
+        return this.commentModel.find({ _id: { $in: commentIds } }).then(async comments => {
+            if (comments.length <= 0) {
+                throw new NotFoundException('没有可删除的评论');
+            }
+            return this.commentModel.deleteMany({ _id: { $in: commentIds } });
+        });
     }
 }

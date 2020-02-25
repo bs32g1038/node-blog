@@ -11,9 +11,9 @@ export class SearchService {
         if (options.key) {
             const q = new QueryRules(options, {
                 key: (str: string) => ({ title: new RegExp(str) }),
-            });
+            }).generateQuery();
             return await this.articleModel.paginate({ ...q, isDeleted: false }, 'title', {
-                skip: 0,
+                skip: 1,
                 limit: 20,
             });
         }

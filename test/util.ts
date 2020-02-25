@@ -4,7 +4,8 @@ import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadat
 import { DatabaseModule } from '../server/database/database.module';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
-import queryString from 'query-string';
+import { INestApplication } from '@nestjs/common';
+import mongoose from 'mongoose';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -27,34 +28,9 @@ export const initApp = async (metadata: ModuleMetadata) => {
     return app;
 };
 
-/**
- * 格式化jest测试中的it的name，如 it('Method: get, Url: /api/test, ...', fn)
- */
-export const formatJestItNameE2e = ({
-    method = '',
-    url = '',
-    status = 200,
-    message = '',
-    body = {},
-    params = {},
-    query = {},
-}) => {
-    return `Method: ${method} Url: ${url} Status: ${status} params: ${JSON.stringify(params)} query: ${JSON.stringify(
-        query
-    )} ${message} ${JSON.stringify(body)} \n -------------------------------------`;
-};
-
-/**
- * 生成url
- * @param {string} url
- * @param {object} params 作用于路径
- * @param {string} query 作用域？后面的字符串
- */
-export const generateUrl = ({ url = '', params = {}, query = {} }) => {
-    Object.keys(params).map(key => {
-        url = url.replace(`:${key}`, params[key]);
-    });
-    return url + '?' + queryString.stringify(query);
+export const closeApp = async (app: INestApplication) => {
+    await app.close();
+    await mongoose.disconnect();
 };
 
 export const isExpectPass = (arr1: any[], arr2: any[], fields: string[]) => {
