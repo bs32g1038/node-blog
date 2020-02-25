@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.0-alpha.19",
-    "@chakra-ui/core": "^0.5.2",
+    "@chakra-ui/core": "^0.6.0",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@nestjs/testing": "^6.11.8",
