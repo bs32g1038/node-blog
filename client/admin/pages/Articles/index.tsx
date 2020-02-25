@@ -46,8 +46,12 @@ export default () => {
         const query = {
             limit,
             page,
-            title: state.searchKey,
         };
+        if (state.searchKey) {
+            Object.assign(query, {
+                title: state.searchKey,
+            });
+        }
         axios.get('/articles?' + queryString.stringify(query)).then(res => {
             const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
             setState(data => ({

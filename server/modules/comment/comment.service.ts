@@ -60,7 +60,7 @@ export class CommentService {
     }
 
     async recentComments() {
-        return this.commentModel.find({}, { limit: 10 });
+        return await this.commentModel.find({}, '', { limit: 10 });
     }
 
     async batchDelete(commentIds: string[]) {
