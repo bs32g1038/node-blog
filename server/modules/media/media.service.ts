@@ -18,16 +18,16 @@ export class MediaService {
     }
 
     async getMediaList(options: {
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: object;
     }): Promise<{
         items: Media[];
         totalCount: number;
     }> {
-        const { skip = 1, limit = 10, sort = {} } = options;
+        const { page = 1, limit = 10, sort = {} } = options;
         return await this.mediaModel.paginate({}, '', {
-            skip,
+            page,
             limit,
             sort,
         });

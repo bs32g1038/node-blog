@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '../write.day.reading.module';
 import { Article, ArticleModel, IArticleModel, ArticleJoiSchema } from '../../models/article.model';
-import { CategoryDocument, CategoryModel } from '../../models/category.model';
+import { CategoryModel, CategoryDocument } from '../../models/category.model';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import mila from 'markdown-it-link-attributes';
@@ -61,12 +61,12 @@ export class ArticleService {
     async getArticleList(options: {
         cid?: string;
         tag?: string;
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: object;
         title?: string;
     }) {
-        const { skip = 1, limit = 10, sort = { createdAt: -1 } } = options;
+        const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
         const q = new QueryRules(options, {
             cid: (str: string) => ({ category: str }),
             tag: (str: string) => ({ tags: { $elemMatch: { $regex: new RegExp(str, 'i') } } }),
@@ -74,7 +74,7 @@ export class ArticleService {
         }).generateQuery();
         const query = { isDeleted: false, ...q };
         const { items, totalCount } = await this.articleModel.paginate(query, '-content', {
-            skip,
+            page,
             limit,
             sort,
             populate: [{ path: 'category' }],

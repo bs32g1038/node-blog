@@ -19,14 +19,14 @@ export class FileService {
 
     async getFileList(options: {
         parentId?: string;
-        skip?: number;
+        page?: number;
         limit?: number;
         sort?: {};
     }): Promise<{ items: File[]; totalCount: number }> {
-        const { parentId, skip = 1, limit = 10, sort = {} } = options;
+        const { parentId, page = 1, limit = 10, sort = {} } = options;
         const q = new QueryRules({ parentId }, { parentId: (str: string) => ({ parentId: str }) }).generateQuery();
         return await this.fileModel.paginate(q, '', {
-            skip,
+            page,
             limit,
             sort,
         });

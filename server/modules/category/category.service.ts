@@ -16,10 +16,10 @@ export class CategoryService {
         return await this.categoryModel.findById(id);
     }
 
-    async getCategories(options: { skip?: number; limit?: number }): Promise<Category[]> {
-        const { skip = 1, limit = 100 } = options;
+    async getCategories(options: { page?: number; limit?: number }): Promise<Category[]> {
+        const { page = 1, limit = 100 } = options;
         return await this.categoryModel.find({}, '', {
-            skip: (skip - 1) * limit,
+            page: (page - 1) * limit,
             limit,
         });
     }

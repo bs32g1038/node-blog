@@ -30,7 +30,7 @@ export class CategoryController {
         @JoiQuery(StandardPaginationSchema) query: { page: number; limit: number }
     ): Promise<Category[]> {
         return await this.categoryService.getCategories({
-            skip: query.page,
+            page: query.page,
             limit: query.limit,
         });
     }
