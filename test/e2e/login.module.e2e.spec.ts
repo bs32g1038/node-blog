@@ -21,18 +21,18 @@ describe('login.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/getFirstLoginInfo')
             .expect(200)
-            .expect({ msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！' });
+            .expect({ message: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！' });
     });
 
     test('bad request, first login, try use empty account', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: '', password: 'test' })) })
+            .send({ key: encrypt(JSON.stringify({ account: '', password: 'admin_password' })) })
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
                 expect(res.body.message).toEqual(
-                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！账号长度在3-30之间！'
+                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！账号长度在6-30之间！'
                 );
             });
     });
@@ -40,12 +40,12 @@ describe('login.module.e2e', () => {
     test('bad request, first login, try use empty password', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'test', password: '' })) })
+            .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: '' })) })
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
                 expect(res.body.message).toEqual(
-                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！密码长度在3-30之间！'
+                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！密码长度在6-30之间！'
                 );
             });
     });
@@ -53,7 +53,7 @@ describe('login.module.e2e', () => {
     test('first login success', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'test', password: 'test' })) })
+            .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: 'admin_password' })) })
             .expect(201)
             .then(res => {
                 expect(!verifyToken(res.body.token)).toBe(false);
@@ -66,7 +66,7 @@ describe('login.module.e2e', () => {
     test('second login also should be success', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'test', password: 'test' })) })
+            .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: 'admin_password' })) })
             .expect(201)
             .then(res => {
                 expect(!verifyToken(res.body.token)).toBe(false);
@@ -76,7 +76,7 @@ describe('login.module.e2e', () => {
     test('not first login, try account or password error, return warning message', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'test1', password: 'test1' })) })
+            .send({ key: encrypt(JSON.stringify({ account: 'admin_account1', password: 'admin_account1' })) })
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
