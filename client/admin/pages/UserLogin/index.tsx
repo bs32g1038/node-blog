@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Router, { withRouter } from 'next/router';
 import axios from '@blog/client/admin/axios';
 import config from '@blog/client/admin/configs/default.config';
 import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto-js';
 import { SignIn, SignInMain, SignInPanel, SignInHeader, SignInTitle } from './style';
+import useRequest from '@blog/client/admin/hooks/useRequest';
 
-const UserLogin = () => {
-    const [firstLoginTip, setFirstLoginTip] = useState('');
+const FirstLoginInfoTip = () => {
+    const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
+    if (!data) return null;
+    return <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />;
+};
+
+export default () => {
     const handleLogin = data => {
         const str = encrypt(JSON.stringify(data));
         axios.post('/login', { key: str }).then(res => {
@@ -16,11 +22,6 @@ const UserLogin = () => {
             Router.push('/admin/dashboard/analysis');
         });
     };
-    useEffect(() => {
-        axios.get('/getFirstLoginInfo').then(res => {
-            setFirstLoginTip(res.data.msg);
-        });
-    }, [1]);
     return (
         <SignIn>
             <SignInMain>
@@ -35,9 +36,7 @@ const UserLogin = () => {
                     <SignInHeader>
                         <SignInTitle className="sign-in-title">后台登陆</SignInTitle>
                     </SignInHeader>
-                    {firstLoginTip && (
-                        <Alert message={firstLoginTip} type="warning" style={{ margin: '0 20px 20px 20px' }} />
-                    )}
+                    <FirstLoginInfoTip />
                     <Form onFinish={handleLogin} className="login-form">
                         <Form.Item
                             name="account"
@@ -79,5 +78,3 @@ const UserLogin = () => {
         </SignIn>
     );
 };
-
-export default withRouter(UserLogin);
