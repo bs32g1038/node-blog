@@ -1,5 +1,5 @@
 import React from 'react';
-import Router, { withRouter } from 'next/router';
+import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
 import config from '@blog/client/admin/configs/default.config';
 import { Input, Button, Alert, message, Form } from 'antd';
