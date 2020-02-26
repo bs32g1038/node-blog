@@ -1,25 +1,12 @@
+import Joi from '@hapi/joi';
+import jwt from 'jsonwebtoken';
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import Joi from '@hapi/joi';
 import { TOKEN_SECRET_KEY } from '../../configs/index.config';
-import jwt from 'jsonwebtoken';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
-import { UserDocument, UserModel } from '../../models/user.model';
+import { UserDocument, UserModel, UserJoiSchema } from '../../models/user.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
-
-const schema = Joi.object({
-    account: Joi.string()
-        .min(3)
-        .max(30)
-        .required()
-        .error(new Error('账号长度在3-30之间！')),
-    password: Joi.string()
-        .min(3)
-        .max(30)
-        .required()
-        .error(new Error('密码长度在3-30之间！')),
-});
 
 @Injectable()
 export class LoginService {
@@ -35,7 +22,7 @@ export class LoginService {
         const count = await this.userModel.countDocuments({});
         if (count <= 0) {
             return {
-                msg: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！',
+                message: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！',
             };
         }
         return '';
@@ -46,7 +33,7 @@ export class LoginService {
         const account = U.account;
         const password = U.password;
         const count = await this.userModel.countDocuments({});
-        const result = schema.validate(U);
+        const result = Joi.object(UserJoiSchema).validate(U);
         if (count <= 0) {
             /**
              * 首次登陆，即为管理员账号，仅一次。
