@@ -20,10 +20,10 @@ export interface UserDocument extends User, Document {
 
 export const UserJoiSchema = {
     account: Joi.string()
-        .min(1)
-        .max(20),
+        .min(6)
+        .max(30),
     password: Joi.string()
-        .min(1)
+        .min(6)
         .max(40),
 };
 
@@ -39,7 +39,8 @@ const UserSchema = new mongoose.Schema(
         account: {
             type: String,
             unique: true,
-            maxlength: 20,
+            minlength: 6,
+            maxlength: 30,
             trim: true,
             lowercase: true,
             required: true,
@@ -47,6 +48,7 @@ const UserSchema = new mongoose.Schema(
         // 密码
         password: {
             type: String,
+            minlength: 6,
             maxlength: 40,
             set: sha1,
             trim: true,
