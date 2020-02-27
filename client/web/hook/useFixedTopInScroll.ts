@@ -16,7 +16,9 @@ export const useFixedTopInScroll = () => {
     useEffect(() => {
         const load = debounce((): any => {
             const S = document.documentElement.scrollTop || document.body.scrollTop;
-            if (S >= getTop($dom.current)) {
+            const eleBottomToDocumentTopLength = getTop($dom.current);
+            // 当滚动超过元素距离顶部距离时，采用 fixed 模式
+            if (S >= eleBottomToDocumentTopLength - eleBottomToDocumentTopLength / 2) {
                 setIsFixed(() => true);
             } else {
                 setIsFixed(() => false);
