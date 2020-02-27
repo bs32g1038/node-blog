@@ -1,10 +1,30 @@
 import React from 'react';
 import initializeStore from './store';
+import axios from '@blog/client/web/utils/axios';
+import { setError } from '@blog/client/web/redux/reducers/app';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
 
-function getOrCreateStore(initialState?: any) {
+/**
+ * 拦截 axios 响应，添加错误处理
+ * @param reduxStore redux store
+ */
+const initAxios = reduxStore => {
+    axios.interceptors.response.use(
+        function(response) {
+            return response;
+        },
+        async function(error) {
+            const { response = {} } = error;
+            const { status } = response;
+            await reduxStore.dispatch(setError({ error: { status } }));
+            return Promise.reject(error);
+        }
+    );
+};
+
+export function getOrCreateStore(initialState?: any) {
     if (isServer) {
         return initializeStore(initialState);
     }
@@ -22,6 +42,7 @@ export default (App: any) => {
             // This allows you to set a custom default initialState
             const reduxStore = getOrCreateStore();
 
+            initAxios(reduxStore);
             // Provide the store to getInitialProps of pages
             appContext.ctx.reduxStore = reduxStore;
 
