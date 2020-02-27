@@ -73,4 +73,7 @@ export default {
     mobileFooter: {
         bg: white,
     },
+    errorPage: {
+        bg: white,
+    },
 };

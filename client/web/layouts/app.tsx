@@ -11,6 +11,7 @@ export default (props: { children: any }) => {
     const children = props.children;
     const [theme, setTheme] = useState<any>(light);
     const { colorMode } = useColorMode();
+
     useEffect(() => {
         setTheme(() => (colorMode === 'light' ? light : dark));
     }, [colorMode]);

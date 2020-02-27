@@ -5,6 +5,7 @@ import { ColorModeProvider } from '@chakra-ui/core';
 import withReduxStore from '../client/web/redux/with-redux-store';
 import versionInfo from '../package.json';
 import siteInfo from '../client/web/config/site-info';
+import ErrorPage from '@blog/client/web/components/error-page';
 
 class MyApp extends App {
     componentDidMount() {
@@ -26,7 +27,11 @@ class MyApp extends App {
         return (
             <Provider store={reduxStore}>
                 <ColorModeProvider>
-                    <Component {...pageProps} />
+                    {reduxStore.getState().app.error ? (
+                        <ErrorPage statusCode={reduxStore.getState().app.error.status}></ErrorPage>
+                    ) : (
+                        <Component {...pageProps} />
+                    )}
                 </ColorModeProvider>
             </Provider>
         );

@@ -68,4 +68,7 @@ export default {
     mobileFooter: {
         bg: rgb(23, 23, 23),
     },
+    errorPage: {
+        bg: mainBgColor,
+    },
 };
