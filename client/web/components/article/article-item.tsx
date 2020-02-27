@@ -30,40 +30,40 @@ export default (props: Props) => {
             <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
                 <BreadcrumbItem>
                     <Link href="/">
-                        <BreadcrumbLink fontSize={12} color="gray.500">
+                        <BreadcrumbLink fontSize="13px" color="gray.500">
                             首页
                         </BreadcrumbLink>
                     </Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <Link href={'/blog/articles?cid=' + (article.category && article.category._id)}>
-                        <BreadcrumbLink fontSize={12} color="gray.500">
+                    <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}>
+                        <BreadcrumbLink fontSize="13px" color="gray.500">
                             {article.category && article.category.name}
                         </BreadcrumbLink>
                     </Link>
                 </BreadcrumbItem>
-                <BreadcrumbItem isCurrentPage>
-                    <BreadcrumbLink fontSize={12} color="gray.500">
+                <BreadcrumbItem isCurrentPage={true}>
+                    <BreadcrumbLink isTruncated={true} maxW="450px" fontSize="13px" color="gray.500">
                         {article.title}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
             <Box mb={5}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
-                    <Heading as="h2" size="xl" my={[4]}>
-                        {article.title}
-                    </Heading>
+                    <UiLink>
+                        <Heading as="h2" fontSize="1.8em" lineHeight={1.35} my={[4]}>
+                            {article.title}
+                        </Heading>
+                    </UiLink>
                 </Link>
-                <Flex fontSize={12} flexWrap="wrap">
+                <Flex fontSize="14px" flexWrap="wrap">
                     <Text color="gray.500" mr={1}>
                         发表于{parseTime(article.createdAt)}
                     </Text>
                     <Text color="gray.500" mr={1}>
                         分类于
-                        <Link href={`/blog/articles?cid=${article.category && article.category._id}`}>
-                            <Text as="a" color="gray.500" cursor="pointer">
-                                {article.category && article.category.name}
-                            </Text>
+                        <Link href={`/blog/articles?cid=${article.category && article.category._id}`} passHref={true}>
+                            <UiLink color="gray.500">{article.category && article.category.name}</UiLink>
                         </Link>
                     </Text>
                     <Text color="gray.500" mr={1}>

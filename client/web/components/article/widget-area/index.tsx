@@ -100,7 +100,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     position: fixed;
                     top: 0;
                     right: 50%;
-                    margin-right: -400px;
+                    margin-right: -380px;
                 `
             }
         >

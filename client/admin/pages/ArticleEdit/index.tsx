@@ -317,7 +317,7 @@ export default () => {
                             label="文章详情："
                             labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
-                            rules={[{ required: true, message: '文章详情不能为空，且最多3000个字符!', max: 3000 }]}
+                            rules={[{ required: true, message: '文章详情不能为空，且最多15000个字符!', max: 15000 }]}
                         >
                             <MdEdit />
                         </Form.Item>

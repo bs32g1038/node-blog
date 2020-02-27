@@ -31,7 +31,7 @@ export const ArticleJoiSchema = {
     content: Joi.string()
         .trim()
         .min(1)
-        .max(3000),
+        .max(15000),
     summary: Joi.string()
         .trim()
         .min(1)
@@ -68,7 +68,7 @@ const ArticleSchema = new mongoose.Schema(
         content: {
             type: String,
             minlength: 1,
-            maxlength: 3000,
+            maxlength: 15000,
             trim: true,
             required: true,
         },
