@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import marked from '@blog/client/libs/marked';
-import 'github-markdown-css';
 import axios from '../../axios';
 import CM from 'codemirror';
 import { WrapDiv } from './style';
+import MarkdownBody from './markdown-body';
 require('codemirror/mode/markdown/markdown');
 
 let codeMirror = null;
@@ -181,14 +181,7 @@ export default (props: any) => {
                 </div>
                 <div className="MdEditor-wraper">
                     <textarea id="codemirror" name={props.name} defaultValue={props.value} />
-                    {state.isPreview && (
-                        <div
-                            className="preview markdown-body"
-                            dangerouslySetInnerHTML={{
-                                __html: marked(MarkdownContent),
-                            }}
-                        ></div>
-                    )}
+                    {state.isPreview && <MarkdownBody content={marked(MarkdownContent)}></MarkdownBody>}
                 </div>
             </div>
         </WrapDiv>

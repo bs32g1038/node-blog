@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import theme from '@blog/client/web/theme/light';
 
 const Div = styled.div`
     font-size: 16px;
     font-family: Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'tohoma,sans-serif';
     line-height: 1.8;
-    color: ${(props: any) => props.theme.colors.theme.primaryText};
+    color: ${theme.colors.theme.primaryText};
     h1,
     h2,
     h3,
@@ -15,7 +16,7 @@ const Div = styled.div`
         font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif,
             WenQuanYi Micro Hei, sans-serif;
         font-weight: 700;
-        color: ${(props: any) => props.theme.colors.theme.title};
+        color: ${theme.colors.theme.title};
         line-height: 1.35;
     }
     h1,
@@ -94,7 +95,7 @@ const Div = styled.div`
     blockquote {
         padding: 0;
         position: relative;
-        color: ${(props: any) => props.theme.colors.theme.secondaryText};
+        color: ${theme.colors.theme.secondaryText};
         font-weight: 400;
         border-left: 1px solid rgb(239, 112, 96);
         padding-left: 1em;
@@ -121,7 +122,7 @@ const Div = styled.div`
         border-radius: 4px;
         white-space: pre-wrap;
         display: block;
-        background-color: ${(props: any) => props.theme.colors.theme.blackground};
+        background-color: ${theme.colors.theme.blackground};
         padding: 10px 20px;
         border: none;
         margin-bottom: 25px;
@@ -135,7 +136,7 @@ const Div = styled.div`
         font-size: 90%;
     }
     p > code {
-        background-color: ${(props: any) => props.theme.colors.theme.blackground};
+        background-color: ${theme.colors.theme.blackground};
         padding: 0.2em 0.4em;
         border-radius: 3px;
         -moz-border-radius: 3px;
@@ -227,7 +228,7 @@ const Div = styled.div`
     }
     .hljs,
     .hljs-subst {
-        color: ${(props: any) => props.theme.colors.theme.primaryText};
+        color: ${theme.colors.theme.primaryText};
     }
     .hljs-comment {
         color: #888888;
@@ -289,7 +290,7 @@ const Div = styled.div`
 
 export default (props: any) => (
     <Div
-        className="markdown-body"
+        className="markdown-body preview"
         dangerouslySetInnerHTML={{
             __html: props.content,
         }}
