@@ -7,6 +7,7 @@ import NavLink from '../nav-link';
 import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
+import { rem } from 'polished';
 
 const ItemLink = styled(Link)`
     text-decoration: none;
@@ -48,7 +49,7 @@ export default () => {
     return (
         <Box
             flex="0 0 auto"
-            fontSize={13}
+            fontSize={rem(14)}
             borderBottomWidth="1px"
             borderStyle="solid"
             borderBottomColor="theme.categories.border"

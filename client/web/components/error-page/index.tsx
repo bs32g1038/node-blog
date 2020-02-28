@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Flex, Heading, Box, Image, Divider } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import siteInfo from '@blog/client/web/config/site-info';
+import { rem } from 'polished';
 
 interface Props {
     statusCode: number;
@@ -17,7 +18,7 @@ const Error = (props: Props) => {
             alignItems="center"
             justifyContent="center"
             flexDirection="column"
-            fontSize="14px"
+            fontSize={rem(16)}
             color="rgba(0, 0, 0, 0.65)"
             lineHeight={1.5}
         >
@@ -28,7 +29,7 @@ const Error = (props: Props) => {
                     </Box>
                     {statusCode >= 400 && statusCode < 500 ? (
                         <Box maxW="450px">
-                            <Heading as="h3" fontSize="24px" fontWeight={500} my={2}>
+                            <Heading as="h3" fontSize={rem(24)} fontWeight={500} my={2}>
                                 抱歉！您所访问的页面不存在。
                             </Heading>
                             <Text my={1}>可能是因为您的链接地址有误、或者该文章已经被作者删除。</Text>
@@ -37,7 +38,7 @@ const Error = (props: Props) => {
                         </Box>
                     ) : (
                         <Box maxW="450px">
-                            <Heading as="h3" fontSize="24px" fontWeight={500} mb={2}>
+                            <Heading as="h3" fontSize={rem(24)} fontWeight={500} mb={2}>
                                 服务器内部发生错误。
                             </Heading>
                             抱歉带给您糟糕的体验, 恳请您发送 Email 到 {siteInfo.email}, 我们将在第一时间修复。
@@ -46,12 +47,18 @@ const Error = (props: Props) => {
                 </Flex>
                 <Divider width="100%"></Divider>
             </Box>
-            <Box fontSize={12} color="rgba(0, 0, 0, 0.45)">
+            <Box fontSize={rem(14)} color="rgba(0, 0, 0, 0.45)">
                 <span>Copyright © 2016-2019</span>
-                <UiLink color="rgba(0, 0, 0, 0.45)" href="/blog" fontSize={12} ml={1}>
+                <UiLink color="rgba(0, 0, 0, 0.45)" href="/blog" fontSize={rem(14)} ml={1}>
                     {siteInfo.name}
                 </UiLink>
-                <UiLink fontSize={12} ml={1} color="rgba(0, 0, 0, 0.45)" href={siteInfo.icpGovCn} isExternal={true}>
+                <UiLink
+                    fontSize={rem(14)}
+                    ml={1}
+                    color="rgba(0, 0, 0, 0.45)"
+                    href={siteInfo.icpGovCn}
+                    isExternal={true}
+                >
                     <span className="icon-icp"></span> {siteInfo.icp}
                 </UiLink>
             </Box>

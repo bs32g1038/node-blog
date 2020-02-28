@@ -46,13 +46,7 @@ const Div = styled.div`
         width: 100%;
         border-radius: 5px;
         display: block;
-        margin-bottom: 15px;
         height: auto;
-    }
-    p {
-        margin: 0 0 20px;
-        padding: 0;
-        line-height: 1.8;
     }
     p,
     pre,
@@ -124,7 +118,6 @@ const Div = styled.div`
         background-color: ${(props: any) => props.theme.colors.theme.blackground};
         padding: 10px 20px;
         border: none;
-        margin-bottom: 25px;
         color: #666;
         font-family: Courier, sans-serif;
         position: relative;

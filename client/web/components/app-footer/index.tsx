@@ -8,6 +8,7 @@ import BlogRuningTime from '../blog-runing-time';
 import { Flex, Box, Text, Divider, useColorMode } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
+import { rem } from 'polished';
 
 const MobileTabbar = styled(Box)`
     position: fixed;
@@ -92,7 +93,7 @@ export const AppFooter = () => {
                 position="relative"
                 justifyContent="space-between"
                 p={4}
-                fontSize={12}
+                fontSize={rem(14)}
                 bg="theme.footer.bg"
                 color="theme.footer.text"
                 mb={['50px', 0]}

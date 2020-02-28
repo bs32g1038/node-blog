@@ -36,14 +36,14 @@ export const AppHeader = () => {
                 <NavLink href="/blog">
                     <NavA flex="1 0 auto">
                         <Flex alignItems="center" justifyContent="center">
-                            <Icon fill="theme.header.fill" size="14px" name="home" mr={1}></Icon>首页
+                            <Icon fill="theme.header.fill" size="16px" name="home" mt="2px" mr={1}></Icon>首页
                         </Flex>
                     </NavA>
                 </NavLink>
                 <NavLink href="/about">
                     <NavA flex="1 0 auto">
                         <Flex alignItems="center" justifyContent="center">
-                            <Icon fill="theme.header.fill" size="14px" name="user" mr={1}></Icon>关于
+                            <Icon fill="theme.header.fill" size="16px" name="user" mt="2px" mr={1}></Icon>关于
                         </Flex>
                     </NavA>
                 </NavLink>
@@ -51,8 +51,9 @@ export const AppHeader = () => {
                     <Flex alignItems="center" justifyContent="center">
                         <Icon
                             fill="theme.header.fill"
-                            size="14px"
+                            size="16px"
                             name="rss"
+                            mt="2px"
                             mr={1}
                             className={css`
                                 transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
