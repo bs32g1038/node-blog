@@ -13,7 +13,7 @@ export class ArticleController {
 
     @Post('/articles')
     @Roles('admin')
-    public async create(@JoiBody(ArticleJoiSchema) article: Article) {
+    public async create(@JoiBody(ArticleJoiSchema, { method: 'post' }) article: Article) {
         return await this.articleService.create(article);
     }
 

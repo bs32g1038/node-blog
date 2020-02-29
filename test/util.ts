@@ -6,6 +6,7 @@ import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
 import mongoose from 'mongoose';
+import { isEqual, isEmpty } from 'lodash';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -33,17 +34,22 @@ export const closeApp = async (app: INestApplication) => {
     await mongoose.disconnect();
 };
 
-export const isExpectPass = (arr1: any[], arr2: any[], fields: string[]) => {
+export const isExpectPass = (arr1: any[], arr2: any[], skipFields: string[] = []) => {
     for (let i = 0; i < arr1.length; i++) {
         const rs = arr2.some(item => {
-            return fields.every(field => {
-                return arr1[i][field] === item[field];
+            return Object.keys(item).every(key => {
+                // 跳过字段检查
+                if (skipFields.includes(key)) {
+                    return true;
+                }
+                return isEqual(item[key], arr1[i][key]);
             });
         });
         if (rs) {
             return rs;
         }
     }
+    return false;
 };
 
 export const generateDataList = (fn: () => void, len = 0) => {

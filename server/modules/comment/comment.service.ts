@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Comment, ICommentModel, CommentModel, CommentJoiSchema } from '../../models/comment.model';
+import { Comment, ICommentModel, CommentModel } from '../../models/comment.model';
 import { IArticleModel, ArticleModel } from '../../models/article.model';
 import { BadRequestException } from '@nestjs/common';
 import { QueryRules } from '../../utils/mongoose.query.util';
-import { checkEntityIsValid } from '../../utils/helper';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class CommentService {
@@ -14,9 +14,8 @@ export class CommentService {
     ) {}
 
     async create(newComment: Comment) {
-        const data: Comment = checkEntityIsValid(newComment, CommentJoiSchema, ['website', 'reply', 'identity']);
-        const article = await this.articleModel.findById(data.article);
-        if (!article) {
+        const article = await this.articleModel.findById(newComment.article);
+        if (isEmpty(article)) {
             throw new BadRequestException('[article]文章id为错误数据');
         }
         const comment = await this.commentModel.create(newComment);
@@ -60,7 +59,7 @@ export class CommentService {
     }
 
     async recentComments() {
-        return await this.commentModel.find({}, '', { limit: 10 });
+        return await this.commentModel.find({}, '', { limit: 10, createdAt: -1 });
     }
 
     async batchDelete(commentIds: string[]) {

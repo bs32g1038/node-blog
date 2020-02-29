@@ -26,6 +26,7 @@ const Connection = {
             mongoose.connection.on('error', error => {
                 console.error('数据库发生异常！', error);
                 mongoose.disconnect();
+                process.exit(99);
             });
         }
 

@@ -6,7 +6,6 @@ import { initApp, closeApp } from '../util';
 /**
  * rss模块 api 测试
  */
-
 describe('rss.module.e2e', () => {
     let app: INestApplication;
 

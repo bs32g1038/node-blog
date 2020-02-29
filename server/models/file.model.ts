@@ -24,16 +24,33 @@ export interface File {
 export const FileJoiSchema = {
     originalName: Joi.string()
         .min(1)
-        .max(80),
-    name: Joi.string(),
-    mimetype: Joi.string(),
-    size: Joi.number(),
-    suffix: Joi.string(),
-    fileName: Joi.string(),
-    filePath: Joi.string(),
-    category: Joi.number(),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
+    name: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    mimetype: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    size: Joi.number().alter({
+        post: schema => schema.required(),
+    }),
+    suffix: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    fileName: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    filePath: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    category: Joi.number().alter({
+        post: schema => schema.required(),
+    }),
     isdir: Joi.boolean(),
-    parentId: Joi.string(),
+    parentId: [Joi.equal(null), Joi.objectId()],
 };
 
 export interface FileDocument extends File, Document {

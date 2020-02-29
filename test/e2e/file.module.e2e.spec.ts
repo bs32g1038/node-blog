@@ -45,9 +45,10 @@ describe('file.module.e2e', () => {
     });
 
     test('create folder success', async () => {
-        const folder = getFile({
+        const folder = {
+            name: getFile().name,
             parentId: getObjectId(),
-        });
+        };
         return request(app.getHttpServer())
             .post('/api/files/createFolder')
             .set('authorization', __TOKEN__)
@@ -133,7 +134,7 @@ describe('file.module.e2e', () => {
             .then(res => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
                 expect(res.body.items.length).toEqual(10);
-                expect(isExpectPass(res.body.items, files, [])).toBe(true);
+                expect(isExpectPass(res.body.items, files)).toBe(true);
             });
     });
 

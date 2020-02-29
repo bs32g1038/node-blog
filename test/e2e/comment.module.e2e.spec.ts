@@ -37,7 +37,6 @@ describe('comment.module.e2e', () => {
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
                 expect(a.article).toEqual(article._id.toString());
-                expect(a.website).toEqual(comment.website);
             });
     });
 
@@ -52,7 +51,7 @@ describe('comment.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.items.length).toBeGreaterThanOrEqual(10);
-                    expect(isExpectPass(res.body.items, comments, ['_id', 'nickName'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, comments, ['email', 'article', 'reply'])).toEqual(true);
                 });
         });
 
@@ -85,7 +84,6 @@ describe('comment.module.e2e', () => {
                 expect(a.nickName).toEqual(comment.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
-                expect(a.website).toEqual(comment.website);
             });
     });
 
@@ -102,13 +100,10 @@ describe('comment.module.e2e', () => {
             .then(res => {
                 const a = res.body;
                 expect(a.pass).toEqual(true);
-                expect(a.identity).toEqual(comment.identity);
                 expect(a.nickName).toEqual(comment.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
                 expect(a.article).toEqual(article._id.toString());
-                expect(a.website).toEqual(comment.website);
-                expect(a.createdAt).toEqual(comment.createdAt);
             });
     });
 

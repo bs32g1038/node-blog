@@ -15,7 +15,10 @@ export interface Category {
 export const CategoryJoiSchema = {
     name: Joi.string()
         .min(1)
-        .max(80),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
 };
 
 export interface CategoryDocument extends Category, Document {

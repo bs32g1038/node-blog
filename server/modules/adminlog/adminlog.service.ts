@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { AdminLogModel, AdminLog, IAdminLogModel, AdminLogJoiSchema } from '../../models/adminlog.model';
+import { AdminLogModel, AdminLog, IAdminLogModel } from '../../models/adminlog.model';
 import { InjectModel } from '../../utils/model.util';
-import { checkEntityIsValid } from '../../utils/helper';
 
 @Injectable()
 export class AdminLogService {
@@ -21,7 +20,6 @@ export class AdminLogService {
     }
 
     async create(adminLog: AdminLog): Promise<AdminLog> {
-        checkEntityIsValid(adminLog, AdminLogJoiSchema);
         return await this.adminLogModel.create(adminLog);
     }
 

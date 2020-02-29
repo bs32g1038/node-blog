@@ -18,7 +18,7 @@ export class FileController {
 
     @Post('/files')
     @Roles('admin')
-    async create(@JoiBody(FileJoiSchema) file: File) {
+    async create(@JoiBody(FileJoiSchema, { method: 'post' }) file: File) {
         return await this.fileService.create(file);
     }
 

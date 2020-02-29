@@ -248,7 +248,7 @@ describe('article.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
-                    expect(isExpectPass(res.body.items, articles, ['_id', 'title'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
         });
 
@@ -260,7 +260,7 @@ describe('article.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
-                    expect(isExpectPass(res.body.items, articles, ['_id', 'title'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
         });
 
@@ -269,11 +269,11 @@ describe('article.module.e2e', () => {
             await ArticleModel.create(articles);
 
             return request(app.getHttpServer())
-                .get(`/api/articles?category=${articles[0].category}`)
+                .get(`/api/articles?cid=${articles[0].category}`)
                 .expect(200)
                 .then(res => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
-                    expect(isExpectPass(res.body.items, articles, ['_id', 'title'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
         });
 
@@ -287,7 +287,7 @@ describe('article.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
-                    expect(isExpectPass(res.body.items, articles, ['_id', 'title'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
         });
     });
