@@ -57,7 +57,7 @@ export class WriteDayReadingModule {
         );
 
         if (res.n <= 0) {
-            await this.articleModel.update({ _id: articleId }, { $addToSet: { dayReadings: { timestamp, count } } });
+            await this.articleModel.updateOne({ _id: articleId }, { $addToSet: { dayReadings: { timestamp, count } } });
         }
 
         const result = (cache.get(key) as number) - count;
