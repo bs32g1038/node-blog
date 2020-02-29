@@ -107,8 +107,8 @@ const Item: SFC<{ item: any }> = (props: any) => {
                     <Flex alignItems="center" mt={3}>
                         <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
                         {item.tags.map((name: any) => (
-                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_000000' + name}>
-                                <UiLink color="theme.articles.secondaryText" ml={2}>
+                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_uid' + name}>
+                                <UiLink textTransform="capitalize" color="theme.articles.secondaryText" ml={2}>
                                     {name}
                                 </UiLink>
                             </Link>
