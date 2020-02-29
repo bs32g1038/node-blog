@@ -53,8 +53,10 @@ export default () => {
             borderBottomWidth="1px"
             borderStyle="solid"
             borderBottomColor="theme.categories.border"
-            px={3}
-            pb={3}
+            pb={[0, 3]}
+            whiteSpace={['nowrap', 'normal']}
+            overflowX={['auto']}
+            overflowY={['hidden', 'auto']}
         >
             <Box display="inline-block" mt={2} mb={4}>
                 <NavLink exact={true} href="/blog">

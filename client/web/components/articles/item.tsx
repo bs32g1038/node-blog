@@ -8,7 +8,7 @@ import Trend from '../Trend';
 import { LazyLoad } from '../lazy-load';
 import { parseTime } from '../../../libs/time';
 import ListStyleLoader from '../list-style-loader';
-import { rem, em } from 'polished';
+import { rem } from 'polished';
 
 const ThumbWrap = styled.div`
     height: auto;
@@ -73,7 +73,13 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         {item.title}
                     </Heading>
                 </Link>
-                <Text color="theme.articles.secondaryText" fontSize={rem(14)} my={rem(10)}>
+                <Text
+                    color="theme.articles.secondaryText"
+                    fontSize={rem(14)}
+                    my={rem(10)}
+                    wordBreak="break-all"
+                    whiteSpace="normal"
+                >
                     <span className="cat">发布于 {parseTime(item.createdAt)}</span>
                     <Text as="em" ml={1} mr={1}>
                         ·
