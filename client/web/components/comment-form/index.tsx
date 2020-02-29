@@ -22,6 +22,7 @@ import MarkdownBody from '../markdown-body';
 import axios from '../../utils/axios';
 import { gernateAvatarImage } from '../../utils/helper';
 import marked from '../../../libs/marked';
+import { rem } from 'polished';
 
 interface Props {
     url: string;
@@ -114,7 +115,7 @@ export const CommentForm = (props: Props) => {
                 status="info"
                 color="theme.primaryText"
                 variant="subtle"
-                fontSize={13}
+                fontSize={rem(14)}
                 mb={3}
                 backgroundColor="theme.blackground"
                 position="relative"
@@ -149,7 +150,7 @@ export const CommentForm = (props: Props) => {
                 </Tooltip>
             </Alert>
             <Flex pb={3} alignItems="center" color="theme.primaryText">
-                <Text fontSize={13} mr={1}>
+                <Text fontSize={rem(14)} mr={1}>
                     游客账户：
                 </Text>
                 <Avatar
@@ -159,13 +160,13 @@ export const CommentForm = (props: Props) => {
                     backgroundColor="theme.blackground"
                     src={gernateAvatarImage(userInfo.nickName) || ''}
                 />
-                <Text fontSize={13} ml={2}>
+                <Text fontSize={rem(14)} ml={2}>
                     {userInfo.nickName}
                 </Text>
             </Flex>
             <Box color="theme.primaryText">
                 {errorMessage && (
-                    <Alert status="error" mb={1} color="theme.primaryText" variant="subtle" fontSize={13}>
+                    <Alert status="error" mb={1} color="theme.primaryText" variant="subtle" fontSize={rem(14)}>
                         <AlertIcon size="12px" />
                         {errorMessage}
                         <CloseButton
@@ -183,7 +184,7 @@ export const CommentForm = (props: Props) => {
                     bg="theme.blackground"
                     color="theme.primaryText"
                     focusBorderColor="none"
-                    fontSize={14}
+                    fontSize={rem(14)}
                     name="content"
                     ref={$textarea}
                     borderRadius={0}
@@ -220,7 +221,7 @@ export const CommentForm = (props: Props) => {
                     <Flex
                         flexDirection={['column', 'row']}
                         justifyContent="space-between"
-                        fontSize={14}
+                        fontSize={rem(16)}
                         alignItems="center"
                     >
                         <Text as="span" mb={['10px', '0']}>
@@ -230,7 +231,7 @@ export const CommentForm = (props: Props) => {
                             <Button
                                 bg="theme.blackground"
                                 variant="solid"
-                                size="xs"
+                                size="sm"
                                 fontWeight="normal"
                                 onClick={() => setIsShowEmotion(!isShowEmotion)}
                             >
@@ -240,7 +241,7 @@ export const CommentForm = (props: Props) => {
                                 fontWeight="normal"
                                 bg="theme.blackground"
                                 variant="solid"
-                                size="xs"
+                                size="sm"
                                 onClick={() => showPreview()}
                             >
                                 {isShowPreview ? '关闭预览' : '预览'}
@@ -251,7 +252,7 @@ export const CommentForm = (props: Props) => {
                                 loadingText="正在提交..."
                                 variantColor="blue"
                                 variant="solid"
-                                size="xs"
+                                size="sm"
                                 onClick={() => submit()}
                             >
                                 提 交

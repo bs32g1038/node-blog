@@ -6,6 +6,7 @@ import UiLink from '../../ui-link';
 import { parseTime } from '../../../../libs/time';
 import ListStyleLoader from '../../list-style-loader';
 import { useFixedTopInScroll } from '../../../hook/useFixedTopInScroll';
+import { rem } from 'polished';
 
 const Media = styled.div`
     max-width: 28%;
@@ -55,11 +56,11 @@ const Item = (props: Props) => {
                     isExternal={true}
                 ></MediaContent>
             </Media>
-            <Flex fontSize={14} pl={2} justifyContent="space-between" flexDirection="column">
+            <Flex fontSize={rem(14)} pl={2} justifyContent="space-between" flexDirection="column">
                 <UiLink href={`/blog/articles/${item._id}`} isExternal={true}>
                     <Heading
                         as="h2"
-                        fontSize={14}
+                        fontSize={rem(15)}
                         color="theme.primaryText"
                         isTruncated={true}
                         whiteSpace="normal"
@@ -72,7 +73,7 @@ const Item = (props: Props) => {
                         {item.title}
                     </Heading>
                 </UiLink>
-                <Text fontSize={12} color="theme.secondaryText">
+                <Text fontSize={13} color="theme.secondaryText">
                     {parseTime(item.createdAt)}
                 </Text>
             </Flex>

@@ -7,10 +7,11 @@ import { timeAgo } from '../../../libs/time';
 import { CommentForm } from '../comment-form';
 import MarkdownBody from '../markdown-body';
 import { gernateAvatarImage } from '../../utils/helper';
+import { rem } from 'polished';
 
 const ItemContent = styled(MarkdownBody)`
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.8;
     word-break: break-all;
     word-wrap: break-word;
 `;
@@ -19,7 +20,7 @@ const getBadgeVisitorOrAuthor = identity => {
     return identity !== 0 ? (
         <Badge
             fontWeight="normal"
-            fontSize={12}
+            fontSize={14}
             boxShadow="none"
             variant="outline"
             color="theme.article.badgeAuthorColor"
@@ -29,7 +30,7 @@ const getBadgeVisitorOrAuthor = identity => {
     ) : (
         <Badge
             fontWeight="normal"
-            fontSize={12}
+            fontSize={14}
             boxShadow="none"
             variant="outline"
             color="theme.article.badgeVisitorColor"
@@ -46,25 +47,22 @@ const replyFn = (item: any) => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={14} mt={2} mb={2}>
+        <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={rem(14)} mt={2} mb={2}>
             <Flex justifyContent="space-between" alignItems="center">
                 <Flex alignItems="center">
                     <Text as="span">回复给：</Text>
                     <Image src={avatarSrc} size="16px" borderRadius="md" mr={1}></Image>
-                    <Box color="theme.primaryText" fontSize={14} isTruncated={true} maxW={['110px', '180px']}>
+                    <Box color="theme.primaryText" isTruncated={true} maxW={['110px', '180px']}>
                         {item.nickName}
                     </Box>
                     <span className="separator">&nbsp;·&nbsp;</span>
                     {getBadgeVisitorOrAuthor(item.identity)}
                     <span className="separator">&nbsp;·&nbsp;</span>
-                    <Text color="gray.500" fontSize={12}>
-                        {timeAgo(item.createdAt)}
-                    </Text>
+                    <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
                 </Flex>
                 <Box
                     userSelect="none"
                     color="theme.secondaryText"
-                    fontSize={12}
                     style={{ cursor: 'pointer' }}
                     comment-id={item._id}
                     onClick={() => {
@@ -97,16 +95,16 @@ export const CommentItem = (props: { item: any; index: number }) => {
             borderBottom="1px"
             borderBottomColor="theme.border"
             position="relative"
-            fontSize={[12, 14]}
+            fontSize={rem(14)}
             className={css`
                 &:after {
                     content: attr(data-index);
                     position: absolute;
                     right: 10px;
-                    top: 18px;
+                    top: 17px;
                     text-align: center;
                     color: #d5cbcb;
-                    font-size: 12px;
+                    font-size: ${rem(14)};
                 }
             `}
         >
@@ -120,21 +118,17 @@ export const CommentItem = (props: { item: any; index: number }) => {
                                 fontWeight="bold"
                                 isTruncated={true}
                                 maxW={['110px', '180px']}
-                                fontSize={[12, 14]}
                             >
                                 {item.nickName}
                             </Box>
                             <span className="separator">&nbsp;·&nbsp;</span>
                             {getBadgeVisitorOrAuthor(item.identity)}
                             <span className="separator">&nbsp;·&nbsp;</span>
-                            <Text color="gray.500" fontSize={12}>
-                                {timeAgo(item.createdAt)}
-                            </Text>
+                            <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
                         </Flex>
                         <Box
                             userSelect="none"
-                            fontSize={12}
-                            mr="55px"
+                            mr="4rem"
                             color="red.500"
                             cursor="pointer"
                             comment-id={item._id}
@@ -144,7 +138,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         </Box>
                     </Flex>
                     {item.reply && replyFn(item.reply)}
-                    <Box color="theme.primaryText">
+                    <Box color="theme.primaryText" mt={rem(10)}>
                         <ItemContent content={marked(item.content)}></ItemContent>
                     </Box>
                     <Box mt={3}>

@@ -17,6 +17,7 @@ import {
     ListItem,
     Heading,
 } from '@chakra-ui/core';
+import { rem } from 'polished';
 
 interface Props {
     article: any;
@@ -27,23 +28,25 @@ export default (props: Props) => {
     const { article, comments } = props;
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
-            <Breadcrumb spacing="3px" separator={<Icon color="gray.500" name="chevron-right" />}>
+            <Breadcrumb
+                fontSize={rem(14)}
+                spacing="3px"
+                separator={<Icon color="theme.secondaryText" name="chevron-right" />}
+            >
                 <BreadcrumbItem>
                     <Link href="/">
-                        <BreadcrumbLink fontSize="13px" color="gray.500">
-                            首页
-                        </BreadcrumbLink>
+                        <BreadcrumbLink color="theme.secondaryText">首页</BreadcrumbLink>
                     </Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
                     <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}>
-                        <BreadcrumbLink fontSize="13px" color="gray.500">
+                        <BreadcrumbLink color="theme.secondaryText">
                             {article.category && article.category.name}
                         </BreadcrumbLink>
                     </Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem isCurrentPage={true}>
-                    <BreadcrumbLink isTruncated={true} maxW="450px" fontSize="13px" color="gray.500">
+                    <BreadcrumbLink isTruncated={true} maxW="450px" color="theme.secondaryText">
                         {article.title}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -51,25 +54,25 @@ export default (props: Props) => {
             <Box mb={5}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
                     <UiLink>
-                        <Heading as="h2" fontSize="1.8em" lineHeight={1.35} my={[4]}>
+                        <Heading as="h2" fontSize="1.8em" lineHeight={1.35} my={[3]}>
                             {article.title}
                         </Heading>
                     </UiLink>
                 </Link>
-                <Flex fontSize="14px" flexWrap="wrap">
-                    <Text color="gray.500" mr={1}>
+                <Flex fontSize={rem(14)} flexWrap="wrap">
+                    <Text color="theme.secondaryText" mr={1}>
                         发表于{parseTime(article.createdAt)}
                     </Text>
-                    <Text color="gray.500" mr={1}>
+                    <Text color="theme.secondaryText" mr={1}>
                         分类于
                         <Link href={`/blog/articles?cid=${article.category && article.category._id}`} passHref={true}>
-                            <UiLink color="gray.500">{article.category && article.category.name}</UiLink>
+                            <UiLink color="theme.secondaryText">{article.category && article.category.name}</UiLink>
                         </Link>
                     </Text>
-                    <Text color="gray.500" mr={1}>
+                    <Text color="theme.secondaryText" mr={1}>
                         {article.commentCount}条评论
                     </Text>
-                    <Text color="gray.500">阅读次数{article.viewsCount}</Text>
+                    <Text color="theme.secondaryText">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </Box>
             <Box color="theme.article.primaryText" mb={5}>
@@ -77,8 +80,8 @@ export default (props: Props) => {
             </Box>
             <List
                 spacing={3}
-                fontSize={13}
-                mb={4}
+                fontSize={14}
+                mb={5}
                 px={4}
                 py={2}
                 backgroundColor="theme.blackground"
@@ -106,7 +109,7 @@ export default (props: Props) => {
                     </Text>
                 </ListItem>
             </List>
-            <Flex justifyContent="space-between" fontSize={13} color="theme.article.primaryText">
+            <Flex mb="1.8em" justifyContent="space-between" fontSize={rem(14)} color="theme.article.primaryText">
                 {article.prev && (
                     <Text isTruncated={true} width="45%" mr={5}>
                         <Text as="strong">上一篇：</Text>
