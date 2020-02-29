@@ -6,6 +6,7 @@ import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/cor
 import Icon from '../icon';
 import { debounce } from 'lodash';
 import { useTheme } from 'emotion-theming';
+import { rem } from 'polished';
 
 const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
     const { isLoading, items } = props;
@@ -14,7 +15,8 @@ const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
             as="ul"
             width="100%"
             maxHeight="432px"
-            overflow="auto"
+            overflowY="auto"
+            overflowX="hidden"
             borderBottomWidth="1px"
             borderStyle="solid"
             borderBottomColor="theme.header.borderColor"
@@ -25,19 +27,17 @@ const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
                     <Box
                         as="li"
                         key={item._id}
+                        py="5px"
+                        isTruncated={true}
+                        fontSize={rem(14)}
                         className={css`
                             padding-left: 8px;
                             width: 100%;
-                            height: 36px;
-                            line-height: 36px;
-                            font-size: 12px;
                             box-sizing: border-box;
                         `}
                     >
                         <Link href={'/blog/articles/' + item._id} passHref={true}>
-                            <UiLink color="theme.header.color" isTruncated={true}>
-                                {item.title}
-                            </UiLink>
+                            <UiLink color="theme.header.color">{item.title}</UiLink>
                         </Link>
                     </Box>
                 ))}
@@ -63,18 +63,18 @@ const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) =
     return (
         <Box
             color="theme.header.color"
+            pt={2}
+            fontSize={rem(14)}
             className={css`
                 padding-left: 8px;
                 width: 100%;
-                height: 36px;
-                line-height: 36px;
                 box-sizing: border-box;
             `}
         >
             {isLoading ? (
-                <Text fontSize={12}>正在搜索数据...</Text>
+                <Text>正在搜索数据...</Text>
             ) : (
-                <Text fontSize={12} isTruncated={true}>
+                <Text>
                     <Icon verticalAlign="text-bottom" name="github" fill="theme.header.color" size="16px" mr={1} />
                     {totalCount <= 0 ? '没有该搜索结果' : `共 ${totalCount} 条记录，可尝试其他关键字👍`}
                 </Text>
@@ -183,7 +183,7 @@ export const SearchForm = () => {
                         box-shadow: 0 4px 16px ${theme.colors.theme.header.boxShadowColor};
                     `}
                 >
-                    <Box color="theme.header.color" py={2} pl={2} width="100%" fontSize={12}>
+                    <Box color="theme.header.color" py={2} pl={2} width="100%" fontSize={rem(14)}>
                         博客
                         <Text as="span" float="right" cursor=" pointer" onClick={foldNavList}>
                             收起

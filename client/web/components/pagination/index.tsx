@@ -11,7 +11,7 @@ const PageNumbers = styled(UiLink)`
     background-color: ${(props: any) => props.theme.colors.theme.pagination.bg};
     padding: 0.5rem 0.875rem;
     margin: 0 0.5rem 0 0;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 0.2rem;
     text-decoration: none;
     cursor: pointer;

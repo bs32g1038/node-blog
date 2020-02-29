@@ -21,10 +21,14 @@ export default (props: { children: any }) => {
             <div className="app">
                 <Global
                     styles={css`
+                        html {
+                            font-size: 16px;
+                        }
                         html,
                         body,
                         #__next,
                         .app {
+                            line-height: 1.8;
                             height: 100%;
                             min-height: 100%;
                             background-color: ${colorMode === 'light' ? '#f5f5f5' : 'rgb(10, 10, 10)'};

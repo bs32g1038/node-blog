@@ -17,7 +17,7 @@ const values = data.userCommits.contribution.map(item => {
 
 export const About = () => {
     return (
-        <Box flex="1 0 auto" color="theme.primaryText" fontSize={14}>
+        <Box flex="1 0 auto" color="theme.primaryText">
             <Box className="bio" py={2}>
                 专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢 coding。
             </Box>

@@ -7,7 +7,7 @@ const comemnt = (props: { article: any; comments: any }) => {
     const article = props.article;
     const comments = props.comments;
     return (
-        <Box mt={5}>
+        <Box>
             <Heading as="h3" size="lg" my={[4]} textAlign="center" color="theme.primaryText">
                 --发表评论--
             </Heading>

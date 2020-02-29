@@ -14,7 +14,7 @@ export class CommentService {
     ) {}
 
     async create(newComment: Comment) {
-        const data: Comment = checkEntityIsValid(newComment, CommentJoiSchema, ['reply', 'identity']);
+        const data: Comment = checkEntityIsValid(newComment, CommentJoiSchema, ['website', 'reply', 'identity']);
         const article = await this.articleModel.findById(data.article);
         if (!article) {
             throw new BadRequestException('[article]文章id为错误数据');

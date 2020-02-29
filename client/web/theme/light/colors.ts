@@ -16,6 +16,7 @@ const dividers = rgba(0, 0, 0, 0.06);
 const blackground = rgba(0, 0, 0, 0.04);
 
 export default {
+    name: 'light',
     title,
     primaryText,
     secondaryText,
