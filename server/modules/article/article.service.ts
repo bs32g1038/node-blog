@@ -2,13 +2,13 @@ import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '../write.day.reading.module';
-import { Article, ArticleModel, IArticleModel, ArticleJoiSchema } from '../../models/article.model';
+import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
 import { CategoryModel, CategoryDocument } from '../../models/category.model';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import mila from 'markdown-it-link-attributes';
 import { QueryRules } from '../../utils/mongoose.query.util';
-import { checkEntityIsValid } from '../../utils/helper';
+import { isEmpty, isEqual } from 'lodash';
 
 const markdown: any = new MarkdownIt({
     highlight: (str, lang) => {
@@ -36,7 +36,6 @@ export class ArticleService {
     ) {}
 
     async create(articleDocument: Article) {
-        checkEntityIsValid(articleDocument, ArticleJoiSchema);
         const article = await this.articleModel.create(articleDocument);
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         return article;
@@ -46,14 +45,19 @@ export class ArticleService {
         const article = await this.articleModel.findOneAndUpdate({ _id }, data, {
             runValidators: true,
         });
-        if (!article) {
+        if (isEmpty(article)) {
             throw new BadRequestException('找不到该文章！');
         }
-        if (article.category && article.category.toString() !== data.category) {
-            await Promise.all([
-                this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } }),
-                this.categoryModel.updateOne({ _id: data.category }, { $inc: { articleCount: 1 } }),
-            ]);
+        if (article.category && !isEqual(article.category.toString(), data.category)) {
+            const reduceArticleCountForOldCateory = this.categoryModel.updateOne(
+                { _id: article.category },
+                { $inc: { articleCount: -1 } }
+            );
+            const increaseArticleCountForNewCateory = this.categoryModel.updateOne(
+                { _id: data.category },
+                { $inc: { articleCount: 1 } }
+            );
+            await Promise.all([reduceArticleCountForOldCateory, increaseArticleCountForNewCateory]);
         }
         return article;
     }
@@ -89,7 +93,7 @@ export class ArticleService {
             })
             .populate('category');
 
-        if (!article) {
+        if (isEmpty(article)) {
             throw new NotFoundException('没有该文章');
         }
 

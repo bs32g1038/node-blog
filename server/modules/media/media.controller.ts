@@ -13,7 +13,7 @@ export class MediaController {
 
     @Post('/medias')
     @Roles('admin')
-    async create(@JoiBody(MediaJoiSchema) media: Media) {
+    async create(@JoiBody(MediaJoiSchema, { method: 'post' }) media: Media) {
         return await this.mediaService.create(media);
     }
 

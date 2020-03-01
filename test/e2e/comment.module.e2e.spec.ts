@@ -21,24 +21,48 @@ describe('comment.module.e2e', () => {
         await clearModelCollectionData();
     });
 
-    test('create comment success', async () => {
-        const article = await ArticleModel.create(getArticle());
-        const comment = getComment({ article: article._id.toString() });
+    describe('create comment', () => {
+        test('permission:visitor', async () => {
+            const article = await ArticleModel.create(getArticle());
+            const comment = getComment({ article: article._id.toString() });
 
-        return request(app.getHttpServer())
-            .post('/api/comments')
-            .send(comment)
-            .expect(201)
-            .then(res => {
-                const a = res.body;
-                expect(a.pass).toEqual(true);
-                expect(a.identity).toEqual(0);
-                expect(a.nickName).toEqual(comment.nickName);
-                expect(a.content).toEqual(comment.content);
-                expect(a.reply).toEqual(comment.reply);
-                expect(a.article).toEqual(article._id.toString());
-                expect(a.website).toEqual(comment.website);
-            });
+            return request(app.getHttpServer())
+                .post('/api/comments')
+                .send(comment)
+                .expect(201)
+                .then(res => {
+                    const a = res.body;
+                    expect(a.pass).toEqual(true);
+                    expect(a.identity).toEqual(0);
+                    expect(a.nickName).toEqual(comment.nickName);
+                    expect(a.content).toEqual(comment.content);
+                    expect(a.reply).toEqual(comment.reply);
+                    expect(a.article).toEqual(article._id.toString());
+                });
+        });
+
+        test('permission:admin', async () => {
+            const article = await ArticleModel.create(getArticle());
+            const replyComment = {
+                article: article._id.toString(),
+                content: getComment().content,
+                reply: getObjectId(),
+            };
+
+            return request(app.getHttpServer())
+                .post('/api/admin/reply-comment')
+                .set('authorization', __TOKEN__)
+                .send(replyComment)
+                .expect(201)
+                .then(res => {
+                    const a = res.body;
+                    expect(a.pass).toEqual(true);
+                    expect(a.identity).toEqual(1);
+                    expect(a.content).toEqual(replyComment.content);
+                    expect(a.reply).toBe(replyComment.reply);
+                    expect(a.article).toEqual(article._id.toString());
+                });
+        });
     });
 
     describe('get comment list', () => {
@@ -52,7 +76,7 @@ describe('comment.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.items.length).toBeGreaterThanOrEqual(10);
-                    expect(isExpectPass(res.body.items, comments, ['_id', 'nickName'])).toEqual(true);
+                    expect(isExpectPass(res.body.items, comments, ['email', 'article', 'reply'])).toEqual(true);
                 });
         });
 
@@ -85,7 +109,6 @@ describe('comment.module.e2e', () => {
                 expect(a.nickName).toEqual(comment.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
-                expect(a.website).toEqual(comment.website);
             });
     });
 
@@ -102,13 +125,10 @@ describe('comment.module.e2e', () => {
             .then(res => {
                 const a = res.body;
                 expect(a.pass).toEqual(true);
-                expect(a.identity).toEqual(comment.identity);
                 expect(a.nickName).toEqual(comment.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
                 expect(a.article).toEqual(article._id.toString());
-                expect(a.website).toEqual(comment.website);
-                expect(a.createdAt).toEqual(comment.createdAt);
             });
     });
 

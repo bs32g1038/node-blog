@@ -57,6 +57,7 @@ const UserSchema = new mongoose.Schema(
             set: sha1,
             trim: true,
             required: true,
+            select: false,
         },
     },
     {

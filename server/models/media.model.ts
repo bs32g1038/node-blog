@@ -21,14 +21,31 @@ export interface Media {
 export const MediaJoiSchema = {
     originalName: Joi.string()
         .min(1)
-        .max(80),
-    name: Joi.string(),
-    mimetype: Joi.string(),
-    size: Joi.number(),
-    suffix: Joi.string(),
-    fileName: Joi.string(),
-    filePath: Joi.string(),
-    type: Joi.string(),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
+    name: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    mimetype: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    size: Joi.number().alter({
+        post: schema => schema.required(),
+    }),
+    suffix: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    fileName: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    filePath: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
+    type: Joi.string().alter({
+        post: schema => schema.required(),
+    }),
 };
 
 export interface MediaDocument extends Media, Document {

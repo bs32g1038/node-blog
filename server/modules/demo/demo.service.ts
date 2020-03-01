@@ -1,14 +1,12 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Demo, DemoModel, IDemoModel, DemoJoiSchema } from '../../models/demo.model';
-import { checkEntityIsValid } from '../../utils/helper';
+import { Demo, DemoModel, IDemoModel } from '../../models/demo.model';
 
 @Injectable()
 export class DemoService {
     constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
 
     async create(newDemo: Demo): Promise<Demo> {
-        checkEntityIsValid(newDemo, DemoJoiSchema);
         const demo: Demo = await this.demoModel.create(newDemo);
         return demo;
     }

@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Media, MediaModel, IMediaModel, MediaJoiSchema } from '../../models/media.model';
-import { checkEntityIsValid } from '../../utils/helper';
+import { Media, MediaModel, IMediaModel } from '../../models/media.model';
 
 @Injectable()
 export class MediaService {
     constructor(@InjectModel(MediaModel) private readonly mediaModel: IMediaModel) {}
 
     async create(newMedia: Media): Promise<Media> {
-        checkEntityIsValid(newMedia, MediaJoiSchema);
         const media: Media = await this.mediaModel.create(newMedia);
         return media;
     }

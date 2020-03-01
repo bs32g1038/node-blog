@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { File, FileModel, IFileModel, FileJoiSchema } from '../../models/file.model';
+import { File, FileModel, IFileModel } from '../../models/file.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
-import { checkEntityIsValid } from '../../utils/helper';
 
 @Injectable()
 export class FileService {
     constructor(@InjectModel(FileModel) private readonly fileModel: IFileModel) {}
 
     async create(newFile: File): Promise<File> {
-        checkEntityIsValid(newFile, FileJoiSchema, ['parentId', 'isdir']);
         return await this.fileModel.create(newFile);
     }
 

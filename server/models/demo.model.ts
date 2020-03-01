@@ -16,8 +16,15 @@ export interface Demo {
 export const DemoJoiSchema = {
     title: Joi.string()
         .min(1)
-        .max(80),
-    content: Joi.string().max(800),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
+    content: Joi.string()
+        .max(800)
+        .alter({
+            post: schema => schema.required(),
+        }),
 };
 
 export interface DemoDocument extends Demo, Document {

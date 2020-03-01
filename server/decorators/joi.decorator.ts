@@ -5,4 +5,4 @@ export const JoiParam = (schema: object) => Param(JoiValidationPipe(schema));
 
 export const JoiQuery = (schema: object) => Query(JoiValidationPipe(schema));
 
-export const JoiBody = (schema: object) => Body(JoiValidationPipe(schema));
+export const JoiBody = (schema: object, options?: { method: string }) => Body(JoiValidationPipe(schema, options));

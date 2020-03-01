@@ -15,7 +15,7 @@ export class DemoController {
 
     @Post('/api/demos')
     @Roles('admin')
-    async create(@JoiBody(DemoJoiSchema) demo: Demo) {
+    async create(@JoiBody(DemoJoiSchema, { method: 'post' }) demo: Demo) {
         return await this.demoService.create(demo);
     }
 

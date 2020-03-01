@@ -22,13 +22,25 @@ export interface Comment {
 export const CommentJoiSchema = {
     nickName: Joi.string()
         .min(1)
-        .max(80),
-    email: Joi.string().email(),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
+    email: Joi.string()
+        .email()
+        .alter({
+            post: schema => schema.required(),
+        }),
     content: Joi.string()
         .min(1)
-        .max(500),
+        .max(500)
+        .alter({
+            post: schema => schema.required(),
+        }),
     reply: [Joi.equal(null), Joi.objectId()],
-    article: Joi.objectId(),
+    article: Joi.objectId().alter({
+        post: schema => schema.required(),
+    }),
     identity: Joi.number()
         .min(0)
         .max(4),

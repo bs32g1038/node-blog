@@ -5,7 +5,6 @@ import { Roles } from '../../decorators/roles.decorator';
 import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { ObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
-import { checkEntityIsValid } from '../../utils/helper';
 
 @Controller('/api')
 @UseGuards(RolesGuard)
@@ -14,8 +13,7 @@ export class CategoryController {
 
     @Post('/categories')
     @Roles('admin')
-    async create(@JoiBody(CategoryJoiSchema) category: Category) {
-        checkEntityIsValid(category, CategoryJoiSchema);
+    async create(@JoiBody(CategoryJoiSchema, { method: 'post' }) category: Category) {
         return await this.categoryService.create(category);
     }
 

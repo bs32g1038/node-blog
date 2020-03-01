@@ -41,7 +41,7 @@ describe('demo.module.e2e', () => {
             .expect(200)
             .then(res => {
                 expect(res.body.items.length).toBeGreaterThanOrEqual(10);
-                expect(isExpectPass(res.body.items, demos, ['_id', 'title'])).toEqual(true);
+                expect(isExpectPass(res.body.items, demos)).toEqual(true);
             });
     });
 

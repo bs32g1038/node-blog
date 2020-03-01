@@ -16,13 +16,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
                 message: exception.message,
             });
         }
-        if (exception instanceof mongoose.Error) {
-            logger.warn(exception.message);
-            return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: HttpStatus.BAD_REQUEST,
-                message: exception.message,
-            });
-        }
+
         let status = HttpStatus.INTERNAL_SERVER_ERROR;
         if (exception instanceof HttpException) {
             status = exception.getStatus();
@@ -40,7 +34,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
         return response.status(status).json({
             statusCode: status,
-            message: 'server error',
+            message: 'internal server error',
         });
     }
 }

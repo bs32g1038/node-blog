@@ -27,19 +27,33 @@ export const ArticleJoiSchema = {
     title: Joi.string()
         .trim()
         .min(1)
-        .max(80),
+        .max(80)
+        .alter({
+            post: schema => schema.required(),
+        }),
     content: Joi.string()
         .trim()
         .min(1)
-        .max(15000),
+        .max(15000)
+        .alter({
+            post: schema => schema.required(),
+        }),
     summary: Joi.string()
         .trim()
         .min(1)
-        .max(1000),
+        .max(1000)
+        .alter({
+            post: schema => schema.required(),
+        }),
     screenshot: Joi.string()
         .trim()
-        .max(100),
-    category: Joi.objectId(),
+        .max(100)
+        .alter({
+            post: schema => schema.required(),
+        }),
+    category: Joi.objectId().alter({
+        post: schema => schema.required(),
+    }),
     tags: Joi.array().items(Joi.string().max(20)),
 };
 

@@ -152,7 +152,8 @@
       "!./server/filters/all-exceptions.filter.ts",
       "!./server/middlewares/rate-limit.middleware.ts",
       "!./server/database/database.module.ts",
-      "!./server/modules/write.day.reading.module.ts"
+      "!./server/modules/write.day.reading.module.ts",
+      "!./server/joi/schemas/**"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": [

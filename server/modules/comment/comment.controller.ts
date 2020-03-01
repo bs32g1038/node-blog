@@ -16,20 +16,35 @@ export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
     @Post('/comments')
-    async create(@Req() req: Request, @JoiBody(CommentJoiSchema) comment: Comment) {
-        const isAuth = auth(req);
-        if (isAuth) {
-            Object.assign(comment, {
-                identity: 1,
-                nickName: ADMIN_USER_INFO.nickName,
-                email: ADMIN_USER_INFO.email,
-                location: ADMIN_USER_INFO.location,
-            });
-        }
+    async create(@Req() req: Request, @JoiBody(CommentJoiSchema, { method: 'post' }) comment: Comment) {
         const data = await this.commentService.create(comment);
-        if (!isAuth) {
-            return omit(data.toJSON(), 'email');
-        }
+        return omit(data.toJSON(), 'email');
+    }
+
+    /**
+     * 管理员回复评论接口，需要登录授权
+     */
+    @Post('/admin/reply-comment')
+    @Roles('admin')
+    async adminReplyComment(
+        @Req() req: Request,
+        @JoiBody(
+            {
+                article: CommentJoiSchema.article,
+                reply: CommentJoiSchema.reply[1].required(),
+                content: CommentJoiSchema.content,
+            },
+            { method: 'post' }
+        )
+        comment: Comment
+    ) {
+        Object.assign(comment, {
+            identity: 1,
+            nickName: ADMIN_USER_INFO.nickName,
+            email: ADMIN_USER_INFO.email,
+            location: ADMIN_USER_INFO.location,
+        });
+        const data = await this.commentService.create(comment);
         return data;
     }
 

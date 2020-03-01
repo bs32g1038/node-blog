@@ -43,7 +43,7 @@ describe('category.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.length).toBeGreaterThanOrEqual(10);
-                    expect(isExpectPass(res.body, categories, [])).toEqual(true);
+                    expect(isExpectPass(res.body, categories)).toEqual(true);
                 });
         });
 
@@ -56,7 +56,7 @@ describe('category.module.e2e', () => {
                 .expect(200)
                 .then(res => {
                     expect(res.body.length).toBeGreaterThanOrEqual(20);
-                    expect(isExpectPass(res.body, categories, [])).toEqual(true);
+                    expect(isExpectPass(res.body, categories)).toEqual(true);
                 });
         });
     });
