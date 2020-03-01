@@ -160,7 +160,6 @@ describe('article.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .get('/api/recentArticles')
-                .set('authorization', __TOKEN__)
                 .expect(200)
                 .then(res => {
                     expect(res.body.length).toBeGreaterThanOrEqual(5);
@@ -169,21 +168,12 @@ describe('article.module.e2e', () => {
     });
 
     describe('get one article', () => {
-        test('get article data & not found in db', async () => {
-            const randomId = getObjectId();
-            return request(app.getHttpServer())
-                .get('/api/articles/' + randomId)
-                .set('authorization', __TOKEN__)
-                .expect(404);
-        });
-
         test('get article success, the content should be handled by markdown render', async () => {
             const article = getArticle();
             const { _id } = await ArticleModel.create(article);
 
             return request(app.getHttpServer())
                 .get('/api/articles/' + _id + '?md=true')
-                .set('authorization', __TOKEN__)
                 .expect(200)
                 .then(res => {
                     const a = res.body;
@@ -197,7 +187,6 @@ describe('article.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .get('/api/articles/' + _id + '?md=false')
-                .set('authorization', __TOKEN__)
                 .expect(200)
                 .then(res => {
                     const a = res.body;
@@ -214,7 +203,6 @@ describe('article.module.e2e', () => {
 
                 return request(app.getHttpServer())
                     .get('/api/articles/' + _id + '?md=true')
-                    .set('authorization', __TOKEN__)
                     .expect(200)
                     .then(res => {
                         const a = res.body;
@@ -228,12 +216,26 @@ describe('article.module.e2e', () => {
 
                 return request(app.getHttpServer())
                     .get('/api/articles/' + _id + '?md=' + true)
-                    .set('authorization', __TOKEN__)
                     .expect(200)
                     .then(res => {
                         const a = res.body;
                         expect(a.content).toEqual(markdown.render(article.content));
                     });
+            });
+
+            describe('status > 400', () => {
+                test('get article data & not found in db', async () => {
+                    const randomId = getObjectId();
+                    return request(app.getHttpServer())
+                        .get('/api/articles/' + randomId)
+                        .expect(404);
+                });
+
+                test('get article data & randomId is not valid object id', async () => {
+                    return request(app.getHttpServer())
+                        .get('/api/articles/' + 'notValidObjectId')
+                        .expect(400);
+                });
             });
         });
     });

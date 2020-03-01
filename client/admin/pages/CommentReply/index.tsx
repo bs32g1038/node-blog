@@ -35,7 +35,7 @@ export default () => {
     const publish = data => {
         const { id } = router.query;
         Object.assign(data, { reply: id });
-        axios.post('/comments/', data).then(() => {
+        axios.post('/admin/reply-comment/', data).then(() => {
             message.success('提交成功');
             Router.push('/admin/content/comments');
         });
