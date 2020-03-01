@@ -5,7 +5,10 @@ import axios from '../axios';
 export type GetRequest = AxiosRequestConfig | null;
 
 interface Return<Data, Error>
-    extends Pick<responseInterface<AxiosResponse<Data>, AxiosError<Error>>, 'isValidating' | 'revalidate' | 'error'> {
+    extends Pick<
+        responseInterface<AxiosResponse<Data>, AxiosError<Error>>,
+        'isValidating' | 'revalidate' | 'error' | 'mutate'
+    > {
     data: Data | undefined;
     response: AxiosResponse<Data> | undefined;
 }
@@ -19,7 +22,7 @@ export default function useRequest<Data = unknown, Error = unknown>(
     request: GetRequest,
     { initialData, ...config }: Config<Data, Error> = {}
 ): Return<Data, Error> {
-    const { data: response, error, isValidating, revalidate } = useSWR<AxiosResponse<Data>, AxiosError<Error>>(
+    const { data: response, error, isValidating, revalidate, mutate } = useSWR<AxiosResponse<Data>, AxiosError<Error>>(
         request && JSON.stringify(request),
         /**
          * NOTE: Typescript thinks `request` can be `null` here, but the fetcher
@@ -41,6 +44,7 @@ export default function useRequest<Data = unknown, Error = unknown>(
 
     return {
         data: response && response.data,
+        mutate,
         response,
         error,
         isValidating,

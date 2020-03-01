@@ -19,6 +19,7 @@ import {
     PictureFilled,
     FileFilled,
 } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 export default () => {
     const [state, setState] = useState({
@@ -266,147 +267,149 @@ export default () => {
         },
     };
     return (
-        <PageHeaderWrapper title="静态文件列表" content="控制台----静态文件列表">
-            <div className="main-content">
-                <PanelDiv className="panel">
-                    <Button
-                        type="primary"
-                        icon={<CloudUploadOutlined />}
-                        onClick={() =>
-                            setState(data => ({
-                                ...data,
-                                visible: true,
-                            }))
-                        }
-                    >
-                        上传
-                    </Button>
-                    {!folderId && (
+        <BasicLayout>
+            <PageHeaderWrapper title="静态文件列表" content="控制台----静态文件列表">
+                <div className="main-content">
+                    <PanelDiv className="panel">
                         <Button
                             type="primary"
-                            icon={<PlusOutlined />}
+                            icon={<CloudUploadOutlined />}
                             onClick={() =>
                                 setState(data => ({
                                     ...data,
-                                    isShowNewFolderDialog: true,
+                                    visible: true,
                                 }))
                             }
                         >
-                            新建文件夹
+                            上传
                         </Button>
-                    )}
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.delConfirmVisible}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的文件');
-                                return;
-                            }
+                        {!folderId && (
+                            <Button
+                                type="primary"
+                                icon={<PlusOutlined />}
+                                onClick={() =>
+                                    setState(data => ({
+                                        ...data,
+                                        isShowNewFolderDialog: true,
+                                    }))
+                                }
+                            >
+                                新建文件夹
+                            </Button>
+                        )}
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            visible={state.delConfirmVisible}
+                            onVisibleChange={() => {
+                                if (state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的文件');
+                                    return;
+                                }
+                                setState(data => ({
+                                    ...data,
+                                    delConfirmVisible: !state.delConfirmVisible,
+                                }));
+                            }}
+                            onConfirm={() => batchDeleteFile()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" icon={<DeleteFilled />}>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
+                        {folderId && (
+                            <>
+                                <span style={{ marginLeft: '20px' }}>当前目录为：{state.folderName}</span>
+                                <Link href="/admin/code/static-files">
+                                    <a
+                                        style={{
+                                            marginLeft: '10px',
+                                            color: '#fff',
+                                            backgroundColor: '#1890ff',
+                                            padding: '3px 8px',
+                                            borderRadius: '2px',
+                                        }}
+                                    >
+                                        返回上一级
+                                    </a>
+                                </Link>
+                            </>
+                        )}
+                    </PanelDiv>
+                    <Modal
+                        title="上传文件"
+                        visible={state.visible}
+                        onOk={() => handleOk()}
+                        onCancel={() =>
                             setState(data => ({
                                 ...data,
-                                delConfirmVisible: !state.delConfirmVisible,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteFile()}
-                        okText="确定"
-                        cancelText="取消"
+                                visible: false,
+                            }))
+                        }
                     >
-                        <Button type="danger" icon={<DeleteFilled />}>
-                            批量删除
-                        </Button>
-                    </Popconfirm>
-                    {folderId && (
-                        <>
-                            <span style={{ marginLeft: '20px' }}>当前目录为：{state.folderName}</span>
-                            <Link href="/admin/code/static-files">
-                                <a
-                                    style={{
-                                        marginLeft: '10px',
-                                        color: '#fff',
-                                        backgroundColor: '#1890ff',
-                                        padding: '3px 8px',
-                                        borderRadius: '2px',
-                                    }}
-                                >
-                                    返回上一级
-                                </a>
-                            </Link>
-                        </>
-                    )}
-                </PanelDiv>
-                <Modal
-                    title="上传文件"
-                    visible={state.visible}
-                    onOk={() => handleOk()}
-                    onCancel={() =>
-                        setState(data => ({
-                            ...data,
-                            visible: false,
-                        }))
-                    }
-                >
-                    <Upload.Dragger {...uploadProps}>
-                        <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                        <p className="ant-upload-hint">
-                            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                            band files
-                        </p>
-                    </Upload.Dragger>
-                </Modal>
-                <Modal
-                    title="新建文件夹"
-                    visible={state.isShowNewFolderDialog}
-                    onCancel={() =>
-                        setState(data => ({
-                            ...data,
-                            isShowNewFolderDialog: false,
-                        }))
-                    }
-                    footer={null}
-                >
-                    <Form onFinish={handleNewFloderOk}>
-                        <Form.Item
-                            name="name"
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 10 }}
-                            label="文件夹名称："
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '文件夹名称长度要在1-25个字符之间！',
-                                    min: 1,
-                                    max: 25,
-                                },
-                            ]}
-                        >
-                            <Input type="text" width="100%" />
-                        </Form.Item>
-                        <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="操作：">
-                            <Button type="primary" htmlType="submit">
-                                新建
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={record => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        dataSource={state.files}
-                        loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
-                        pagination={{
-                            showTotal: total => `共 ${total} 条数据`,
-                        }}
-                    />
+                        <Upload.Dragger {...uploadProps}>
+                            <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                            </p>
+                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                            <p className="ant-upload-hint">
+                                Support for a single or bulk upload. Strictly prohibit from uploading company data or
+                                other band files
+                            </p>
+                        </Upload.Dragger>
+                    </Modal>
+                    <Modal
+                        title="新建文件夹"
+                        visible={state.isShowNewFolderDialog}
+                        onCancel={() =>
+                            setState(data => ({
+                                ...data,
+                                isShowNewFolderDialog: false,
+                            }))
+                        }
+                        footer={null}
+                    >
+                        <Form onFinish={handleNewFloderOk}>
+                            <Form.Item
+                                name="name"
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 10 }}
+                                label="文件夹名称："
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: '文件夹名称长度要在1-25个字符之间！',
+                                        min: 1,
+                                        max: 25,
+                                    },
+                                ]}
+                            >
+                                <Input type="text" width="100%" />
+                            </Form.Item>
+                            <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="操作：">
+                                <Button type="primary" htmlType="submit">
+                                    新建
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Modal>
+                    <div className="table-wrapper">
+                        <Table
+                            rowKey={record => record._id}
+                            rowSelection={rowSelection}
+                            columns={getTableColums()}
+                            dataSource={state.files}
+                            loading={state.loading}
+                            onChange={pagination => handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条数据`,
+                            }}
+                        />
+                    </div>
                 </div>
-            </div>
-        </PageHeaderWrapper>
+            </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

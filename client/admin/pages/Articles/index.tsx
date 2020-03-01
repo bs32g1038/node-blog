@@ -8,6 +8,7 @@ import { Table, Button, Popconfirm, message, Input, Row, Col, Tag } from 'antd';
 import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 const PanelDiv = styled.div`
     margin-bottom: 20px;
@@ -180,104 +181,106 @@ export default () => {
         onChange: onSelectChange.bind(this),
     };
     return (
-        <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
-            <div className="main-content">
-                <PanelDiv id="article-panel">
-                    <ModuleControlRow justify="space-between">
-                        <Col>
-                            <Button
-                                type="primary"
-                                icon={<PlusOutlined />}
-                                onClick={() => Router.push('/admin/content/articles/edit')}
-                            >
-                                添加文档
-                            </Button>
-                            <Popconfirm
-                                title="确认要删除？"
-                                placement="right"
-                                visible={state.visible}
-                                onVisibleChange={() => {
-                                    if (state.selectedRowKeys.length <= 0) {
-                                        message.info('请选择要删除的文章');
-                                        return;
-                                    }
-                                    setState(data => ({
-                                        ...data,
-                                        visible: !state.visible,
-                                    }));
-                                }}
-                                onConfirm={() => batchDeleteArticle()}
-                                okText="确定"
-                                cancelText="取消"
-                            >
-                                <Button type="danger" icon={<DeleteFilled />}>
-                                    批量删除
+        <BasicLayout>
+            <PageHeaderWrapper title="文章列表" content="控制台----文章列表">
+                <div className="main-content">
+                    <PanelDiv id="article-panel">
+                        <ModuleControlRow justify="space-between">
+                            <Col>
+                                <Button
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    onClick={() => Router.push('/admin/content/articles/edit')}
+                                >
+                                    添加文档
                                 </Button>
-                            </Popconfirm>
-                        </Col>
-                        <Col style={{ flex: '1 0 auto' }}>
-                            <SearchWrap>
-                                <div className="search-input-group">
-                                    <Row justify="end">
-                                        <Col>
-                                            <Input
-                                                type="text"
-                                                name="searchTitle"
-                                                placeholder="请输入文章标题关键词"
-                                                value={state.searchKey}
-                                                onChange={e => {
-                                                    const value = e.currentTarget.value;
-                                                    setState(val => ({
-                                                        ...val,
-                                                        searchKey: value,
-                                                    }));
-                                                }}
-                                            />
-                                        </Col>
-                                        <Col>
-                                            <Button
-                                                type="primary"
-                                                icon={<SearchOutlined />}
-                                                onClick={() => {
-                                                    fetchData();
-                                                }}
-                                            >
-                                                查询
-                                            </Button>
-                                        </Col>
-                                        <Col>
-                                            <Button
-                                                type="primary"
-                                                icon={<HighlightOutlined />}
-                                                onClick={() => {
-                                                    setState(value => ({
-                                                        ...value,
-                                                        searchKey: '',
-                                                        isResetFetch: true,
-                                                    }));
-                                                }}
-                                            >
-                                                重置
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </SearchWrap>
-                        </Col>
-                    </ModuleControlRow>
-                </PanelDiv>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={record => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        dataSource={state.articles}
-                        pagination={state.pagination}
-                        loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
-                    />
+                                <Popconfirm
+                                    title="确认要删除？"
+                                    placement="right"
+                                    visible={state.visible}
+                                    onVisibleChange={() => {
+                                        if (state.selectedRowKeys.length <= 0) {
+                                            message.info('请选择要删除的文章');
+                                            return;
+                                        }
+                                        setState(data => ({
+                                            ...data,
+                                            visible: !state.visible,
+                                        }));
+                                    }}
+                                    onConfirm={() => batchDeleteArticle()}
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <Button type="danger" icon={<DeleteFilled />}>
+                                        批量删除
+                                    </Button>
+                                </Popconfirm>
+                            </Col>
+                            <Col style={{ flex: '1 0 auto' }}>
+                                <SearchWrap>
+                                    <div className="search-input-group">
+                                        <Row justify="end">
+                                            <Col>
+                                                <Input
+                                                    type="text"
+                                                    name="searchTitle"
+                                                    placeholder="请输入文章标题关键词"
+                                                    value={state.searchKey}
+                                                    onChange={e => {
+                                                        const value = e.currentTarget.value;
+                                                        setState(val => ({
+                                                            ...val,
+                                                            searchKey: value,
+                                                        }));
+                                                    }}
+                                                />
+                                            </Col>
+                                            <Col>
+                                                <Button
+                                                    type="primary"
+                                                    icon={<SearchOutlined />}
+                                                    onClick={() => {
+                                                        fetchData();
+                                                    }}
+                                                >
+                                                    查询
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button
+                                                    type="primary"
+                                                    icon={<HighlightOutlined />}
+                                                    onClick={() => {
+                                                        setState(value => ({
+                                                            ...value,
+                                                            searchKey: '',
+                                                            isResetFetch: true,
+                                                        }));
+                                                    }}
+                                                >
+                                                    重置
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </SearchWrap>
+                            </Col>
+                        </ModuleControlRow>
+                    </PanelDiv>
+                    <div className="table-wrapper">
+                        <Table
+                            rowKey={record => record._id}
+                            rowSelection={rowSelection}
+                            columns={getTableColums()}
+                            dataSource={state.articles}
+                            pagination={state.pagination}
+                            loading={state.loading}
+                            onChange={pagination => handleTableChange(pagination)}
+                        />
+                    </div>
                 </div>
-            </div>
-        </PageHeaderWrapper>
+            </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

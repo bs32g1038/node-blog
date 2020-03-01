@@ -9,6 +9,7 @@ import { Menu, Layout, Tooltip, Avatar as _Avatar, Dropdown } from 'antd';
 import config from '../../configs/default.config';
 import Router from 'next/router';
 import styled from '@emotion/styled';
+import { isEmpty } from 'lodash';
 
 const Header = styled(Layout.Header)`
     background-color: #fff;
@@ -81,6 +82,13 @@ interface Props {
     onCollapse: Function;
 }
 
+const coverStringToJson = data => {
+    if (!isEmpty(data)) {
+        data = JSON.parse(data);
+    }
+    return data;
+};
+
 export default (props: Props) => {
     const [state, setState] = useState({
         collapsed: false,
@@ -99,6 +107,7 @@ export default (props: Props) => {
     const menuClick = e => {
         e.key === 'logout' && logout();
     };
+    const userInfo = coverStringToJson(localStorage.getItem(config.userInfoKey)) || {};
     const menu = (
         <Menu selectedKeys={[]} onClick={menuClick}>
             <Menu.Item key="logout">
@@ -128,7 +137,7 @@ export default (props: Props) => {
                             src={'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'}
                             alt="avatar"
                         />
-                        <span className="name">bs32g1038</span>
+                        <span className="name">{userInfo.account}</span>
                     </span>
                 </Dropdown>
             </RightDiv>

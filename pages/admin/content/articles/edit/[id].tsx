@@ -1,11 +1,2 @@
-import React from 'react';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
-import ArticleEdit from '@blog/client/admin/pages/ArticleEdit';
-
-export default () => {
-    return (
-        <BasicLayout>
-            <ArticleEdit></ArticleEdit>
-        </BasicLayout>
-    );
-};
+import dynamic from 'next/dynamic';
+export default dynamic(() => import('@blog/client/admin/pages/ArticleEdit'), { ssr: false });

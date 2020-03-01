@@ -12,6 +12,7 @@ import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
 import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 const ghat = new GHAT();
 
@@ -147,99 +148,104 @@ export default () => {
     };
     const expandedRowKeys = state.comments.map(item => item._id);
     return (
-        <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
-            <div className="main-content">
-                <PanelDiv className="panel" id="comments-panel">
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.visiable}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的评论');
-                                return;
-                            }
-                            setState(data => ({
-                                ...data,
-                                visiable: !state.visiable,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteComment()}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <Button type="danger" icon={<DeleteFilled />}>
-                            批量删除
-                        </Button>
-                    </Popconfirm>
-                </PanelDiv>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={record => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        loading={state.loading}
-                        dataSource={state.comments}
-                        onChange={pagination => handleTableChange(pagination)}
-                        pagination={{
-                            showTotal: total => `共 ${total} 条评论数据`,
-                        }}
-                        expandedRowRender={record => {
-                            return (
-                                <React.Fragment>
-                                    {record.reply && (
-                                        <ReplyListItem>
-                                            <UserAvatar>
-                                                <img src={ghat.getImage(md5(record.reply.nickName).toString())} />
-                                            </UserAvatar>
-                                            <ReplyContent>
-                                                <ReplyInfo>
-                                                    <BaseInfo>
-                                                        <div className="reply-author">{record.reply.nickName}</div>
-                                                        <a className="reply-time">
-                                                            在 {timeAgo(record.reply.createdAt)} 评论
-                                                        </a>
-                                                    </BaseInfo>
-                                                    <UserAction>
-                                                        <Button
-                                                            size="small"
-                                                            icon={<SendOutlined />}
-                                                            onClick={() => {
-                                                                Router.push(
-                                                                    '/admin/content/comments/reply/' + record.reply._id
-                                                                );
-                                                            }}
-                                                        >
-                                                            回复
-                                                        </Button>
-                                                    </UserAction>
-                                                </ReplyInfo>
-                                                <MarkdownText
-                                                    className="markdown-body"
-                                                    dangerouslySetInnerHTML={{ __html: marked(record.reply.content) }}
-                                                ></MarkdownText>
-                                            </ReplyContent>
-                                        </ReplyListItem>
-                                    )}
-                                    <div style={{ padding: '0 20px' }}>
-                                        <Tip className="tip">
-                                            <CommentOutlined />
-                                            评论内容：
-                                        </Tip>
-                                        <div
-                                            className="markdown-body"
-                                            dangerouslySetInnerHTML={{
-                                                __html: marked(record.content),
-                                            }}
-                                        ></div>
-                                    </div>
-                                </React.Fragment>
-                            );
-                        }}
-                        expandedRowKeys={expandedRowKeys}
-                    />
+        <BasicLayout>
+            <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
+                <div className="main-content">
+                    <PanelDiv className="panel" id="comments-panel">
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            visible={state.visiable}
+                            onVisibleChange={() => {
+                                if (state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的评论');
+                                    return;
+                                }
+                                setState(data => ({
+                                    ...data,
+                                    visiable: !state.visiable,
+                                }));
+                            }}
+                            onConfirm={() => batchDeleteComment()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" icon={<DeleteFilled />}>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
+                    </PanelDiv>
+                    <div className="table-wrapper">
+                        <Table
+                            rowKey={record => record._id}
+                            rowSelection={rowSelection}
+                            columns={getTableColums()}
+                            loading={state.loading}
+                            dataSource={state.comments}
+                            onChange={pagination => handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条评论数据`,
+                            }}
+                            expandedRowRender={record => {
+                                return (
+                                    <React.Fragment>
+                                        {record.reply && (
+                                            <ReplyListItem>
+                                                <UserAvatar>
+                                                    <img src={ghat.getImage(md5(record.reply.nickName).toString())} />
+                                                </UserAvatar>
+                                                <ReplyContent>
+                                                    <ReplyInfo>
+                                                        <BaseInfo>
+                                                            <div className="reply-author">{record.reply.nickName}</div>
+                                                            <a className="reply-time">
+                                                                在 {timeAgo(record.reply.createdAt)} 评论
+                                                            </a>
+                                                        </BaseInfo>
+                                                        <UserAction>
+                                                            <Button
+                                                                size="small"
+                                                                icon={<SendOutlined />}
+                                                                onClick={() => {
+                                                                    Router.push(
+                                                                        '/admin/content/comments/reply/' +
+                                                                            record.reply._id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                回复
+                                                            </Button>
+                                                        </UserAction>
+                                                    </ReplyInfo>
+                                                    <MarkdownText
+                                                        className="markdown-body"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: marked(record.reply.content),
+                                                        }}
+                                                    ></MarkdownText>
+                                                </ReplyContent>
+                                            </ReplyListItem>
+                                        )}
+                                        <div style={{ padding: '0 20px' }}>
+                                            <Tip className="tip">
+                                                <CommentOutlined />
+                                                评论内容：
+                                            </Tip>
+                                            <div
+                                                className="markdown-body"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: marked(record.content),
+                                                }}
+                                            ></div>
+                                        </div>
+                                    </React.Fragment>
+                                );
+                            }}
+                            expandedRowKeys={expandedRowKeys}
+                        />
+                    </div>
                 </div>
-            </div>
-        </PageHeaderWrapper>
+            </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

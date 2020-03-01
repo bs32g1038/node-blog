@@ -1,11 +1,2 @@
-import React from 'react';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
-import Dashboard from '@blog/client/admin/pages/Dashboard';
-
-export default () => {
-    return (
-        <BasicLayout>
-            <Dashboard></Dashboard>
-        </BasicLayout>
-    );
-};
+import dynamic from 'next/dynamic';
+export default dynamic(() => import('@blog/client/admin/pages/Dashboard'), { ssr: false });

@@ -7,6 +7,7 @@ import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { PanelDiv } from '@blog/client/admin/styles';
 import Router from 'next/router';
 import { EyeFilled, PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
 export default () => {
     const [state, setState] = useState({
@@ -137,53 +138,55 @@ export default () => {
         onChange: onSelectChange.bind(this),
     };
     return (
-        <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
-            <div className="main-content">
-                <PanelDiv className="panel">
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => Router.push('/admin/code/demos/edit')}
-                    >
-                        添加Demo
-                    </Button>
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.visible}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的demo');
-                                return;
-                            }
-                            setState(data => ({
-                                ...data,
-                                visible: !state.visible,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteDemo()}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <Button type="danger" icon={<DeleteFilled />}>
-                            批量删除
+        <BasicLayout>
+            <PageHeaderWrapper title="demo列表" content="控制台----demo列表">
+                <div className="main-content">
+                    <PanelDiv className="panel">
+                        <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={() => Router.push('/admin/code/demos/edit')}
+                        >
+                            添加Demo
                         </Button>
-                    </Popconfirm>
-                </PanelDiv>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={record => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        dataSource={state.demos}
-                        loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
-                        pagination={{
-                            showTotal: total => `共 ${total} 条数据`,
-                        }}
-                    />
+                        <Popconfirm
+                            title="确认要删除？"
+                            placement="right"
+                            visible={state.visible}
+                            onVisibleChange={() => {
+                                if (state.selectedRowKeys.length <= 0) {
+                                    message.info('请选择要删除的demo');
+                                    return;
+                                }
+                                setState(data => ({
+                                    ...data,
+                                    visible: !state.visible,
+                                }));
+                            }}
+                            onConfirm={() => batchDeleteDemo()}
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <Button type="danger" icon={<DeleteFilled />}>
+                                批量删除
+                            </Button>
+                        </Popconfirm>
+                    </PanelDiv>
+                    <div className="table-wrapper">
+                        <Table
+                            rowKey={record => record._id}
+                            rowSelection={rowSelection}
+                            columns={getTableColums()}
+                            dataSource={state.demos}
+                            loading={state.loading}
+                            onChange={pagination => handleTableChange(pagination)}
+                            pagination={{
+                                showTotal: total => `共 ${total} 条数据`,
+                            }}
+                        />
+                    </div>
                 </div>
-            </div>
-        </PageHeaderWrapper>
+            </PageHeaderWrapper>
+        </BasicLayout>
     );
 };
