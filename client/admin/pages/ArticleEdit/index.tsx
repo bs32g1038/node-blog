@@ -2,15 +2,51 @@ import React, { useState, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import queryString from 'query-string';
 import config from '@blog/client/admin/configs/default.config';
-import { Form, Input, Upload, Select, Button, message, Row, Modal, Card, Pagination, Empty } from 'antd';
+import {
+    Form,
+    Input,
+    Upload,
+    Select,
+    Button,
+    message,
+    Row,
+    Modal,
+    Card,
+    Pagination,
+    Empty,
+    Menu,
+    Dropdown,
+    Drawer,
+} from 'antd';
 import dynamic from 'next/dynamic';
 const MdEdit = dynamic(() => import('@blog/client/admin/components/MdEdit'), { ssr: false });
 import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import styled from '@emotion/styled';
-import { CloudUploadOutlined, SearchOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, ArrowDownOutlined, SettingOutlined, DownOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import { Header } from './style';
+import Editor from '../../components/Editor';
+
+const menu = (
+    <Menu>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                1st menu item
+            </a>
+        </Menu.Item>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                2nd menu item
+            </a>
+        </Menu.Item>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+                3rd menu item
+            </a>
+        </Menu.Item>
+    </Menu>
+);
 
 const PanelDiv = styled.div`
     .ant-upload-list-picture {
@@ -173,19 +209,47 @@ export default () => {
             </Option>
         ));
     const { id } = router.query;
+    const [showDrawer, setShowDrawer] = useState(false);
     return (
-        <BasicLayout>
-            <PanelDiv>
-                <PageHeaderWrapper
-                    title={id ? '文章编辑' : '添加文章'}
-                    content={
-                        <>
-                            <strong>控制台----文章添加或编辑</strong>
-                        </>
-                    }
-                >
-                    <div className="main-content">
-                        <Form
+        <div>
+            <Header>
+                <div className="left-item">
+                    <div className="name">
+                        <a href="#/posts/">
+                            <ArrowLeftOutlined></ArrowLeftOutlined>
+                            文章列表
+                        </a>
+                    </div>
+                    <div className="type">
+                        <span className="fw4 midgrey-l2">
+                            <div id="ember187" className="ember-view">
+                                草稿
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <section className="view-actions">
+                    <div id="ember261" className="gh-publishmenu ember-view">
+                        <Dropdown overlay={menu} trigger={['click']}>
+                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                发布 <DownOutlined />
+                            </a>
+                        </Dropdown>
+                        <div
+                            id="ember-basic-dropdown-content-ember262"
+                            className="ember-basic-dropdown-content-placeholder"
+                        ></div>
+                    </div>
+                    <Button type="link" className="post-settings" title="Settings" onClick={() => setShowDrawer(true)}>
+                        <SettingOutlined></SettingOutlined>
+                    </Button>
+                    <Drawer
+                        title="文章配置"
+                        placement="right"
+                        onClose={() => setShowDrawer(false)}
+                        visible={showDrawer}
+                    >
+                    <Form
                             form={form}
                             onFinish={publish}
                             style={{ marginTop: '20px' }}
@@ -317,7 +381,6 @@ export default () => {
                                     </Modal>
                                 </Row>
                             </Form.Item>
-
                             <Form.Item
                                 name="summary"
                                 labelCol={{ span: 3 }}
@@ -327,26 +390,16 @@ export default () => {
                             >
                                 <TextArea placeholder="请输入文章摘要" autoSize={{ minRows: 2, maxRows: 6 }}></TextArea>
                             </Form.Item>
-                            <Form.Item
-                                name="content"
-                                label="文章详情："
-                                labelCol={{ span: 3 }}
-                                wrapperCol={{ span: 20 }}
-                                rules={[
-                                    { required: true, message: '文章详情不能为空，且最多15000个字符!', max: 15000 },
-                                ]}
-                            >
-                                <MdEdit />
-                            </Form.Item>
                             <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
                                 <Button type="primary" htmlType="submit">
-                                    发布
+                                    删除文章
                                 </Button>
                             </Form.Item>
                         </Form>
-                    </div>
-                </PageHeaderWrapper>
-            </PanelDiv>
-        </BasicLayout>
+                    </Drawer>
+                </section>
+            </Header>
+            <Editor></Editor>
+        </div>
     );
 };

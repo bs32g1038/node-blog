@@ -20,7 +20,7 @@ export default () => {
             message.success('登陆成功！');
             localStorage.setItem(config.userInfoKey, JSON.stringify({ account: res.data.account }));
             localStorage.setItem(config.tokenKey, res.data.token);
-            Router.push('/admin/dashboard/analysis');
+            Router.push('/admin/dashboard');
         });
     };
     return (

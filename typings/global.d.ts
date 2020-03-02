@@ -10,6 +10,11 @@ declare module 'markdown-it-link-attributes' {
     export default content;
 }
 
+declare module 'tui-editor' {
+    const content: any;
+    export default content;
+}
+
 declare module 'markdown-it-for-inline' {
     const content: any;
     export default content;

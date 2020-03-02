@@ -102,50 +102,48 @@ export default () => {
     };
     return (
         <BasicLayout>
-            <PageHeaderWrapper title="文章分类列表" content="控制台----分类列表">
-                <div className="main-content">
-                    <PanelDiv style={{ marginBottom: '20px' }}>
-                        <Button
-                            type="primary"
-                            icon={<PlusOutlined />}
-                            onClick={() => Router.push('/admin/content/categories/edit')}
-                        >
-                            添加分类
+            <div className="main-content">
+                <PanelDiv style={{ marginBottom: '20px' }}>
+                    <Button
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        onClick={() => Router.push('/admin/content/categories/edit')}
+                    >
+                        添加分类
+                    </Button>
+                    <Popconfirm
+                        title="确认要删除？"
+                        placement="right"
+                        visible={state.visible}
+                        onVisibleChange={() => {
+                            if (state.selectedRowKeys.length <= 0) {
+                                message.info('请选择要删除的分类');
+                                return;
+                            }
+                            setState(data => ({
+                                ...data,
+                                visible: !state.visible,
+                            }));
+                        }}
+                        onConfirm={() => batchDeleteCategory()}
+                        okText="确定"
+                        cancelText="取消"
+                    >
+                        <Button type="danger" icon={<DeleteFilled />}>
+                            批量删除
                         </Button>
-                        <Popconfirm
-                            title="确认要删除？"
-                            placement="right"
-                            visible={state.visible}
-                            onVisibleChange={() => {
-                                if (state.selectedRowKeys.length <= 0) {
-                                    message.info('请选择要删除的分类');
-                                    return;
-                                }
-                                setState(data => ({
-                                    ...data,
-                                    visible: !state.visible,
-                                }));
-                            }}
-                            onConfirm={() => batchDeleteCategory()}
-                            okText="确定"
-                            cancelText="取消"
-                        >
-                            <Button type="danger" icon={<DeleteFilled />}>
-                                批量删除
-                            </Button>
-                        </Popconfirm>
-                    </PanelDiv>
-                    <div className="table-wrapper">
-                        <Table
-                            rowKey={(record: any) => record._id}
-                            rowSelection={rowSelection}
-                            columns={getTableColums()}
-                            loading={!categories}
-                            dataSource={categories as any}
-                        />
-                    </div>
+                    </Popconfirm>
+                </PanelDiv>
+                <div className="table-wrapper">
+                    <Table
+                        rowKey={(record: any) => record._id}
+                        rowSelection={rowSelection}
+                        columns={getTableColums()}
+                        loading={!categories}
+                        dataSource={categories as any}
+                    />
                 </div>
-            </PageHeaderWrapper>
+            </div>
         </BasicLayout>
     );
 };
