@@ -18,7 +18,7 @@ export default () => {
         const str = encrypt(JSON.stringify(data));
         axios.post('/login', { key: str }).then(res => {
             message.success('登陆成功！');
-            localStorage.setItem(config.userInfoKey, JSON.stringify({ account: res.data.account }));
+            localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
             localStorage.setItem(config.tokenKey, res.data.token);
             Router.push('/admin/dashboard');
         });

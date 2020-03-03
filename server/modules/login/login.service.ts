@@ -64,6 +64,9 @@ export class LoginService {
                 user: user._id,
             });
             return {
+                userName: user.userName,
+                avatar: user.avatar,
+                email: user.email,
                 account,
                 token: jwt.sign({ account, roles: ['admin'] }, TOKEN_SECRET_KEY, {
                     expiresIn: 60 * 60,

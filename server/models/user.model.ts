@@ -8,6 +8,9 @@ import Joi from '../joi';
 export interface User {
     readonly _id?: string;
     readonly type?: string;
+    readonly userName?: string;
+    readonly avatar?: string;
+    readonly email?: string;
     readonly account?: string;
     readonly password?: string;
     readonly createdAt?: string | Date;
@@ -39,7 +42,19 @@ const UserSchema = new mongoose.Schema(
             default: 'admin',
             required: true,
         },
-        // 邮箱
+        // 头像 url
+        avatar: {
+            type: String,
+            maxlength: 200,
+        },
+        userName: {
+            minlength: 1,
+            type: String,
+            maxlength: 100,
+        },
+        email: {
+            type: String,
+        },
         account: {
             type: String,
             unique: true,

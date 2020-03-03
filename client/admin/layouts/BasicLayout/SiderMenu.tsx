@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
+import { Layout, Menu, Avatar, Button } from 'antd';
 const { Sider } = Layout;
 import styled from '@emotion/styled';
 import IconLogo from '@blog/client/admin/assets/logo.svg';
@@ -8,7 +8,7 @@ import config from '@blog/client/admin/configs/default.config';
 import menus from '@blog/client/admin/configs/menu-config';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from './util';
 import Router, { useRouter } from 'next/router';
-import { HomeOutlined, UserOutlined, DownOutlined, LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 
 const WrapDiv = styled.div`
     .ant-menu-light {
@@ -94,14 +94,31 @@ const MenuLinkA = styled.a`
     padding-left: 13px;
 `;
 
+const UserMenu = styled.div`
+    .ant-menu-inline {
+        border-right: none !important;
+    }
+    .ant-menu-submenu {
+        .ant-menu-sub {
+            background-color: rgb(245, 245, 245);
+        }
+        .ant-menu-submenu-title {
+            height: auto;
+        }
+    }
+    .ant-menu-item:active,
+    .ant-menu-submenu-title:active {
+        background: transparent;
+    }
+`;
+
 const UserPanel = styled.div`
-    margin: 12px 5px 12px;
+    margin: 10px 5px 10px;
     display: flex;
     align-items: center;
-    padding: 8px 12px 8px 16px;
-    .avatar-wrap {
-        margin: 0px 8px 0px 0px;
-    }
+    padding: 5px 0;
+    user-select: none;
+    line-height: 1.5;
     h2 {
         margin: 0;
         font-weight: 600;
@@ -113,6 +130,12 @@ const UserPanel = styled.div`
         font-weight: 400;
         color: rgb(84, 102, 109);
         margin: -1px 8px -3px 0px;
+    }
+    .avatar-wrap {
+        margin: 0px 8px 0px 0px;
+        .anticon-user {
+            margin-right: 0;
+        }
     }
 `;
 
@@ -133,7 +156,7 @@ const MenuList = props => {
         <Menu {...props}>
             {menus &&
                 menus
-                    .filter(item => item.title)
+                    .filter(item => item.title && !item.hidden)
                     .map(item => {
                         return renderMenuItem(item);
                     })
@@ -193,18 +216,6 @@ export default (props: Props) => {
         }));
     }, [1]);
     const { selectedKey, openKey, firstHide } = state;
-    const menu = (
-        <Menu>
-            <Menu.Item
-                onClick={() => {
-                    logout();
-                }}
-            >
-                <LogoutOutlined />
-                退出登录
-            </Menu.Item>
-        </Menu>
-    );
     const data = JSON.parse(localStorage.getItem(config.userInfoKey));
     return (
         <WrapDiv>
@@ -229,20 +240,39 @@ export default (props: Props) => {
                         <h1>{config.title}</h1>
                     </LogoDiv>
                 </Link>
-                <Dropdown overlay={menu} trigger={['click']}>
-                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        <UserPanel>
-                            <div className="avatar-wrap">
-                                <Avatar size={34} icon={<UserOutlined />} />
-                            </div>
-                            <div>
-                                <h2>{data.nickName}</h2>
-                                <p>{data.account}</p>
-                            </div>
-                        </UserPanel>
-                        <DownOutlined style={{ fontSize: '14px', color: 'rgb(0,0,0,0.65)' }} />
-                    </a>
-                </Dropdown>
+                <UserMenu>
+                    <Menu mode="inline">
+                        <Menu.SubMenu
+                            title={
+                                <UserPanel>
+                                    <div className="avatar-wrap">
+                                        <Avatar src={data.avatar} size={34} icon={<UserOutlined />} />
+                                    </div>
+                                    <div>
+                                        <h2>{data.userName}</h2>
+                                        <p>{data.account}</p>
+                                    </div>
+                                </UserPanel>
+                            }
+                        >
+                            <Menu.Item>
+                                <Link href="/admin/user/person" passHref={true}>
+                                    <a>
+                                        <SettingOutlined />
+                                        配置个人信息
+                                    </a>
+                                </Link>
+                                <SettingOutlined />
+                                配置个人信息
+                            </Menu.Item>
+                            <Menu.Item onClick={() => logout()}>
+                                <LogoutOutlined />
+                                退出登录
+                            </Menu.Item>
+                            <Menu.Divider></Menu.Divider>
+                        </Menu.SubMenu>
+                    </Menu>
+                </UserMenu>
                 <div style={{ overflowY: 'auto' }}>
                     <HomeMenuItem>
                         <Link href="/admin/site">

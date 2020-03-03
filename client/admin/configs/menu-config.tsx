@@ -7,6 +7,7 @@ import {
     CodepenOutlined,
     AppstoreOutlined,
     FileOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 
 export default [
@@ -93,6 +94,13 @@ export default [
         path: '/admin/medias/images',
         icon: <FileImageOutlined />,
         title: '图片列表',
+        exact: true,
+    },
+    {
+        path: '/admin/user/person',
+        icon: <UserOutlined />,
+        title: '用户信息',
+        hidden: true,
         exact: true,
     },
 ];
