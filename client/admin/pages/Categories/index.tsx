@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';

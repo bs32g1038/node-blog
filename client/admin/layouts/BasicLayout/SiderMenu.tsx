@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Avatar, Dropdown } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 const { Sider } = Layout;
 import styled from '@emotion/styled';
 import IconLogo from '@blog/client/admin/assets/logo.svg';
 import config from '@blog/client/admin/configs/default.config';
 import menus from '@blog/client/admin/configs/menu-config';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from './util';
-import { useRouter } from 'next/router';
-import { HomeOutlined, UserOutlined, DownOutlined } from '@ant-design/icons';
+import Router, { useRouter } from 'next/router';
+import { HomeOutlined, UserOutlined, DownOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const WrapDiv = styled.div`
     .ant-menu-light {
         border-right-color: transparent;
     }
     .ant-menu-item {
-        padding-left: 34px;
+        padding-left: 36px;
     }
     .ant-dropdown-link {
         display: flex;
@@ -52,16 +52,18 @@ const LogoDiv = styled.div`
         margin: 0 0 0 12px;
         color: #444;
         font-weight: 600;
-        font-size: 15px;
-        /* font-family: zixinfangmeng; */
+        font-size: 16px;
+        font-family: zixinfangmeng;
         vertical-align: middle;
     }
 `;
 
 const HomeMenuItem = styled.div`
     margin: 10px 0px;
-    a {
-        display: flex;
+    display: flex;
+    justify-content: center;
+    button {
+        width: 100%;
         align-items: center;
         display: flex;
         align-items: center;
@@ -71,16 +73,21 @@ const HomeMenuItem = styled.div`
         transition: none 0s ease 0s;
         margin: 2px 5px;
         border-radius: 5px;
-        svg {
-            margin-right: 8px;
+        border: none;
+        background-color: #fff;
+        box-shadow: none;
+        &:hover {
+            box-shadow: none;
+            color: inherit;
+            background-color: rgba(0, 0, 0, 0.05);
         }
     }
 `;
 
 const MenuTip = styled.div`
     padding-left: 26px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 `;
 
 const MenuLinkA = styled.a`
@@ -122,25 +129,8 @@ const MenuList = props => {
             </Link>
         </Menu.Item>
     );
-    const renderSubMenu = item => (
-        <Menu.SubMenu
-            key={item.path}
-            title={
-                <span>
-                    {item.icon}
-                    <span className="nav-text">{item.title}</span>
-                </span>
-            }
-        >
-            {/* {item.childMenus
-                .filter(item => item.title && !item.hideInMenu)
-                .map(item => renderMenuItem(item))
-                .filter(item => item)} */}
-        </Menu.SubMenu>
-    );
     return (
         <Menu {...props}>
-            <MenuTip>管理</MenuTip>
             {menus &&
                 menus
                     .filter(item => item.title)
@@ -166,6 +156,11 @@ const setMenuOpen = props => {
         }),
         selectedKey: getSelectedMenuKeys(flatMenuKeys, pathname),
     };
+};
+
+const logout = () => {
+    localStorage.removeItem(config.tokenKey);
+    return Router.push('/admin/login');
 };
 
 export default (props: Props) => {
@@ -200,13 +195,17 @@ export default (props: Props) => {
     const { selectedKey, openKey, firstHide } = state;
     const menu = (
         <Menu>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-                    退出登录
-                </a>
+            <Menu.Item
+                onClick={() => {
+                    logout();
+                }}
+            >
+                <LogoutOutlined />
+                退出登录
             </Menu.Item>
         </Menu>
     );
+    const data = JSON.parse(localStorage.getItem(config.userInfoKey));
     return (
         <WrapDiv>
             <Sider
@@ -224,7 +223,7 @@ export default (props: Props) => {
                     boxShadow: 'none',
                 }}
             >
-                <Link href="/admin/dashboard/analysis" passHref={true}>
+                <Link href="/admin/dashboard">
                     <LogoDiv>
                         <img src={IconLogo} />
                         <h1>{config.title}</h1>
@@ -237,8 +236,8 @@ export default (props: Props) => {
                                 <Avatar size={34} icon={<UserOutlined />} />
                             </div>
                             <div>
-                                <h2>冷夜流星</h2>
-                                <p>bs32g1038@163.com</p>
+                                <h2>{data.nickName}</h2>
+                                <p>{data.account}</p>
                             </div>
                         </UserPanel>
                         <DownOutlined style={{ fontSize: '14px', color: 'rgb(0,0,0,0.65)' }} />
@@ -246,10 +245,13 @@ export default (props: Props) => {
                 </Dropdown>
                 <div style={{ overflowY: 'auto' }}>
                     <HomeMenuItem>
-                        <a href="">
-                            <HomeOutlined></HomeOutlined>浏览网站
-                        </a>
+                        <Link href="/admin/site">
+                            <Button>
+                                <HomeOutlined></HomeOutlined>浏览网站
+                            </Button>
+                        </Link>
                     </HomeMenuItem>
+                    <MenuTip>管理</MenuTip>
                     <MenuList
                         theme="light"
                         mode={collapsed ? 'vertical' : 'inline'}

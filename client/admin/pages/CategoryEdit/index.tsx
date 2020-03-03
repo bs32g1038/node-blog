@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import axios from '@blog/client/admin/axios';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
@@ -34,33 +33,31 @@ export default () => {
     const { id } = router.query;
     return (
         <BasicLayout>
-            <PageHeaderWrapper title={id ? '分类编辑' : '添加分类'} content="控制台----分类添加或编辑">
-                <div className="main-content">
-                    <Form form={form} onFinish={publish} style={{ marginTop: '20px' }}>
-                        <Form.Item
-                            name="name"
-                            labelCol={{ span: 3 }}
-                            wrapperCol={{ span: 10 }}
-                            label="分类名称："
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '分类名称长度要在1-25个字符之间！',
-                                    min: 1,
-                                    max: 25,
-                                },
-                            ]}
-                        >
-                            <Input type="text" />
-                        </Form.Item>
-                        <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
-                            <Button type="primary" htmlType="submit">
-                                发布
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </div>
-            </PageHeaderWrapper>
+            <div className="main-content">
+                <Form form={form} onFinish={publish} style={{ marginTop: '20px' }}>
+                    <Form.Item
+                        name="name"
+                        labelCol={{ span: 3 }}
+                        wrapperCol={{ span: 10 }}
+                        label="分类名称："
+                        rules={[
+                            {
+                                required: true,
+                                message: '分类名称长度要在1-25个字符之间！',
+                                min: 1,
+                                max: 25,
+                            },
+                        ]}
+                    >
+                        <Input type="text" />
+                    </Form.Item>
+                    <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="操作：">
+                        <Button type="primary" htmlType="submit">
+                            发布
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
         </BasicLayout>
     );
 };
