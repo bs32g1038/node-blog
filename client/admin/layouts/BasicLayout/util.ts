@@ -1,4 +1,4 @@
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from 'path-to-regexp';
 import { urlToList } from '@blog/client/admin/utils/path-tools';
 
 export const getFlatMenuKeys = (menuData = []) => {

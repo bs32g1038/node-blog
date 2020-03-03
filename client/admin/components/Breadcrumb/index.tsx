@@ -1,5 +1,5 @@
 import React from 'react';
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from 'path-to-regexp';
 import { urlToList } from '@blog/client/admin/utils/path-tools';
 import menu from '../../configs/menu-config';
 import { useRouter } from 'next/router';

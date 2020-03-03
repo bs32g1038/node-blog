@@ -645,11 +645,12 @@ export const WrapDiv = styled(PandaSyntax)`
     }
 
     .CodeMirror {
-        font-size: 14px;
+        font-size: 16px;
         font-family: 'YaHei Consolas Hybrid', Consolas, '微软雅黑', 'Meiryo UI', 'Malgun Gothic', 'Segoe UI',
             'Trebuchet MS', Helvetica, 'Monaco', courier, monospace;
-        line-height: 1.6;
+        line-height: 1.8;
         min-height: 500px;
+        padding: 10px;
     }
 
     :-webkit-full-screen {
@@ -662,7 +663,7 @@ export const WrapDiv = styled(PandaSyntax)`
     .markdown-body {
         font-family: Lato, Helvetica Neue For Number, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC,
             Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 2;
     }
 
