@@ -1,7 +1,7 @@
 import React from 'react';
 import initializeStore from './store';
 import axios from '@blog/client/web/utils/axios';
-import { setError } from '@blog/client/web/redux/reducers/app';
+import { setError, setConfig } from '@blog/client/web/redux/reducers/app';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
@@ -24,6 +24,12 @@ const initAxios = reduxStore => {
     );
 };
 
+const initConfig = reduxStore => {
+    return axios.get('/configs').then(async res => {
+        await reduxStore.dispatch(setConfig({ config: res.data }));
+    });
+};
+
 export function getOrCreateStore(initialState?: any) {
     if (isServer) {
         return initializeStore(initialState);
@@ -42,7 +48,8 @@ export default (App: any) => {
             // This allows you to set a custom default initialState
             const reduxStore = getOrCreateStore();
 
-            initAxios(reduxStore);
+            await initAxios(reduxStore);
+            await initConfig(reduxStore);
             // Provide the store to getInitialProps of pages
             appContext.ctx.reduxStore = reduxStore;
 

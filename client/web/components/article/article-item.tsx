@@ -1,6 +1,5 @@
 import Link from '../link';
 import React from 'react';
-import config from '@blog/client/web/config/site-info';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
@@ -19,6 +18,8 @@ import {
 } from '@chakra-ui/core';
 import { rem } from 'polished';
 import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/web/redux/store';
 
 interface Props {
     article: any;
@@ -28,6 +29,8 @@ interface Props {
 export default (props: Props) => {
     const { article, comments } = props;
     const markdownContent = useLinkGenerateDemo();
+    const config = useSelector((state: RootState) => state.app.config);
+
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb

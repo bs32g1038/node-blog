@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import siteInfo from '../../config/site-info';
 import media from '../../utils/media';
 import NavLink from '../nav-link';
 import BackTopBtn from '../back-top-button';
@@ -9,6 +8,8 @@ import { Flex, Box, Text, Divider, useColorMode } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
 import { rem } from 'polished';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/web/redux/store';
 
 const MobileTabbar = styled(Box)`
     position: fixed;
@@ -82,6 +83,7 @@ const loadTimeCountEvent = () => {
 
 export const AppFooter = () => {
     const { colorMode, toggleColorMode } = useColorMode();
+    const config = useSelector((state: RootState) => state.app.config);
     useEffect(() => {
         loadTimeCountEvent();
     });
@@ -111,11 +113,11 @@ export const AppFooter = () => {
                     <Text mb={1}>
                         <span>Copyright © 2016-2019</span>
                         <UiLink className="text-white" href="/blog">
-                            <strong> {siteInfo.name} </strong>
+                            <strong> {config.siteTitle} </strong>
                         </UiLink>
                         <span>
-                            <UiLink href={siteInfo.icpGovCn} isExternal={true}>
-                                <span className="icon-icp"></span> {siteInfo.icp}
+                            <UiLink href={config.icpGovCn} isExternal={true}>
+                                <span className="icon-icp"></span> {config.icp}
                             </UiLink>
                         </span>
                     </Text>
@@ -138,7 +140,7 @@ export const AppFooter = () => {
                     <Divider />
                     <Text>
                         博客已开源至
-                        <UiLink href={siteInfo.projectGithub}>
+                        <UiLink href={config.projectGithub}>
                             <strong> Github </strong>
                         </UiLink>
                         请大家多多关注
@@ -168,7 +170,7 @@ export const AppFooter = () => {
                     </div>
                     <div className="tabbar-item__text">主题</div>
                 </a>
-                <a className="tabbar-item" href={siteInfo.github} rel="noopener noreferrer" target="_blank">
+                <a className="tabbar-item" href={config.github} rel="noopener noreferrer" target="_blank">
                     <div className="tabbar-item__icon">
                         <Icon size="24px" name="github" fill="theme.primaryText" />
                     </div>

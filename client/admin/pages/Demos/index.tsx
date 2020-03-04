@@ -84,9 +84,7 @@ export default () => {
         ];
     };
     const onFinish = values => {
-        updateConfig({
-            demo: values,
-        }).then(() => {
+        updateConfig(values).then(() => {
             message.success('更新成功');
         });
     };
@@ -107,7 +105,7 @@ export default () => {
                             onClick={() => {
                                 if (activePanel !== '1') {
                                     fetchConfig().then(res => {
-                                        form.setFieldsValue(res.data.demo);
+                                        form.setFieldsValue(res.data);
                                     });
                                     return setActivePanel('1');
                                 }
@@ -143,7 +141,7 @@ export default () => {
                             >
                                 <Form.Item>
                                     <Form.Item
-                                        name="git"
+                                        name="demoGit"
                                         label="git链接"
                                         rules={[{ required: true, message: '请输入一个有效的git链接!' }]}
                                     >
@@ -155,7 +153,7 @@ export default () => {
                                 </Form.Item>
                                 <Form.Item>
                                     <Form.Item
-                                        name="time"
+                                        name="demoTime"
                                         label="定时时间"
                                         rules={[{ type: 'object', message: 'Please select time!' }]}
                                     >

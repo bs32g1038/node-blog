@@ -8,6 +8,7 @@ import {
     AppstoreOutlined,
     FileOutlined,
     UserOutlined,
+    SettingOutlined,
 } from '@ant-design/icons';
 
 export default [
@@ -101,6 +102,12 @@ export default [
         icon: <UserOutlined />,
         title: '用户信息',
         hidden: true,
+        exact: true,
+    },
+    {
+        path: '/admin/settings',
+        icon: <SettingOutlined />,
+        title: '系统配置',
         exact: true,
     },
 ];

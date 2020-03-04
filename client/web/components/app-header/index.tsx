@@ -6,10 +6,12 @@ import Icon from '../icon';
 import NavLink from '../nav-link';
 import { HomeNav, NavA } from './style';
 import { SearchForm } from './search-form';
-import siteInfo from '../../config/site-info';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/web/redux/store';
 
 export const AppHeader = () => {
     const { colorMode, toggleColorMode } = useColorMode();
+    const config = useSelector((state: RootState) => state.app.config);
     return (
         <Box
             bg="theme.header.bg"
@@ -25,10 +27,10 @@ export const AppHeader = () => {
             px={5}
         >
             <Link href="/" as="/">
-                <HomeNav title={siteInfo.name} mr={[0, 6]}>
+                <HomeNav title={config.siteTitle} mr={[0, 6]}>
                     <Icon fill="theme.header.fill" size="40px" name="logo" mr={2}></Icon>
-                    <Heading as="h1" title={siteInfo.name} fontSize={16} fontFamily="siteitlefont">
-                        {siteInfo.name}
+                    <Heading as="h1" title={config.siteTitle} fontSize={16} fontFamily="siteitlefont">
+                        {config.siteTitle}
                     </Heading>
                 </HomeNav>
             </Link>

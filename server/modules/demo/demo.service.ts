@@ -1,18 +1,15 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Demo, DemoModel, IDemoModel } from '../../models/demo.model';
+import { DemoModel, IDemoModel } from '../../models/demo.model';
 import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import shelljs from 'shelljs';
-import { ConfigService } from '../config/config.service';
+import { getConfig } from '../../site-config/site.config.module';
 
 @Injectable()
 export class DemoService {
-    constructor(
-        @InjectModel(DemoModel) private readonly demoModel: IDemoModel,
-        private readonly configService: ConfigService
-    ) {}
+    constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
 
     async getDemoList(): Promise<{ items: { url: string; name: string }[]; totalCount: number }> {
         const dirs = await this.readDir(path.resolve(__dirname, '../../../../public/demo'));
@@ -42,8 +39,8 @@ export class DemoService {
     }
 
     async gitClone() {
-        const config: any = this.configService.getConfig();
-        const git = config.demo.git;
+        const config: any = getConfig();
+        const git = config.demoGit;
         return new Promise((resolve, reject) => {
             shelljs.exec(`git clone ${git} ${path.resolve(__dirname, '../../../../public')}`, code => {
                 if (code !== 0) {

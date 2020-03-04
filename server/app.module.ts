@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './database/database.module';
+import { SiteConfigModule } from './site-config/site.config.module';
 import { AdminLogModule } from './modules/adminlog.module';
 import { DashboardModule } from './modules/dashboard.module';
 import { ArticleModule } from './modules/article.module';
@@ -14,7 +15,6 @@ import { LoginModule } from './modules/login.module';
 import { UploadModule } from './modules/upload.module';
 import { SearchModule } from './modules/search.module';
 import { UserModule } from './modules/user.module';
-import { ConfigModule } from './modules/config.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { SSRModule } from '../client/server';
@@ -24,6 +24,7 @@ import { isProdMode } from './configs/index.config';
 @Module({
     imports: [
         DatabaseModule,
+        SiteConfigModule,
         AdminLogModule,
         DashboardModule,
         ArticleModule,
@@ -39,7 +40,6 @@ import { isProdMode } from './configs/index.config';
         SearchModule,
         UserModule,
         WriteDayReadingModule,
-        ConfigModule,
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],
 })

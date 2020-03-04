@@ -1,25 +1,24 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import axios from '@blog/client/web/utils/axios';
 
 /* eslint-disable */
-class AppDocument extends Document {
+class AppDocument extends Document<any> {
     static async getInitialProps(ctx: DocumentContext) {
         const initialProps = await Document.getInitialProps(ctx);
-        return { ...initialProps };
+        const config = await axios.get('/configs').then(res => {
+            return res.data;
+        });
+        return { ...initialProps, config };
     }
     render() {
+        const { config } = this.props;
         return (
             <Html>
                 <Head>
-                    <meta
-                        content="李志成的个人网站，李志成的博客，web开发，nodejs全栈，前端工程师，后端开发，docker容器，生活日常"
-                        name="Keywords"
-                    />
-                    <meta
-                        content="李志成的个人网站，专注于web开发，尤其是前端开发。喜欢做技术，也喜欢分享技术。本站主要是分享web相关文章内容，以及个人工作相关日志！"
-                        name="description"
-                    />
-                    <link rel="shortcut icon" sizes="48x48" href="/static/logo.png" />
+                    <meta content={config.siteMetaKeyWords} name="Keywords" />
+                    <meta content={config.siteMetaDescription} name="description" />
+                    <link rel="shortcut icon" sizes="48x48" href={config.siteLogo} />
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `
