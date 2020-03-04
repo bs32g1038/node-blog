@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { css } from 'emotion';
 import { Box, Flex, Text, Heading } from '@chakra-ui/core';
-import UiLink from '../../ui-link';
-import { parseTime } from '../../../../libs/time';
-import ListStyleLoader from '../../list-style-loader';
-import { useFixedTopInScroll } from '../../../hook/useFixedTopInScroll';
+import UiLink from '@blog/client/web/components/ui-link';
+import { parseTime } from '@blog/client/libs/time';
+import ListStyleLoader from '@blog/client/web/components/list-style-loader';
+import { useFixedTopInScroll } from '@blog/client/web/hooks/useFixedTopInScroll';
 import { rem } from 'polished';
 
 const Media = styled.div`

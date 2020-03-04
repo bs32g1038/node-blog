@@ -46,6 +46,8 @@ const AdminLogSchema = new mongoose.Schema(
     }
 );
 
+AdminLogSchema.index({ createdAt: -1 });
+
 AdminLogSchema.plugin(paginate);
 
 const AdminLogModel: ModelPaginate<AdminLogDocument> = mongoose.model('adminlog', AdminLogSchema, 'adminlog');

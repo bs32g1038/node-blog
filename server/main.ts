@@ -7,13 +7,14 @@ import { AppModule } from './app.module';
 import { APP_SERVER } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
-import { staticAssetsPath } from './utils/path.util';
+import { staticAssetsPath, demoAssetsPath } from './utils/path.util';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });
     app.use(helmet());
     app.use(json({ limit: '20mb' }));
     app.useStaticAssets(staticAssetsPath, { prefix: '/static/' });
+    app.useStaticAssets(demoAssetsPath, { prefix: '/demo/' });
     app.use(log4js.connectLogger(requestInfoLogger, { level: 'info' }));
     app.useGlobalFilters(new AllExceptionsFilter());
     return await app.listen(APP_SERVER.port);

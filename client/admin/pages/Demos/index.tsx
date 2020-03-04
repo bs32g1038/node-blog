@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
-import { parseTime } from '@blog/client/libs/time';
-import { Table, Button, Popconfirm, message } from 'antd';
+import { Table, Button, Collapse, message, Form, Input, TimePicker } from 'antd';
 import { PanelDiv } from '@blog/client/admin/styles';
 import Router from 'next/router';
-import { EyeFilled, PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
+import { EyeFilled, PlusOutlined, DeleteFilled, SettingOutlined, ForkOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import { ConfigWrap } from './style';
+import { useForm } from 'antd/lib/form/util';
+
+const fetchConfig = () => {
+    return axios.get('/configs');
+};
+
+const updateConfig = data => {
+    return axios.put('/configs', data);
+};
+
+const pullDemo = () => {
+    return axios.post('/demo/git');
+};
 
 export default () => {
     const [state, setState] = useState({
@@ -36,44 +49,6 @@ export default () => {
             }));
         });
     };
-    const deleteDemo = _id => {
-        axios.delete('/demos/' + _id).then(() => {
-            message.success('删除demo成功');
-            fetchData();
-        });
-    };
-    const batchDeleteDemo = () => {
-        axios
-            .delete('/demos', {
-                data: { demoIds: state.selectedRowKeys },
-            })
-            .then(res => {
-                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
-                    message.success('删除demo成功！');
-                    setState(data => ({
-                        ...data,
-                        selectedRowKeys: [],
-                    }));
-                    return fetchData();
-                }
-                return message.error('删除demo失败，请重新尝试。');
-            });
-    };
-    const handleTableChange = pagination => {
-        const pager = { ...state.pagination };
-        pager.current = pagination.current;
-        setState(data => ({
-            ...data,
-            pagination: pager,
-        }));
-        fetchData(pagination.current, pagination.pageSize);
-    };
-    const onSelectChange = selectedRowKeys => {
-        setState(data => ({
-            ...data,
-            selectedRowKeys,
-        }));
-    };
     useEffect(() => {
         fetchData();
     }, [1]);
@@ -81,12 +56,11 @@ export default () => {
         return [
             {
                 title: '名称',
-                dataIndex: 'title',
+                dataIndex: 'name',
             },
             {
-                title: '创建时间',
-                dataIndex: 'createdAt',
-                render: (text, record) => parseTime(record.createdAt),
+                title: 'url',
+                dataIndex: 'url',
             },
             {
                 title: '操作',
@@ -95,89 +69,115 @@ export default () => {
                 render: (text, record) => (
                     <div>
                         <Button
-                            type="primary"
-                            size="small"
-                            title="编辑"
-                            icon={<EditFilled />}
-                            onClick={() => Router.push('/admin/code/demos/edit/' + record._id)}
-                        >
-                            编辑
-                        </Button>
-                        ,
-                        <Button
                             target="_blank"
                             type="primary"
-                            style={{ backgroundColor: 'rgb(94, 181, 96)', border: '1px solid rgb(94, 181, 96)' }}
                             size="small"
                             title="预览"
-                            href={'/demos/' + record._id}
+                            href={'/blog/demos?name=' + record.name}
                             icon={<EyeFilled />}
                         >
                             预览
                         </Button>
-                        ,
-                        <Popconfirm
-                            title="确认要删除？"
-                            onConfirm={() => deleteDemo(record._id)}
-                            okText="确定"
-                            cancelText="取消"
-                        >
-                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
-                                删除
-                            </Button>
-                        </Popconfirm>
                     </div>
                 ),
             },
         ];
     };
-    const { selectedRowKeys } = state;
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+    const onFinish = values => {
+        updateConfig({
+            demo: values,
+        }).then(() => {
+            message.success('更新成功');
+        });
     };
+    const onFinishFailed = errorInfo => {
+        console.log('Failed:', errorInfo);
+    };
+    const [activePanel, setActivePanel] = useState('0');
+    const [isLoading, setLoading] = useState(false);
+    const [form] = useForm();
     return (
         <BasicLayout>
             <div className="main-content">
-                <PanelDiv className="panel">
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => Router.push('/admin/code/demos/edit')}
-                    >
-                        添加Demo
-                    </Button>
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.visible}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的demo');
-                                return;
-                            }
-                            setState(data => ({
-                                ...data,
-                                visible: !state.visible,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteDemo()}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <Button type="danger" icon={<DeleteFilled />}>
-                            批量删除
+                <ConfigWrap>
+                    <PanelDiv>
+                        <Button
+                            type="primary"
+                            icon={<SettingOutlined />}
+                            onClick={() => {
+                                if (activePanel !== '1') {
+                                    fetchConfig().then(res => {
+                                        form.setFieldsValue(res.data.demo);
+                                    });
+                                    return setActivePanel('1');
+                                }
+                                return setActivePanel('0');
+                            }}
+                        >
+                            配置demo
                         </Button>
-                    </Popconfirm>
-                </PanelDiv>
+                        <Button
+                            loading={isLoading}
+                            type="primary"
+                            icon={<ForkOutlined />}
+                            onClick={() => {
+                                setLoading(true);
+                                pullDemo().then(() => {
+                                    message.success('拉取成功');
+                                    setLoading(false);
+                                });
+                            }}
+                            danger={true}
+                        >
+                            拉取demo
+                        </Button>
+                    </PanelDiv>
+                    <Collapse bordered={false} activeKey={[activePanel]}>
+                        <Collapse.Panel showArrow={false} header={''} key="1" disabled={true}>
+                            <Form
+                                className="form"
+                                form={form}
+                                layout="vertical"
+                                onFinish={onFinish}
+                                onFinishFailed={onFinishFailed}
+                            >
+                                <Form.Item>
+                                    <Form.Item
+                                        name="git"
+                                        label="git链接"
+                                        rules={[{ required: true, message: '请输入一个有效的git链接!' }]}
+                                    >
+                                        <Input size="large" placeholder="请输入git链接" />
+                                    </Form.Item>
+                                    <p>
+                                        网站是通过git自动拉取目标仓库，建议使用github，码云，或者coding等git代码管理仓库
+                                    </p>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Form.Item
+                                        name="time"
+                                        label="定时时间"
+                                        rules={[{ type: 'object', message: 'Please select time!' }]}
+                                    >
+                                        <TimePicker size="large" placeholder="请输入一个时间" />
+                                    </Form.Item>
+                                    <p>设置时间自动定时拉取git仓库</p>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit">
+                                        保存
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                        </Collapse.Panel>
+                    </Collapse>
+                </ConfigWrap>
                 <div className="table-wrapper">
                     <Table
                         rowKey={record => record._id}
-                        rowSelection={rowSelection}
                         columns={getTableColums()}
                         dataSource={state.demos}
                         loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
                         pagination={{
                             showTotal: total => `共 ${total} 条数据`,
                         }}

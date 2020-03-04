@@ -14,6 +14,7 @@ import { LoginModule } from './modules/login.module';
 import { UploadModule } from './modules/upload.module';
 import { SearchModule } from './modules/search.module';
 import { UserModule } from './modules/user.module';
+import { ConfigModule } from './modules/config.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { SSRModule } from '../client/server';
@@ -38,6 +39,7 @@ import { isProdMode } from './configs/index.config';
         SearchModule,
         UserModule,
         WriteDayReadingModule,
+        ConfigModule,
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],
 })

@@ -55,7 +55,7 @@ export default () => {
     const publish = data => {
         const { id } = router.query;
         Object.assign(data, {
-            screenshot: data.screenshot[0].response.url,
+            screenshot: data.screenshot[0].url,
         });
         const p = id ? updateArticle(id, data) : createArticle(data);
         p.then(() => {

@@ -22,6 +22,10 @@ export const publicPath = join(getRootPath(), 'public');
  */
 export const staticAssetsPath = join(getRootPath(), 'public/static');
 /**
+ * demo资源路径
+ */
+export const demoAssetsPath = join(getRootPath(), 'public/demo');
+/**
  * 上传文件存放目录路径
  */
 export const uploadRootPath = join(publicPath, 'static/upload');

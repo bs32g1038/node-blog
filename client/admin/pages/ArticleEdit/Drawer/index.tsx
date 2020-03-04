@@ -59,8 +59,17 @@ export default ({ visible, onCancel, formData }) => {
         if (info.file.status === 'done') {
             setImageUrl(info.file.response.url);
             setUploading(false);
+            const fileList =
+                info &&
+                info.fileList.slice(-1).map(file => {
+                    if (file.response) {
+                        file.url = file.response.url;
+                    }
+                    return file;
+                });
+            return fileList;
         }
-        return info && info.fileList.slice(-1);
+        return info && info.fileList;
     };
     const uploadButton = (
         <div>

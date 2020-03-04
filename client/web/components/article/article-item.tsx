@@ -1,7 +1,7 @@
 import Link from '../link';
 import React from 'react';
-import config from '../../config/site-info';
-import { parseTime } from '../../../libs/time';
+import config from '@blog/client/web/config/site-info';
+import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
 import {
@@ -18,6 +18,7 @@ import {
     Heading,
 } from '@chakra-ui/core';
 import { rem } from 'polished';
+import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
 
 interface Props {
     article: any;
@@ -26,6 +27,7 @@ interface Props {
 
 export default (props: Props) => {
     const { article, comments } = props;
+    const markdownContent = useLinkGenerateDemo();
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb
@@ -75,7 +77,7 @@ export default (props: Props) => {
                     <Text color="theme.secondaryText">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </Box>
-            <Box color="theme.article.primaryText" mb={5}>
+            <Box color="theme.article.primaryText" mb={5} ref={markdownContent}>
                 <MarkdownBody content={article.content}></MarkdownBody>
             </Box>
             <List
