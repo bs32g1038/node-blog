@@ -4,12 +4,11 @@ import siteConfig from '@blog/client/web/config/site-info';
 interface State {
     config: {
         siteTitle: string;
-        icp: string;
+        siteIcp: string;
         icpGovCn: string;
         email: string;
         github: string;
         projectGithub: string;
-        domain: string;
     };
     error: {
         status: number;
@@ -19,12 +18,11 @@ interface State {
 const initialState: State = {
     config: {
         siteTitle: siteConfig.siteTitle,
-        icp: siteConfig.icp,
+        siteIcp: siteConfig.siteIcp,
         icpGovCn: siteConfig.icpGovCn,
         email: siteConfig.email,
         github: siteConfig.github,
         projectGithub: siteConfig.projectGithub,
-        domain: siteConfig.domain,
     },
     error: null,
 };
@@ -45,11 +43,11 @@ const app = createSlice({
     reducers: {
         setConfig(state, action: PayloadAction<ConfigDataLoaded>) {
             const { config } = action.payload;
-            state.config = config;
+            state.config = { ...state.config, ...config };
         },
         setError(state, action: PayloadAction<StatusCodeDataLoaded>) {
             const { error } = action.payload;
-            state.error = error;
+            state.error = { ...state.error, ...error };
         },
     },
 });

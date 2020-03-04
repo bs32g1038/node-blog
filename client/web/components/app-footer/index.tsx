@@ -117,7 +117,7 @@ export const AppFooter = () => {
                         </UiLink>
                         <span>
                             <UiLink href={config.icpGovCn} isExternal={true}>
-                                <span className="icon-icp"></span> {config.icp}
+                                <span className="icon-icp"></span> {config.siteIcp}
                             </UiLink>
                         </span>
                     </Text>

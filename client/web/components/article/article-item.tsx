@@ -1,5 +1,6 @@
 import Link from '../link';
 import React from 'react';
+import Router from 'next/router';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
@@ -18,8 +19,8 @@ import {
 } from '@chakra-ui/core';
 import { rem } from 'polished';
 import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import dynamic from 'next/dynamic';
+const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 
 interface Props {
     article: any;
@@ -29,8 +30,6 @@ interface Props {
 export default (props: Props) => {
     const { article, comments } = props;
     const markdownContent = useLinkGenerateDemo();
-    const config = useSelector((state: RootState) => state.app.config);
-
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb
@@ -96,9 +95,7 @@ export default (props: Props) => {
             >
                 <ListItem mb={1} isTruncated={true}>
                     <Text as="strong">本文链接：</Text>
-                    <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
-                        <UiLink isTruncated={true}>{config.domain + '/blog/articles/' + article._id}</UiLink>
-                    </Link>
+                    <ArticleAddress articleId={article._id}></ArticleAddress>
                 </ListItem>
                 <ListItem>
                     <Text as="strong">版权声明：</Text>

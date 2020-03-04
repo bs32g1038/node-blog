@@ -56,7 +56,7 @@ const Error = (props: Props) => {
                     {config.siteTitle}
                 </UiLink>
                 <UiLink fontSize={rem(14)} ml={1} color="rgba(0, 0, 0, 0.45)" href={config.icpGovCn} isExternal={true}>
-                    <span className="icon-icp"></span> {config.icp}
+                    <span className="icon-icp"></span> {config.siteIcp}
                 </UiLink>
             </Box>
         </Flex>

@@ -12,28 +12,34 @@ const ConfigSchema = new mongoose.Schema(
         siteTitle: {
             type: String,
             maxlength: 200,
+            trim: true,
         },
         siteLogo: {
             type: String,
             maxlength: 200,
+            trim: true,
         },
         siteMetaKeyWords: {
             type: String,
             maxlength: 2000,
+            trim: true,
         },
         siteMetaDescription: {
             type: String,
             maxlength: 2000,
+            trim: true,
         },
         siteIcp: {
             type: String,
             maxlength: 100,
+            trim: true,
         },
         // dmeo 相关配置
         demoGit: {
             type: String,
             minlength: 1,
             maxlength: 200,
+            trim: true,
         },
         demoTime: {
             type: Date,

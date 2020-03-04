@@ -38,6 +38,9 @@ export default () => {
                     <Form.Item wrapperCol={{ span: 16 }} label="网站LOGO" name="siteLogo">
                         <Input placeholder="请输入网站logo" size="large" />
                     </Form.Item>
+                    <Form.Item wrapperCol={{ span: 16 }} label="网站备案icp" name="siteIcp">
+                        <Input placeholder="请输入备案icp" size="large" />
+                    </Form.Item>
                     <Tip>网站 META 配置</Tip>
                     <Form.Item wrapperCol={{ span: 16 }} label="META keywords" name="siteMetaKeyWords">
                         <Input.TextArea placeholder="请输入keywords" autoSize={{ minRows: 3, maxRows: 5 }} />
