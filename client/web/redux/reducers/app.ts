@@ -6,6 +6,7 @@ interface State {
         siteTitle: string;
         siteIcp: string;
         icpGovCn: string;
+        siteLogo: string;
         email: string;
         github: string;
         projectGithub: string;
@@ -20,6 +21,7 @@ const initialState: State = {
         siteTitle: siteConfig.siteTitle,
         siteIcp: siteConfig.siteIcp,
         icpGovCn: siteConfig.icpGovCn,
+        siteLogo: siteConfig.siteLogo,
         email: siteConfig.email,
         github: siteConfig.github,
         projectGithub: siteConfig.projectGithub,

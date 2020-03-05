@@ -89,9 +89,9 @@ export class FileService {
         const domain = getConfig().siteDomain;
         const p = await creteUploadFile(fileName, file.buffer);
         const url = domain + p;
-        const result = await this.fileModel.findOne({ name: fileName });
+        const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
         if (result) {
-            return result;
+            return { ...result.toObject(), url };
         }
         const _file = await this.fileModel.create({
             name: fileName,

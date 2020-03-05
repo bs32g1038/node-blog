@@ -11,6 +11,9 @@ export const HomeNav: any = styled(Link)`
     cursor: pointer;
     font-weight: 600;
     ${siteitlefont}
+    img {
+        margin-right: 8px;
+    }
     &:hover {
         text-decoration: none;
     }

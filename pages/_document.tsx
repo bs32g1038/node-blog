@@ -18,7 +18,6 @@ class AppDocument extends Document<any> {
                 <Head>
                     <meta content={config.siteMetaKeyWords} name="Keywords" />
                     <meta content={config.siteMetaDescription} name="description" />
-                    <link rel="shortcut icon" sizes="48x48" href={config.siteLogo} />
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `

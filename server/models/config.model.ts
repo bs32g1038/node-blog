@@ -24,9 +24,10 @@ const ConfigSchema = new mongoose.Schema(
             maxlength: 200,
             trim: true,
         },
+        // base64 或者 url
         siteLogo: {
             type: String,
-            maxlength: 200,
+            maxlength: 1024 * 100,
             trim: true,
         },
         siteMetaKeyWords: {

@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { Layout, Menu, Avatar, Button } from 'antd';
 const { Sider } = Layout;
 import styled from '@emotion/styled';
-import IconLogo from '@blog/client/admin/assets/logo.svg';
-import config from '@blog/client/admin/configs/default.config';
+import defaultConfig from '@blog/client/admin/configs/default.config';
 import menus from '@blog/client/admin/configs/menu-config';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from './util';
 import Router, { useRouter } from 'next/router';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/web/redux/store';
 
 const WrapDiv = styled.div`
     .ant-menu-light {
@@ -182,7 +183,7 @@ const setMenuOpen = props => {
 };
 
 const logout = () => {
-    localStorage.removeItem(config.tokenKey);
+    localStorage.removeItem(defaultConfig.tokenKey);
     return Router.push('/admin/login');
 };
 
@@ -216,7 +217,8 @@ export default (props: Props) => {
         }));
     }, [1]);
     const { selectedKey, openKey, firstHide } = state;
-    const data = JSON.parse(localStorage.getItem(config.userInfoKey));
+    const data = JSON.parse(localStorage.getItem(defaultConfig.userInfoKey));
+    const config = useSelector((state: RootState) => state.app.config);
     return (
         <WrapDiv>
             <Sider
@@ -236,8 +238,8 @@ export default (props: Props) => {
             >
                 <Link href="/admin/dashboard">
                     <LogoDiv>
-                        <img src={IconLogo} />
-                        <h1>{config.title}</h1>
+                        <img src={config.siteLogo} />
+                        <h1>{config.siteTitle}</h1>
                     </LogoDiv>
                 </Link>
                 <UserMenu>
@@ -262,8 +264,6 @@ export default (props: Props) => {
                                         配置个人信息
                                     </a>
                                 </Link>
-                                <SettingOutlined />
-                                配置个人信息
                             </Menu.Item>
                             <Menu.Item onClick={() => logout()}>
                                 <LogoutOutlined />

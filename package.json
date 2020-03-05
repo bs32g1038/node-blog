@@ -30,6 +30,7 @@
     "@nestjs/common": "^6.11.11",
     "@nestjs/core": "^6.11.11",
     "@nestjs/platform-express": "^6.11.11",
+    "@types/serve-favicon": "^2.5.0",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.1",
@@ -51,6 +52,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
     "scroll-into-view-if-needed": "^2.2.24",
+    "serve-favicon": "^2.5.0",
     "validator": "^12.2.0",
     "xss": "^1.0.6"
   },

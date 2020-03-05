@@ -23,12 +23,12 @@ const CONFIG_KEY = 'app-config';
 export const updateConfig = async data => {
     await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
     const res = await ConfigModel.findOne({ key: CONFIG_KEY });
-    const config = res.toObject();
-    cache.set(CACHE_KEY, config);
+    cache.set(CACHE_KEY, res.toObject());
     return config;
 };
 
 export const getConfig = (): Setting => {
+    console.log(cache.get(CACHE_KEY));
     return cache.get(CACHE_KEY) as any;
 };
 

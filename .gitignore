@@ -47,9 +47,9 @@ logs/blog/*
 static
 !public/static
 public/static/upload/**
+public/demo/**
 !.gitkeep
 dist
 *.lock
 *.log
 coverage
-public/demo

@@ -1,6 +1,6 @@
 import { css } from 'emotion';
 import React from 'react';
-import { Link as UiLink, Flex, Heading, useColorMode, Button, Box } from '@chakra-ui/core';
+import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Image } from '@chakra-ui/core';
 import Link from '../link';
 import Icon from '../icon';
 import NavLink from '../nav-link';
@@ -28,7 +28,7 @@ export const AppHeader = () => {
         >
             <Link href="/" as="/">
                 <HomeNav title={config.siteTitle} mr={[0, 6]}>
-                    <Icon fill="theme.header.fill" size="40px" name="logo" mr={2}></Icon>
+                    <img src={config.siteLogo} width="40px" height="40px" />
                     <Heading as="h1" title={config.siteTitle} fontSize={16} fontFamily="siteitlefont">
                         {config.siteTitle}
                     </Heading>

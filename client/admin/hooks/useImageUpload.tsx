@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import config from '@blog/client/admin/configs/default.config';
@@ -43,29 +43,32 @@ export default ({ style = {} }) => {
         return info && info.fileList;
     };
 
-    const UploadButton = props => (
-        <Upload
-            name="file"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            action="/api/files/upload"
-            beforeUpload={beforeUpload}
-            accept=".jpg,.jpeg,.png"
-            headers={{
-                authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
-            }}
-            {...props}
-        >
-            {imageUrl ? (
-                <img src={imageUrl} alt="" style={style} />
-            ) : (
-                <div>
-                    {isUploading ? <LoadingOutlined /> : <PlusOutlined />}
-                    <div className="ant-upload-text">上传</div>
-                </div>
-            )}
-        </Upload>
+    const UploadButton = useCallback(
+        props => (
+            <Upload
+                name="file"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action="/api/files/upload"
+                beforeUpload={beforeUpload}
+                accept=".jpg,.jpeg,.png"
+                headers={{
+                    authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
+                }}
+                {...props}
+            >
+                {imageUrl ? (
+                    <img src={imageUrl} alt="" style={style} />
+                ) : (
+                    <div>
+                        {isUploading ? <LoadingOutlined /> : <PlusOutlined />}
+                        <div className="ant-upload-text">上传</div>
+                    </div>
+                )}
+            </Upload>
+        ),
+        [imageUrl]
     );
     return {
         UploadButton,
