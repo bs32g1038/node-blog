@@ -12,15 +12,9 @@ interface Props {
 }
 
 export default (props: Props) => {
-    const [state, setState] = useState({
+    const [state] = useState({
         collapsed: false,
     });
-
-    const toggle = () => {
-        setState({
-            collapsed: !state.collapsed,
-        });
-    };
 
     useEffect(() => {
         isLogin();

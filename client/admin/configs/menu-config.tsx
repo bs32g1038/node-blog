@@ -2,7 +2,6 @@ import React from 'react';
 import {
     DashboardOutlined,
     FormOutlined,
-    FileImageOutlined,
     CommentOutlined,
     CodepenOutlined,
     AppstoreOutlined,
@@ -89,12 +88,6 @@ export default [
     },
     {
         path: '/admin/code/static-files/:folderId',
-        exact: true,
-    },
-    {
-        path: '/admin/medias/images',
-        icon: <FileImageOutlined />,
-        title: '图片列表',
         exact: true,
     },
     {

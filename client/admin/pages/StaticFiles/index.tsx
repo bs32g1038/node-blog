@@ -3,20 +3,17 @@ import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import Clipboard from 'clipboard';
-import Link from 'next/link';
 import { InboxOutlined } from '@ant-design/icons';
-import { Form, Table, Button, Popconfirm, message, Upload, Modal, Input } from 'antd';
+import { Table, Button, Popconfirm, message, Upload, Modal } from 'antd';
 import config from '@blog/client/admin/configs/default.config';
-import { useRouter } from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 import {
     CloudUploadOutlined,
-    PlusOutlined,
     CopyFilled,
     DeleteFilled,
-    FolderFilled,
     PictureFilled,
     FileFilled,
+    VideoCameraOutlined,
 } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
 
@@ -27,26 +24,21 @@ export default () => {
         pagination: {
             current: 1,
             total: 0,
+            showTotal: total => `共 ${total} 条数据`,
         },
         selectedRowKeys: [],
         loading: false,
         clipboard: null,
-        isShowNewFolderDialog: false,
-        folderName: '',
         delConfirmVisible: false,
     });
-    const router = useRouter();
-
     const fetchData = (page = 1, limit = 10) => {
         setState(data => ({
             ...data,
             loading: true,
         }));
-        const { folderId } = router.query;
         const query = {
             limit,
             page,
-            parentId: folderId,
         };
         return axios.get('/files?' + queryString.stringify(query)).then(res => {
             const pagination = { ...state.pagination };
@@ -82,33 +74,6 @@ export default () => {
                 return message.error('删除文件失败，请重新尝试。');
             });
     };
-    const fetchFolderName = () => {
-        const { folderId } = router.query;
-        const _id = folderId;
-        if (!_id) {
-            return;
-        }
-        return axios.get('/files/getFolderName/' + _id).then(res => {
-            setState(data => ({
-                ...data,
-                folderName: res.data.originalName,
-            }));
-        });
-    };
-    const createFolder = name => {
-        return axios
-            .post('/files/createFolder', {
-                name,
-            })
-            .then(() => {
-                message.success('创建文件夹成功！');
-                fetchData();
-                setState(data => ({
-                    ...data,
-                    isShowNewFolderDialog: false,
-                }));
-            });
-    };
     const handleOk = () => {
         return fetchData().then(() => {
             setState(data => ({
@@ -116,9 +81,6 @@ export default () => {
                 visible: false,
             }));
         });
-    };
-    const handleNewFloderOk = data => {
-        createFolder(data.name);
     };
     const handleTableChange = pagination => {
         const pager = { ...state.pagination };
@@ -138,27 +100,43 @@ export default () => {
     const getTableColums = () => {
         return [
             {
-                title: '原始文件名',
-                dataIndex: 'originalName',
+                title: '文件名',
+                dataIndex: 'name',
                 render: (text, record) => {
-                    return record.isdir ? (
-                        <Link href={'/admin/code/static-files/' + record._id} passHref={true}>
-                            <a>
-                                <FolderFilled style={{ marginRight: '4px' }} />
-                                {record.originalName}
-                            </a>
-                        </Link>
-                    ) : record.category === 3 ? (
-                        <span>
-                            <PictureFilled style={{ marginRight: '4px' }} />
-                            {record.originalName}
-                        </span>
-                    ) : (
+                    if (record.type === 'image') {
+                        return (
+                            <span>
+                                <PictureFilled style={{ marginRight: '4px' }} />
+                                {record.name}
+                            </span>
+                        );
+                    }
+                    if (record.type === 'video') {
+                        return (
+                            <span>
+                                <VideoCameraOutlined style={{ marginRight: '4px' }} />
+                                {record.name}
+                            </span>
+                        );
+                    }
+                    return (
                         <span>
                             <FileFilled style={{ marginRight: '4px' }} />
-                            {record.originalName}
+                            {record.name}
                         </span>
                     );
+                },
+            },
+            {
+                title: '类型',
+                dataIndex: 'type',
+            },
+            {
+                title: '大小',
+                dataIndex: 'size',
+                width: 100,
+                render: (text, record) => {
+                    return record.size ? (record.size / 1024).toFixed(1) + 'k' : '-';
                 },
             },
             {
@@ -168,22 +146,6 @@ export default () => {
                 render: (text, record) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
             },
             {
-                title: '文件类型',
-                dataIndex: 'mimetype',
-                width: 160,
-                render: (text, record) => {
-                    return record.mimetype ? record.mimetype : '-';
-                },
-            },
-            {
-                title: '文件大小',
-                dataIndex: 'size',
-                width: 100,
-                render: (text, record) => {
-                    return record.size ? (record.size / 1024).toFixed(1) + 'k' : '-';
-                },
-            },
-            {
                 title: '操作',
                 key: 'operation',
                 width: 190,
@@ -191,10 +153,9 @@ export default () => {
                     <div>
                         {!record.isdir && (
                             <Button
-                                type="primary"
                                 size="small"
                                 title="复制"
-                                data-clipboard-text={record.filePath + record.fileName}
+                                data-clipboard-text={record.url}
                                 className="btnCopy"
                                 style={{ marginRight: '5px' }}
                                 icon={<CopyFilled />}
@@ -208,7 +169,7 @@ export default () => {
                             okText="确定"
                             cancelText="取消"
                         >
-                            <Button type="danger" size="small" title="删除" icon={<DeleteFilled />}>
+                            <Button size="small" title="删除" icon={<DeleteFilled />} danger>
                                 删除
                             </Button>
                         </Popconfirm>
@@ -218,11 +179,6 @@ export default () => {
         ];
     };
     useEffect(() => {
-        const { folderId } = router.query;
-        if (folderId) {
-            fetchData();
-            fetchFolderName();
-        }
         const c = new Clipboard('.btnCopy');
         setState(data => ({
             ...data,
@@ -232,7 +188,6 @@ export default () => {
             message.success('复制链接成功');
         });
         fetchData();
-        fetchFolderName();
         return () => {
             if (state.clipboard) {
                 state.clipboard.destroy();
@@ -245,11 +200,10 @@ export default () => {
         selectedRowKeys,
         onChange: onSelectChange.bind(this),
     };
-    const { folderId } = router.query;
     const uploadProps = {
         name: 'file',
         multiple: true,
-        action: '/api/upload/static-files?parentId=' + (folderId || ''),
+        action: '/api/files/upload',
         headers: {
             authorization: (typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey)) || '',
         },
@@ -281,20 +235,6 @@ export default () => {
                     >
                         上传
                     </Button>
-                    {!folderId && (
-                        <Button
-                            type="primary"
-                            icon={<PlusOutlined />}
-                            onClick={() =>
-                                setState(data => ({
-                                    ...data,
-                                    isShowNewFolderDialog: true,
-                                }))
-                            }
-                        >
-                            新建文件夹
-                        </Button>
-                    )}
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
@@ -317,24 +257,6 @@ export default () => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                    {folderId && (
-                        <>
-                            <span style={{ marginLeft: '20px' }}>当前目录为：{state.folderName}</span>
-                            <Link href="/admin/code/static-files">
-                                <a
-                                    style={{
-                                        marginLeft: '10px',
-                                        color: '#fff',
-                                        backgroundColor: '#1890ff',
-                                        padding: '3px 8px',
-                                        borderRadius: '2px',
-                                    }}
-                                >
-                                    返回上一级
-                                </a>
-                            </Link>
-                        </>
-                    )}
                 </PanelDiv>
                 <Modal
                     title="上传文件"
@@ -358,41 +280,6 @@ export default () => {
                         </p>
                     </Upload.Dragger>
                 </Modal>
-                <Modal
-                    title="新建文件夹"
-                    visible={state.isShowNewFolderDialog}
-                    onCancel={() =>
-                        setState(data => ({
-                            ...data,
-                            isShowNewFolderDialog: false,
-                        }))
-                    }
-                    footer={null}
-                >
-                    <Form onFinish={handleNewFloderOk}>
-                        <Form.Item
-                            name="name"
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 10 }}
-                            label="文件夹名称："
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '文件夹名称长度要在1-25个字符之间！',
-                                    min: 1,
-                                    max: 25,
-                                },
-                            ]}
-                        >
-                            <Input type="text" width="100%" />
-                        </Form.Item>
-                        <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 10 }} label="操作：">
-                            <Button type="primary" htmlType="submit">
-                                新建
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
                 <div className="table-wrapper">
                     <Table
                         rowKey={record => record._id}
@@ -401,9 +288,7 @@ export default () => {
                         dataSource={state.files}
                         loading={state.loading}
                         onChange={pagination => handleTableChange(pagination)}
-                        pagination={{
-                            showTotal: total => `共 ${total} 条数据`,
-                        }}
+                        pagination={state.pagination}
                     />
                 </div>
             </div>

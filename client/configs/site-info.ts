@@ -13,4 +13,6 @@ export default {
     email: 'bs32g1038@163.com',
 
     demoGit: 'https://gitee.com/chengli01/demo',
+
+    domain: process.env.NODE_ENV === 'production' ? 'http://www.lizc.net' : 'http://127.0.0.1:3000',
 };

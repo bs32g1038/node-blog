@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
 import mongoose from 'mongoose';
-import { isEqual, isEmpty } from 'lodash';
+import { isEqual } from 'lodash';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {

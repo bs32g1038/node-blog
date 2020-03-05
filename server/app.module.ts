@@ -12,7 +12,6 @@ import { FileModule } from './modules/file.module';
 import { MediaModule } from './modules/media.module';
 import { RssModule } from './modules/rss.module';
 import { LoginModule } from './modules/login.module';
-import { UploadModule } from './modules/upload.module';
 import { SearchModule } from './modules/search.module';
 import { UserModule } from './modules/user.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
@@ -36,7 +35,6 @@ import { isProdMode } from './configs/index.config';
         MediaModule,
         RssModule,
         LoginModule,
-        UploadModule,
         SearchModule,
         UserModule,
         WriteDayReadingModule,

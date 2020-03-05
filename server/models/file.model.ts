@@ -4,53 +4,42 @@ import { getProviderByModel } from '../utils/model.util';
 import paginate, { ModelPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
+export enum FileType {
+    image = 'image',
+    video = 'video',
+    audio = 'audio',
+    document = 'document',
+    other = 'other',
+}
+
+// export type FileType = 'image' | 'video' | 'audio' | 'document' | 'other';
+
 export interface File {
     readonly _id?: string;
-    readonly originalName?: string;
     readonly name?: string;
-    readonly mimetype?: string;
+    readonly type?: 'image' | 'video' | 'audio' | 'document' | 'other';
     readonly size?: number;
-    readonly suffix?: string;
-    readonly fileName?: string;
-    readonly filePath?: string;
-    readonly isdir?: boolean;
-    readonly category?: number;
-    readonly parentId?: string;
-    readonly fileCount?: number;
+    readonly url?: string;
     readonly createdAt?: string | Date;
     readonly updatedAt?: string | Date;
 }
 
 export const FileJoiSchema = {
-    originalName: Joi.string()
+    name: Joi.string()
         .min(1)
         .max(80)
         .alter({
             post: schema => schema.required(),
         }),
-    name: Joi.string().alter({
-        post: schema => schema.required(),
-    }),
-    mimetype: Joi.string().alter({
+    type: Joi.string().alter({
         post: schema => schema.required(),
     }),
     size: Joi.number().alter({
         post: schema => schema.required(),
     }),
-    suffix: Joi.string().alter({
+    url: Joi.string().alter({
         post: schema => schema.required(),
     }),
-    fileName: Joi.string().alter({
-        post: schema => schema.required(),
-    }),
-    filePath: Joi.string().alter({
-        post: schema => schema.required(),
-    }),
-    category: Joi.number().alter({
-        post: schema => schema.required(),
-    }),
-    isdir: Joi.boolean(),
-    parentId: [Joi.equal(null), Joi.objectId()],
 };
 
 export interface FileDocument extends File, Document {
@@ -59,20 +48,17 @@ export interface FileDocument extends File, Document {
 
 const FileSchema = new mongoose.Schema(
     {
-        originalName: {
+        // md5 处理后的文件名，应该带后缀
+        name: {
             type: String,
             minlength: 1,
             maxlength: 80,
             trim: true,
             required: true,
         },
-        name: {
+        type: {
             type: String,
-            trim: true,
-            required: true,
-        },
-        mimetype: {
-            type: String,
+            enum: ['image', 'video', 'audio', 'document', 'other'],
             trim: true,
             required: true,
         },
@@ -80,36 +66,10 @@ const FileSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        suffix: {
+        url: {
             type: String,
             trim: true,
             required: true,
-        },
-        fileName: {
-            type: String,
-            trim: true,
-            required: true,
-        }, // 文件全名
-        filePath: {
-            type: String,
-            trim: true,
-            required: true,
-        },
-        isdir: {
-            type: Boolean,
-            default: false,
-        },
-        category: {
-            type: Number,
-            required: true,
-        },
-        parentId: {
-            type: mongoose.Schema.Types.ObjectId,
-            default: null,
-        },
-        fileCount: {
-            type: Number,
-            default: 0,
         },
     },
     {

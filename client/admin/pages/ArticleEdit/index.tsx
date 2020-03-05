@@ -112,10 +112,10 @@ export default () => {
                 <Form form={form} initialValues={{ content: '' }} name="contentForm">
                     <Form.Item
                         name="title"
-                        style={{ maxWidth: '700px', width: '100%', margin: '0 auto', textAlign: 'center' }}
+                        style={{ maxWidth: '700px', width: '100%', margin: '0 auto' }}
                         rules={[{ required: true, message: '标题不能为空！，且最多80个字符!', max: 80 }]}
                     >
-                        <TextArea placeholder="请输入标题" autoSize={{ maxRows: 1 }} style={{ textAlign: 'center' }} />
+                        <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
                     </Form.Item>
                     <Form.Item
                         name="content"
