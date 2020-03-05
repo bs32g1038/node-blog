@@ -1,7 +1,7 @@
 import { Module, Global, Put } from '@nestjs/common';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../guards/roles.guard';
-import { ConfigModel } from '../models/config.model';
+import { ConfigModel, Setting } from '../models/config.model';
 import LRU from 'lru-cache';
 import { isEmpty } from 'lodash';
 import { JoiBody } from '../decorators/joi.decorator';
@@ -28,8 +28,8 @@ export const updateConfig = async data => {
     return config;
 };
 
-export const getConfig = () => {
-    return cache.get(CACHE_KEY);
+export const getConfig = (): Setting => {
+    return cache.get(CACHE_KEY) as any;
 };
 
 const siteConfig = {
@@ -61,6 +61,7 @@ export class ConfigController {
             siteMetaKeyWords: Joi.string(),
             siteMetaDescription: Joi.string(),
             siteIcp: Joi.string(),
+            siteDomain: Joi.string(),
             demoGit: Joi.string(),
         })
         body

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import ReactDom from 'react-dom';
-import UiLink from '@blog/client/web/components/ui-link';
 import { Box, Link } from '@chakra-ui/core';
 import { iframeResizer } from 'iframe-resizer';
 import styled from '@emotion/styled';

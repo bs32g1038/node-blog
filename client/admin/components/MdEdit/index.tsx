@@ -198,9 +198,9 @@ export default (props: any) => {
                 <div className="MdEditor-wraper">
                     <textarea id="codemirror" name={props.name} defaultValue={props.value} />
                     {state.isPreview && <MarkdownBody content={marked(MarkdownContent)}></MarkdownBody>}
-                    {/* <p style={{ paddingTop: '10px', textAlign: 'right' }}>
+                    <p style={{ paddingTop: '10px', textAlign: 'right' }}>
                         {codeMirror && codeMirror.lineCount()}行，{codeMirror && wordCount(codeMirror.getValue())} 字
-                    </p> */}
+                    </p>
                 </div>
             </div>
         </WrapDiv>

@@ -1,7 +1,7 @@
 import { MONGODB } from '../server/configs/index.config';
 import mongoose from 'mongoose';
-import { getCategory, getArticle, getComment, getDemo, getMedia, getFile } from '../test/faker';
-import { CategoryModel, ArticleModel, CommentModel, DemoModel, MediaModel, FileModel } from '../test/models';
+import { getCategory, getArticle, getComment, getFile } from '../test/faker';
+import { CategoryModel, ArticleModel, CommentModel, FileModel } from '../test/models';
 
 const init = async () => {
     const conn = await mongoose.connect(MONGODB.uri, {
@@ -42,24 +42,6 @@ const init = async () => {
         );
     }
     await CommentModel.create(comments);
-
-    /**
-     * 创建 demo 数据
-     */
-    const demos = [];
-    for (let i = 0; i < 50; i++) {
-        demos.push(getDemo());
-    }
-    await DemoModel.create(demos);
-
-    /**
-     * 创建 媒体 数据
-     */
-    const medias = [];
-    for (let i = 0; i < 50; i++) {
-        medias.push(getMedia());
-    }
-    await MediaModel.create(medias);
 
     /**
      * 创建 静态文件 数据

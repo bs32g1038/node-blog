@@ -6,13 +6,14 @@ import util from 'util';
 import path from 'path';
 import shelljs from 'shelljs';
 import { getConfig } from '../../site-config/site.config.module';
+import { publicPath } from '../../utils/path.util';
 
 @Injectable()
 export class DemoService {
     constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
 
     async getDemoList(): Promise<{ items: { url: string; name: string }[]; totalCount: number }> {
-        const dirs = await this.readDir(path.resolve(__dirname, '../../../../public/demo'));
+        const dirs = await this.readDir(path.join(publicPath, 'demo'));
         const items = dirs
             .filter(name => {
                 if (name === '.git') {
@@ -29,11 +30,6 @@ export class DemoService {
         return { totalCount: items.length, items };
     }
 
-    async getDemo(id: string) {
-        const demo = await this.demoModel.findById(id);
-        return demo;
-    }
-
     async readDir(path: string) {
         return util.promisify(fs.readdir)(path);
     }
@@ -42,9 +38,9 @@ export class DemoService {
         const config: any = getConfig();
         const git = config.demoGit;
         return new Promise((resolve, reject) => {
-            shelljs.exec(`git clone ${git} ${path.resolve(__dirname, '../../../../public')}`, code => {
+            shelljs.exec(`git clone ${git} ${publicPath} -o demo`, code => {
                 if (code !== 0) {
-                    shelljs.cd(path.resolve(__dirname, '../../../../public/demo'));
+                    shelljs.cd(path.join(publicPath, 'demo'));
                     shelljs.exec('git pull', async code => {
                         if (code === 0) {
                             resolve({ success: true });

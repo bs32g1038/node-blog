@@ -9,7 +9,6 @@ import { AboutModule } from './modules/about.module';
 import { CommentModule } from './modules/comment.module';
 import { DemoModule } from './modules/demo.module';
 import { FileModule } from './modules/file.module';
-import { MediaModule } from './modules/media.module';
 import { RssModule } from './modules/rss.module';
 import { LoginModule } from './modules/login.module';
 import { SearchModule } from './modules/search.module';
@@ -32,7 +31,6 @@ import { isProdMode } from './configs/index.config';
         CommentModule,
         DemoModule,
         FileModule,
-        MediaModule,
         RssModule,
         LoginModule,
         SearchModule,

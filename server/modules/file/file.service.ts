@@ -6,7 +6,7 @@ import multr from 'multer';
 import { MulterModule } from '@nestjs/platform-express';
 import { md5 } from '../../utils/crypto.util';
 import { creteUploadFile } from '../../utils/upload.util';
-import siteInfo from '../../../client/configs/site-info';
+import { getConfig } from '../../site-config/site.config.module';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -51,10 +51,6 @@ export class FileService {
         });
     }
 
-    async getFile(id: string) {
-        return await this.fileModel.findById(id);
-    }
-
     async deleteFile(id: string) {
         const _file = await this.fileModel.findById(id);
         if (_file) {
@@ -90,8 +86,9 @@ export class FileService {
         }
 
         // 文件处理
+        const domain = getConfig().siteDomain;
         const p = await creteUploadFile(fileName, file.buffer);
-        const url = siteInfo.domain + p;
+        const url = domain + p;
         const result = await this.fileModel.findOne({ name: fileName });
         if (result) {
             return result;

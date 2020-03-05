@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Select } from 'antd';
 import { Wrap, Tip } from './style';
 import { useForm } from 'antd/lib/form/util';
 import axios from '../../axios';
@@ -12,6 +12,21 @@ const fetchConfig = () => {
 const updateConfig = data => {
     return axios.put('/configs', data);
 };
+
+const selectBefore = (
+    <Select defaultValue="http://" style={{ width: 90 }}>
+        <Select.Option value="http://">http://</Select.Option>
+        <Select.Option value="https://">https://</Select.Option>
+    </Select>
+);
+const selectAfter = (
+    <Select defaultValue=".com" style={{ width: 80 }}>
+        <Select.Option value=".com">.com</Select.Option>
+        <Select.Option value=".jp">.jp</Select.Option>
+        <Select.Option value=".cn">.cn</Select.Option>
+        <Select.Option value=".org">.org</Select.Option>
+    </Select>
+);
 
 export default () => {
     const [form] = useForm();
@@ -34,6 +49,10 @@ export default () => {
                     <Tip>网站基础信息</Tip>
                     <Form.Item wrapperCol={{ span: 16 }} label="网站标题" name="siteTitle">
                         <Input placeholder="请输入网站标题" size="large" />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ span: 16 }} label="网站域名" name="siteDomain">
+                        <Input addonBefore={selectBefore} addonAfter={selectAfter} defaultValue="mysite" />
+                        <Input placeholder="请输入网站域名" size="large" />
                     </Form.Item>
                     <Form.Item wrapperCol={{ span: 16 }} label="网站LOGO" name="siteLogo">
                         <Input placeholder="请输入网站logo" size="large" />

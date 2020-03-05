@@ -1,6 +1,5 @@
 import Link from '../link';
 import React from 'react';
-import Router from 'next/router';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';

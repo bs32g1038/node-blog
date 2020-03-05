@@ -1,6 +1,16 @@
 import mongoose from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
 
+export interface Setting {
+    siteTitle: string;
+    siteLogo: string;
+    siteMetaKeyWords: string;
+    siteMetaDescription: string;
+    siteIcp: string;
+    siteDomain: string;
+    demoGit: string;
+}
+
 const ConfigSchema = new mongoose.Schema(
     {
         key: {
@@ -30,6 +40,11 @@ const ConfigSchema = new mongoose.Schema(
             trim: true,
         },
         siteIcp: {
+            type: String,
+            maxlength: 100,
+            trim: true,
+        },
+        siteDomain: {
             type: String,
             maxlength: 100,
             trim: true,
