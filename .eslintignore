@@ -3,3 +3,5 @@ public/*
 static/*
 node_modules/*
 dist/*
+coverage/*
+.github/*
