@@ -1,10 +1,16 @@
 import request from 'supertest';
-import { FileModule } from '../../server/modules/file.module';
+import { FileModule } from '@blog/server/modules/file/file.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, isExpectPass, generateDataList, closeApp } from '../util';
 import { getFile, getObjectId } from '../faker';
 import { FileModel, clearModelCollectionData } from '../models';
+import path from 'path';
+import { rootPath } from '@blog/server/utils/path.util';
 import queryString from 'query-string';
+
+const resolve = (str: string) => {
+    return path.join(rootPath, 'test/assets/' + str);
+};
 
 /**
  * 文件模块 api 测试
@@ -22,38 +28,88 @@ describe('file.module.e2e', () => {
         return await clearModelCollectionData();
     });
 
-    test('create file success', async () => {
-        const file = getFile();
+    test('upload static .text file success', async () => {
         return request(app.getHttpServer())
-            .post('/api/files')
+            .post('/api/files/upload')
             .set('authorization', __TOKEN__)
-            .send(file)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.txt'))
             .expect(201)
             .then(res => {
-                const a = res.body;
-                expect(a.originalName).toEqual(file.originalName);
-                expect(a.name).toEqual(file.name);
-                expect(a.mimetype).toEqual(file.mimetype);
-                expect(a.size).toEqual(file.size);
-                expect(a.suffix).toEqual(file.suffix);
-                expect(a.fileName).toEqual(file.fileName);
-                expect(a.filePath).toEqual(file.filePath);
-                expect(a.isdir).toEqual(file.isdir);
-                expect(a.category).toEqual(file.category);
-                expect(a.parentId).toBeNull();
+                expect(typeof res.body.url).toEqual('string');
             });
     });
 
-    test('create folder success', async () => {
-        const folder = {
-            name: getFile().name,
-            parentId: getObjectId(),
-        };
+    test('upload static .png file success', async () => {
         return request(app.getHttpServer())
-            .post('/api/files/createFolder')
+            .post('/api/files/upload')
             .set('authorization', __TOKEN__)
-            .send(folder)
-            .expect(201);
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.png'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
+    });
+
+    test('upload static .mp3 file success', async () => {
+        return request(app.getHttpServer())
+            .post('/api/files/upload')
+            .set('authorization', __TOKEN__)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.mp3'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
+    });
+
+    test('upload static .mp4 file success', async () => {
+        return request(app.getHttpServer())
+            .post('/api/files/upload')
+            .set('authorization', __TOKEN__)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.mp4'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
+    });
+
+    test('upload static .docx file success', async () => {
+        return request(app.getHttpServer())
+            .post('/api/files/upload')
+            .set('authorization', __TOKEN__)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.docx'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
+    });
+
+    test('upload static .doc file success', async () => {
+        return request(app.getHttpServer())
+            .post('/api/files/upload')
+            .set('authorization', __TOKEN__)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.doc'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
+    });
+
+    test('upload static .md file success', async () => {
+        return request(app.getHttpServer())
+            .post('/api/files/upload')
+            .set('authorization', __TOKEN__)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .attach('file', resolve('test.md'))
+            .expect(201)
+            .then(res => {
+                expect(typeof res.body.url).toEqual('string');
+            });
     });
 
     test('delete file success', async () => {
@@ -63,18 +119,6 @@ describe('file.module.e2e', () => {
             .delete(`/api/files/${_id}`)
             .set('authorization', __TOKEN__)
             .send(file)
-            .expect(200);
-    });
-
-    test('delete folder success', async () => {
-        const folder = getFile({
-            parentId: getObjectId(),
-        });
-        const { _id } = await FileModel.create(folder);
-        return request(app.getHttpServer())
-            .delete(`/api/files/${_id}`)
-            .set('authorization', __TOKEN__)
-            .send(folder)
             .expect(200);
     });
 
@@ -112,18 +156,6 @@ describe('file.module.e2e', () => {
             .expect(400);
     });
 
-    test('get one file success', async () => {
-        const folder = getFile({
-            parentId: getObjectId(),
-        });
-        const { _id } = await FileModel.create(folder);
-        return request(app.getHttpServer())
-            .get(`/api/files/getFolderName/${_id}`)
-            .set('authorization', __TOKEN__)
-            .send(folder)
-            .expect(200);
-    });
-
     test('get file items should success, when default empty query', async () => {
         const files = generateDataList(() => getFile(), 30);
         await FileModel.create(files);
@@ -148,29 +180,6 @@ describe('file.module.e2e', () => {
             .then(res => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(30);
                 expect(res.body.items.length).toEqual(30);
-            });
-    });
-
-    test('update one file success', async () => {
-        const file = getFile();
-        const { _id } = await FileModel.create(file);
-        return request(app.getHttpServer())
-            .put(`/api/files/${_id}`)
-            .set('authorization', __TOKEN__)
-            .send(file)
-            .expect(200)
-            .then(res => {
-                const a = res.body;
-                expect(a.originalName).toEqual(file.originalName);
-                expect(a.name).toEqual(file.name);
-                expect(a.mimetype).toEqual(file.mimetype);
-                expect(a.size).toEqual(file.size);
-                expect(a.suffix).toEqual(file.suffix);
-                expect(a.fileName).toEqual(file.fileName);
-                expect(a.filePath).toEqual(file.filePath);
-                expect(a.isdir).toEqual(file.isdir);
-                expect(a.category).toEqual(file.category);
-                expect(a.parentId).toBeNull();
             });
     });
 

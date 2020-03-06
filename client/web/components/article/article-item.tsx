@@ -1,7 +1,6 @@
 import Link from '../link';
 import React from 'react';
-import config from '../../config/site-info';
-import { parseTime } from '../../../libs/time';
+import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import MarkdownBody from '../markdown-body';
 import {
@@ -18,6 +17,9 @@ import {
     Heading,
 } from '@chakra-ui/core';
 import { rem } from 'polished';
+import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
+import dynamic from 'next/dynamic';
+const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 
 interface Props {
     article: any;
@@ -26,6 +28,7 @@ interface Props {
 
 export default (props: Props) => {
     const { article, comments } = props;
+    const markdownContent = useLinkGenerateDemo();
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb
@@ -46,7 +49,12 @@ export default (props: Props) => {
                     </Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem isCurrentPage={true}>
-                    <BreadcrumbLink isTruncated={true} maxW="450px" color="theme.secondaryText">
+                    <BreadcrumbLink
+                        isTruncated={true}
+                        maxW={['200px', '430px']}
+                        width="100%"
+                        color="theme.secondaryText"
+                    >
                         {article.title}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -75,7 +83,7 @@ export default (props: Props) => {
                     <Text color="theme.secondaryText">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </Box>
-            <Box color="theme.article.primaryText" mb={5}>
+            <Box color="theme.article.primaryText" mb={5} ref={markdownContent}>
                 <MarkdownBody content={article.content}></MarkdownBody>
             </Box>
             <List
@@ -91,9 +99,7 @@ export default (props: Props) => {
             >
                 <ListItem mb={1} isTruncated={true}>
                     <Text as="strong">本文链接：</Text>
-                    <Link href={config.domain + '/blog/articles/' + article._id} passHref={true}>
-                        <UiLink isTruncated={true}>{config.domain + '/blog/articles/' + article._id}</UiLink>
-                    </Link>
+                    <ArticleAddress articleId={article._id}></ArticleAddress>
                 </ListItem>
                 <ListItem>
                     <Text as="strong">版权声明：</Text>

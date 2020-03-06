@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
-import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
-import config from '@blog/client/admin/configs/default.config';
+import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Clipboard from 'clipboard';
 import { Row, Button, Popconfirm, message, Alert, Pagination, Card } from 'antd';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { MediaListRow, WrapCard } from './style';
 import { EyeFilled, CopyFilled, DeleteFilled } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
+
 const { Meta } = Card;
 
 export default () => {
+    const appConfig = useSelector((state: RootState) => state.app.config);
     const [state, setState] = useState({
         medias: new Array(8).fill({}),
         pagination: { current: 1, total: 0 },
@@ -64,7 +67,7 @@ export default () => {
         };
     }, [1]);
     return (
-        <PageHeaderWrapper title="媒体文件列表" content="控制台----媒体文件列表">
+        <BasicLayout>
             <div className="main-content">
                 <div className="table-wrapper">
                     {(state.loading || state.medias.length <= 0) && (
@@ -93,7 +96,7 @@ export default () => {
                                             key="viewButton"
                                             size="small"
                                             title="查看大图"
-                                            href={config.siteInfo.domain + item.filePath + '/' + item.fileName}
+                                            href={appConfig.siteDomain + item.filePath + '/' + item.fileName}
                                             target="_blank"
                                             className="button button-view"
                                             icon={<EyeFilled />}
@@ -106,7 +109,7 @@ export default () => {
                                             size="small"
                                             title="复制"
                                             data-clipboard-text={
-                                                config.siteInfo.domain + item.filePath + '/' + item.fileName
+                                                appConfig.siteDomain + item.filePath + '/' + item.fileName
                                             }
                                             className="button copyButton"
                                             icon={<CopyFilled />}
@@ -152,6 +155,6 @@ export default () => {
                     </Row>
                 </div>
             </div>
-        </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

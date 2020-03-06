@@ -59,7 +59,7 @@ const Header = (props: { userInfo: UserInfo }) => {
                     border="1px solid #ccc"
                     borderRadius="md"
                     p={1}
-                    src={require('../../assets/images/avatar.jpg')}
+                    src={require('@blog/client/assets/images/avatar.jpg')}
                     alt="头像"
                     size="90px"
                 />

@@ -2,14 +2,10 @@ import React from 'react';
 import { Card, Button } from 'antd';
 import styled from '@emotion/styled';
 
-const NavPanelCard = styled(Card)`
-    .ant-card-head {
-        padding: 0;
-    }
-`;
+const NavPanelCard = styled(Card)``;
 
 const LinkGroupDiv = styled.div`
-    padding: 20px 0 8px 0;
+    padding: 20px 20px 8px 20px;
     font-size: 0;
     > a {
         display: inline-block;

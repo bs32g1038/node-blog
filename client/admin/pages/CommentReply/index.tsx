@@ -3,8 +3,8 @@ import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
 import marked from '@blog/client/libs/marked';
 import { Form, Input, Button, message } from 'antd';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import Router, { useRouter } from 'next/router';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [comment, setComment] = useState({
@@ -42,7 +42,7 @@ export default () => {
     };
 
     return (
-        <PageHeaderWrapper title="文章列表" content="控制台----评论回复">
+        <BasicLayout>
             <div className="main-content">
                 <Form form={form} onFinish={publish} style={{ marginTop: '20px' }}>
                     <Form.Item name="article" style={{ display: 'none' }}>
@@ -91,6 +91,6 @@ export default () => {
                     </Form.Item>
                 </Form>
             </div>
-        </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

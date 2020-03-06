@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { AboutModule } from '../../server/modules/about.module';
-import { GetUserDataDto } from '../../server/modules/about/about.dto';
+import { AboutModule } from '@blog/server/modules/about/about.module';
+import { GetUserDataDto } from '@blog/server/modules/about/about.dto';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 

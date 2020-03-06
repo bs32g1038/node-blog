@@ -1,45 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { File, FileModel, IFileModel } from '../../models/file.model';
-import { QueryRules } from '../../utils/mongoose.query.util';
+import { File, FileModel, IFileModel, FileType } from '../../models/file.model';
+import path from 'path';
+import multr from 'multer';
+import { MulterModule } from '@nestjs/platform-express';
+import { md5 } from '../../utils/crypto.util';
+import { creteUploadFile } from '../../utils/upload.util';
+import { getConfig } from '@blog/server/configs/site.config.module';
+
+MulterModule.register({
+    storage: multr.memoryStorage(),
+});
 
 @Injectable()
 export class FileService {
+    FILE_TYPE_MAP_MIMETYPE = [
+        {
+            type: FileType.video,
+            mimetypes: ['mp4', 'x-flv'],
+        },
+        {
+            type: FileType.audio,
+            mimetypes: ['mpeg', 'mp3'],
+        },
+        {
+            type: FileType.image,
+            mimetypes: ['png', 'jpg', 'jpeg', 'webp'],
+        },
+        {
+            type: FileType.document,
+            mimetypes: ['txt', 'doc', 'docx', 'pdf'],
+        },
+        {
+            type: FileType.other,
+            mimetypes: [],
+        },
+    ];
     constructor(@InjectModel(FileModel) private readonly fileModel: IFileModel) {}
 
-    async create(newFile: File): Promise<File> {
-        return await this.fileModel.create(newFile);
-    }
-
-    async update(id: string, data: File) {
-        return await this.fileModel.findByIdAndUpdate({ _id: id }, data, { runValidators: true });
-    }
-
     async getFileList(options: {
-        parentId?: string;
         page?: number;
         limit?: number;
         sort?: {};
     }): Promise<{ items: File[]; totalCount: number }> {
-        const { parentId, page = 1, limit = 10, sort = {} } = options;
-        const q = new QueryRules({ parentId }, { parentId: (str: string) => ({ parentId: str }) }).generateQuery();
-        return await this.fileModel.paginate(q, '', {
+        const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
+        return await this.fileModel.paginate({}, '', {
             page,
             limit,
             sort,
         });
     }
 
-    async getFile(id: string) {
-        return await this.fileModel.findById(id);
-    }
-
     async deleteFile(id: string) {
         const _file = await this.fileModel.findById(id);
         if (_file) {
-            if (_file.parentId) {
-                await this.fileModel.updateOne({ _id: _file.parentId }, { $inc: { fileCount: -1 } });
-            }
             await this.fileModel.deleteOne({ _id: id });
         }
         return {};
@@ -49,19 +63,42 @@ export class FileService {
         return this.fileModel.deleteMany({ _id: { $in: fileIds } });
     }
 
-    async createFolder(name: string, parentId: string) {
-        return await this.fileModel.create({
-            originalName: name,
-            name,
-            isdir: true,
-            category: 6,
-            parentId: parentId || null,
-            mimetype: '*',
-            size: 0,
-            suffix: '*',
-            fileName: '*',
-            filePath: '*',
-            fileCount: 0,
+    public async uploadFile(file: Express.Multer.File) {
+        const mimetype = file.mimetype;
+        const size = file.size;
+        const name = md5(file.buffer);
+
+        const suffix = path.extname(file.originalname);
+        const fileName = name + suffix;
+
+        let type = FileType.other;
+        for (const item of this.FILE_TYPE_MAP_MIMETYPE) {
+            const rs = item.mimetypes.some(t => {
+                return mimetype.toLocaleLowerCase().includes(t);
+            });
+            if (rs) {
+                if (item.type === FileType.image && Number(size) > 1024 * 1024 * 2) {
+                    throw new BadRequestException('图片最大为 2MB');
+                }
+                type = item.type;
+                break;
+            }
+        }
+
+        // 文件处理
+        const domain = getConfig().siteDomain;
+        const p = await creteUploadFile(fileName, file.buffer);
+        const url = domain + p;
+        const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
+        if (result) {
+            return { ...result.toObject(), url };
+        }
+        const _file = await this.fileModel.create({
+            name: fileName,
+            type,
+            size,
+            url,
         });
+        return _file;
     }
 }

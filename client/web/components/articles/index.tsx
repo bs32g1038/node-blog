@@ -4,20 +4,22 @@ import { Flex, Box } from '@chakra-ui/core';
 import Categories from '../categories';
 import Empty from '../empty';
 import ArticleItem from './item';
-import Pagination from '../pagination';
-import AppLayout from '../../layouts/app';
-import siteInfo from '../../config/site-info';
-import { useFetchArticles } from '../../hook/useFetchArticles';
-import { fetchArticles } from '../../redux/reducers/articles';
-import { fetchCategories } from '../../redux/reducers/categories';
-import { isServer } from '../../utils/helper';
+import Pagination from '@blog/client/web/components/pagination';
+import AppLayout from '@blog/client/web/layouts/app';
+import { useFetchArticles } from '@blog/client/web/hooks/useFetchArticles';
+import { fetchArticles } from '@blog/client/redux/reducers/articles';
+import { fetchCategories } from '@blog/client/redux/reducers/categories';
+import { isServer } from '@blog/client/web/utils/helper';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
 
 const Page = () => {
     const { page, items, totalCount, isLoading, limit } = useFetchArticles();
+    const config = useSelector((state: RootState) => state.app.config);
     return (
         <AppLayout>
             <Head>
-                <title>{siteInfo.name + '-博客'}</title>
+                <title>{config.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
             <Box>

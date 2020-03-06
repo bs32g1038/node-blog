@@ -1,8 +1,9 @@
 import React from 'react';
-import siteInfo from '../../config/site-info';
 import { Flex, Box, Heading, Text } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
 
 interface UserRepoItem {
     name: string;
@@ -18,6 +19,7 @@ interface UserReposProps {
 
 const PinnedListItem = (props: { item: UserRepoItem }) => {
     const { item } = props;
+    const config = useSelector((state: RootState) => state.app.config);
     return (
         <Flex
             bg="theme.blackground"
@@ -31,7 +33,7 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
             <Box>
                 <Flex alignItems="center" mb={2}>
                     <Icon name="repo" fill="theme.primaryText"></Icon>
-                    <UiLink ml={2} href={siteInfo.github + '/' + item.name} isExternal={true} flex="1 0 auto">
+                    <UiLink ml={2} href={config.github + '/' + item.name} isExternal={true} flex="1 0 auto">
                         <Heading color="theme.primaryText" fontWeight="normal" as="h3" fontSize="1rem">
                             {item.name}
                         </Heading>
@@ -57,13 +59,13 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
                     ></Box>
                     <span>{item.language}</span>
                 </Text>
-                <UiLink href={siteInfo.github + '/' + item.name + '/stargazers'} mr={3}>
+                <UiLink href={config.github + '/' + item.name + '/stargazers'} mr={3}>
                     <Flex alignItems="center">
                         <Icon name="star" fill="theme.secondaryText" mr={1} />
                         {item.stargazersCount}
                     </Flex>
                 </UiLink>
-                <UiLink href={siteInfo.github + '/' + item.name + '/network/members'}>
+                <UiLink href={config.github + '/' + item.name + '/network/members'}>
                     <Flex alignItems="center">
                         <Icon name="fork" fill="theme.secondaryText" mr={1} />
                         {item.forkCount}

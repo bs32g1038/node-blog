@@ -1,7 +1,7 @@
-import { Module, Global } from '@nestjs/common';
 import mongoose from 'mongoose';
-import { MONGODB } from '../configs/index.config';
-import { isTestMode } from '../configs/index.config';
+import { Module, Global } from '@nestjs/common';
+import { MONGODB } from '@blog/server/configs/index.config';
+import { isTestMode } from '@blog/server/configs/index.config';
 
 const DB_CONNECTION_TOKEN = Symbol('DB_CONNECTION_TOKEN');
 

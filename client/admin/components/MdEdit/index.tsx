@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import marked from '@blog/client/libs/marked';
-import axios from '../../axios';
+import axios from '@blog/client/admin/axios';
 import CM from 'codemirror';
 import { WrapDiv } from './style';
 import MarkdownBody from './markdown-body';
@@ -8,6 +8,22 @@ require('codemirror/mode/markdown/markdown');
 
 let codeMirror = null;
 let _currentCodemirrorValue = null;
+
+/* The right word count in respect for CJK. */
+function wordCount(data) {
+    const pattern = /[a-zA-Z0-9_\u0392-\u03c9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
+    const m = data.match(pattern);
+    let count = 0;
+    if (m === null) return count;
+    for (let i = 0; i < m.length; i++) {
+        if (m[i].charCodeAt(0) >= 0x4e00) {
+            count += m[i].length;
+        } else {
+            count += 1;
+        }
+    }
+    return count;
+}
 
 export default (props: any) => {
     const MarkdownContent = props.value;
@@ -124,9 +140,9 @@ export default (props: any) => {
             }
         };
     }, [1]);
-    if (codeMirror && codeMirror.getValue() === '' && props.value !== '') {
+    useEffect(() => {
         codeMirror.setValue(props.value);
-    }
+    }, [codeMirror && codeMirror.getValue() === '' && props.value !== '']);
     return (
         <WrapDiv>
             <div className="MdEditor">
@@ -182,6 +198,9 @@ export default (props: any) => {
                 <div className="MdEditor-wraper">
                     <textarea id="codemirror" name={props.name} defaultValue={props.value} />
                     {state.isPreview && <MarkdownBody content={marked(MarkdownContent)}></MarkdownBody>}
+                    <p style={{ paddingTop: '10px', textAlign: 'right' }}>
+                        {codeMirror && codeMirror.lineCount()}行，{codeMirror && wordCount(codeMirror.getValue())} 字
+                    </p>
                 </div>
             </div>
         </WrapDiv>

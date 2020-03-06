@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { LoginModule } from '../../server/modules/login.module';
+import { LoginModule } from '@blog/server/modules/login/login.module';
 import { INestApplication } from '@nestjs/common';
-import { encrypt } from '../../server/utils/crypto.util';
+import { encrypt } from '@blog/server/utils/crypto.util';
 import { verifyToken, closeApp } from '../util';
 import { initApp } from '../util';
 

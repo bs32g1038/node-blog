@@ -1,26 +1,33 @@
 import { join } from 'path';
+import findRoot from 'find-root';
 
 /**
  * 根目录路径，指向当前执行命令的目录
  */
 export const getRootPath = () => {
-    return process.cwd();
+    return findRoot(__dirname);
 };
+
+export const rootPath = getRootPath();
 
 /**
  * 日志文件路径
  */
-export const logPath = join(getRootPath(), 'logs');
+export const logPath = join(rootPath, 'logs');
 
 /**
  * public目录路径
  */
-export const publicPath = join(getRootPath(), 'public');
+export const publicPath = join(rootPath, 'public');
 
 /**
  * 静态资源路径
  */
-export const staticAssetsPath = join(getRootPath(), 'public/static');
+export const staticAssetsPath = join(rootPath, 'public/static');
+/**
+ * demo资源路径
+ */
+export const demoAssetsPath = join(rootPath, 'public/demo');
 /**
  * 上传文件存放目录路径
  */

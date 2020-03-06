@@ -13,13 +13,6 @@ export const getCategory = () => {
     };
 };
 
-export const getDemo = (content = '') => {
-    return {
-        title: faker.name.title(),
-        content: content || '```html\ntest\n```\n```css\ntest\n```\n```javascript\ntest\n```',
-    };
-};
-
 export const getArticle = (obj = {}) => {
     return {
         title: faker.name.title(),
@@ -43,32 +36,12 @@ export const getComment = (obj = {}) => {
     };
 };
 
-export const getMedia = (obj = {}) => {
-    return {
-        originalName: 'test.png',
-        name: 'test',
-        mimetype: 'image/type',
-        size: 2000,
-        suffix: '.png',
-        fileName: 'test.png',
-        filePath: '/upload/2019/test.png',
-        type: 'image',
-        ...obj,
-    };
-};
-
 export const getFile = (obj = {}) => {
     return {
-        originalName: 'test.png',
-        name: 'test',
-        mimetype: 'image/type',
+        name: faker.lorem.word() + '.jpg',
+        url: faker.image.imageUrl(),
         size: 2000,
-        suffix: '.png',
-        fileName: 'test.png',
-        filePath: '/upload/2019/test.png',
-        isdir: false,
-        category: 1,
-        parentId: null,
+        type: 'image',
         ...obj,
     };
 };

@@ -4,7 +4,6 @@
 import MarkdownIt from 'markdown-it';
 import iterator from 'markdown-it-for-inline';
 import jsxss from 'xss';
-import siteInfo from '../../configs/site-info';
 
 const markdown = new MarkdownIt({
     breaks: true,
@@ -22,7 +21,7 @@ markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
                 const name = r[1];
-                return `<img class="emoji" src="${siteInfo.domain}/static/images/emotion/${name}.png" style="width:28px;height:28px;vertical-align: bottom; display: inline-block;" />`;
+                return `<img class="emoji" src="/static/images/emotion/${name}.png" style="width:28px;height:28px;vertical-align: bottom; display: inline-block;" />`;
             }
         }
         return str;

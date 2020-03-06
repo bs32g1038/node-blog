@@ -1,7 +1,7 @@
 import { css } from 'emotion';
 import Link from '../link';
 import React, { useRef, useState } from 'react';
-import * as Api from '../../api/article';
+import * as Api from '@blog/client/web/api/article';
 import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/core';
 import Icon from '../icon';
 import { debounce } from 'lodash';

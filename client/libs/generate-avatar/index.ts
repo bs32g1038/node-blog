@@ -7,9 +7,9 @@ class Color {
     b: number;
     a: number;
     constructor(r?: number, g?: number, b?: number, a = 1) {
-        this.r = r || Math.floor(Math.random() * 200);
-        this.g = g || Math.floor(Math.random() * 200);
-        this.b = b || Math.floor(Math.random() * 200);
+        this.r = r || Math.floor(Math.random() * 240);
+        this.g = g || Math.floor(Math.random() * 240);
+        this.b = b || Math.floor(Math.random() * 240);
         this.a = a;
     }
     rgba() {
@@ -27,12 +27,12 @@ class GHAT {
     fillStyle?: string;
     SEED_W: number;
 
-    constructor(w = 420) {
+    constructor(w = 72) {
         this.w = w;
         this.h = w; //h;
 
-        this.PARTITIONS = 7;
-        this.BASE_SEED = 7;
+        this.PARTITIONS = 9;
+        this.BASE_SEED = 9;
         this.SEED_H = this.h / this.BASE_SEED;
         this.SEED_W = this.w / this.BASE_SEED;
     }

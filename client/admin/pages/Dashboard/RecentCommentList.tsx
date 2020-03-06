@@ -2,15 +2,12 @@ import React from 'react';
 import { Card } from 'antd';
 import styled from '@emotion/styled';
 import marked from '@blog/client/libs/marked';
-import GHAT from '@blog/client/libs/generate-avatar';
-import { md5 } from '@blog/client/admin/utils/crypto-js';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { timeAgo } from '@blog/client/libs/time';
-const ghat = new GHAT();
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 const RecentCommentListCard = styled(Card)`
     .ant-card-head {
-        padding: 0;
     }
     .ant-card-meta-description {
         height: 44px;
@@ -62,7 +59,7 @@ const RecentCommentListCard = styled(Card)`
 const CommentMsgDiv = styled.div`
     font-size: 14px;
     padding: 20px;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 `;
 
 const CommentInfoDiv = styled.div`
@@ -105,7 +102,8 @@ const CommentTextDiv = styled.div`
     padding: 10px;
     margin: 5px 0 0 50px;
     color: #5a5e66;
-    background-color: #edf2fc;
+    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.05);
     font-size: 14px;
     &:before,
     &:after {
@@ -113,7 +111,7 @@ const CommentTextDiv = styled.div`
         right: 100%;
         top: 15px;
         border: solid transparent;
-        border-right-color: #edf2fc;
+        border-right-color: rgba(0, 0, 0, 0.05);
         content: ' ';
         height: 0;
         width: 0;
@@ -180,7 +178,7 @@ export default (props: Props) => {
                             </TimestampSpan>
                         </CommentInfoDiv>
                         <div className="random-logo">
-                            <CommentLogoImg src={ghat.getImage(md5(item.nickName).toString()) || ''} />
+                            <CommentLogoImg src={gernateAvatarImage(item.nickName) || ''} />
                         </div>
                         <CommentTextDiv>
                             <div

@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { css } from 'emotion';
 import { Box, Flex, Text, Heading } from '@chakra-ui/core';
-import UiLink from '../../ui-link';
-import { parseTime } from '../../../../libs/time';
-import ListStyleLoader from '../../list-style-loader';
-import { useFixedTopInScroll } from '../../../hook/useFixedTopInScroll';
+import UiLink from '@blog/client/web/components/ui-link';
+import { parseTime } from '@blog/client/libs/time';
+import ListStyleLoader from '@blog/client/web/components/list-style-loader';
+import { useFixedTopInScroll } from '@blog/client/web/hooks/useFixedTopInScroll';
 import { rem } from 'polished';
 
 const Media = styled.div`
@@ -119,7 +119,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
                         <img
-                            src="https://www.vultr.com/media/banners/banner_300x250.png"
+                            src={require('@blog/client/assets/banners/vultr_banner_300x250.png')}
                             style={{
                                 width: '200px',
                                 border: '1px solid #ccc',

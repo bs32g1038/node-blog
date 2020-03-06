@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { notification } from 'antd';
 import Router from 'next/router';
-import config from '../configs/default.config';
+import config from '@blog/client/configs/admin.default.config';
 
 axios.defaults.baseURL = '/api';
 

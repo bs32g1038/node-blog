@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { Collapse, Box, Badge, Text, Flex, Image } from '@chakra-ui/core';
+import { Collapse, Box, Text, Flex, Image, Icon } from '@chakra-ui/core';
 import { css } from 'emotion';
-import marked from '../../../libs/marked';
-import { timeAgo } from '../../../libs/time';
+import marked from '@blog/client/libs/marked';
+import { timeAgo } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
 import MarkdownBody from '../markdown-body';
-import { gernateAvatarImage } from '../../utils/helper';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { rem } from 'polished';
 
 const ItemContent = styled(MarkdownBody)`
@@ -17,27 +17,7 @@ const ItemContent = styled(MarkdownBody)`
 `;
 
 const getBadgeVisitorOrAuthor = identity => {
-    return identity !== 0 ? (
-        <Badge
-            fontWeight="normal"
-            fontSize={14}
-            boxShadow="none"
-            variant="outline"
-            color="theme.article.badgeAuthorColor"
-        >
-            博主
-        </Badge>
-    ) : (
-        <Badge
-            fontWeight="normal"
-            fontSize={14}
-            boxShadow="none"
-            variant="outline"
-            color="theme.article.badgeVisitorColor"
-        >
-            游客
-        </Badge>
-    );
+    return identity !== 0 ? <Icon name="star" mr={2} fill="theme.primaryText"></Icon> : null;
 };
 
 const replyFn = (item: any) => {
@@ -47,17 +27,15 @@ const replyFn = (item: any) => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <Box width="100%" bg="theme.blackground" py={2} px={5} fontSize={rem(14)} mt={2} mb={2}>
+        <Box width="100%" bg="theme.blackground" py={2} px={4} fontSize={rem(14)} mt={2} mb={2}>
             <Flex justifyContent="space-between" alignItems="center">
                 <Flex alignItems="center">
-                    <Text as="span">回复给：</Text>
-                    <Image src={avatarSrc} size="16px" borderRadius="md" mr={1}></Image>
-                    <Box color="theme.primaryText" isTruncated={true} maxW={['110px', '180px']}>
+                    <Icon name="at-sign" color="theme.secondaryText" mr={2}></Icon>
+                    <Image src={avatarSrc} size="20px" borderRadius="md" mr={2}></Image>
+                    <Box color="theme.primaryText" isTruncated={true} maxW={['110px', '180px']} mr={2}>
                         {item.nickName}
                     </Box>
-                    <span className="separator">&nbsp;·&nbsp;</span>
                     {getBadgeVisitorOrAuthor(item.identity)}
-                    <span className="separator">&nbsp;·&nbsp;</span>
                     <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
                 </Flex>
                 <Box
@@ -89,9 +67,9 @@ export const CommentItem = (props: { item: any; index: number }) => {
     const item = props.item;
     return (
         <Box
-            data-index={'# ' + (props.index + 1) + ' 楼层'}
-            p={2}
-            pt={4}
+            px={[0, 2]}
+            pt={3}
+            pb={2}
             borderBottom="1px"
             borderBottomColor="theme.border"
             position="relative"
@@ -101,15 +79,23 @@ export const CommentItem = (props: { item: any; index: number }) => {
                     content: attr(data-index);
                     position: absolute;
                     right: 10px;
-                    top: 17px;
+                    top: 6.5px;
                     text-align: center;
                     color: #d5cbcb;
-                    font-size: ${rem(14)};
+                    font-size: ${rem(16)};
                 }
             `}
         >
             <Flex>
-                <Image src={avatarSrc} size="40px" borderRadius="4px" mt="5px" mr="10px"></Image>
+                <Image
+                    src={avatarSrc}
+                    size="38px"
+                    borderRadius="md"
+                    mt="5px"
+                    mr="10px"
+                    p={1}
+                    backgroundColor="theme.blackground"
+                ></Image>
                 <Box width="100%">
                     <Flex justifyContent="space-between" alignItems="center">
                         <Flex alignItems="center">
@@ -117,25 +103,24 @@ export const CommentItem = (props: { item: any; index: number }) => {
                                 color="theme.primaryText"
                                 fontWeight="bold"
                                 isTruncated={true}
-                                maxW={['110px', '180px']}
+                                maxW={['100px', '180px']}
+                                mr={2}
                             >
                                 {item.nickName}
                             </Box>
-                            <span className="separator">&nbsp;·&nbsp;</span>
                             {getBadgeVisitorOrAuthor(item.identity)}
-                            <span className="separator">&nbsp;·&nbsp;</span>
                             <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
                         </Flex>
-                        <Box
+                        <Flex
                             userSelect="none"
-                            mr="4rem"
+                            alignItems="center"
                             color="red.500"
                             cursor="pointer"
                             comment-id={item._id}
                             onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
                         >
-                            回复
-                        </Box>
+                            <Icon name="edit" mr={1}></Icon>回复
+                        </Flex>
                     </Flex>
                     {item.reply && replyFn(item.reply)}
                     <Box color="theme.primaryText" mt={rem(10)}>
@@ -143,7 +128,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
                     </Box>
                     <Box mt={3}>
                         {showCommentForm === item._id && (
-                            <CommentForm url="/comments" articleId={item.article} replyId={item._id} />
+                            <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
                         )}
                     </Box>
                 </Box>

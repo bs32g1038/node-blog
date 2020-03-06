@@ -2,19 +2,19 @@ import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ColorModeProvider } from '@chakra-ui/core';
-import withReduxStore from '../client/web/redux/with-redux-store';
+import withReduxStore from '../client/redux/with-redux-store';
 import versionInfo from '../package.json';
-import siteInfo from '../client/web/config/site-info';
 import ErrorPage from '@blog/client/web/components/error-page';
 
 class MyApp extends App {
     componentDidMount() {
+        const { reduxStore } = this.props as any;
         const info = [
             `Version: ${versionInfo.version}`,
             `Author: ${versionInfo.author.name + ' - ' + versionInfo.author.email}`,
             `Homepage: ${versionInfo.homepage}`,
             `Description: ${versionInfo.description}`,
-            `Check out our code here: ${siteInfo.projectGithub}`,
+            `Check out our code here: ${reduxStore.getState().app.config.projectGithub}`,
             `Have a great day! 📣🐢`,
         ];
         for (const message of info) {

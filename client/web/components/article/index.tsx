@@ -1,22 +1,22 @@
 import Head from 'next/head';
 import React from 'react';
-import siteInfo from '../../config/site-info';
-import { fetchArticle, fetchRecentArticle } from '../../redux/reducers/article';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { RootState } from '@blog/client/redux/store';
+import { fetchArticle, fetchRecentArticle } from '@blog/client/redux/reducers/article';
 import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
-import AppLayout from '../../layouts/app';
+import AppLayout from '@blog/client/web/layouts/app';
 import { Flex } from '@chakra-ui/core';
-import { isServer } from '../../utils/helper';
+import { isServer } from '@blog/client/web/utils/helper';
 
 const Page = () => {
+    const config = useSelector((state: RootState) => state.app.config);
     const { article, comments, recentArticles } = useSelector((state: RootState) => state.article);
     return (
         <AppLayout>
             <Flex>
                 <Head>
-                    <title>{article.title + ' - ' + siteInfo.name}</title>
+                    <title>{article.title + ' - ' + config.siteTitle}</title>
                 </Head>
                 <ArticleItem article={article} comments={comments}></ArticleItem>
                 <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>

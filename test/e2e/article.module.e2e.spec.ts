@@ -1,11 +1,11 @@
 import request from 'supertest';
-import { ArticleModule } from '../../server/modules/article.module';
+import { ArticleModule } from '@blog/server/modules/article/article.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { clearModelCollectionData } from '../models';
 import faker, { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
-import { markdown } from '../../server/modules/article/article.service';
+import { markdown } from '@blog/server/modules/article/article.service';
 import queryString from 'query-string';
 
 /**

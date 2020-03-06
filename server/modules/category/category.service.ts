@@ -30,8 +30,9 @@ export class CategoryService {
     }
 
     async deleteCategory(id: string) {
+        const category = await this.categoryModel.findById(id);
         await this.categoryModel.deleteOne({ _id: id });
-        return {};
+        return category;
     }
 
     public async batchDelete(categoryIds: string[]) {

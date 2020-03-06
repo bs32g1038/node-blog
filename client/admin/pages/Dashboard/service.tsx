@@ -1,4 +1,4 @@
-import axios from '../../axios';
+import axios from '@blog/client/admin/axios';
 
 export async function getStatisticalInfo() {
     return axios.get('/dashboard/statistical-info');

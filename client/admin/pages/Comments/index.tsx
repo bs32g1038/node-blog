@@ -4,16 +4,13 @@ import queryString from 'query-string';
 import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction, Tip } from './style';
-import GHAT from '@blog/client/libs/generate-avatar';
-import { md5 } from '@blog/client/admin/utils/crypto-js';
-import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
+import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
-import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined } from '@ant-design/icons';
-
-const ghat = new GHAT();
+import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [state, setState] = useState({
@@ -147,7 +144,7 @@ export default () => {
     };
     const expandedRowKeys = state.comments.map(item => item._id);
     return (
-        <PageHeaderWrapper title="评论列表" content="控制台----评论列表">
+        <BasicLayout>
             <div className="main-content">
                 <PanelDiv className="panel" id="comments-panel">
                     <Popconfirm
@@ -188,39 +185,49 @@ export default () => {
                             return (
                                 <React.Fragment>
                                     {record.reply && (
-                                        <ReplyListItem>
-                                            <UserAvatar>
-                                                <img src={ghat.getImage(md5(record.reply.nickName).toString())} />
-                                            </UserAvatar>
-                                            <ReplyContent>
-                                                <ReplyInfo>
-                                                    <BaseInfo>
-                                                        <div className="reply-author">{record.reply.nickName}</div>
-                                                        <a className="reply-time">
-                                                            在 {timeAgo(record.reply.createdAt)} 评论
-                                                        </a>
-                                                    </BaseInfo>
-                                                    <UserAction>
-                                                        <Button
-                                                            size="small"
-                                                            icon={<SendOutlined />}
-                                                            onClick={() => {
-                                                                Router.push(
-                                                                    '/admin/content/comments/reply/' + record.reply._id
-                                                                );
-                                                            }}
-                                                        >
-                                                            回复
-                                                        </Button>
-                                                    </UserAction>
-                                                </ReplyInfo>
-                                                <MarkdownText
-                                                    className="markdown-body"
-                                                    dangerouslySetInnerHTML={{ __html: marked(record.reply.content) }}
-                                                ></MarkdownText>
-                                            </ReplyContent>
-                                        </ReplyListItem>
+                                        <div>
+                                            <Tip className="tip">
+                                                <BranchesOutlined />
+                                                引用：
+                                            </Tip>
+                                            <ReplyListItem>
+                                                <UserAvatar>
+                                                    <img src={gernateAvatarImage(record.reply.nickName)} />
+                                                </UserAvatar>
+                                                <ReplyContent>
+                                                    <ReplyInfo>
+                                                        <BaseInfo>
+                                                            <div className="reply-author">{record.reply.nickName}</div>
+                                                            <a className="reply-time">
+                                                                在 {timeAgo(record.reply.createdAt)} 评论
+                                                            </a>
+                                                        </BaseInfo>
+                                                        <UserAction>
+                                                            <Button
+                                                                size="small"
+                                                                icon={<SendOutlined />}
+                                                                onClick={() => {
+                                                                    Router.push(
+                                                                        '/admin/content/comments/reply/' +
+                                                                            record.reply._id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                回复
+                                                            </Button>
+                                                        </UserAction>
+                                                    </ReplyInfo>
+                                                    <MarkdownText
+                                                        className="markdown-body"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: marked(record.reply.content),
+                                                        }}
+                                                    ></MarkdownText>
+                                                </ReplyContent>
+                                            </ReplyListItem>
+                                        </div>
                                     )}
+
                                     <div style={{ padding: '0 20px' }}>
                                         <Tip className="tip">
                                             <CommentOutlined />
@@ -240,6 +247,6 @@ export default () => {
                     />
                 </div>
             </div>
-        </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

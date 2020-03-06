@@ -1,28 +1,28 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './database/database.module';
-import { AdminLogModule } from './modules/adminlog.module';
-import { DashboardModule } from './modules/dashboard.module';
-import { ArticleModule } from './modules/article.module';
-import { CategoryModule } from './modules/category.module';
-import { AboutModule } from './modules/about.module';
-import { CommentModule } from './modules/comment.module';
-import { DemoModule } from './modules/demo.module';
-import { FileModule } from './modules/file.module';
-import { MediaModule } from './modules/media.module';
-import { RssModule } from './modules/rss.module';
-import { LoginModule } from './modules/login.module';
-import { UploadModule } from './modules/upload.module';
-import { SearchModule } from './modules/search.module';
-import { UserModule } from './modules/user.module';
+import { SiteConfigModule } from '@blog/server/configs/site.config.module';
+import { AdminLogModule } from './modules/adminlog/adminlog.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { ArticleModule } from './modules/article/article.module';
+import { CategoryModule } from './modules/category/category.module';
+import { AboutModule } from './modules/about/about.module';
+import { CommentModule } from './modules/comment/comment.module';
+import { DemoModule } from './modules/demo/demo.module';
+import { FileModule } from './modules/file/file.module';
+import { RssModule } from './modules/rss/rss.module';
+import { LoginModule } from './modules/login/login.module';
+import { SearchModule } from './modules/search/search.module';
+import { UserModule } from './modules/user/user.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
-import { SSRModule } from '../client/server';
+import { SSRModule } from '@blog/client/server';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { isProdMode } from './configs/index.config';
 
 @Module({
     imports: [
         DatabaseModule,
+        SiteConfigModule,
         AdminLogModule,
         DashboardModule,
         ArticleModule,
@@ -31,10 +31,8 @@ import { isProdMode } from './configs/index.config';
         CommentModule,
         DemoModule,
         FileModule,
-        MediaModule,
         RssModule,
         LoginModule,
-        UploadModule,
         SearchModule,
         UserModule,
         WriteDayReadingModule,

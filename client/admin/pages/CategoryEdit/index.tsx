@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import PageHeaderWrapper from '@blog/client/admin/components/PageHeaderWrapper';
 import axios from '@blog/client/admin/axios';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const router = useRouter();
@@ -30,9 +30,8 @@ export default () => {
             Router.push('/admin/content/categories');
         });
     };
-    const { id } = router.query;
     return (
-        <PageHeaderWrapper title={id ? '分类编辑' : '添加分类'} content="控制台----分类添加或编辑">
+        <BasicLayout>
             <div className="main-content">
                 <Form form={form} onFinish={publish} style={{ marginTop: '20px' }}>
                     <Form.Item
@@ -58,6 +57,6 @@ export default () => {
                     </Form.Item>
                 </Form>
             </div>
-        </PageHeaderWrapper>
+        </BasicLayout>
     );
 };

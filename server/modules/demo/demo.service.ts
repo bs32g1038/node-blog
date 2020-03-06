@@ -1,49 +1,57 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { Demo, DemoModel, IDemoModel } from '../../models/demo.model';
+import { DemoModel, IDemoModel } from '../../models/demo.model';
+import fs from 'fs';
+import util from 'util';
+import path from 'path';
+import shelljs from 'shelljs';
+import { getConfig } from '@blog/server/configs/site.config.module';
+import { publicPath } from '../../utils/path.util';
 
 @Injectable()
 export class DemoService {
     constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
 
-    async create(newDemo: Demo): Promise<Demo> {
-        const demo: Demo = await this.demoModel.create(newDemo);
-        return demo;
+    async getDemoList(): Promise<{ items: { url: string; name: string }[]; totalCount: number }> {
+        const dirs = await this.readDir(path.join(publicPath, 'demo'));
+        const items = dirs
+            .filter(name => {
+                if (name === '.git') {
+                    return false;
+                }
+                return true;
+            })
+            .map(name => {
+                return {
+                    name,
+                    url: '/blog/demos?name=' + name,
+                };
+            });
+        return { totalCount: items.length, items };
     }
 
-    async update(id: string, data: Demo) {
-        return await this.demoModel.findByIdAndUpdate({ _id: id }, data, { runValidators: true });
+    async readDir(path: string) {
+        return util.promisify(fs.readdir)(path);
     }
 
-    async getDemoList(options: {
-        page?: number;
-        limit?: number;
-        sort?: object;
-    }): Promise<{ items: Demo[]; totalCount: number }> {
-        const { page = 1, limit = 10, sort = {} } = options;
-        return await this.demoModel.paginate({}, '', {
-            page,
-            limit,
-            sort,
-        });
-    }
-
-    async getDemo(id: string) {
-        const demo = await this.demoModel.findById(id);
-        return demo;
-    }
-
-    async deleteDemo(id: string) {
-        await this.demoModel.deleteOne({ _id: id });
-        return {};
-    }
-
-    public async batchDelete(demoIds: string[]) {
-        return this.demoModel.find({ _id: { $in: demoIds } }).then(async demos => {
-            if (demos.length <= 0) {
-                throw new BadRequestException();
-            }
-            return this.demoModel.deleteMany({ _id: { $in: demoIds } });
+    async gitClone() {
+        const config: any = getConfig();
+        const git = config.demoGit;
+        return new Promise((resolve, reject) => {
+            shelljs.exec(`git clone ${git} ${publicPath} -o demo`, code => {
+                if (code !== 0) {
+                    shelljs.cd(path.join(publicPath, 'demo'));
+                    shelljs.exec('git pull', async code => {
+                        if (code === 0) {
+                            resolve({ success: true });
+                        } else {
+                            reject({ success: false });
+                        }
+                    });
+                } else {
+                    resolve({ success: true });
+                }
+            });
         });
     }
 }

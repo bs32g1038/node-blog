@@ -10,4 +10,12 @@ export class UserService {
     async getUserByAccount(account: string) {
         return this.userModel.findOne({ account }, '-password');
     }
+
+    async updateUserByAccount(account: string, user: object) {
+        return this.userModel.updateOne({ account }, user);
+    }
+
+    async resetPasswordByAccount(account: string, password: string) {
+        return this.userModel.updateOne({ account }, { password });
+    }
 }

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { SearchModule } from '../../server/modules/search.module';
+import { SearchModule } from '@blog/server/modules/search/search.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, closeApp } from '../util';
 import queryString from 'query-string';
