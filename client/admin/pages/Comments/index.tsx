@@ -5,15 +5,12 @@ import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction, Tip } from './style';
-import GHAT from '@blog/client/libs/generate-avatar';
-import { md5 } from '@blog/client/admin/utils/crypto.util';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
-
-const ghat = new GHAT();
 
 export default () => {
     const [state, setState] = useState({
@@ -195,7 +192,7 @@ export default () => {
                                             </Tip>
                                             <ReplyListItem>
                                                 <UserAvatar>
-                                                    <img src={ghat.getImage(md5(record.reply.nickName).toString())} />
+                                                    <img src={gernateAvatarImage(record.reply.nickName)} />
                                                 </UserAvatar>
                                                 <ReplyContent>
                                                     <ReplyInfo>

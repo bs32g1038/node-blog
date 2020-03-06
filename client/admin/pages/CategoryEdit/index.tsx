@@ -30,7 +30,6 @@ export default () => {
             Router.push('/admin/content/categories');
         });
     };
-    const { id } = router.query;
     return (
         <BasicLayout>
             <div className="main-content">
