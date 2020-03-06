@@ -165,7 +165,9 @@
       "!./server/database/database.module.ts",
       "!./server/site-config/site.config.module.ts",
       "!./server/modules/write.day.reading.module.ts",
-      "!./server/joi/schemas/**"
+      "!./server/joi/schemas/**",
+      "!./server/modules/demo/**",
+      "!./server/modules/about/**"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": [
