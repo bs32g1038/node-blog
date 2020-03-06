@@ -108,7 +108,12 @@ const Item: SFC<{ item: any }> = (props: any) => {
                         <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
                         {item.tags.map((name: any) => (
                             <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_uid' + name}>
-                                <UiLink textTransform="capitalize" color="theme.articles.secondaryText" ml={2}>
+                                <UiLink
+                                    fontSize={rem(14)}
+                                    ml={2}
+                                    textTransform="capitalize"
+                                    color="theme.articles.secondaryText"
+                                >
                                     {name}
                                 </UiLink>
                             </Link>
