@@ -78,6 +78,7 @@ const Div = styled.div`
     a {
         color: rgb(239, 112, 96);
         text-decoration: none;
+        word-break: break-all;
     }
     a:hover {
         text-decoration: underline;

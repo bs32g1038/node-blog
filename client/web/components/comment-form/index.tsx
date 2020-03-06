@@ -74,7 +74,7 @@ export const CommentForm = (props: Props) => {
             setUserInfo(data);
         } else {
             const ids = uuidv4().split('-');
-            const nickName = 'visitor_' + ids[0] + ids[1];
+            const nickName = '游客_' + ids[0] + ids[1];
             const data = {
                 nickName,
                 email: 'visitor@lizc.email',
@@ -154,10 +154,11 @@ export const CommentForm = (props: Props) => {
                     游客账户：
                 </Text>
                 <Avatar
+                    p={1}
                     borderRadius="md"
                     size="xs"
-                    name="Dan Abrahmov"
                     backgroundColor="theme.blackground"
+                    name={userInfo.nickName}
                     src={gernateAvatarImage(userInfo.nickName) || ''}
                 />
                 <Text fontSize={rem(14)} ml={2}>
@@ -221,11 +222,11 @@ export const CommentForm = (props: Props) => {
                     <Flex
                         flexDirection={['column', 'row']}
                         justifyContent="space-between"
-                        fontSize={rem(16)}
+                        fontSize={rem(14)}
                         alignItems="center"
                     >
                         <Text as="span" mb={['10px', '0']}>
-                            🚀support markdown (*￣▽￣*)ブ
+                            🚀 支持markdown语法
                         </Text>
                         <ButtonGroup spacing={4} color="theme.primaryText">
                             <Button

@@ -49,7 +49,12 @@ export default (props: Props) => {
                     </Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem isCurrentPage={true}>
-                    <BreadcrumbLink isTruncated={true} maxW="450px" color="theme.secondaryText">
+                    <BreadcrumbLink
+                        isTruncated={true}
+                        maxW={['200px', '430px']}
+                        width="100%"
+                        color="theme.secondaryText"
+                    >
                         {article.title}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
