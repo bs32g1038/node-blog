@@ -52,7 +52,11 @@ describe('user.module.e2e', () => {
             .put('/api/user/reset-password')
             .set('authorization', __TOKEN__)
             .send({
-                password: encrypt('password'),
+                key: encrypt(
+                    JSON.stringify({
+                        password: 'password',
+                    })
+                ),
             })
             .expect(200);
     });
