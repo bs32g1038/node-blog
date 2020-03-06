@@ -22,7 +22,10 @@
         "jsx": "preserve",
         "isolatedModules": false,
         "outDir": "./dist",
-        "baseUrl": "./"
+        "baseUrl": "./",
+        "paths": {
+            "@blog/*": ["./*"]
+        }
     },
     "exclude": ["node_modules", ".next", "static", "public", "assets", "node_modules", "dist", "test"],
     "include": ["server/*.ts", "scripts"]

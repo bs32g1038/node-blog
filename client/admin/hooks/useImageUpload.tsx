@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
-import config from '@blog/client/admin/configs/default.config';
+import config from '@blog/client/configs/admin.default.config';
 
 function beforeUpload(file) {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png';

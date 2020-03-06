@@ -19,9 +19,9 @@ import Emoji from './emoji';
 import { debounce } from 'lodash';
 import { USER_COMMENT_INFO_KEY } from './constant';
 import MarkdownBody from '../markdown-body';
-import axios from '../../utils/axios';
-import { gernateAvatarImage } from '../../utils/helper';
-import marked from '../../../libs/marked';
+import axios from '@blog/client/web/utils/axios';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
+import marked from '@blog/client/libs/marked';
 import { rem } from 'polished';
 
 interface Props {

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { DashboardModule } from '../../server/modules/dashboard.module';
+import { DashboardModule } from '@blog/server/modules/dashboard/dashboard.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 

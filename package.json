@@ -11,10 +11,10 @@
   "scripts": {
     "init:dev:data": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist/scripts/init_faker_data.js",
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
-    "dev:server": "cross-env NODE_ENV=development concurrently --handle-input \"wait-on dist/server/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
-    "dev:web": "cross-env NODE_ENV=development node client/dev.server.js",
+    "dev:server": "cross-env NODE_ENV=development nest start --watch",
+    "dev:web": "cross-env NODE_ENV=development ts-node -P tsconfig.build.json client/dev.server.ts",
     "build": "concurrently \"npm run build:server\" \" npm run build:web \"",
-    "build:server": "rimraf dist && tsc -p tsconfig.build.json",
+    "build:server": "rimraf dist && cross-env NODE_ENV=production nest build",
     "build:web": "next build",
     "start:prod": "cross-env NODE_ENV=production node dist/server/main.js",
     "lint": "eslint **/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
@@ -61,6 +61,7 @@
     "@chakra-ui/core": "^0.6.1",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@nestjs/cli": "^6.14.2",
     "@nestjs/testing": "^6.11.11",
     "@reduxjs/toolkit": "^1.2.5",
     "@types/cheerio": "^0.22.16",
@@ -137,6 +138,9 @@
     "wait-on": "^4.0.1"
   },
   "jest": {
+    "moduleNameMapper": {
+      "^@blog/(.*)$": "<rootDir>/$1"
+    },
     "moduleFileExtensions": [
       "js",
       "json",

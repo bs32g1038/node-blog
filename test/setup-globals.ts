@@ -1,4 +1,4 @@
-import { MONGODB } from '../server/configs/index.config';
+import { MONGODB } from '@blog/server/configs/index.config';
 import mongoose from 'mongoose';
 
 module.exports = async () => {

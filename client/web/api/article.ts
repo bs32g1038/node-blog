@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import axios from '../utils/axios';
+import axios from '@blog/client/web/utils/axios';
 
 export const fetchArticles = (page = 1, limit = 10, filter: { cid: string; tag: string }) => {
     const query: any = { limit, page };

@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from '@blog/client/web/utils/axios';
 
 export default class About {
     public static fetchUserProfile(username: string) {

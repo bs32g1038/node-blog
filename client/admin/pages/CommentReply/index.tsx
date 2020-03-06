@@ -4,7 +4,7 @@ import { parseTime } from '@blog/client/libs/time';
 import marked from '@blog/client/libs/marked';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [comment, setComment] = useState({

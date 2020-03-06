@@ -119,7 +119,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
                         <img
-                            src="https://www.vultr.com/media/banners/banner_300x250.png"
+                            src={require('@blog/client/assets/banners/vultr_banner_300x250.png')}
                             style={{
                                 width: '200px',
                                 border: '1px solid #ccc',

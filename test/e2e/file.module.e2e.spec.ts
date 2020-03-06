@@ -1,11 +1,11 @@
 import request from 'supertest';
-import { FileModule } from '../../server/modules/file.module';
+import { FileModule } from '@blog/server/modules/file/file.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, isExpectPass, generateDataList, closeApp } from '../util';
 import { getFile, getObjectId } from '../faker';
 import { FileModel, clearModelCollectionData } from '../models';
 import path from 'path';
-import { rootPath } from '../../server/utils/path.util';
+import { rootPath } from '@blog/server/utils/path.util';
 import queryString from 'query-string';
 
 const resolve = (str: string) => {

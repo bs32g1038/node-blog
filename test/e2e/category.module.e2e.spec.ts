@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { CategoryModule } from '../../server/modules/category.module';
+import { CategoryModule } from '@blog/server/modules/category/category.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { getCategory, getObjectId } from '../faker';

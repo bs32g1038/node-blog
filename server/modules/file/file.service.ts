@@ -6,7 +6,7 @@ import multr from 'multer';
 import { MulterModule } from '@nestjs/platform-express';
 import { md5 } from '../../utils/crypto.util';
 import { creteUploadFile } from '../../utils/upload.util';
-import { getConfig } from '../../site-config/site.config.module';
+import { getConfig } from '@blog/server/configs/site.config.module';
 
 MulterModule.register({
     storage: multr.memoryStorage(),

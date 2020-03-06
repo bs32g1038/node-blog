@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { CommentModule } from '../../server/modules/comment.module';
+import { CommentModule } from '@blog/server/modules/comment/comment.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { getComment, getArticle, getObjectId } from '../faker';

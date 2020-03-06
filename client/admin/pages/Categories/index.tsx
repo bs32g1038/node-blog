@@ -5,8 +5,8 @@ import { Table, Button, Popconfirm, message } from 'antd';
 import Router from 'next/router';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
-import useRequest from '../../hooks/useRequest';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import useRequest from '@blog/client/admin/hooks/useRequest';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [state, setState] = useState({

@@ -7,11 +7,11 @@ import ArticleItem from './item';
 import Pagination from '@blog/client/web/components/pagination';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useFetchArticles } from '@blog/client/web/hooks/useFetchArticles';
-import { fetchArticles } from '@blog/client/web/redux/reducers/articles';
-import { fetchCategories } from '@blog/client/web/redux/reducers/categories';
+import { fetchArticles } from '@blog/client/redux/reducers/articles';
+import { fetchCategories } from '@blog/client/redux/reducers/categories';
 import { isServer } from '@blog/client/web/utils/helper';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 const Page = () => {
     const { page, items, totalCount, isLoading, limit } = useFetchArticles();

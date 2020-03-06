@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { isArray } from 'lodash';
-import { fetchArticles, getArticlesCacheKey, setArticles } from '../redux/reducers/articles';
-import { RootState } from '../redux/store';
+import { fetchArticles, getArticlesCacheKey, setArticles } from '@blog/client/redux/reducers/articles';
+import { RootState } from '@blog/client/redux/store';
 import { useEffect } from 'react';
 import { isEqual } from 'lodash';
 

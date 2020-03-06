@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 import styled from '@emotion/styled';
 import InfoForm from './InfoForm';
 import PasswordForm from './PasswordForm';

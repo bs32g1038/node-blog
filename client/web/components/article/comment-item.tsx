@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Collapse, Box, Badge, Text, Flex, Image } from '@chakra-ui/core';
 import { css } from 'emotion';
-import marked from '../../../libs/marked';
-import { timeAgo } from '../../../libs/time';
+import marked from '@blog/client/libs/marked';
+import { timeAgo } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
 import MarkdownBody from '../markdown-body';
-import { gernateAvatarImage } from '../../utils/helper';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { rem } from 'polished';
 
 const ItemContent = styled(MarkdownBody)`

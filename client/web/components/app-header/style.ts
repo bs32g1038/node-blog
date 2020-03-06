@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
 import { Link } from '@chakra-ui/core';
-import siteitlefont from './siteitlefont';
 
 export const HomeNav: any = styled(Link)`
+    @font-face {
+        font-family: 'logoFont';
+        src: url(${require('@blog/client/assets/fonts/ZiXinFangMengTi-subfont.ttf')}) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
     display: flex;
     text-decoration: none;
     color: inherit;
@@ -10,7 +15,9 @@ export const HomeNav: any = styled(Link)`
     align-items: center;
     cursor: pointer;
     font-weight: 600;
-    ${siteitlefont}
+    h1 {
+        font-family: logoFont;
+    }
     img {
         margin-right: 8px;
     }

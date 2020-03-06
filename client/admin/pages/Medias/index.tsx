@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
-import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
-import config from '@blog/client/admin/configs/default.config';
+import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
+import config from '@blog/client/configs/admin.default.config';
 import Clipboard from 'clipboard';
 import { Row, Button, Popconfirm, message, Alert, Pagination, Card } from 'antd';
 import { MediaListRow, WrapCard } from './style';
 import { EyeFilled, CopyFilled, DeleteFilled } from '@ant-design/icons';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 const { Meta } = Card;
 
 export default () => {

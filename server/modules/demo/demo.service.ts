@@ -5,7 +5,7 @@ import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import shelljs from 'shelljs';
-import { getConfig } from '../../site-config/site.config.module';
+import { getConfig } from '@blog/server/configs/site.config.module';
 import { publicPath } from '../../utils/path.util';
 
 @Injectable()

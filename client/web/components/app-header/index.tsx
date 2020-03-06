@@ -1,13 +1,13 @@
 import { css } from 'emotion';
 import React from 'react';
-import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Image } from '@chakra-ui/core';
+import { Link as UiLink, Flex, Heading, useColorMode, Button, Box } from '@chakra-ui/core';
 import Link from '../link';
 import Icon from '../icon';
 import NavLink from '../nav-link';
 import { HomeNav, NavA } from './style';
 import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 export const AppHeader = () => {
     const { colorMode, toggleColorMode } = useColorMode();

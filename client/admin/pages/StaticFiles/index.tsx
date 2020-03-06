@@ -5,7 +5,7 @@ import { parseTime } from '@blog/client/libs/time';
 import Clipboard from 'clipboard';
 import { InboxOutlined } from '@ant-design/icons';
 import { Table, Button, Popconfirm, message, Upload, Modal } from 'antd';
-import config from '@blog/client/admin/configs/default.config';
+import config from '@blog/client/configs/admin.default.config';
 import { PanelDiv } from '@blog/client/admin/styles';
 import {
     CloudUploadOutlined,
@@ -15,7 +15,7 @@ import {
     FileFilled,
     VideoCameraOutlined,
 } from '@ant-design/icons';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [state, setState] = useState({

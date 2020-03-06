@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { AdminLogModule } from '../../server/modules/adminlog.module';
+import { AdminLogModule } from '@blog/server/modules/adminlog/adminlog.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 

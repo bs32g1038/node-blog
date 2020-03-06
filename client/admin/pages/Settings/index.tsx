@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 import { Button, Form, Input, message } from 'antd';
 import { Wrap, Tip } from './style';
 import { useForm } from 'antd/lib/form/util';
-import axios from '../../axios';
+import axios from '@blog/client/admin/axios';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 
 const fetchConfig = () => {

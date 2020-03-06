@@ -6,7 +6,7 @@ import UiLink from '../ui-link';
 import Icon from '../icon';
 import Trend from '../Trend';
 import { LazyLoad } from '../lazy-load';
-import { parseTime } from '../../../libs/time';
+import { parseTime } from '@blog/client/libs/time';
 import ListStyleLoader from '../list-style-loader';
 import { rem } from 'polished';
 

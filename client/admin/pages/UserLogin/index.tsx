@@ -1,11 +1,13 @@
 import React from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
-import config from '@blog/client/admin/configs/default.config';
+import config from '@blog/client/configs/admin.default.config';
 import { Input, Button, Alert, message, Form } from 'antd';
-import { encrypt } from '@blog/client/admin/utils/crypto-js';
+import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import { SignIn, SignInMain, SignInPanel, SignInHeader, SignInTitle } from './style';
 import useRequest from '@blog/client/admin/hooks/useRequest';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
 
 const FirstLoginInfoTip = () => {
     const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
@@ -14,6 +16,7 @@ const FirstLoginInfoTip = () => {
 };
 
 export default () => {
+    const appConfig = useSelector((state: RootState) => state.app.config);
     const handleLogin = data => {
         const str = encrypt(JSON.stringify(data));
         axios.post('/login', { key: str }).then(res => {
@@ -27,9 +30,9 @@ export default () => {
         <SignIn>
             <SignInMain>
                 <div className="header">
-                    <img className="brand" src={require('@blog/client/admin/assets/logo.svg')} alt="" />
+                    <img className="brand" src={appConfig.siteLogo} alt="" />
                     <div className="header-title">
-                        <h2>{config.title}</h2>
+                        <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>
                     </div>
                 </div>
@@ -67,7 +70,7 @@ export default () => {
                 <div className="nodeblog">
                     Powered by
                     <a
-                        href={config.siteInfo.domain}
+                        href={appConfig.siteDomain}
                         title="轻量级nodeblog博客系统"
                         rel="noopener noreferrer"
                         target="_blank"

@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { Table, Button, Collapse, message, Form, Input, TimePicker } from 'antd';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { EyeFilled, SettingOutlined, ForkOutlined } from '@ant-design/icons';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 import { ConfigWrap } from './style';
 import { useForm } from 'antd/lib/form/util';
 

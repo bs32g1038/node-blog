@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import media from '../../utils/media';
+import media from '@blog/client/web/utils/media';
 import NavLink from '../nav-link';
 import BackTopBtn from '../back-top-button';
 import BlogRuningTime from '../blog-runing-time';
@@ -9,7 +9,7 @@ import UiLink from '../ui-link';
 import Icon from '../icon';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 const MobileTabbar = styled(Box)`
     position: fixed;
@@ -125,16 +125,16 @@ export const AppFooter = () => {
                 <Flex justifyContent="space-between" flexDirection="column">
                     <Flex alignItems="center">
                         <UiLink href="https://nestjs.com" isExternal={true}>
-                            <LibLogo src={require('../../assets/svgs/logo-nestjs.svg')} />
+                            <LibLogo src={require('@blog/client/assets/svgs/logo-nestjs.svg')} />
                         </UiLink>
                         <UiLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('../../assets/svgs/logo-react.svg')} />
+                            <LibLogo src={require('@blog/client/assets/svgs/logo-react.svg')} />
                         </UiLink>
                         <UiLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('../../assets/svgs/logo-nodejs.svg')} />
+                            <LibLogo src={require('@blog/client/assets/svgs/logo-nodejs.svg')} />
                         </UiLink>
                         <UiLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('../../assets/svgs/logo-ant-design.svg')} />
+                            <LibLogo src={require('@blog/client/assets/svgs/logo-ant-design.svg')} />
                         </UiLink>
                     </Flex>
                     <Divider />

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { DemoModule } from '../../server/modules/demo.module';
+import { DemoModule } from '@blog/server/modules/demo/demo.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 

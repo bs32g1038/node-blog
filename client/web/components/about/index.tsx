@@ -7,7 +7,7 @@ import { Box } from '@chakra-ui/core';
 import Head from 'next/head';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 const totalContributionLastYear = (data.userCommits && data.userCommits.total) || 0;
 const values = data.userCommits.contribution.map(item => {

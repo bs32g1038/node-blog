@@ -3,7 +3,7 @@ import { Flex, Box, Heading, Text } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 interface UserRepoItem {
     name: string;

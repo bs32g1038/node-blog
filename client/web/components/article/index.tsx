@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
-import { fetchArticle, fetchRecentArticle } from '../../redux/reducers/article';
+import { RootState } from '@blog/client/redux/store';
+import { fetchArticle, fetchRecentArticle } from '@blog/client/redux/reducers/article';
 import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
-import AppLayout from '../../layouts/app';
+import AppLayout from '@blog/client/web/layouts/app';
 import { Flex } from '@chakra-ui/core';
-import { isServer } from '../../utils/helper';
+import { isServer } from '@blog/client/web/utils/helper';
 
 const Page = () => {
     const config = useSelector((state: RootState) => state.app.config);

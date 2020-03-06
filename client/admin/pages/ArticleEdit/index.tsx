@@ -7,7 +7,7 @@ import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
 import { Header, EditorWrap } from './style';
 import Drawer from './Drawer';
 import Link from 'next/link';
-import { isLogin } from '@blog/client/admin/utils/is-login';
+import { isLogin } from '@blog/client/admin/api/is.login.api';
 
 const { TextArea } = Input;
 

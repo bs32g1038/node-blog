@@ -1,6 +1,6 @@
 import useSWR, { ConfigInterface, responseInterface } from 'swr';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import axios from '../axios';
+import axios from '@blog/client/admin/axios';
 
 export type GetRequest = AxiosRequestConfig | null;
 

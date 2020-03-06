@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 const MdEdit = dynamic(() => import('@blog/client/admin/components/MdEdit'), { ssr: false });
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const [demo, setDemo] = useState({

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 export default () => {
     const router = useRouter();

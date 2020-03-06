@@ -2,10 +2,8 @@ import React from 'react';
 import { Card } from 'antd';
 import styled from '@emotion/styled';
 import marked from '@blog/client/libs/marked';
-import GHAT from '@blog/client/libs/generate-avatar';
-import { md5 } from '@blog/client/admin/utils/crypto-js';
+import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { timeAgo } from '@blog/client/libs/time';
-const ghat = new GHAT();
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 const RecentCommentListCard = styled(Card)`
@@ -180,7 +178,7 @@ export default (props: Props) => {
                             </TimestampSpan>
                         </CommentInfoDiv>
                         <div className="random-logo">
-                            <CommentLogoImg src={ghat.getImage(md5(item.nickName).toString()) || ''} />
+                            <CommentLogoImg src={gernateAvatarImage(item.nickName) || ''} />
                         </div>
                         <CommentTextDiv>
                             <div

@@ -3,11 +3,11 @@ import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
-import scrollIntoView from '@blog/client/admin/utils/scroll-into-view';
+import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 const PanelDiv = styled.div`
     margin-bottom: 20px;

@@ -3,7 +3,7 @@ import { Text, Flex, Heading, Box, Image, Divider } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/web/redux/store';
+import { RootState } from '@blog/client/redux/store';
 
 interface Props {
     statusCode: number;
@@ -11,7 +11,7 @@ interface Props {
 
 const Error = (props: Props) => {
     const { statusCode } = props;
-    const config = useSelector((state: RootState) => state.app.config);
+    const appConfig = useSelector((state: RootState) => state.app.config);
 
     return (
         <Flex
@@ -28,7 +28,7 @@ const Error = (props: Props) => {
             <Box>
                 <Flex alignItems="center">
                     <Box mt={3}>
-                        <Image mr={3} src={require('../../assets/svgs/logo.svg')} size="80px"></Image>
+                        <Image mr={3} src={appConfig.siteLogo} size="80px"></Image>
                     </Box>
                     {statusCode >= 400 && statusCode < 500 ? (
                         <Box maxW="450px">
@@ -44,7 +44,7 @@ const Error = (props: Props) => {
                             <Heading as="h3" fontSize={rem(24)} fontWeight={500} mb={2}>
                                 服务器内部发生错误。
                             </Heading>
-                            抱歉带给您糟糕的体验, 恳请您发送 Email 到 {config.email}, 我们将在第一时间修复。
+                            抱歉带给您糟糕的体验, 恳请您发送 Email 到 {appConfig.email}, 我们将在第一时间修复。
                         </Box>
                     )}
                 </Flex>
@@ -53,10 +53,16 @@ const Error = (props: Props) => {
             <Box fontSize={rem(14)} color="rgba(0, 0, 0, 0.45)">
                 <span>Copyright © 2016-2019</span>
                 <UiLink color="rgba(0, 0, 0, 0.45)" href="/blog" fontSize={rem(14)} ml={1}>
-                    {config.siteTitle}
+                    {appConfig.siteTitle}
                 </UiLink>
-                <UiLink fontSize={rem(14)} ml={1} color="rgba(0, 0, 0, 0.45)" href={config.icpGovCn} isExternal={true}>
-                    <span className="icon-icp"></span> {config.siteIcp}
+                <UiLink
+                    fontSize={rem(14)}
+                    ml={1}
+                    color="rgba(0, 0, 0, 0.45)"
+                    href={appConfig.icpGovCn}
+                    isExternal={true}
+                >
+                    <span className="icon-icp"></span> {appConfig.siteIcp}
                 </UiLink>
             </Box>
         </Flex>

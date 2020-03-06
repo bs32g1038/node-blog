@@ -1,7 +1,7 @@
-import { json } from 'body-parser';
 import helmet from 'helmet';
-import favicon from 'serve-favicon';
 import log4js from 'log4js';
+import { json } from 'body-parser';
+import favicon from 'serve-favicon';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import marked from '@blog/client/libs/marked';
-import axios from '../../axios';
+import axios from '@blog/client/admin/axios';
 import CM from 'codemirror';
 import { WrapDiv } from './style';
 import MarkdownBody from './markdown-body';

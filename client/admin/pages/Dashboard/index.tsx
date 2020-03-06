@@ -5,7 +5,7 @@ import RecentCommentList from './RecentCommentList';
 import NavPanel from './NavPanel';
 import LoginLogPanel from './LoginLogPanel';
 import { PlusOutlined, CommentOutlined, EditFilled } from '@ant-design/icons';
-import BasicLayout from '@blog/client/admin/layouts/BasicLayout';
+import BasicLayout from '@blog/client/admin/layouts';
 
 const links = [
     {

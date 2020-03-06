@@ -1,10 +1,10 @@
 import React from 'react';
-import { pathToRegexp } from 'path-to-regexp';
-import { urlToList } from '@blog/client/admin/utils/path-tools';
-import menu from '../../configs/menu-config';
-import { useRouter } from 'next/router';
 import { Breadcrumb } from 'antd';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { pathToRegexp } from 'path-to-regexp';
+import { urlToList } from '@blog/client/admin/utils/url.util';
+import menu from '@blog/client/configs/admin.menu.config';
 
 export const getFlatMenuKeys = (menuData = []) => {
     let keys = [];

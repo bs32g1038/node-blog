@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '../../redux/reducers/categories';
-import { RootState } from '../../redux/store';
+import { fetchCategories } from '@blog/client/redux/reducers/categories';
+import { RootState } from '@blog/client/redux/store';
 import NavLink from '../nav-link';
 import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
 import { useRouter } from 'next/router';

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { RssModule } from '../../server/modules/rss.module';
+import { RssModule } from '@blog/server/modules/rss/rss.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 
