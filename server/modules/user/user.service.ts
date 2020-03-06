@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { UserDocument, UserModel } from '../../models/user.model';
 import { Model } from 'mongoose';
 import { InjectModel } from '../../utils/model.util';
-import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 
 @Injectable()
 export class UserService {
@@ -17,7 +16,6 @@ export class UserService {
     }
 
     async resetPasswordByAccount(account: string, password: string) {
-        const p = getDerivedKey(decrypt(password));
-        return this.userModel.updateOne({ account }, { password: p });
+        return this.userModel.updateOne({ account }, { password });
     }
 }

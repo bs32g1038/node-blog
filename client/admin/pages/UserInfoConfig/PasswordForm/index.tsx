@@ -29,9 +29,8 @@ export default () => {
             style={{ maxWidth: '540px', margin: '0 auto', width: '100%' }}
             onFinish={data => {
                 const password = data.password;
-                resetPassword({
-                    password: encrypt(password),
-                }).then(() => {
+                const str = encrypt(JSON.stringify({ password }));
+                resetPassword({ key: str }).then(() => {
                     message.success('更改密码成功！');
                 });
             }}
