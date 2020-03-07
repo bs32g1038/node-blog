@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
 import { Collapse, Box, Text, Flex, Image, Icon } from '@chakra-ui/core';
 import { css } from 'emotion';
 import marked from '@blog/client/libs/marked';
@@ -8,13 +7,6 @@ import { CommentForm } from '../comment-form';
 import MarkdownBody from '../markdown-body';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { rem } from 'polished';
-
-const ItemContent = styled(MarkdownBody)`
-    font-size: 16px;
-    line-height: 1.8;
-    word-break: break-all;
-    word-wrap: break-word;
-`;
 
 const getBadgeVisitorOrAuthor = identity => {
     return identity !== 0 ? <Icon name="star" mr={2} fill="theme.primaryText"></Icon> : null;
@@ -51,7 +43,7 @@ const replyFn = (item: any) => {
                 </Box>
             </Flex>
             <Collapse mt={4} isOpen={showContent}>
-                <ItemContent content={marked(item.content)}></ItemContent>
+                <MarkdownBody content={marked(item.content)}></MarkdownBody>
             </Collapse>
         </Box>
     );
@@ -99,13 +91,7 @@ export const CommentItem = (props: { item: any; index: number }) => {
                 <Box width="100%">
                     <Flex justifyContent="space-between" alignItems="center">
                         <Flex alignItems="center">
-                            <Box
-                                color="theme.primaryText"
-                                fontWeight="bold"
-                                isTruncated={true}
-                                maxW={['100px', '180px']}
-                                mr={2}
-                            >
+                            <Box color="theme.primaryText" fontWeight="bold" isTruncated={true} mr={2}>
                                 {item.nickName}
                             </Box>
                             {getBadgeVisitorOrAuthor(item.identity)}
@@ -114,17 +100,17 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         <Flex
                             userSelect="none"
                             alignItems="center"
-                            color="red.500"
+                            color="theme.secondaryText"
                             cursor="pointer"
                             comment-id={item._id}
                             onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
                         >
-                            <Icon name="edit" mr={1}></Icon>回复
+                            <Icon name="chat" fontSize={14} mr={1}></Icon>回复
                         </Flex>
                     </Flex>
                     {item.reply && replyFn(item.reply)}
-                    <Box color="theme.primaryText" mt={rem(10)}>
-                        <ItemContent content={marked(item.content)}></ItemContent>
+                    <Box color="theme.primaryText" mt={rem(6)}>
+                        <MarkdownBody content={marked(item.content)}></MarkdownBody>
                     </Box>
                     <Box mt={3}>
                         {showCommentForm === item._id && (
