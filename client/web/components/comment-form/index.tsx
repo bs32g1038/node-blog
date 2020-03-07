@@ -98,6 +98,8 @@ export const CommentForm = (props: Props) => {
         }
         if (!isLength(data.content, { min: 6 })) {
             return setErrorMessage('最少输入6个字符！');
+        } else if (!isLength(data.content, { max: 490 })) {
+            return setErrorMessage('最多只能输入490个字符！');
         }
         setButtonLoading(true);
         axios
