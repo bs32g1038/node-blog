@@ -14,15 +14,19 @@ import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/ico
 export default () => {
     const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
     const appConfig = useSelector((state: RootState) => state.app.config);
-    const { loading, injectRequestLoading } = useRequestLoading();
+    const { loading, setLoading, injectRequestLoading } = useRequestLoading();
     const handleLogin = data => {
         const str = encrypt(JSON.stringify(data));
-        injectRequestLoading(axios.post('/login', { key: str })).then(res => {
-            message.success('登陆成功！');
-            localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
-            localStorage.setItem(config.tokenKey, res.data.token);
-            Router.push('/admin/dashboard');
-        });
+        injectRequestLoading(axios.post('/login', { key: str }))
+            .then(res => {
+                message.success('登陆成功！');
+                localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
+                localStorage.setItem(config.tokenKey, res.data.token);
+                Router.push('/admin/dashboard');
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     };
     return (
         <SignIn>
