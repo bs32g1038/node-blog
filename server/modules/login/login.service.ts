@@ -7,6 +7,7 @@ import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 import { UserDocument, UserModel, UserJoiSchema } from '../../models/user.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
+import userDefaultData from '@blog/data/user.default.data';
 
 @Injectable()
 export class LoginService {
@@ -30,6 +31,7 @@ export class LoginService {
 
     async login(data) {
         const U = JSON.parse(decrypt(data.key));
+        const userName = U.userName;
         const account = U.account;
         const password = U.password;
         const count = await this.userModel.countDocuments({});
@@ -43,13 +45,19 @@ export class LoginService {
                     '你是首次登陆，该账号将为你的管理员账号，请务必记住！' + result.error.message
                 );
             }
-            await this.userModel.create({
+            const user = await this.userModel.create({
+                userName,
                 account,
+                avatar: userDefaultData.avatar,
                 password: getDerivedKey(password),
             });
             return {
+                userName: user.userName,
+                avatar: user.avatar,
+                email: user.email,
+                account,
                 token: jwt.sign({ account, roles: ['admin'] }, TOKEN_SECRET_KEY, {
-                    expiresIn: 60 * 60 * 12,
+                    expiresIn: 60 * 60,
                 }),
             };
         }

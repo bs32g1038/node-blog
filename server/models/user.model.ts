@@ -22,6 +22,11 @@ export interface UserDocument extends User, Document {
 }
 
 export const UserJoiSchema = {
+    userName: Joi.string()
+        .min(1)
+        .max(30)
+        .required()
+        .error(new Error('用户名长度在1-30之间！')),
     account: Joi.string()
         .min(6)
         .max(30)

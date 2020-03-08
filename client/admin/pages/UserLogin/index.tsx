@@ -6,20 +6,18 @@ import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import { SignIn, SignInMain, SignInPanel, SignInHeader, SignInTitle } from './style';
 import useRequest from '@blog/client/admin/hooks/useRequest';
+import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
-
-const FirstLoginInfoTip = () => {
-    const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
-    if (!data) return null;
-    return <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />;
-};
+import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 
 export default () => {
+    const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
     const appConfig = useSelector((state: RootState) => state.app.config);
+    const { loading, injectRequestLoading } = useRequestLoading();
     const handleLogin = data => {
         const str = encrypt(JSON.stringify(data));
-        axios.post('/login', { key: str }).then(res => {
+        injectRequestLoading(axios.post('/login', { key: str })).then(res => {
             message.success('登陆成功！');
             localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
             localStorage.setItem(config.tokenKey, res.data.token);
@@ -40,28 +38,39 @@ export default () => {
                     <SignInHeader>
                         <SignInTitle className="sign-in-title">后台登陆</SignInTitle>
                     </SignInHeader>
-                    <FirstLoginInfoTip />
+                    {data && <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />}
                     <Form onFinish={handleLogin} className="login-form">
+                        {data && (
+                            <Form.Item
+                                name="userName"
+                                label="用户名："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                                rules={[{ required: true, message: 'Please input your userName!' }]}
+                            >
+                                <Input prefix={<AliwangwangOutlined />} placeholder="请输入用户名" />
+                            </Form.Item>
+                        )}
                         <Form.Item
                             name="account"
                             label="账号："
                             labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                            rules={[{ required: true, message: 'Please input your account!' }]}
                         >
-                            <Input placeholder="请输入账户" />
+                            <Input prefix={<UserOutlined />} placeholder="请输入账户" />
                         </Form.Item>
                         <Form.Item
                             name="password"
                             label="密码："
                             labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
-                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                            rules={[{ required: true, message: 'Please input your password!' }]}
                         >
-                            <Input type="password" placeholder="请填写密码" />
+                            <Input prefix={<LockOutlined />} type="password" placeholder="请填写密码" />
                         </Form.Item>
                         <Form.Item label="操作：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
+                            <Button loading={loading} type="primary" htmlType="submit" className="login-form-button">
                                 登陆
                             </Button>
                         </Form.Item>
