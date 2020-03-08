@@ -44,7 +44,6 @@ export class UserController {
     async resetPassword(@Req() req: Request, @Body() body) {
         const user: any = auth(req);
         if (user) {
-            console.log(body.key);
             const { error } = Joi.string()
                 .min(1)
                 .max(250)
