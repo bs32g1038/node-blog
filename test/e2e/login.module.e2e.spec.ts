@@ -27,7 +27,7 @@ describe('login.module.e2e', () => {
     test('bad request, first login, try use empty account', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: '', password: 'admin_password' })) })
+            .send({ key: encrypt(JSON.stringify({ userName: 'test', account: '', password: 'admin_password' })) })
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
@@ -40,7 +40,7 @@ describe('login.module.e2e', () => {
     test('bad request, first login, try use empty password', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: '' })) })
+            .send({ key: encrypt(JSON.stringify({ userName: 'test', account: 'admin_account', password: '' })) })
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
@@ -53,7 +53,11 @@ describe('login.module.e2e', () => {
     test('first login success', async () => {
         return request(app.getHttpServer())
             .post('/api/login')
-            .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: 'admin_password' })) })
+            .send({
+                key: encrypt(
+                    JSON.stringify({ userName: 'test', account: 'admin_account', password: 'admin_password' })
+                ),
+            })
             .expect(201)
             .then(res => {
                 expect(!verifyToken(res.body.token)).toBe(false);
