@@ -1,4 +1,7 @@
-import { isEmpty } from 'lodash';
+import fs from 'fs';
+import util from 'util';
+import mongoose from 'mongoose';
+import { isEmpty, isEqual } from 'lodash';
 import Joi from '@blog/server/joi';
 import { Module, Global, Put } from '@nestjs/common';
 import { Controller, Get, UseGuards } from '@nestjs/common';
@@ -7,6 +10,7 @@ import { ConfigModel, Setting } from '@blog/server/models/config.model';
 import { JoiBody } from '@blog/server/decorators/joi.decorator';
 import { Roles } from '@blog/server/decorators/roles.decorator';
 import siteInfo from '@blog/data/site.config';
+import { publicPath } from '@blog/server/utils/path.util';
 
 import LRU from 'lru-cache';
 const cache = new LRU();
@@ -20,15 +24,18 @@ const config = {
 const CACHE_KEY = Symbol.for('app-config-cache-key');
 const CONFIG_KEY = 'app-config';
 
+export const getConfig = (): Setting => {
+    return cache.get(CACHE_KEY) as any;
+};
+
 export const updateConfig = async data => {
+    if (!isEqual(data.demoGit, getConfig().demoGit)) {
+        await util.promisify(fs.rename)(publicPath + '/demo', publicPath + '/' + mongoose.Types.ObjectId());
+    }
     await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
     const res = await ConfigModel.findOne({ key: CONFIG_KEY });
     cache.set(CACHE_KEY, res.toObject());
     return config;
-};
-
-export const getConfig = (): Setting => {
-    return cache.get(CACHE_KEY) as any;
 };
 
 const siteConfig = {

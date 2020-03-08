@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from '@blog/client/admin/axios';
-import queryString from 'query-string';
 import { Table, Button, Collapse, message, Form, Input, TimePicker } from 'antd';
 import { PanelDiv } from '@blog/client/admin/styles';
 import { EyeFilled, SettingOutlined, ForkOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
+import useRequest from '@blog/client/admin/hooks/useRequest';
+import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { ConfigWrap } from './style';
 import { useForm } from 'antd/lib/form/util';
 
@@ -20,68 +21,42 @@ const pullDemo = () => {
     return axios.post('/demo/git');
 };
 
+const getTableColums = () => {
+    return [
+        {
+            title: '名称',
+            dataIndex: 'name',
+        },
+        {
+            title: 'url',
+            dataIndex: 'url',
+        },
+        {
+            title: '操作',
+            key: 'operation',
+            width: 300,
+            render: (text, record) => (
+                <div>
+                    <Button
+                        target="_blank"
+                        type="primary"
+                        size="small"
+                        title="预览"
+                        href={'/blog/demos?name=' + record.name}
+                        icon={<EyeFilled />}
+                    >
+                        预览
+                    </Button>
+                </div>
+            ),
+        },
+    ];
+};
+
 export default () => {
-    const [state, setState] = useState({
-        demos: [],
-        pagination: { current: 1, total: 0 },
-        selectedRowKeys: [],
-        loading: false,
-        visible: false,
-    });
-    const fetchData = (page = 1, limit = 10) => {
-        setState(data => ({
-            ...data,
-            loading: true,
-        }));
-        const query = {
-            limit,
-            page,
-        };
-        axios.get('/demos?' + queryString.stringify(query)).then(res => {
-            const pagination = { ...state.pagination };
-            pagination.total = res.data.totalCount;
-            setState(data => ({
-                ...data,
-                demos: res.data.items,
-                loading: false,
-                pagination,
-            }));
-        });
-    };
-    useEffect(() => {
-        fetchData();
-    }, [1]);
-    const getTableColums = () => {
-        return [
-            {
-                title: '名称',
-                dataIndex: 'name',
-            },
-            {
-                title: 'url',
-                dataIndex: 'url',
-            },
-            {
-                title: '操作',
-                key: 'operation',
-                width: 300,
-                render: (text, record) => (
-                    <div>
-                        <Button
-                            target="_blank"
-                            type="primary"
-                            size="small"
-                            title="预览"
-                            href={'/blog/demos?name=' + record.name}
-                            icon={<EyeFilled />}
-                        >
-                            预览
-                        </Button>
-                    </div>
-                ),
-            },
-        ];
-    };
+    const { data, mutate } = useRequest<{ items: []; totalCount: number }>({ url: '/demos' });
+    const { loading, setLoading, injectRequestLoading } = useRequestLoading();
+
     const onFinish = values => {
         updateConfig(values).then(() => {
             message.success('更新成功');
@@ -91,7 +66,6 @@ export default () => {
         console.log('Failed:', errorInfo);
     };
     const [activePanel, setActivePanel] = useState('0');
-    const [isLoading, setLoading] = useState(false);
     const [form] = useForm();
     return (
         <BasicLayout>
@@ -114,17 +88,21 @@ export default () => {
                             配置demo
                         </Button>
                         <Button
-                            loading={isLoading}
                             type="primary"
+                            loading={loading}
+                            danger={true}
                             icon={<ForkOutlined />}
                             onClick={() => {
-                                setLoading(true);
-                                pullDemo().then(() => {
-                                    message.success('拉取成功');
-                                    setLoading(false);
-                                });
+                                injectRequestLoading(pullDemo())
+                                    .then(() => {
+                                        mutate();
+                                        message.success('拉取成功');
+                                    })
+                                    .catch(err => {
+                                        setLoading(false);
+                                        console.log(err);
+                                    });
                             }}
-                            danger={true}
                         >
                             拉取demo
                         </Button>
@@ -173,11 +151,9 @@ export default () => {
                     <Table
                         rowKey={record => record._id}
                         columns={getTableColums()}
-                        dataSource={state.demos}
-                        loading={state.loading}
-                        pagination={{
-                            showTotal: total => `共 ${total} 条数据`,
-                        }}
+                        dataSource={data && data.items}
+                        loading={!data}
+                        pagination={{ showTotal: total => `共 ${total} 条数据` }}
                     />
                 </div>
             </div>
