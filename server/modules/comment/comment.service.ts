@@ -59,7 +59,9 @@ export class CommentService {
     }
 
     async recentComments() {
-        return await this.commentModel.find({}, '', { limit: 10, createdAt: -1 });
+        return await this.commentModel
+            .find({}, '', { limit: 10, sort: { createdAt: -1 } })
+            .populate('article', 'title');
     }
 
     async batchDelete(commentIds: string[]) {

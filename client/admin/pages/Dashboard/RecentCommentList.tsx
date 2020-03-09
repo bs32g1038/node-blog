@@ -105,6 +105,9 @@ const CommentTextDiv = styled.div`
     background-color: #fff;
     background-color: rgba(0, 0, 0, 0.05);
     font-size: 14px;
+    img {
+        width: 100%;
+    }
     &:before,
     &:after {
         position: absolute;
