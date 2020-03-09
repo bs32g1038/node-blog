@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, Flex, Heading, Box, Image, Divider } from '@chakra-ui/core';
-import UiLink from '../ui-link';
+import { Text, Flex, Heading, Box, Image, Divider, Link } from '@chakra-ui/core';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
@@ -37,7 +36,10 @@ const Error = (props: Props) => {
                             </Heading>
                             <Text my={1}>可能是因为您的链接地址有误、或者该文章已经被作者删除。</Text>
                             <Text my={1}>您可以尝试</Text>
-                            <UiLink href="/">返回「李志成的个人网站」首页</UiLink>。
+                            <Link href="/" color="#1890ff">
+                                返回「李志成的个人网站」首页
+                            </Link>
+                            。
                         </Box>
                     ) : (
                         <Box maxW="450px">
@@ -51,19 +53,13 @@ const Error = (props: Props) => {
                 <Divider width="100%"></Divider>
             </Box>
             <Box fontSize={rem(14)} color="rgba(0, 0, 0, 0.45)">
-                <span>Copyright © 2016-2019</span>
-                <UiLink color="rgba(0, 0, 0, 0.45)" href="/blog" fontSize={rem(14)} ml={1}>
+                <span>Copyright © 2016-{new Date().getFullYear()}</span>
+                <Link color="rgba(0, 0, 0, 0.45)" href="/blog" fontSize={rem(14)} ml={1}>
                     {appConfig.siteTitle}
-                </UiLink>
-                <UiLink
-                    fontSize={rem(14)}
-                    ml={1}
-                    color="rgba(0, 0, 0, 0.45)"
-                    href={appConfig.icpGovCn}
-                    isExternal={true}
-                >
+                </Link>
+                <Link fontSize={rem(14)} ml={1} color="rgba(0, 0, 0, 0.45)" href={appConfig.icpGovCn} isExternal={true}>
                     <span className="icon-icp"></span> {appConfig.siteIcp}
-                </UiLink>
+                </Link>
             </Box>
         </Flex>
     );
