@@ -76,7 +76,7 @@ const NickName = styled.div`
 
 const CommentContentTitleA = styled.a`
     color: #878d99;
-    font-style: italic;
+
     max-width: 240px;
     display: block;
     overflow: hidden;
@@ -86,7 +86,6 @@ const CommentContentTitleA = styled.a`
 
 const TimestampSpan = styled.span`
     color: #878d99;
-    font-style: italic;
 `;
 
 const CommentLogoImg = styled.img`
@@ -157,7 +156,7 @@ export default (props: Props) => {
                                 </NickName>
                                 &nbsp;在&nbsp;
                                 <CommentContentTitleA
-                                    href={`/blog/articles/${item._id}`}
+                                    href={`/blog/articles/${item.article && item.article._id}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
