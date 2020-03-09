@@ -48,7 +48,7 @@
     "markdown-it": "^10.0.0",
     "markdown-it-link-attributes": "^3.0.0",
     "mongoose": "^5.9.3",
-    "next": "9.2.2",
+    "next": "9.3.0",
     "path-to-regexp": "^6.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
