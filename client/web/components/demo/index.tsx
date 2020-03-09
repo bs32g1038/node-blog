@@ -10,28 +10,27 @@ const IFrame = styled.iframe`
     min-width: 100%;
 `;
 
-export const Demo = ({ demoName }) => {
+export const Demo = ({ demoName, demoGit }) => {
     useEffect(() => {
         iframeResizer({ log: true }, '');
     });
     return (
         <Box bg="rgba(0,0,0,0.05)" py={rem(16)} px={rem(20)} mt={rem(10)} position="relative">
             <Box mb={2}>
-                源码：
-                <Link href="https://gitee.com/chengli01/demo" isExternal={true} color="red.500">
-                    https://gitee.com/chengli01/demo
+                <Link href={demoGit + '/tree/master/' + demoName} isExternal={true} color="red.500">
+                    源码
                 </Link>
             </Box>
             <Box position="absolute" top="10px" right="10px">
                 DEMO窗口
             </Box>
-            <IFrame src={`/demo/${demoName}/index.html`} frameBorder="0" scrolling="no"></IFrame>
+            <IFrame src={`/demo?name=${demoName}`} frameBorder="0" scrolling="no"></IFrame>
         </Box>
     );
 };
 
-export default (optoins: { demoName: string }) => {
+export default (optoins: { demoName: string; demoGit: string }) => {
     const $el = document.createElement('div');
-    ReactDom.render(<Demo demoName={optoins.demoName}></Demo>, $el);
+    ReactDom.render(<Demo demoName={optoins.demoName} demoGit={optoins.demoGit}></Demo>, $el);
     return $el;
 };

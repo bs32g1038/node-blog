@@ -20,6 +20,8 @@ import { rem } from 'polished';
 import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
 
 interface Props {
     article: any;
@@ -28,7 +30,8 @@ interface Props {
 
 export default (props: Props) => {
     const { article, comments } = props;
-    const markdownContent = useLinkGenerateDemo();
+    const config = useSelector((state: RootState) => state.app.config);
+    const markdownContent = useLinkGenerateDemo(config.demoGit);
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb
