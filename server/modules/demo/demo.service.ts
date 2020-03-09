@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
 import { DemoModel, IDemoModel } from '../../models/demo.model';
 import fs from 'fs';
@@ -66,5 +66,20 @@ export class DemoService {
                 }
             });
         });
+    }
+
+    async getDemo(name: string) {
+        let buffer = new Buffer('');
+        try {
+            buffer = await fs.readFileSync(publicPath + '/demo/' + name + '/index.html');
+        } catch (error) {
+            throw new BadRequestException(`没有找到该名字为${name}的Demo`);
+        }
+        const data = buffer.toString();
+        const arr = data.split('</body>');
+        if (arr.length < 2) {
+            throw new InternalServerErrorException('异常的html文件');
+        }
+        return arr[0] + '<script src="/static/js/iframeResizer.contentWindow.min.js"></script>' + arr[1];
     }
 }

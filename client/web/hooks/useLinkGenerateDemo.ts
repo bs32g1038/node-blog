@@ -3,7 +3,7 @@ import DemoElement from '@blog/client/web/components/demo';
 
 const cache = {};
 
-export default () => {
+export default (demoGit: string) => {
     const markdownContent = useRef();
     useEffect(() => {
         const $el: any = markdownContent.current;
@@ -19,7 +19,7 @@ export default () => {
                         delete cache[el.href];
                     }
                     Object.assign(cache, {
-                        [el.href]: DemoElement({ demoName }),
+                        [el.href]: DemoElement({ demoName, demoGit }),
                     });
                     el.parentNode.append(cache[el.href]);
                     return false;
