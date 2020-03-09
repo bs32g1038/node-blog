@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import siteConfig from '@blog/data/site.config';
 
 interface State {
     config: {
@@ -24,15 +23,15 @@ interface State {
 
 const initialState: State = {
     config: {
-        siteTitle: siteConfig.siteTitle,
-        siteIcp: siteConfig.siteIcp,
-        siteDomain: siteConfig.siteDomain,
-        icpGovCn: siteConfig.icpGovCn,
-        siteLogo: siteConfig.siteLogo,
-        email: siteConfig.email,
-        github: siteConfig.github,
-        projectGithub: siteConfig.projectGithub,
-        demoGit: siteConfig.demoGit,
+        siteTitle: '',
+        siteIcp: '',
+        siteDomain: '',
+        icpGovCn: '',
+        siteLogo: '',
+        email: '',
+        github: '',
+        projectGithub: '',
+        demoGit: '',
         admin: {
             tokenKey: 'node-blog-bs32g1038@163.com',
             userInfoKey: 'node-blog-bs32g1038@163.com-userInfo',

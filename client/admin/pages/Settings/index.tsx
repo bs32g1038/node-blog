@@ -5,6 +5,7 @@ import { Wrap, Tip } from './style';
 import { useForm } from 'antd/lib/form/util';
 import axios from '@blog/client/admin/axios';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
+import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 
 const fetchConfig = () => {
     return axios.get('/configs');
@@ -14,14 +15,9 @@ const updateConfig = data => {
     return axios.put('/configs', data);
 };
 
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
-
 export default () => {
     const [form] = useForm();
+    const { loading, injectRequestLoading } = useRequestLoading();
 
     const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
         style: {
@@ -31,17 +27,13 @@ export default () => {
     });
 
     const onFinish = values => {
-        const isLt100K = values.siteLogo[0].size / (1024 * 100) < 1;
-        if (!isLt100K) {
-            return message.error('网站logo最大100K!');
-        }
-        getBase64(values.siteLogo[0].originFileObj, img => {
+        injectRequestLoading(
             updateConfig({
                 ...values,
-                siteLogo: img,
-            }).then(() => {
-                message.success('更新成功');
-            });
+                siteLogo: values.siteLogo[0].url,
+            })
+        ).then(() => {
+            message.success('更新成功');
         });
     };
 
@@ -92,7 +84,7 @@ export default () => {
                         <Input.TextArea placeholder="请输入描述" autoSize={{ minRows: 3, maxRows: 5 }} />
                     </Form.Item>
                     <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" loading={loading}>
                             保存
                         </Button>
                     </Form.Item>

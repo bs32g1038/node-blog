@@ -7,7 +7,7 @@ import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 import { UserDocument, UserModel, UserJoiSchema } from '../../models/user.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
-import userDefaultData from '@blog/data/user.default.data';
+import userDefaultData from '@blog/server/configs/user.default.config';
 
 @Injectable()
 export class LoginService {

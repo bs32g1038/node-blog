@@ -4,10 +4,15 @@ export default () => {
     const injectRequestLoading = useCallback(
         (promise: Promise<any>) => {
             setLoading(true);
-            return promise.then(res => {
-                setLoading(false);
-                return res;
-            });
+            return promise
+                .then(res => {
+                    setLoading(false);
+                    return res;
+                })
+                .catch(err => {
+                    setLoading(false);
+                    console.log(err);
+                });
         },
         [1]
     );

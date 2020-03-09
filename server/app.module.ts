@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
-import { SiteConfigModule } from '@blog/server/configs/site.config.module';
+import { AppConfigModule } from './modules/app-config/app.config.module';
 import { AdminLogModule } from './modules/adminlog/adminlog.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ArticleModule } from './modules/article/article.module';
@@ -15,14 +16,21 @@ import { SearchModule } from './modules/search/search.module';
 import { UserModule } from './modules/user/user.module';
 import { WriteDayReadingModule } from './modules/write.day.reading.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
-import { SSRModule } from '@blog/client/server';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { isProdMode } from './configs/index.config';
+import { siteConfig } from './modules/app-config/app.config.service';
+
+import { SSRModule } from '@blog/client/server';
 
 @Module({
     imports: [
         DatabaseModule,
-        SiteConfigModule,
+        ConfigModule.forRoot({
+            ignoreEnvFile: true,
+            isGlobal: true,
+            load: [siteConfig],
+        }),
+        AppConfigModule,
         AdminLogModule,
         DashboardModule,
         ArticleModule,

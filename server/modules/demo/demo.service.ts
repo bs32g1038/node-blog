@@ -1,16 +1,22 @@
-import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
-import { DemoModel, IDemoModel } from '../../models/demo.model';
 import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import shelljs from 'shelljs';
-import { getConfig } from '@blog/server/configs/site.config.module';
-import { publicPath } from '../../utils/path.util';
+import { publicPath } from '@blog/server/utils/path.util';
+import { InjectModel } from '@blog/server/utils/model.util';
+import { DemoModel, IDemoModel } from '@blog/server/models/demo.model';
+import { AppConfigService } from '@blog/server/modules/app-config/app.config.service';
+import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class DemoService {
-    constructor(@InjectModel(DemoModel) private readonly demoModel: IDemoModel) {}
+    constructor(
+        @InjectModel(DemoModel) private readonly demoModel: IDemoModel,
+        private readonly configService: AppConfigService
+    ) {
+        // 当服务器重启后，应该进行克隆demo
+        this.gitClone();
+    }
 
     async getDemoList(): Promise<{ items: { url: string; name: string }[]; totalCount: number }> {
         const p = path.join(publicPath, 'demo');
@@ -48,8 +54,7 @@ export class DemoService {
     }
 
     async gitClone() {
-        const config: any = getConfig();
-        const git = config.demoGit;
+        const git = this.configService.appConfig.demoGit;
         return new Promise((resolve, reject) => {
             shelljs.exec(`git clone ${git} ${publicPath + '/demo'} -o demo`, code => {
                 if (code !== 0) {

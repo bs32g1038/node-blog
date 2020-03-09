@@ -1,13 +1,15 @@
-import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
+import mongoose from 'mongoose';
+import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
+import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 import { DatabaseModule } from '../server/database/database.module';
-import { SiteConfigModule } from '@blog/server/configs/site.config.module';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
-import mongoose from 'mongoose';
-import { isEqual } from 'lodash';
+import { ConfigModule } from '@nestjs/config';
+import { AppConfigModule } from '@blog/server/modules/app-config/app.config.module';
+import { siteConfig } from '@blog/server/modules/app-config/app.config.service';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -21,7 +23,16 @@ export const verifyToken = str => {
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const module = await Test.createTestingModule({
-        imports: [DatabaseModule, SiteConfigModule, ...(metadata.imports || [])],
+        imports: [
+            DatabaseModule,
+            ConfigModule.forRoot({
+                ignoreEnvFile: true,
+                isGlobal: true,
+                load: [siteConfig],
+            }),
+            AppConfigModule,
+            ...(metadata.imports || []),
+        ],
         providers: metadata.providers,
     }).compile();
     const app = module.createNestApplication();

@@ -1,12 +1,12 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
-import { File, FileModel, IFileModel, FileType } from '../../models/file.model';
 import path from 'path';
 import multr from 'multer';
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { InjectModel } from '@blog/server/utils/model.util';
+import { File, FileModel, IFileModel, FileType } from '@blog/server/models/file.model';
 import { MulterModule } from '@nestjs/platform-express';
-import { md5 } from '../../utils/crypto.util';
-import { creteUploadFile } from '../../utils/upload.util';
-import { getConfig } from '@blog/server/configs/site.config.module';
+import { md5 } from '@blog/server/utils/crypto.util';
+import { creteUploadFile } from '@blog/server/utils/upload.util';
+import { AppConfigService } from '@blog/server/modules/app-config/app.config.service';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -36,7 +36,10 @@ export class FileService {
             mimetypes: [],
         },
     ];
-    constructor(@InjectModel(FileModel) private readonly fileModel: IFileModel) {}
+    constructor(
+        @InjectModel(FileModel) private readonly fileModel: IFileModel,
+        private readonly configService: AppConfigService
+    ) {}
 
     async getFileList(options: {
         page?: number;
@@ -86,7 +89,7 @@ export class FileService {
         }
 
         // 文件处理
-        const domain = getConfig().siteDomain;
+        const domain = this.configService.appConfig.siteDomain;
         const p = await creteUploadFile(fileName, file.buffer);
         const url = domain + p;
         const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
