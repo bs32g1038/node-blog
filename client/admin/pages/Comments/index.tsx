@@ -4,7 +4,17 @@ import queryString from 'query-string';
 import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
-import { ReplyListItem, UserAvatar, ReplyContent, ReplyInfo, BaseInfo, MarkdownText, UserAction, Tip } from './style';
+import {
+    Wrap,
+    ReplyListItem,
+    UserAvatar,
+    ReplyContent,
+    ReplyInfo,
+    BaseInfo,
+    MarkdownText,
+    UserAction,
+    Tip,
+} from './style';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
@@ -88,7 +98,7 @@ export default () => {
             {
                 title: '昵称',
                 dataIndex: 'nickName',
-                width: 140,
+                width: 160,
             },
             {
                 title: 'email',
@@ -145,7 +155,7 @@ export default () => {
     const expandedRowKeys = state.comments.map(item => item._id);
     return (
         <BasicLayout>
-            <div className="main-content">
+            <Wrap className="main-content">
                 <PanelDiv className="panel" id="comments-panel">
                     <Popconfirm
                         title="确认要删除？"
@@ -246,7 +256,7 @@ export default () => {
                         expandedRowKeys={expandedRowKeys}
                     />
                 </div>
-            </div>
+            </Wrap>
         </BasicLayout>
     );
 };

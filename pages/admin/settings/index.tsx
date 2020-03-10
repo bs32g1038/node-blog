@@ -1,2 +1,2 @@
-import dynamic from 'next/dynamic';
-export default dynamic(() => import('@blog/client/admin/pages/Settings'), { ssr: false });
+import { noSSRWithLoadingDynamic } from '@blog/client/admin/utils/dynamic.import.util';
+export default noSSRWithLoadingDynamic(import('@blog/client/admin/pages/Settings'));

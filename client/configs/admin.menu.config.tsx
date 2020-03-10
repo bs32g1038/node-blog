@@ -41,12 +41,12 @@ export default [
         childMenus: [
             {
                 title: '添加分类',
-                path: '/content/categories/edit',
+                path: '/admin/content/categories/edit',
                 exact: true,
             },
             {
                 title: '编辑分类',
-                path: '/content/categories/edit/:id',
+                path: '/admin/content/categories/edit/:id',
                 exact: true,
             },
         ],

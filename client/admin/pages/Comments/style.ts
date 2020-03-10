@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 
+export const Wrap = styled.div`
+    img {
+        width: 100%;
+    }
+`;
+
 export const ReplyListItem = styled.div`
     display: flex;
     position: relative;
