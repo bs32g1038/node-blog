@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { Form, Input, Alert, Button, Divider } from 'antd';
 import axios from '@blog/client/admin/axios';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
+import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -26,6 +27,7 @@ const updateUserInfo = data => {
 };
 
 export default () => {
+    const { loading, injectRequestLoading } = useRequestLoading();
     const { setImageUrl, UploadButton, handleUpload } = useImageUpload({
         style: {
             width: '70px',
@@ -50,7 +52,7 @@ export default () => {
     }, [1]);
 
     const onFinish = values => {
-        return updateUserInfo({ ...values, avatar: values.avatar[0].url }).then(() => {
+        return injectRequestLoading(updateUserInfo({ ...values, avatar: values.avatar[0].url })).then(() => {
             message.success('更新成功！');
         });
     };
@@ -110,7 +112,7 @@ export default () => {
                 <p>邮箱用于接收系统通知</p>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button loading={loading} type="primary" htmlType="submit">
                     保存
                 </Button>
             </Form.Item>

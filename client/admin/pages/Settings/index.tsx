@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
-import { Button, Form, Input, message } from 'antd';
+import { message } from 'antd';
 import { Wrap, Tip } from './style';
-import { useForm } from 'antd/lib/form/util';
+import isFQDN from 'validator/lib/isFQDN';
 import axios from '@blog/client/admin/axios';
-import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
+import EditableInput from '@blog/client/admin/components/EditableInput';
 
 const fetchConfig = () => {
     return axios.get('/configs');
@@ -16,79 +16,93 @@ const updateConfig = data => {
 };
 
 export default () => {
-    const [form] = useForm();
+    const [data, setData] = useState<any>({});
     const { loading, injectRequestLoading } = useRequestLoading();
 
-    const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
-        style: {
-            width: '60px',
-            height: '60px',
-        },
-    });
-
     const onFinish = values => {
-        injectRequestLoading(
-            updateConfig({
-                ...values,
-                siteLogo: values.siteLogo[0].url,
-            })
-        ).then(() => {
+        const data = values;
+        if (data.siteLogo) {
+            Object.assign(data, {
+                siteLogo: data.siteLogo[0].url,
+            });
+        }
+        injectRequestLoading(updateConfig(data)).then(() => {
             message.success('更新成功');
         });
     };
 
     useEffect(() => {
         fetchConfig().then(res => {
-            setImageUrl(res.data.siteLogo);
-            const data = {
-                ...res.data,
-                siteLogo: [
-                    {
-                        uid: -1,
-                        status: 'done',
-                        url: res.data.siteLogo,
-                    },
-                ],
-            };
-            form.setFieldsValue(data);
+            setData(res.data);
         });
     }, [1]);
     return (
         <BasicLayout>
             <Wrap>
-                <Form form={form} className="form" layout="vertical" onFinish={onFinish}>
-                    <Tip>网站基础信息</Tip>
-                    <Form.Item wrapperCol={{ span: 16 }} label="网站标题" name="siteTitle">
-                        <Input placeholder="请输入网站标题" size="large" />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 16 }} label="网站域名" name="siteDomain">
-                        <Input placeholder="请输入网站域名" size="large" />
-                    </Form.Item>
-                    <Form.Item
-                        valuePropName="fileList"
-                        getValueFromEvent={handleUpload}
-                        wrapperCol={{ span: 16 }}
-                        label="网站LOGO"
-                        name="siteLogo"
-                    >
-                        <UploadButton></UploadButton>
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 16 }} label="网站备案icp" name="siteIcp">
-                        <Input placeholder="请输入备案icp" size="large" />
-                    </Form.Item>
-                    <Tip>网站 META 配置</Tip>
-                    <Form.Item wrapperCol={{ span: 16 }} label="META keywords" name="siteMetaKeyWords">
-                        <Input.TextArea placeholder="请输入keywords" autoSize={{ minRows: 3, maxRows: 5 }} />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 16 }} label="META 描述" name="siteMetaDescription">
-                        <Input.TextArea placeholder="请输入描述" autoSize={{ minRows: 3, maxRows: 5 }} />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-                        <Button type="primary" htmlType="submit" loading={loading}>
-                            保存
-                        </Button>
-                    </Form.Item>
-                </Form>
+                <Tip>网站基础信息</Tip>
+                <EditableInput
+                    value={data.siteTitle}
+                    label="网站标题"
+                    name="siteTitle"
+                    placeholder="请输入网站标题"
+                    loading={loading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
+                    value={data.siteDomain}
+                    label="网站域名"
+                    name="siteDomain"
+                    placeholder="请输入网站域名"
+                    loading={loading}
+                    onFinish={onFinish}
+                    rules={[
+                        {
+                            validator: (rule, value) => {
+                                if (isFQDN(value)) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('请输入正确的网站域名，如http(s)://www.baidu.com');
+                            },
+                        },
+                    ]}
+                ></EditableInput>
+                <EditableInput
+                    value={data.siteIcp}
+                    label="网站备案icp"
+                    name="siteIcp"
+                    placeholder="请输入备案icp"
+                    loading={loading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
+                    type="upload"
+                    value={data.siteLogo}
+                    label="网站LOGO"
+                    name="siteLogo"
+                    loading={loading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <Tip>网站 META 配置</Tip>
+                <EditableInput
+                    type="textarea"
+                    autoSize={{ minRows: 2, maxRows: 4 }}
+                    value={data.siteMetaKeyWords}
+                    label="META keywords"
+                    name="siteMetaKeyWords"
+                    placeholder="请输入keywords"
+                    loading={loading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
+                    type="textarea"
+                    autoSize={{ minRows: 3, maxRows: 6 }}
+                    value={data.siteMetaDescription}
+                    label="META 描述"
+                    name="siteMetaDescription"
+                    placeholder="请输入描述"
+                    loading={loading}
+                    onFinish={onFinish}
+                ></EditableInput>
             </Wrap>
         </BasicLayout>
     );

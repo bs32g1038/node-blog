@@ -1,0 +1,115 @@
+import React, { useState, useEffect } from 'react';
+import { Input, Form, Button } from 'antd';
+import { EditOutlined, SendOutlined } from '@ant-design/icons';
+import { useForm } from 'antd/lib/form/util';
+import styled from '@emotion/styled';
+import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
+import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
+import { isEqual } from 'lodash';
+import { Rule } from 'antd/lib/form';
+
+const _Form = styled(Form)`
+    position: relative;
+    .ant-btn + .ant-btn {
+        margin-left: 5px;
+    }
+    .ant-input-group-addon {
+        background-color: #fff;
+        border: none;
+    }
+`;
+
+interface Props {
+    label: string;
+    placeholder?: string;
+    name: string;
+    value?: string;
+    loading: boolean;
+    type?: 'input' | 'textarea' | 'upload';
+    autoSize?: AutoSizeType;
+    rules?: Rule[];
+    onFinish: (values) => void;
+}
+
+export default (props: Props) => {
+    const { name, placeholder, value, label, loading, type = 'input', autoSize, rules } = props;
+    const [form] = useForm();
+    const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
+        style: {
+            width: '60px',
+            height: '60px',
+        },
+    });
+    const [disabled, setDisabled] = useState(true);
+    const onFinish = values => {
+        if (props.onFinish) {
+            props.onFinish(values);
+        }
+    };
+    useEffect(() => {
+        if (isEqual(type, 'upload')) {
+            setImageUrl(value);
+            return form.setFieldsValue({
+                [name]: [
+                    {
+                        uid: -1,
+                        status: 'done',
+                        url: value,
+                    },
+                ],
+            });
+        }
+        form.setFieldsValue({ [name]: value });
+    }, [value]);
+
+    const FORM_ITEM = {
+        input: <Input placeholder={placeholder} size="large" disabled={disabled} />,
+        textarea: <Input.TextArea autoSize={autoSize} placeholder={placeholder} disabled={disabled} />,
+        upload: <UploadButton></UploadButton>,
+    };
+
+    return (
+        <_Form form={form} className="form" layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
+            <div className="ant-col ant-form-item-label">
+                <label htmlFor={name} title={label}>
+                    {label}
+                    {disabled && (
+                        <Button
+                            type="link"
+                            onClick={() => {
+                                setDisabled(!disabled);
+                            }}
+                        >
+                            <EditOutlined></EditOutlined>编辑
+                        </Button>
+                    )}
+                </label>
+            </div>
+            {isEqual(type, 'upload') ? (
+                <Form.Item valuePropName="fileList" name={name} getValueFromEvent={handleUpload}>
+                    {FORM_ITEM[type]}
+                </Form.Item>
+            ) : (
+                <Form.Item rules={rules} name={name}>
+                    {FORM_ITEM[type]}
+                </Form.Item>
+            )}
+            {!disabled && (
+                <Form.Item className="footer">
+                    <Button type="primary" htmlType="submit" loading={loading}>
+                        <SendOutlined></SendOutlined>保存
+                    </Button>
+                    <Button
+                        type="default"
+                        danger={true}
+                        onClick={() => {
+                            setDisabled(!disabled);
+                        }}
+                    >
+                        取消
+                    </Button>
+                </Form.Item>
+            )}
+        </_Form>
+    );
+};

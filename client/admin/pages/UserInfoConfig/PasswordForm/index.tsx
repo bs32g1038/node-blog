@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Popconfirm } from 'antd';
 import axios from '@blog/client/admin/axios';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
+import { useForm } from 'antd/lib/form/util';
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -21,8 +22,10 @@ const resetPassword = data => {
 };
 
 export default () => {
+    const [form] = useForm();
     return (
         <Form
+            form={form}
             layout="vertical"
             name="passwrodForm"
             scrollToFirstError
@@ -77,9 +80,16 @@ export default () => {
                 <p>此处密码应该和上面一样</p>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-                <Button type="danger" htmlType="submit">
-                    改变密码
-                </Button>
+                <Popconfirm
+                    title="你确定要重置密码吗？"
+                    okText="确定"
+                    cancelText="取消"
+                    onConfirm={() => form.submit()}
+                >
+                    <Button type="primary" danger={true}>
+                        改变密码
+                    </Button>
+                </Popconfirm>
             </Form.Item>
         </Form>
     );

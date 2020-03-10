@@ -10,6 +10,7 @@ export const Wrap = styled.div`
 `;
 
 export const Tip = styled.div`
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
     color: rgba(0, 0, 0, 0.45);
+    max-width: 700px;
 `;
