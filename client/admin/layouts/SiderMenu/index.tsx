@@ -145,17 +145,16 @@ const MenuList = props => {
     const renderMenuItem = (
         item // item.route 菜单单独跳转的路由
     ) => (
-        <Menu.Item
-            key={item.path}
-            title={
-                <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
-                    <MenuLinkA>
-                        {item.icon}
-                        <span className="nav-text">{item.title}</span>
-                    </MenuLinkA>
-                </Link>
-            }
-        ></Menu.Item>
+        <Menu.Item key={item.path}>
+            <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
+                <MenuLinkA>
+                    {item.icon}
+                    <span className="nav-text" style={{ marginLeft: '10px' }}>
+                        {item.title}
+                    </span>
+                </MenuLinkA>
+            </Link>
+        </Menu.Item>
     );
     return (
         <Menu {...props}>

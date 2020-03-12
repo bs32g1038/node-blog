@@ -3,18 +3,12 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": false,
-    "lib": [
-      "dom",
-      "es2015",
-      "es2016",
-      "es2017"
-    ],
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "strictNullChecks": false,
-    "target": "es6",
+    "target": "esnext",
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
@@ -26,12 +20,17 @@
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": false,
-    "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "noEmit": true
   },
   "types": [
     "typePatches",
@@ -45,5 +44,8 @@
     "pages/**/*.tsx",
     "test/**/*.ts",
     "typings/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
