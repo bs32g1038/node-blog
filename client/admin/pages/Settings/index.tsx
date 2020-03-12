@@ -6,6 +6,7 @@ import isFQDN from 'validator/lib/isFQDN';
 import axios from '@blog/client/admin/axios';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import EditableInput from '@blog/client/admin/components/EditableInput';
+import EmailInput from './EmailInput';
 
 const fetchConfig = () => {
     return axios.get('/configs');
@@ -103,6 +104,8 @@ export default () => {
                     loading={loading}
                     onFinish={onFinish}
                 ></EditableInput>
+                <Tip>网站邮箱服务通知配置</Tip>
+                <EmailInput data={data}></EmailInput>
             </Wrap>
         </BasicLayout>
     );

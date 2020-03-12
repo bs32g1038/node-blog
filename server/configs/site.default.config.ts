@@ -1,4 +1,15 @@
-export default {
+const smptConfig = {
+    isEnableSmtp: false,
+    smtpHost: 'smtp.163.com',
+    smtpSecure: true,
+    smtpPort: 465,
+    smtpAuthUser: 'your email address like : bs32g1038@163.com',
+    smtpAuthpass: 'your email password',
+};
+
+export type SmptConfigType = typeof smptConfig;
+
+const config = {
     siteTitle: '李志成的个人网站',
     siteMetaKeyWords: '李志成的个人网站，李志成的博客，web开发，nodejs全栈，前端工程师，后端开发，docker容器，生活日常',
     siteMetaDescription:
@@ -10,9 +21,14 @@ export default {
 
     github: 'https://github.com/bs32g1038',
     projectGithub: 'https://github.com/bs32g1038/node-blog',
-    email: 'bs32g1038@163.com',
 
     demoGit: 'https://gitee.com/chengli01/demo',
 
     siteDomain: process.env.NODE_ENV === 'production' ? 'http://www.lizc.net' : 'http://127.0.0.1:3000',
+
+    ...smptConfig,
 };
+
+export type configType = typeof config;
+
+export default config;

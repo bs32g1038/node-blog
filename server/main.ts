@@ -11,7 +11,7 @@ import logger, { requestInfoLogger } from './utils/logger.util';
 import { publicPath, staticAssetsPath, demoAssetsPath } from './utils/path.util';
 
 export async function bootstrap() {
-    const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false });
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.use(helmet());
     app.use(json({ limit: '20mb' }));
     app.use(favicon(publicPath + '/favicon.ico'));

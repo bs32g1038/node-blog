@@ -42,7 +42,6 @@ module.exports = withCss({
                 },
             ],
         });
-
         config.resolve.alias = {
             ...config.resolve.alias,
             '@blog': resolve('./'),

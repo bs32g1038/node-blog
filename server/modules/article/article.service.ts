@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '../../utils/model.util';
-import { incArticleDayReadingCount } from '../write.day.reading.module';
+import { incArticleDayReadingCount } from '@blog/server/modules/tasks/write.day.reading.tasks.service';
 import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
 import { CategoryModel, CategoryDocument } from '../../models/category.model';
 import MarkdownIt from 'markdown-it';

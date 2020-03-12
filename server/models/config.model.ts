@@ -1,15 +1,8 @@
 import mongoose from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
+import { configType } from '@blog/server/configs/site.default.config';
 
-export interface Setting {
-    siteTitle: string;
-    siteLogo: string;
-    siteMetaKeyWords: string;
-    siteMetaDescription: string;
-    siteIcp: string;
-    siteDomain: string;
-    demoGit: string;
-}
+export type Setting = configType;
 
 const ConfigSchema = new mongoose.Schema(
     {
@@ -59,6 +52,32 @@ const ConfigSchema = new mongoose.Schema(
         },
         demoTime: {
             type: Date,
+        },
+        isEnableSmtp: {
+            type: Boolean,
+            default: false,
+        },
+        smtpHost: {
+            type: String,
+            maxlength: 100,
+            trim: true,
+        },
+        smtpSecure: {
+            type: Boolean,
+            default: true,
+        },
+        smtpPort: {
+            type: Number,
+        },
+        smtpAuthUser: {
+            type: String,
+            maxlength: 100,
+            trim: true,
+        },
+        smtpAuthpass: {
+            type: String,
+            maxlength: 100,
+            trim: true,
         },
     },
     {

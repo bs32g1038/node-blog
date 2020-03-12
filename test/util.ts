@@ -10,6 +10,7 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppConfigModule } from '@blog/server/modules/app-config/app.config.module';
 import { siteConfig } from '@blog/server/modules/app-config/app.config.service';
+import { EmailModule } from '@blog/server/modules/email/email.module';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -31,6 +32,7 @@ export const initApp = async (metadata: ModuleMetadata) => {
                 load: [siteConfig],
             }),
             AppConfigModule,
+            EmailModule,
             ...(metadata.imports || []),
         ],
         providers: metadata.providers,
