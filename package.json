@@ -13,7 +13,7 @@
     "init:dev:data": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist/scripts/init_faker_data.js",
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
     "dev:watch": "concurrently \"npm run dev:server:watch\" \" npm run dev:web \"",
-    "dev:server": "cross-env NODE_ENV=development nest start",
+    "dev:server": "npm run build:server && cross-env NODE_ENV=development nest start",
     "dev:server:watch": "cross-env NODE_ENV=development nest start --watch",
     "dev:server:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "dev:web": "cross-env NODE_ENV=development ts-node -P tsconfig.build.json client/dev.server.ts",
