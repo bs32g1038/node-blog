@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import { message } from 'antd';
 import { Wrap, Tip } from './style';
-import isFQDN from 'validator/lib/isFQDN';
+import isURL from 'validator/lib/isURL';
 import axios from '@blog/client/admin/axios';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import EditableInput from '@blog/client/admin/components/EditableInput';
@@ -59,7 +59,7 @@ export default () => {
                     rules={[
                         {
                             validator: (rule, value) => {
-                                if (isFQDN(value)) {
+                                if (isURL(value)) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject('请输入正确的网站域名，如http(s)://www.baidu.com');

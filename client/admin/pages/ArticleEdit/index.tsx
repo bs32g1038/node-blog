@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Router, { useRouter } from 'next/router';
 import { Form, Input, Button, message } from 'antd';
 import MdEdit from '@blog/client/admin/components/MdEdit';
@@ -8,6 +8,7 @@ import { Header, EditorWrap } from './style';
 import Drawer from './Drawer';
 import Link from 'next/link';
 import { isLogin } from '@blog/client/admin/api/is.login.api';
+import { debounce } from 'lodash';
 
 const { TextArea } = Input;
 
@@ -65,8 +66,25 @@ export default () => {
     };
 
     const { id } = router.query;
+    const debounceSetData = useCallback(
+        debounce((values: {}) => {
+            setData(data => ({
+                ...data,
+                ...values,
+            }));
+        }),
+        [1]
+    );
+
     return (
         <Form.Provider
+            onFormChange={(name, { forms }) => {
+                if (name === 'articleConfigForm') {
+                    const { articleConfigForm } = forms;
+                    const values = articleConfigForm.getFieldsValue();
+                    debounceSetData(values);
+                }
+            }}
             onFormFinish={(name, { values, forms }) => {
                 if (name === 'contentForm') {
                     setShowDrawer(true);

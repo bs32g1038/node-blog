@@ -4,12 +4,16 @@ import path from 'path';
 import shelljs from 'shelljs';
 import { publicPath } from '@blog/server/utils/path.util';
 import { InjectModel } from '@blog/server/utils/model.util';
+import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { DemoModel, IDemoModel } from '@blog/server/models/demo.model';
 import { AppConfigService } from '@blog/server/modules/app-config/app.config.service';
 import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import { getObjectId } from '@blog/server/utils/helper';
 
 @Injectable()
 export class DemoService {
+    CACHE_DEMO_PAGE_BASE_KEY = getObjectId();
+
     constructor(
         @InjectModel(DemoModel) private readonly demoModel: IDemoModel,
         private readonly configService: AppConfigService
@@ -74,6 +78,10 @@ export class DemoService {
     }
 
     async getDemo(name: string) {
+        const htmlStr = cache.get(this.getCacheKey(name));
+        if (htmlStr) {
+            return htmlStr;
+        }
         let buffer = new Buffer('');
         try {
             buffer = await fs.readFileSync(publicPath + '/demo/' + name + '/index.html');
@@ -85,6 +93,12 @@ export class DemoService {
         if (arr.length < 2) {
             throw new InternalServerErrorException('异常的html文件');
         }
-        return arr[0] + '<script src="/static/js/iframeResizer.contentWindow.min.js"></script>' + arr[1];
+        const res = arr[0] + '<script src="/static/js/iframeResizer.contentWindow.min.js"></script>' + arr[1];
+        cache.set(this.getCacheKey(name), res, TimeExpression.TIME_5_MINUTES);
+        return res;
+    }
+
+    getCacheKey(str: string) {
+        return this.CACHE_DEMO_PAGE_BASE_KEY + '#' + str;
     }
 }
