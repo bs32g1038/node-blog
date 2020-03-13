@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import { message } from 'antd';
 import { Wrap, Tip } from './style';
-import isURL from 'validator/lib/isURL';
+import isFQDN from 'validator/lib/isFQDN';
 import axios from '@blog/client/admin/axios';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import EditableInput from '@blog/client/admin/components/EditableInput';
@@ -59,10 +59,10 @@ export default () => {
                     rules={[
                         {
                             validator: (rule, value) => {
-                                if (isURL(value)) {
+                                if (isFQDN(value)) {
                                     return Promise.resolve();
                                 }
-                                return Promise.reject('请输入正确的网站域名，如http(s)://www.baidu.com');
+                                return Promise.reject('请输入正确的网站域名，如www.lizc.net');
                             },
                         },
                     ]}
@@ -104,7 +104,6 @@ export default () => {
                     loading={loading}
                     onFinish={onFinish}
                 ></EditableInput>
-                <Tip>网站邮箱服务通知配置</Tip>
                 <EmailInput data={data}></EmailInput>
             </Wrap>
         </BasicLayout>

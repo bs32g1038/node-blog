@@ -264,7 +264,7 @@ export default (props: Props) => {
                                 <Link href="/admin/user/person" passHref={true}>
                                     <a>
                                         <SettingOutlined />
-                                        配置个人信息
+                                        <span style={{ marginLeft: '10px' }}>配置个人信息</span>
                                     </a>
                                 </Link>
                             </Menu.Item>
