@@ -21,7 +21,7 @@ export class AppConfigController {
             siteMetaKeyWords: JoiCharSchema,
             siteMetaDescription: JoiCharSchema,
             siteIcp: JoiCharSchema,
-            siteDomain: JoiCharSchema,
+            siteDomain: Joi.string().domain(),
             demoGit: JoiCharSchema,
         })
         body

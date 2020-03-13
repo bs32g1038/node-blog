@@ -89,7 +89,7 @@ export class FileService {
         }
 
         // 文件处理
-        const domain = this.configService.appConfig.siteDomain;
+        const domain = this.configService.siteDomain;
         const p = await creteUploadFile(fileName, file.buffer);
         const url = domain + p;
         const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });

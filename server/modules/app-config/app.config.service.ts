@@ -1,10 +1,10 @@
 import fs from 'fs';
 import util from 'util';
 import mongoose from 'mongoose';
+import { isDevMode, APP_SERVER } from '@blog/server/configs/index.config';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, registerAs } from '@nestjs/config';
 import { ConfigModel } from '@blog/server/models/config.model';
-import { registerAs } from '@nestjs/config';
 import siteInfo from '@blog/server/configs/site.default.config';
 import { isEmpty, isEqual } from 'lodash';
 import { publicPath } from '@blog/server/utils/path.util';
@@ -53,6 +53,17 @@ export class AppConfigService {
         this.setConfig(res.toObject());
         return config;
     };
+
+    /**
+     * 当处于开发环境，不使用域名
+     * 采用缺省协议入库，即用 // 替代 http(s)://
+     */
+    get siteDomain(): string {
+        if (isDevMode) {
+            return '//' + APP_SERVER.hostname + ':' + APP_SERVER.port;
+        }
+        return '//' + this.appConfig.siteDomain;
+    }
 
     get appConfig(): Setting {
         return cache.get(this.namespace) as any;
