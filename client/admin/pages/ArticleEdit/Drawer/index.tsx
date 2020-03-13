@@ -28,7 +28,7 @@ export default ({ visible, onCancel, formData }) => {
 
     useEffect(() => {
         if (formData) {
-            setImageUrl(formData.screenshot[0].url);
+            setImageUrl(formData.imgUrl);
         }
         if (!visible && prevVisible) {
             form.resetFields();
