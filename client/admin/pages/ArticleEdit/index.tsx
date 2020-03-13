@@ -32,7 +32,13 @@ export default () => {
                     title: article.title,
                     content: article.content || '',
                     category: category._id,
-                    screenshot: article.screenshot,
+                    screenshot: [
+                        {
+                            uid: -1,
+                            status: 'done',
+                            url: article.screenshot,
+                        },
+                    ],
                     tags: article.tags,
                     summary: article.summary,
                     imgUrl: article.screenshot,
