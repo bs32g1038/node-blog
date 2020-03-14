@@ -6,7 +6,7 @@ services:
       - db
     volumes:
       - ../data/logs:/code/logs
-      - ../data/blog/upload:/code/public/static/upload
+      - ../data/blog/static:/code/public/static
     command: npm run start:prod --MONGODB_HOSTNAME=db
     environment:
       - MONGODB_URL=mongodb://db:27017/blog
