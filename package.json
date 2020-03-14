@@ -44,7 +44,7 @@
     "@nestjs/common": "^6.11.11",
     "@nestjs/config": "^0.3.0",
     "@nestjs/core": "^6.11.11",
-    "@nestjs/platform-express": "^6.11.11",
+    "@nestjs/platform-express": "^7.0.0",
     "@nestjs/schedule": "^0.2.1",
     "@types/serve-favicon": "^2.5.0",
     "axios": "^0.19.2",
