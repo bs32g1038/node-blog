@@ -33,7 +33,7 @@ export default () => {
         <SignIn>
             <SignInMain>
                 <div className="header">
-                    <ReactSVG className="brand" src={appConfig.siteLogo.replace('8080', '3000')} />
+                    <ReactSVG className="brand" src={appConfig.siteLogo} />
                     <div className="header-title">
                         <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>

@@ -243,7 +243,7 @@ export default (props: Props) => {
             >
                 <Link href="/admin/dashboard">
                     <LogoDiv>
-                        <ReactSVG src={config.siteLogo.replace('8080', '3000')} />
+                        <ReactSVG src={config.siteLogo} />
                         <h1>{config.siteTitle}</h1>
                     </LogoDiv>
                 </Link>
