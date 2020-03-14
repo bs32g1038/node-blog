@@ -1,6 +1,7 @@
 # compiled output
-/dist
-/node_modules
+dist
+node_modules
+*.lock
 
 # Logs
 logs
@@ -15,7 +16,7 @@ lerna-debug.log*
 .env*
 
 # Tests
-/coverage
+coverage
 /.nyc_output
 
 # IDEs and editors
@@ -39,25 +40,14 @@ lerna-debug.log*
 .pnp.js
 
 # next.js
-/.next/
-/out/
+.next
+out
 
+# node-blog
 .cache
 logs/blog/*
 
-public
-public/demo
-!public/favicon.ico
-
-public/static
-!public/static/images
-!public/static/js
-!public/static/logo.png
-public/static/upload/**
-
+public/static/*
+!public/static/favicon.ico
+!public/static/logo.svg
 !.gitkeep
-
-dist
-*.lock
-*.log
-coverage

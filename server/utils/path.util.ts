@@ -21,13 +21,18 @@ export const logPath = join(rootPath, 'logs');
 export const publicPath = join(rootPath, 'public');
 
 /**
+ * assets静态资源路径
+ */
+export const assetsPath = join(rootPath, 'public/assets');
+
+/**
  * 静态资源路径
  */
 export const staticAssetsPath = join(rootPath, 'public/static');
 /**
  * demo资源路径
  */
-export const demoAssetsPath = join(rootPath, 'public/demo');
+export const demoAssetsPath = join(rootPath, 'public/static/demo');
 /**
  * 上传文件存放目录路径
  */

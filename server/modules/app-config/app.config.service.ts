@@ -8,7 +8,7 @@ import { ConfigService, registerAs } from '@nestjs/config';
 import { ConfigModel } from '@blog/server/models/config.model';
 import siteInfo from '@blog/server/configs/site.default.config';
 import { isEmpty, isEqual } from 'lodash';
-import { publicPath, staticAssetsPath } from '@blog/server/utils/path.util';
+import { staticAssetsPath, publicPath } from '@blog/server/utils/path.util';
 import { Setting } from '@blog/server/models/config.model';
 import LRU from 'lru-cache';
 import toIco from 'to-ico';
@@ -36,6 +36,7 @@ export const siteConfig = registerAs(namespace, () => {
 @Injectable()
 export class AppConfigService {
     private readonly namespace: string;
+    isHasfavicon = true;
 
     constructor(private configService: ConfigService) {
         this.namespace = namespace;
@@ -47,16 +48,22 @@ export class AppConfigService {
     }
 
     updateAppConfig = async data => {
-        const siteLogo = await this.handleSiteLogoUrl(data);
-        Object.assign(data, {
-            siteLogo,
-        });
+        if (!isEmpty(data.siteLogo)) {
+            const siteLogo = await this.handleSiteLogoUrl(data);
+            Object.assign(data, {
+                siteLogo,
+            });
+        }
         await this.updateDemoGit(data);
         await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
         const res = await ConfigModel.findOne({ key: CONFIG_KEY });
         this.setConfig(res.toObject());
         return config;
     };
+
+    setIsHasfavicon(bool: boolean) {
+        this.isHasfavicon = bool;
+    }
 
     /**
      * 当处于开发环境，不使用域名
@@ -89,8 +96,8 @@ export class AppConfigService {
 
     async generateIco(content: Buffer) {
         return new Promise((resolve, reject) => {
-            const pngPath = path.normalize(publicPath + '/favicon.png');
-            const icoPath = path.normalize(publicPath + '/favicon.ico');
+            const pngPath = path.normalize(staticAssetsPath + '/favicon.png');
+            const icoPath = path.normalize(staticAssetsPath + '/favicon.ico');
             sharp(content)
                 .resize(64, 64)
                 .png()
@@ -101,6 +108,7 @@ export class AppConfigService {
                     try {
                         toIco(await fs.readFile(pngPath)).then(async buf => {
                             await fs.writeFile(icoPath, buf);
+                            this.setIsHasfavicon(true);
                         });
                     } catch (err) {
                         reject(new Error('生成favicon.ico文件出错'));
@@ -112,7 +120,7 @@ export class AppConfigService {
 
     async updateDemoGit(data) {
         if (data.demoGit && !isEqual(data.demoGit, this.appConfig.demoGit)) {
-            await fs.rename(publicPath + '/demo', publicPath + '/' + mongoose.Types.ObjectId());
+            await fs.rename(staticAssetsPath + '/demo', staticAssetsPath + '/' + mongoose.Types.ObjectId());
         }
     }
 }

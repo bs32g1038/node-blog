@@ -2,7 +2,7 @@ import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import shelljs from 'shelljs';
-import { publicPath } from '@blog/server/utils/path.util';
+import { staticAssetsPath } from '@blog/server/utils/path.util';
 import { InjectModel } from '@blog/server/utils/model.util';
 import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { DemoModel, IDemoModel } from '@blog/server/models/demo.model';
@@ -23,7 +23,7 @@ export class DemoService {
     }
 
     async getDemoList(): Promise<{ items: { url: string; name: string }[]; totalCount: number }> {
-        const p = path.join(publicPath, 'demo');
+        const p = path.join(staticAssetsPath, 'demo');
         const dirs = await this.readDir(p);
         const items = [];
 
@@ -60,9 +60,9 @@ export class DemoService {
     async gitClone() {
         const git = this.configService.appConfig.demoGit;
         return new Promise((resolve, reject) => {
-            shelljs.exec(`git clone ${git} ${publicPath + '/demo'} -o demo`, code => {
+            shelljs.exec(`git clone ${git} ${staticAssetsPath + '/demo'} -o demo`, code => {
                 if (code !== 0) {
-                    shelljs.cd(path.join(publicPath, 'demo'));
+                    shelljs.cd(path.join(staticAssetsPath, 'demo'));
                     shelljs.exec('git pull', async code => {
                         if (code === 0) {
                             resolve({ success: true });
@@ -84,7 +84,7 @@ export class DemoService {
         }
         let buffer = new Buffer('');
         try {
-            buffer = await fs.readFileSync(publicPath + '/demo/' + name + '/index.html');
+            buffer = await fs.readFileSync(staticAssetsPath + '/demo/' + name + '/index.html');
         } catch (error) {
             throw new BadRequestException(`没有找到该名字为${name}的Demo`);
         }
