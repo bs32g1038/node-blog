@@ -1,12 +1,11 @@
 version: '3'
 services:
   server:
-    image: bs32g1038/node-blog:v3
+    image: bs32g1038/node-blog:v4
     depends_on:
       - db
     volumes:
       - ../data/logs:/code/logs
-      - ../data/blog/public:/code/public
       - ../data/blog/upload:/code/public/static/upload
     command: npm run start:prod --MONGODB_HOSTNAME=db
     environment:
@@ -14,7 +13,7 @@ services:
     ports:
       - 8080:8080
   db:
-    image: mongo:4.1
+    image: mongo:4.2
     volumes:
       - ../data/mongo-backup:/data/mongo-backup
       - ../data/mongo-db:/data/db
