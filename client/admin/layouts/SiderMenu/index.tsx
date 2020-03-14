@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from '@blog/client/admin/utils/path.util';
+import { ReactSVG } from 'react-svg';
 
 import { Layout, Menu, Avatar, Button } from 'antd';
 const { Sider } = Layout;
@@ -38,9 +39,10 @@ const LogoDiv = styled.div`
     a {
         color: #1890ff;
     }
-    img {
+    svg {
         display: inline-block;
         height: 32px;
+        width: auto;
         vertical-align: middle;
     }
     @font-face {
@@ -241,7 +243,7 @@ export default (props: Props) => {
             >
                 <Link href="/admin/dashboard">
                     <LogoDiv>
-                        <img src={config.siteLogo} />
+                        <ReactSVG src={config.siteLogo.replace('8080', '3000')} />
                         <h1>{config.siteTitle}</h1>
                     </LogoDiv>
                 </Link>

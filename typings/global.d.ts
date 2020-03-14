@@ -54,3 +54,8 @@ declare module 'codemirror' {
     const content: any;
     export default content;
 }
+
+declare module 'to-ico' {
+    const content: any;
+    export default content;
+}

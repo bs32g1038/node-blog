@@ -77,6 +77,7 @@ export default () => {
                 ></EditableInput>
                 <EditableInput
                     type="upload"
+                    extra="目前仅支持svg文件上传，使用svg文件logo可以兼容主题换色。"
                     value={data.siteLogo}
                     label="网站LOGO"
                     name="siteLogo"

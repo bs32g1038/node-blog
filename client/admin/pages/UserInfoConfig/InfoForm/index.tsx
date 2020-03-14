@@ -82,34 +82,30 @@ export default () => {
             >
                 <UploadButton></UploadButton>
             </Form.Item>
-            <Form.Item>
-                <Form.Item
-                    name="userName"
-                    label="用户名"
-                    rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
-                >
-                    <Input size="large" placeholder="请输入用户名" />
-                </Form.Item>
-                <p>建议使用一个易记的用户名，方便人们认识你</p>
+            <Form.Item
+                name="userName"
+                label="用户名"
+                extra="建议使用一个易记的用户名，方便人们认识你"
+                rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+            >
+                <Input size="large" placeholder="请输入用户名" />
             </Form.Item>
-            <Form.Item>
-                <Form.Item
-                    name="email"
-                    label="邮箱"
-                    rules={[
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
-                        {
-                            required: true,
-                            message: 'Please input your E-mail!',
-                        },
-                    ]}
-                >
-                    <Input size="large" placeholder="请输入邮箱" />
-                </Form.Item>
-                <p>邮箱用于接收系统通知</p>
+            <Form.Item
+                name="email"
+                label="邮箱"
+                extra="邮箱用于接收系统通知"
+                rules={[
+                    {
+                        type: 'email',
+                        message: 'The input is not valid E-mail!',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your E-mail!',
+                    },
+                ]}
+            >
+                <Input size="large" placeholder="请输入邮箱" />
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Button loading={loading} type="primary" htmlType="submit">

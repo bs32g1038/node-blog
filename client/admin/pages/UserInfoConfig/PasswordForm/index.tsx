@@ -38,46 +38,42 @@ export default () => {
                 });
             }}
         >
-            <Form.Item>
-                <Form.Item
-                    name="password"
-                    label="新的密码"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入密码!',
-                        },
-                    ]}
-                    hasFeedback
-                >
-                    <Input.Password size="large" placeholder="请输入密码" />
-                </Form.Item>
-                <p>密码建议使用6位数以上</p>
+            <Form.Item
+                name="password"
+                label="新的密码"
+                extra="密码建议使用6位数以上"
+                rules={[
+                    {
+                        required: true,
+                        message: '请输入密码!',
+                    },
+                ]}
+                hasFeedback
+            >
+                <Input.Password size="large" placeholder="请输入密码" />
             </Form.Item>
-            <Form.Item>
-                <Form.Item
-                    name="confirm"
-                    label="确认密码"
-                    dependencies={['password']}
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: '请确认你的密码是否一致!',
+            <Form.Item
+                name="confirm"
+                label="确认密码"
+                extra="此处密码应该和上面一样"
+                dependencies={['password']}
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                        message: '请确认你的密码是否一致!',
+                    },
+                    ({ getFieldValue }) => ({
+                        validator(rule, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject('两次密码输入不一致!');
                         },
-                        ({ getFieldValue }) => ({
-                            validator(rule, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject('两次密码输入不一致!');
-                            },
-                        }),
-                    ]}
-                >
-                    <Input.Password size="large" placeholder="请再次输入密码" />
-                </Form.Item>
-                <p>此处密码应该和上面一样</p>
+                    }),
+                ]}
+            >
+                <Input.Password size="large" placeholder="请再次输入密码" />
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Popconfirm

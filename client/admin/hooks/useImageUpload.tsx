@@ -2,9 +2,26 @@ import React, { useState, useCallback } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import config from '@blog/client/configs/admin.default.config';
+import { isEqual } from 'lodash';
+
+function svgBeforeUpload(file) {
+    const isSvg = file.type === 'image/svg+xml';
+    if (!isSvg) {
+        message.error('只能上传svg文件!');
+    }
+    const isLt100K = file.size / 1024 < 100;
+    if (!isLt100K) {
+        message.error('svg最大只能上传100K!');
+    }
+    return isSvg && isLt100K;
+}
 
 function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png';
+    const isJpgOrPng =
+        file.type === 'image/jpeg' ||
+        file.type === 'image/jpg' ||
+        file.type === 'image/png' ||
+        file.type === 'image/svg+xml';
     if (!isJpgOrPng) {
         message.error('只能上传jpg或者png图片!');
     }
@@ -15,7 +32,17 @@ function beforeUpload(file) {
     return isJpgOrPng && isLt2M;
 }
 
-export default ({ style = {} }) => {
+interface Props {
+    style?: object;
+    disabled?: boolean;
+    type?: 'image' | 'svg';
+}
+
+const isImage = type => isEqual(type, 'image');
+const isSvg = type => isEqual(type, 'svg');
+
+export default (props: Props) => {
+    const { style = {}, disabled = false, type = 'image' } = props;
     const [isUploading, setUploading] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
 
@@ -46,13 +73,21 @@ export default ({ style = {} }) => {
     const UploadButton = useCallback(
         props => (
             <Upload
+                disabled={disabled}
                 name="file"
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
                 action="/api/files/upload"
-                beforeUpload={beforeUpload}
-                accept=".jpg,.jpeg,.png"
+                beforeUpload={() => {
+                    if (isImage(type)) {
+                        return beforeUpload;
+                    }
+                    if (isSvg(type)) {
+                        return svgBeforeUpload;
+                    }
+                }}
+                accept={isImage(type) ? '.jpg,.jpeg,.png' : isSvg(type) && '.svg'}
                 headers={{
                     authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
                 }}

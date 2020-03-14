@@ -37,7 +37,7 @@ export const SignInMain = styled.div`
     .brand {
         display: block;
         width: 60px;
-        fill: #fff;
+        fill: black;
     }
     > .nodeblog {
         text-align: center;

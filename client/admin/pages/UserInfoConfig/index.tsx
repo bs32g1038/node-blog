@@ -11,13 +11,8 @@ const Wrap = styled.div`
     flex-direction: column;
     position: relative;
     padding: 20px;
-    .ant-form-item {
-        margin-bottom: 0;
-        p {
-            margin-top: 4px;
-            color: rgba(0, 0, 0, 0.45);
-            font-size: 13px;
-        }
+    .ant-form-item-extra {
+        margin-top: 6px;
     }
 `;
 

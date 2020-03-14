@@ -10,6 +10,7 @@ import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
+import { ReactSVG } from 'react-svg';
 
 export default () => {
     const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
@@ -32,7 +33,7 @@ export default () => {
         <SignIn>
             <SignInMain>
                 <div className="header">
-                    <img className="brand" src={appConfig.siteLogo} alt="" />
+                    <ReactSVG className="brand" src={appConfig.siteLogo.replace('8080', '3000')} />
                     <div className="header-title">
                         <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>

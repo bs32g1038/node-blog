@@ -1,10 +1,10 @@
 import { css } from 'emotion';
 import React from 'react';
-import { Link as UiLink, Flex, Heading, useColorMode, Button, Box } from '@chakra-ui/core';
+import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Spinner } from '@chakra-ui/core';
 import Link from '../link';
 import Icon from '../icon';
 import NavLink from '../nav-link';
-import { HomeNav, NavA } from './style';
+import { HomeNav, NavA, ReactSVG } from './style';
 import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
@@ -28,7 +28,10 @@ export const AppHeader = () => {
         >
             <Link href="/" as="/">
                 <HomeNav title={config.siteTitle} mr={[0, 6]}>
-                    <img src={config.siteLogo} width="40px" height="40px" />
+                    <ReactSVG
+                        loading={() => <Spinner size="sm" mr={2} />}
+                        src={config.siteLogo.replace('8080', '3000')}
+                    />
                     <Heading as="h1" title={config.siteTitle} fontSize={16} fontFamily="siteitlefont">
                         {config.siteTitle}
                     </Heading>

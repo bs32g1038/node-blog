@@ -44,11 +44,19 @@ lerna-debug.log*
 
 .cache
 logs/blog/*
-static
-!public/static
-public/static/upload/**
+
+public
 public/demo
+!public/favicon.ico
+
+public/static
+!public/static/images
+!public/static/js
+!public/static/logo.png
+public/static/upload/**
+
 !.gitkeep
+
 dist
 *.lock
 *.log

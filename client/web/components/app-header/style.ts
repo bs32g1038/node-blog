@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from '@chakra-ui/core';
+import { ReactSVG as _ReactSVG } from 'react-svg';
 
 export const HomeNav: any = styled(Link)`
     @font-face {
@@ -17,9 +18,6 @@ export const HomeNav: any = styled(Link)`
     font-weight: 600;
     h1 {
         font-family: logoFont;
-    }
-    img {
-        margin-right: 8px;
     }
     &:hover {
         text-decoration: none;
@@ -39,5 +37,16 @@ export const NavA = styled(Link)`
         svg {
             fill: #f86422;
         }
+    }
+`;
+
+export const ReactSVG = styled(_ReactSVG)`
+    display: flex;
+    align-items: center;
+    svg {
+        fill: ${(props: any) => props.theme.colors.theme.header.color};
+        margin-right: 8px;
+        width: 40px;
+        height: 40px;
     }
 `;

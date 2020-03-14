@@ -22,6 +22,7 @@ const _Form = styled(Form)`
 interface Props {
     label: string;
     placeholder?: string;
+    extra?: string;
     name: string;
     value?: string;
     loading: boolean;
@@ -32,9 +33,10 @@ interface Props {
 }
 
 export default (props: Props) => {
-    const { name, placeholder, value, label, loading, type = 'input', autoSize, rules } = props;
+    const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
     const [form] = useForm();
     const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
+        type: 'svg',
         style: {
             width: '60px',
             height: '60px',
@@ -65,7 +67,7 @@ export default (props: Props) => {
     const FORM_ITEM = {
         input: <Input placeholder={placeholder} size="large" disabled={disabled} />,
         textarea: <Input.TextArea autoSize={autoSize} placeholder={placeholder} disabled={disabled} />,
-        upload: <UploadButton></UploadButton>,
+        upload: <UploadButton disabled={disabled}></UploadButton>,
     };
 
     return (
@@ -86,11 +88,11 @@ export default (props: Props) => {
                 </label>
             </div>
             {isEqual(type, 'upload') ? (
-                <Form.Item valuePropName="fileList" name={name} getValueFromEvent={handleUpload}>
+                <Form.Item extra={extra} valuePropName="fileList" name={name} getValueFromEvent={handleUpload}>
                     {FORM_ITEM[type]}
                 </Form.Item>
             ) : (
-                <Form.Item rules={rules} name={name}>
+                <Form.Item extra={extra} rules={rules} name={name}>
                     {FORM_ITEM[type]}
                 </Form.Item>
             )}
