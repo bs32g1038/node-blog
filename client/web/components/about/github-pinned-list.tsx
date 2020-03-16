@@ -26,7 +26,7 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
             flexDirection="column"
             justifyContent="space-between"
             key={item.name}
-            width={['calc(100% - 8px)', 'calc(25% - 8px)']}
+            width={['calc(100% - 8px)', 'calc(33.33% - 8px)']}
             p={4}
             mb={2}
             borderRadius="sm"

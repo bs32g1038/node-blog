@@ -8,7 +8,6 @@ import { AdminLogModule } from './modules/adminlog/adminlog.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ArticleModule } from './modules/article/article.module';
 import { CategoryModule } from './modules/category/category.module';
-import { AboutModule } from './modules/about/about.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { DemoModule } from './modules/demo/demo.module';
 import { FileModule } from './modules/file/file.module';
@@ -38,7 +37,6 @@ import { SSRModule } from '@blog/client/server';
         DashboardModule,
         ArticleModule,
         CategoryModule,
-        AboutModule,
         CommentModule,
         DemoModule,
         FileModule,

@@ -1,42 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import data from './data';
-import dynamic from 'next/dynamic';
 import GithubPinnedList from './github-pinned-list';
-import { Box } from '@chakra-ui/core';
 import Head from 'next/head';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
-import { Flex, List, ListItem, Image, Heading, Text, Spinner } from '@chakra-ui/core';
+import { Box, Flex, List, ListItem, Image, Heading, Text } from '@chakra-ui/core';
 import Icon from '../icon';
 import HelperListItem from './helper-list-item';
 import * as api from '@blog/client/web/api/article';
-export const GithubContribution = dynamic(() => import('./github-contribution'), {
-    ssr: false,
-    loading: () => (
-        <Flex justifyContent="center" my={5}>
-            <Spinner />
-        </Flex>
-    ),
-});
-const issues = [
-    {
-        _id: 1,
-        question: '请问，你们目前承接网站开发业务吗？',
-        answer: '你好，目前团队还在运作中，如果你有需求，可以通过邮箱联系我们。',
-    },
-    {
-        _id: 2,
-        question: '如果我要开发一个网站，我需要提供什么资料？',
-        answer: '请明确你的需求，最低报价，工期，然后通过邮箱联系我们，我们将与你详细沟通。',
-    },
-];
+import PersonCommit from './person-commit';
+
 export default () => {
     const config = useSelector((state: RootState) => state.app.config);
     const [userCommits, setUserCommits] = useState([]);
     useEffect(() => {
-        api.fetchArticlesAggregationMapDate().then(data => {
-            setUserCommits(data);
+        api.fetchArticlesAggregationMapDate().then(res => {
+            setUserCommits(res);
         });
     }, [1]);
     let totalCountInYear = 0;
@@ -52,11 +32,10 @@ export default () => {
             <Head>
                 <title>{config.siteTitle + '-关于'}</title>
             </Head>
-            <Flex>
-                <Box height="100%" color="theme.white">
-                    <Box background={`url(${require('@blog/client/assets/images/bg.jpg')})`}></Box>
+            <Flex fontSize={14} position="relative">
+                <Box height="100%" color="theme.white" mr={[0, '240px']} position="relative" zIndex={100}>
                     <Box py={2} maxW="100%" margin="0 auto" pb={5}>
-                        <List fontSize="14px">
+                        <List>
                             <ListItem mb={3}>
                                 <Flex>
                                     <Image
@@ -77,7 +56,7 @@ export default () => {
                                 </Flex>
                             </ListItem>
                             <ListItem mb={3}>
-                                <Icon name="place" fill="gray.500" mr={2} size="20px" />
+                                <Icon name="place" fill="gray.500" mr={2} size="24px" />
                                 广东 广州
                             </ListItem>
                             <ListItem mb={3}>
@@ -86,11 +65,11 @@ export default () => {
                                 </Box>
                                 bs32g1038#163.com（#换成@）
                             </ListItem>
-                            <ListItem mb={3}>
+                            <ListItem mb={3} display="flex">
                                 <Box width="20px" textAlign="center" display="inline-block" mr={2}>
                                     <Icon name="tag" fill="gray.500" />
                                 </Box>
-                                学海无涯苦作舟，梅花香自苦寒来。不断努力，寻找成功的阶梯。
+                                孟子：尽信书，不如无书。史记：桃李不言，下自成蹊。
                             </ListItem>
                             <ListItem>
                                 <Box width="20px" textAlign="center" display="inline-block" mr={2}>
@@ -102,21 +81,34 @@ export default () => {
                         </List>
                     </Box>
                 </Box>
-                <Box maxW="240px" flex="1 0 auto" fontSize={14} ml={5}>
-                    <Text mb={2}>行路难 · 其一</Text>
-                    <Text mb={2}>唐 · 李白</Text>
-                    <Text mb={1.5}>金樽清酒斗十千，玉盘珍羞直万钱。</Text>
-                    <Text mb={1.5}>停杯投箸不能食，拔剑四顾心茫然。</Text>
-                    <Text mb={1.5}>欲渡黄河冰塞川，将登太行雪满山。</Text>
-                    <Text mb={1.5}>闲来垂钓碧溪上，忽复乘舟梦日边。</Text>
-                    <Text mb={1.5}>行路难！行路难！多歧路，今安在？</Text>
-                    <Text>长风破浪会有时，直挂云帆济沧海。</Text>
-                </Box>
+                <Box
+                    position="absolute"
+                    top="0"
+                    right={['0', '-40px']}
+                    bottom="0"
+                    maxW="240px"
+                    flex="1 0 auto"
+                    fontSize={14}
+                    height="auto"
+                    backgroundSize="contain"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="center"
+                    width="100%"
+                    backgroundImage={`url(${require('@blog/client/assets/images/meihua.png')})`}
+                ></Box>
             </Flex>
-            <GithubContribution values={values} totalCountInYear={totalCountInYear}></GithubContribution>
-            <Box mb={5}>
-                <Flex justifyContent="space-between">
-                    <Box bg="theme.blackground" p={5} textAlign="center" borderRadius="sm" mr={4}>
+            <PersonCommit values={values} totalCountInYear={totalCountInYear}></PersonCommit>
+            <Box mb={5} overflow="hidden" overflowX="auto" height="116.5px" mx={-3}>
+                <Flex>
+                    <Box
+                        bg="theme.blackground"
+                        p={5}
+                        mx={3}
+                        flex="1 0 auto"
+                        textAlign="center"
+                        borderRadius="sm"
+                        animation="slideInUp .2s ease-in"
+                    >
                         <Image
                             margin="0 auto"
                             size={10}
@@ -126,25 +118,57 @@ export default () => {
                             团队还承接业务
                         </Text>
                     </Box>
-                    <Box bg="theme.blackground" p={5} textAlign="center" borderRadius="sm" mr={4}>
+                    <Box
+                        bg="theme.blackground"
+                        p={5}
+                        mx={3}
+                        textAlign="center"
+                        borderRadius="sm"
+                        flex="1 0 auto"
+                        animation="slideInUp .3s ease-in"
+                    >
                         <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/psd.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             PSD转页面
                         </Text>
                     </Box>
-                    <Box bg="theme.blackground" p={5} textAlign="center" borderRadius="sm" mr={4}>
+                    <Box
+                        bg="theme.blackground"
+                        p={5}
+                        mx={3}
+                        textAlign="center"
+                        borderRadius="sm"
+                        flex="1 0 auto"
+                        animation="slideInUp .4s ease-in"
+                    >
                         <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/pc.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             PC网站制作
                         </Text>
                     </Box>
-                    <Box bg="theme.blackground" p={5} textAlign="center" borderRadius="sm" mr={4}>
+                    <Box
+                        bg="theme.blackground"
+                        p={5}
+                        mx={3}
+                        textAlign="center"
+                        borderRadius="sm"
+                        flex="1 0 auto"
+                        animation="slideInUp .5s ease-in"
+                    >
                         <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/app.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             移动端开发
                         </Text>
                     </Box>
-                    <Box bg="theme.blackground" p={5} textAlign="center" borderRadius="sm">
+                    <Box
+                        bg="theme.blackground"
+                        p={5}
+                        mx={3}
+                        flex="1 0 auto"
+                        textAlign="center"
+                        borderRadius="sm"
+                        animation="slideInUp .6s ease-in"
+                    >
                         <Image
                             margin="0 auto"
                             size={10}
@@ -157,11 +181,11 @@ export default () => {
                 </Flex>
             </Box>
             <GithubPinnedList userRepos={data.userRepos}></GithubPinnedList>
-            <Box fontSize="14px" p={5}>
+            <Box p={5}>
                 <Text textAlign="center" mb={5}>
                     <Icon name="info" mr={2}></Icon>常见问题
                 </Text>
-                {issues.map(issue => {
+                {data.issues.map(issue => {
                     return <HelperListItem key={issue._id} issue={issue}></HelperListItem>;
                 })}
             </Box>

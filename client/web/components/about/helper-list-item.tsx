@@ -3,8 +3,8 @@ import { Box, Flex, Image, Text } from '@chakra-ui/core';
 
 export default ({ issue }) => {
     return (
-        <Box overflow="hidden" mb={2}>
-            <Flex mb={2}>
+        <Box overflow="hidden" fontSize={14}>
+            <Flex>
                 <Image
                     borderRadius="50%"
                     border="1px solid #ccc"

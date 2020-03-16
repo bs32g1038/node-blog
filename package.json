@@ -190,8 +190,7 @@
       "!./server/modules/email/**",
       "!./server/modules/tasks/**",
       "!./server/joi/schemas/**",
-      "!./server/modules/demo/**",
-      "!./server/modules/about/**"
+      "!./server/modules/demo"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
     "setupFiles": [
