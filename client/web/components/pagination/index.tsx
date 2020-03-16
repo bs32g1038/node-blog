@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Flex } from '@chakra-ui/core';
+import { Flex, Link as UiLink } from '@chakra-ui/core';
 import Link from '../link';
 import Icon from '../icon';
-import UiLink from '../ui-link';
 
 const PageNumbers = styled(UiLink)`
     position: relative;
@@ -20,6 +19,9 @@ const PageNumbers = styled(UiLink)`
         color: #fff;
         background-color: #4eb77d;
         pointer-events: none;
+    }
+    &:focus {
+        box-shadow: none;
     }
 `;
 
