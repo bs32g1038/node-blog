@@ -17,12 +17,14 @@ interface State {
         | any;
     comments: any[];
     recentArticles: any[];
+    userCommits: any[];
 }
 
 const initialState: State = {
     article: {},
     comments: [],
     recentArticles: [],
+    userCommits: [],
 };
 
 interface ArticleDataLoaded {
@@ -32,6 +34,10 @@ interface ArticleDataLoaded {
 
 interface RecentArticlesDataLoaded {
     recentArticles: any[];
+}
+
+interface ArticlesAggregationMapDateDataLoaded {
+    userCommits: any[];
 }
 
 const article = createSlice({
@@ -47,10 +53,14 @@ const article = createSlice({
             const { recentArticles } = action.payload;
             state.recentArticles = recentArticles;
         },
+        setArticlesAggregationMapDate(state, action: PayloadAction<ArticlesAggregationMapDateDataLoaded>) {
+            const { userCommits } = action.payload;
+            state.userCommits = userCommits;
+        },
     },
 });
 
-export const { setArticle, setRecentArticles } = article.actions;
+export const { setArticle, setRecentArticles, setArticlesAggregationMapDate } = article.actions;
 
 export default article.reducer;
 
@@ -62,4 +72,11 @@ export const fetchArticle = (id: string) => async (dispatch: Dispatch<PayloadAct
 export const fetchRecentArticle = () => async (dispatch: Dispatch<PayloadAction<RecentArticlesDataLoaded>>) => {
     const data = await api.fetchRecentArticles();
     return dispatch(setRecentArticles({ recentArticles: data }));
+};
+
+export const fetchArticlesAggregationMapDate = () => async (
+    dispatch: Dispatch<PayloadAction<ArticlesAggregationMapDateDataLoaded>>
+) => {
+    const data = await api.fetchArticlesAggregationMapDate();
+    return dispatch(setArticlesAggregationMapDate({ userCommits: data }));
 };

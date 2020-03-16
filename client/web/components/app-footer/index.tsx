@@ -1,58 +1,30 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import media from '@blog/client/web/utils/media';
-import NavLink from '../nav-link';
 import BackTopBtn from '../back-top-button';
-import BlogRuningTime from '../blog-runing-time';
-import { Flex, Box, Text, Divider, useColorMode } from '@chakra-ui/core';
+import { Flex, Box, Text, Heading, useColorMode, Image, Button, Spinner } from '@chakra-ui/core';
 import UiLink from '../ui-link';
 import Icon from '../icon';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
+import { ReactSVG as _ReactSVG } from 'react-svg';
 
-const MobileTabbar = styled(Box)`
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    z-index: 9000;
-    display: none;
-    ${media.phone`
-        display: flex;
-    `};
-    .tabbar-item {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: #7d7e80;
-        font-size: 12px;
-        line-height: 1;
-        cursor: pointer;
-        text-decoration: none;
-        &.active {
-            color: #1989fa;
-            svg {
-                fill: #1989fa !important;
-            }
-        }
-    }
-    .tabbar-item__icon {
-        position: relative;
-        margin-bottom: 5px;
-        font-size: 18px;
+export const ReactSVG = styled(_ReactSVG)`
+    display: flex;
+    align-items: center;
+    svg {
+        fill: ${(props: any) => props.theme.colors.theme.header.color};
+        width: 20px;
+        height: 20px;
     }
 `;
 
 const LibLogo = styled.img`
     fill: #2b414d;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    margin: 0 6px;
+    margin-right: 10px;
     display: inline-block;
 `;
 
@@ -88,95 +60,83 @@ export const AppFooter = () => {
         loadTimeCountEvent();
     });
     return (
-        <React.Fragment>
-            <Flex
-                flex="0 0 auto"
-                position="relative"
-                justifyContent="space-between"
-                p={4}
-                fontSize={rem(14)}
-                bg="theme.footer.bg"
-                color="theme.footer.text"
-                mb={['50px', 0]}
-            >
-                <BackTopBtn></BackTopBtn>
-                <Box>
-                    <Text mb={1}>欢迎来到我的个人网站，这里主要分享前后端技术文章，致力于web技术研究。</Text>
-                    <Text mb={1}>
-                        Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>react</strong>{' '}
-                        <strong>antdesign</strong>
-                    </Text>
-                    <Text mb={1}>
-                        <span>累计运行</span>
-                        <BlogRuningTime></BlogRuningTime>
-                    </Text>
-                    <Text mb={1}>
-                        <span>Copyright © 2016-2019</span>
-                        <UiLink className="text-white" href="/blog">
-                            <strong> {config.siteTitle} </strong>
-                        </UiLink>
-                        <span>
-                            <UiLink href={config.icpGovCn} isExternal={true}>
-                                <span className="icon-icp"></span> {config.siteIcp}
-                            </UiLink>
-                        </span>
-                    </Text>
-                </Box>
-                <Flex justifyContent="space-between" flexDirection="column">
-                    <Flex alignItems="center">
-                        <UiLink href="https://nestjs.com" isExternal={true}>
-                            <LibLogo src={require('@blog/client/assets/svgs/logo-nestjs.svg')} />
-                        </UiLink>
-                        <UiLink href="https://react.docschina.org" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('@blog/client/assets/svgs/logo-react.svg')} />
-                        </UiLink>
-                        <UiLink href="https://nodejs.org/en" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('@blog/client/assets/svgs/logo-nodejs.svg')} />
-                        </UiLink>
-                        <UiLink href="https://ant.design" rel="noopener noreferrer" target="_blank">
-                            <LibLogo src={require('@blog/client/assets/svgs/logo-ant-design.svg')} />
-                        </UiLink>
-                    </Flex>
-                    <Divider />
-                    <Text>
-                        博客已开源至
-                        <UiLink href={config.projectGithub}>
-                            <strong> Github </strong>
-                        </UiLink>
-                        请大家多多关注
+        <Flex
+            position="relative"
+            flex="0 0 auto"
+            justifyContent="space-between"
+            p={4}
+            fontSize={rem(14)}
+            bg="theme.footer.bg"
+            color="theme.footer.text"
+        >
+            <BackTopBtn></BackTopBtn>
+            <Box>
+                <Flex className="site-info" alignItems="center">
+                    <ReactSVG loading={() => <Spinner size="sm" mr={2} />} src={config.siteLogo} />
+                    <Text className="site-title" ml={rem(8)}>
+                        欢迎来到 {config.siteTitle}，这里主要分享前后端技术文章，致力于web技术研究。
                     </Text>
                 </Flex>
+                <Flex alignItems="center">
+                    <div className="contact-title">Contact us: </div>
+                    <Flex className="social-list">
+                        <UiLink href="mailto:bs32g1038@163.com">
+                            <Icon name="email" ml="8px" fill="theme.primaryText"></Icon>
+                        </UiLink>
+                        <UiLink>
+                            <Icon name="wechat" ml="8px" fill="theme.primaryText"></Icon>
+                        </UiLink>
+                        <UiLink>
+                            <Icon name="qq" ml="8px" fill="theme.primaryText"></Icon>
+                        </UiLink>
+                        <UiLink href={config.projectGithub} isExternal={true}>
+                            <Icon name="github" ml="8px" fill="theme.primaryText"></Icon>
+                        </UiLink>
+                    </Flex>
+                </Flex>
+                <Flex flexWrap="wrap">
+                    <Text as="span">
+                        Copyright © 2016-{new Date().getFullYear()} {config.siteTitle}
+                    </Text>
+                    <UiLink href={config.icpGovCn} isExternal={true} display="flex" alignItems="center">
+                        <Image
+                            ml="3px"
+                            mr="3px"
+                            size="14px"
+                            display="inline-block"
+                            src={require('@blog/client/assets/images/icp.png')}
+                        ></Image>
+                        <Text as="span">{config.siteIcp}</Text>
+                    </UiLink>
+                </Flex>
+                <Text mb={1}>
+                    Powered by <strong>Nodejs</strong> <strong>nestjs</strong> <strong>nextjs</strong>{' '}
+                    <strong>react</strong> <strong>antdesign</strong>
+                </Text>
+            </Box>
+            <Flex flexDirection="column" maxW={rem(200)}>
+                <Heading as="h3" fontSize={rem(20)}>
+                    商务合作
+                </Heading>
+                <Text lineHeight={1.5}>承包前后端业务，联系前，请明确你的需求，最低报价，工期。</Text>
+                <Flex alignItems="center">
+                    <UiLink href="https://nestjs.com" isExternal={true}>
+                        <LibLogo src={require('@blog/client/assets/svgs/logo-nestjs.svg')} />
+                    </UiLink>
+                    <UiLink href="https://react.docschina.org" isExternal={true}>
+                        <LibLogo src={require('@blog/client/assets/svgs/logo-react.svg')} />
+                    </UiLink>
+                    <UiLink href="https://nodejs.org/en" isExternal={true}>
+                        <LibLogo src={require('@blog/client/assets/svgs/logo-nodejs.svg')} />
+                    </UiLink>
+                    <UiLink href="https://ant.design" isExternal={true}>
+                        <LibLogo src={require('@blog/client/assets/svgs/logo-ant-design.svg')} />
+                    </UiLink>
+                    <Button size="sm" onClick={() => toggleColorMode()} float="right" title="主题切换">
+                        {colorMode === 'light' ? '暗黑' : '明亮'}主题
+                    </Button>
+                </Flex>
             </Flex>
-            <MobileTabbar borderTop={1} borderStyle="solid" borderTopColor="theme.border" bg="theme.mobileFooter.bg">
-                <NavLink href="/blog">
-                    <a className="tabbar-item">
-                        <div className="tabbar-item__icon">
-                            <Icon fill="theme.primaryText" size="24px" name="home" />
-                        </div>
-                        <div className="tabbar-item__text">博客</div>
-                    </a>
-                </NavLink>
-                <NavLink href="/about">
-                    <a className="tabbar-item">
-                        <div className="tabbar-item__icon">
-                            <Icon fill="theme.primaryText" size="24px" name="user" />
-                        </div>
-                        <div className="tabbar-item__text">关于</div>
-                    </a>
-                </NavLink>
-                <a className="tabbar-item" onClick={() => toggleColorMode()}>
-                    <div className="tabbar-item__icon">
-                        <Icon size="24px" fill="theme.primaryText" name={colorMode === 'light' ? 'moon' : 'sun'} />
-                    </div>
-                    <div className="tabbar-item__text">主题</div>
-                </a>
-                <a className="tabbar-item" href={config.github} rel="noopener noreferrer" target="_blank">
-                    <div className="tabbar-item__icon">
-                        <Icon size="24px" name="github" fill="theme.primaryText" />
-                    </div>
-                    <div className="tabbar-item__text">Gituhub</div>
-                </a>
-            </MobileTabbar>
-        </React.Fragment>
+        </Flex>
     );
 };

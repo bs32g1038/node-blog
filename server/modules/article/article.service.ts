@@ -8,7 +8,9 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import mila from 'markdown-it-link-attributes';
 import { QueryRules } from '../../utils/mongoose.query.util';
+import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { isEmpty, isEqual } from 'lodash';
+import dayjs from 'dayjs';
 
 const markdown: any = new MarkdownIt({
     highlight: (str, lang) => {
@@ -146,5 +148,34 @@ export class ArticleService {
             });
             return this.articleModel.deleteMany({ _id: { $in: articleIds } });
         });
+    }
+
+    public async articlesAggregation() {
+        const key = 'articlesAggregation#date';
+        if (cache.get(key)) {
+            return cache.get(key);
+        }
+        const data = await this.articleModel.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $gte: dayjs()
+                            .startOf('year')
+                            .toDate(),
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+                    articles: {
+                        $push: '$_id',
+                    },
+                },
+            },
+            { $project: { createdAt: 1, _id: 1, articles: 1 } },
+        ]);
+        cache.set(key, data, TimeExpression.TIME_5_MINUTES);
+        return data;
     }
 }

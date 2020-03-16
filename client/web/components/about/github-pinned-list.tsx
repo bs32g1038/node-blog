@@ -26,23 +26,24 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
             flexDirection="column"
             justifyContent="space-between"
             key={item.name}
-            width={['calc(100% - 8px)', 'calc(50% - 8px)']}
+            width={['calc(100% - 8px)', 'calc(25% - 8px)']}
             p={4}
             mb={2}
+            borderRadius="sm"
         >
             <Box>
                 <Flex alignItems="center" mb={2}>
                     <Icon name="repo" fill="theme.primaryText"></Icon>
-                    <UiLink ml={2} href={config.github + '/' + item.name} isExternal={true} flex="1 0 auto">
+                    <UiLink ml={1} href={config.github + '/' + item.name} isExternal={true} flex="1 0 auto">
                         <Heading color="theme.primaryText" fontWeight="normal" as="h3" fontSize="1rem">
                             {item.name}
                         </Heading>
                     </UiLink>
-                    <Box>
-                        <Icon name="grabber" fill="theme.primaryText"></Icon>
-                    </Box>
+                    <Icon name="grabber" fill="theme.primaryText"></Icon>
                 </Flex>
-                <Text mb={4}>{item.description}</Text>
+                <Text mb={4} fontSize={13}>
+                    {item.description}
+                </Text>
             </Box>
             <Flex alignItems="center" fontSize={13}>
                 <Text as="span" mr={3} color="theme.secondaryText">
@@ -84,7 +85,7 @@ export default (props: UserReposProps) => {
     }
     return (
         <>
-            <Text mb={3}>Github开源项目</Text>
+            {/* <Text mb={3}>Github开源项目</Text> */}
             <Flex flexWrap="wrap" justifyContent="space-between">
                 {arr.map((item: UserRepoItem) => (
                     <PinnedListItem item={item} key={item.name}></PinnedListItem>

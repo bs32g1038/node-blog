@@ -34,3 +34,9 @@ export const fetchRecentArticles = () => {
 export const searchArticles = (key: string) => {
     return axios.get('/search?key=' + key);
 };
+
+export const fetchArticlesAggregationMapDate = () => {
+    return axios.get('/articles-aggregation/date').then(_ => {
+        return _.data;
+    });
+};
