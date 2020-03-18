@@ -57,7 +57,7 @@ export default (props: any) => {
             const formdata = new FormData();
             formdata.append('file', inputObj.files[0]);
             axios({
-                url: '/upload/image',
+                url: '/files/upload',
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
