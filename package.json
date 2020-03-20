@@ -74,7 +74,7 @@
     "serve-favicon": "^2.5.0",
     "sharp": "^0.25.1",
     "to-ico": "^1.1.5",
-    "validator": "^12.2.0",
+    "validator": "^13.0.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {
