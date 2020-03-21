@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 import { APP_SERVER } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
-import { staticAssetsPath, demoAssetsPath, assetsPath } from './utils/path.util';
+import { staticAssetsPath, assetsPath } from './utils/path.util';
 import { AppConfigService } from './modules/app-config/app.config.service';
 
 export async function bootstrap() {
@@ -32,7 +32,6 @@ export async function bootstrap() {
     });
     app.useStaticAssets(assetsPath, { prefix: '/static/' });
     app.useStaticAssets(staticAssetsPath, { prefix: '/static/' });
-    app.useStaticAssets(demoAssetsPath, { prefix: '/demo/' });
     app.use(log4js.connectLogger(requestInfoLogger, { level: 'info' }));
     app.useGlobalFilters(new AllExceptionsFilter());
     return await app.listen(APP_SERVER.port);

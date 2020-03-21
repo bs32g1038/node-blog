@@ -167,6 +167,20 @@ describe('article.module.e2e', () => {
         });
     });
 
+    describe('get articles aggregation by date', () => {
+        test('success', async () => {
+            const articles = generateDataList(() => getArticle(), 10);
+            await ArticleModel.create(articles);
+
+            return request(app.getHttpServer())
+                .get('/api/articles-aggregation/date')
+                .expect(200)
+                .then(res => {
+                    expect(res.body.length).toBeGreaterThanOrEqual(1);
+                });
+        });
+    });
+
     describe('get one article', () => {
         test('get article success, the content should be handled by markdown render', async () => {
             const article = getArticle();

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notification } from 'antd';
+import { message } from 'antd';
 import Router from 'next/router';
 import config from '@blog/client/configs/admin.default.config';
 
@@ -9,7 +9,10 @@ axios.defaults.baseURL = '/api';
  * 异常处理程序
  */
 const errorHandler = error => {
-    const { response = {} } = error;
+    const { response = {}, code, message: msg } = error;
+    if (code === 'ECONNABORTED' || msg.includes('timeout')) {
+        return message.error('网络超时');
+    }
     const { status } = response;
     switch (status) {
         case 401:
@@ -25,9 +28,9 @@ const errorHandler = error => {
         default:
             break;
     }
-    notification.error({
-        message: response.data.message,
-    });
+    if (response.data) {
+        message.error(response.data.message);
+    }
     return Promise.reject(error);
 };
 
@@ -48,9 +51,6 @@ axios.interceptors.request.use(
     }
 );
 
-/**
- * 配置request请求时的默认参数
- */
 axios.interceptors.response.use(
     function(response) {
         return response;

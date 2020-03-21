@@ -29,7 +29,13 @@ export const AppHeader = () => {
             <Link href="/" as="/">
                 <HomeNav title={config.siteTitle} mr={[0, 6]}>
                     <ReactSVG loading={() => <Spinner size="sm" mr={2} />} src={config.siteLogo} />
-                    <Heading as="h1" title={config.siteTitle} fontSize={16} fontFamily="siteitlefont">
+                    <Heading
+                        color="theme.header.color"
+                        as="h1"
+                        title={config.siteTitle}
+                        fontSize={16}
+                        fontFamily="siteitlefont"
+                    >
                         {config.siteTitle}
                     </Heading>
                 </HomeNav>

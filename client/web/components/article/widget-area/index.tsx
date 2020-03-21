@@ -4,7 +4,6 @@ import { css } from 'emotion';
 import { Box, Flex, Text, Heading } from '@chakra-ui/core';
 import UiLink from '@blog/client/web/components/ui-link';
 import { parseTime } from '@blog/client/libs/time';
-import ListStyleLoader from '@blog/client/web/components/list-style-loader';
 import { useFixedTopInScroll } from '@blog/client/web/hooks/useFixedTopInScroll';
 import { rem } from 'polished';
 
@@ -110,12 +109,8 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     最近文章
                 </Heading>
                 <Box>
-                    {arr.map((item, index) => {
-                        return item ? (
-                            <Item item={item} key={item._id}></Item>
-                        ) : (
-                            <ListStyleLoader key={`recommended_posts_loading_${index}`}></ListStyleLoader>
-                        );
+                    {arr.map(item => {
+                        return <Item item={item} key={item._id}></Item>;
                     })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
                         <img

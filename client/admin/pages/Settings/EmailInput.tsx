@@ -56,7 +56,12 @@ export default (props: Props) => {
             <Form.Item label="邮箱授权密码" name="smtpAuthpass">
                 <Input.Password size="large" placeholder="请输入邮箱授权密码" disabled={disabled} />
             </Form.Item>
-            <Form.Item name="isEnableSmtp" valuePropName="checked" label="是否开启邮箱通知服务">
+            <Form.Item
+                name="isEnableSmtp"
+                valuePropName="checked"
+                label="是否开启邮箱通知服务"
+                extra="勾选，系统将会在有新的评论时，给你发送通知邮件"
+            >
                 <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} disabled={disabled} />
             </Form.Item>
             {!disabled && (

@@ -106,6 +106,7 @@ export default (props: Props) => {
                         danger={true}
                         onClick={() => {
                             setDisabled(!disabled);
+                            form.setFieldsValue({ [name]: value });
                         }}
                     >
                         取消

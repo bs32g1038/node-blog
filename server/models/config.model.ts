@@ -43,16 +43,10 @@ const ConfigSchema = new mongoose.Schema(
             maxlength: 100,
             trim: true,
         },
-        // dmeo 相关配置
-        demoGit: {
-            type: String,
-            minlength: 1,
-            maxlength: 200,
-            trim: true,
-        },
-        demoTime: {
-            type: Date,
-        },
+
+        /**
+         * 邮箱通知服务配置
+         */
         isEnableSmtp: {
             type: Boolean,
             default: false,

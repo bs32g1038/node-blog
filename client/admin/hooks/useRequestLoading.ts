@@ -7,11 +7,17 @@ export default () => {
             return promise
                 .then(res => {
                     setLoading(false);
-                    return res;
+                    return { res, err: null };
                 })
                 .catch(err => {
                     setLoading(false);
-                    console.log(err);
+                    return { res: null, err };
+                })
+                .then(({ res, err }) => {
+                    if (err) {
+                        throw new Error(err);
+                    }
+                    return res;
                 });
         },
         [1]

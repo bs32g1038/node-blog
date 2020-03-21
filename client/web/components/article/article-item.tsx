@@ -17,7 +17,6 @@ import {
     Heading,
 } from '@chakra-ui/core';
 import { rem } from 'polished';
-import useLinkGenerateDemo from '@blog/client/web/hooks/useLinkGenerateDemo';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import { useSelector } from 'react-redux';
@@ -31,7 +30,6 @@ interface Props {
 export default (props: Props) => {
     const { article, comments } = props;
     const config = useSelector((state: RootState) => state.app.config);
-    const markdownContent = useLinkGenerateDemo(config.demoGit);
     return (
         <Box bg="theme.article.bg" position="relative" flex="1 0 auto" maxW="570px" width="100%">
             <Breadcrumb
@@ -86,7 +84,7 @@ export default (props: Props) => {
                     <Text color="theme.secondaryText">阅读次数{article.viewsCount}</Text>
                 </Flex>
             </Box>
-            <Box color="theme.article.primaryText" mb={5} ref={markdownContent}>
+            <Box color="theme.article.primaryText" mb={5}>
                 <MarkdownBody content={article.content}></MarkdownBody>
             </Box>
             <List

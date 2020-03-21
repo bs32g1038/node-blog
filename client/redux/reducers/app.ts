@@ -10,7 +10,6 @@ interface State {
         email: string;
         github: string;
         projectGithub: string;
-        demoGit: string;
         admin: {
             tokenKey: string;
             userInfoKey: string;
@@ -31,7 +30,6 @@ const initialState: State = {
         email: '',
         github: 'https://github.com/bs32g1038',
         projectGithub: 'https://github.com/bs32g1038/node-blog',
-        demoGit: '',
         admin: {
             tokenKey: 'node-blog-bs32g1038@163.com',
             userInfoKey: 'node-blog-bs32g1038@163.com-userInfo',

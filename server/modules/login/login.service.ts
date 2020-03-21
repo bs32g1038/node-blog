@@ -81,6 +81,6 @@ export class LoginService {
                 }),
             };
         }
-        throw new BadRequestException('用户名或者密码输入有误，请重新检查后再登陆！');
+        throw new BadRequestException('用户名或者密码输入有误，请重新检查后再登陆');
     }
 }

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import theme from '@blog/client/web/theme/light';
 
 const Div = styled.div`
@@ -45,15 +44,16 @@ const Div = styled.div`
     }
     img {
         width: 100%;
-        border-radius: 5px;
         display: block;
         margin-bottom: 15px;
         height: auto;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        padding: 4px;
     }
     p {
         margin: 0 0 20px;
         padding: 0;
-        line-height: 1.8;
+        line-height: 1.6;
     }
     p,
     pre,
@@ -64,7 +64,7 @@ const Div = styled.div`
     hr,
     table,
     blockquote {
-        margin-bottom: 1.2em;
+        margin-bottom: 0.6em;
     }
     ul {
         margin-left: 1.3em;
@@ -288,11 +288,4 @@ const Div = styled.div`
     }
 `;
 
-export default (props: any) => (
-    <Div
-        className="markdown-body preview"
-        dangerouslySetInnerHTML={{
-            __html: props.content,
-        }}
-    ></Div>
-);
+export default Div;

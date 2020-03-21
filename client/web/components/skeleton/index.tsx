@@ -2,27 +2,32 @@ import React from 'react';
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import { Box, BoxProps } from '@chakra-ui/core';
+import { opacify } from 'polished';
 
-const skeletonWidthGlow = keyframes`
-    0%   { width:100%; }
-    25%  { width:85%; }
-    35%  { width:70%; }
-    50%  { width:55%; }
-    65%  { width:76%; }
-    75%  { width:90%; }
-    100% { width:100%; }
+const SkeletonLoading = keyframes`
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 `;
 
 const _Box = styled(Box)`
-    border-color: ${(props: any) => props.theme.colors.theme.blackground};
     box-shadow: none !important;
-    background: ${(props: any) => props.theme.colors.theme.blackground};
     background-clip: padding-box !important;
     cursor: default;
     color: transparent !important;
-    animation: ${(props: any) => props.isWidthAnimation && skeletonWidthGlow} 1s linear infinite;
     pointer-events: none;
     user-select: none;
+    background: linear-gradient(
+        90deg,
+        ${(props: any) => opacify(0.045, props.theme.colors.theme.blackground)} 25%,
+        ${(props: any) => props.theme.colors.theme.blackground} 37%,
+        ${(props: any) => opacify(0.035, props.theme.colors.theme.blackground)} 63%
+    );
+    background-size: 400% 100%;
+    animation: ${SkeletonLoading} 1.4s ease infinite;
 `;
 
 interface CProps {

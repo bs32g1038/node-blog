@@ -221,7 +221,7 @@ export default () => {
                             <SearchWrap>
                                 <div className="search-input-group">
                                     <Row justify="end">
-                                        <Col>
+                                        <Col flex="0 0 auto">
                                             <Input
                                                 type="text"
                                                 name="searchTitle"
@@ -236,7 +236,7 @@ export default () => {
                                                 }}
                                             />
                                         </Col>
-                                        <Col>
+                                        <Col flex="0 0 auto">
                                             <Button
                                                 type="primary"
                                                 icon={<SearchOutlined />}
@@ -247,7 +247,7 @@ export default () => {
                                                 查询
                                             </Button>
                                         </Col>
-                                        <Col>
+                                        <Col flex="0 0 auto">
                                             <Button
                                                 type="primary"
                                                 icon={<HighlightOutlined />}

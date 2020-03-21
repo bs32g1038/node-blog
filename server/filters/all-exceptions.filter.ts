@@ -34,7 +34,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
         return response.status(status).json({
             statusCode: status,
-            message: 'internal server error',
+            message: '服务器罢工了，请稍后再重试',
         });
     }
 }

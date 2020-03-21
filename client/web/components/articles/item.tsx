@@ -7,7 +7,6 @@ import Icon from '../icon';
 import Trend from '../Trend';
 import { LazyLoad } from '../lazy-load';
 import { parseTime } from '@blog/client/libs/time';
-import ListStyleLoader from '../list-style-loader';
 import { rem } from 'polished';
 
 const ThumbWrap = styled.div`
@@ -138,8 +137,4 @@ const Item: SFC<{ item: any }> = (props: any) => {
     );
 };
 
-const C: SFC<{ item: any; loading: boolean }> = (props: any) => {
-    return !props.loading && props.item ? <Item item={props.item}></Item> : <ListStyleLoader></ListStyleLoader>;
-};
-
-export default C;
+export default Item;

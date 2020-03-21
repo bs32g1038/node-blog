@@ -22,8 +22,6 @@ const config = {
     github: 'https://github.com/bs32g1038',
     projectGithub: 'https://github.com/bs32g1038/node-blog',
 
-    demoGit: 'https://gitee.com/chengli01/demo',
-
     siteDomain: process.env.NODE_ENV === 'production' ? 'http://www.lizc.net' : 'http://127.0.0.1:3000',
 
     ...smptConfig,

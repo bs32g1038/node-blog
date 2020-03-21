@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 const Div = styled.div`
     font-size: 16px;
@@ -44,9 +45,15 @@ const Div = styled.div`
     }
     img {
         width: 100%;
-        border-radius: 5px;
+        padding: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
         display: block;
         height: auto;
+        &.emoji {
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
     }
     p,
     pre,
@@ -283,7 +290,7 @@ const Div = styled.div`
 
 export default (props: any) => (
     <Div
-        className="markdown-body"
+        className="tui-editor-contents"
         dangerouslySetInnerHTML={{
             __html: props.content,
         }}

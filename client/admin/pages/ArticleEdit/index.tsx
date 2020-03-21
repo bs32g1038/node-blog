@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Router, { useRouter } from 'next/router';
 import { Form, Input, Button, message } from 'antd';
-import MdEdit from '@blog/client/admin/components/MdEdit';
 import axios from '@blog/client/admin/axios';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
 import { Header, EditorWrap } from './style';
@@ -9,11 +8,17 @@ import Drawer from './Drawer';
 import Link from 'next/link';
 import { isLogin } from '@blog/client/admin/api/is.login.api';
 import { debounce } from 'lodash';
+import isLength from 'validator/lib/isLength';
+import dynamic from 'next/dynamic';
+const ToastuiEditor = dynamic(() => import('@blog/client/admin/components/ToastuiEditor'), { ssr: false });
 
 const { TextArea } = Input;
 
 export default () => {
-    const [data, setData] = useState({});
+    const [editor, setEditor] = useState<any>(null);
+    const [data, setData] = useState<any>({
+        content: '',
+    });
     const router = useRouter();
     const [form] = Form.useForm();
     const [showDrawer, setShowDrawer] = useState(false);
@@ -61,7 +66,12 @@ export default () => {
 
     const publish = data => {
         const { id } = router.query;
+        const content = editor.getMarkdown();
+        if (!isLength(content, { min: 1, max: 15000 })) {
+            return message.error('文章详情不能为空，且最多15000个字符!');
+        }
         Object.assign(data, {
+            content,
             screenshot: data.screenshot[0].url,
         });
         const p = id ? updateArticle(id, data) : createArticle(data);
@@ -113,6 +123,17 @@ export default () => {
                     </div>
                     <div className="type">{id ? '文章编辑' : '添加文章'}</div>
                 </div>
+                <EditorWrap>
+                    <Form form={form} initialValues={{ content: '' }} name="contentForm">
+                        <Form.Item
+                            name="title"
+                            style={{ maxWidth: '700px', width: '100%', margin: '0 auto' }}
+                            rules={[{ required: true, message: '标题不能为空！，且最多80个字符!', max: 80 }]}
+                        >
+                            <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
+                        </Form.Item>
+                    </Form>
+                </EditorWrap>
                 <section className="view-actions">
                     <Button
                         type="link"
@@ -132,23 +153,7 @@ export default () => {
                     ></Drawer>
                 </section>
             </Header>
-            <EditorWrap>
-                <Form form={form} initialValues={{ content: '' }} name="contentForm">
-                    <Form.Item
-                        name="title"
-                        style={{ maxWidth: '700px', width: '100%', margin: '0 auto' }}
-                        rules={[{ required: true, message: '标题不能为空！，且最多80个字符!', max: 80 }]}
-                    >
-                        <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
-                    </Form.Item>
-                    <Form.Item
-                        name="content"
-                        rules={[{ required: true, message: '文章详情不能为空，且最多15000个字符!', max: 15000 }]}
-                    >
-                        <MdEdit />
-                    </Form.Item>
-                </Form>
-            </EditorWrap>
+            <ToastuiEditor initialValue={data.content} getEditor={e => setEditor(e)}></ToastuiEditor>
         </Form.Provider>
     );
 };

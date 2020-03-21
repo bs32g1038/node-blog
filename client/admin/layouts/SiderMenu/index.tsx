@@ -151,9 +151,7 @@ const MenuList = props => {
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
                 <MenuLinkA>
                     {item.icon}
-                    <span className="nav-text" style={{ marginLeft: '10px' }}>
-                        {item.title}
-                    </span>
+                    <span className="nav-text">{item.title}</span>
                 </MenuLinkA>
             </Link>
         </Menu.Item>
@@ -266,7 +264,7 @@ export default (props: Props) => {
                                 <Link href="/admin/user/person" passHref={true}>
                                     <a>
                                         <SettingOutlined />
-                                        <span style={{ marginLeft: '10px' }}>配置个人信息</span>
+                                        <span>配置个人信息</span>
                                     </a>
                                 </Link>
                             </Menu.Item>

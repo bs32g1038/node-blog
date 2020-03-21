@@ -9,7 +9,6 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ArticleModule } from './modules/article/article.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CommentModule } from './modules/comment/comment.module';
-import { DemoModule } from './modules/demo/demo.module';
 import { FileModule } from './modules/file/file.module';
 import { RssModule } from './modules/rss/rss.module';
 import { LoginModule } from './modules/login/login.module';
@@ -38,7 +37,6 @@ import { SSRModule } from '@blog/client/server';
         ArticleModule,
         CategoryModule,
         CommentModule,
-        DemoModule,
         FileModule,
         RssModule,
         LoginModule,

@@ -4,9 +4,8 @@ export const Header = styled.header`
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    height: 36px;
     padding: 0;
-    padding: 24px 40px;
+    padding: 10px 40px;
     z-index: 799;
     display: flex;
     .left-item {
@@ -34,7 +33,7 @@ export const Header = styled.header`
 `;
 
 export const EditorWrap = styled.div`
-    margin-top: 20px;
+    flex: 1 0 auto;
     .MdEditor {
         margin: 0 auto;
         border: none !important;
@@ -43,10 +42,9 @@ export const EditorWrap = styled.div`
         margin-top: 20px;
     }
     textarea.ant-input {
-        font-size: 32px;
+        font-size: 24px;
         font-weight: 700;
         border: none;
-        overflow-y: scroll;
         &:focus {
             outline: none;
             box-shadow: none;

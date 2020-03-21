@@ -12,6 +12,7 @@ import { fetchCategories } from '@blog/client/redux/reducers/categories';
 import { isServer } from '@blog/client/web/utils/helper';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
+import ListStyleLoader from './list-style-loader';
 
 const Page = () => {
     const { page, items, totalCount, isLoading, limit } = useFetchArticles();
@@ -23,17 +24,18 @@ const Page = () => {
             </Head>
             <Categories></Categories>
             <Box>
-                {items.map((item: any, index: number) => (
-                    <ArticleItem
-                        loading={isLoading}
-                        item={item}
-                        key={item ? item._id : `article-item-loading-${index}`}
-                    ></ArticleItem>
-                ))}
-                {items.length <= 0 && (
+                {isLoading &&
+                    new Array(limit)
+                        .fill('')
+                        .map((item, index) => (
+                            <ListStyleLoader key={`article-item-loading-${index}`}></ListStyleLoader>
+                        ))}
+                {!isLoading && items.length <= 0 ? (
                     <Box mt={5}>
                         <Empty />
                     </Box>
+                ) : (
+                    items.map((item: any) => <ArticleItem item={item} key={item._id}></ArticleItem>)
                 )}
             </Box>
             {totalCount > 0 && (

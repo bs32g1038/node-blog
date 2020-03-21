@@ -27,19 +27,10 @@ export interface File {
 export const FileJoiSchema = {
     name: Joi.string()
         .min(1)
-        .max(80)
-        .alter({
-            post: schema => schema.required(),
-        }),
-    type: Joi.string().alter({
-        post: schema => schema.required(),
-    }),
-    size: Joi.number().alter({
-        post: schema => schema.required(),
-    }),
-    url: Joi.string().alter({
-        post: schema => schema.required(),
-    }),
+        .max(80),
+    type: Joi.string(),
+    size: Joi.number(),
+    url: Joi.string().max(2000),
 };
 
 export interface FileDocument extends File, Document {

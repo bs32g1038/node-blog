@@ -1,7 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
 import sharp from 'sharp';
-import mongoose from 'mongoose';
 import { isDevMode } from '@blog/server/configs/index.config';
 import { Injectable } from '@nestjs/common';
 import { ConfigService, registerAs } from '@nestjs/config';
@@ -54,7 +53,6 @@ export class AppConfigService {
                 siteLogo,
             });
         }
-        await this.updateDemoGit(data);
         await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
         const res = await ConfigModel.findOne({ key: CONFIG_KEY });
         this.setConfig(res.toObject());
@@ -116,11 +114,5 @@ export class AppConfigService {
                     resolve(true);
                 });
         });
-    }
-
-    async updateDemoGit(data) {
-        if (data.demoGit && !isEqual(data.demoGit, this.appConfig.demoGit)) {
-            await fs.rename(staticAssetsPath + '/demo', staticAssetsPath + '/' + mongoose.Types.ObjectId());
-        }
     }
 }

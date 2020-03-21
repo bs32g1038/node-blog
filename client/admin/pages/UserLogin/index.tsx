@@ -51,9 +51,9 @@ export default () => {
                                 label="用户名："
                                 labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
-                                rules={[{ required: true, message: 'Please input your userName!' }]}
+                                rules={[{ required: true, message: '请输入你的用户名!' }]}
                             >
-                                <Input prefix={<AliwangwangOutlined />} placeholder="请输入用户名" />
+                                <Input prefix={<AliwangwangOutlined />} placeholder="请输入" />
                             </Form.Item>
                         )}
                         <Form.Item
@@ -61,18 +61,18 @@ export default () => {
                             label="账号："
                             labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
-                            rules={[{ required: true, message: 'Please input your account!' }]}
+                            rules={[{ required: true, message: '请输入你的账号!' }]}
                         >
-                            <Input prefix={<UserOutlined />} placeholder="请输入账户" />
+                            <Input prefix={<UserOutlined />} placeholder="请输入" />
                         </Form.Item>
                         <Form.Item
                             name="password"
                             label="密码："
                             labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[{ required: true, message: '请输入你的密码!' }]}
                         >
-                            <Input prefix={<LockOutlined />} type="password" placeholder="请填写密码" />
+                            <Input prefix={<LockOutlined />} type="password" placeholder="请填写" />
                         </Form.Item>
                         <Form.Item label="操作：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                             <Button loading={loading} type="primary" htmlType="submit" className="login-form-button">
