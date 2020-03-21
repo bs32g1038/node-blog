@@ -21,7 +21,9 @@ describe('login.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/getFirstLoginInfo')
             .expect(200)
-            .expect({ message: '你是首次登陆，该账号将为你的管理员账号，请务必记住！直接登陆即可生成账号！' });
+            .then(res => {
+                expect(typeof res.body.message).toEqual('string');
+            });
     });
 
     test('bad request, first login, try use empty account', async () => {
@@ -31,9 +33,7 @@ describe('login.module.e2e', () => {
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
-                expect(res.body.message).toEqual(
-                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！账号长度在6-30之间！'
-                );
+                expect(typeof res.body.message).toEqual('string');
             });
     });
 
@@ -44,9 +44,7 @@ describe('login.module.e2e', () => {
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
-                expect(res.body.message).toEqual(
-                    '你是首次登陆，该账号将为你的管理员账号，请务必记住！密码长度在6-30之间！'
-                );
+                expect(typeof res.body.message).toEqual('string');
             });
     });
 
@@ -84,7 +82,7 @@ describe('login.module.e2e', () => {
             .expect(400)
             .then(res => {
                 expect(res.body.statusCode).toEqual(400);
-                expect(res.body.message).toEqual('用户名或者密码输入有误，请重新检查后再登陆！');
+                expect(typeof res.body.message).toEqual('string');
             });
     });
 
