@@ -11,7 +11,8 @@ axios.defaults.baseURL = '/api';
 const errorHandler = error => {
     const { response = {}, code, message: msg } = error;
     if (code === 'ECONNABORTED' || msg.includes('timeout')) {
-        return message.error('网络超时');
+        message.error('网络超时');
+        return Promise.reject(error);
     }
     const { status } = response;
     switch (status) {
