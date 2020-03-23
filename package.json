@@ -137,7 +137,7 @@
     "markdown-it-for-inline": "^0.1.1",
     "null-loader": "^3.0.0",
     "polished": "^3.5.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.1",
     "query-string": "^6.11.1",
     "rc-tween-one": "^2.6.8",
     "react": "^16.13.1",
