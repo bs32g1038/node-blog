@@ -25,12 +25,12 @@ export const getFlatMenuKeys = (menuData = []) => {
 };
 
 export const getMenuMatches = (flatMenuKeys: any = [], path: string) =>
-    flatMenuKeys.filter(item => item && pathToRegexp(item.path).test(path));
+    flatMenuKeys.filter((item) => item && pathToRegexp(item.path).test(path));
 
 export const getBreadCrumbRoutes = (menus, router) => {
     const breadcrumbs = urlToList(router.pathname)
-        .map(item => getMenuMatches(getFlatMenuKeys(menus), item)[0])
-        .filter(item => item)
+        .map((item) => getMenuMatches(getFlatMenuKeys(menus), item)[0])
+        .filter((item) => item)
         .reduce((acc, curr) => [...acc, curr], []);
     return breadcrumbs;
 };
@@ -53,7 +53,7 @@ export default () => {
     const items = getBreadCrumbRoutes(menu, router);
     return (
         <_Breadcrumb>
-            {items.map(item => {
+            {items.map((item) => {
                 return (
                     <Breadcrumb.Item key={item.path}>
                         {item.breadcrumbIcon}

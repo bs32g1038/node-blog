@@ -36,14 +36,14 @@ export default ({ visible, onCancel, formData }) => {
     }, [visible]);
 
     useEffect(() => {
-        axios.get('/categories/').then(res => {
+        axios.get('/categories/').then((res) => {
             setCategories(res.data);
         });
     }, [1]);
 
     const categoryOptions =
         categories &&
-        categories.map(category => (
+        categories.map((category) => (
             <Option key={category._id} value={category._id}>
                 {category.name}
             </Option>

@@ -75,7 +75,7 @@ export const fetchArticles = (page?: number, filter?: { cid: string; tag: string
     const { cid = '', tag = '' } = filter;
     return (dispatch: Dispatch<PayloadAction<any>>) => {
         dispatch(setLoading({ isLoading: true }));
-        return api.fetchArticles(page, LIMIT, { cid, tag }).then(res => {
+        return api.fetchArticles(page, LIMIT, { cid, tag }).then((res) => {
             const items = res.items;
             const totalCount = res.totalCount;
             const data = {

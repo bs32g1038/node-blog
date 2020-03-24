@@ -14,7 +14,7 @@ const testEmail = () => {
     return axios.post('/email/test');
 };
 
-const updateEmailConfig = data => {
+const updateEmailConfig = (data) => {
     return axios.put('/email', data);
 };
 
@@ -23,7 +23,7 @@ export default (props: Props) => {
     const [disabled, setDisabled] = useState(true);
     const { loading, injectRequestLoading } = useRequestLoading();
     const [form] = useForm();
-    const onFinish = values => {
+    const onFinish = (values) => {
         injectRequestLoading(updateEmailConfig(values)).then(() => {
             message.success('更新成功');
         });
@@ -72,7 +72,7 @@ export default (props: Props) => {
                     <Button
                         loading={loading}
                         onClick={() => {
-                            injectRequestLoading(testEmail()).then(res => {
+                            injectRequestLoading(testEmail()).then((res) => {
                                 if (res && res.data === true) {
                                     return message.success('邮箱配置正常！');
                                 }

@@ -24,26 +24,24 @@ export const CommentJoiSchema = {
         .min(1)
         .max(80)
         .alter({
-            post: schema => schema.required(),
+            post: (schema) => schema.required(),
         }),
     email: Joi.string()
         .email()
         .alter({
-            post: schema => schema.required(),
+            post: (schema) => schema.required(),
         }),
     content: Joi.string()
         .min(1)
         .max(500)
         .alter({
-            post: schema => schema.required(),
+            post: (schema) => schema.required(),
         }),
     reply: [Joi.equal(null), Joi.objectId()],
     article: Joi.objectId().alter({
-        post: schema => schema.required(),
+        post: (schema) => schema.required(),
     }),
-    identity: Joi.number()
-        .min(0)
-        .max(4),
+    identity: Joi.number().min(0).max(4),
     website: Joi.string().allow(''),
 };
 

@@ -147,7 +147,7 @@ export default (props: Props) => {
             loading={loading}
         >
             <div>
-                {recentComments.map(item => (
+                {recentComments.map((item) => (
                     <CommentMsgDiv key={item._id}>
                         <CommentInfoDiv>
                             <span style={{ flex: '1 0 auto', display: 'flex' }}>

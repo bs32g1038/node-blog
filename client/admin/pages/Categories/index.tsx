@@ -19,8 +19,8 @@ export default () => {
         url: '/categories',
         params: { page: 1, limit: 100 },
     });
-    const deleteCategory = _id => {
-        axios.delete('/categories/' + _id).then(res => {
+    const deleteCategory = (_id) => {
+        axios.delete('/categories/' + _id).then((res) => {
             message.success(`删除分类 ${res.data.name} 成功！`);
             mutate();
         });
@@ -30,10 +30,10 @@ export default () => {
             .delete('/categories', {
                 data: { categoryIds: state.selectedRowKeys },
             })
-            .then(res => {
+            .then((res) => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success(`删除分类成功！`);
-                    setState(data => ({
+                    setState((data) => ({
                         ...data,
                         selectedRowKeys: [],
                     }));
@@ -42,8 +42,8 @@ export default () => {
                 return message.error('删除分类失败，请重新尝试。');
             });
     };
-    const onSelectChange = selectedRowKeys => {
-        setState(data => ({
+    const onSelectChange = (selectedRowKeys) => {
+        setState((data) => ({
             ...data,
             selectedRowKeys,
         }));
@@ -119,7 +119,7 @@ export default () => {
                                 message.info('请选择要删除的分类');
                                 return;
                             }
-                            setState(data => ({
+                            setState((data) => ({
                                 ...data,
                                 visible: !state.visible,
                             }));

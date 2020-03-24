@@ -36,7 +36,7 @@ export class CategoryService {
     }
 
     public async batchDelete(categoryIds: string[]) {
-        return this.categoryModel.find({ _id: { $in: categoryIds } }).then(async categories => {
+        return this.categoryModel.find({ _id: { $in: categoryIds } }).then(async (categories) => {
             if (categories.length <= 0) {
                 throw new BadRequestException();
             }

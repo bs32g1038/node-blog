@@ -28,9 +28,7 @@ export class ArticleController {
         @JoiQuery({
             cid: Joi.objectId(),
             tag: Joi.string().max(20),
-            title: Joi.string()
-                .trim()
-                .max(80),
+            title: Joi.string().trim().max(80),
             ...StandardPaginationSchema,
         })
         query: {

@@ -8,7 +8,7 @@ import MarkdownBody from '../markdown-body';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { rem } from 'polished';
 
-const getBadgeVisitorOrAuthor = identity => {
+const getBadgeVisitorOrAuthor = (identity) => {
     return identity !== 0 ? <Icon name="star" mr={2} fill="theme.primaryText"></Icon> : null;
 };
 

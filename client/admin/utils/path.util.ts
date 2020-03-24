@@ -3,7 +3,7 @@ import { urlToList } from '@blog/client/admin/utils/url.util';
 
 export const getFlatMenuKeys = (menuData = []) => {
     let keys = [];
-    menuData.forEach(item => {
+    menuData.forEach((item) => {
         if (!item) {
             return;
         }
@@ -16,21 +16,21 @@ export const getFlatMenuKeys = (menuData = []) => {
 };
 
 export const getMenuMatches = (flatMenuKeys = [], path) =>
-    flatMenuKeys.filter(item => item && pathToRegexp(item).test(path));
+    flatMenuKeys.filter((item) => item && pathToRegexp(item).test(path));
 
 /**
  * 获得菜单子节点
  */
-export const getDefaultCollapsedSubMenus = props => {
+export const getDefaultCollapsedSubMenus = (props) => {
     const { router = { pathname: '/' }, flatMenuKeys } = props;
     return urlToList(router.pathname)
-        .map(item => getMenuMatches(flatMenuKeys, item)[0])
-        .filter(item => item)
+        .map((item) => getMenuMatches(flatMenuKeys, item)[0])
+        .filter((item) => item)
         .reduce((acc, curr) => [...acc, curr], ['/']);
 };
 
 export const getSelectedMenuKeys = (flatMenuKeys, pathname) => {
     return urlToList(pathname)
-        .map(itemPath => getMenuMatches(flatMenuKeys, itemPath).pop())
-        .filter(item => item);
+        .map((itemPath) => getMenuMatches(flatMenuKeys, itemPath).pop())
+        .filter((item) => item);
 };

@@ -22,19 +22,19 @@ export default () => {
         clipboard: null,
     });
     const fetchData = (page = 1, limit = 10) => {
-        setState(data => ({ ...data, loading: true }));
+        setState((data) => ({ ...data, loading: true }));
         const query = {
             limit,
             page,
         };
-        return axios.get('/medias?' + queryString.stringify(query)).then(res => {
+        return axios.get('/medias?' + queryString.stringify(query)).then((res) => {
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
-            setState(data => ({ ...data, medias: res.data.items, loading: false, pagination }));
+            setState((data) => ({ ...data, medias: res.data.items, loading: false, pagination }));
         });
     };
 
-    const deleteFile = _id => {
+    const deleteFile = (_id) => {
         axios.delete('/medias/' + _id).then(() => {
             message.success('删除文件成功');
             fetchData();
@@ -43,7 +43,7 @@ export default () => {
     const onShowSizeChange = (current, pageSize) => {
         const pager = { ...state.pagination };
         pager.current = current;
-        setState(data => ({
+        setState((data) => ({
             ...data,
             pagination: pager,
         }));
@@ -52,11 +52,11 @@ export default () => {
     };
     useEffect(() => {
         const c = new Clipboard('.copyButton');
-        setState(data => ({
+        setState((data) => ({
             ...data,
             clipboard: c,
         }));
-        c.on('success', function() {
+        c.on('success', function () {
             message.success('复制链接成功');
         });
         fetchData();
@@ -79,7 +79,7 @@ export default () => {
                         />
                     )}
                     <MediaListRow id="media-row">
-                        {state.medias.map(item => {
+                        {state.medias.map((item) => {
                             return (
                                 <WrapCard
                                     loading={state.loading}
@@ -145,7 +145,7 @@ export default () => {
                     </MediaListRow>
                     <Row justify="end" style={{ marginTop: '20px' }}>
                         <Pagination
-                            showTotal={total => `共 ${total} 条数据`}
+                            showTotal={(total) => `共 ${total} 条数据`}
                             showSizeChanger={true}
                             defaultCurrent={state.pagination.current}
                             total={state.pagination.total}

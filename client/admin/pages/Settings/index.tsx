@@ -12,7 +12,7 @@ const fetchConfig = () => {
     return axios.get('/configs');
 };
 
-const updateConfig = data => {
+const updateConfig = (data) => {
     return axios.put('/configs', data);
 };
 
@@ -20,7 +20,7 @@ export default () => {
     const [data, setData] = useState<any>({});
     const { loading, injectRequestLoading } = useRequestLoading();
 
-    const onFinish = values => {
+    const onFinish = (values) => {
         const data = values;
         if (data.siteLogo) {
             Object.assign(data, {
@@ -33,7 +33,7 @@ export default () => {
     };
 
     useEffect(() => {
-        fetchConfig().then(res => {
+        fetchConfig().then((res) => {
             setData(res.data);
         });
     }, [1]);

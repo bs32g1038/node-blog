@@ -24,7 +24,7 @@ export default () => {
         pagination: {
             current: 1,
             total: 0,
-            showTotal: total => `共 ${total} 条数据`,
+            showTotal: (total) => `共 ${total} 条数据`,
         },
         selectedRowKeys: [],
         loading: false,
@@ -32,7 +32,7 @@ export default () => {
         delConfirmVisible: false,
     });
     const fetchData = (page = 1, limit = 10) => {
-        setState(data => ({
+        setState((data) => ({
             ...data,
             loading: true,
         }));
@@ -40,10 +40,10 @@ export default () => {
             limit,
             page,
         };
-        return axios.get('/files?' + queryString.stringify(query)).then(res => {
+        return axios.get('/files?' + queryString.stringify(query)).then((res) => {
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
-            setState(data => ({
+            setState((data) => ({
                 ...data,
                 files: res.data.items,
                 loading: false,
@@ -51,7 +51,7 @@ export default () => {
             }));
         });
     };
-    const deleteFile = _id => {
+    const deleteFile = (_id) => {
         axios.delete('/files/' + _id).then(() => {
             message.success('删除文件成功');
             fetchData();
@@ -62,10 +62,10 @@ export default () => {
             .delete('/files', {
                 data: { fileIds: state.selectedRowKeys },
             })
-            .then(res => {
+            .then((res) => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success('删除文件成功！');
-                    setState(data => ({
+                    setState((data) => ({
                         ...data,
                         selectedRowKeys: [],
                     }));
@@ -76,23 +76,23 @@ export default () => {
     };
     const handleOk = () => {
         return fetchData().then(() => {
-            setState(data => ({
+            setState((data) => ({
                 ...data,
                 visible: false,
             }));
         });
     };
-    const handleTableChange = pagination => {
+    const handleTableChange = (pagination) => {
         const pager = { ...state.pagination };
         pager.current = pagination.current;
-        setState(data => ({
+        setState((data) => ({
             ...data,
             pagination: pager,
         }));
         fetchData(pagination.current, pagination.pageSize);
     };
-    const onSelectChange = selectedRowKeys => {
-        setState(data => ({
+    const onSelectChange = (selectedRowKeys) => {
+        setState((data) => ({
             ...data,
             selectedRowKeys,
         }));
@@ -180,11 +180,11 @@ export default () => {
     };
     useEffect(() => {
         const c = new Clipboard('.btnCopy');
-        setState(data => ({
+        setState((data) => ({
             ...data,
             clipboard: c,
         }));
-        c.on('success', function() {
+        c.on('success', function () {
             message.success('复制链接成功');
         });
         fetchData();
@@ -227,7 +227,7 @@ export default () => {
                         type="primary"
                         icon={<CloudUploadOutlined />}
                         onClick={() =>
-                            setState(data => ({
+                            setState((data) => ({
                                 ...data,
                                 visible: true,
                             }))
@@ -244,7 +244,7 @@ export default () => {
                                 message.info('请选择要删除的文件');
                                 return;
                             }
-                            setState(data => ({
+                            setState((data) => ({
                                 ...data,
                                 delConfirmVisible: !state.delConfirmVisible,
                             }));
@@ -263,7 +263,7 @@ export default () => {
                     visible={state.visible}
                     onOk={() => handleOk()}
                     onCancel={() =>
-                        setState(data => ({
+                        setState((data) => ({
                             ...data,
                             visible: false,
                         }))
@@ -282,12 +282,12 @@ export default () => {
                 </Modal>
                 <div className="table-wrapper">
                     <Table
-                        rowKey={record => record._id}
+                        rowKey={(record) => record._id}
                         rowSelection={rowSelection}
                         columns={getTableColums()}
                         dataSource={state.files}
                         loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
+                        onChange={(pagination) => handleTableChange(pagination)}
                         pagination={state.pagination}
                     />
                 </div>

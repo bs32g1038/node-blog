@@ -17,16 +17,11 @@ describe('user.module.e2e', () => {
     });
 
     test('get user login info success', async () => {
-        return request(app.getHttpServer())
-            .get('/api/user/login-info')
-            .set('authorization', __TOKEN__)
-            .expect(200);
+        return request(app.getHttpServer()).get('/api/user/login-info').set('authorization', __TOKEN__).expect(200);
     });
 
     test('forbidden request, get user login info failure', async () => {
-        return request(app.getHttpServer())
-            .get('/api/user/login-info')
-            .expect(403);
+        return request(app.getHttpServer()).get('/api/user/login-info').expect(403);
     });
 
     test('update user info success', async () => {
@@ -42,9 +37,7 @@ describe('user.module.e2e', () => {
     });
 
     test('forbidden request, update user info failure', async () => {
-        return request(app.getHttpServer())
-            .put('/api/user/update')
-            .expect(403);
+        return request(app.getHttpServer()).put('/api/user/update').expect(403);
     });
 
     test('reset-password success', async () => {
@@ -62,9 +55,7 @@ describe('user.module.e2e', () => {
     });
 
     test('forbidden request, reset-password failure', async () => {
-        return request(app.getHttpServer())
-            .put('/api/user/reset-password')
-            .expect(403);
+        return request(app.getHttpServer()).put('/api/user/reset-password').expect(403);
     });
 
     afterAll(async () => {

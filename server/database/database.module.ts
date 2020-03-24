@@ -23,7 +23,7 @@ const Connection = {
                 console.error(`数据库失去连接！尝试 ${RECONNET_INTERVAL / 1000}s 后重连`);
             });
 
-            mongoose.connection.on('error', error => {
+            mongoose.connection.on('error', (error) => {
                 console.error('数据库发生异常！', error);
                 mongoose.disconnect();
                 process.exit(99);

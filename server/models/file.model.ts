@@ -25,9 +25,7 @@ export interface File {
 }
 
 export const FileJoiSchema = {
-    name: Joi.string()
-        .min(1)
-        .max(80),
+    name: Joi.string().min(1).max(80),
     type: Joi.string(),
     size: Joi.number(),
     url: Joi.string().max(2000),

@@ -65,7 +65,7 @@ export class CommentService {
     }
 
     async batchDelete(commentIds: string[]) {
-        return this.commentModel.find({ _id: { $in: commentIds } }).then(async comments => {
+        return this.commentModel.find({ _id: { $in: commentIds } }).then(async (comments) => {
             if (comments.length <= 0) {
                 throw new NotFoundException('没有可删除的评论');
             }

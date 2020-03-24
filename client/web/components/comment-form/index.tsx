@@ -58,7 +58,7 @@ export const CommentForm = (props: Props) => {
         setIsShowPreview(!isShowPreview);
     };
     const onEmojiInput = (text: string) => {
-        setContent(val => {
+        setContent((val) => {
             const d = val + text;
             if ($textarea.current) {
                 $textarea.current.value = d;
@@ -194,7 +194,7 @@ export const CommentForm = (props: Props) => {
                     placeholder="留点空白给你说~"
                     resize="none"
                     isInvalid={!!errorMessage}
-                    onChange={event => {
+                    onChange={(event) => {
                         debounceContent(event.target.value);
                     }}
                 ></Textarea>
@@ -215,7 +215,7 @@ export const CommentForm = (props: Props) => {
                     <Collapse mb={3} isOpen={isShowEmotion}>
                         <Box borderBottom="1px dashed #dedede">
                             <Emoji
-                                onInput={text => {
+                                onInput={(text) => {
                                     onEmojiInput(text);
                                 }}
                             ></Emoji>

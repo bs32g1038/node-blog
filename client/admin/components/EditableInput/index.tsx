@@ -43,7 +43,7 @@ export default (props: Props) => {
         },
     });
     const [disabled, setDisabled] = useState(true);
-    const onFinish = values => {
+    const onFinish = (values) => {
         if (props.onFinish) {
             props.onFinish(values);
         }

@@ -30,7 +30,7 @@ export default () => {
     useEffect(() => {
         const { id } = router.query;
         if (id) {
-            axios.get('/articles/' + id).then(res => {
+            axios.get('/articles/' + id).then((res) => {
                 const article = res.data;
                 const category = article.category || {};
                 setData({
@@ -56,7 +56,7 @@ export default () => {
         }
     }, [1]);
 
-    const createArticle = data => {
+    const createArticle = (data) => {
         return axios.post('/articles', data);
     };
 
@@ -64,7 +64,7 @@ export default () => {
         return axios.put('/articles/' + id, data);
     };
 
-    const publish = data => {
+    const publish = (data) => {
         const { id } = router.query;
         const content = editor.getMarkdown();
         if (!isLength(content, { min: 1, max: 15000 })) {
@@ -84,7 +84,7 @@ export default () => {
     const { id } = router.query;
     const debounceSetData = useCallback(
         debounce((values: {}) => {
-            setData(data => ({
+            setData((data) => ({
                 ...data,
                 ...values,
             }));
@@ -153,7 +153,7 @@ export default () => {
                     ></Drawer>
                 </section>
             </Header>
-            <ToastuiEditor initialValue={data.content} getEditor={e => setEditor(e)}></ToastuiEditor>
+            <ToastuiEditor initialValue={data.content} getEditor={(e) => setEditor(e)}></ToastuiEditor>
         </Form.Provider>
     );
 };

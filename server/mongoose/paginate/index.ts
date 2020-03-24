@@ -37,7 +37,7 @@ export default (schema: mongoose.Schema) => {
             sort: sort,
         });
         if (isArray(options.populate)) {
-            options.populate.map(item => {
+            options.populate.map((item) => {
                 $FD = $FD.populate(item.path, item.select);
             });
         }

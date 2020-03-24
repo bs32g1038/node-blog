@@ -16,10 +16,10 @@ export default () => {
     const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
     const appConfig = useSelector((state: RootState) => state.app.config);
     const { loading, setLoading, injectRequestLoading } = useRequestLoading();
-    const handleLogin = data => {
+    const handleLogin = (data) => {
         const str = encrypt(JSON.stringify(data));
         injectRequestLoading(axios.post('/login', { key: str }))
-            .then(res => {
+            .then((res) => {
                 message.success('登陆成功！');
                 localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
                 localStorage.setItem(config.tokenKey, res.data.token);

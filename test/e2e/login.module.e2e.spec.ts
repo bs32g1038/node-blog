@@ -21,7 +21,7 @@ describe('login.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/getFirstLoginInfo')
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.message).toEqual('string');
             });
     });
@@ -31,7 +31,7 @@ describe('login.module.e2e', () => {
             .post('/api/login')
             .send({ key: encrypt(JSON.stringify({ userName: 'test', account: '', password: 'admin_password' })) })
             .expect(400)
-            .then(res => {
+            .then((res) => {
                 expect(res.body.statusCode).toEqual(400);
                 expect(typeof res.body.message).toEqual('string');
             });
@@ -42,7 +42,7 @@ describe('login.module.e2e', () => {
             .post('/api/login')
             .send({ key: encrypt(JSON.stringify({ userName: 'test', account: 'admin_account', password: '' })) })
             .expect(400)
-            .then(res => {
+            .then((res) => {
                 expect(res.body.statusCode).toEqual(400);
                 expect(typeof res.body.message).toEqual('string');
             });
@@ -57,10 +57,10 @@ describe('login.module.e2e', () => {
                 ),
             })
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(!verifyToken(res.body.token)).toBe(false);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.log(err);
             });
     });
@@ -70,7 +70,7 @@ describe('login.module.e2e', () => {
             .post('/api/login')
             .send({ key: encrypt(JSON.stringify({ account: 'admin_account', password: 'admin_password' })) })
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(!verifyToken(res.body.token)).toBe(false);
             });
     });
@@ -80,23 +80,18 @@ describe('login.module.e2e', () => {
             .post('/api/login')
             .send({ key: encrypt(JSON.stringify({ account: 'admin_account1', password: 'admin_account1' })) })
             .expect(400)
-            .then(res => {
+            .then((res) => {
                 expect(res.body.statusCode).toEqual(400);
                 expect(typeof res.body.message).toEqual('string');
             });
     });
 
     test('once again request first login api interface, should not return any info', async () => {
-        return request(app.getHttpServer())
-            .get('/api/getFirstLoginInfo')
-            .expect(200)
-            .expect('');
+        return request(app.getHttpServer()).get('/api/getFirstLoginInfo').expect(200).expect('');
     });
 
     test('user unauthorized, forbidden request', async () => {
-        return request(app.getHttpServer())
-            .get('/api/is-login')
-            .expect(403);
+        return request(app.getHttpServer()).get('/api/is-login').expect(403);
     });
 
     test('user authorized, return true', async () => {

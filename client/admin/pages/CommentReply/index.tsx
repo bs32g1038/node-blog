@@ -22,7 +22,7 @@ export default () => {
     useEffect(() => {
         const { id } = router.query;
         if (id) {
-            axios.get('/comments/' + id).then(res => {
+            axios.get('/comments/' + id).then((res) => {
                 const comment = res.data;
                 form.setFieldsValue({
                     article: comment.article._id,
@@ -32,7 +32,7 @@ export default () => {
         }
     }, [1]);
 
-    const publish = data => {
+    const publish = (data) => {
         const { id } = router.query;
         Object.assign(data, { reply: id });
         axios.post('/admin/reply-comment/', data).then(() => {

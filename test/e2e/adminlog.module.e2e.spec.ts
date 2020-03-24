@@ -16,17 +16,11 @@ describe('adminlog.module.e2e', () => {
     });
 
     test('get admin logs success', async () => {
-        return request(app.getHttpServer())
-            .get('/api/admin-logs')
-            .set('authorization', __TOKEN__)
-            .expect(200);
+        return request(app.getHttpServer()).get('/api/admin-logs').set('authorization', __TOKEN__).expect(200);
     });
 
     test('get recent admin logs success', async () => {
-        return request(app.getHttpServer())
-            .get('/api/recent-admin-logs')
-            .set('authorization', __TOKEN__)
-            .expect(200);
+        return request(app.getHttpServer()).get('/api/recent-admin-logs').set('authorization', __TOKEN__).expect(200);
     });
 
     afterAll(async () => {

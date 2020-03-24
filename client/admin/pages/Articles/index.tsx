@@ -41,7 +41,7 @@ export default () => {
         isResetFetch: false,
     });
     const fetchData = (page = 1, limit = 10) => {
-        setState(data => {
+        setState((data) => {
             return { ...data, isResetFetch: false, loading: true };
         });
         const query = {
@@ -53,9 +53,9 @@ export default () => {
                 title: state.searchKey,
             });
         }
-        axios.get('/articles?' + queryString.stringify(query)).then(res => {
+        axios.get('/articles?' + queryString.stringify(query)).then((res) => {
             const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
-            setState(data => ({
+            setState((data) => ({
                 ...data,
                 articles: res.data.items,
                 loading: false,
@@ -64,7 +64,7 @@ export default () => {
             scrollIntoView('article-panel');
         });
     };
-    const deleteArticle = _id => {
+    const deleteArticle = (_id) => {
         axios.delete('/articles/' + _id).then(() => {
             message.success('删除文章成功！');
             fetchData();
@@ -75,10 +75,10 @@ export default () => {
             .delete('/articles', {
                 data: { articleIds: state.selectedRowKeys },
             })
-            .then(res => {
+            .then((res) => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success('删除文章成功！');
-                    setState(data => ({
+                    setState((data) => ({
                         ...data,
                         selectedRowKeys: [],
                     }));
@@ -158,17 +158,17 @@ export default () => {
             },
         ];
     };
-    const handleTableChange = pagination => {
+    const handleTableChange = (pagination) => {
         const pager = { ...state.pagination };
         pager.current = pagination.current;
-        setState(data => ({
+        setState((data) => ({
             ...data,
             pagination: pager,
         }));
         fetchData(pagination.current, pagination.pageSize);
     };
-    const onSelectChange = selectedRowKeys => {
-        setState(data => ({
+    const onSelectChange = (selectedRowKeys) => {
+        setState((data) => ({
             ...data,
             selectedRowKeys,
         }));
@@ -203,7 +203,7 @@ export default () => {
                                         message.info('请选择要删除的文章');
                                         return;
                                     }
-                                    setState(data => ({
+                                    setState((data) => ({
                                         ...data,
                                         visible: !state.visible,
                                     }));
@@ -227,9 +227,9 @@ export default () => {
                                                 name="searchTitle"
                                                 placeholder="请输入文章标题关键词"
                                                 value={state.searchKey}
-                                                onChange={e => {
+                                                onChange={(e) => {
                                                     const value = e.currentTarget.value;
-                                                    setState(val => ({
+                                                    setState((val) => ({
                                                         ...val,
                                                         searchKey: value,
                                                     }));
@@ -252,7 +252,7 @@ export default () => {
                                                 type="primary"
                                                 icon={<HighlightOutlined />}
                                                 onClick={() => {
-                                                    setState(value => ({
+                                                    setState((value) => ({
                                                         ...value,
                                                         searchKey: '',
                                                         isResetFetch: true,
@@ -270,13 +270,13 @@ export default () => {
                 </PanelDiv>
                 <div className="table-wrapper">
                     <Table
-                        rowKey={record => record._id}
+                        rowKey={(record) => record._id}
                         rowSelection={rowSelection}
                         columns={getTableColums()}
                         dataSource={state.articles}
                         pagination={state.pagination}
                         loading={state.loading}
-                        onChange={pagination => handleTableChange(pagination)}
+                        onChange={(pagination) => handleTableChange(pagination)}
                     />
                 </div>
             </div>

@@ -10,10 +10,7 @@ export class SearchController {
     @Get('')
     async getArticles(
         @JoiQuery({
-            key: Joi.string()
-                .default('')
-                .max(10)
-                .allow(''),
+            key: Joi.string().default('').max(10).allow(''),
         })
         query: {
             key: string;

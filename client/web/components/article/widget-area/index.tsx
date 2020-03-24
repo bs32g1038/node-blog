@@ -109,7 +109,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                     最近文章
                 </Heading>
                 <Box>
-                    {arr.map(item => {
+                    {arr.map((item) => {
                         return <Item item={item} key={item._id}></Item>;
                     })}
                     <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>

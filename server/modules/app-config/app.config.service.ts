@@ -20,7 +20,7 @@ const config = {
 };
 
 export const siteConfig = registerAs(namespace, () => {
-    return ConfigModel.findOne({ key: CONFIG_KEY }).then(async res => {
+    return ConfigModel.findOne({ key: CONFIG_KEY }).then(async (res) => {
         if (isEmpty(res)) {
             const data = await ConfigModel.create({
                 key: CONFIG_KEY,
@@ -46,7 +46,7 @@ export class AppConfigService {
         cache.set(this.namespace, data);
     }
 
-    updateAppConfig = async data => {
+    updateAppConfig = async (data) => {
         if (!isEmpty(data.siteLogo)) {
             const siteLogo = await this.handleSiteLogoUrl(data);
             Object.assign(data, {
@@ -99,12 +99,12 @@ export class AppConfigService {
             sharp(content)
                 .resize(64, 64)
                 .png()
-                .toFile(pngPath, async err => {
+                .toFile(pngPath, async (err) => {
                     if (err) {
                         reject(new Error('生成favicon.png文件出错'));
                     }
                     try {
-                        toIco(await fs.readFile(pngPath)).then(async buf => {
+                        toIco(await fs.readFile(pngPath)).then(async (buf) => {
                             await fs.writeFile(icoPath, buf);
                             this.setIsHasfavicon(true);
                         });

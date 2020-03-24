@@ -32,7 +32,7 @@ describe('article.module.e2e', () => {
                 .set('authorization', __TOKEN__)
                 .send(article)
                 .expect(201)
-                .then(res => {
+                .then((res) => {
                     expect(res.body).toHaveProperty('_id');
                 });
         });
@@ -161,7 +161,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/recentArticles')
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(5);
                 });
         });
@@ -175,7 +175,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/articles-aggregation/date')
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(1);
                 });
         });
@@ -189,7 +189,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/articles/' + _id + '?md=true')
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     const a = res.body;
                     expect(a.content).toEqual(markdown.render(article.content));
                 });
@@ -202,7 +202,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/articles/' + _id + '?md=false')
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     const a = res.body;
                     expect(a.content).toEqual(article.content);
                 });
@@ -218,7 +218,7 @@ describe('article.module.e2e', () => {
                 return request(app.getHttpServer())
                     .get('/api/articles/' + _id + '?md=true')
                     .expect(200)
-                    .then(res => {
+                    .then((res) => {
                         const a = res.body;
                         expect(a.content).toEqual(markdown.render(article.content));
                     });
@@ -231,7 +231,7 @@ describe('article.module.e2e', () => {
                 return request(app.getHttpServer())
                     .get('/api/articles/' + _id + '?md=' + true)
                     .expect(200)
-                    .then(res => {
+                    .then((res) => {
                         const a = res.body;
                         expect(a.content).toEqual(markdown.render(article.content));
                     });
@@ -262,7 +262,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get(`/api/articles?${queryString.stringify({ page: 1, limit: 10 })}`)
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
                     expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
@@ -274,7 +274,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get(`/api/articles?tag=${articles[0].tags[0]}`)
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
                     expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
@@ -287,7 +287,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get(`/api/articles?cid=${articles[0].category}`)
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
                     expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });
@@ -301,7 +301,7 @@ describe('article.module.e2e', () => {
             return request(app.getHttpServer())
                 .get(`/api/articles?title=${title}`)
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(1);
                     expect(isExpectPass(res.body.items, articles, ['content', 'category'])).toEqual(true);
                 });

@@ -49,7 +49,7 @@ export default () => {
     });
 
     useEffect(() => {
-        setState(state => ({
+        setState((state) => ({
             ...state,
             loading: true,
         }));

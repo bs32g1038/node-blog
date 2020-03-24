@@ -49,7 +49,7 @@ export class EmailService {
         if (!this.isEnableSmtp()) {
             return;
         }
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.transporter.verify((error, success) => {
                 if (error) {
                     return resolve(error);

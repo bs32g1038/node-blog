@@ -29,7 +29,7 @@ describe('search.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/search')
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(Array.isArray(res.body.items)).toEqual(true);
                 expect(res.body.items.length).toBeGreaterThanOrEqual(4);
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(4);
@@ -43,7 +43,7 @@ describe('search.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/search?' + queryString.stringify({ key: '' }))
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(Array.isArray(res.body.items)).toEqual(true);
                 expect(res.body.items.length).toBeGreaterThanOrEqual(4);
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(4);
@@ -59,7 +59,7 @@ describe('search.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/search?' + queryString.stringify({ key: title }))
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(Array.isArray(res.body.items)).toEqual(true);
                 expect(res.body.items.length).toBeGreaterThanOrEqual(1);
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(1);

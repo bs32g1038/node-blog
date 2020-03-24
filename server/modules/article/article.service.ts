@@ -139,7 +139,7 @@ export class ArticleService {
 
     // 批量删除文章
     public async batchDelete(articleIds: string[]) {
-        return this.articleModel.find({ _id: { $in: articleIds } }).then(async articles => {
+        return this.articleModel.find({ _id: { $in: articleIds } }).then(async (articles) => {
             if (articles.length <= 0) {
                 throw new NotFoundException('没有可删除的文章条目');
             }
@@ -159,9 +159,7 @@ export class ArticleService {
             {
                 $match: {
                     createdAt: {
-                        $gte: dayjs()
-                            .startOf('year')
-                            .toDate(),
+                        $gte: dayjs().startOf('year').toDate(),
                     },
                 },
             },

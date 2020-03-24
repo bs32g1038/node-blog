@@ -15,12 +15,12 @@ export default () => {
     const config = useSelector((state: RootState) => state.app.config);
     const [userCommits, setUserCommits] = useState([]);
     useEffect(() => {
-        api.fetchArticlesAggregationMapDate().then(res => {
+        api.fetchArticlesAggregationMapDate().then((res) => {
             setUserCommits(res);
         });
     }, [1]);
     let totalCountInYear = 0;
-    const values = userCommits.map(item => {
+    const values = userCommits.map((item) => {
         totalCountInYear = totalCountInYear + item.articles.length;
         return {
             date: item._id,
@@ -185,7 +185,7 @@ export default () => {
                 <Text textAlign="center" mb={5}>
                     <Icon name="info" mr={2}></Icon>常见问题
                 </Text>
-                {data.issues.map(issue => {
+                {data.issues.map((issue) => {
                     return <HelperListItem key={issue._id} issue={issue}></HelperListItem>;
                 })}
             </Box>

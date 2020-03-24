@@ -17,7 +17,7 @@ const tailFormItemLayout = {
     },
 };
 
-const resetPassword = data => {
+const resetPassword = (data) => {
     return axios.put('/user/reset-password', data);
 };
 
@@ -30,7 +30,7 @@ export default () => {
             name="passwrodForm"
             scrollToFirstError
             style={{ maxWidth: '540px', margin: '0 auto', width: '100%' }}
-            onFinish={data => {
+            onFinish={(data) => {
                 const password = data.password;
                 const str = encrypt(JSON.stringify({ password }));
                 resetPassword({ key: str }).then(() => {

@@ -41,7 +41,7 @@ describe('category.module.e2e', () => {
                 .get('/api/categories')
                 .set('authorization', __TOKEN__)
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(10);
                     expect(isExpectPass(res.body, categories)).toEqual(true);
                 });
@@ -54,7 +54,7 @@ describe('category.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/categories?' + queryString.stringify({ page: 1, limit: 20 }))
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(20);
                     expect(isExpectPass(res.body, categories)).toEqual(true);
                 });
@@ -68,7 +68,7 @@ describe('category.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/categories/' + _id)
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 const a = res.body;
                 expect(a.name).toEqual(category.name);
             });
@@ -83,7 +83,7 @@ describe('category.module.e2e', () => {
             .set('authorization', __TOKEN__)
             .send(category)
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 const a = res.body;
                 expect(a.name).toEqual(category.name);
             });

@@ -30,7 +30,7 @@ describe('comment.module.e2e', () => {
                 .post('/api/comments')
                 .send(comment)
                 .expect(201)
-                .then(res => {
+                .then((res) => {
                     const a = res.body;
                     expect(a.pass).toEqual(true);
                     expect(a.identity).toEqual(0);
@@ -54,7 +54,7 @@ describe('comment.module.e2e', () => {
                 .set('authorization', __TOKEN__)
                 .send(replyComment)
                 .expect(201)
-                .then(res => {
+                .then((res) => {
                     const a = res.body;
                     expect(a.pass).toEqual(true);
                     expect(a.identity).toEqual(1);
@@ -74,7 +74,7 @@ describe('comment.module.e2e', () => {
             return request(app.getHttpServer())
                 .get('/api/comments')
                 .expect(200)
-                .then(res => {
+                .then((res) => {
                     expect(res.body.items.length).toBeGreaterThanOrEqual(10);
                     expect(isExpectPass(res.body.items, comments, ['email', 'article', 'reply'])).toEqual(true);
                 });
@@ -88,10 +88,7 @@ describe('comment.module.e2e', () => {
     });
 
     test('get recent comment list 200', async () => {
-        return request(app.getHttpServer())
-            .get('/api/recent-comments')
-            .set('authorization', __TOKEN__)
-            .expect(200);
+        return request(app.getHttpServer()).get('/api/recent-comments').set('authorization', __TOKEN__).expect(200);
     });
 
     test('get one comment success', async () => {
@@ -102,7 +99,7 @@ describe('comment.module.e2e', () => {
         return request(app.getHttpServer())
             .get('/api/comments/' + _id.toString())
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 const a = res.body;
                 expect(a.pass).toEqual(true);
                 expect(a.identity).toEqual(0);
@@ -122,7 +119,7 @@ describe('comment.module.e2e', () => {
             .set('authorization', __TOKEN__)
             .send(comment)
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 const a = res.body;
                 expect(a.pass).toEqual(true);
                 expect(a.nickName).toEqual(comment.nickName);

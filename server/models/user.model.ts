@@ -22,21 +22,9 @@ export interface UserDocument extends User, Document {
 }
 
 export const UserJoiSchema = {
-    userName: Joi.string()
-        .min(1)
-        .max(30)
-        .required()
-        .error(new Error('用户名长度在1-30之间！')),
-    account: Joi.string()
-        .min(6)
-        .max(30)
-        .required()
-        .error(new Error('账号长度在6-30之间！')),
-    password: Joi.string()
-        .min(6)
-        .max(30)
-        .required()
-        .error(new Error('密码长度在6-30之间！')),
+    userName: Joi.string().min(1).max(30).required().error(new Error('用户名长度在1-30之间！')),
+    account: Joi.string().min(6).max(30).required().error(new Error('账号长度在6-30之间！')),
+    password: Joi.string().min(6).max(30).required().error(new Error('密码长度在6-30之间！')),
 };
 
 const UserSchema = new mongoose.Schema(

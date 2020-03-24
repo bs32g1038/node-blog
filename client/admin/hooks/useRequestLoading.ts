@@ -5,11 +5,11 @@ export default () => {
         (promise: Promise<any>) => {
             setLoading(true);
             return promise
-                .then(res => {
+                .then((res) => {
                     setLoading(false);
                     return { res, err: null };
                 })
-                .catch(err => {
+                .catch((err) => {
                     setLoading(false);
                     return { res: null, err };
                 })

@@ -10,19 +10,19 @@ export default () => {
     useEffect(() => {
         const { id } = router.query;
         if (id) {
-            axios.get('/categories/' + id).then(res => {
+            axios.get('/categories/' + id).then((res) => {
                 const category = res.data;
                 form.setFieldsValue(category);
             });
         }
     }, [1]);
-    const createCategory = data => {
+    const createCategory = (data) => {
         return axios.post('/categories', data);
     };
     const updateCategory = (id, data) => {
         return axios.put('/categories/' + id, data);
     };
-    const publish = data => {
+    const publish = (data) => {
         const { id } = router.query;
         const p = id ? updateCategory(id, data) : createCategory(data);
         p.then(() => {

@@ -25,7 +25,7 @@ export default (props: Props) => {
     return (
         <ButtonGroup
             spacing={0}
-            onClick={e => onClick(e)}
+            onClick={(e) => onClick(e)}
             className={css`
                 button {
                     background-color: transparent;

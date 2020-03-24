@@ -3,8 +3,8 @@ import log4js from 'log4js';
 import { isProdMode } from '../configs/index.config';
 import { logPath } from './path.util';
 
-log4js.addLayout('json', config => {
-    return logEvent => {
+log4js.addLayout('json', (config) => {
+    return (logEvent) => {
         return JSON.stringify(logEvent) + config.separator;
     };
 });

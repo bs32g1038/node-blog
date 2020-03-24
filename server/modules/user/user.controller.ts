@@ -44,10 +44,7 @@ export class UserController {
     async resetPassword(@Req() req: Request, @Body() body) {
         const user: any = auth(req);
         if (user) {
-            const { error } = Joi.string()
-                .min(1)
-                .max(250)
-                .validate(body.key);
+            const { error } = Joi.string().min(1).max(250).validate(body.key);
             if (error) {
                 throw new BadRequestException('上传的内容不能为空，长度必须在1-250之间！');
             }

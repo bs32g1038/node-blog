@@ -76,7 +76,7 @@ export class FileService {
 
         let type = FileType.other;
         for (const item of this.FILE_TYPE_MAP_MIMETYPE) {
-            const rs = item.mimetypes.some(t => {
+            const rs = item.mimetypes.some((t) => {
                 return mimetype.toLocaleLowerCase().includes(t);
             });
             if (rs) {

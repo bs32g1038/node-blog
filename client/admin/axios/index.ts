@@ -8,7 +8,7 @@ axios.defaults.baseURL = '/api';
 /**
  * 异常处理程序
  */
-const errorHandler = error => {
+const errorHandler = (error) => {
     const { response = {}, code, message: msg } = error;
     if (code === 'ECONNABORTED' || msg.includes('timeout')) {
         message.error('网络超时');
@@ -36,7 +36,7 @@ const errorHandler = error => {
 };
 
 axios.interceptors.request.use(
-    function(c) {
+    function (c) {
         const tokenKey = config.tokenKey;
         const token = localStorage.getItem(tokenKey);
         if (!(c.url && (c.url.includes('getFirstLoginInfo') || c.url.includes('login')))) {
@@ -47,16 +47,16 @@ axios.interceptors.request.use(
         c.headers.authorization = token || '';
         return c;
     },
-    function(error) {
+    function (error) {
         return Promise.reject(error);
     }
 );
 
 axios.interceptors.response.use(
-    function(response) {
+    function (response) {
         return response;
     },
-    function(error) {
+    function (error) {
         return errorHandler(error);
     }
 );

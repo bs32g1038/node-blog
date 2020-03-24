@@ -17,7 +17,7 @@ export const CategoryJoiSchema = {
         .min(1)
         .max(80)
         .alter({
-            post: schema => schema.required(),
+            post: (schema) => schema.required(),
         }),
 };
 

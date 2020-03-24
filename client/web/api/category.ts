@@ -3,10 +3,10 @@ import axios from '@blog/client/web/utils/axios';
 export const fetchCategories = () => {
     return axios
         .get('/categories')
-        .then(_ => {
+        .then((_) => {
             return _.data;
         })
-        .catch(err => {
+        .catch((err) => {
             console.log(err);
         });
 };

@@ -18,7 +18,7 @@ export const getToken = () => {
     });
 };
 
-export const verifyToken = str => {
+export const verifyToken = (str) => {
     return jwt.verify(str, TOKEN_SECRET_KEY);
 };
 
@@ -50,8 +50,8 @@ export const closeApp = async (app: INestApplication) => {
 
 export const isExpectPass = (arr1: any[], arr2: any[], skipFields: string[] = []) => {
     for (let i = 0; i < arr1.length; i++) {
-        const rs = arr2.some(item => {
-            return Object.keys(item).every(key => {
+        const rs = arr2.some((item) => {
+            return Object.keys(item).every((key) => {
                 // 跳过字段检查
                 if (skipFields.includes(key)) {
                     return true;

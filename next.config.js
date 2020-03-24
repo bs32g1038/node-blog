@@ -2,7 +2,7 @@
 const path = require('path');
 const withCss = require('@zeit/next-css');
 
-const resolve = dir => path.resolve(__dirname, dir);
+const resolve = (dir) => path.resolve(__dirname, dir);
 
 module.exports = withCss({
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

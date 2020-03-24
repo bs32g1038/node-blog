@@ -35,7 +35,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.txt'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -47,7 +47,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.png'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -59,7 +59,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.mp3'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -71,7 +71,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.mp4'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -83,7 +83,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.docx'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -95,7 +95,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.doc'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -107,7 +107,7 @@ describe('file.module.e2e', () => {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.md'))
             .expect(201)
-            .then(res => {
+            .then((res) => {
                 expect(typeof res.body.url).toEqual('string');
             });
     });
@@ -163,7 +163,7 @@ describe('file.module.e2e', () => {
             .get(`/api/files`)
             .set('authorization', __TOKEN__)
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
                 expect(res.body.items.length).toEqual(10);
                 expect(isExpectPass(res.body.items, files)).toBe(true);
@@ -177,7 +177,7 @@ describe('file.module.e2e', () => {
             .get(`/api/files?${queryString.stringify({ page: 1, limit: 30 })}`)
             .set('authorization', __TOKEN__)
             .expect(200)
-            .then(res => {
+            .then((res) => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(30);
                 expect(res.body.items.length).toEqual(30);
             });

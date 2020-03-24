@@ -143,7 +143,7 @@ const UserPanel = styled.div`
     }
 `;
 
-const MenuList = props => {
+const MenuList = (props) => {
     const renderMenuItem = (
         item // item.route 菜单单独跳转的路由
     ) => (
@@ -160,11 +160,11 @@ const MenuList = props => {
         <Menu {...props}>
             {menus &&
                 menus
-                    .filter(item => item.title && !item.hidden)
-                    .map(item => {
+                    .filter((item) => item.title && !item.hidden)
+                    .map((item) => {
                         return renderMenuItem(item);
                     })
-                    .filter(item => item)}
+                    .filter((item) => item)}
         </Menu>
     );
 };
@@ -173,7 +173,7 @@ interface Props {
     collapsed: boolean;
 }
 
-const setMenuOpen = props => {
+const setMenuOpen = (props) => {
     const { pathname } = props.router;
     const flatMenuKeys = getDefaultCollapsedSubMenus({ ...props, flatMenuKeys: getFlatMenuKeys(menus) });
     return {
@@ -199,21 +199,21 @@ export default (props: Props) => {
         firstHide: true,
     });
     const router = useRouter();
-    const menuClick = e => {
-        setState(data => ({
+    const menuClick = (e) => {
+        setState((data) => ({
             ...data,
             selectedKey: Array.isArray(e.key) ? e.key : [e.key],
         }));
     };
     const openMenu = (v: any) => {
-        setState(data => ({
+        setState((data) => ({
             ...data,
             openKey: Array.isArray(v) ? v : [v],
             firstHide: false,
         }));
     };
     useEffect(() => {
-        setState(data => ({
+        setState((data) => ({
             ...data,
             firstHide: false,
             ...(setMenuOpen({ router }) as any),

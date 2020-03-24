@@ -5,7 +5,7 @@ interface Root extends Joi.Root {
     objectId(): StringSchema;
 }
 
-export default Joi.extend(joi => {
+export default Joi.extend((joi) => {
     return {
         type: 'objectId',
         base: joi.string(),

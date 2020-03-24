@@ -24,8 +24,8 @@ export default class EditableTagGroup extends React.Component<any, any> {
         };
     }
 
-    handleClose = removedTag => {
-        const tags = this.state.tags.filter(tag => tag !== removedTag);
+    handleClose = (removedTag) => {
+        const tags = this.state.tags.filter((tag) => tag !== removedTag);
         this.setState({ tags });
         this.triggerChange(tags);
     };
@@ -34,11 +34,11 @@ export default class EditableTagGroup extends React.Component<any, any> {
         this.setState({ inputVisible: true }, () => this.input.focus());
     };
 
-    handleInputChange = e => {
+    handleInputChange = (e) => {
         this.setState({ inputValue: e.target.value });
     };
 
-    triggerChange = tags => {
+    triggerChange = (tags) => {
         // Should provide an event to pass value to Form.
         const { onChange } = this.props;
         if (onChange) {
@@ -60,13 +60,13 @@ export default class EditableTagGroup extends React.Component<any, any> {
         });
     };
 
-    saveInputRef = input => (this.input = input);
+    saveInputRef = (input) => (this.input = input);
 
-    forMap = tag => {
+    forMap = (tag) => {
         const tagElem = (
             <Tag
                 closable
-                onClose={e => {
+                onClose={(e) => {
                     e.preventDefault();
                     this.handleClose(tag);
                 }}

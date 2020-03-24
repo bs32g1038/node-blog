@@ -6,7 +6,7 @@ import axios from '@blog/client/web/utils/axios';
 class AppDocument extends Document<any> {
     static async getInitialProps(ctx: DocumentContext) {
         const initialProps = await Document.getInitialProps(ctx);
-        const config = await axios.get('/configs').then(res => {
+        const config = await axios.get('/configs').then((res) => {
             return res.data;
         });
         return { ...initialProps, config };

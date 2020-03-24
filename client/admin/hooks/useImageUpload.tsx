@@ -38,15 +38,15 @@ interface Props {
     type?: 'image' | 'svg';
 }
 
-const isImage = type => isEqual(type, 'image');
-const isSvg = type => isEqual(type, 'svg');
+const isImage = (type) => isEqual(type, 'image');
+const isSvg = (type) => isEqual(type, 'svg');
 
 export default (props: Props) => {
     const { style = {}, disabled = false, type = 'image' } = props;
     const [isUploading, setUploading] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
 
-    const handleUpload = info => {
+    const handleUpload = (info) => {
         if (Array.isArray(info)) {
             return info;
         }
@@ -58,7 +58,7 @@ export default (props: Props) => {
             setUploading(false);
             const fileList =
                 info &&
-                info.fileList.slice(-1).map(file => {
+                info.fileList.slice(-1).map((file) => {
                     if (file.response) {
                         file.url = file.response.url;
                     }
@@ -71,7 +71,7 @@ export default (props: Props) => {
     };
 
     const UploadButton = useCallback(
-        props => (
+        (props) => (
             <Upload
                 disabled={disabled}
                 name="file"

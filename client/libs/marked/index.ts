@@ -9,14 +9,14 @@ const markdown = new MarkdownIt({
     breaks: true,
 });
 
-markdown.renderer.rules.text = function(tokens, idx /*, options, env */) {
+markdown.renderer.rules.text = function (tokens, idx /*, options, env */) {
     return tokens[idx].content;
 };
 
-markdown.use(iterator, 'emoji_replace', 'text', function(tokens, idx) {
+markdown.use(iterator, 'emoji_replace', 'text', function (tokens, idx) {
     const text = tokens[idx].content;
     const regex = /@\((.+?)\)/g;
-    tokens[idx].content = text.replace(regex, str => {
+    tokens[idx].content = text.replace(regex, (str) => {
         if (str) {
             const r = /\((.+?)\)/g.exec(str);
             if (r) {
@@ -50,10 +50,10 @@ const Xss = new jsxss.FilterXSS({
     },
 });
 
-const xss = html => {
+const xss = (html) => {
     return Xss.process(html);
 };
 
-export default mdStr => {
+export default (mdStr) => {
     return xss(markdown.render(mdStr));
 };

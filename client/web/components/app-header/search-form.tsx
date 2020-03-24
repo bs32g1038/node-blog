@@ -101,7 +101,7 @@ export const SearchForm = () => {
             return Promise.resolve();
         }
         setIsLoading(true);
-        return Api.searchArticles(key).then(_ => {
+        return Api.searchArticles(key).then((_) => {
             if (_.data) {
                 if (key === '') {
                     cache[cacheEmptyKey] = _.data;
@@ -167,7 +167,7 @@ export const SearchForm = () => {
                 width="100%"
                 zIndex={2000}
                 display={isActiveNavSearchDropdown ? 'block' : 'none'}
-                onMouseDown={event => event.preventDefault()}
+                onMouseDown={(event) => event.preventDefault()}
             >
                 <Collapse
                     isOpen={isActiveNavSearchDropdown}

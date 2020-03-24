@@ -22,7 +22,7 @@ const getLoginInfo = () => {
     return axios.get('/user/login-info');
 };
 
-const updateUserInfo = data => {
+const updateUserInfo = (data) => {
     return axios.put('/user/update', data);
 };
 
@@ -38,7 +38,7 @@ export default () => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        getLoginInfo().then(res => {
+        getLoginInfo().then((res) => {
             const avatar = [
                 {
                     uid: -1,
@@ -51,7 +51,7 @@ export default () => {
         });
     }, [1]);
 
-    const onFinish = values => {
+    const onFinish = (values) => {
         return injectRequestLoading(updateUserInfo({ ...values, avatar: values.avatar[0].url })).then(() => {
             message.success('更新成功！');
         });

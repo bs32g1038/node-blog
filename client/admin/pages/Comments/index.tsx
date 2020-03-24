@@ -32,7 +32,7 @@ export default () => {
     });
 
     const fetchData = (page = 1, limit = 10) => {
-        setState(data => ({
+        setState((data) => ({
             ...data,
             loading: true,
         }));
@@ -40,10 +40,10 @@ export default () => {
             limit,
             page,
         };
-        axios.get('/comments?' + queryString.stringify(query)).then(res => {
+        axios.get('/comments?' + queryString.stringify(query)).then((res) => {
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
-            setState(data => ({
+            setState((data) => ({
                 ...data,
                 comments: res.data.items,
                 loading: false,
@@ -52,7 +52,7 @@ export default () => {
             scrollIntoView('comments-panel');
         });
     };
-    const deleteComment = _id => {
+    const deleteComment = (_id) => {
         axios.delete('/comments/' + _id).then(() => {
             message.success('删除评论成功');
             fetchData();
@@ -63,10 +63,10 @@ export default () => {
             .delete('/comments', {
                 data: { commentIds: state.selectedRowKeys },
             })
-            .then(res => {
+            .then((res) => {
                 if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
                     message.success('删除评论成功！');
-                    setState(data => ({
+                    setState((data) => ({
                         ...data,
                         selectedRowKeys: [],
                     }));
@@ -75,17 +75,17 @@ export default () => {
                 return message.error('删除评论失败，请重新尝试。');
             });
     };
-    const handleTableChange = pagination => {
+    const handleTableChange = (pagination) => {
         const pager = { ...state.pagination };
         pager.current = pagination.current;
-        setState(data => ({
+        setState((data) => ({
             ...data,
             pagination: pager,
         }));
         fetchData(pagination.current, pagination.pageSize);
     };
-    const onSelectChange = selectedRowKeys => {
-        setState(data => ({
+    const onSelectChange = (selectedRowKeys) => {
+        setState((data) => ({
             ...data,
             selectedRowKeys,
         }));
@@ -152,7 +152,7 @@ export default () => {
         selectedRowKeys,
         onChange: onSelectChange.bind(this),
     };
-    const expandedRowKeys = state.comments.map(item => item._id);
+    const expandedRowKeys = state.comments.map((item) => item._id);
     return (
         <BasicLayout>
             <Wrap className="main-content">
@@ -166,7 +166,7 @@ export default () => {
                                 message.info('请选择要删除的评论');
                                 return;
                             }
-                            setState(data => ({
+                            setState((data) => ({
                                 ...data,
                                 visiable: !state.visiable,
                             }));
@@ -182,16 +182,16 @@ export default () => {
                 </PanelDiv>
                 <div className="table-wrapper">
                     <Table
-                        rowKey={record => record._id}
+                        rowKey={(record) => record._id}
                         rowSelection={rowSelection}
                         columns={getTableColums()}
                         loading={state.loading}
                         dataSource={state.comments}
-                        onChange={pagination => handleTableChange(pagination)}
+                        onChange={(pagination) => handleTableChange(pagination)}
                         pagination={{
-                            showTotal: total => `共 ${total} 条评论数据`,
+                            showTotal: (total) => `共 ${total} 条评论数据`,
                         }}
-                        expandedRowRender={record => {
+                        expandedRowRender={(record) => {
                             return (
                                 <React.Fragment>
                                     {record.reply && (
