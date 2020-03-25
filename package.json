@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.3",
-    "@chakra-ui/core": "^0.6.1",
+    "@chakra-ui/core": "^0.7.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@nestjs/cli": "^7.0.2",
