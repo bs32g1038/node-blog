@@ -19,8 +19,8 @@ export class CategoryService {
     async getCategories(options: { page?: number; limit?: number }): Promise<Category[]> {
         const { page = 1, limit = 100 } = options;
         return await this.categoryModel.find({}, '', {
-            page: (page - 1) * limit,
-            limit,
+            skip: (page - 1) * limit,
+            limit: limit,
             sort: { createdAt: -1 },
         });
     }

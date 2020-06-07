@@ -51,3 +51,5 @@ public/static/*
 !public/static/favicon.ico
 !public/static/logo.svg
 !.gitkeep
+
+.vscode

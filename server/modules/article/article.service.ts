@@ -109,11 +109,11 @@ export class ArticleService {
                 data.content = markdown.render(data.content);
             }
             const [prev, next] = await Promise.all([
-                this.articleModel.findOne({ _id: { $gt: id } }, 'title', { sort: { _id: 1 } }),
-                this.articleModel.findOne({ _id: { $lt: id } }, 'title', { sort: { _id: -1 } }),
+                this.articleModel.find({ _id: { $gt: id } }, 'title', { sort: { _id: 1 } }),
+                this.articleModel.find({ _id: { $lt: id } }, 'title', { sort: { _id: -1 } }),
             ]);
-            data.prev = prev;
-            data.next = next;
+            data.prev = prev.length > 0 ? prev[0] : null;
+            data.next = next.length > 0 ? next[0] : null;
             return data;
         }
 

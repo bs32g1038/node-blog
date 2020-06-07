@@ -124,7 +124,7 @@ export default () => {
                                             cancelText="取消"
                                         >
                                             <Button
-                                                type="danger"
+                                                danger={true}
                                                 size="small"
                                                 title="删除"
                                                 className="button"

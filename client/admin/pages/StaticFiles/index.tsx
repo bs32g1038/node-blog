@@ -253,7 +253,7 @@ export default () => {
                         okText="确定"
                         cancelText="取消"
                     >
-                        <Button type="danger" icon={<DeleteFilled />}>
+                        <Button danger={true} icon={<DeleteFilled />}>
                             批量删除
                         </Button>
                     </Popconfirm>

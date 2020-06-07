@@ -4,12 +4,10 @@ import { getProviderByModel } from '../utils/model.util';
 import Joi from '../joi';
 
 export interface Category {
-    readonly _id?: string | mongoose.Types.ObjectId;
+    readonly _id?: string;
     readonly name?: string;
     readonly order?: number;
     readonly articleCount?: number;
-    readonly createdAt?: string | Date;
-    readonly updatedAt?: string | Date;
 }
 
 export const CategoryJoiSchema = {

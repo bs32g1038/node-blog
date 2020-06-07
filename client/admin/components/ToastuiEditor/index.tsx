@@ -35,7 +35,7 @@ export default (props: Props) => {
                         data: formdata,
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     }).then((res) => {
-                        cb(res.data.url);
+                        cb(res.data.url, '');
                     });
                 },
             },
