@@ -10,6 +10,7 @@
   },
   "scripts": {
     "prebuild:server": "rimraf dist",
+    "fix:comment": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist/scripts/fix_comment_count.js",
     "init:dev:data": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist/scripts/init_faker_data.js",
     "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
     "dev:watch": "concurrently \"npm run dev:server:watch\" \" npm run dev:web \"",
