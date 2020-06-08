@@ -54,8 +54,12 @@ export class CommentService {
     }
 
     async deleteComment(id: string) {
-        await this.commentModel.deleteOne({ _id: id });
-        return {};
+        const comment = await this.commentModel.findById(id);
+        if (comment) {
+            await this.commentModel.deleteOne({ _id: id });
+            await this.articleModel.updateOne({ _id: comment.article }, { $inc: { commentCount: -1 } });
+        }
+        return comment;
     }
 
     async recentComments() {
@@ -69,6 +73,11 @@ export class CommentService {
             if (comments.length <= 0) {
                 throw new NotFoundException('没有可删除的评论');
             }
+            await Promise.all(
+                comments.map(async (item) => {
+                    await this.articleModel.updateOne({ _id: item.article }, { $inc: { commentCount: -1 } });
+                })
+            );
             return this.commentModel.deleteMany({ _id: { $in: commentIds } });
         });
     }
