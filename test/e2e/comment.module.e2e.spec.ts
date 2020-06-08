@@ -138,8 +138,7 @@ describe('comment.module.e2e', () => {
         return request(app.getHttpServer())
             .delete('/api/comments/' + _id)
             .set('authorization', __TOKEN__)
-            .expect(200)
-            .expect({});
+            .expect(200);
     });
 
     describe('batch delete', () => {
