@@ -11,10 +11,11 @@ const init = async () => {
     });
 
     const articles = await ArticleModel.find({});
+
     await Promise.all(
         articles.map(async (item) => {
             const count = await CommentModel.countDocuments({ article: item._id });
-            await this.articleModel.updateOne({ _id: item._id }, { commentCount: count });
+            await ArticleModel.updateOne({ _id: item._id }, { commentCount: count });
         })
     );
 
