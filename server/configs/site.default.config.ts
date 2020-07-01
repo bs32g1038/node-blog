@@ -16,7 +16,7 @@ const config = {
         '李志成的个人网站，专注于web开发，尤其是前端开发。喜欢做技术，也喜欢分享技术。本站主要是分享web相关文章内容，以及个人工作相关日志！',
     siteLogo: '/static/logo.svg',
 
-    siteIcp: '粤ICP备16021965号-2',
+    siteIcp: '粤ICP备16021965号-3',
     icpGovCn: 'http://www.beian.miit.gov.cn',
 
     github: 'https://github.com/bs32g1038',

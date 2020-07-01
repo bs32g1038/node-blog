@@ -23,9 +23,9 @@ interface State {
 const initialState: State = {
     config: {
         siteTitle: '',
-        siteIcp: '',
+        siteIcp: '粤ICP备16021965号-3',
         siteDomain: '',
-        icpGovCn: '',
+        icpGovCn: 'http://www.beian.miit.gov.cn',
         siteLogo: '',
         email: '',
         github: 'https://github.com/bs32g1038',
