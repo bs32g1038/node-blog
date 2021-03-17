@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/css';
 import jsxss from 'xss';
 
 const sizes = {

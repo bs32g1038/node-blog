@@ -35,7 +35,7 @@ const buildLinearPath = (data: Array<any>) => {
         .join(' ');
 };
 
-export default (props: any) => {
+const Trend =  (props: any) => {
     const uid = 'trend-' + props.data.join('');
     return (
         <svg width="155" height="30">
@@ -69,3 +69,5 @@ export default (props: any) => {
         </svg>
     );
 };
+
+export default Trend

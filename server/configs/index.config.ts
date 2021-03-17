@@ -11,7 +11,7 @@ export const APP_SERVER = {
 
 export const MONGODB = {
     uri: isDevMode
-        ? 'mongodb://localhost:27017/dev'
+        ? 'mongodb://192.168.169.2:27017/dev'
         : isTestMode
         ? 'mongodb://localhost:27017/test'
         : process.env.MONGODB_URL ||

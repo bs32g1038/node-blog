@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Form, Button, Switch, message } from 'antd';
 import { EditOutlined, SendOutlined, CloseOutlined, CheckOutlined, SoundOutlined } from '@ant-design/icons';
-import { useForm } from 'antd/lib/form/util';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import axios from '@blog/client/admin/axios';
 import { Tip } from './style';
@@ -22,7 +21,7 @@ export default (props: Props) => {
     const { data } = props;
     const [disabled, setDisabled] = useState(true);
     const { loading, injectRequestLoading } = useRequestLoading();
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const onFinish = (values) => {
         injectRequestLoading(updateEmailConfig(values)).then(() => {
             message.success('更新成功');

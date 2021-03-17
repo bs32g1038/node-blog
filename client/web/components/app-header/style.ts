@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { Link } from '@chakra-ui/core';
-import { ReactSVG as _ReactSVG } from 'react-svg';
+import { Link } from '@chakra-ui/react';
+import { config as darkConfig } from '../../theme/dark';
+import { config as lightConfig } from '../../theme/light';
 
 export const HomeNav: any = styled(Link)`
     @font-face {
@@ -40,13 +41,15 @@ export const NavA = styled(Link)`
     }
 `;
 
-export const ReactSVG = styled(_ReactSVG)`
+export const SvgDiv: any = styled.div`
     display: flex;
     align-items: center;
     svg {
-        fill: ${(props: any) => props.theme.colors.theme.header.color};
         margin-right: 8px;
         width: 40px;
         height: 40px;
+        fill: ${(props: any) => {
+            return props.colorMode == 'light' ? lightConfig.colors.theme.title : darkConfig.colors.theme.title;
+        }};
     }
 `;

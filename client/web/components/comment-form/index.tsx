@@ -11,9 +11,9 @@ import {
     Collapse,
     Tooltip,
     IconButton,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import isLength from 'validator/lib/isLength';
-import { Box, ButtonGroup } from '@chakra-ui/core';
+import { Box, ButtonGroup } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import Emoji from './emoji';
 import { debounce } from 'lodash';
@@ -123,7 +123,7 @@ export const CommentForm = (props: Props) => {
                 position="relative"
                 py={1}
             >
-                <AlertIcon size="14px" />
+                <AlertIcon w="14px" h="14px" />
                 当前评论模式：游客模式，系统将自动生成相关数据信息
                 <Tooltip
                     aria-label="tip"
@@ -198,7 +198,7 @@ export const CommentForm = (props: Props) => {
                         debounceContent(event.target.value);
                     }}
                 ></Textarea>
-                <Collapse mb={3} isOpen={isShowPreview}>
+                <Collapse in={isShowPreview}>
                     <Box
                         overflowY="auto"
                         minHeight="90px"
@@ -207,13 +207,14 @@ export const CommentForm = (props: Props) => {
                         borderStyle="dashed"
                         borderBottomWidth="1px"
                         borderBottomColor="#dedede"
+                        mb={3}
                     >
                         <MarkdownBody content={previewHtml}></MarkdownBody>
                     </Box>
                 </Collapse>
-                <Box mt={2}>
-                    <Collapse mb={3} isOpen={isShowEmotion}>
-                        <Box borderBottom="1px dashed #dedede">
+                <Box>
+                    <Collapse in={isShowEmotion}>
+                        <Box borderBottom="1px dashed #dedede" mb={3}>
                             <Emoji
                                 onInput={(text) => {
                                     onEmojiInput(text);
@@ -253,7 +254,7 @@ export const CommentForm = (props: Props) => {
                                 fontWeight="normal"
                                 isLoading={buttonLoading}
                                 loadingText="正在提交..."
-                                variantColor="blue"
+                                colorScheme="blue"
                                 variant="solid"
                                 size="sm"
                                 onClick={() => submit()}

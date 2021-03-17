@@ -1,16 +1,21 @@
-import { css } from 'emotion';
-import React from 'react';
-import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Spinner } from '@chakra-ui/core';
+import { css } from '@emotion/css';
+import React, { useEffect } from 'react';
+import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Spinner, Icon } from '@chakra-ui/react';
 import Link from '../link';
-import Icon from '../icon';
 import NavLink from '../nav-link';
-import { HomeNav, NavA, ReactSVG } from './style';
+import { HomeNav, NavA, SvgDiv } from './style';
 import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { GithubIcon, RssIcon } from '../../icons';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
+import { setTheme } from '@blog/client/redux/reducers/app';
+import { ReactSVG } from 'react-svg';
 
-export const AppHeader = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
+export const AppHeader = (props) => {
+    const colorMode = useSelector((state: RootState) => state.app.theme);
     const config = useSelector((state: RootState) => state.app.config);
     return (
         <Box
@@ -28,7 +33,9 @@ export const AppHeader = () => {
         >
             <Link href="/" as="/">
                 <HomeNav title={config.siteTitle} mr={[0, 6]}>
-                    <ReactSVG loading={() => <Spinner size="sm" mr={2} />} src={config.siteLogo} />
+                    <SvgDiv colorMode={colorMode}>
+                        <ReactSVG src={config.siteLogo} />
+                    </SvgDiv>
                     <Heading
                         color="theme.header.color"
                         as="h1"
@@ -44,22 +51,41 @@ export const AppHeader = () => {
                 <NavLink href="/blog">
                     <NavA flex="1 0 auto">
                         <Flex alignItems="center" justifyContent="center">
-                            <Icon fill="theme.header.fill" size="16px" name="home" mt="2px" mr={1}></Icon>首页
+                            <Icon
+                                as={HomeOutlined}
+                                lineHeight={0}
+                                fill="theme.header.fill"
+                                w="16px"
+                                h="16px"
+                                mt="2px"
+                                mr={1}
+                            ></Icon>
+                            首页
                         </Flex>
                     </NavA>
                 </NavLink>
                 <NavLink href="/about">
                     <NavA flex="1 0 auto">
                         <Flex alignItems="center" justifyContent="center">
-                            <Icon fill="theme.header.fill" size="16px" name="user" mt="2px" mr={1}></Icon>关于
+                            <Icon
+                                as={UserOutlined}
+                                fill="theme.header.fill"
+                                w="16px"
+                                h="16px"
+                                mt="2px"
+                                lineHeight={0}
+                                mr={1}
+                            ></Icon>
+                            关于
                         </Flex>
                     </NavA>
                 </NavLink>
                 <NavA flex="1 0 auto" href="/blog/rss" isExternal={true}>
                     <Flex alignItems="center" justifyContent="center">
-                        <Icon
-                            fill="theme.header.fill"
-                            size="16px"
+                        <RssIcon
+                            ffill="theme.header.fill"
+                            w="16px"
+                            h="16px"
                             name="rss"
                             mt="2px"
                             mr={1}
@@ -69,7 +95,7 @@ export const AppHeader = () => {
                                     transform: rotate(270deg);
                                 }
                             `}
-                        ></Icon>
+                        ></RssIcon>
                         Rss
                     </Flex>
                 </NavA>
@@ -86,13 +112,16 @@ export const AppHeader = () => {
                     variant="unstyled"
                     aria-label="switch theme mode"
                     minWidth="auto"
-                    onClick={toggleColorMode}
-                    variantColor="blue"
+                    onClick={() => {
+                        console.log('sadsad', colorMode);
+                        getOrCreateStore().dispatch(setTheme(colorMode));
+                    }}
+                    colorScheme="blue"
                 >
-                    <Icon size="24px" name={colorMode === 'light' ? 'moon' : 'sun'} />
+                    {colorMode === 'light' ? <MoonIcon w="24px" h="24px" /> : <SunIcon w="24px" h="24px" />}
                 </Button>
                 <UiLink display={['none', 'block']} href="https://github.com/bs32g1038" isExternal={true}>
-                    <Icon fill="theme.header.fill" size="24px" name="github"></Icon>
+                    <GithubIcon name="github" w="24px" h="24px" fill="theme.header.fill"></GithubIcon>
                 </UiLink>
             </Flex>
         </Box>

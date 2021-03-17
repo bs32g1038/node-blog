@@ -5,13 +5,14 @@ import Head from 'next/head';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
-import { Box, Flex, List, ListItem, Image, Heading, Text } from '@chakra-ui/core';
-import Icon from '../icon';
+import { Box, Flex, List, ListItem, Image, Heading, Text } from '@chakra-ui/react';
+import {EmailIcon, TagIcon, PlaceIcon } from '../../icons';
 import HelperListItem from './helper-list-item';
 import * as api from '@blog/client/web/api/article';
 import PersonCommit from './person-commit';
+import { EditIcon, InfoIcon } from '@chakra-ui/icons'
 
-export default () => {
+const AboutPage =  () => {
     const config = useSelector((state: RootState) => state.app.config);
     const [userCommits, setUserCommits] = useState([]);
     useEffect(() => {
@@ -44,7 +45,7 @@ export default () => {
                                         p="1px"
                                         src={require('@blog/client/assets/images/avatar.jpg')}
                                         alt="头像"
-                                        size="24px"
+                                        boxSize="24px"
                                         mr={2}
                                     />
                                     <Heading as="h2" fontSize={20}>
@@ -56,24 +57,24 @@ export default () => {
                                 </Flex>
                             </ListItem>
                             <ListItem mb={3}>
-                                <Icon name="place" fill="gray.500" mr={2} size="24px" />
+                                <PlaceIcon name="place" fill="gray.500" mr={2} w="24px" h="24px" />
                                 广东 广州
                             </ListItem>
                             <ListItem mb={3}>
                                 <Box width="20px" textAlign="center" display="inline-block" mr={2}>
-                                    <Icon name="email" fill="gray.500" />
+                                    <EmailIcon name="email" fill="gray.500" />
                                 </Box>
                                 bs32g1038#163.com（#换成@）
                             </ListItem>
                             <ListItem mb={3} display="flex">
                                 <Box width="20px" textAlign="center" display="inline-block" mr={2}>
-                                    <Icon name="tag" fill="gray.500" />
+                                    <TagIcon name="tag" fill="gray.500" />
                                 </Box>
                                 孟子：尽信书，不如无书。史记：桃李不言，下自成蹊。
                             </ListItem>
                             <ListItem>
                                 <Box width="20px" textAlign="center" display="inline-block" mr={2}>
-                                    <Icon name="edit" color="gray.500" />
+                                    <EditIcon name="edit" color="gray.500" />
                                 </Box>
                                 本博客是一个技术性博客，主要发布关于web前端以及后端开发的文章。博主专注于web前端开发。喜欢新事物，关注前端动态，对新的技术有追求；涉猎广泛，喜欢
                                 coding。
@@ -111,7 +112,7 @@ export default () => {
                     >
                         <Image
                             margin="0 auto"
-                            size={10}
+                            boxSize={10}
                             src={require('@blog/client/assets/images/telescope.png')}
                         ></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
@@ -127,7 +128,7 @@ export default () => {
                         flex="1 0 auto"
                         animation="slideInUp .3s ease-in"
                     >
-                        <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/psd.png')}></Image>
+                        <Image margin="0 auto" boxSize={10} src={require('@blog/client/assets/images/psd.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             PSD转页面
                         </Text>
@@ -141,7 +142,7 @@ export default () => {
                         flex="1 0 auto"
                         animation="slideInUp .4s ease-in"
                     >
-                        <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/pc.png')}></Image>
+                        <Image margin="0 auto" boxSize={10} src={require('@blog/client/assets/images/pc.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             PC网站制作
                         </Text>
@@ -155,7 +156,7 @@ export default () => {
                         flex="1 0 auto"
                         animation="slideInUp .5s ease-in"
                     >
-                        <Image margin="0 auto" size={10} src={require('@blog/client/assets/images/app.png')}></Image>
+                        <Image margin="0 auto" boxSize={10} src={require('@blog/client/assets/images/app.png')}></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
                             移动端开发
                         </Text>
@@ -171,7 +172,7 @@ export default () => {
                     >
                         <Image
                             margin="0 auto"
-                            size={10}
+                            boxSize={10}
                             src={require('@blog/client/assets/images/mini-program-fill.png')}
                         ></Image>
                         <Text mt={2} color="theme.primaryText" fontSize={16}>
@@ -183,7 +184,7 @@ export default () => {
             <GithubPinnedList userRepos={data.userRepos}></GithubPinnedList>
             <Box p={5}>
                 <Text textAlign="center" mb={5}>
-                    <Icon name="info" mr={2}></Icon>常见问题
+                    <InfoIcon name="info" mr={2}></InfoIcon>常见问题
                 </Text>
                 {data.issues.map((issue) => {
                     return <HelperListItem key={issue._id} issue={issue}></HelperListItem>;
@@ -197,3 +198,5 @@ export default () => {
         </AppLayout>
     );
 };
+
+export default AboutPage

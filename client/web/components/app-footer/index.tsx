@@ -1,21 +1,25 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import BackTopBtn from '../back-top-button';
-import { Flex, Box, Text, Heading, useColorMode, Image, Button, Spinner } from '@chakra-ui/core';
+import { Flex, Box, Text, Heading, useColorMode, Image, Button, Spinner } from '@chakra-ui/react';
 import UiLink from '../ui-link';
-import Icon from '../icon';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
-import { ReactSVG as _ReactSVG } from 'react-svg';
+import { ReactSVG } from 'react-svg';
+import { EmailIcon, WechatIcon, QQIcon, GithubIcon } from '../../icons';
+import { config as darkConfig } from '../../theme/dark';
+import { config as lightConfig } from '../../theme/light';
 
-export const ReactSVG = styled(_ReactSVG)`
+const SvgDiv = styled.div`
     display: flex;
     align-items: center;
     svg {
-        fill: ${(props: any) => props.theme.colors.theme.header.color};
         width: 20px;
         height: 20px;
+        fill: ${(props) => {
+            return props.colorMode == 'light' ? lightConfig.colors.theme.title : darkConfig.colors.theme.title;
+        }};
     }
 `;
 
@@ -28,37 +32,9 @@ const LibLogo = styled.img`
     display: inline-block;
 `;
 
-/**
- * 底部时间计数逻辑实现
- */
-const loadTimeCountEvent = () => {
-    const time = document.getElementById('blog-runing-time');
-    // 显示博客运行时间
-    function showRunTime() {
-        const BirthDay = new Date('2016/012/11 00:00:00');
-        const today = new Date();
-        const timeold = today.getTime() - BirthDay.getTime();
-        const msPerDay = 864e5;
-        const eDaysold = timeold / msPerDay;
-        const daysold = Math.floor(eDaysold);
-        const eHrsold = 24 * (eDaysold - daysold);
-        const hrsold = Math.floor(eHrsold);
-        const eMinsold = 60 * (eHrsold - hrsold);
-        const minsold = Math.floor(60 * (eHrsold - hrsold));
-        const seconds = Math.floor(60 * (eMinsold - minsold));
-        if (time) {
-            time.innerHTML = daysold + '天' + hrsold + '小时' + minsold + '分' + seconds + '秒';
-        }
-    }
-    setInterval(showRunTime, 1000);
-};
-
 export const AppFooter = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
+    const colorMode = useSelector((state: RootState) => state.app.theme);
     const config = useSelector((state: RootState) => state.app.config);
-    useEffect(() => {
-        loadTimeCountEvent();
-    });
     return (
         <Flex
             position="relative"
@@ -72,7 +48,9 @@ export const AppFooter = () => {
             <BackTopBtn></BackTopBtn>
             <Box>
                 <Flex className="site-info" alignItems="center">
-                    <ReactSVG loading={() => <Spinner size="sm" mr={2} />} src={config.siteLogo} />
+                    <SvgDiv colorMode={colorMode}>
+                        <ReactSVG src={config.siteLogo} />
+                    </SvgDiv>
                     <Text className="site-title" ml={rem(8)}>
                         欢迎来到 {config.siteTitle}，这里主要分享前后端技术文章，致力于web技术研究。
                     </Text>
@@ -81,16 +59,16 @@ export const AppFooter = () => {
                     <div className="contact-title">Contact us: </div>
                     <Flex className="social-list">
                         <UiLink href="mailto:bs32g1038@163.com">
-                            <Icon name="email" ml="8px" fill="theme.primaryText"></Icon>
+                            <EmailIcon ml="8px" fill="theme.primaryText"></EmailIcon>
                         </UiLink>
                         <UiLink>
-                            <Icon name="wechat" ml="8px" fill="theme.primaryText"></Icon>
+                            <WechatIcon ml="8px" fill="theme.primaryText"></WechatIcon>
                         </UiLink>
                         <UiLink>
-                            <Icon name="qq" ml="8px" fill="theme.primaryText"></Icon>
+                            <QQIcon ml="8px" fill="theme.primaryText"></QQIcon>
                         </UiLink>
                         <UiLink href={config.projectGithub} isExternal={true}>
-                            <Icon name="github" ml="8px" fill="theme.primaryText"></Icon>
+                            <GithubIcon ml="8px" fill="theme.primaryText"></GithubIcon>
                         </UiLink>
                     </Flex>
                 </Flex>

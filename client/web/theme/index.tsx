@@ -20,8 +20,8 @@ const dividers = rgba(0, 0, 0, 0.06);
 const blackground = rgba(0, 0, 0, 0.04);
 
 // 2. Add your color mode config
-export const config = {
-    initialColorMode: "light",
+const config = {
+    initialColorMode: 'light',
     useSystemColorMode: false,
     colors: {
         theme: {

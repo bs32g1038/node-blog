@@ -37,5 +37,9 @@ export const decrypt = (str: string) => {
 };
 
 export const getDerivedKey = (str: string) => {
-    return crypto.PBKDF2(str, 'salt', 1, 32, 'sha512').toString(crypto.enc.Hex);
+    return crypto
+        .PBKDF2(str, 'salt', {
+            keySize: 32
+        })
+        .toString(crypto.enc.Hex);
 };
