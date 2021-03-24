@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import React, { useEffect } from 'react';
-import { Link as UiLink, Flex, Heading, useColorMode, Button, Box, Spinner, Icon } from '@chakra-ui/react';
+import { Link as UiLink, Flex, Heading, Button, Box, Icon } from '@chakra-ui/react';
 import Link from '../link';
 import NavLink from '../nav-link';
 import { HomeNav, NavA, SvgDiv } from './style';
@@ -113,7 +113,6 @@ export const AppHeader = (props) => {
                     aria-label="switch theme mode"
                     minWidth="auto"
                     onClick={() => {
-                        console.log('sadsad', colorMode);
                         getOrCreateStore().dispatch(setTheme(colorMode));
                     }}
                     colorScheme="blue"

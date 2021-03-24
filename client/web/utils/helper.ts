@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
-import jsxss from 'xss';
+import _jss from 'xss';
+const jsxss: any = _jss;
 
 const sizes = {
     desktop: 992,

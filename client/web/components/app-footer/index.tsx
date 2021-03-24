@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React from 'react';
 import BackTopBtn from '../back-top-button';
-import { Flex, Box, Text, Heading, useColorMode, Image, Button, Spinner } from '@chakra-ui/react';
+import { Flex, Box, Text, Heading, Image, Button } from '@chakra-ui/react';
 import UiLink from '../ui-link';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
@@ -10,14 +10,16 @@ import { ReactSVG } from 'react-svg';
 import { EmailIcon, WechatIcon, QQIcon, GithubIcon } from '../../icons';
 import { config as darkConfig } from '../../theme/dark';
 import { config as lightConfig } from '../../theme/light';
+import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
+import { setTheme } from '@blog/client/redux/reducers/app';
 
-const SvgDiv = styled.div`
+const SvgDiv: any = styled.div`
     display: flex;
     align-items: center;
     svg {
         width: 20px;
         height: 20px;
-        fill: ${(props) => {
+        fill: ${(props: any) => {
             return props.colorMode == 'light' ? lightConfig.colors.theme.title : darkConfig.colors.theme.title;
         }};
     }
@@ -110,7 +112,12 @@ export const AppFooter = () => {
                     <UiLink href="https://ant.design" isExternal={true}>
                         <LibLogo src={require('@blog/client/assets/svgs/logo-ant-design.svg')} />
                     </UiLink>
-                    <Button size="sm" onClick={() => toggleColorMode()} float="right" title="主题切换">
+                    <Button
+                        size="sm"
+                        onClick={() => getOrCreateStore().dispatch(setTheme(colorMode))}
+                        float="right"
+                        title="主题切换"
+                    >
                         {colorMode === 'light' ? '暗黑' : '明亮'}主题
                     </Button>
                 </Flex>

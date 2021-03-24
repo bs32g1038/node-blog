@@ -138,7 +138,6 @@ export const CommentForm = (props: Props) => {
                         color="theme.primaryText"
                         variant="solid"
                         aria-label="tip"
-                        icon="question-outline"
                         bg="transparent"
                         size="sm"
                         verticalAlign="text-bottom"
@@ -170,7 +169,7 @@ export const CommentForm = (props: Props) => {
             <Box color="theme.primaryText">
                 {errorMessage && (
                     <Alert status="error" mb={1} color="theme.primaryText" variant="subtle" fontSize={rem(14)}>
-                        <AlertIcon size="12px" />
+                        <AlertIcon w="12px" h="12px" />
                         {errorMessage}
                         <CloseButton
                             size="sm"
