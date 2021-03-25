@@ -1,4 +1,4 @@
-import _Link, { LinkProps } from 'next/link';
+import _Link from 'next/link';
 
 /**
  * 默认不预加载 js code 文件

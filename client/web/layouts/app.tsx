@@ -10,10 +10,6 @@ import { fontFamily } from '../theme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 
-const SwitchTheme = () => {
-    return <div></div>
-}
-
 const App = (props: { children: any }) => {
     const children = props.children;
     const colorMode = useSelector((state: RootState) => state.app.theme);

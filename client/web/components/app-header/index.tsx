@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link as UiLink, Flex, Heading, Button, Box, Icon } from '@chakra-ui/react';
 import Link from '../link';
 import NavLink from '../nav-link';
