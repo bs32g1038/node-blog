@@ -154,7 +154,7 @@
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "swr": "^0.2.2",
-    "ts-jest": "26.1.0",
+    "ts-jest": "26.5.6",
     "ts-node": "8.10.2",
     "tsconfig-paths": "3.9.0",
     "typescript": "3.9.5",
