@@ -1,7 +1,7 @@
 import React from 'react';
 import { CommentForm } from '../comment-form';
 import { CommentItem } from './comment-item';
-import { Heading, Box } from '@chakra-ui/core';
+import { Heading, Box } from '@chakra-ui/react';
 
 const comemnt = (props: { article: any; comments: any }) => {
     const article = props.article;

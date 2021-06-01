@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import React, { SFC } from 'react';
-import { Flex, Box, Text, Heading } from '@chakra-ui/core';
+import { Flex, Box, Text, Heading } from '@chakra-ui/react';
 import Link from '../link';
 import UiLink from '../ui-link';
-import Icon from '../icon';
+import { TagIcon } from '../../icons';
 import Trend from '../Trend';
 import { LazyLoad } from '../lazy-load';
 import { parseTime } from '@blog/client/libs/time';
@@ -104,7 +104,7 @@ const Item: SFC<{ item: any }> = (props: any) => {
                 </Text>
                 {item.tags.length > 0 && (
                     <Flex alignItems="center" mt={3}>
-                        <Icon name="tag" fill="theme.articles.secondaryText"></Icon>
+                        <TagIcon name="tag" fill="theme.articles.secondaryText"></TagIcon>
                         {item.tags.map((name: any) => (
                             <Link href={`/blog/articles?tag=${name}`} passHref={true} key={'tag_uid' + name}>
                                 <UiLink

@@ -1,31 +1,30 @@
 /* eslint-disable */
 const path = require('path');
-const withCss = require('@zeit/next-css');
 
 const resolve = (dir) => path.resolve(__dirname, dir);
 
-module.exports = withCss({
+module.exports = {
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        if (isServer) {
-            const antStyles = /antd\/.*?\/style\/css.*?/;
-            const origExternals = [...config.externals];
-            config.externals = [
-                (context, request, callback) => {
-                    if (request.match(antStyles)) return callback();
-                    if (typeof origExternals[0] === 'function') {
-                        origExternals[0](context, request, callback);
-                    } else {
-                        callback();
-                    }
-                },
-                ...(typeof origExternals[0] === 'function' ? [] : origExternals),
-            ];
+        // if (isServer) {
+        //     const antStyles = /antd\/.*?\/style\/css.*?/;
+        //     const origExternals = [...config.externals];
+        //     config.externals = [
+        //         (context, request, callback) => {
+        //             if (request.match(antStyles)) return callback();
+        //             if (typeof origExternals[0] === 'function') {
+        //                 origExternals[0](context, request, callback);
+        //             } else {
+        //                 callback();
+        //             }
+        //         },
+        //         ...(typeof origExternals[0] === 'function' ? [] : origExternals),
+        //     ];
 
-            config.module.rules.unshift({
-                test: antStyles,
-                use: 'null-loader',
-            });
-        }
+        //     config.module.rules.unshift({
+        //         test: antStyles,
+        //         use: 'null-loader',
+        //     });
+        // }
         config.module.rules.push({
             test: /\.(txt|png|svg|gif|bmp|jpe?g|ttf)$/,
             use: [
@@ -48,4 +47,4 @@ module.exports = withCss({
         };
         return config;
     },
-});
+};

@@ -134,7 +134,8 @@ const ArticleSchema = new mongoose.Schema(
 
 ArticleSchema.plugin(paginate);
 
-const ArticleModel: ModelPaginate<ArticleDocument> = mongoose.model('article', ArticleSchema, 'article');
+const c:any = mongoose.model('article', ArticleSchema, 'article');
+const ArticleModel: ModelPaginate<ArticleDocument> = c
 
 export type IArticleModel = typeof ArticleModel;
 

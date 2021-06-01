@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex, Box, Heading, Text } from '@chakra-ui/core';
+import { Flex, Box, Heading, Text } from '@chakra-ui/react';
 import UiLink from '../ui-link';
-import Icon from '../icon';
+import { RepoIcon, GrabberIcon, StartIcon, ForkIcon } from '../../icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 
@@ -33,13 +33,13 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
         >
             <Box>
                 <Flex alignItems="center" mb={2}>
-                    <Icon name="repo" fill="theme.primaryText"></Icon>
+                    <RepoIcon name="repo" fill="theme.primaryText"></RepoIcon>
                     <UiLink ml={1} href={config.github + '/' + item.name} isExternal={true} flex="1 0 auto">
                         <Heading color="theme.primaryText" fontWeight="normal" as="h3" fontSize="1rem">
                             {item.name}
                         </Heading>
                     </UiLink>
-                    <Icon name="grabber" fill="theme.primaryText"></Icon>
+                    <GrabberIcon name="grabber" fill="theme.primaryText"></GrabberIcon>
                 </Flex>
                 <Text mb={4} fontSize={13}>
                     {item.description}
@@ -62,13 +62,13 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
                 </Text>
                 <UiLink href={config.github + '/' + item.name + '/stargazers'} mr={3}>
                     <Flex alignItems="center">
-                        <Icon name="star" fill="theme.secondaryText" mr={1} />
+                        <StartIcon fill="theme.secondaryText" mr={1} />
                         {item.stargazersCount}
                     </Flex>
                 </UiLink>
                 <UiLink href={config.github + '/' + item.name + '/network/members'}>
                     <Flex alignItems="center">
-                        <Icon name="fork" fill="theme.secondaryText" mr={1} />
+                        <ForkIcon fill="theme.secondaryText" mr={1} />
                         {item.forkCount}
                     </Flex>
                 </UiLink>
@@ -77,7 +77,7 @@ const PinnedListItem = (props: { item: UserRepoItem }) => {
     );
 };
 
-export default (props: UserReposProps) => {
+const GithubPinnedList = (props: UserReposProps) => {
     const { userRepos } = props;
     let arr = userRepos;
     if (Array.isArray(props.userRepos) && props.userRepos.length <= 0) {
@@ -94,3 +94,5 @@ export default (props: UserReposProps) => {
         </>
     );
 };
+
+export default GithubPinnedList

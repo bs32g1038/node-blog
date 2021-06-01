@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Form, Button } from 'antd';
 import { EditOutlined, SendOutlined } from '@ant-design/icons';
-import { useForm } from 'antd/lib/form/util';
 import styled from '@emotion/styled';
-import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
+import { AutoSizeType } from 'rc-textarea';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import { isEqual } from 'lodash';
 import { Rule } from 'antd/lib/form';
@@ -34,7 +33,7 @@ interface Props {
 
 export default (props: Props) => {
     const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
         type: 'svg',
         style: {

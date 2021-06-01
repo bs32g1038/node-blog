@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '@blog/client/redux/reducers/categories';
 import { RootState } from '@blog/client/redux/store';
 import NavLink from '../nav-link';
-import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/core';
+import { Box, Link, Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Router from 'next/router';
 import { rem } from 'polished';
@@ -36,7 +36,7 @@ const ItemLink = styled(Link)`
     }
 `;
 
-export default () => {
+const Categories = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { items } = useSelector((state: RootState) => state.categories);
@@ -88,3 +88,5 @@ export default () => {
         </Box>
     );
 };
+
+export default Categories

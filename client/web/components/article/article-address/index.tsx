@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from '../../link';
-import { Link as UiLink } from '@chakra-ui/core';
+import { Link as UiLink } from '@chakra-ui/react';
 
 export default ({ articleId }: { articleId: string }) => {
     const domain = window.location.protocol + '//' + window.location.host;

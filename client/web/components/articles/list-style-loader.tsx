@@ -1,8 +1,8 @@
 import React from 'react';
-import { Flex, Box } from '@chakra-ui/core';
+import { Flex, Box } from '@chakra-ui/react';
 import Skeleton from '../skeleton';
 
-export default () => {
+const ListStyleLoader = () => {
     return (
         <Flex px={4} mt={4} mb={4} width="100%" alignItems="center">
             <Box mr={[0, 4]} flex="1 0 auto" maxWidth="100%">
@@ -31,3 +31,5 @@ export default () => {
         </Flex>
     );
 };
+
+export default ListStyleLoader

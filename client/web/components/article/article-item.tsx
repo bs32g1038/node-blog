@@ -5,7 +5,6 @@ import Comment from './comment';
 import MarkdownBody from '../markdown-body';
 import {
     Box,
-    Icon,
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
@@ -15,7 +14,8 @@ import {
     List,
     ListItem,
     Heading,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons'
 import { rem } from 'polished';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
@@ -35,7 +35,7 @@ export default (props: Props) => {
             <Breadcrumb
                 fontSize={rem(14)}
                 spacing="3px"
-                separator={<Icon color="theme.secondaryText" name="chevron-right" />}
+                separator={<ChevronRightIcon color="theme.secondaryText" name="chevron-right" />}
             >
                 <BreadcrumbItem>
                     <Link href="/">

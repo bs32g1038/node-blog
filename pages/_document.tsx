@@ -1,6 +1,8 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import axios from '@blog/client/web/utils/axios';
+import { ColorModeScript } from '@chakra-ui/react';
+import theme from '@blog/client/web/theme';
 
 /* eslint-disable */
 class AppDocument extends Document<any> {
@@ -33,6 +35,9 @@ class AppDocument extends Document<any> {
                     />
                 </Head>
                 <body>
+                    {this.props.__NEXT_DATA__.page.includes('blog') && (
+                        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+                    )}
                     <Main />
                     <NextScript />
                 </body>

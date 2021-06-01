@@ -1,12 +1,12 @@
-import { css } from 'emotion';
+import { useTheme } from '@emotion/react';
+import { css } from '@emotion/css';
 import Link from '../link';
 import React, { useRef, useState } from 'react';
 import * as Api from '@blog/client/web/api/article';
-import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/core';
-import Icon from '../icon';
+import { Input, Box, Link as UiLink, Text, Flex, Collapse } from '@chakra-ui/react';
 import { debounce } from 'lodash';
-import { useTheme } from 'emotion-theming';
 import { rem } from 'polished';
+import { SearchIcon, GithubIcon } from '../../icons';
 
 const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
     const { isLoading, items } = props;
@@ -75,7 +75,14 @@ const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) =
                 <Text>正在搜索数据...</Text>
             ) : (
                 <Text>
-                    <Icon verticalAlign="text-bottom" name="github" fill="theme.header.color" size="16px" mr={1} />
+                    <GithubIcon
+                        verticalAlign="text-bottom"
+                        name="github"
+                        fill="theme.header.color"
+                        w="16px"
+                        h="16px"
+                        mr={1}
+                    />
                     {totalCount <= 0 ? '没有该搜索结果' : `共 ${totalCount} 条记录，可尝试其他关键字👍`}
                 </Text>
             )}
@@ -89,7 +96,7 @@ export const SearchForm = () => {
     const cache = {};
     const $input = useRef<HTMLInputElement>(null);
     const [isActiveNavSearchDropdown, setIsActiveNavSearchDropdown] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [items, setItems] = useState([]);
     const [totalCount, setTotalCount] = useState(-1);
 
@@ -159,7 +166,7 @@ export const SearchForm = () => {
                     onBlur={onblur}
                     transition=""
                 />
-                <Icon name="search3" fill="#666" mx={3}></Icon>
+                <SearchIcon fill="#666" mx={3}></SearchIcon>
             </Flex>
             <Box
                 position="absolute"
@@ -169,29 +176,36 @@ export const SearchForm = () => {
                 display={isActiveNavSearchDropdown ? 'block' : 'none'}
                 onMouseDown={(event) => event.preventDefault()}
             >
-                <Collapse
-                    isOpen={isActiveNavSearchDropdown}
+                <Box
                     bg="theme.header.bg"
                     color="theme.header.color"
-                    pt="0"
-                    px="12px"
-                    pb="16px"
                     borderRadius="0 0 4px 4px"
                     textAlign="left"
                     width="100%"
+                    px="12px"
+                    pb="16px"
                     className={css`
                         box-shadow: 0 4px 16px ${theme.colors.theme.header.boxShadowColor};
                     `}
                 >
-                    <Box color="theme.header.color" py={2} pl={2} width="100%" fontSize={rem(14)}>
-                        博客
-                        <Text as="span" float="right" cursor=" pointer" onClick={foldNavList}>
-                            收起
-                        </Text>
-                    </Box>
-                    <SearchResultList items={items} isLoading={isLoading}></SearchResultList>
-                    <SearchResultFooter isLoading={isLoading} totalCount={totalCount}></SearchResultFooter>
-                </Collapse>
+                    <Collapse in={isActiveNavSearchDropdown}>
+                        <Box
+                            py={2}
+                            px={2}
+                            bg="theme.header.bg"
+                            color="theme.header.color"
+                            width="100%"
+                            fontSize={rem(14)}
+                        >
+                            博客
+                            <Text as="span" float="right" cursor=" pointer" onClick={foldNavList}>
+                                收起
+                            </Text>
+                        </Box>
+                        <SearchResultList items={items} isLoading={isLoading}></SearchResultList>
+                        <SearchResultFooter isLoading={isLoading} totalCount={totalCount}></SearchResultFooter>
+                    </Collapse>
+                </Box>
             </Box>
         </Box>
     );

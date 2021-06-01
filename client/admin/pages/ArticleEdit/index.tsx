@@ -66,7 +66,7 @@ export default () => {
 
     const publish = (data) => {
         const { id } = router.query;
-        const content = editor.getMarkdown();
+        const content = editor.getValue();
         if (!isLength(content, { min: 1, max: 15000 })) {
             return message.error('文章详情不能为空，且最多15000个字符!');
         }

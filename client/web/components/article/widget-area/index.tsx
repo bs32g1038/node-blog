@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { css } from 'emotion';
-import { Box, Flex, Text, Heading } from '@chakra-ui/core';
+import { css } from '@emotion/css';
+import { Box, Flex, Text, Heading } from '@chakra-ui/react';
 import UiLink from '@blog/client/web/components/ui-link';
 import { parseTime } from '@blog/client/libs/time';
 import { useFixedTopInScroll } from '@blog/client/web/hooks/useFixedTopInScroll';

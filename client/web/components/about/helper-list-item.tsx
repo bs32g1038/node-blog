@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Flex, Image, Text } from '@chakra-ui/core';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
-export default ({ issue }) => {
+const HelperListItem = ({ issue }) => {
     return (
         <Box overflow="hidden" fontSize={14}>
             <Flex>
@@ -10,7 +10,7 @@ export default ({ issue }) => {
                     border="1px solid #ccc"
                     p="1px"
                     mr={2}
-                    size={6}
+                    boxSize={6}
                     mt={2}
                     src={require('@blog/client/assets/images/use.default.avatar.png')}
                 ></Image>
@@ -25,7 +25,7 @@ export default ({ issue }) => {
                     p="1px"
                     src={require('@blog/client/assets/images/avatar.jpg')}
                     alt="头像"
-                    size={6}
+                    boxSize={6}
                     mt={2}
                     mr={2}
                 />
@@ -34,3 +34,4 @@ export default ({ issue }) => {
         </Box>
     );
 };
+export default HelperListItem

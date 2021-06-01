@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Flex, Heading, Box, Image, Divider, Link } from '@chakra-ui/core';
+import { Text, Flex, Heading, Box, Image, Divider, Link } from '@chakra-ui/react';
 import { rem } from 'polished';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';

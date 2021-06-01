@@ -1,15 +1,17 @@
 import React from 'react';
-import Icon from '../icon';
-import { Text, Box } from '@chakra-ui/core';
+import { EmptyIcon } from '../../icons';
+import { Text, Box } from '@chakra-ui/react';
 import { rem } from 'polished';
 
-export default () => {
+const Empty = () => {
     return (
         <Box textAlign="center">
-            <Icon fill="theme.border" width="150px" height="120px" name="empty"></Icon>
+            <EmptyIcon fill="theme.border" width="150px" height="120px" name="empty"></EmptyIcon>
             <Text fontWeight="bold" color="theme.primaryText" fontSize={rem(16)}>
                 ~暂无数据~
             </Text>
         </Box>
     );
 };
+
+export default Empty

@@ -1,7 +1,7 @@
 import React from 'react';
-import { keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, BoxProps } from '@chakra-ui/core';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { opacify } from 'polished';
 
 const SkeletonLoading = keyframes`

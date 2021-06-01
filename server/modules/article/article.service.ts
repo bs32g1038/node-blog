@@ -103,7 +103,7 @@ export class ArticleService {
             incArticleDayReadingCount(article._id, (article.dayReadings && article.dayReadings.length) || 0);
         }
         if (article) {
-            const data = article.toObject();
+            const data: any = article.toObject();
 
             if (isRenderHtml) {
                 data.content = markdown.render(data.content);

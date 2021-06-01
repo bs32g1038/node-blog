@@ -75,7 +75,8 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.plugin(paginate);
 
-const UserModel: ModelPaginate<UserDocument> = mongoose.model('user', UserSchema, 'user');
+const c: any = mongoose.model('user', UserSchema, 'user');
+const UserModel: ModelPaginate<UserDocument> = c
 
 export type IUserModel = typeof UserModel;
 

@@ -68,7 +68,8 @@ const FileSchema = new mongoose.Schema(
 
 FileSchema.plugin(paginate);
 
-const FileModel: ModelPaginate<FileDocument> = mongoose.model('file', FileSchema, 'file');
+const c:any = mongoose.model('file', FileSchema, 'file');
+const FileModel: ModelPaginate<FileDocument> = c
 
 export type IFileModel = typeof FileModel;
 

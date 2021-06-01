@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Box, Tooltip } from '@chakra-ui/core';
-import { css } from 'emotion';
+import { Box, Tooltip } from '@chakra-ui/react';
+import { css } from '@emotion/css';
 
-export default () => {
+const BackTopButton = () => {
     const $el = useRef(null);
     useEffect(() => {
         let timer: any = null;
@@ -39,8 +39,6 @@ export default () => {
                     right: -40px;
                     bottom: 40px;
                     text-align: center;
-                    width: 44px;
-                    background: #fff;
                     width: 40px;
                     height: 40px;
                     line-height: 40px;
@@ -61,3 +59,5 @@ export default () => {
         </Tooltip>
     );
 };
+
+export default BackTopButton

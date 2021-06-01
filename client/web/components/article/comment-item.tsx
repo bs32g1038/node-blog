@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Box, Text, Flex, Image, Icon } from '@chakra-ui/core';
-import { css } from 'emotion';
+import { Collapse, Box, Text, Flex, Image, Icon } from '@chakra-ui/react';
+import { css } from '@emotion/css';
 import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
@@ -42,7 +42,7 @@ const replyFn = (item: any) => {
                     {showContent ? '折叠' : '展开'}
                 </Box>
             </Flex>
-            <Collapse mt={4} isOpen={showContent}>
+            <Collapse in={showContent}>
                 <MarkdownBody content={marked(item.content)}></MarkdownBody>
             </Collapse>
         </Box>
