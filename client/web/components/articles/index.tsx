@@ -1,10 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
-import { Flex, Box } from '@chakra-ui/core';
+import { Flex, Box } from '@chakra-ui/react';
 import Categories from '../categories';
 import Empty from '../empty';
 import ArticleItem from './item';
-import Pagination from '@blog/client/web/components/pagination';
+import {Pagination} from '@blog/client/web/components/pagination';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useFetchArticles } from '@blog/client/web/hooks/useFetchArticles';
 import { fetchArticles } from '@blog/client/redux/reducers/articles';

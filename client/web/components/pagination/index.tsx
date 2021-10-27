@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Flex, Link as UiLink } from '@chakra-ui/core';
+import { Flex, Link as UiLink } from '@chakra-ui/react';
 import Link from '../link';
-import Icon from '../icon';
+import { ChevronRightIcon } from '@chakra-ui/icons'
 
 const PageNumbers = styled(UiLink)`
     position: relative;
@@ -77,7 +77,7 @@ interface Props {
     total: number;
 }
 
-export default (props: Props) => {
+export const Pagination = (props: Props) => {
     const { current, pageSize, total } = props;
     const pageCount = Math.ceil(total / pageSize);
     const { showPrevMore, showNextMore, pageList } = getPage(current, pageCount);
@@ -86,7 +86,7 @@ export default (props: Props) => {
             {current > 1 && (
                 <Link href={`/blog/articles?page=${current - 1}`}>
                     <PageNumbers>
-                        <Icon name="arrow"></Icon>
+                        <ChevronRightIcon name="arrow"></ChevronRightIcon>
                     </PageNumbers>
                 </Link>
             )}
@@ -112,7 +112,7 @@ export default (props: Props) => {
             {current < pageCount && (
                 <Link href={`/blog/articles?page=${current + 1}`}>
                     <PageNumbers>
-                        <Icon name="arrow" transform="rotate(180deg)"></Icon>
+                        <ChevronRightIcon name="arrow" transform="rotate(180deg)"></ChevronRightIcon>
                     </PageNumbers>
                 </Link>
             )}

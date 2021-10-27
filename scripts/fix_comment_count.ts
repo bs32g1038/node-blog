@@ -3,12 +3,7 @@ import mongoose from 'mongoose';
 import { ArticleModel, CommentModel } from '../test/models';
 
 const init = async () => {
-    const conn = await mongoose.connect(MONGODB.uri, {
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(MONGODB.uri);
 
     const articles = await ArticleModel.find({});
 

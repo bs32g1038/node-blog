@@ -4,12 +4,7 @@ import { getCategory, getArticle, getComment, getFile } from '../test/faker';
 import { CategoryModel, ArticleModel, CommentModel, FileModel } from '../test/models';
 
 const init = async () => {
-    const conn = await mongoose.connect(MONGODB.uri, {
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(MONGODB.uri);
     await conn.connection.dropDatabase();
 
     /**

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@chakra-ui/core';
-import { css } from 'emotion';
+import { Button, ButtonGroup } from '@chakra-ui/react';
+import { css } from '@emotion/css';
 
 interface Props {
     onInput: (val: string) => void;
@@ -25,6 +25,8 @@ export default (props: Props) => {
     return (
         <ButtonGroup
             spacing={0}
+            mb={1}
+            flexWrap="wrap"
             onClick={(e) => onClick(e)}
             className={css`
                 button {

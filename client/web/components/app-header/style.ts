@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
-import { Link } from '@chakra-ui/core';
-import { ReactSVG as _ReactSVG } from 'react-svg';
 
-export const HomeNav: any = styled(Link)`
+export const MainWrap = styled.header`
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+`;
+
+export const HomeNav: any = styled.a`
     @font-face {
         font-family: 'logoFont';
         src: url(${require('@blog/client/assets/fonts/ZiXinFangMengTi-subfont.ttf')}) format('truetype');
@@ -16,16 +21,33 @@ export const HomeNav: any = styled(Link)`
     align-items: center;
     cursor: pointer;
     font-weight: 600;
+    margin-right: 26px;
+    margin-bottom: 0;
     h1 {
         font-family: logoFont;
+        font-size: 16px;
+        font-weight: bold;
+        color: ${(props: any) => props.theme.colors.title};
     }
     &:hover {
         text-decoration: none;
     }
 `;
 
-export const NavA = styled(Link)`
+export const NavWrap = styled.div`
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+`;
+
+export const NavA = styled.a`
     transition: none;
+    flex: 1 0 auto;
+    color: ${(props: any) => props.theme.colors.primaryText};
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:focus {
         box-shadow: none;
     }
@@ -38,13 +60,15 @@ export const NavA = styled(Link)`
             fill: #f86422;
         }
     }
+    > span {
+        margin-left: 5px;
+    }
 `;
 
-export const ReactSVG = styled(_ReactSVG)`
+export const SvgDiv: any = styled.div`
     display: flex;
     align-items: center;
     svg {
-        fill: ${(props: any) => props.theme.colors.theme.header.color};
         margin-right: 8px;
         width: 40px;
         height: 40px;

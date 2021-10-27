@@ -3,7 +3,7 @@
  */
 import MarkdownIt from 'markdown-it';
 import iterator from 'markdown-it-for-inline';
-import jsxss from 'xss';
+import * as jsxss from 'xss';
 
 const markdown = new MarkdownIt({
     breaks: true,

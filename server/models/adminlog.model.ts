@@ -50,7 +50,8 @@ AdminLogSchema.index({ createdAt: -1 });
 
 AdminLogSchema.plugin(paginate);
 
-const AdminLogModel: ModelPaginate<AdminLogDocument> = mongoose.model('adminlog', AdminLogSchema, 'adminlog');
+const c:any = mongoose.model('adminlog', AdminLogSchema, 'adminlog');
+const AdminLogModel: ModelPaginate<AdminLogDocument> = c
 
 export type IAdminLogModel = typeof AdminLogModel;
 

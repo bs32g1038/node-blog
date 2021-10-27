@@ -15,6 +15,6 @@
             "@blog/*": ["./*"]
         }
     },
-    "exclude": ["node_modules", ".next", "static", "public", "assets", "node_modules", "dist", "test"],
+    "exclude": ["node_modules", ".next", "static", "public", "assets", "dist", "test"],
     "include": ["server/*.ts", "scripts"]
 }

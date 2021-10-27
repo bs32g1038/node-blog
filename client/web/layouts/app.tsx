@@ -1,23 +1,24 @@
-import { css, Global } from '@emotion/core';
+import { Global, css } from '@emotion/react';
 import React, { useState, useEffect } from 'react';
 import { AppFooter } from '../components/app-footer';
 import { AppHeader } from '../components/app-header';
 import media from '../utils/media';
 import light from '../theme/light';
 import dark from '../theme/dark';
-import { ThemeProvider, CSSReset, useColorMode, Box } from '@chakra-ui/core';
+import { fontFamily } from '../theme';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
+import { ThemeProvider } from '@emotion/react'
 
-export default (props: { children: any }) => {
+const App = (props: { children: any }) => {
     const children = props.children;
+    const colorMode = useSelector((state: RootState) => state.app.theme);
     const [theme, setTheme] = useState<any>(light);
-    const { colorMode } = useColorMode();
-
-    useEffect(() => {
-        setTheme(() => (colorMode === 'light' ? light : dark));
-    }, [colorMode]);
+    // useEffect(() => {
+    //     setTheme(() => (colorMode === 'light' ? light : dark));
+    // }, [colorMode]);
     return (
-        <ThemeProvider theme={theme}>
-            <CSSReset />
+        <ThemeProvider theme={light}>
             <div className="app">
                 <Global
                     styles={css`
@@ -39,10 +40,10 @@ export default (props: { children: any }) => {
                             width: 820px;
                             margin: 0 auto;
                             flex: 1 0 auto;
-                            font-family: ${theme.fontFamily};
+                            font-family: ${fontFamily};
                             ${media.phone`
-                        width: 100%;
-                    `};
+                                width: 100%;
+                            `};
                         }
                         @keyframes slideInUp {
                             from {
@@ -60,11 +61,13 @@ export default (props: { children: any }) => {
                     `}
                 />
                 <AppHeader />
-                <Box bg="theme.articles.bg" p={5} flex="1 0 auto">
+                {/* <Box bg="theme.articles.bg" p={5} flex="1 0 auto">
                     {children}
-                </Box>
-                <AppFooter />
+                </Box> */}
+                {/* <AppFooter /> */}
             </div>
         </ThemeProvider>
     );
 };
+
+export default App;

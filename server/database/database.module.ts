@@ -30,12 +30,7 @@ const Connection = {
             });
         }
 
-        return mongoose.connect(MONGODB.uri, {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useUnifiedTopology: true,
-        });
+        return mongoose.connect(MONGODB.uri);
     },
 };
 

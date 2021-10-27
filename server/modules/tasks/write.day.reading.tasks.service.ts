@@ -67,7 +67,7 @@ export class WriteDayReadingTasksService {
 
         const count = cache.get(key) as number;
 
-        const res = await this.articleModel.update(
+        const res: any = await this.articleModel.update(
             { _id: articleId, 'dayReadings.timestamp': timestamp },
             { $inc: { 'dayReadings.$.count': count } }
         );
