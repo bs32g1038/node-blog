@@ -11,6 +11,7 @@
         "outDir": "./dist-server",
         "baseUrl": "./",
         "incremental": true,
+        "skipLibCheck": true,
         "paths": {
             "@blog/*": ["./*"]
         }

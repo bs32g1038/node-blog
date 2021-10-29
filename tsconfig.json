@@ -36,8 +36,7 @@
     "client/**/*.tsx",
     "pages/**/*.tsx",
     "test/**/*.ts",
-    "typings/**/*.d.ts",
-    "node_modules/**/*.d.ts"
+    "typings/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"
