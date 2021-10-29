@@ -20,7 +20,7 @@
     "build:web": "next build",
     "start:prod": "cross-env NODE_ENV=production node dist/server/main.js",
     "lint": "eslint **/*.{ts,js,tsx,jsx} --ignore-path .eslintignore",
-    "format": "prettier **/**/*.{ts,tsx,js,jsx} --config ./.prettierrc --ignore-path ./.prettierignore --write",
+    "format": "prettier **/**/*.{ts,tsx,js,jsx,scss} --config ./.prettierrc --ignore-path ./.prettierignore --write",
     "test": "cross-env NODE_ENV=test jest --runInBand --maxConcurrency=1",
     "test:watch": "cross-env NODE_ENV=test jest --runInBand --maxConcurrency=1 --watch",
     "test:cov": "cross-env NODE_ENV=test jest --runInBand --maxConcurrency=1 --coverage",

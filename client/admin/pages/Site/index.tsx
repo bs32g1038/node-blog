@@ -2,7 +2,6 @@ import React from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
 
-
 export default () => {
     return (
         <BasicLayout>
