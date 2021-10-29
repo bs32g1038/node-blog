@@ -13,7 +13,7 @@ import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
 
 export default () => {
-    const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
+    const [data] = useRequest('/getFirstLoginInfo', { page: 1, limit: 100 });
     const appConfig = useSelector((state: RootState) => state.app.config);
     const { loading, setLoading, injectRequestLoading } = useRequestLoading();
     const handleLogin = (data) => {

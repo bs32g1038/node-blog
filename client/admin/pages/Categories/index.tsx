@@ -4,9 +4,9 @@ import { parseTime } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import Router from 'next/router';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
-import useRequest from '@blog/client/admin/hooks/useRequest';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
+import useRequest from '@blog/client/admin/hooks/useRequest';
 
 export default () => {
     const [state, setState] = useState({
@@ -15,14 +15,11 @@ export default () => {
         loading: false,
         visible: false,
     });
-    const { data: categories, mutate } = useRequest<{ categories: any[] }>({
-        url: '/categories',
-        params: { page: 1, limit: 100 },
-    });
+    const [categories, refresh] = useRequest('/categories/', { page: 1, limit: 100 });
     const deleteCategory = (_id) => {
         axios.delete('/categories/' + _id).then((res) => {
             message.success(`删除分类 ${res.data.name} 成功！`);
-            mutate();
+            refresh();
         });
     };
     const batchDeleteCategory = () => {
@@ -37,7 +34,7 @@ export default () => {
                         ...data,
                         selectedRowKeys: [],
                     }));
-                    mutate();
+                    refresh();
                 }
                 return message.error('删除分类失败，请重新尝试。');
             });
