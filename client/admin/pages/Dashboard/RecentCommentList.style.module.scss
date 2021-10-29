@@ -1,7 +1,7 @@
 .recentCommentListCard {
     display: flex;
     flex-direction: column;
-    :global() {
+    :global {
         .ant-card-meta-description {
             height: 44px;
             overflow: hidden;

@@ -97,6 +97,7 @@ export const CommentForm = (props: Props) => {
                 <span className={style.userInfoText}>{userInfo.nickName}</span>
             </div>
             <div>
+                {errorMessage && <Alert message={errorMessage} type="warning" showIcon />}
                 <Input.TextArea
                     value={content}
                     placeholder="留点空白给你说~"
@@ -111,7 +112,7 @@ export const CommentForm = (props: Props) => {
                     }}
                 ></Emoji>
                 <div className={style.commentFormFooter}>
-                    <Button size="small" type="primary" onClick={() => submit()}>
+                    <Button loading={buttonLoading} size="small" type="primary" onClick={() => submit()}>
                         提 交
                     </Button>
                 </div>

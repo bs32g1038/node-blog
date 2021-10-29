@@ -28,7 +28,7 @@ const initialState: State = {
 };
 
 interface ArticleDataLoaded {
-    article: {};
+    article: unknown;
     comments: any[];
 }
 

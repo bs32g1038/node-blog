@@ -6,8 +6,6 @@ import { Breadcrumb } from 'antd';
 import MarkdownBody from '../markdown-body';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
 import style from './article-item.style.module.scss';
 
 interface Props {
@@ -17,7 +15,6 @@ interface Props {
 
 export default (props: Props) => {
     const { article, comments } = props;
-    const config = useSelector((state: RootState) => state.app.config);
     return (
         <div className={style.article}>
             <Breadcrumb separator=">">

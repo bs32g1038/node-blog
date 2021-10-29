@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
  *    num: (num: number) => ({ count: num }),
  * }
  */
-export class QueryRules<T> {
+export class QueryRules {
     data: object;
     rules: object;
     constructor(data = {}, rules: object = {}) {

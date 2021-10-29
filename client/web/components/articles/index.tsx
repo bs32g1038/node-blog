@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Categories from '../categories';
 import ArticleItem from './item';
@@ -24,8 +24,8 @@ const Page = () => {
             <>
                 {isLoading &&
                     new Array(limit).fill('').map((item, index) => (
-                        <div style={{ padding: '0 40px 20px' }}>
-                            <Skeleton active key={`article-item-loading-${index}`}></Skeleton>
+                        <div style={{ padding: '0 40px 20px' }} key={`article-item-loading-${index}`}>
+                            <Skeleton active></Skeleton>
                         </div>
                     ))}
                 {!isLoading && items.length <= 0 ? (

@@ -8,14 +8,13 @@ import { useSelector } from 'react-redux';
 import { Button, Input } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { GithubIcon, RssIcon } from '../../icons';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 // import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
 // import { setTheme } from '@blog/client/redux/reducers/app';
 import { ReactSVG } from 'react-svg';
 import { RootState } from '@blog/client/redux/store';
 import scrollIntoView from '@blog/client/web/utils/scroll.into.view';
 
-export const AppHeader = (props) => {
+export const AppHeader = () => {
     const config = useSelector((state: RootState) => state.app.config);
     return (
         <header className={style.appHeader}>
@@ -46,9 +45,7 @@ export const AppHeader = (props) => {
                 </NavLink>
             </nav>
             <Input.Search placeholder="请输入关键词" style={{ width: 200 }} />
-            <Button type="text">
-                <MoonIcon w="24px" h="24px" />
-            </Button>
+            <Button type="text">🌙</Button>
             <a href="https://github.com/bs32g1038" target="__blank">
                 <GithubIcon name="github" w="24px" h="24px" fill="theme.header.fill"></GithubIcon>
             </a>

@@ -4,7 +4,7 @@ import * as api from '@blog/client/web/api/article';
 const LIMIT = 10;
 
 interface State {
-    cache?: {};
+    cache?: unknown;
     items?: any[];
     totalCount: number;
     isLoading: boolean;
@@ -27,11 +27,6 @@ interface ArticlesDataLoaded {
 
 interface LoadingDataLoaded {
     isLoading: boolean;
-}
-
-interface CacheDataLoaded {
-    key: string;
-    data: {};
 }
 
 const articles = createSlice({

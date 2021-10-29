@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
 import * as api from '@blog/client/web/api/article';
 import PersonCommit from './person-commit';
 import style from './style.module.scss';
 import vultrPng from '@blog/client/assets/banners/vultr_banner_728x90.png';
 
 const AboutPage = () => {
-    const config = useSelector((state: RootState) => state.app.config);
     const [userCommits, setUserCommits] = useState([]);
     useEffect(() => {
         api.fetchArticlesAggregationMapDate().then((res) => {

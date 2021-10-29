@@ -1,8 +1,7 @@
-declare namespace NodeJS {
-    export interface Global {
-        __TOKEN__: string;
-    }
+export interface Global {
+    __TOKEN__: string;
 }
+
 declare const __TOKEN__: string;
 
 declare module 'markdown-it-link-attributes' {

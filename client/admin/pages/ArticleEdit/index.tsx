@@ -84,7 +84,7 @@ export default () => {
 
     const { id } = router.query;
     const debounceSetData = useCallback(
-        debounce((values: {}) => {
+        debounce((values: any) => {
             setData((data) => ({
                 ...data,
                 ...values,

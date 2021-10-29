@@ -2,6 +2,7 @@
 public/*
 static/*
 node_modules/*
-dist/*
+dist-server/*
 coverage/*
 .github/*
+typings/*

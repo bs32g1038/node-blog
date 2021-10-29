@@ -4,7 +4,7 @@ export const LazyLoad = (props: { component: any; attrs: any }) => {
     const [attrs, setAttrs] = useState({});
     const $dom = useRef(null);
     useEffect(() => {
-        var intersectionObserver = new IntersectionObserver(function (entries) {
+        const intersectionObserver = new IntersectionObserver(function (entries) {
             if (entries[0].intersectionRatio <= 0) return;
             if (Object.keys(attrs).length > 0) {
                 // 注意注销监听元素
