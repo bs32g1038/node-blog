@@ -74,9 +74,8 @@ export const fetchRecentArticle = () => async (dispatch: Dispatch<PayloadAction<
     return dispatch(setRecentArticles({ recentArticles: data }));
 };
 
-export const fetchArticlesAggregationMapDate = () => async (
-    dispatch: Dispatch<PayloadAction<ArticlesAggregationMapDateDataLoaded>>
-) => {
-    const data = await api.fetchArticlesAggregationMapDate();
-    return dispatch(setArticlesAggregationMapDate({ userCommits: data }));
-};
+export const fetchArticlesAggregationMapDate =
+    () => async (dispatch: Dispatch<PayloadAction<ArticlesAggregationMapDateDataLoaded>>) => {
+        const data = await api.fetchArticlesAggregationMapDate();
+        return dispatch(setArticlesAggregationMapDate({ userCommits: data }));
+    };

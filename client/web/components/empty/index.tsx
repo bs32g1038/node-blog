@@ -14,4 +14,4 @@ const Empty = () => {
     );
 };
 
-export default Empty
+export default Empty;

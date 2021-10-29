@@ -16,8 +16,7 @@ type Paginate<T> = {
 
 export type ModelPaginate<T extends mongoose.Document> = {
     [k in keyof mongoose.Model<T>]: mongoose.Model<T>[k];
-} &
-    Paginate<T>;
+} & Paginate<T>;
 
 export default (schema: mongoose.Schema) => {
     async function paginate(

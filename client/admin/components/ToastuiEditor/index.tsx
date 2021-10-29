@@ -8,36 +8,6 @@ export default (props) => {
     const ref = useRef(null);
 
     useEffect(() => {
-        // let height = 500;
-        // if (ref.current) {
-        //     height = ref.current.offsetTop;
-        // }
-        // const ed = new Editor({
-        //     hideModeSwitch: true,
-        //     previewStyle: 'vertical',
-        //     initialEditType: 'markdown',
-        //     height: document.documentElement.clientHeight - height + 'px',
-        //     el: ref.current,
-        //     language: 'zh-CN',
-        //     hooks: {
-        //         addImageBlobHook: (file, cb) => {
-        //             const formdata = new FormData();
-        //             formdata.append('file', file);
-        //             axios({
-        //                 url: '/files/upload',
-        //                 method: 'post',
-        //                 data: formdata,
-        //                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        //             }).then((res) => {
-        //                 cb(res.data.url, '');
-        //             });
-        //         },
-        //     },
-        // });
-        // setEditor(ed);
-        // if (props.getEditor) {
-        //     props.getEditor(ed);
-        // }
         const vditor = new Vditor('editor', {
             height: 360,
             toolbarConfig: {

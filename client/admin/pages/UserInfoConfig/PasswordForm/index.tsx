@@ -3,7 +3,6 @@ import { Form, Input, Button, message, Popconfirm } from 'antd';
 import axios from '@blog/client/admin/axios';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
 
-
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {

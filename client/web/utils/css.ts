@@ -1,1 +1,1 @@
-import { rem } from 'polished'
+import { rem } from 'polished';
