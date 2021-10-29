@@ -1,29 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const getTop = (e: any) => {
-    let T = e.offsetTop;
-    while (e.offsetParent) {
-        e = e.offsetParent;
-        T += e.offsetTop;
-    }
-    return T;
-};
 export const LazyLoad = (props: { component: any; attrs: any }) => {
     const [attrs, setAttrs] = useState({});
     const $dom = useRef(null);
-    const load = (): any => {
-        const H = window.innerHeight;
-        const S = document.documentElement.scrollTop || document.body.scrollTop;
-        if (H + S > getTop($dom.current)) {
-            setAttrs(props.attrs);
-        }
-    };
     useEffect(() => {
-        load();
-        window.addEventListener('scroll', load, false);
-        return () => {
-            window.removeEventListener('scroll', load);
-        };
+        var intersectionObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].intersectionRatio <= 0) return;
+            if (Object.keys(attrs).length > 0) {
+                // 注意注销监听元素
+                return intersectionObserver.unobserve($dom.current);
+            }
+            setAttrs(props.attrs);
+        });
+        intersectionObserver.observe($dom.current);
     }, [1]);
     const Component = props.component;
     return <Component {...attrs} ref={$dom}></Component>;

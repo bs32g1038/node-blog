@@ -1,5 +1,4 @@
 import _Link from 'next/link';
-
 /**
  * 默认不预加载 js code 文件
  * 重载 nextjs 的构造方法，使 auto-prefetches 为 false， 避免自动预加载 js code
@@ -18,5 +17,5 @@ import _Link from 'next/link';
 //         this.p = props.prefetch === true;
 //     }
 // }
-
-export default _Link
+const Link = _Link;
+export default Link;

@@ -54,3 +54,4 @@ public/static/*
 
 .vscode
 .yarn
+dist-server

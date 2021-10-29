@@ -25,7 +25,7 @@ const ActiveLink = (data: any) => {
             if (router.pathname === aimRouter.url && aimRouter.query.cid === router.query.cid) {
                 className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
             } else {
-                className = null;
+                className = className.replace(` ${props.activeClassName}`, '');
             }
         }
     }

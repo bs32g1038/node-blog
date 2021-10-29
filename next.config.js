@@ -6,24 +6,30 @@ const resolve = (dir) => path.resolve(__dirname, dir);
 module.exports = {
     experimental: { esmExternals: true },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        config.module.rules.push({
-            test: /\.(txt|png|svg|gif|bmp|jpe?g|ttf)$/,
-            type: 'asset/resource',
-            // assetModuleFilename: 'images/[hash][ext][query]'
-            // use: [
-            //     {
-            //         loader: 'url-loader',
-            //         options: {
-            //             context: '',
-            //             outputPath: 'static',
-            //             publicPath: '/_next/static',
-            //             name: 'assets/[name].[hash:8].[ext]',
-            //             limit: 1024 * 30, // 20kb
-            //             esModule: false,
-            //         },
-            //     },
-            // ],
-        });
+        config.module.rules.push(
+            {
+                test: /\.(txt|svg|ttf)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'static/[hash][ext][query]',
+                },
+            },
+            // {
+            //     test: /\.(jpg|png|gif|bmp|jpe?g)$/,
+            //     type: 'asset',
+            //     // //解析
+            //     // parser: {
+            //     //     //转base64的条件
+            //     //     dataUrlCondition: {
+            //     //         maxSize: 25 * 1024, // 25kb
+            //     //     },
+            //     // },
+            //     // generator: {
+            //     //     //与output.assetModuleFilename是相同的,这个写法引入的时候也会添加好这个路径
+            //     //     filename: 'static/[name][hash:6][ext]'
+            //     // },
+            // }
+        );
         config.resolve.alias = {
             ...config.resolve.alias,
             '@blog': resolve('./'),

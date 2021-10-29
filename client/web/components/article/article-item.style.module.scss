@@ -1,0 +1,49 @@
+.article {
+    max-width: 610px;
+    background-color: #fff;
+    padding: 20px;
+    :global(.ant-breadcrumb) {
+        font-size: 13px;
+        margin-bottom: 8px;
+        span {
+            color: var(--secondary-text-color) !important;
+        }
+    }
+}
+.articleMeta {
+    margin-bottom: 12px;
+}
+.articleTitle {
+    font-size: 24px;
+    color: var(--title-text-color);
+}
+.articleMetaInfo {
+    display: flex;
+    align-items: center;
+    color: var(--secondary-text-color);
+    font-size: 14px;
+    span {
+        margin-right: 10px;
+    }
+    a {
+        color: var(--secondary-text-color);
+        text-decoration: underline;
+    }
+}
+.articleContent {
+}
+
+.statement {
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: var(--blackground-color);
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    color: var(--primary-text-color);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}

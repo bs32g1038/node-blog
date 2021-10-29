@@ -9,7 +9,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 app.prepare().then(() => {
     const server = express();
 
-    server.get('/_next/*', (req, res) => {
+    server.get(/^\/_next\//, (req, res) => {
         handle(req, res);
     });
 

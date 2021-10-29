@@ -9,12 +9,14 @@ export const getObjectId = () => {
 
 export const getCategory = () => {
     return {
+        _id: getObjectId(),
         name: faker.name.findName(),
     };
 };
 
 export const getArticle = (obj = {}) => {
     return {
+        _id: getObjectId(),
         title: faker.name.title(),
         content: faker.lorem.paragraphs(),
         summary: faker.lorem.paragraph(),
@@ -27,6 +29,7 @@ export const getArticle = (obj = {}) => {
 
 export const getComment = (obj = {}) => {
     return {
+        _id: getObjectId(),
         nickName: faker.name.findName(),
         email: 'bs32g1038@163.com',
         article: null,
@@ -38,6 +41,7 @@ export const getComment = (obj = {}) => {
 
 export const getFile = (obj = {}) => {
     return {
+        _id: getObjectId(),
         name: faker.lorem.word() + '.jpg',
         url: faker.image.imageUrl(),
         size: 2000,

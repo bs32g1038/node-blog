@@ -2,12 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Flex, Link as UiLink } from '@chakra-ui/react';
 import Link from '../link';
-import { ChevronRightIcon } from '@chakra-ui/icons'
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
 const PageNumbers = styled(UiLink)`
     position: relative;
     display: inline-block;
-    background-color: ${(props: any) => props.theme.colors.theme.pagination.bg};
     padding: 0.5rem 0.875rem;
     margin: 0 0.5rem 0 0;
     font-size: 14px;

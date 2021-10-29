@@ -85,11 +85,11 @@ export const QQIcon = createIcon({
     ),
 });
 
-export const TagIcon = createIcon({
-    displayName: 'TagIcon',
-    viewBox: '0 0 32 32',
-    path: <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>,
-});
+// export const TagIcon = createIcon({
+//     displayName: 'TagIcon',
+//     viewBox: '0 0 32 32',
+//     path: <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>,
+// });
 
 export const ArrowIcon = createIcon({
     displayName: 'ArrowIcon',
@@ -175,7 +175,7 @@ export const EmptyIcon = createIcon({
 });
 
 export const RssIcon = (props: any) => (
-    <svg viewBox="0 0 512 512" focusable="false" name="rss" {...props}>
+    <svg viewBox="0 0 512 512" focusable="false" name="rss" {...props} fill="currentColor">
         <g>
             <path
                 d="M432.464,512h-37.766c-8.021,0-14.523-6.502-14.523-14.523s6.502-14.523,14.523-14.523h37.766
@@ -219,3 +219,11 @@ export const RssIcon = (props: any) => (
         ></path>
     </svg>
 );
+
+export const TagIcon = (props) => {
+    return (
+        <svg viewBox="0 0 32 32" focusable="false" name="tag" {...props} fill="currentColor">
+            <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>
+        </svg>
+    );
+};

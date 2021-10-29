@@ -54,6 +54,8 @@ const xss = (html) => {
     return Xss.process(html);
 };
 
+export { xss };
+
 export default (mdStr) => {
     return xss(markdown.render(mdStr));
 };

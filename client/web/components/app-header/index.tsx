@@ -1,71 +1,57 @@
-import { css } from '@emotion/css';
 import React from 'react';
-import { Link as UiLink } from '@chakra-ui/react';
+import style from './style.module.scss';
 import NavLink from '../nav-link';
-import { HomeNav, NavA, SvgDiv } from './style';
-import * as styles from './style';
-import { SearchForm } from './search-form';
+import Link from '../link';
+// import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
-import { Button } from 'antd';
-import { HomeOutlined, UserOutlined, BranchesOutlined } from '@ant-design/icons';
+// import { RootState } from '@blog/client/redux/store';
+import { Button, Input } from 'antd';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { GithubIcon, RssIcon } from '../../icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
-import { setTheme } from '@blog/client/redux/reducers/app';
+// import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
+// import { setTheme } from '@blog/client/redux/reducers/app';
 import { ReactSVG } from 'react-svg';
+import { RootState } from '@blog/client/redux/store';
+import scrollIntoView from '@blog/client/web/utils/scroll.into.view';
 
 export const AppHeader = (props) => {
-    const colorMode = useSelector((state: RootState) => state.app.theme);
     const config = useSelector((state: RootState) => state.app.config);
     return (
-        <styles.MainWrap>
-            <HomeNav title={config.siteTitle}>
-                <SvgDiv colorMode={colorMode}>
-                    <ReactSVG src={config.siteLogo} />
-                </SvgDiv>
-                <h1>{config.siteTitle}</h1>
-            </HomeNav>
-            <styles.NavWrap>
+        <header className={style.appHeader}>
+            <Link href="/blog" passHref={true}>
+                <a className={style.siteTitle}>
+                    <div className={style.siteTileSvgWrap}>
+                        <ReactSVG src={config.siteLogo} />
+                    </div>
+                    <h1>{config.siteTitle}</h1>
+                </a>
+            </Link>
+            <nav className={style.nav}>
                 <NavLink href="/blog">
-                    <NavA>
+                    <a className={style.navA}>
                         <HomeOutlined></HomeOutlined>
                         <span>首页</span>
-                    </NavA>
+                    </a>
                 </NavLink>
+                <a className={style.navA} onClick={() => scrollIntoView('app-footer')}>
+                    <UserOutlined></UserOutlined>
+                    <span>关于</span>
+                </a>
                 <NavLink href="/about">
-                    <NavA>
-                        <UserOutlined></UserOutlined>
-                        <span>关于</span>
-                    </NavA>
+                    <a className={style.navA}>
+                        <RssIcon className={style.branche}></RssIcon>
+                        <span>Rss</span>
+                    </a>
                 </NavLink>
-                <NavA href="/blog/rss">
-                    <BranchesOutlined
-                        className={css`
-                            width: 16px;
-                            height: 16px;
-                            margin-top: 2px;
-                            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                            &:hover {
-                                transform: rotate(270deg);
-                            }
-                        `}
-                    ></BranchesOutlined>
-                    <span>Rss</span>
-                </NavA>
-            </styles.NavWrap>
-            {/* <SearchForm></SearchForm> */}
-            <Button
-                type="text"
-                onClick={() => {
-                    getOrCreateStore().dispatch(setTheme(colorMode));
-                }}
-            >
-                {colorMode === 'light' ? <MoonIcon w="24px" h="24px" /> : <SunIcon w="24px" h="24px" />}
+            </nav>
+            <Input.Search placeholder="请输入关键词" style={{ width: 200 }} />
+            <Button type="text">
+                <MoonIcon w="24px" h="24px" />
             </Button>
-            <UiLink display={['none', 'block']} href="https://github.com/bs32g1038" isExternal={true}>
+            <a href="https://github.com/bs32g1038" target="__blank">
                 <GithubIcon name="github" w="24px" h="24px" fill="theme.header.fill"></GithubIcon>
-            </UiLink>
-        </styles.MainWrap>
+            </a>
+        </header>
     );
 };

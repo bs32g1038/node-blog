@@ -7,7 +7,7 @@ const loadTimeCountEvent = () => {
     const time = document.getElementById('blog-runing-time');
     // 显示博客运行时间
     function showRunTime() {
-        const BirthDay = new Date('2016/012/11 00:00:00');
+        const BirthDay = new Date('2021/10/28 00:00:00');
         const today = new Date();
         const timeold = today.getTime() - BirthDay.getTime();
         const msPerDay = 864e5;
@@ -24,9 +24,10 @@ const loadTimeCountEvent = () => {
     }
     setInterval(showRunTime, 1000);
 };
-export default () => {
+const BlogRunTime = () => {
     useEffect(() => {
         loadTimeCountEvent();
-    });
+    }, []);
     return <span id="blog-runing-time"></span>;
 };
+export default BlogRunTime;

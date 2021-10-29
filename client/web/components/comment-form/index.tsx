@@ -1,28 +1,12 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import {
-    Avatar,
-    Text,
-    Textarea,
-    Flex,
-    Alert,
-    AlertIcon,
-    Button,
-    CloseButton,
-    Collapse,
-    Tooltip,
-    IconButton,
-} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import isLength from 'validator/lib/isLength';
-import { Box, ButtonGroup } from '@chakra-ui/react';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import Emoji from './emoji';
-import { debounce } from 'lodash';
 import { USER_COMMENT_INFO_KEY } from './constant';
-import MarkdownBody from '../markdown-body';
 import axios from '@blog/client/web/utils/axios';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
-import marked from '@blog/client/libs/marked';
-import { rem } from 'polished';
+import { Alert, Tooltip, Input, Button } from 'antd';
+import style from './style.module.scss';
 
 interface Props {
     url: string;
@@ -35,36 +19,12 @@ export const CommentForm = (props: Props) => {
         nickName: '',
         email: '',
     });
-    const $textarea = useRef(null);
     const [content, setContent] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [isShowEmotion, setIsShowEmotion] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
-    const [isShowPreview, setIsShowPreview] = useState(false);
-    const [previewHtml, setPreviewHtml] = useState('');
-    const debounceContent = useCallback(
-        debounce((value: string) => {
-            setContent(value);
-            if (!isShowPreview) {
-                setPreviewHtml(marked(value));
-            }
-        }),
-        [1]
-    );
-    const showPreview = () => {
-        if (!isShowPreview) {
-            setPreviewHtml(marked(content));
-        }
-        setIsShowPreview(!isShowPreview);
-    };
     const onEmojiInput = (text: string) => {
         setContent((val) => {
-            const d = val + text;
-            if ($textarea.current) {
-                $textarea.current.value = d;
-            }
-            setPreviewHtml(marked(d));
-            return d;
+            return val + text;
         });
     };
     useEffect(() => {
@@ -73,8 +33,7 @@ export const CommentForm = (props: Props) => {
             const data: any = JSON.parse(info);
             setUserInfo(data);
         } else {
-            const ids = uuidv4().split('-');
-            const nickName = '游客_' + ids[0] + ids[1];
+            const nickName = nanoid(6);
             const data = {
                 nickName,
                 email: 'visitor@lizc.email',
@@ -96,7 +55,7 @@ export const CommentForm = (props: Props) => {
                 reply: props.replyId,
             });
         }
-        if (!isLength(data.content, { min: 6 })) {
+        if (!isLength(data.content, { min: 1 })) {
             return setErrorMessage('最少输入6个字符！');
         } else if (!isLength(data.content, { max: 490 })) {
             return setErrorMessage('最多只能输入490个字符！');
@@ -112,158 +71,51 @@ export const CommentForm = (props: Props) => {
             });
     };
     return (
-        <Flex flexDirection="column">
+        <div>
             <Alert
-                status="info"
-                color="theme.primaryText"
-                variant="subtle"
-                fontSize={rem(14)}
-                mb={3}
-                backgroundColor="theme.blackground"
-                position="relative"
-                py={1}
-            >
-                <AlertIcon w="14px" h="14px" />
-                当前评论模式：游客模式，系统将自动生成相关数据信息
-                <Tooltip
-                    aria-label="tip"
-                    placement="right-end"
-                    label="发布评论时，请遵守您所在国家和中华人民共和国的法律法规，禁止发布政治相关内容；
-评论内容应该和所在页面的内容相关，禁止一切无意义和严重跑题的内容；
-请尊重他人，友好评论，请像和他人面对面谈话时一样保持对他人的尊重；
-禁止发布商业广告；"
-                >
-                    <IconButton
-                        width="20px"
-                        color="theme.primaryText"
-                        variant="solid"
-                        aria-label="tip"
-                        bg="transparent"
-                        size="sm"
-                        verticalAlign="text-bottom"
-                        _hover={{
-                            backgroundColor: 'none',
-                        }}
-                        _focus={{
-                            boxShadow: 'none',
-                        }}
-                    ></IconButton>
-                </Tooltip>
-            </Alert>
-            <Flex pb={3} alignItems="center" color="theme.primaryText">
-                <Text fontSize={rem(14)} mr={1}>
-                    游客账户：
-                </Text>
-                <Avatar
-                    p={1}
-                    borderRadius="md"
-                    size="xs"
-                    backgroundColor="theme.blackground"
-                    name={userInfo.nickName}
+                message={
+                    <div>
+                        当前评论模式：游客模式，系统将自动生成相关数据信息。
+                        <Tooltip
+                            placement="topLeft"
+                            title="发布评论时，请遵守您所在国家和中华人民共和国的法律法规，禁止发布政治相关内容；评论内容应该和所在页面的内容相关，禁止一切无意义和严重跑题的内容；请尊重他人，友好评论，请像和他人面对面谈话时一样保持对他人的尊重；禁止发布商业广告。"
+                        >
+                            <a>详情。</a>
+                        </Tooltip>
+                    </div>
+                }
+                type="warning"
+                showIcon
+            />
+            <div className={style.userInfo}>
+                <span className={style.userInfoText}>游客账户：</span>
+                <img
+                    className={style.userInfoAvatar}
+                    title={userInfo.nickName}
                     src={gernateAvatarImage(userInfo.nickName) || ''}
                 />
-                <Text fontSize={rem(14)} ml={2}>
-                    {userInfo.nickName}
-                </Text>
-            </Flex>
-            <Box color="theme.primaryText">
-                {errorMessage && (
-                    <Alert status="error" mb={1} color="theme.primaryText" variant="subtle" fontSize={rem(14)}>
-                        <AlertIcon w="12px" h="12px" />
-                        {errorMessage}
-                        <CloseButton
-                            size="sm"
-                            position="absolute"
-                            right="8px"
-                            top="11px"
-                            onClick={() => {
-                                setErrorMessage('');
-                            }}
-                        />
-                    </Alert>
-                )}
-                <Textarea
-                    bg="theme.blackground"
-                    color="theme.primaryText"
-                    focusBorderColor="none"
-                    fontSize={rem(14)}
-                    name="content"
-                    ref={$textarea}
-                    borderRadius={0}
+                <span className={style.userInfoText}>{userInfo.nickName}</span>
+            </div>
+            <div>
+                <Input.TextArea
+                    value={content}
                     placeholder="留点空白给你说~"
-                    resize="none"
-                    isInvalid={!!errorMessage}
+                    autoSize={{ minRows: 3, maxRows: 3 }}
                     onChange={(event) => {
-                        debounceContent(event.target.value);
+                        setContent(event.target.value);
                     }}
-                ></Textarea>
-                <Collapse in={isShowPreview}>
-                    <Box
-                        overflowY="auto"
-                        minHeight="90px"
-                        maxHeight="90px"
-                        py={2}
-                        borderStyle="dashed"
-                        borderBottomWidth="1px"
-                        borderBottomColor="#dedede"
-                        mb={3}
-                    >
-                        <MarkdownBody content={previewHtml}></MarkdownBody>
-                    </Box>
-                </Collapse>
-                <Box>
-                    <Collapse in={isShowEmotion}>
-                        <Box borderBottom="1px dashed #dedede" mb={3}>
-                            <Emoji
-                                onInput={(text) => {
-                                    onEmojiInput(text);
-                                }}
-                            ></Emoji>
-                        </Box>
-                    </Collapse>
-                    <Flex
-                        flexDirection={['column', 'row']}
-                        justifyContent="space-between"
-                        fontSize={rem(14)}
-                        alignItems="center"
-                    >
-                        <Text as="span" mb={['10px', '0']}>
-                            🚀 支持markdown语法
-                        </Text>
-                        <ButtonGroup spacing={4} color="theme.primaryText">
-                            <Button
-                                bg="theme.blackground"
-                                variant="solid"
-                                size="sm"
-                                fontWeight="normal"
-                                onClick={() => setIsShowEmotion(!isShowEmotion)}
-                            >
-                                {isShowEmotion ? '关闭表情' : '打开表情'}
-                            </Button>
-                            <Button
-                                fontWeight="normal"
-                                bg="theme.blackground"
-                                variant="solid"
-                                size="sm"
-                                onClick={() => showPreview()}
-                            >
-                                {isShowPreview ? '关闭预览' : '预览'}
-                            </Button>
-                            <Button
-                                fontWeight="normal"
-                                isLoading={buttonLoading}
-                                loadingText="正在提交..."
-                                colorScheme="blue"
-                                variant="solid"
-                                size="sm"
-                                onClick={() => submit()}
-                            >
-                                提 交
-                            </Button>
-                        </ButtonGroup>
-                    </Flex>
-                </Box>
-            </Box>
-        </Flex>
+                />
+                <Emoji
+                    onInput={(text) => {
+                        onEmojiInput(text);
+                    }}
+                ></Emoji>
+                <div className={style.commentFormFooter}>
+                    <Button size="small" type="primary" onClick={() => submit()}>
+                        提 交
+                    </Button>
+                </div>
+            </div>
+        </div>
     );
 };
