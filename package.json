@@ -11,13 +11,11 @@
   "scripts": {
     "prebuild:server": "rimraf dist",
     "init:dev:data": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist-server/scripts/init_faker_data.js",
-    "dev": "concurrently \"npm run dev:server\" \" npm run dev:web \"",
-    "dev:watch": "concurrently \"npm run dev:server:watch\" \" npm run dev:web \"",
     "dev:server": "npm run build:server && cross-env NODE_ENV=development nest start",
     "dev:server:watch": "cross-env NODE_ENV=development nest start --watch",
     "dev:server:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "dev:web": "cross-env NODE_ENV=development ts-node -P tsconfig.build.json client/dev.server.ts",
-    "build": "concurrently \"npm run build:server\" \" npm run build:web \"",
+    "build": "npm run build:server && npm run build:web",
     "build:server": "nest build --config tsconfig.build.json",
     "build:web": "next build",
     "start:prod": "cross-env NODE_ENV=production node dist/server/main.js",
@@ -117,8 +115,6 @@
     "@typescript-eslint/parser": "^5.2.0",
     "antd": "4.16.13",
     "clipboard": "^2.0.8",
-    "codemirror": "^5.63.3",
-    "concurrently": "^6.3.0",
     "dayjs": "^1.10.7",
     "emotion": "^11.0.0",
     "emotion-server": "^11.0.0",
@@ -164,7 +160,6 @@
     "typescript": "4.4.4",
     "url-loader": "^4.1.1",
     "uuid": "^8.3.2",
-    "vditor": "^3.8.7",
     "wait-on": "^6.0.0"
   },
   "jest": {
