@@ -1,10 +1,5 @@
-import styled from '@emotion/styled';
 import React from 'react';
-import { css } from '@emotion/css';
-import { Flex, Text, Heading } from '@chakra-ui/react';
-import UiLink from '@blog/client/web/components/ui-link';
 import { parseTime } from '@blog/client/libs/time';
-import { rem } from 'polished';
 import style from './style.module.scss';
 import vultrPng from '@blog/client/assets/banners/vultr_banner_300x250.png';
 
