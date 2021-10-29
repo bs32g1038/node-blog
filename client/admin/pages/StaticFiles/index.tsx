@@ -6,7 +6,7 @@ import Clipboard from 'clipboard';
 import { InboxOutlined } from '@ant-design/icons';
 import { Table, Button, Popconfirm, message, Upload, Modal } from 'antd';
 import config from '@blog/client/configs/admin.default.config';
-import { PanelDiv } from '@blog/client/admin/styles';
+import style from '@blog/client/admin/styles/index.module.scss';
 import {
     CloudUploadOutlined,
     CopyFilled,
@@ -222,7 +222,7 @@ export default () => {
     return (
         <BasicLayout>
             <div className="main-content">
-                <PanelDiv className="panel">
+                <div className={style.adminPanelDiv}>
                     <Button
                         type="primary"
                         icon={<CloudUploadOutlined />}
@@ -257,7 +257,7 @@ export default () => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                </PanelDiv>
+                </div>
                 <Modal
                     title="上传文件"
                     visible={state.visible}

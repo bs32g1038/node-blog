@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Form, Button } from 'antd';
 import { EditOutlined, SendOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
 import { AutoSizeType } from 'rc-textarea';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import { isEqual } from 'lodash';
 import { Rule } from 'antd/lib/form';
-
-const _Form = styled(Form)`
-    position: relative;
-    .ant-btn + .ant-btn {
-        margin-left: 5px;
-    }
-    .ant-input-group-addon {
-        background-color: #fff;
-        border: none;
-    }
-`;
+import style from './style.module.scss';
 
 interface Props {
     label: string;
@@ -70,7 +59,7 @@ export default (props: Props) => {
     };
 
     return (
-        <_Form form={form} className="form" layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
+        <Form form={form} className={style.form} layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
             <div className="ant-col ant-form-item-label">
                 <label htmlFor={name} title={label}>
                     {label}
@@ -112,6 +101,6 @@ export default (props: Props) => {
                     </Button>
                 </Form.Item>
             )}
-        </_Form>
+        </Form>
     );
 };

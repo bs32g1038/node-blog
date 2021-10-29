@@ -3,7 +3,7 @@ import { Input, Form, Button, Switch, message } from 'antd';
 import { EditOutlined, SendOutlined, CloseOutlined, CheckOutlined, SoundOutlined } from '@ant-design/icons';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import axios from '@blog/client/admin/axios';
-import { Tip } from './style';
+import style from './style.module.scss';
 
 interface Props {
     data?: object;
@@ -32,7 +32,7 @@ export default (props: Props) => {
     }, [data]);
     return (
         <Form form={form} className="form" layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
-            <Tip>
+            <div className={style.tip}>
                 网站邮箱服务通知配置
                 {disabled && (
                     <Button
@@ -45,7 +45,7 @@ export default (props: Props) => {
                         <EditOutlined></EditOutlined>编辑
                     </Button>
                 )}
-            </Tip>
+            </div>
             <Form.Item label="邮箱smtp地址" name="smtpHost">
                 <Input size="large" placeholder="请输入邮箱smtp地址" disabled={disabled} />
             </Form.Item>

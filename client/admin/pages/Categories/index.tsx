@@ -3,10 +3,10 @@ import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import Router from 'next/router';
-import { PanelDiv } from '@blog/client/admin/styles';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import useRequest from '@blog/client/admin/hooks/useRequest';
 import BasicLayout from '@blog/client/admin/layouts';
+import style from './style.module.scss';
 
 export default () => {
     const [state, setState] = useState({
@@ -102,7 +102,7 @@ export default () => {
     return (
         <BasicLayout>
             <div className="main-content">
-                <PanelDiv style={{ marginBottom: '20px' }}>
+                <div className={style.adminPanelDiv} style={{ marginBottom: '20px' }}>
                     <Button
                         type="primary"
                         icon={<PlusOutlined />}
@@ -132,7 +132,7 @@ export default () => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                </PanelDiv>
+                </div>
                 <div className="table-wrapper">
                     <Table
                         rowKey={(record: any) => record._id}

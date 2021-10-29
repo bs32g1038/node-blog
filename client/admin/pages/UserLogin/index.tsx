@@ -4,13 +4,13 @@ import axios from '@blog/client/admin/axios';
 import config from '@blog/client/configs/admin.default.config';
 import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
-import { SignIn, SignInMain, SignInPanel, SignInHeader, SignInTitle } from './style';
 import useRequest from '@blog/client/admin/hooks/useRequest';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 import { ReactSVG } from 'react-svg';
+import style from './style.module.scss';
 
 export default () => {
     const { data } = useRequest<{ message: string }>({ url: '/getFirstLoginInfo' });
@@ -30,8 +30,8 @@ export default () => {
             });
     };
     return (
-        <SignIn>
-            <SignInMain>
+        <div className={style.signIn}>
+            <div className={style.signInMain}>
                 <div className="header">
                     <ReactSVG className="brand" src={appConfig.siteLogo} />
                     <div className="header-title">
@@ -39,10 +39,10 @@ export default () => {
                         <p>轻量级 NODE BLOG 系统</p>
                     </div>
                 </div>
-                <SignInPanel>
-                    <SignInHeader>
-                        <SignInTitle className="sign-in-title">后台登陆</SignInTitle>
-                    </SignInHeader>
+                <div className={style.signInPanel}>
+                    <div className={style.signInHeader}>
+                        <h3 className={style.signInTitle}>后台登陆</h3>
+                    </div>
                     {data && <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />}
                     <Form onFinish={handleLogin} className="login-form">
                         {data && (
@@ -80,7 +80,7 @@ export default () => {
                             </Button>
                         </Form.Item>
                     </Form>
-                </SignInPanel>
+                </div>
                 <div className="nodeblog">
                     Powered by
                     <a
@@ -92,7 +92,7 @@ export default () => {
                         LIZCBLOG
                     </a>
                 </div>
-            </SignInMain>
-        </SignIn>
+            </div>
+        </div>
     );
 };

@@ -7,7 +7,6 @@ import { Table, Button, Popconfirm, message } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
-import { PanelDiv } from '@blog/client/admin/styles';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
@@ -146,7 +145,7 @@ export default () => {
     return (
         <BasicLayout>
             <div className={style.wrap}>
-                <PanelDiv className="panel" id="comments-panel">
+                <div className={style.adminPanelDiv} id="comments-panel">
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
@@ -169,7 +168,7 @@ export default () => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                </PanelDiv>
+                </div>
                 <div className="table-wrapper">
                     <Table
                         rowKey={(record) => record._id}
