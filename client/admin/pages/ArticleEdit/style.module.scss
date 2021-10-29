@@ -1,0 +1,35 @@
+.header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    padding: 10px 40px;
+    z-index: 799;
+    display: flex;
+    :global(.view-actions) {
+        display: flex;
+        align-items: center;
+    }
+}
+.leftItem {
+    display: flex;
+}
+.name {
+    padding-right: 8px;
+}
+.type {
+    padding-left: 8px;
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+.editorWrap {
+    flex: 1 0 auto;
+    :global(textarea.ant-input) {
+        font-size: 24px;
+        font-weight: 700;
+        border: none;
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}

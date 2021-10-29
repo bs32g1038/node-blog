@@ -1,0 +1,11 @@
+.toastuiEditorContents {
+    :global(.toastui-editor-contents) {
+        width: 900px;
+        margin: 0 auto;
+        border-left: 1px solid #ebedf2;
+        border-right: 1px solid #ebedf2;
+    }
+    :global(.toastui-editor-defaultUI-toolbar) {
+        justify-content: center;
+    }
+}
