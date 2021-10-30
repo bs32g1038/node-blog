@@ -4,11 +4,14 @@
     "plugins": ["@typescript-eslint", "prettier"],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
+        "plugin:@next/next/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
     "settings": {
+        "next": {
+            "rootDir": "./client"
+        },
         "react": {
             "version": "detect"
         }
