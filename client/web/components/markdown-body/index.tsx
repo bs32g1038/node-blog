@@ -5,7 +5,7 @@ const M = (props: any) => {
     useEffect(() => {
         new Viewer({
             initialValue: props.content,
-            el: document.getElementById('editor-content')
+            el: document.getElementById('editor-content'),
         });
     }, [1]);
     return <div id="editor-content"></div>;

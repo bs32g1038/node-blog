@@ -92,7 +92,6 @@
     "@types/find-root": "^1.1.2",
     "@types/hapi__joi": "^17.1.7",
     "@types/helmet": "^4.0.0",
-    "@types/highlight.js": "^10.1.0",
     "@types/iframe-resizer": "^3.5.9",
     "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
