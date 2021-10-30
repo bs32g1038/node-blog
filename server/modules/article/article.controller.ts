@@ -54,9 +54,8 @@ export class ArticleController {
     @Get('/articles/:id')
     public async getArticle(
         @JoiParam(ObjectIdSchema) params: { id: string },
-        @JoiQuery({ md: Joi.boolean().default(false) }) query: { md?: boolean }
     ): Promise<Article> {
-        return await this.articleService.getArticle(params.id, query.md);
+        return await this.articleService.getArticle(params.id);
     }
 
     @Delete('/articles/:id')

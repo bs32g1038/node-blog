@@ -4,31 +4,10 @@ import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '@blog/server/modules/tasks/write.day.reading.tasks.service';
 import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
 import { CategoryModel, CategoryDocument } from '../../models/category.model';
-import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
-import mila from 'markdown-it-link-attributes';
 import { QueryRules } from '../../utils/mongoose.query.util';
 import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { isEmpty, isEqual } from 'lodash';
 import dayjs from 'dayjs';
-
-const markdown: any = new MarkdownIt({
-    highlight: (str, lang) => {
-        if (lang && hljs.getLanguage(lang)) {
-            return '<pre><code class="hljs">' + hljs.highlight(lang, str, true).value + '</code></pre>';
-        }
-        return '<pre><code class="hljs">' + markdown.utils.escapeHtml(str) + '</code></pre>';
-    },
-});
-
-markdown.use(mila, {
-    attrs: {
-        target: '_blank',
-        rel: 'noopener',
-    },
-});
-
-export { markdown };
 
 @Injectable()
 export class ArticleService {
@@ -88,7 +67,7 @@ export class ArticleService {
         return { items, totalCount };
     }
 
-    async getArticle(id: string, isRenderHtml = false) {
+    async getArticle(id: string) {
         const article = await this.articleModel
             .findByIdAndUpdate(id, {
                 $inc: { viewsCount: 1 },
@@ -104,10 +83,6 @@ export class ArticleService {
         }
         if (article) {
             const data: any = article.toObject();
-
-            if (isRenderHtml) {
-                data.content = markdown.render(data.content);
-            }
             const [prev, next] = await Promise.all([
                 this.articleModel.find({ _id: { $gt: id } }, 'title', { sort: { _id: 1 } }),
                 this.articleModel.find({ _id: { $lt: id } }, 'title', { sort: { _id: -1 } }),
