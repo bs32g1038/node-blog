@@ -13,7 +13,7 @@ const Item = (props: any) => {
     return (
         <div className={style.item + ' loader'}>
             <div className={style.itemLeft}>
-                <Link href={`/blog/articles/${item._id}`} passHref={true} prefetch={false}>
+                <Link href={`/blog/articles/${item._id}`} passHref={true}>
                     <h2>{item.title}</h2>
                 </Link>
                 <div className={style.itemMeta}>

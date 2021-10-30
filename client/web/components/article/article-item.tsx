@@ -3,10 +3,10 @@ import React from 'react';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import { Breadcrumb } from 'antd';
-import MarkdownBody from '../markdown-body';
-import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
+import dynamic from 'next/dynamic';
 import style from './article-item.style.module.scss';
+const MarkdownBody = dynamic(() => import('../markdown-body'), { ssr: false });
 
 interface Props {
     article: any;
@@ -47,7 +47,7 @@ export default (props: Props) => {
                 </div>
             </div>
             <div className={style.articleContent}>
-                <MarkdownBody content={article.content}></MarkdownBody>
+                <MarkdownBody content={article.content} />
             </div>
             <div className={style.statement}>
                 <div>

@@ -17,5 +17,4 @@ import _Link from 'next/link';
 //         this.p = props.prefetch === true;
 //     }
 // }
-const Link = _Link;
-export default Link;
+export default _Link;

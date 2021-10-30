@@ -47,7 +47,7 @@ export const AppHeader = () => {
             <Input.Search placeholder="请输入关键词" style={{ width: 200 }} />
             <Button type="text">🌙</Button>
             <a href="https://github.com/bs32g1038" target="__blank">
-                <GithubIcon name="github" w="24px" h="24px" fill="theme.header.fill"></GithubIcon>
+                <GithubIcon name="github" width="24px" height="24px" className={style.githubIcon}></GithubIcon>
             </a>
         </header>
     );
