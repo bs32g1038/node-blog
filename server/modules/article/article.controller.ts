@@ -52,9 +52,7 @@ export class ArticleController {
     }
 
     @Get('/articles/:id')
-    public async getArticle(
-        @JoiParam(ObjectIdSchema) params: { id: string },
-    ): Promise<Article> {
+    public async getArticle(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Article> {
         return await this.articleService.getArticle(params.id);
     }
 
