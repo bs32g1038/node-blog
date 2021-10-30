@@ -5,6 +5,8 @@ import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { getCategory, getObjectId } from '../faker';
 import { CategoryModel, clearModelCollectionData } from '../models';
 import queryString from 'query-string';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 分类模块 api 测试

@@ -4,6 +4,8 @@ import { INestApplication } from '@nestjs/common';
 import { encrypt } from '@blog/server/utils/crypto.util';
 import { verifyToken, closeApp } from '../util';
 import { initApp } from '../util';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 登录模块 api 测试

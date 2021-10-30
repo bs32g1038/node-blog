@@ -7,6 +7,8 @@ import { FileModel, clearModelCollectionData } from '../models';
 import path from 'path';
 import { rootPath } from '@blog/server/utils/path.util';
 import queryString from 'query-string';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 const resolve = (str: string) => {
     return path.join(rootPath, 'test/assets/' + str);

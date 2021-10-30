@@ -1,6 +1,6 @@
 import { MONGODB } from '../server/configs/index.config';
 import mongoose from 'mongoose';
-import { getCategory, getArticle, getComment, getFile } from '../test/faker';
+import { getCategory, getArticle, getComment, getFile, getObjectId } from '../test/faker';
 import { CategoryModel, ArticleModel, CommentModel, FileModel } from '../test/models';
 
 const init = async () => {
@@ -12,7 +12,7 @@ const init = async () => {
      */
     const categories = [];
     for (let i = 0; i < 10; i++) {
-        categories.push(getCategory());
+        categories.push({ ...getCategory(), _id: getObjectId() });
     }
     await CategoryModel.create(categories);
 
@@ -21,7 +21,7 @@ const init = async () => {
      */
     const articles = [];
     for (let i = 0; i < 50; i++) {
-        articles.push(getArticle({ category: categories[0]._id }));
+        articles.push({ ...getArticle({ category: categories[0]._id }), _id: getObjectId() });
     }
     await ArticleModel.create(articles);
 
@@ -30,11 +30,12 @@ const init = async () => {
      */
     const comments = [];
     for (let i = 0; i < 50; i++) {
-        comments.push(
-            getComment({
+        comments.push({
+            ...getComment({
                 article: articles[0]._id,
-            })
-        );
+            }),
+            _id: getObjectId(),
+        });
     }
     await CommentModel.create(comments);
 

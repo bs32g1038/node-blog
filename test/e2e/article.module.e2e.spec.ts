@@ -7,6 +7,8 @@ import faker, { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
 import { markdown } from '@blog/server/modules/article/article.service';
 import queryString from 'query-string';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 文章模块 api 测试

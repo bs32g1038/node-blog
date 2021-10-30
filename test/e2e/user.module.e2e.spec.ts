@@ -3,6 +3,8 @@ import { UserModule } from '@blog/server/modules/user/user.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
 import { encrypt } from '@blog/server/utils/crypto.util';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 用户模块 api 测试

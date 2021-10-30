@@ -179,9 +179,6 @@
       "!./server/joi/schemas/**"
     ],
     "globalSetup": "<rootDir>/test/setup-globals.ts",
-    "setupFiles": [
-      "<rootDir>/test/setup-files.ts"
-    ],
     "setupFilesAfterEnv": [
       "<rootDir>/test/default-timeout.ts"
     ],
