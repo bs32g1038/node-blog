@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
-import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
@@ -219,7 +218,7 @@ export default () => {
                                                     <div
                                                         className={style.markdownText}
                                                         dangerouslySetInnerHTML={{
-                                                            __html: marked(record.reply.content),
+                                                            __html: record.reply.content,
                                                         }}
                                                     ></div>
                                                 </div>
@@ -234,7 +233,7 @@ export default () => {
                                         <div
                                             className="markdown-body"
                                             dangerouslySetInnerHTML={{
-                                                __html: marked(record.content),
+                                                __html: record.content,
                                             }}
                                         ></div>
                                     </div>

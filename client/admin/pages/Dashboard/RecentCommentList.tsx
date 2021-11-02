@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card } from 'antd';
-import marked from '@blog/client/libs/marked';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { timeAgo } from '@blog/client/libs/time';
 import { ClockCircleOutlined } from '@ant-design/icons';
@@ -63,7 +62,7 @@ export default (props: Props) => {
                             <div
                                 className="markdown-body"
                                 dangerouslySetInnerHTML={{
-                                    __html: marked(item.content),
+                                    __html: item.content,
                                 }}
                             ></div>
                         </div>
