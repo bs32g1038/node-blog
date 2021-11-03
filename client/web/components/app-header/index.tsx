@@ -5,7 +5,8 @@ import Link from '../link';
 // import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
 // import { RootState } from '@blog/client/redux/store';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
+import { SearchForm } from './search-form';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { GithubIcon, RssIcon } from '../../icons';
 // import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
@@ -44,7 +45,7 @@ export const AppHeader = () => {
                     </a>
                 </NavLink>
             </nav>
-            <Input.Search placeholder="请输入关键词" style={{ width: 200 }} />
+            <SearchForm />
             <Button type="text">🌙</Button>
             <a href="https://github.com/bs32g1038" target="__blank">
                 <GithubIcon name="github" width="24px" height="24px" className={style.githubIcon}></GithubIcon>
