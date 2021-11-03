@@ -2,15 +2,11 @@ import React from 'react';
 import style from './style.module.scss';
 import NavLink from '../nav-link';
 import Link from '../link';
-// import { SearchForm } from './search-form';
 import { useSelector } from 'react-redux';
-// import { RootState } from '@blog/client/redux/store';
 import { Button } from 'antd';
 import { SearchForm } from './search-form';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { GithubIcon, RssIcon } from '../../icons';
-// import { getOrCreateStore } from '@blog/client/redux/with-redux-store';
-// import { setTheme } from '@blog/client/redux/reducers/app';
 import { ReactSVG } from 'react-svg';
 import { RootState } from '@blog/client/redux/store';
 import scrollIntoView from '@blog/client/web/utils/scroll.into.view';
@@ -38,7 +34,7 @@ export const AppHeader = () => {
                     <UserOutlined></UserOutlined>
                     <span>关于</span>
                 </a>
-                <NavLink href="/about">
+                <NavLink href="/blog/rss">
                     <a className={style.navA}>
                         <RssIcon className={style.branche}></RssIcon>
                         <span>Rss</span>
