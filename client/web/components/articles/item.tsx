@@ -14,7 +14,9 @@ const Item = (props: any) => {
         <div className={style.item + ' loader'}>
             <div className={style.itemLeft}>
                 <Link href={`/blog/articles/${item._id}`} passHref={true}>
-                    <h2>{item.title}</h2>
+                    <a>
+                        <h2>{item.title}</h2>
+                    </a>
                 </Link>
                 <div className={style.itemMeta}>
                     <span className="cat">发布于 {parseTime(item.createdAt)}</span>

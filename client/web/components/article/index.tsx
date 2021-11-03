@@ -13,7 +13,7 @@ const Page = () => {
     const { article, comments, recentArticles } = useSelector((state: RootState) => state.article);
     return (
         <AppLayout>
-            <div>
+            <div style={{ display: 'flex' }}>
                 <Head>
                     <title>{article.title + ' - ' + config.siteTitle}</title>
                 </Head>
@@ -25,6 +25,9 @@ const Page = () => {
 };
 
 Page.getInitialProps = async ({ reduxStore, req }: any) => {
+    if (!isServer) {
+        return { isServer };
+    }
     try {
         await reduxStore.dispatch(fetchArticle(req.params.id));
         await reduxStore.dispatch(fetchRecentArticle());

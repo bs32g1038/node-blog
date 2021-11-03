@@ -4,7 +4,7 @@ interface Props {
 }
 
 const Error = (props: Props) => {
-    return <div>test</div>;
+    return <div>test{props}</div>;
 };
 
 Error.getInitialProps = ({ res, err }) => {

@@ -10,7 +10,7 @@ app.prepare().then(() => {
     const server = express();
 
     server.get(/^\/_next\//, (req, res) => {
-        handle(req, res);
+        return handle(req, res);
     });
 
     server.use('/api', createProxyMiddleware({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
@@ -23,7 +23,7 @@ app.prepare().then(() => {
     server.get('/', (req, res) => res.redirect('/blog'));
 
     server.all('*', (req, res) => {
-        handle(req, res);
+        return handle(req, res);
     });
 
     server.listen(3000, () => {
