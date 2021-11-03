@@ -60,10 +60,7 @@ export default () => {
                         <span className="ant-form-text">{comment.article && comment.article.title}</span>
                     </Form.Item>
                     <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="内容：">
-                        <span
-                            className="ant-form-text"
-                            dangerouslySetInnerHTML={{ __html: comment.content }}
-                        ></span>
+                        <span className="ant-form-text" dangerouslySetInnerHTML={{ __html: comment.content }}></span>
                     </Form.Item>
                     <Form.Item
                         name="content"
