@@ -92,7 +92,17 @@ export const SearchForm = () => {
     };
     return (
         <div className={style.searchForm}>
-            <Input.Search onFocus={onfocus} onInput={oninput} onBlur={onblur} placeholder="请输入关键词" />
+            <Input.Search
+                onSearch={() => {
+                    setIsActiveNavSearchDropdown(() => {
+                        return true;
+                    });
+                }}
+                onFocus={onfocus}
+                onInput={oninput}
+                onBlur={onblur}
+                placeholder="请输入关键词"
+            />
             <div
                 onMouseDown={(event) => event.preventDefault()}
                 className={style.searchPanel}
