@@ -7,6 +7,6 @@ export default function useRequest(url, params = {}) {
         axios.get(url, { params }).then((res) => {
             setState(res.data);
         });
-    }, [state]);
+    }, [url, JSON.stringify(params)]);
     return [state, setState];
 }
