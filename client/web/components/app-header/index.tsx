@@ -34,7 +34,7 @@ export const AppHeader = () => {
                     <UserOutlined></UserOutlined>
                     <span>关于</span>
                 </a>
-                <NavLink href="/blog/rss">
+                <NavLink href="/blog/rss" target="_blank">
                     <a className={style.navA}>
                         <RssIcon className={style.branche}></RssIcon>
                         <span>Rss</span>
