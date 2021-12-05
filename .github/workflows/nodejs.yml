@@ -19,7 +19,7 @@ jobs:
     - name: Launch MongoDB
       uses: wbari/start-mongoDB@master
       with:
-        mongoDBVersion: 4.2
+        mongoDBVersion: 5
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@master
       with:
