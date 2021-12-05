@@ -40,7 +40,7 @@ const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) =
     );
 };
 
-export const SearchForm = () => {
+export const SearchForm = (props) => {
     const cacheEmptyKey = Symbol('cache init data');
     const cache = {};
     const $input = useRef<HTMLInputElement>(null);
@@ -91,7 +91,7 @@ export const SearchForm = () => {
         }
     };
     return (
-        <div className={style.searchForm}>
+        <div className={style.searchForm} style={props.style}>
             <Input.Search
                 onSearch={() => {
                     setIsActiveNavSearchDropdown(() => {

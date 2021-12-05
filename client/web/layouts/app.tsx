@@ -2,14 +2,59 @@ import React from 'react';
 import { AppFooter } from '../components/app-footer';
 import { AppHeader } from '../components/app-header';
 import { AboutPage } from '../components/about';
-import media from '../utils/media';
 import { Global, css } from '@emotion/react';
+import { RootState } from '@blog/client/redux/store';
+import { useSelector } from 'react-redux';
 
-const App = (props: { children: any }) => {
+export default (props: { children: any }) => {
     const children = props.children;
+    const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <div className="app">
             <AppHeader />
+            {theme === 'light' ? (
+                <Global
+                    styles={css`
+                        :root {
+                            --title-text-color: rgba(0, 0, 0, 0.85);
+                            --primary-text-color: rgba(0, 0, 0, 0.65);
+                            --secondary-text-color: rgba(0, 0, 0, 0.45);
+                            --disabal-color: rgba(0, 0, 0, 0.25);
+                            --border-color: rgba(0, 0, 0, 0.15);
+                            --dividers-color: rgba(0, 0, 0, 0.06);
+                            --blackground-color: rgba(0, 0, 0, 0.04);
+                            --footer-text-color: var(--secondary-text-color);
+                            --main-bg-color: #fff;
+                        }
+                    `}
+                />
+            ) : (
+                <Global
+                    styles={css`
+                        :root {
+                            --title-text-color: rgba(255, 255, 255, 0.85);
+                            --primary-text-color: rgba(255, 255, 255, 0.65);
+                            --secondary-text-color: rgba(255, 255, 255, 0.45);
+                            --disabal-color: rgba(255, 255, 255, 0.25);
+                            --border-color: rgba(255, 255, 255, 0.15);
+                            --dividers-color: rgba(255, 255, 255, 0.06);
+                            --blackground-color: rgba(255, 255, 255, 0.04);
+                            --footer-text-color: var(--secondary-text-color);
+                            --main-bg-color: #141414;
+                        }
+                        .ant-pagination-prev, .ant-pagination-next, .ant-pagination-item{
+                            background-color: var(--main-bg-color);
+                            a {
+                                color: #fff;
+                            }
+                            .ant-pagination-item-link {
+                                background-color: var(--main-bg-color);
+                                color: #fff;
+                            }
+                        }
+                    `}
+                />
+            )}
             <Global
                 styles={css`
                     html,
@@ -19,7 +64,7 @@ const App = (props: { children: any }) => {
                         line-height: 1.6;
                         height: 100%;
                         min-height: 100%;
-                        background-color: #f5f5f5;
+                        background-color: ${theme === 'light' ? '#f5f5f5' : 'rgb(10, 10, 10)'};
                     }
                     .app {
                         display: flex;
@@ -27,9 +72,6 @@ const App = (props: { children: any }) => {
                         width: 820px;
                         margin: 0 auto;
                         flex: 1 0 auto;
-                        ${media.phone`
-                            width: 100%;
-                        `};
                     }
                     @font-face {
                         font-family: 'logoFont';
@@ -52,7 +94,7 @@ const App = (props: { children: any }) => {
                     }
                     .main {
                         flex: 1 0 auto;
-                        background-color: #fff;
+                        background-color: var(--main-bg-color);
                     }
                     .react-calendar-heatmap text {
                         font-size: 10px;
@@ -101,16 +143,6 @@ const App = (props: { children: any }) => {
                     .react-calendar-heatmap .color-gitlab-4 {
                         fill: #254e77;
                     }
-                    :root {
-                        --title-text-color: rgba(0, 0, 0, 0.85);
-                        --primary-text-color: rgba(0, 0, 0, 0.65);
-                        --secondary-text-color: rgba(0, 0, 0, 0.45);
-                        --disabal-color: rgba(0, 0, 0, 0.25);
-                        --border-color: rgba(0, 0, 0, 0.15);
-                        --dividers-color: rgba(0, 0, 0, 0.06);
-                        --blackground-color: rgba(0, 0, 0, 0.04);
-                        --footer-text-color: var(--secondary-text-color);
-                    }
                 `}
             />
             <div className="main">{children}</div>
@@ -120,4 +152,4 @@ const App = (props: { children: any }) => {
     );
 };
 
-export default App;
+// export default App;

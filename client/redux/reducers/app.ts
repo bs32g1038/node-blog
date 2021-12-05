@@ -67,7 +67,8 @@ const app = createSlice({
             state.error = { ...state.error, ...error };
         },
         setTheme(state, action: PayloadAction<ThemeDataLoaded>) {
-            const theme: any = action.payload;
+            const { theme } = action.payload;
+            console.log(action.payload)
             if (theme == 'light') {
                 state.theme = 'dark';
             } else {

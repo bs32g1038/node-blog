@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from '../link';
 import { TagIcon } from '../../icons';
-import Trend from '../Trend';
+import Trend from '../trend';
 import { LazyLoad } from '../lazy-load';
 import { parseTime } from '@blog/client/libs/time';
 import style from './item.style.module.scss';

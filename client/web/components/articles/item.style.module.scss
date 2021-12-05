@@ -1,5 +1,5 @@
 .item {
-    background-color: #fff;
+    background-color: var(--main-bg-color);
     display: flex;
     align-items: center;
     border-bottom: 1px solid #8c8c8c1f;
@@ -99,5 +99,5 @@
     width: 150px;
     background-size: cover;
     background-position: 100% 100%;
-    background-color: #fff;
+    background-color: var(--main-bg-color);
 }

@@ -2,17 +2,20 @@ import React from 'react';
 import style from './style.module.scss';
 import NavLink from '../nav-link';
 import Link from '../link';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { SearchForm } from './search-form';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
-import { GithubIcon, RssIcon } from '../../icons';
+import { GithubIcon, MoonIcon, RssIcon, SunIcon } from '../../icons';
 import { ReactSVG } from 'react-svg';
 import { RootState } from '@blog/client/redux/store';
 import scrollIntoView from '@blog/client/web/utils/scroll.into.view';
+import { setTheme } from '@blog/client/redux/reducers/app';
 
 export const AppHeader = () => {
+    const dispatch = useDispatch();
     const config = useSelector((state: RootState) => state.app.config);
+    const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <header className={style.appHeader}>
             <Link href="/blog" passHref={true}>
@@ -41,9 +44,25 @@ export const AppHeader = () => {
                     </a>
                 </NavLink>
             </nav>
-            <SearchForm />
-            <Button type="text">🌙</Button>
-            <a href="https://github.com/bs32g1038" target="__blank">
+            <SearchForm style={{ marginRight: '15px' }} />
+            {theme === 'light' ? (
+                <Button
+                    type="link"
+                    icon={<MoonIcon className={style.moonIcon}></MoonIcon>}
+                    onClick={() => {
+                        dispatch(setTheme({ theme: 'dark' }));
+                    }}
+                ></Button>
+            ) : (
+                <Button
+                    type="link"
+                    icon={<SunIcon className={style.sunIcon}></SunIcon>}
+                    onClick={() => {
+                        dispatch(setTheme({ theme: 'light' }));
+                    }}
+                ></Button>
+            )}
+            <a href="https://github.com/bs32g1038" target="__blank" style={{ marginLeft: '15px' }}>
                 <GithubIcon name="github" width="24px" height="24px" className={style.githubIcon}></GithubIcon>
             </a>
         </header>
