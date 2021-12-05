@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styled from '@emotion/styled';
 import defaultConfig from '@blog/client/configs/admin.default.config';
 import menus from '@blog/client/configs/admin.menu.config';
 import Router, { useRouter } from 'next/router';
@@ -9,139 +8,10 @@ import { RootState } from '@blog/client/redux/store';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from '@blog/client/admin/utils/path.util';
 import { ReactSVG } from 'react-svg';
+import style from './style.module.scss';
 
 import { Layout, Menu, Avatar, Button } from 'antd';
 const { Sider } = Layout;
-
-const WrapDiv = styled.div`
-    .ant-menu-light {
-        border-right-color: transparent;
-    }
-    .ant-menu-item {
-        padding-left: 36px;
-    }
-    .ant-dropdown-link {
-        display: flex;
-        align-items: center;
-    }
-    .ant-layout-sider-children {
-        display: flex;
-        flex-direction: column;
-    }
-`;
-
-const LogoDiv = styled.div`
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    padding: 24px 0px 11px;
-    margin: 0px 20px;
-    a {
-        color: #1890ff;
-    }
-    svg {
-        display: inline-block;
-        height: 32px;
-        width: auto;
-        vertical-align: middle;
-    }
-    @font-face {
-        font-family: 'logoFont';
-        src: url(${require('@blog/client/assets/fonts/ZiXinFangMengTi-subfont.ttf')}) format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-    h1 {
-        display: inline-block;
-        margin: 0 0 0 12px;
-        color: #444;
-        font-weight: 600;
-        font-size: 16px;
-        font-family: logoFont;
-        vertical-align: middle;
-    }
-`;
-
-const HomeMenuItem = styled.div`
-    margin: 10px 0px;
-    display: flex;
-    justify-content: center;
-    button {
-        width: 100%;
-        align-items: center;
-        display: flex;
-        align-items: center;
-        color: rgb(62, 75, 80);
-        font-weight: 400;
-        padding: 6px 32px;
-        transition: none 0s ease 0s;
-        margin: 2px 5px;
-        border-radius: 5px;
-        border: none;
-        background-color: #fff;
-        box-shadow: none;
-        &:hover {
-            box-shadow: none;
-            color: inherit;
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-    }
-`;
-
-const MenuTip = styled.div`
-    padding-left: 26px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-`;
-
-const MenuLinkA = styled.a`
-    padding-left: 13px;
-`;
-
-const UserMenu = styled.div`
-    .ant-menu-inline {
-        border-right: none !important;
-    }
-    .ant-menu-submenu {
-        .ant-menu-sub {
-            background-color: rgb(245, 245, 245);
-        }
-        .ant-menu-submenu-title {
-            height: auto;
-        }
-    }
-    .ant-menu-item:active,
-    .ant-menu-submenu-title:active {
-        background: transparent;
-    }
-`;
-
-const UserPanel = styled.div`
-    margin: 10px 5px 10px;
-    display: flex;
-    align-items: center;
-    padding: 5px 0;
-    user-select: none;
-    line-height: 1.5;
-    h2 {
-        margin: 0;
-        font-weight: 600;
-        padding: 0px 0px 3px;
-        font-size: 14px;
-    }
-    p {
-        font-size: 13px;
-        font-weight: 400;
-        color: rgb(84, 102, 109);
-        margin: -1px 8px -3px 0px;
-    }
-    .avatar-wrap {
-        margin: 0px 8px 0px 0px;
-        .anticon-user {
-            margin-right: 0;
-        }
-    }
-`;
 
 const MenuList = (props) => {
     const renderMenuItem = (
@@ -149,10 +19,10 @@ const MenuList = (props) => {
     ) => (
         <Menu.Item key={item.path}>
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
-                <MenuLinkA>
+                <a className={style.menuLinkA}>
                     {item.icon}
                     <span className="nav-text">{item.title}</span>
-                </MenuLinkA>
+                </a>
             </Link>
         </Menu.Item>
     );
@@ -223,7 +93,7 @@ export default (props: Props) => {
     const data = JSON.parse(localStorage.getItem(defaultConfig.userInfoKey));
     const config = useSelector((state: RootState) => state.app.config);
     return (
-        <WrapDiv>
+        <div className={style.wrap}>
             <Sider
                 trigger={null}
                 collapsible
@@ -240,16 +110,16 @@ export default (props: Props) => {
                 }}
             >
                 <Link href="/admin/dashboard">
-                    <LogoDiv>
+                    <div className={style.logo}>
                         <ReactSVG src={config.siteLogo} />
                         <h1>{config.siteTitle}</h1>
-                    </LogoDiv>
+                    </div>
                 </Link>
-                <UserMenu>
+                <div className={style.userMenu}>
                     <Menu mode="inline">
                         <Menu.SubMenu
                             title={
-                                <UserPanel>
+                                <div className={style.userPanel}>
                                     <div className="avatar-wrap">
                                         <Avatar src={data.avatar} size={34} icon={<UserOutlined />} />
                                     </div>
@@ -257,7 +127,7 @@ export default (props: Props) => {
                                         <h2>{data.userName}</h2>
                                         <p>{data.account}</p>
                                     </div>
-                                </UserPanel>
+                                </div>
                             }
                         >
                             <Menu.Item>
@@ -275,16 +145,16 @@ export default (props: Props) => {
                             <Menu.Divider></Menu.Divider>
                         </Menu.SubMenu>
                     </Menu>
-                </UserMenu>
+                </div>
                 <div style={{ overflowY: 'auto' }}>
-                    <HomeMenuItem>
+                    <div className={style.homeMenuItem}>
                         <Link href="/admin/site">
                             <Button>
                                 <HomeOutlined></HomeOutlined>浏览网站
                             </Button>
                         </Link>
-                    </HomeMenuItem>
-                    <MenuTip>管理</MenuTip>
+                    </div>
+                    <div className={style.menuTip}>管理</div>
                     <MenuList
                         theme="light"
                         mode={collapsed ? 'vertical' : 'inline'}
@@ -297,6 +167,6 @@ export default (props: Props) => {
                     ></MenuList>
                 </div>
             </Sider>
-        </WrapDiv>
+        </div>
     );
 };

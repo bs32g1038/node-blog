@@ -5,8 +5,9 @@ import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { clearModelCollectionData } from '../models';
 import faker, { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
-import { markdown } from '@blog/server/modules/article/article.service';
 import queryString from 'query-string';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 文章模块 api 测试
@@ -182,19 +183,6 @@ describe('article.module.e2e', () => {
     });
 
     describe('get one article', () => {
-        test('get article success, the content should be handled by markdown render', async () => {
-            const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
-
-            return request(app.getHttpServer())
-                .get('/api/articles/' + _id + '?md=true')
-                .expect(200)
-                .then((res) => {
-                    const a = res.body;
-                    expect(a.content).toEqual(markdown.render(article.content));
-                });
-        });
-
         test('get article success, the content is a common string', async () => {
             const article = getArticle();
             const { _id } = await ArticleModel.create(article);
@@ -206,51 +194,6 @@ describe('article.module.e2e', () => {
                     const a = res.body;
                     expect(a.content).toEqual(article.content);
                 });
-        });
-
-        describe('custom the article content, & it should be handled by markdown render', () => {
-            test('#_1', async () => {
-                const article = getArticle({
-                    content: '```html\ntest\n```\n```css\ntest\n```\n```javascript\ntest\n```',
-                });
-                const { _id } = await ArticleModel.create(article);
-
-                return request(app.getHttpServer())
-                    .get('/api/articles/' + _id + '?md=true')
-                    .expect(200)
-                    .then((res) => {
-                        const a = res.body;
-                        expect(a.content).toEqual(markdown.render(article.content));
-                    });
-            });
-
-            test('#_2', async () => {
-                const article = getArticle({ content: '```\ntest\n```' });
-                const { _id } = await ArticleModel.create(article);
-
-                return request(app.getHttpServer())
-                    .get('/api/articles/' + _id + '?md=' + true)
-                    .expect(200)
-                    .then((res) => {
-                        const a = res.body;
-                        expect(a.content).toEqual(markdown.render(article.content));
-                    });
-            });
-
-            describe('status > 400', () => {
-                test('get article data & not found in db', async () => {
-                    const randomId = getObjectId();
-                    return request(app.getHttpServer())
-                        .get('/api/articles/' + randomId)
-                        .expect(404);
-                });
-
-                test('get article data & randomId is not valid object id', async () => {
-                    return request(app.getHttpServer())
-                        .get('/api/articles/' + 'notValidObjectId')
-                        .expect(400);
-                });
-            });
         });
     });
 

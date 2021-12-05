@@ -3,13 +3,14 @@ import Router, { useRouter } from 'next/router';
 import { Form, Input, Button, message } from 'antd';
 import axios from '@blog/client/admin/axios';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
-import { Header, EditorWrap } from './style';
 import Drawer from './Drawer';
 import Link from 'next/link';
 import { isLogin } from '@blog/client/admin/api/is.login.api';
 import { debounce } from 'lodash';
 import isLength from 'validator/lib/isLength';
 import dynamic from 'next/dynamic';
+import style from './style.module.scss';
+
 const ToastuiEditor = dynamic(() => import('@blog/client/admin/components/ToastuiEditor'), { ssr: false });
 
 const { TextArea } = Input;
@@ -83,7 +84,7 @@ export default () => {
 
     const { id } = router.query;
     const debounceSetData = useCallback(
-        debounce((values: {}) => {
+        debounce((values: any) => {
             setData((data) => ({
                 ...data,
                 ...values,
@@ -111,9 +112,9 @@ export default () => {
                 }
             }}
         >
-            <Header>
-                <div className="left-item">
-                    <div className="name">
+            <div className={style.header}>
+                <div className={style.leftItem}>
+                    <div className={style.name}>
                         <Link href="/admin/content/articles" passHref={true}>
                             <a>
                                 <ArrowLeftOutlined></ArrowLeftOutlined>
@@ -121,9 +122,9 @@ export default () => {
                             </a>
                         </Link>
                     </div>
-                    <div className="type">{id ? '文章编辑' : '添加文章'}</div>
+                    <div className={style.type}>{id ? '文章编辑' : '添加文章'}</div>
                 </div>
-                <EditorWrap>
+                <div className={style.editorWrap}>
                     <Form form={form} initialValues={{ content: '' }} name="contentForm">
                         <Form.Item
                             name="title"
@@ -133,7 +134,7 @@ export default () => {
                             <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
                         </Form.Item>
                     </Form>
-                </EditorWrap>
+                </div>
                 <section className="view-actions">
                     <Button
                         type="link"
@@ -152,7 +153,7 @@ export default () => {
                         }}
                     ></Drawer>
                 </section>
-            </Header>
+            </div>
             <ToastuiEditor initialValue={data.content} getEditor={(e) => setEditor(e)}></ToastuiEditor>
         </Form.Provider>
     );

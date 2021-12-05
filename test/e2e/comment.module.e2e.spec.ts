@@ -4,6 +4,8 @@ import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { getComment, getArticle, getObjectId } from '../faker';
 import { CommentModel, ArticleModel, clearModelCollectionData } from '../models';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * 评论模块 api 测试

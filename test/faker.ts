@@ -4,7 +4,7 @@ import faker from 'faker';
 faker.locale = 'zh_CN';
 
 export const getObjectId = () => {
-    return mongoose.Types.ObjectId().toString();
+    return new mongoose.Types.ObjectId().toString();
 };
 
 export const getCategory = () => {

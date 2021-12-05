@@ -4,8 +4,7 @@ import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
-
-import { DrawerContent } from './style';
+import style from './style.module.scss';
 
 const Option = Select.Option;
 const { TextArea } = Input;
@@ -61,7 +60,7 @@ export default ({ visible, onCancel, formData }) => {
             }}
             visible={visible}
         >
-            <DrawerContent>
+            <div className={style.drawerContent}>
                 <Form layout="vertical" form={form} name="articleConfigForm" initialValues={formData}>
                     <Form.Item
                         required={true}
@@ -95,7 +94,7 @@ export default ({ visible, onCancel, formData }) => {
                         </Button>
                     </Form.Item>
                 </Form>
-            </DrawerContent>
+            </div>
         </Drawer>
     );
 };

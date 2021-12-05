@@ -1,16 +1,17 @@
 {
     "root": true,
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
+    "plugins": ["@typescript-eslint", "prettier"],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@next/next/recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint",
-        "prettier/react"
+        "plugin:prettier/recommended"
     ],
     "settings": {
+        "next": {
+            "rootDir": "./client"
+        },
         "react": {
             "version": "detect"
         }

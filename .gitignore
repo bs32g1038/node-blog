@@ -53,3 +53,5 @@ public/static/*
 !.gitkeep
 
 .vscode
+.yarn
+dist-server

@@ -1,10 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
-import { Flex, Box } from '@chakra-ui/core';
 import Categories from '../categories';
-import Empty from '../empty';
 import ArticleItem from './item';
-import Pagination from '@blog/client/web/components/pagination';
 import AppLayout from '@blog/client/web/layouts/app';
 import { useFetchArticles } from '@blog/client/web/hooks/useFetchArticles';
 import { fetchArticles } from '@blog/client/redux/reducers/articles';
@@ -12,7 +9,8 @@ import { fetchCategories } from '@blog/client/redux/reducers/categories';
 import { isServer } from '@blog/client/web/utils/helper';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
-import ListStyleLoader from './list-style-loader';
+import { Empty, Skeleton, Pagination } from 'antd';
+import Link from '../link';
 
 const Page = () => {
     const { page, items, totalCount, isLoading, limit } = useFetchArticles();
@@ -23,25 +21,37 @@ const Page = () => {
                 <title>{config.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
-            <Box>
+            <>
                 {isLoading &&
-                    new Array(limit)
-                        .fill('')
-                        .map((item, index) => (
-                            <ListStyleLoader key={`article-item-loading-${index}`}></ListStyleLoader>
-                        ))}
+                    new Array(limit).fill('').map((item, index) => (
+                        <div style={{ padding: '0 40px 20px' }} key={`article-item-loading-${index}`}>
+                            <Skeleton active></Skeleton>
+                        </div>
+                    ))}
                 {!isLoading && items.length <= 0 ? (
-                    <Box mt={5}>
-                        <Empty />
-                    </Box>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<span>暂无数据~~</span>} />
                 ) : (
                     items.map((item: any) => <ArticleItem item={item} key={item._id}></ArticleItem>)
                 )}
-            </Box>
+            </>
             {totalCount > 0 && (
-                <Flex justifyContent="center" mt={5}>
-                    <Pagination current={page} pageSize={limit} total={totalCount}></Pagination>
-                </Flex>
+                <div style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'center' }}>
+                    <Pagination
+                        itemRender={(page, type, originalElement) => {
+                            if (page >= 1 && type == 'page') {
+                                return (
+                                    <Link href={`/blog/articles?page=${page}`} passHref={true}>
+                                        <a>{page}</a>
+                                    </Link>
+                                );
+                            }
+                            return originalElement;
+                        }}
+                        defaultCurrent={page}
+                        pageSize={10}
+                        total={totalCount}
+                    />
+                </div>
             )}
         </AppLayout>
     );

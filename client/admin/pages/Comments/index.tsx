@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
-import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
-import {
-    Wrap,
-    ReplyListItem,
-    UserAvatar,
-    ReplyContent,
-    ReplyInfo,
-    BaseInfo,
-    MarkdownText,
-    UserAction,
-    Tip,
-} from './style';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
-import { PanelDiv } from '@blog/client/admin/styles';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
+import style from './style.module.scss';
 
 export default () => {
     const [state, setState] = useState({
@@ -155,8 +143,8 @@ export default () => {
     const expandedRowKeys = state.comments.map((item) => item._id);
     return (
         <BasicLayout>
-            <Wrap className="main-content">
-                <PanelDiv className="panel" id="comments-panel">
+            <div className={style.wrap}>
+                <div className={style.adminPanelDiv} id="comments-panel">
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
@@ -179,7 +167,7 @@ export default () => {
                             批量删除
                         </Button>
                     </Popconfirm>
-                </PanelDiv>
+                </div>
                 <div className="table-wrapper">
                     <Table
                         rowKey={(record) => record._id}
@@ -196,23 +184,23 @@ export default () => {
                                 <React.Fragment>
                                     {record.reply && (
                                         <div>
-                                            <Tip className="tip">
+                                            <div className={style.tip}>
                                                 <BranchesOutlined />
                                                 引用：
-                                            </Tip>
-                                            <ReplyListItem>
-                                                <UserAvatar>
+                                            </div>
+                                            <div className={style.replyListItem}>
+                                                <div className={style.userAvatar}>
                                                     <img src={gernateAvatarImage(record.reply.nickName)} />
-                                                </UserAvatar>
-                                                <ReplyContent>
-                                                    <ReplyInfo>
-                                                        <BaseInfo>
+                                                </div>
+                                                <div className={style.replyContent}>
+                                                    <div className={style.replyInfo}>
+                                                        <div className={style.baseInfo}>
                                                             <div className="reply-author">{record.reply.nickName}</div>
                                                             <a className="reply-time">
                                                                 在 {timeAgo(record.reply.createdAt)} 评论
                                                             </a>
-                                                        </BaseInfo>
-                                                        <UserAction>
+                                                        </div>
+                                                        <div className={style.userAction}>
                                                             <Button
                                                                 size="small"
                                                                 icon={<SendOutlined />}
@@ -225,28 +213,27 @@ export default () => {
                                                             >
                                                                 回复
                                                             </Button>
-                                                        </UserAction>
-                                                    </ReplyInfo>
-                                                    <MarkdownText
-                                                        className="markdown-body"
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        className={style.markdownText}
                                                         dangerouslySetInnerHTML={{
-                                                            __html: marked(record.reply.content),
+                                                            __html: record.reply.content,
                                                         }}
-                                                    ></MarkdownText>
-                                                </ReplyContent>
-                                            </ReplyListItem>
+                                                    ></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
-
                                     <div style={{ padding: '0 20px' }}>
-                                        <Tip className="tip">
+                                        <div className={style.tip}>
                                             <CommentOutlined />
                                             评论内容：
-                                        </Tip>
+                                        </div>
                                         <div
                                             className="markdown-body"
                                             dangerouslySetInnerHTML={{
-                                                __html: marked(record.content),
+                                                __html: record.content,
                                             }}
                                         ></div>
                                     </div>
@@ -256,7 +243,7 @@ export default () => {
                         expandedRowKeys={expandedRowKeys}
                     />
                 </div>
-            </Wrap>
+            </div>
         </BasicLayout>
     );
 };

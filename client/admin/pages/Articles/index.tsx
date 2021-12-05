@@ -5,26 +5,9 @@ import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import { Table, Button, Popconfirm, message, Input, Row, Col, Tag, Typography } from 'antd';
-import styled from '@emotion/styled';
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
-
-const PanelDiv = styled.div`
-    margin-bottom: 20px;
-`;
-
-const ModuleControlRow = styled(Row)`
-    button {
-        margin-right: 8px;
-    }
-`;
-
-const SearchWrap = styled.div`
-    button {
-        margin-left: 8px;
-        margin-right: 0;
-    }
-`;
+import style from './style.module.scss';
 
 export default () => {
     const [state, setState] = useState({
@@ -184,8 +167,8 @@ export default () => {
     return (
         <BasicLayout>
             <div>
-                <PanelDiv id="article-panel">
-                    <ModuleControlRow justify="space-between">
+                <div className={style.adminPanelDiv} id="article-panel">
+                    <div className={style.moduleControlRow}>
                         <Col>
                             <Button
                                 type="primary"
@@ -218,7 +201,7 @@ export default () => {
                             </Popconfirm>
                         </Col>
                         <Col style={{ flex: '1 0 auto' }}>
-                            <SearchWrap>
+                            <div className={style.searchWrap}>
                                 <div className="search-input-group">
                                     <Row justify="end">
                                         <Col flex="0 0 auto">
@@ -264,10 +247,10 @@ export default () => {
                                         </Col>
                                     </Row>
                                 </div>
-                            </SearchWrap>
+                            </div>
                         </Col>
-                    </ModuleControlRow>
-                </PanelDiv>
+                    </div>
+                </div>
                 <div className="table-wrapper">
                     <Table
                         rowKey={(record) => record._id}

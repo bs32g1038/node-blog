@@ -44,7 +44,7 @@ export class FileService {
     async getFileList(options: {
         page?: number;
         limit?: number;
-        sort?: {};
+        sort?: any;
     }): Promise<{ items: File[]; totalCount: number }> {
         const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
         return await this.fileModel.paginate({}, '', {

@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Input, Button, message, Popconfirm } from 'antd';
 import axios from '@blog/client/admin/axios';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
-import { useForm } from 'antd/lib/form/util';
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -22,7 +21,7 @@ const resetPassword = (data) => {
 };
 
 export default () => {
-    const [form] = useForm();
+    const [form] = Form.useForm();
     return (
         <Form
             form={form}

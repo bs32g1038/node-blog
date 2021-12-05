@@ -6,7 +6,6 @@ import { fetchArticle, fetchRecentArticle } from '@blog/client/redux/reducers/ar
 import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
 import AppLayout from '@blog/client/web/layouts/app';
-import { Flex } from '@chakra-ui/core';
 import { isServer } from '@blog/client/web/utils/helper';
 
 const Page = () => {
@@ -14,18 +13,21 @@ const Page = () => {
     const { article, comments, recentArticles } = useSelector((state: RootState) => state.article);
     return (
         <AppLayout>
-            <Flex>
+            <div style={{ display: 'flex' }}>
                 <Head>
                     <title>{article.title + ' - ' + config.siteTitle}</title>
                 </Head>
                 <ArticleItem article={article} comments={comments}></ArticleItem>
                 <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
-            </Flex>
+            </div>
         </AppLayout>
     );
 };
 
 Page.getInitialProps = async ({ reduxStore, req }: any) => {
+    if (!isServer) {
+        return { isServer };
+    }
     try {
         await reduxStore.dispatch(fetchArticle(req.params.id));
         await reduxStore.dispatch(fetchRecentArticle());

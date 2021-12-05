@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
-import marked from '@blog/client/libs/marked';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
@@ -61,10 +60,7 @@ export default () => {
                         <span className="ant-form-text">{comment.article && comment.article.title}</span>
                     </Form.Item>
                     <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="内容：">
-                        <span
-                            className="ant-form-text"
-                            dangerouslySetInnerHTML={{ __html: marked(comment.content) }}
-                        ></span>
+                        <span className="ant-form-text" dangerouslySetInnerHTML={{ __html: comment.content }}></span>
                     </Form.Item>
                     <Form.Item
                         name="content"

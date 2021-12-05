@@ -1,0 +1,12 @@
+.breadcrumb {
+    font-size: 20px;
+    padding: 24px 24px 0px;
+    font-weight: 700;
+    :global(.anticon) {
+        font-size: 20px;
+        font-weight: 700;
+        svg {
+            margin-right: 4px;
+        }
+    }
+}

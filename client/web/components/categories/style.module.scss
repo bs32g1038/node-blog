@@ -1,0 +1,39 @@
+.categories {
+    background-color: #fff;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #8c8c8c1f;
+    font-size: 14px;
+    color: var(--second-text-color);
+    margin: 0 20px;
+}
+
+.categoryItemA {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--primary-text-color);
+    margin-right: 30px;
+    margin-bottom: 20px;
+    display: inline-block;
+    &:hover {
+        text-decoration: none;
+        color: var(--primary-text-color);
+    }
+    &:global(.active) {
+        position: relative;
+        font-weight: 700;
+        &:after {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            width: 14px;
+            margin: auto;
+            content: '';
+            border-top: 5px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 5px solid #f86422;
+            border-left: 7px solid transparent;
+            box-sizing: border-box;
+        }
+    }
+}

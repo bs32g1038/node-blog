@@ -18,6 +18,7 @@ interface State {
     error: {
         status: number;
     };
+    theme: any;
 }
 
 const initialState: State = {
@@ -36,6 +37,7 @@ const initialState: State = {
         },
     },
     error: null,
+    theme: 'light',
 };
 
 interface ConfigDataLoaded {
@@ -46,6 +48,10 @@ interface StatusCodeDataLoaded {
     error: {
         status: number;
     };
+}
+
+interface ThemeDataLoaded {
+    theme: any;
 }
 
 const app = createSlice({
@@ -60,9 +66,17 @@ const app = createSlice({
             const { error } = action.payload;
             state.error = { ...state.error, ...error };
         },
+        setTheme(state, action: PayloadAction<ThemeDataLoaded>) {
+            const theme: any = action.payload;
+            if (theme == 'light') {
+                state.theme = 'dark';
+            } else {
+                state.theme = 'light';
+            }
+        },
     },
 });
 
-export const { setError, setConfig } = app.actions;
+export const { setError, setConfig, setTheme } = app.actions;
 
 export default app.reducer;

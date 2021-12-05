@@ -5,6 +5,7 @@ import { setError, setConfig } from '@blog/client/redux/reducers/app';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
+let isRequestConfig = false;
 
 /**
  * 拦截 axios 响应，添加错误处理
@@ -25,7 +26,11 @@ const initAxios = (reduxStore) => {
 };
 
 const initConfig = (reduxStore) => {
+    if (isRequestConfig) {
+        return;
+    }
     return axios.get('/configs').then(async (res) => {
+        isRequestConfig = true;
         await reduxStore.dispatch(setConfig({ config: res.data }));
     });
 };
@@ -40,7 +45,7 @@ export function getOrCreateStore(initialState?: any) {
     return window[__NEXT_REDUX_STORE__];
 }
 
-export default (App: any) => {
+const AppWithRedux = (App: any) => {
     return class AppWithRedux extends React.Component {
         public reduxStore: any;
         public static async getInitialProps(appContext: any) {
@@ -74,3 +79,5 @@ export default (App: any) => {
         }
     };
 };
+
+export default AppWithRedux;

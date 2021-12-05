@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Editor, { EditorOptions } from '@toast-ui/editor';
 import axios from '@blog/client/admin/axios';
-import Wrap from './style';
+import style from './style.module.scss';
 
 type Props = Omit<EditorOptions, 'el'> & {
     getEditor?: (ed: Editor) => void;
@@ -19,9 +18,9 @@ export default (props: Props) => {
             height = ref.current.offsetTop;
         }
         const ed = new Editor({
+            initialEditType: 'wysiwyg',
             hideModeSwitch: true,
             previewStyle: 'vertical',
-            initialEditType: 'markdown',
             height: document.documentElement.clientHeight - height + 'px',
             el: ref.current,
             language: 'zh-CN',
@@ -51,5 +50,5 @@ export default (props: Props) => {
         }
     }, [editor !== null && props.initialValue]);
 
-    return <Wrap id="editor" ref={ref} />;
+    return <div id="editor" ref={ref} className={style.toastuiEditorContents}></div>;
 };

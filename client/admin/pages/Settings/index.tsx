@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import { message } from 'antd';
-import { Wrap, Tip } from './style';
 import isFQDN from 'validator/lib/isFQDN';
 import axios from '@blog/client/admin/axios';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import EditableInput from '@blog/client/admin/components/EditableInput';
 import EmailInput from './EmailInput';
+import style from './style.module.scss';
 
 const fetchConfig = () => {
     return axios.get('/configs');
@@ -39,8 +39,8 @@ export default () => {
     }, [1]);
     return (
         <BasicLayout>
-            <Wrap>
-                <Tip>网站基础信息</Tip>
+            <div className={style.wrap}>
+                <div className={style.tip}>网站基础信息</div>
                 <EditableInput
                     value={data.siteTitle}
                     label="网站标题"
@@ -84,7 +84,7 @@ export default () => {
                     loading={loading}
                     onFinish={onFinish}
                 ></EditableInput>
-                <Tip>网站 META 配置</Tip>
+                <div className={style.tip}>网站 META 配置</div>
                 <EditableInput
                     type="textarea"
                     autoSize={{ minRows: 2, maxRows: 4 }}
@@ -106,7 +106,7 @@ export default () => {
                     onFinish={onFinish}
                 ></EditableInput>
                 <EmailInput data={data}></EmailInput>
-            </Wrap>
+            </div>
         </BasicLayout>
     );
 };

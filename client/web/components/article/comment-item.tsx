@@ -1,51 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Box, Text, Flex, Image, Icon } from '@chakra-ui/core';
-import { css } from 'emotion';
-import marked from '@blog/client/libs/marked';
 import { timeAgo } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
-import MarkdownBody from '../markdown-body';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
-import { rem } from 'polished';
+import style from './comment-item.style.module.scss';
+import { xss } from '@blog/client/libs/marked';
+import { Collapse } from 'antd';
+
+const { Panel } = Collapse;
+
+const handleEmoji = (text) => {
+    const regex = /@\((.+?)\)/g;
+    return text.replace(regex, (str) => {
+        if (str) {
+            const r = /\((.+?)\)/g.exec(str);
+            if (r) {
+                const name = r[1];
+                return `<img class="emoji" src="/static/images/emotion/${name}.png" style="width:28px;height:28px;vertical-align: bottom; display: inline-block;" />`;
+            }
+        }
+        return str;
+    });
+};
 
 const getBadgeVisitorOrAuthor = (identity) => {
-    return identity !== 0 ? <Icon name="star" mr={2} fill="theme.primaryText"></Icon> : null;
+    return identity !== 0 ? <span>博主</span> : <span>游客</span>;
 };
 
 const replyFn = (item: any) => {
     const [avatarSrc, setAvatarSrc] = useState('');
-    const [showContent, setShowContent] = useState(false);
     useEffect(() => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <Box width="100%" bg="theme.blackground" py={2} px={4} fontSize={rem(14)} mt={2} mb={2}>
-            <Flex justifyContent="space-between" alignItems="center">
-                <Flex alignItems="center">
-                    <Icon name="at-sign" color="theme.secondaryText" mr={2}></Icon>
-                    <Image src={avatarSrc} size="20px" borderRadius="md" mr={2}></Image>
-                    <Box color="theme.primaryText" isTruncated={true} maxW={['110px', '180px']} mr={2}>
-                        {item.nickName}
-                    </Box>
-                    {getBadgeVisitorOrAuthor(item.identity)}
-                    <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
-                </Flex>
-                <Box
-                    userSelect="none"
-                    color="theme.secondaryText"
-                    style={{ cursor: 'pointer' }}
-                    comment-id={item._id}
-                    onClick={() => {
-                        setShowContent(!showContent);
-                    }}
-                >
-                    {showContent ? '折叠' : '展开'}
-                </Box>
-            </Flex>
-            <Collapse mt={4} isOpen={showContent}>
-                <MarkdownBody content={marked(item.content)}></MarkdownBody>
-            </Collapse>
-        </Box>
+        <div className={style.commentReplyItem}>
+            <div className={style.commentItemReplyContent}>
+                <Collapse collapsible="header" ghost>
+                    <Panel
+                        showArrow={false}
+                        header={
+                            <div className={style.commentItemReplyInfo}>
+                                <strong>@</strong>
+                                <span>&nbsp;&nbsp;</span>
+                                <img
+                                    style={{ width: '16px', height: '16px' }}
+                                    src={avatarSrc}
+                                    className={style.commentItemAvatar}
+                                />
+                                <span>{item.nickName}</span>
+                                <span className={style.divide}></span>
+                                {getBadgeVisitorOrAuthor(item.identity)}
+                                <span className={style.divide}></span>
+                                <span>{timeAgo(item.createdAt)}</span>
+                            </div>
+                        }
+                        key="1"
+                    >
+                        <p
+                            style={{ marginBottom: 0 }}
+                            dangerouslySetInnerHTML={{
+                                __html: xss(handleEmoji(item.content)),
+                            }}
+                        ></p>
+                    </Panel>
+                </Collapse>
+            </div>
+        </div>
     );
 };
 
@@ -55,70 +74,40 @@ export const CommentItem = (props: { item: any; index: number }) => {
     useEffect(() => {
         setAvatarSrc(gernateAvatarImage(props.item.nickName) || '');
     }, [props.item._id]);
-
     const item = props.item;
     return (
-        <Box
-            px={[0, 2]}
-            pt={3}
-            pb={2}
-            borderBottom="1px"
-            borderBottomColor="theme.border"
-            position="relative"
-            fontSize={rem(14)}
-            className={css`
-                &:after {
-                    content: attr(data-index);
-                    position: absolute;
-                    right: 10px;
-                    top: 6.5px;
-                    text-align: center;
-                    color: #d5cbcb;
-                    font-size: ${rem(16)};
-                }
-            `}
-        >
-            <Flex>
-                <Image
-                    src={avatarSrc}
-                    size="38px"
-                    borderRadius="md"
-                    mt="5px"
-                    mr="10px"
-                    p={1}
-                    backgroundColor="theme.blackground"
-                ></Image>
-                <Box width="100%">
-                    <Flex justifyContent="space-between" alignItems="center">
-                        <Flex alignItems="center">
-                            <Box color="theme.primaryText" fontWeight="bold" isTruncated={true} mr={2}>
-                                {item.nickName}
-                            </Box>
-                            {getBadgeVisitorOrAuthor(item.identity)}
-                            <Text color="theme.secondaryText">{timeAgo(item.createdAt)}</Text>
-                        </Flex>
-                        <Flex
-                            userSelect="none"
-                            alignItems="center"
-                            color="theme.secondaryText"
-                            cursor="pointer"
-                            comment-id={item._id}
-                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
-                        >
-                            <Icon name="chat" fontSize={14} mr={1}></Icon>回复
-                        </Flex>
-                    </Flex>
-                    {item.reply && replyFn(item.reply)}
-                    <Box color="theme.primaryText" mt={rem(6)}>
-                        <MarkdownBody content={marked(item.content)}></MarkdownBody>
-                    </Box>
-                    <Box mt={3}>
+        <div className={style.commentItem}>
+            <div className={style.commentItemInner}>
+                <img src={avatarSrc} className={style.commentItemAvatar} />
+                <div className={style.commentItemRight}>
+                    <div className={style.commentHeader}>
+                        <div className={style.commentHeaderLeft}>
+                            <div className={style.commentHeaderLeftContent}>
+                                <span className={style.commentItemNickName}>{item.nickName}</span>
+                                <span className={style.divide}></span>
+                                {getBadgeVisitorOrAuthor(item.identity)}
+                                <span className={style.divide}></span>
+                                <span className={style.commentHeaderTime}>{timeAgo(item.createdAt)}</span>
+                            </div>
+                        </div>
+                        <div className={style.commentHeaderRight}>
+                            <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
+                        </div>
+                    </div>
+                    <div>
+                        {item.reply && replyFn(item.reply)}
+                        <p
+                            style={{ marginBottom: '8px', marginTop: '8px' }}
+                            dangerouslySetInnerHTML={{
+                                __html: xss(handleEmoji(item.content)),
+                            }}
+                        ></p>
                         {showCommentForm === item._id && (
                             <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
                         )}
-                    </Box>
-                </Box>
-            </Flex>
-        </Box>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };

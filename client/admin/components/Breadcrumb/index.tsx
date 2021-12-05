@@ -1,10 +1,10 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { pathToRegexp } from 'path-to-regexp';
 import { urlToList } from '@blog/client/admin/utils/url.util';
 import menu from '@blog/client/configs/admin.menu.config';
+import style from './style.module.scss';
 
 export const getFlatMenuKeys = (menuData = []) => {
     let keys = [];
@@ -35,24 +35,11 @@ export const getBreadCrumbRoutes = (menus, router) => {
     return breadcrumbs;
 };
 
-const _Breadcrumb = styled(Breadcrumb)`
-    font-size: 20px;
-    padding: 24px 24px 0px;
-    font-weight: 700;
-    .anticon {
-        font-size: 20px;
-        font-weight: 700;
-        svg {
-            margin-right: 4px;
-        }
-    }
-`;
-
 export default () => {
     const router = useRouter();
     const items = getBreadCrumbRoutes(menu, router);
     return (
-        <_Breadcrumb>
+        <div className={style.breadcrumb}>
             {items.map((item) => {
                 return (
                     <Breadcrumb.Item key={item.path}>
@@ -61,6 +48,6 @@ export default () => {
                     </Breadcrumb.Item>
                 );
             })}
-        </_Breadcrumb>
+        </div>
     );
 };

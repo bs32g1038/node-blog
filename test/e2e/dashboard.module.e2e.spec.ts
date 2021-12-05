@@ -2,6 +2,8 @@ import request from 'supertest';
 import { DashboardModule } from '@blog/server/modules/dashboard/dashboard.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * dashboard模块 api 测试

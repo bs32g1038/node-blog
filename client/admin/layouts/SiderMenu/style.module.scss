@@ -1,0 +1,121 @@
+.wrap {
+    :global {
+        .ant-menu-light {
+            border-right-color: transparent;
+        }
+        .ant-menu-item {
+            padding-left: 36px;
+        }
+        .ant-dropdown-link {
+            display: flex;
+            align-items: center;
+        }
+        .ant-layout-sider-children {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+.logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 24px 0px 11px;
+    margin: 0px 20px;
+    a {
+        color: #1890ff;
+    }
+    svg {
+        display: inline-block;
+        height: 32px;
+        width: auto;
+        vertical-align: middle;
+    }
+    h1 {
+        display: inline-block;
+        margin: 0 0 0 12px;
+        color: #444;
+        font-weight: 600;
+        font-size: 16px;
+        font-family: logoFont;
+        vertical-align: middle;
+    }
+}
+.homeMenuItem {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+    button {
+        width: 100%;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        color: rgb(62, 75, 80);
+        font-weight: 400;
+        padding: 6px 32px;
+        transition: none 0s ease 0s;
+        margin: 2px 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: #fff;
+        box-shadow: none;
+        &:hover {
+            box-shadow: none;
+            color: inherit;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+}
+.menuTip {
+    padding-left: 26px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.menuLinkA {
+    padding-left: 13px;
+}
+.userMenu {
+    :global {
+        .ant-menu-inline {
+            border-right: none !important;
+        }
+        .ant-menu-submenu {
+            .ant-menu-sub {
+                background-color: rgb(245, 245, 245);
+            }
+            .ant-menu-submenu-title {
+                height: auto;
+            }
+        }
+        .ant-menu-item:active,
+        .ant-menu-submenu-title:active {
+            background: transparent;
+        }
+    }
+}
+.userPanel {
+    margin: 10px 5px 10px;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    user-select: none;
+    line-height: 1.5;
+    h2 {
+        margin: 0;
+        font-weight: 600;
+        padding: 0px 0px 3px;
+        font-size: 14px;
+    }
+    p {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgb(84, 102, 109);
+        margin: -1px 8px -3px 0px;
+    }
+    :global(.avatar-wrap) {
+        margin: 0px 8px 0px 0px;
+        .anticon-user {
+            margin-right: 0;
+        }
+    }
+}

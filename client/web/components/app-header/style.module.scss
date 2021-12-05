@@ -1,0 +1,82 @@
+.appHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #8c8c8c1f;
+}
+
+.siteTitle {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 26px;
+    margin-bottom: 0;
+    h1 {
+        font-family: logoFont;
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--title-text-color);
+        margin-bottom: 0;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.siteTileSvgWrap {
+    display: flex;
+    align-items: center;
+    svg {
+        margin-right: 8px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+}
+
+.navA {
+    transition: none;
+    flex: 1 0 auto;
+    color: var(--primary-text-color);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:focus {
+        box-shadow: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:global(.active) {
+        color: #f86422;
+    }
+    span {
+        margin-left: 5px;
+    }
+}
+
+.branche {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    &:hover {
+        transform: rotate(270deg);
+    }
+}
+.githubIcon {
+    color: var(--primary-text-color);
+    width: 22px;
+    vertical-align: text-bottom;
+}

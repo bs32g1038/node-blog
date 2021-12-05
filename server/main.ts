@@ -34,7 +34,7 @@ export async function bootstrap() {
     app.useStaticAssets(staticAssetsPath, { prefix: '/static/' });
     app.use(log4js.connectLogger(requestInfoLogger, { level: 'info' }));
     app.useGlobalFilters(new AllExceptionsFilter());
-    return await app.listen(APP_SERVER.port);
+    return await app.listen(APP_SERVER.port, APP_SERVER.hostname);
 }
 
 bootstrap().then(() => {

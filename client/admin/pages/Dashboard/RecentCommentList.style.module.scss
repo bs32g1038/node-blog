@@ -1,0 +1,94 @@
+.recentCommentListCard {
+    display: flex;
+    flex-direction: column;
+    :global {
+        .ant-card-meta-description {
+            height: 44px;
+            overflow: hidden;
+            color: #666;
+            line-height: 22px;
+        }
+        .cardTitle {
+            font-size: 0;
+            a {
+                display: inline-block;
+                height: 24px;
+                margin-left: 12px;
+                color: #333;
+                font-size: 14px;
+                line-height: 24px;
+                vertical-align: top;
+                &:hover {
+                    color: #333;
+                }
+            }
+        }
+    }
+}
+.commentMessage {
+    font-size: 14px;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.commentInfo {
+    margin-bottom: 10px;
+    display: flex;
+}
+.nickName {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 130px;
+}
+.commentContentTitleA {
+    color: #878d99;
+    max-width: 240px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.timestampSpan {
+    color: #878d99;
+}
+.commentLogoImg {
+    width: 40px;
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+}
+.commentTextDiv {
+    border-radius: 5px;
+    position: relative;
+    padding: 10px;
+    margin: 5px 0 0 50px;
+    color: #5a5e66;
+    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    img {
+        width: 100%;
+    }
+    &:before,
+    &:after {
+        position: absolute;
+        right: 100%;
+        top: 15px;
+        border: solid transparent;
+        border-right-color: rgba(0, 0, 0, 0.05);
+        content: ' ';
+        height: 0;
+        width: 0;
+        pointer-events: none;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    &:before {
+        border-width: 6px;
+        margin-top: -6px;
+    }
+    &:after {
+        border-width: 5px;
+        margin-top: -5px;
+    }
+}

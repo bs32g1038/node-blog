@@ -2,6 +2,8 @@ import request from 'supertest';
 import { AdminLogModule } from '@blog/server/modules/adminlog/adminlog.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, closeApp } from '../util';
+import { getToken } from '../util';
+const __TOKEN__ = getToken();
 
 /**
  * adminlog模块 api 测试

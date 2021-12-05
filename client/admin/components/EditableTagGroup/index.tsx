@@ -1,8 +1,7 @@
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Tag, Input } from 'antd';
-import { TweenOneGroup } from 'rc-tween-one';
-
+import TweenOneGroup from 'rc-tween-one/lib/TweenOneGroup';
 export default class EditableTagGroup extends React.Component<any, any> {
     input: any;
     static getDerivedStateFromProps(nextProps) {

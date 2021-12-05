@@ -112,7 +112,8 @@ const CommentSchema = new mongoose.Schema(
 
 CommentSchema.plugin(paginate);
 
-const CommentModel: ModelPaginate<CommentDocument> = mongoose.model('comment', CommentSchema, 'comment');
+const c: any = mongoose.model('comment', CommentSchema, 'comment');
+const CommentModel: ModelPaginate<CommentDocument> = c;
 
 export type ICommentModel = typeof CommentModel;
 

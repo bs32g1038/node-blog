@@ -8,13 +8,14 @@
         "experimentalDecorators": true,
         "target": "es6",
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "./dist-server",
         "baseUrl": "./",
         "incremental": true,
+        "skipLibCheck": true,
         "paths": {
             "@blog/*": ["./*"]
         }
     },
-    "exclude": ["node_modules", ".next", "static", "public", "assets", "node_modules", "dist", "test"],
+    "exclude": ["node_modules", ".next", "static", "public", "assets", "dist", "test"],
     "include": ["server/*.ts", "scripts"]
 }
