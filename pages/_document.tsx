@@ -18,19 +18,6 @@ class AppDocument extends Document<any> {
                 <Head>
                     <meta content={config.siteMetaKeyWords} name="Keywords" />
                     <meta content={config.siteMetaDescription} name="description" />
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                            var _hmt = _hmt || [];
-                            (function() {
-                              var hm = document.createElement("script");
-                              hm.src = "https://hm.baidu.com/hm.js?ff62c5e1c5159c0b837c6a9d27016497";
-                              var s = document.getElementsByTagName("script")[0]; 
-                              s.parentNode.insertBefore(hm, s);
-                            })();
-                        `,
-                        }}
-                    />
                 </Head>
                 <body>
                     <Main />
