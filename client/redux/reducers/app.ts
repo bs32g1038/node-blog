@@ -18,7 +18,7 @@ interface State {
     error: {
         status: number;
     };
-    theme: any;
+    theme: 'light' | 'dark';
 }
 
 const initialState: State = {
@@ -68,12 +68,7 @@ const app = createSlice({
         },
         setTheme(state, action: PayloadAction<ThemeDataLoaded>) {
             const { theme } = action.payload;
-            console.log(action.payload)
-            if (theme == 'light') {
-                state.theme = 'dark';
-            } else {
-                state.theme = 'light';
-            }
+            state.theme = theme;
         },
     },
 });
