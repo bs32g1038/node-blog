@@ -1,10 +1,10 @@
-FROM node:12-alpine3.11
+FROM node:14-alpine3.12
 WORKDIR /code
 COPY ./package.json /code
-RUN yarn install
+RUN npm install
 COPY . /code
-RUN yarn run build
-FROM node:12-alpine3.11
+RUN npm run build
+FROM node:14-alpine3.12
 COPY --from=0 /code .
 RUN apk --update add git less openssh && \
     rm -rf /var/lib/apt/lists/* && \
