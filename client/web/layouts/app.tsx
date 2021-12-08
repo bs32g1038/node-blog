@@ -42,7 +42,9 @@ export default (props: { children: any }) => {
                             --footer-text-color: var(--secondary-text-color);
                             --main-bg-color: #141414;
                         }
-                        .ant-pagination-prev, .ant-pagination-next, .ant-pagination-item{
+                        .ant-pagination-prev,
+                        .ant-pagination-next,
+                        .ant-pagination-item {
                             background-color: var(--main-bg-color);
                             a {
                                 color: #fff;
