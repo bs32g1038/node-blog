@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
-import paginate, { ModelPaginate } from '../mongoose/paginate';
+import paginate, { IPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
 export enum FileType {
@@ -68,10 +68,9 @@ const FileSchema = new mongoose.Schema(
 
 FileSchema.plugin(paginate);
 
-const c: any = mongoose.model('file', FileSchema, 'file');
-const FileModel: ModelPaginate<FileDocument> = c;
+const FileModel = mongoose.model<FileDocument>('file', FileSchema, 'file');
 
-export type IFileModel = typeof FileModel;
+export type IFileModel = typeof FileModel & IPaginate;
 
 export { FileModel };
 

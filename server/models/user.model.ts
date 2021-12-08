@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { sha1 } from '../utils/crypto.util';
 import { getProviderByModel } from '../utils/model.util';
-import paginate, { ModelPaginate } from '../mongoose/paginate';
+import paginate, { IPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
 export interface User {
@@ -75,10 +75,9 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.plugin(paginate);
 
-const c: any = mongoose.model('user', UserSchema, 'user');
-const UserModel: ModelPaginate<UserDocument> = c;
+const UserModel = mongoose.model('user', UserSchema, 'user');
 
-export type IUserModel = typeof UserModel;
+export type IUserModel = typeof UserModel & IPaginate;
 
 export { UserModel };
 

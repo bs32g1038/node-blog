@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
-import paginate, { ModelPaginate } from '../mongoose/paginate';
+import paginate, { IPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
 export interface AdminLog {
@@ -50,10 +50,9 @@ AdminLogSchema.index({ createdAt: -1 });
 
 AdminLogSchema.plugin(paginate);
 
-const c: any = mongoose.model('adminlog', AdminLogSchema, 'adminlog');
-const AdminLogModel: ModelPaginate<AdminLogDocument> = c;
+const AdminLogModel = mongoose.model<AdminLogDocument>('adminlog', AdminLogSchema, 'adminlog');
 
-export type IAdminLogModel = typeof AdminLogModel;
+export type IAdminLogModel = typeof AdminLogModel & IPaginate;
 
 export { AdminLogModel };
 

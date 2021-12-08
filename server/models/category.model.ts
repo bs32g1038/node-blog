@@ -47,6 +47,6 @@ const CategorySchema = new mongoose.Schema(
     }
 );
 
-export const CategoryModel = mongoose.model('category', CategorySchema, 'category');
+export const CategoryModel = mongoose.model<CategoryDocument>('category', CategorySchema, 'category');
 
 export const CategoryModelProvider = getProviderByModel(CategoryModel);
