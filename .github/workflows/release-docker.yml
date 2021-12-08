@@ -14,7 +14,8 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: bs32g1038/node-blog:v5
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        registry: ghcr.io
       env:
         CI: true
