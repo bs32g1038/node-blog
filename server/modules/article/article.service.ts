@@ -140,13 +140,19 @@ export class ArticleService {
             },
             {
                 $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } as any,
                     articles: {
                         $push: '$_id',
                     },
                 },
             },
-            { $project: { createdAt: 1, _id: 1, articles: 1 } },
+            {
+                $project: {
+                    createdAt: 1,
+                    _id: 0,
+                    articles: 1,
+                },
+            },
         ]);
         cache.set(key, data, TimeExpression.TIME_5_MINUTES);
         return data;

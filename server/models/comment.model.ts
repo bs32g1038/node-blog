@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
-import paginate, { ModelPaginate } from '../mongoose/paginate';
+import paginate, { IPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
 export interface Comment {
@@ -112,10 +112,9 @@ const CommentSchema = new mongoose.Schema(
 
 CommentSchema.plugin(paginate);
 
-const c: any = mongoose.model('comment', CommentSchema, 'comment');
-const CommentModel: ModelPaginate<CommentDocument> = c;
+const CommentModel = mongoose.model<CommentDocument>('comment', CommentSchema, 'comment');
 
-export type ICommentModel = typeof CommentModel;
+export type ICommentModel = typeof CommentModel & IPaginate;
 
 export { CommentModel };
 

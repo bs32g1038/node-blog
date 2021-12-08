@@ -1,7 +1,6 @@
-import { isArray } from 'util';
 import mongoose from 'mongoose';
 
-type Paginate<T> = {
+export type IPaginate = {
     paginate?: (
         query: any,
         field: any,
@@ -11,12 +10,8 @@ type Paginate<T> = {
             sort?: object;
             populate?: { path: string | any; select?: string | any }[];
         }
-    ) => { items: T[]; totalCount: number };
+    ) => { items: any[]; totalCount: number };
 };
-
-export type ModelPaginate<T extends mongoose.Document> = {
-    [k in keyof mongoose.Model<T>]: mongoose.Model<T>[k];
-} & Paginate<T>;
 
 export default (schema: mongoose.Schema) => {
     async function paginate(
@@ -35,7 +30,7 @@ export default (schema: mongoose.Schema) => {
             limit: limit,
             sort: sort,
         });
-        if (isArray(options.populate)) {
+        if (Array.isArray(options.populate)) {
             options.populate.map((item) => {
                 $FD = $FD.populate(item.path, item.select);
             });

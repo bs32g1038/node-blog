@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getProviderByModel } from '../utils/model.util';
-import paginate, { ModelPaginate } from '../mongoose/paginate';
+import paginate, { IPaginate } from '../mongoose/paginate';
 import Joi from '../joi';
 
 export interface Article {
@@ -134,10 +134,9 @@ const ArticleSchema = new mongoose.Schema(
 
 ArticleSchema.plugin(paginate);
 
-const c: any = mongoose.model('article', ArticleSchema, 'article');
-const ArticleModel: ModelPaginate<ArticleDocument> = c;
+const ArticleModel = mongoose.model<ArticleDocument>('article', ArticleSchema, 'article');
 
-export type IArticleModel = typeof ArticleModel;
+export type IArticleModel = typeof ArticleModel & IPaginate;
 
 export { ArticleModel };
 
