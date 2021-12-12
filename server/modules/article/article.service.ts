@@ -140,7 +140,7 @@ export class ArticleService {
             },
             {
                 $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } as any,
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } } as any,
                     articles: {
                         $push: '$_id',
                     },
@@ -149,7 +149,6 @@ export class ArticleService {
             {
                 $project: {
                     createdAt: 1,
-                    _id: 0,
                     articles: 1,
                 },
             },
