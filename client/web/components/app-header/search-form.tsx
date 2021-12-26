@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Input } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Input } from 'antd';
 import style from './search-form.style.module.scss';
 import { debounce } from 'lodash';
-import * as Api from '@blog/client/web/api/article';
 import Link from '../link';
 import { GithubIcon } from '../../icons';
 import spinner64 from './spinner-64.gif';
+import { searchArticles } from '@blog/client/web/api';
 
 const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
     const { isLoading, items } = props;
@@ -13,7 +13,7 @@ const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
         <ul className={style.searchList}>
             {!isLoading &&
                 items.map((item: { _id: string; title: string }) => (
-                    <li>
+                    <li key={item._id}>
                         <Link href={'/blog/articles/' + item._id} passHref={true}>
                             <a>{item.title}</a>
                         </Link>
@@ -57,7 +57,7 @@ export const SearchForm = (props) => {
             return Promise.resolve();
         }
         setIsLoading(true);
-        return Api.searchArticles(key).then((_) => {
+        return searchArticles(key).then((_) => {
             if (_.data) {
                 if (key === '') {
                     cache[cacheEmptyKey] = _.data;

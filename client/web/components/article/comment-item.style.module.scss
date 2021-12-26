@@ -9,7 +9,6 @@
     display: flex;
 }
 .commentItemRight {
-    flex: 1 0 auto;
     width: 100%;
 }
 .commentHeader {
@@ -50,16 +49,19 @@
     margin: 0 8px;
 }
 
-.commentReplyItem {
+.commentReplyList {
     background-color: var(--blackground-color);
-    // padding: 6px 10px;
+}
+
+.commentReplyItem {
     border-radius: 4px;
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
 .commentItemReplyContent {
-    // display: flex;
-    // align-items: center;
+    padding: 10px 12px;
+    border-radius: 4px;
 }
 
 .commentItemReplyInfo {

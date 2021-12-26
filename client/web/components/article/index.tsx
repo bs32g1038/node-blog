@@ -1,16 +1,28 @@
 import Head from 'next/head';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
-import { fetchArticle, fetchRecentArticle } from '@blog/client/redux/reducers/article';
+import { wrapper } from '@blog/client/redux/store';
 import ArticleItem from './article-item';
 import WidgetArea from './widget-area';
 import AppLayout from '@blog/client/web/layouts/app';
-import { isServer } from '@blog/client/web/utils/helper';
+import {
+    fetchArticle,
+    fetchComments,
+    fetchRecentArticles,
+    useFetchArticleQuery,
+    useFetchCommentsQuery,
+    useFetchConfigQuery,
+    useFetchRecentArticlesQuery,
+} from '@blog/client/web/api';
+import { useRouter } from 'next/router';
 
 const Page = () => {
-    const config = useSelector((state: RootState) => state.app.config);
-    const { article, comments, recentArticles } = useSelector((state: RootState) => state.article);
+    const router = useRouter();
+    const { data: config } = useFetchConfigQuery();
+    const { data: article } = useFetchArticleQuery(router.query.id as string);
+    const {
+        data: { items: comments },
+    } = useFetchCommentsQuery(router.query.id as string);
+    const { data: recentArticles = [] } = useFetchRecentArticlesQuery();
     return (
         <AppLayout>
             <div style={{ display: 'flex' }}>
@@ -24,17 +36,14 @@ const Page = () => {
     );
 };
 
-Page.getInitialProps = async ({ reduxStore, req }: any) => {
-    if (!isServer) {
-        return { isServer };
-    }
-    try {
-        await reduxStore.dispatch(fetchArticle(req.params.id));
-        await reduxStore.dispatch(fetchRecentArticle());
-    } catch (error) {
-        //
-    }
-    return { isServer };
-};
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
+    const { id } = context.query;
+    await store.dispatch(fetchArticle.initiate(id));
+    await store.dispatch(fetchComments.initiate(id));
+    await store.dispatch(fetchRecentArticles.initiate());
+    return {
+        props: {},
+    };
+});
 
 export default Page;

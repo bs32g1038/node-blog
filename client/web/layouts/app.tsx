@@ -5,13 +5,20 @@ import { AboutPage } from '../components/about';
 import { Global, css } from '@emotion/react';
 import { RootState } from '@blog/client/redux/store';
 import { useSelector } from 'react-redux';
+import Head from 'next/head';
+import { useFetchConfigQuery } from '../api';
 
-export default (props: { children: any }) => {
+const App = (props: { children: any }) => {
     const children = props.children;
     const theme = useSelector((state: RootState) => state.app.theme);
+    const { data: config } = useFetchConfigQuery();
     return (
         <div className="app">
             <AppHeader />
+            <Head>
+                <meta content={config?.siteMetaKeyWords} name="Keywords" />
+                <meta content={config?.siteMetaDescription} name="description" />
+            </Head>
             {theme === 'light' ? (
                 <Global
                     styles={css`
@@ -154,4 +161,4 @@ export default (props: { children: any }) => {
     );
 };
 
-// export default App;
+export default App;
