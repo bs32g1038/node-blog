@@ -8,7 +8,7 @@ import icpPng from '@blog/client/assets/images/icp.png';
 import { useFetchConfigQuery } from '../../api';
 
 export const AppFooter = () => {
-    const { data: config = {} } = useFetchConfigQuery();
+    const { data: config } = useFetchConfigQuery();
     return (
         <footer className={style.appFooter} id="app-footer">
             <BackTopBtn></BackTopBtn>

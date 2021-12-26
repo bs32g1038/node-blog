@@ -27,6 +27,7 @@ const axiosBaseQuery =
     };
 
 interface Iconfig {
+    projectGithub: string;
     siteMetaDescription: string;
     siteMetaKeyWords: string;
     siteTitle: string;
