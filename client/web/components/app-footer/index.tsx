@@ -2,15 +2,13 @@ import React from 'react';
 import style from './style.module.scss';
 import BackTopBtn from '../back-top-button';
 import BlogRuningTime from '../blog-runing-time';
-import { Button } from 'antd';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
 import { ReactSVG } from 'react-svg';
 import { EmailIcon, WechatIcon, QQIcon, GithubIcon } from '../../icons';
 import icpPng from '@blog/client/assets/images/icp.png';
+import { useFetchConfigQuery } from '../../api';
 
 export const AppFooter = () => {
-    const config = useSelector((state: RootState) => state.app.config);
+    const { data: config } = useFetchConfigQuery();
     return (
         <footer className={style.appFooter} id="app-footer">
             <BackTopBtn></BackTopBtn>
@@ -64,9 +62,6 @@ export const AppFooter = () => {
                     <a href="https://ant.design">
                         <img src={require('@blog/client/assets/svgs/logo-ant-design.svg')} />
                     </a>
-                    <Button size="small" title="主题切换">
-                        明亮主题
-                    </Button>
                 </div>
             </section>
         </footer>

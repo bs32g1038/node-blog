@@ -1,22 +1,43 @@
-import { createStore, combineReducers, applyMiddleware } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import app from './reducers/app';
-import articles from './reducers/articles';
-import categories from './reducers/categories';
-import article from './reducers/article';
+import { configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
+import { appApi } from '@blog/client/web/api';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({
-    app,
-    articles,
-    categories,
-    article,
-});
-
-export type RootState = ReturnType<typeof rootReducer>;
-
-function initializeStore(_initialState: RootState) {
-    return createStore(rootReducer, _initialState, composeWithDevTools(applyMiddleware(thunk)));
+interface State {
+    theme: 'light' | 'dark';
 }
 
-export default initializeStore;
+const initialState: State = {
+    theme: 'light',
+};
+interface ThemeDataLoaded {
+    theme: any;
+}
+
+const app = createSlice({
+    name: 'app',
+    initialState,
+    reducers: {
+        setTheme(state, action: PayloadAction<ThemeDataLoaded>) {
+            const { theme } = action.payload;
+            state.theme = theme;
+        },
+    },
+});
+
+export const { setTheme } = app.actions;
+
+export const makeStore = () =>
+    configureStore({
+        reducer: {
+            app: app.reducer,
+            [appApi.reducerPath]: appApi.reducer,
+        },
+        middleware: (gDM) => gDM().concat(appApi.middleware),
+    });
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });

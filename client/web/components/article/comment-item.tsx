@@ -27,42 +27,41 @@ const getBadgeVisitorOrAuthor = (identity) => {
 };
 
 const replyFn = (item: any) => {
+    const [showCommentForm, setShowCommentForm] = useState('');
     const [avatarSrc, setAvatarSrc] = useState('');
     useEffect(() => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <div className={style.commentReplyItem}>
+        <div className={style.commentReplyItem} key={item._id}>
             <div className={style.commentItemReplyContent}>
-                <Collapse collapsible="header" ghost>
-                    <Panel
-                        showArrow={false}
-                        header={
-                            <div className={style.commentItemReplyInfo}>
-                                <strong>@</strong>
-                                <span>&nbsp;&nbsp;</span>
-                                <img
-                                    style={{ width: '16px', height: '16px' }}
-                                    src={avatarSrc}
-                                    className={style.commentItemAvatar}
-                                />
-                                <span>{item.nickName}</span>
-                                <span className={style.divide}></span>
-                                {getBadgeVisitorOrAuthor(item.identity)}
-                                <span className={style.divide}></span>
-                                <span>{timeAgo(item.createdAt)}</span>
-                            </div>
-                        }
-                        key="1"
-                    >
-                        <p
-                            style={{ marginBottom: 0 }}
-                            dangerouslySetInnerHTML={{
-                                __html: xss(handleEmoji(item.content)),
-                            }}
-                        ></p>
-                    </Panel>
-                </Collapse>
+                <div className={style.commentItemReplyInfo}>
+                    <span>&nbsp;&nbsp;</span>
+                    <img
+                        style={{ width: '16px', height: '16px' }}
+                        src={avatarSrc}
+                        className={style.commentItemAvatar}
+                    />
+                    <span>
+                        <strong>{item.nickName}</strong>
+                    </span>
+                    <span className={style.divide}></span>
+                    {getBadgeVisitorOrAuthor(item.identity)}
+                    <span className={style.divide}></span>
+                    <span>{timeAgo(item.createdAt)}</span>
+                    <div className={style.commentHeaderRight}>
+                        <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
+                    </div>
+                </div>
+                <p
+                    style={{ marginBottom: 0, marginTop: '10px' }}
+                    dangerouslySetInnerHTML={{
+                        __html: xss(handleEmoji(item.content)),
+                    }}
+                ></p>
+                {showCommentForm === item._id && (
+                    <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
+                )}
             </div>
         </div>
     );
@@ -94,17 +93,19 @@ export const CommentItem = (props: { item: any; index: number }) => {
                             <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
                         </div>
                     </div>
-                    <div>
-                        {item.reply && replyFn(item.reply)}
-                        <p
-                            style={{ marginBottom: '8px', marginTop: '8px' }}
-                            dangerouslySetInnerHTML={{
-                                __html: xss(handleEmoji(item.content)),
-                            }}
-                        ></p>
-                        {showCommentForm === item._id && (
-                            <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
-                        )}
+                    <p
+                        style={{ marginBottom: '8px', marginTop: '8px' }}
+                        dangerouslySetInnerHTML={{
+                            __html: xss(handleEmoji(item.content)),
+                        }}
+                    ></p>
+                    {showCommentForm === item._id && (
+                        <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
+                    )}
+                    <div className={style.commentReplyList}>
+                        {item.comments?.items?.map((item) => {
+                            return replyFn(item);
+                        })}
                     </div>
                 </div>
             </div>

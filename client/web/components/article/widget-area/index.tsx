@@ -39,7 +39,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
     const { recentArticles } = props;
     let arr = recentArticles;
     if (Array.isArray(recentArticles) && recentArticles.length <= 0) {
-        arr = new Array(5).fill(null);
+        arr = new Array(5).fill({});
     }
     return (
         <section className={style.widgetArea}>

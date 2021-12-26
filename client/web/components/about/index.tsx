@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import * as api from '@blog/client/web/api/article';
+import React from 'react';
 import PersonCommit from './person-commit';
 import style from './style.module.scss';
 import vultrPng from '@blog/client/assets/banners/vultr_banner_728x90.png';
+import { useFetchArticlesAggregationMapDateQuery } from '../../api';
 
 const AboutPage = () => {
-    const [userCommits, setUserCommits] = useState([]);
-    useEffect(() => {
-        api.fetchArticlesAggregationMapDate().then((res) => {
-            setUserCommits(res);
-        });
-    }, [1]);
+    const { data = [] } = useFetchArticlesAggregationMapDateQuery();
     let totalCountInYear = 0;
-    const values = userCommits.map((item) => {
+    const values = data.map((item) => {
         totalCountInYear = totalCountInYear + item.articles.length;
         return {
             date: item._id,

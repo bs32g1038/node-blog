@@ -11,6 +11,7 @@ import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
 
 import { Layout, Menu, Avatar, Button } from 'antd';
+import { useFetchConfigQuery } from '@blog/client/web/api';
 const { Sider } = Layout;
 
 const MenuList = (props) => {
@@ -90,8 +91,8 @@ export default (props: Props) => {
         }));
     }, [1]);
     const { selectedKey, openKey, firstHide } = state;
+    const { data: config } = useFetchConfigQuery();
     const data = JSON.parse(localStorage.getItem(defaultConfig.userInfoKey));
-    const config = useSelector((state: RootState) => state.app.config);
     return (
         <div className={style.wrap}>
             <Sider
@@ -118,6 +119,7 @@ export default (props: Props) => {
                 <div className={style.userMenu}>
                     <Menu mode="inline">
                         <Menu.SubMenu
+                            key="userSubMenu"
                             title={
                                 <div className={style.userPanel}>
                                     <div className="avatar-wrap">
@@ -130,7 +132,7 @@ export default (props: Props) => {
                                 </div>
                             }
                         >
-                            <Menu.Item>
+                            <Menu.Item key="/admin/user/person">
                                 <Link href="/admin/user/person" passHref={true}>
                                     <a>
                                         <SettingOutlined />
@@ -138,9 +140,9 @@ export default (props: Props) => {
                                     </a>
                                 </Link>
                             </Menu.Item>
-                            <Menu.Item onClick={() => logout()}>
+                            <Menu.Item key="logout" onClick={() => logout()}>
                                 <LogoutOutlined />
-                                退出登录
+                                <span>退出登录</span>
                             </Menu.Item>
                             <Menu.Divider></Menu.Divider>
                         </Menu.SubMenu>

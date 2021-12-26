@@ -9,7 +9,7 @@ import EmailInput from './EmailInput';
 import style from './style.module.scss';
 
 const fetchConfig = () => {
-    return axios.get('/configs');
+    return axios.get('/configs/admin');
 };
 
 const updateConfig = (data) => {

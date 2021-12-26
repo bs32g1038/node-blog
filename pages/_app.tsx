@@ -1,20 +1,27 @@
 import App from 'next/app';
 import React from 'react';
-import { Provider } from 'react-redux';
-import withReduxStore from '../client/redux/with-redux-store';
 import versionInfo from '../package.json';
-import ErrorPage from '@blog/client/web/components/error-page';
+import { wrapper } from '@blog/client/redux/store';
+import { fetchConfig } from '@blog/client/web/api';
+
 import 'antd/dist/antd.css';
 
 class MyApp extends App {
+    public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
+        await store.dispatch(fetchConfig.initiate());
+        return {
+            pageProps: {
+                ...(await App.getInitialProps(context)).pageProps,
+            },
+        };
+    });
     componentDidMount() {
-        const { reduxStore } = this.props as any;
         const info = [
             `Version: ${versionInfo.version}`,
             `Author: ${versionInfo.author.name + ' - ' + versionInfo.author.email}`,
             `Homepage: ${versionInfo.homepage}`,
             `Description: ${versionInfo.description}`,
-            `Check out our code here: ${reduxStore.getState().app.config.projectGithub}`,
+            `Check out our code here: ${versionInfo.github}`,
             `Have a great day! 📣🐢`,
         ];
         for (const message of info) {
@@ -23,17 +30,9 @@ class MyApp extends App {
         }
     }
     public render() {
-        const { Component, pageProps, reduxStore } = this.props as any;
-        return (
-            <Provider store={reduxStore}>
-                {reduxStore.getState().app.error ? (
-                    <ErrorPage statusCode={reduxStore.getState().app.error.status}></ErrorPage>
-                ) : (
-                    <Component {...pageProps} />
-                )}
-            </Provider>
-        );
+        const { Component, pageProps } = this.props as any;
+        return <Component {...pageProps} />;
     }
 }
 
-export default withReduxStore(MyApp);
+export default wrapper.withRedux(MyApp);

@@ -19,10 +19,10 @@ export default (props: Props) => {
         <div className={style.article}>
             <Breadcrumb separator=">">
                 <Breadcrumb.Item>首页</Breadcrumb.Item>
-                <Breadcrumb.Item href="">
-                    <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}>
-                        <a>{article.category && article.category.name}</a>
-                    </Link>
+                <Breadcrumb.Item>
+                    {/* <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}> */}
+                    <a>{article.category && article.category.name}</a>
+                    {/* </Link> */}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <span>{article.title}</span>

@@ -100,6 +100,7 @@ describe('comment.module.e2e', () => {
 
         return request(app.getHttpServer())
             .get('/api/comments/' + _id.toString())
+            .set('authorization', __TOKEN__)
             .expect(200)
             .then((res) => {
                 const a = res.body;

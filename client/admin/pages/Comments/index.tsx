@@ -28,7 +28,7 @@ export default () => {
             limit,
             page,
         };
-        axios.get('/comments?' + queryString.stringify(query)).then((res) => {
+        axios.get('/admin-comments?' + queryString.stringify(query)).then((res) => {
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
             setState((data) => ({

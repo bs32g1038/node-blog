@@ -3,18 +3,21 @@ import Head from 'next/head';
 import Categories from '../categories';
 import ArticleItem from './item';
 import AppLayout from '@blog/client/web/layouts/app';
-import { useFetchArticles } from '@blog/client/web/hooks/useFetchArticles';
-import { fetchArticles } from '@blog/client/redux/reducers/articles';
-import { fetchCategories } from '@blog/client/redux/reducers/categories';
-import { isServer } from '@blog/client/web/utils/helper';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
+import { useFetchArticlesQuery, fetchArticles, fetchCategories, useFetchConfigQuery } from '@blog/client/web/api';
 import { Empty, Skeleton, Pagination } from 'antd';
 import Link from '../link';
+import { useRouter } from 'next/router';
+import { isArray } from 'lodash';
+import { wrapper } from '@blog/client/redux/store';
 
 const Page = () => {
-    const { page, items, totalCount, isLoading, limit } = useFetchArticles();
-    const config = useSelector((state: RootState) => state.app.config);
+    const router = useRouter();
+    const { data: config } = useFetchConfigQuery();
+    const page = Number(router.query.page || 1);
+    const cid: string = isArray(router.query.cid) ? router.query.cid.join(',') : router.query.cid || '';
+    const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
+    const { data, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
+    const { items = [], totalCount = 0 } = data || {};
     return (
         <AppLayout>
             <Head>
@@ -23,7 +26,7 @@ const Page = () => {
             <Categories></Categories>
             <>
                 {isLoading &&
-                    new Array(limit).fill('').map((item, index) => (
+                    new Array(10).fill('').map((_, index) => (
                         <div style={{ padding: '0 40px 20px' }} key={`article-item-loading-${index}`}>
                             <Skeleton active></Skeleton>
                         </div>
@@ -57,18 +60,21 @@ const Page = () => {
     );
 };
 
-Page.getInitialProps = async ({ reduxStore, req }: any) => {
-    if (!isServer) {
-        return { isServer };
-    }
-    try {
-        await reduxStore.dispatch(fetchCategories());
-        const { page = 1, cid = '', tag = '' } = req && req.query;
-        await reduxStore.dispatch(fetchArticles(Number(page), { cid, tag }));
-    } catch (err) {
-        //
-    }
-    return { isServer };
-};
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
+    const { page = 1, cid = '', tag = '' } = context.query;
+    await store.dispatch(fetchCategories.initiate());
+    await store.dispatch(
+        fetchArticles.initiate({
+            page,
+            filter: {
+                cid,
+                tag,
+            },
+        })
+    );
+    return {
+        props: {},
+    };
+});
 
 export default Page;

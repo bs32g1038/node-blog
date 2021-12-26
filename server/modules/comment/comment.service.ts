@@ -28,7 +28,7 @@ export class CommentService {
         return await this.commentModel.findById(id);
     }
 
-    async getCommentList(options: {
+    async getAdminCommentList(options: {
         articleId?: string;
         page?: number;
         limit?: number;
@@ -46,6 +46,50 @@ export class CommentService {
                 { path: 'reply', select: field },
             ],
         });
+    }
+
+    async getCommentList(options: {
+        articleId?: string;
+        page?: number;
+        limit?: number;
+        sort?: object;
+        field?: string;
+    }): Promise<{ items: Comment[]; totalCount: number }> {
+        const { articleId, page = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = options;
+        let q = {};
+        if (articleId) {
+            q = {
+                reply: null,
+                article: articleId,
+            };
+        }
+        const data = await this.commentModel.paginate(q, field, {
+            page,
+            limit,
+            sort,
+            populate: [{ path: 'article', select: 'title' }],
+        });
+        const _ds = await Promise.all(
+            data.items.map(async (item) => {
+                const { page = 1, limit = 100, sort = { createdAt: 1 }, field = '' } = options;
+                const comments = await this.commentModel.paginate(
+                    {
+                        reply: item._id,
+                    },
+                    field,
+                    {
+                        page,
+                        limit,
+                        sort,
+                    }
+                );
+                return { ...item.toJSON(), comments };
+            })
+        );
+        return {
+            items: _ds,
+            totalCount: data.totalCount,
+        };
     }
 
     async getComment(id: string) {
