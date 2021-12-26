@@ -47,14 +47,6 @@ describe('article.module.e2e', () => {
                 .expect(400);
         });
 
-        test('bad request, create article failure, the title length over the range', async () => {
-            const article2 = getArticle({ title: faker.lorem.paragraph() });
-            return request(app.getHttpServer())
-                .post('/api/articles')
-                .set('authorization', __TOKEN__)
-                .send(article2)
-                .expect(400);
-        });
     });
 
     describe('update', () => {
