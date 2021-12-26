@@ -33,7 +33,7 @@ const replyFn = (item: any) => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item._id]);
     return (
-        <div className={style.commentReplyItem}>
+        <div className={style.commentReplyItem} key={item._id}>
             <div className={style.commentItemReplyContent}>
                 <div className={style.commentItemReplyInfo}>
                     <span>&nbsp;&nbsp;</span>

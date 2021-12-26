@@ -28,6 +28,26 @@ export class CommentService {
         return await this.commentModel.findById(id);
     }
 
+    async getAdminCommentList(options: {
+        articleId?: string;
+        page?: number;
+        limit?: number;
+        sort?: object;
+        field?: string;
+    }): Promise<{ items: Comment[]; totalCount: number }> {
+        const { articleId, page = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = options;
+        const q = new QueryRules({ articleId }, { articleId: (id: string) => ({ article: id }) }).generateQuery();
+        return await this.commentModel.paginate(q, field, {
+            page,
+            limit,
+            sort,
+            populate: [
+                { path: 'article', select: 'title' },
+                { path: 'reply', select: field },
+            ],
+        });
+    }
+
     async getCommentList(options: {
         articleId?: string;
         page?: number;

@@ -6,7 +6,7 @@ export default () => {
     return (
         <BasicLayout>
             <div className={style.wrap}>
-                <iframe className={style.Iframe} src="/" frameBorder="0" allowTransparency={true}></iframe>
+                <iframe className={style.Iframe} src="/" frameBorder="0"></iframe>
             </div>
         </BasicLayout>
     );

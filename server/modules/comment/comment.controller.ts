@@ -54,6 +54,31 @@ export class CommentController {
         return await this.commentService.update(params.id, comment);
     }
 
+    @Get('/admin-comments')
+    @Roles('admin')
+    async getAdminComments(
+        @Req() req: Request,
+        @JoiQuery({ ...StandardPaginationSchema, ...generateObjectIdSchema('articleId') })
+        query: {
+            page: number;
+            limit: number;
+            articleId: string;
+        }
+    ) {
+        let field = '';
+        if (!auth(req)) {
+            field = '-email';
+        }
+        const { items, totalCount } = await this.commentService.getAdminCommentList({
+            ...query,
+            field,
+        });
+        return {
+            items,
+            totalCount,
+        };
+    }
+
     @Get('/comments')
     async getComments(
         @Req() req: Request,
@@ -79,6 +104,7 @@ export class CommentController {
     }
 
     @Get('/comments/:id')
+    @Roles('admin')
     async getComment(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Comment | null> {
         return await this.commentService.getComment(params.id);
     }
