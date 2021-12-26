@@ -1,28 +1,27 @@
 import React from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
-import config from '@blog/client/configs/admin.default.config';
 import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import useRequest from '@blog/client/admin/hooks/useRequest';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
+import { useFetchConfigQuery } from '@blog/client/web/api';
+import defaultConfig from '@blog/client/configs/admin.default.config';
 
 export default () => {
     const [data] = useRequest('/getFirstLoginInfo', { page: 1, limit: 100 });
-    const appConfig = useSelector((state: RootState) => state.app.config);
+    const { data: appConfig } = useFetchConfigQuery();
     const { loading, setLoading, injectRequestLoading } = useRequestLoading();
     const handleLogin = (data) => {
         const str = encrypt(JSON.stringify(data));
         injectRequestLoading(axios.post('/login', { key: str }))
             .then((res) => {
                 message.success('登陆成功！');
-                localStorage.setItem(config.userInfoKey, JSON.stringify(res.data));
-                localStorage.setItem(config.tokenKey, res.data.token);
+                localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res.data));
+                localStorage.setItem(defaultConfig.tokenKey, res.data.token);
                 Router.push('/admin/dashboard');
             })
             .catch(() => {

@@ -36,11 +36,6 @@ interface Iconfig {
     siteLogo: string;
     email: string;
     github: string;
-    projectGithub: string;
-    admin: {
-        tokenKey: string;
-        userInfoKey: string;
-    };
 }
 
 interface IComment {
