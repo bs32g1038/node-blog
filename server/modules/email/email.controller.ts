@@ -3,7 +3,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '@blog/server/guards/roles.guard';
 import { JoiBody } from '@blog/server/decorators/joi.decorator';
 import { Roles } from '@blog/server/decorators/roles.decorator';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import { EmailService } from './email.service';
 
 @Controller('/api/email')

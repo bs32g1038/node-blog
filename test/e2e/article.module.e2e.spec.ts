@@ -46,7 +46,6 @@ describe('article.module.e2e', () => {
                 .send(article1)
                 .expect(400);
         });
-
     });
 
     describe('update', () => {

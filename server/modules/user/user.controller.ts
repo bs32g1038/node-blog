@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { auth } from '../../utils/auth.util';
 import { JoiBody } from '../../decorators/joi.decorator';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)

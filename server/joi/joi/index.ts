@@ -1,4 +1,4 @@
-import Joi, { StringSchema } from '@hapi/joi';
+import Joi, { StringSchema } from 'joi';
 import mongoose from 'mongoose';
 
 interface Root extends Joi.Root {

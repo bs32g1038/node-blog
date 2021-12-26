@@ -5,7 +5,7 @@ import { RolesGuard } from '@blog/server/guards/roles.guard';
 import { JoiBody } from '@blog/server/decorators/joi.decorator';
 import { Roles } from '@blog/server/decorators/roles.decorator';
 import { AppConfigService } from './app.config.service';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import { omit } from 'lodash';
 
 @Controller('/api/configs')

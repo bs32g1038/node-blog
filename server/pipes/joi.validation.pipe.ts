@@ -1,6 +1,6 @@
 import Joi from '../joi';
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import { isEmpty } from 'lodash';
 
 interface Options {
