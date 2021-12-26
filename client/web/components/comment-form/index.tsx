@@ -4,9 +4,13 @@ import { nanoid } from 'nanoid';
 import Emoji from './emoji';
 import { USER_COMMENT_INFO_KEY } from './constant';
 import axios from '@blog/client/web/utils/axios';
-import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import { Alert, Tooltip, Input, Button } from 'antd';
 import style from './style.module.scss';
+import dynamic from 'next/dynamic';
+
+const Avatar = dynamic(() => import('./avatar'), {
+    ssr: false,
+});
 
 interface Props {
     url: string;
@@ -89,11 +93,7 @@ export const CommentForm = (props: Props) => {
             />
             <div className={style.userInfo}>
                 <span className={style.userInfoText}>游客账户：</span>
-                <img
-                    className={style.userInfoAvatar}
-                    title={userInfo.nickName}
-                    src={gernateAvatarImage(userInfo.nickName) || ''}
-                />
+                <Avatar nickName={userInfo.nickName}></Avatar>
                 <span className={style.userInfoText}>{userInfo.nickName}</span>
             </div>
             <div>
