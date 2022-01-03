@@ -55,7 +55,7 @@
     "express": "^4.17.2",
     "express-rate-limit": "^6.0.1",
     "fs-extra": "^10.0.0",
-    "helmet": "^4.6.0",
+    "helmet": "^5.0.1",
     "joi": "^17.5.0",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.3.0",
