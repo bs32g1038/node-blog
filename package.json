@@ -113,7 +113,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "faker": "^5.5.3",
     "find-root": "^1.1.0",
-    "framer-motion": "^5.5.5",
+    "framer-motion": "^6.2.4",
     "http-proxy-middleware": "^2.0.1",
     "husky": "^7.0.4",
     "jest": "^27.4.5",
