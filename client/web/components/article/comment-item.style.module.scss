@@ -50,13 +50,12 @@
 }
 
 .commentReplyList {
-    background-color: var(--blackground-color);
+    // background-color: var(--blackground-color);
 }
 
 .commentReplyItem {
-    border-radius: 4px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    border-top: 1px dashed #ebe7e7;
+    background: #f9f9f9;
 }
 
 .commentItemReplyContent {
@@ -64,12 +63,40 @@
     border-radius: 4px;
 }
 
+.parentWrapper {
+    display: flex;
+    background: #f2f3f5;
+    box-sizing: border-box;
+    padding: 0 12px;
+    line-height: 36px;
+    height: 36px;
+    font-size: 14px;
+    color: #8a919f;
+    align-items: center;
+    border-left: 3px solid #ccc;
+}
+
+.parentContent {
+    flex-shrink: 1;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-height: 1;
+}
+
 .commentItemReplyInfo {
     display: flex;
     align-items: center;
     color: var(--secondary-text-color);
     font-size: 14px;
+    justify-content: space-between;
     span {
         display: block;
+    }
+    .left {
+        display: flex;
+        align-items: center;
     }
 }

@@ -59,6 +59,7 @@ export class CommentService {
         let q = {};
         if (articleId) {
             q = {
+                parentId: null,
                 reply: null,
                 article: articleId,
             };
@@ -74,13 +75,15 @@ export class CommentService {
                 const { page = 1, limit = 100, sort = { createdAt: 1 }, field = '' } = options;
                 const comments = await this.commentModel.paginate(
                     {
-                        reply: item._id,
+                        parentId: item._id,
+                        article: articleId,
                     },
                     field,
                     {
                         page,
                         limit,
                         sort,
+                        populate: [{ path: 'reply', select: field }],
                     }
                 );
                 return { ...item.toJSON(), comments };

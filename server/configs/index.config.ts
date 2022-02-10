@@ -25,7 +25,7 @@ export const TOKEN_SECRET_KEY = 'NODEBLOG/bs32g1038@163.com/TOKEN';
 export const GITHUB_SECRET_KEY = 'Github/bs32g1038@163.com/TOKEN';
 
 export const ADMIN_USER_INFO = {
-    nickName: '冷夜流星',
+    nickName: '李志成',
     email: 'bs32g1038@163.com',
     location: '广东 广州',
 };
