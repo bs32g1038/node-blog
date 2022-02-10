@@ -14,6 +14,7 @@ const Avatar = dynamic(() => import('./avatar'), {
 
 interface Props {
     url: string;
+    parentId?: string;
     replyId?: string;
     articleId?: string;
 }
@@ -54,6 +55,11 @@ export const CommentForm = (props: Props) => {
             article: props.articleId,
             content,
         };
+        if (props.parentId) {
+            Object.assign(data, {
+                parentId: props.parentId,
+            });
+        }
         if (props.replyId) {
             Object.assign(data, {
                 reply: props.replyId,

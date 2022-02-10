@@ -15,6 +15,7 @@ export default () => {
         nickName: '',
         email: '',
         createdAt: '',
+        parentId: '',
     });
     const router = useRouter();
     const [form] = Form.useForm();
@@ -33,7 +34,11 @@ export default () => {
 
     const publish = (data) => {
         const { id } = router.query;
-        Object.assign(data, { reply: id });
+        if (comment.parentId) {
+            Object.assign(data, { reply: id, parentId: comment.parentId });
+        } else {
+            Object.assign(data, { parentId: id });
+        }
         axios.post('/admin/reply-comment/', data).then(() => {
             message.success('提交成功');
             Router.push('/admin/content/comments');
