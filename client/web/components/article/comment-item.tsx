@@ -26,7 +26,7 @@ const getBadgeVisitorOrAuthor = (identity) => {
     return identity !== 0 ? <span>博主</span> : <span>游客</span>;
 };
 
-const replyFn = (item: any) => {
+const replyFn = (parentId: string, item: any) => {
     const [showCommentForm, setShowCommentForm] = useState('');
     const [avatarSrc, setAvatarSrc] = useState('');
     useEffect(() => {
@@ -36,31 +36,46 @@ const replyFn = (item: any) => {
         <div className={style.commentReplyItem} key={item._id}>
             <div className={style.commentItemReplyContent}>
                 <div className={style.commentItemReplyInfo}>
-                    <span>&nbsp;&nbsp;</span>
-                    <img
-                        style={{ width: '16px', height: '16px' }}
-                        src={avatarSrc}
-                        className={style.commentItemAvatar}
-                    />
-                    <span>
-                        <strong>{item.nickName}</strong>
-                    </span>
-                    <span className={style.divide}></span>
-                    {getBadgeVisitorOrAuthor(item.identity)}
-                    <span className={style.divide}></span>
-                    <span>{timeAgo(item.createdAt)}</span>
+                    <div className={style.left}>
+                        <span>&nbsp;&nbsp;</span>
+                        <img
+                            style={{ width: '16px', height: '16px' }}
+                            src={avatarSrc}
+                            className={style.commentItemAvatar}
+                        />
+                        <span>
+                            <strong>{item.nickName}</strong>
+                        </span>
+                        <span className={style.divide}></span>
+                        {getBadgeVisitorOrAuthor(item.identity)}
+                        <span className={style.divide}></span>
+                        <span>{timeAgo(item.createdAt)}</span>
+                    </div>
                     <div className={style.commentHeaderRight}>
                         <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
                     </div>
                 </div>
-                <p
-                    style={{ marginBottom: 0, marginTop: '10px' }}
-                    dangerouslySetInnerHTML={{
-                        __html: xss(handleEmoji(item.content)),
-                    }}
-                ></p>
+                <div style={{ marginBottom: 0, marginTop: '10px' }}>
+                    {item.reply && (
+                        <div className={style.parentWrapper}>
+                            <div>“</div>
+                            <div
+                                className={style.parentContent}
+                                dangerouslySetInnerHTML={{
+                                    __html: xss(handleEmoji(item.reply.content)),
+                                }}
+                            ></div>
+                            <div>”</div>
+                        </div>
+                    )}
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: xss(handleEmoji(item.content)),
+                        }}
+                    ></p>
+                </div>
                 {showCommentForm === item._id && (
-                    <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
+                    <CommentForm url="/comments" parentId={parentId} articleId={item.article} replyId={item._id} />
                 )}
             </div>
         </div>
@@ -100,11 +115,17 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         }}
                     ></p>
                     {showCommentForm === item._id && (
-                        <CommentForm url="/comments" articleId={item.article._id} replyId={item._id} />
+                        <CommentForm
+                            url="/comments"
+                            parentId={item._id}
+                            articleId={item.article._id}
+                            replyId={item._id}
+                        />
                     )}
                     <div className={style.commentReplyList}>
-                        {item.comments?.items?.map((item) => {
-                            return replyFn(item);
+                        {item.comments?.items?.map((_) => {
+                            console.log(item);
+                            return replyFn(item._id, _);
                         })}
                     </div>
                 </div>

@@ -9,6 +9,7 @@ export interface Comment {
     readonly nickName?: string;
     readonly email?: string;
     readonly website?: string;
+    readonly parentId?: string;
     readonly reply?: string;
     readonly article?: string;
     readonly location?: string;
@@ -37,6 +38,7 @@ export const CommentJoiSchema = {
         .alter({
             post: (schema) => schema.required(),
         }),
+    parentId: [Joi.equal(null), Joi.objectId()],
     reply: [Joi.equal(null), Joi.objectId()],
     article: Joi.objectId().alter({
         post: (schema) => schema.required(),
@@ -77,6 +79,11 @@ const CommentSchema = new mongoose.Schema(
             maxlength: 500,
             trim: true,
             required: true,
+        },
+        parentId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'comment',
+            default: null,
         },
         reply: {
             type: mongoose.Schema.Types.ObjectId,

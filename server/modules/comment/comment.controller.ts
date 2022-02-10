@@ -31,7 +31,8 @@ export class CommentController {
         @JoiBody(
             {
                 article: CommentJoiSchema.article,
-                reply: CommentJoiSchema.reply[1].required(),
+                parentId: CommentJoiSchema.parentId[1].required(),
+                reply: CommentJoiSchema.reply[1],
                 content: CommentJoiSchema.content,
             },
             { method: 'post' }
