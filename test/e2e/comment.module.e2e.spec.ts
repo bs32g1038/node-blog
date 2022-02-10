@@ -48,6 +48,7 @@ describe('comment.module.e2e', () => {
             const replyComment = {
                 article: article._id.toString(),
                 content: getComment().content,
+                parentId: getObjectId(),
                 reply: getObjectId(),
             };
 
