@@ -6,14 +6,14 @@
 
 ⚠️ Caution: Working in progress - It's not production ready 🚧
 
-[![Actions Status](https://github.com/bs32g1038/node-blog/workflows/Node%20Blog%20CI/badge.svg)](https://github.com/bs32g1038/node-blog/actions) [![Actions Status](https://github.com/bs32g1038/node-blog/workflows/Release%20Docker%20CI/badge.svg)](https://github.com/bs32g1038/node-blog/actions) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/context:javascript) 
+[![Actions Status](https://github.com/bs32g1038/node-blog/workflows/Node%20Blog%20CI/badge.svg)](https://github.com/bs32g1038/node-blog/actions) [![Actions Status](https://github.com/bs32g1038/node-blog/workflows/Release%20Docker%20CI/badge.svg)](https://github.com/bs32g1038/node-blog/actions) ![David](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bs32g1038/node-blog.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bs32g1038/node-blog/context:javascript)
 [![codecov](https://codecov.io/gh/bs32g1038/node-blog/branch/master/graph/badge.svg)](https://codecov.io/gh/bs32g1038/node-blog) ![GitHub](https://img.shields.io/github/license/bs32g1038/node-blog.svg)
 
 </div>
 
 ![博客首页](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
 
-* **preview :** [http://www.lizc.net](http://www.lizc.net "blog")
+* **preview :** [https://www.lizc.net](https://www.lizc.net "blog")
 
 ## Features
 
@@ -21,7 +21,7 @@
 * 🐐 APi: Node-blog through Nodejs and express provide the Restful API
 * 🚜 Database: Data stored in Mongodb，Driven by Mongoose
 * 🔨 Powerful build: Use powerful webpack to build projects
-* 🍓 Framework support: React, Ant design, Express, Typescript, ... 
+* 🍓 Framework support: React, Ant design, Express, Typescript, ...
 * 🌲 Nextjs: Support server-side render
 * 📲 Responsive: Responsive layout for mobile-side
 * ⚙️ Best Practices: Solid workflow to make your code healthy
