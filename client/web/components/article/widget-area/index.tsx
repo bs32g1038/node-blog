@@ -53,7 +53,7 @@ export default (props: { recentArticles: ItemProps[] }) => {
                         src={vultrPng.src}
                         style={{
                             width: '200px',
-                            border: '1px solid #ccc',
+                            border: '1px solid var(--border-color)',
                             height: 'auto',
                         }}
                     />

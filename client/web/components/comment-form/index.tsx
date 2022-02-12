@@ -102,7 +102,7 @@ export const CommentForm = (props: Props) => {
                 <Avatar nickName={userInfo.nickName}></Avatar>
                 <span className={style.userInfoText}>{userInfo.nickName}</span>
             </div>
-            <div>
+            <div className={style.inputWrap}>
                 {errorMessage && <Alert message={errorMessage} type="warning" showIcon />}
                 <Input.TextArea
                     value={content}

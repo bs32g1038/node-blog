@@ -8,7 +8,7 @@
     height: 40px;
     line-height: 40px;
     transition: all 0.5s ease;
-    background-color: #ffff;
+    background-color: var(--main-bg-color);
     svg {
         fill: #8590a6;
         vertical-align: middle;

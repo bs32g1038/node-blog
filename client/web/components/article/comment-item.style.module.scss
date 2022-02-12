@@ -1,12 +1,9 @@
 .commentItem {
     padding: 10px;
 }
-.commentItemContent {
-    display: flex;
-    justify-content: space-between;
-}
 .commentItemInner {
     display: flex;
+    color: var(--secondary-text-color);
 }
 .commentItemRight {
     width: 100%;
@@ -45,17 +42,13 @@
     display: block;
     width: 1px;
     height: 14px;
-    background: #e5e6eb;
+    background: var(--border-color);
     margin: 0 8px;
 }
 
-.commentReplyList {
-    // background-color: var(--blackground-color);
-}
-
 .commentReplyItem {
-    border-top: 1px dashed #ebe7e7;
-    background: #f9f9f9;
+    border-top: 1px dashed var(--border-color);
+    background: var(--main-bg-color);
 }
 
 .commentItemReplyContent {
@@ -65,15 +58,14 @@
 
 .parentWrapper {
     display: flex;
-    background: #f2f3f5;
     box-sizing: border-box;
     padding: 0 12px;
     line-height: 36px;
     height: 36px;
     font-size: 14px;
-    color: #8a919f;
+    color: var(--secondary-text-color);
     align-items: center;
-    border-left: 3px solid #ccc;
+    border-left: 2px dashed var(--border-color);
 }
 
 .parentContent {

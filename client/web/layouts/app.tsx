@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppFooter } from '../components/app-footer';
 import { AppHeader } from '../components/app-header';
 import { AboutPage } from '../components/about';
 import { Global, css } from '@emotion/react';
-import { RootState } from '@blog/client/redux/store';
-import { useSelector } from 'react-redux';
+import { RootState, setTheme } from '@blog/client/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from 'next/head';
 import { useFetchConfigQuery } from '../api';
 
 const App = (props: { children: any }) => {
     const children = props.children;
     const theme = useSelector((state: RootState) => state.app.theme);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const t = localStorage.getItem('theme');
+        t && dispatch(setTheme({ theme: t }));
+    }, []);
     const { data: config } = useFetchConfigQuery();
     return (
         <div className="app">

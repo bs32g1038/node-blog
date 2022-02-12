@@ -1,11 +1,14 @@
 .article {
     max-width: 610px;
-    background-color: #fff;
+    background-color: var(--main-bg-color);
     padding: 20px;
     :global(.ant-breadcrumb) {
         font-size: 13px;
         margin-bottom: 8px;
         span {
+            color: var(--secondary-text-color) !important;
+        }
+        a {
             color: var(--secondary-text-color) !important;
         }
     }
@@ -30,8 +33,6 @@
         text-decoration: underline;
     }
 }
-.articleContent {
-}
 
 .statement {
     font-size: 14px;
@@ -39,11 +40,12 @@
     padding: 8px 16px;
     background-color: var(--blackground-color);
     border-radius: 3px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--border-color);
     color: var(--primary-text-color);
 }
 
 .footer {
     display: flex;
     justify-content: space-between;
+    color: var(--secondary-text-color);
 }

@@ -20,6 +20,7 @@ const app = createSlice({
     reducers: {
         setTheme(state, action: PayloadAction<ThemeDataLoaded>) {
             const { theme } = action.payload;
+            localStorage.setItem('theme', theme);
             state.theme = theme;
         },
     },

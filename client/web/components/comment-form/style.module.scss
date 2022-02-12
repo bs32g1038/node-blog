@@ -1,5 +1,5 @@
 .emoji {
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--border-color);
     border-top: none;
     padding: 5px;
     button {
@@ -28,6 +28,15 @@
     height: 16px;
     border-radius: 4px;
     margin-right: 5px;
+}
+
+.inputWrap {
+    textarea {
+        border: 1px solid var(--border-color);
+        background-color: var(--main-bg-color);
+        color: var(--secondary-text-color);
+        border-radius: 0;
+    }
 }
 
 .commentFormFooter {

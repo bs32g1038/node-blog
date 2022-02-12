@@ -1,6 +1,17 @@
 .searchForm {
     position: relative;
     width: 220px;
+    input {
+        background-color: var(--main-bg-color);
+        border: 1px solid var(--border-color);
+    }
+    button {
+        background-color: var(--main-bg-color);
+        border: 1px solid var(--border-color);
+    }
+    svg {
+        fill: var(--secondary-text-color);
+    }
 }
 
 .searchPanel {
@@ -8,7 +19,7 @@
     top: 100%;
     width: 100%;
     z-index: 100;
-    background-color: #fff;
+    background-color: var(--main-bg-color);
     border: 1px solid var(--border-color);
     max-height: 300px;
     overflow-y: auto;
