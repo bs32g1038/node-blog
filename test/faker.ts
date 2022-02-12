@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import faker from 'faker';
-
-faker.locale = 'zh_CN';
+import faker from '@faker-js/faker';
 
 export const getObjectId = () => {
     return new mongoose.Types.ObjectId().toString();
