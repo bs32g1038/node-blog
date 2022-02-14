@@ -12,7 +12,7 @@ import { Setting } from '@blog/server/models/config.model';
 import LRU from 'lru-cache';
 import toIco from 'to-ico';
 
-const cache = new LRU();
+const cache = new LRU({ max: 500 });
 const namespace = 'siteConfig';
 const CONFIG_KEY = 'app-config';
 const config = {

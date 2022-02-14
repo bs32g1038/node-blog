@@ -4,7 +4,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { ArticleModel, IArticleModel } from '@blog/server/models/article.model';
 
 import LRU from 'lru-cache';
-const cache = new LRU();
+const cache = new LRU({ max: 500 });
 
 /**
  * 把文章 每天浏览数 写入缓存
