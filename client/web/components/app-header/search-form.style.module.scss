@@ -4,10 +4,14 @@
     input {
         background-color: var(--main-bg-color);
         border: 1px solid var(--border-color);
+        color: var(--primary-text-color);
     }
     button {
         background-color: var(--main-bg-color);
         border: 1px solid var(--border-color);
+        &:hover {
+            background-color: var(--main-bg-color);
+        }
     }
     svg {
         fill: var(--secondary-text-color);
@@ -57,14 +61,16 @@
     justify-content: space-between;
     padding: 10px 10px 0;
     font-size: 13px;
+    color: var(--primary-text-color);
 }
 
 .panelFooter {
     padding: 0 10px 10px;
     font-size: 13px;
+    color: var(--primary-text-color);
     svg {
         vertical-align: text-bottom;
         margin-right: 2px;
-        color: var(--primary-text-color);
+        fill: var(--primary-text-color);
     }
 }

@@ -66,11 +66,13 @@ export const SearchForm = (props) => {
                 }
                 setItems(_.data.items);
                 setTotalCount(_.data.totalCount);
-                setIsLoading(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 400);
             }
         });
     };
-    const debounceFetchData = debounce(fetchData, 50);
+    const debounceFetchData = debounce(fetchData, 200);
 
     const onfocus = () => {
         debounceFetchData('');
