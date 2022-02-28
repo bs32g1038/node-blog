@@ -5,6 +5,7 @@ import { wrapper } from '@blog/client/redux/store';
 import { fetchConfig } from '@blog/client/web/api';
 
 import 'antd/dist/antd.css';
+import 'react-image-crop/dist/ReactCrop.css';
 
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {

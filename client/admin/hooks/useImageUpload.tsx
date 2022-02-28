@@ -25,11 +25,11 @@ function beforeUpload(file) {
     if (!isJpgOrPng) {
         message.error('只能上传jpg或者png图片!');
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('图片最大只能上传2MB!');
+    const isLt10M = file.size / 1024 / 1024 < 10;
+    if (!isLt10M) {
+        message.error('图片最大只能上传10MB!');
     }
-    return isJpgOrPng && isLt2M;
+    return isJpgOrPng && isLt10M;
 }
 
 interface Props {
@@ -79,19 +79,19 @@ export default (props: Props) => {
                 className="avatar-uploader"
                 showUploadList={false}
                 action="/api/files/upload"
-                beforeUpload={() => {
-                    if (isImage(type)) {
-                        return beforeUpload;
-                    }
-                    if (isSvg(type)) {
-                        return svgBeforeUpload;
-                    }
-                }}
                 accept={isImage(type) ? '.jpg,.jpeg,.png' : isSvg(type) && '.svg'}
                 headers={{
                     authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
                 }}
                 {...props}
+                beforeUpload={(file) => {
+                    if (isImage(type) && beforeUpload(file)) {
+                        return props?.beforeUpload(file) || true;
+                    }
+                    if (isSvg(type) && svgBeforeUpload(file)) {
+                        return props?.beforeUpload(file) || true;
+                    }
+                }}
             >
                 {imageUrl ? (
                     <img src={imageUrl} alt="" style={style} />

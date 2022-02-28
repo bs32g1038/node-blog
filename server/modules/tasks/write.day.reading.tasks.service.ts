@@ -50,7 +50,7 @@ export class WriteDayReadingTasksService {
         }
         this.isInserting = true;
         Promise.all(
-            cache.keys().map(async (key: string) => {
+            (cache.keys() as any).map(async (key: string) => {
                 return await this.writeToDb(key);
             })
         ).then(() => {
@@ -81,7 +81,7 @@ export class WriteDayReadingTasksService {
 
         const result = (cache.get(key) as number) - count;
         if (result <= 0) {
-            cache.del(key);
+            cache.delete(key);
         } else {
             cache.set(key, result);
         }

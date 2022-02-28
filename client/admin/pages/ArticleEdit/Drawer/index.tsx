@@ -5,6 +5,7 @@ import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import style from './style.module.scss';
+import ImageCropper from '@blog/client/admin/components/ImageCropper';
 
 const Option = Select.Option;
 const { TextArea } = Input;
@@ -70,7 +71,9 @@ export default ({ visible, onCancel, formData }) => {
                         getValueFromEvent={handleUpload}
                         rules={[{ required: true, message: '封面图片不能为空!' }]}
                     >
-                        <UploadButton></UploadButton>
+                        <ImageCropper aspectRatio={3 / 2} minWidth={300} maxWidth={300} minHeight={200} maxHeight={200}>
+                            <UploadButton></UploadButton>
+                        </ImageCropper>
                     </Form.Item>
                     <Form.Item name="category" label="文章分类" rules={[{ required: true, message: '分类不能为空!' }]}>
                         <Select placeholder="请选择一个分类">{categoryOptions}</Select>

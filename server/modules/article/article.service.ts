@@ -153,7 +153,7 @@ export class ArticleService {
                 },
             },
         ]);
-        cache.set(key, data, TimeExpression.TIME_5_MINUTES);
+        cache.set(key, data, { ttl: TimeExpression.TIME_5_MINUTES });
         return data;
     }
 }
