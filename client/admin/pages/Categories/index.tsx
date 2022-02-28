@@ -12,10 +12,9 @@ export default () => {
     const [state, setState] = useState({
         categories: [],
         selectedRowKeys: [],
-        loading: false,
         visible: false,
     });
-    const [categories, refresh] = useRequest('/categories/', { page: 1, limit: 100 });
+    const [categories, refresh, loading] = useRequest('/categories/', { page: 1, limit: 100 });
     const deleteCategory = (_id) => {
         axios.delete('/categories/' + _id).then((res) => {
             message.success(`删除分类 ${res.data.name} 成功！`);
@@ -135,7 +134,7 @@ export default () => {
                         rowKey={(record: any) => record._id}
                         rowSelection={rowSelection}
                         columns={getTableColums()}
-                        loading={!categories}
+                        loading={loading}
                         dataSource={categories as any}
                     />
                 </div>
