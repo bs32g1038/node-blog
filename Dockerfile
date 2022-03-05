@@ -1,9 +1,9 @@
 FROM node:14-alpine3.12
 WORKDIR /code
 COPY ./package.json /code
-RUN npm install
+RUN yarn install
 COPY . /code
-RUN npm run build
+RUN yarn run build
 FROM node:14-alpine3.12
 WORKDIR /code
 COPY --from=0 /code /code
