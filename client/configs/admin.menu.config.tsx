@@ -7,6 +7,7 @@ import {
     FileOutlined,
     UserOutlined,
     SettingOutlined,
+    ShareAltOutlined,
 } from '@ant-design/icons';
 
 export default [
@@ -61,6 +62,12 @@ export default [
                 exact: true,
             },
         ],
+    },
+    {
+        path: '/admin/explore',
+        title: '发现管理',
+        icon: <ShareAltOutlined />,
+        exact: true,
     },
     {
         path: '/admin/code/static-files',

@@ -11,6 +11,12 @@ export const getCategory = () => {
     };
 };
 
+export const getExplore = () => {
+    return {
+        contetn: faker.lorem.paragraphs(),
+    };
+};
+
 export const getArticle = (obj = {}) => {
     return {
         title: faker.name.title(),

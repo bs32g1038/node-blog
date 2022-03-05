@@ -1,0 +1,15 @@
+.wrap {
+    &:global(.ant-card) {
+        background-color: transparent;
+    }
+    :global {
+        .ant-card-head {
+            padding-left: 0;
+            border: none;
+        }
+        .ant-card-body {
+            background-color: #fff;
+            padding: 5px 24px;
+        }
+    }
+}

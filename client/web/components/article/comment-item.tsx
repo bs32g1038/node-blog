@@ -4,9 +4,6 @@ import { CommentForm } from '../comment-form';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import style from './comment-item.style.module.scss';
 import { xss } from '@blog/client/libs/marked';
-import { Collapse } from 'antd';
-
-const { Panel } = Collapse;
 
 const handleEmoji = (text) => {
     const regex = /@\((.+?)\)/g;

@@ -136,6 +136,9 @@ export const appApi = createApi({
                 return { url: `/articles?${queryString.stringify(query)}`, method: 'get' };
             },
         }),
+        fetchExplore: builder.query<any, void>({
+            query: () => ({ url: `/explore`, method: 'get' }),
+        }),
     }),
 });
 
@@ -148,10 +151,18 @@ export const {
     useFetchArticlesQuery,
     useFetchConfigQuery,
     useFetchArticlesAggregationMapDateQuery,
+    useFetchExploreQuery,
 } = appApi;
 
-export const { fetchConfig, fetchArticles, fetchCategories, fetchArticle, fetchComments, fetchRecentArticles } =
-    appApi.endpoints;
+export const {
+    fetchConfig,
+    fetchArticles,
+    fetchCategories,
+    fetchArticle,
+    fetchComments,
+    fetchRecentArticles,
+    fetchExplore,
+} = appApi.endpoints;
 
 export const searchArticles = (key: string) => {
     return axios.get('/search?key=' + key);

@@ -3,9 +3,9 @@ import style from './style.module.scss';
 import NavLink from '../nav-link';
 import Link from '../link';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Skeleton } from 'antd';
+import { Button } from 'antd';
 import { SearchForm } from './search-form';
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, ShareAltOutlined, UserOutlined } from '@ant-design/icons';
 import { GithubIcon, MoonIcon, RssIcon, SunIcon } from '../../icons';
 import { ReactSVG } from 'react-svg';
 import { RootState } from '@blog/client/redux/store';
@@ -28,10 +28,16 @@ export const AppHeader = () => {
                 </a>
             </Link>
             <nav className={style.nav}>
-                <NavLink href="/blog">
+                <NavLink href="/blog" exact={true}>
                     <a className={style.navA}>
                         <HomeOutlined></HomeOutlined>
                         <span>首页</span>
+                    </a>
+                </NavLink>
+                <NavLink href="/blog/expore" exact={true}>
+                    <a className={style.navA}>
+                        <ShareAltOutlined />
+                        <span>发现</span>
                     </a>
                 </NavLink>
                 <a className={style.navA} onClick={() => scrollIntoView('app-footer')}>
