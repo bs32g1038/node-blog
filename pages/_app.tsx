@@ -3,6 +3,8 @@ import React from 'react';
 import versionInfo from '../package.json';
 import { wrapper } from '@blog/client/redux/store';
 import { fetchConfig } from '@blog/client/web/api';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 import 'antd/dist/antd.css';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -32,7 +34,11 @@ class MyApp extends App {
     }
     public render() {
         const { Component, pageProps } = this.props as any;
-        return <Component {...pageProps} />;
+        return (
+            <ConfigProvider locale={zhCN}>
+                <Component {...pageProps} />
+            </ConfigProvider>
+        );
     }
 }
 

@@ -16,15 +16,18 @@ import { SearchModule } from './modules/search/search.module';
 import { UserModule } from './modules/user/user.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { isProdMode } from './configs/index.config';
+import { isProdMode, MONGODB } from './configs/index.config';
 import { siteConfig } from './modules/app-config/app.config.service';
 import { TasksModule } from './modules/tasks/tasks.module';
 
 import { SSRModule } from '@blog/client/server';
+import { ExploreModule } from './modules/explore/explore.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
     imports: [
         DatabaseModule,
+        MongooseModule.forRoot(MONGODB.uri),
         ConfigModule.forRoot({
             ignoreEnvFile: true,
             isGlobal: true,
@@ -42,6 +45,7 @@ import { SSRModule } from '@blog/client/server';
         LoginModule,
         SearchModule,
         UserModule,
+        ExploreModule,
         ...(isProdMode ? [ScheduleModule.forRoot(), TasksModule] : []),
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export type IPaginate = {
-    paginate?: (
+    paginate: (
         query: any,
         field: any,
         options: {

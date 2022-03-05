@@ -15,9 +15,6 @@ const ActiveLink = (data: any) => {
 
     if (router.pathname === aimRouter.url) {
         className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
-    } else if (router.pathname.includes(aimRouter.url)) {
-        // 映射类似 /blog/articles -> /blog 的url，激活 带有 /blog 的导航链接
-        className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
     }
     if (props.exact) {
         if (router.query.cid || aimRouter.query.cid) {
