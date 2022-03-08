@@ -2,19 +2,20 @@ import React from 'react';
 import style from './style.module.scss';
 import NavLink from '../nav-link';
 import Link from '../link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { SearchForm } from './search-form';
 import { HomeOutlined, ShareAltOutlined, UserOutlined } from '@ant-design/icons';
-import { GithubIcon, MoonIcon, RssIcon, SunIcon } from '../../icons';
+import { GithubIcon, MoonIcon, RssIcon, SunIcon } from '@blog/client/web/icons';
 import { ReactSVG } from 'react-svg';
 import { RootState } from '@blog/client/redux/store';
 import scrollIntoView from '@blog/client/web/utils/scroll.into.view';
 import { setTheme } from '@blog/client/redux/store';
 import { useFetchConfigQuery } from '@blog/client/web/api';
+import { useAppDispatch } from '@blog/client/web/hooks/app';
 
 export const AppHeader = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { data: config } = useFetchConfigQuery();
     const theme = useSelector((state: RootState) => state.app.theme);
     return (

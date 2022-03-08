@@ -1,0 +1,14 @@
+html,
+body,
+#__next {
+    height: 100%;
+    min-height: 100%;
+    background-color: var(--app-background-color);
+}
+
+@font-face {
+    font-family: 'logoFont';
+    src: url('../assets/fonts/ZiXinFangMengTi-subfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
