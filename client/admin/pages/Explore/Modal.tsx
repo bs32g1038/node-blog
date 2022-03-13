@@ -48,7 +48,9 @@ export default (props: Props) => {
         const { id } = props;
         if (id) {
             axios.get('/explore/' + id).then((res) => {
-                setLinkForms(res.data?.links || initLinkForms);
+                if (res.data?.links?.length > 0) {
+                    setLinkForms(res.data?.links);
+                }
                 form.setFieldsValue({
                     ...res.data,
                     ...(res.data?.links?.reduce((obj, item, index) => {
