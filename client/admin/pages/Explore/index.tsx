@@ -3,7 +3,7 @@ import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
-import { Button, Popconfirm, message, Space, List, Skeleton, Avatar } from 'antd';
+import { Button, Image, Popconfirm, message, Space, List, Skeleton, Avatar } from 'antd';
 import { PlusOutlined, DeleteFilled, EditFilled, TagOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
@@ -116,7 +116,28 @@ export default () => {
                                                 </span>
                                             </Space>
                                         }
-                                        description={item.content}
+                                        description={
+                                            <div>
+                                                <p>{item.content}</p>
+                                                <p>
+                                                    {item.links.map((item) => {
+                                                        return (
+                                                            <Space style={{ display: 'flex' }}>
+                                                                <span>{item.title}</span>
+                                                                <a target="_blank" href={item.link}>
+                                                                    {item.link}
+                                                                </a>
+                                                            </Space>
+                                                        );
+                                                    })}
+                                                </p>
+                                                <p>
+                                                    {item.pics.map((item) => {
+                                                        return <Image width={120} src={item} />;
+                                                    })}
+                                                </p>
+                                            </div>
+                                        }
                                     />
                                 </Skeleton>
                             </List.Item>

@@ -1,22 +1,67 @@
-import React, { useEffect } from 'react';
-import { SendOutlined } from '@ant-design/icons';
-import { Form, Modal, Input, Button, Space, message } from 'antd';
-import style from './modal.module.scss';
+import React, { useEffect, useState } from 'react';
+import { PlusOutlined, SendOutlined } from '@ant-design/icons';
+import { Form, Modal, Input, Button, Space, message, Upload, Select } from 'antd';
+import styles from './modal.module.scss';
 import axios from '@blog/client/admin/axios';
-
+import config from '@blog/client/configs/admin.default.config';
 interface Props {
     id?: string;
     visible: boolean;
     onCancel?: () => void;
 }
 
+const initLinkForms = [
+    {
+        title0: '链接',
+        link0: '',
+    },
+];
+
 export default (props: Props) => {
+    const [linkForms, setLinkForms] = useState(initLinkForms);
+    const handleUpload = (info) => {
+        console.log(info);
+        if (Array.isArray(info)) {
+            return info;
+        }
+        if (info.file.status === 'done') {
+            const fileList =
+                info &&
+                info.fileList.map((file) => {
+                    if (file.response) {
+                        file.url = file.response.url;
+                    }
+                    return file;
+                });
+            return fileList;
+        }
+
+        return info && info.fileList;
+    };
     const [form] = Form.useForm();
+    useEffect(() => {
+        form.setFieldsValue({
+            ...initLinkForms[0],
+        });
+    }, []);
     useEffect(() => {
         const { id } = props;
         if (id) {
             axios.get('/explore/' + id).then((res) => {
-                form.setFieldsValue(res.data);
+                setLinkForms(res.data?.links || initLinkForms);
+                form.setFieldsValue({
+                    ...res.data,
+                    ...(res.data?.links?.reduce((obj, item, index) => {
+                        obj['title' + index] = item.title;
+                        obj['link' + index] = item.link;
+                        return obj;
+                    }, {}) || {}),
+                    pics: res.data.pics.map((item, index) => ({
+                        uid: index,
+                        status: 'done',
+                        url: item,
+                    })),
+                });
             });
         }
     }, [props.id]);
@@ -28,7 +73,22 @@ export default (props: Props) => {
     };
     const publish = (data) => {
         const { id } = props;
-        const p = id ? updateExplore(id, data) : createExplore(data);
+        const value = { ...data };
+        value.links = Object.keys(value)
+            .map((_, index) => {
+                return {
+                    title: value['title' + index],
+                    link: value['link' + index],
+                };
+            })
+            .filter((item) => item.link);
+        Object.assign(value, {
+            pics:
+                value.pics?.map((item) => {
+                    return item.url;
+                }) || [],
+        });
+        const p = id ? updateExplore(id, value) : createExplore(value);
         p.then(() => {
             message.success('提交成功');
             props?.onCancel();
@@ -39,12 +99,71 @@ export default (props: Props) => {
             <Form form={form} onFinish={publish}>
                 <Form.Item name="content" rules={[{ required: true, message: '请输入话题' }]}>
                     <Input.TextArea
-                        className={style.textarea}
+                        className={styles.textarea}
                         placeholder="写下你的令人惊奇的发现"
                         autoSize={{ minRows: 4, maxRows: 7 }}
                     />
                 </Form.Item>
-                <Form.Item className={style.footer}>
+                {linkForms.map((item, index) => {
+                    return (
+                        <div className={styles.group} key={'link--' + index}>
+                            <Button
+                                size="small"
+                                className={styles.actionButton}
+                                type="link"
+                                icon={<PlusOutlined></PlusOutlined>}
+                                onClick={() => {
+                                    setLinkForms((val) => {
+                                        return [
+                                            ...val,
+                                            {
+                                                title0: '链接',
+                                                link0: '',
+                                            },
+                                        ];
+                                    });
+                                }}
+                            >
+                                添加链接
+                            </Button>
+                            <Space>
+                                <Form.Item
+                                    label="链接"
+                                    name={'title' + index}
+                                    rules={[{ required: true, message: '请输入' }]}
+                                >
+                                    <Select style={{ width: 120 }}>
+                                        <Select.Option value="网站">网站</Select.Option>
+                                        <Select.Option value="文档">文档</Select.Option>
+                                        <Select.Option value="Github">Github</Select.Option>
+                                        <Select.Option value="链接">链接</Select.Option>
+                                        <Select.Option value="推特">推特</Select.Option>
+                                        <Select.Option value="微博">微博</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item name={'link' + index} style={{ width: '100%' }}>
+                                    <Input placeholder="请输入链接地址" />
+                                </Form.Item>
+                            </Space>
+                        </div>
+                    );
+                })}
+                <Form.Item name="pics" valuePropName="fileList" getValueFromEvent={handleUpload}>
+                    <Upload
+                        name="file"
+                        action="/api/files/upload"
+                        listType="picture-card"
+                        headers={{
+                            authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
+                        }}
+                    >
+                        <div>
+                            <PlusOutlined />
+                            <div style={{ marginTop: 8 }}>Upload</div>
+                        </div>
+                    </Upload>
+                </Form.Item>
+                <Form.Item className={styles.footer}>
                     <Space>
                         <Button htmlType="submit" type="primary">
                             <SendOutlined />

@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import AppLayout from '@blog/client/web/layouts/app';
 import { fetchExplore, useFetchConfigQuery, useFetchExploreQuery } from '@blog/client/web/api';
-import { Skeleton, Space } from 'antd';
+import { Skeleton, Space, Image } from 'antd';
 import { wrapper } from '@blog/client/redux/store';
 import style from './style.module.scss';
 import { TagOutlined } from '@ant-design/icons';
@@ -35,7 +35,28 @@ const Page = () => {
                                         <span className={style.commentHeaderTime}>{parseTime(item.createdAt)}</span>
                                     </Space>
                                 }
-                                description={item.content}
+                                description={
+                                    <div>
+                                        <p>{item.content}</p>
+                                        <p>
+                                            {item.links.map((item) => {
+                                                return (
+                                                    <Space style={{ display: 'flex' }}>
+                                                        <span>{item.title}</span>
+                                                        <a target="_blank" href={item.link}>
+                                                            {item.link}
+                                                        </a>
+                                                    </Space>
+                                                );
+                                            })}
+                                        </p>
+                                        <p>
+                                            {item.pics.map((item) => {
+                                                return <Image width={120} src={item} />;
+                                            })}
+                                        </p>
+                                    </div>
+                                }
                             />
                         </Skeleton>
                     </List.Item>

@@ -1,0 +1,31 @@
+.linkForm {
+    margin-bottom: 20px;
+}
+
+.group {
+    border: 1px dashed #ccc;
+    padding: 20px 10px 10px;
+    position: relative;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    :global {
+        .ant-form-item {
+            margin-bottom: 0;
+            + .ant-form-item {
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
+.actionButton {
+    position: absolute;
+    z-index: 100;
+    top: -13px;
+    background-color: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+    &:hover {
+        background-color: #fff;
+    }
+}
