@@ -74,13 +74,13 @@ export default () => {
     return (
         <BasicLayout>
             <Row gutter={24}>
-                <Col xl={15} lg={24} md={24} sm={24} xs={24}>
+                <Col xl={15} lg={15} md={15} sm={15} xs={15}>
                     <RecentCommentList
                         loading={state.loading}
                         recentComments={state.recentComments}
                     ></RecentCommentList>
                 </Col>
-                <Col xl={9} lg={24} md={24} sm={24} xs={24}>
+                <Col xl={9} lg={9} md={9} sm={9} xs={9}>
                     <NavPanel loading={state.loading} links={links}></NavPanel>
                     <LoginLogPanel loading={state.loading} recentAdminLogs={state.recentAdminLogs}></LoginLogPanel>
                 </Col>
