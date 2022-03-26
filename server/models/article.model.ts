@@ -75,7 +75,7 @@ export class Article {
     category: Category;
 
     @Prop({ default: 0 })
-    ArticleCount: number;
+    commentCount: number;
 
     @Prop({ default: 0 })
     viewsCount: number;
