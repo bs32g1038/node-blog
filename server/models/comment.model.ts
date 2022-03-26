@@ -45,7 +45,7 @@ export class Comment {
     @Prop({ maxlength: 80, trim: true, required: true })
     email: string;
 
-    @Prop({ maxlength: 80, trim: true, required: true })
+    @Prop({ maxlength: 80, trim: true, default: '' })
     website: string;
 
     @Prop({ maxlength: 500, trim: true, required: true })
@@ -60,14 +60,14 @@ export class Comment {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Article.name, equired: true })
     article: string;
 
-    @Prop({ maxlength: 80, trim: true, required: true })
+    @Prop({ maxlength: 80, trim: true, default: '' })
     location: string;
 
     @Prop({ default: true })
     pass: boolean;
 
     // 管理员身份为1，0为游客
-    @Prop({ max: 4, defalut: 0 })
+    @Prop({ max: 4, default: 0 })
     identity: number;
 }
 
