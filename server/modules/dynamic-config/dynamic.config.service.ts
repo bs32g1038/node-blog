@@ -31,10 +31,9 @@ export class DynamicConfigService {
                     ...config,
                 });
                 logger.info('初始化配置成功！');
-                this.setConfig(data.toObject());
+                return this.setConfig(data.toObject());
             }
-            this.setConfig(res.toObject());
-            return Promise.resolve();
+            return this.setConfig(res.toObject());
         });
     }
 
@@ -44,6 +43,7 @@ export class DynamicConfigService {
 
     setConfig(data) {
         this._config = data;
+        return this._config;
     }
 
     setIsHasfavicon(bool: boolean) {
