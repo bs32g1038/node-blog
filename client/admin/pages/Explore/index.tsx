@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
@@ -27,33 +27,30 @@ const Index = () => {
         isVisibleWriter: false,
         editId: '',
     });
-    const fetchData = useCallback(
-        (page = 1, limit = 10) => {
-            setState((data) => {
-                return { ...data, isResetFetch: false, loading: true };
+    const fetchData = (page = 1, limit = 10) => {
+        setState((data) => {
+            return { ...data, isResetFetch: false, loading: true };
+        });
+        const query = {
+            limit,
+            page,
+        };
+        if (state.searchKey) {
+            Object.assign(query, {
+                title: state.searchKey,
             });
-            const query = {
-                limit,
-                page,
-            };
-            if (state.searchKey) {
-                Object.assign(query, {
-                    title: state.searchKey,
-                });
-            }
-            axios.get('/explore?' + queryString.stringify(query)).then((res) => {
-                const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
-                setState((data) => ({
-                    ...data,
-                    exploreList: res.data.items,
-                    loading: false,
-                    pagination,
-                }));
-                scrollIntoView('article-panel');
-            });
-        },
-        [state.pagination, state.searchKey]
-    );
+        }
+        axios.get('/explore?' + queryString.stringify(query)).then((res) => {
+            const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
+            setState((data) => ({
+                ...data,
+                exploreList: res.data.items,
+                loading: false,
+                pagination,
+            }));
+            scrollIntoView('article-panel');
+        });
+    };
     const deleteExplore = (_id) => {
         axios.delete('/explore/' + _id).then(() => {
             message.success('删除成功！');
@@ -62,7 +59,8 @@ const Index = () => {
     };
     useEffect(() => {
         fetchData();
-    }, [fetchData, state.isResetFetch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.isResetFetch]);
     const CTitle = (
         <Space>
             <Button
