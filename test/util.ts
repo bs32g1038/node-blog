@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
+import { MONGODB, TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 import { DatabaseModule } from '../server/database/database.module';
 import { Test } from '@nestjs/testing';
@@ -9,6 +9,7 @@ import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
 import { DynamicConfigModule } from '@blog/server/modules/dynamic-config/dynamic.config.module';
 import { EmailModule } from '@blog/server/modules/email/email.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -22,7 +23,13 @@ export const verifyToken = (str) => {
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const module = await Test.createTestingModule({
-        imports: [DatabaseModule, DynamicConfigModule, EmailModule, ...(metadata.imports || [])],
+        imports: [
+            DatabaseModule,
+            MongooseModule.forRoot(MONGODB.uri),
+            DynamicConfigModule,
+            EmailModule,
+            ...(metadata.imports || []),
+        ],
         providers: metadata.providers,
     }).compile();
     const app = module.createNestApplication();
