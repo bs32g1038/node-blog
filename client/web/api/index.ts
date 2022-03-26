@@ -107,6 +107,7 @@ interface ExploreDataLoaded {
         link: string;
     }[];
     pics: string[];
+    createdAt: string;
 }
 
 interface IExploreReponse {
