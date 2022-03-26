@@ -3,8 +3,8 @@ import React from 'react';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import { Breadcrumb } from 'antd';
-const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import dynamic from 'next/dynamic';
+const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
 const MarkdownBody = dynamic(() => import('../markdown-body'), { ssr: false });
 
