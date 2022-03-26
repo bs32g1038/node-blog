@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
@@ -11,7 +11,7 @@ import exlporeAvatar from '@blog/client/assets/svgs/explore-avatar.svg';
 import ActionCard from '@blog/client/admin/components/ActionCard';
 import Modal from './Modal';
 
-export default () => {
+const Index = () => {
     const [state, setState] = useState({
         exploreList: [],
         pagination: {
@@ -27,30 +27,33 @@ export default () => {
         isVisibleWriter: false,
         editId: '',
     });
-    const fetchData = (page = 1, limit = 10) => {
-        setState((data) => {
-            return { ...data, isResetFetch: false, loading: true };
-        });
-        const query = {
-            limit,
-            page,
-        };
-        if (state.searchKey) {
-            Object.assign(query, {
-                title: state.searchKey,
+    const fetchData = useCallback(
+        (page = 1, limit = 10) => {
+            setState((data) => {
+                return { ...data, isResetFetch: false, loading: true };
             });
-        }
-        axios.get('/explore?' + queryString.stringify(query)).then((res) => {
-            const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
-            setState((data) => ({
-                ...data,
-                exploreList: res.data.items,
-                loading: false,
-                pagination,
-            }));
-            scrollIntoView('article-panel');
-        });
-    };
+            const query = {
+                limit,
+                page,
+            };
+            if (state.searchKey) {
+                Object.assign(query, {
+                    title: state.searchKey,
+                });
+            }
+            axios.get('/explore?' + queryString.stringify(query)).then((res) => {
+                const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
+                setState((data) => ({
+                    ...data,
+                    exploreList: res.data.items,
+                    loading: false,
+                    pagination,
+                }));
+                scrollIntoView('article-panel');
+            });
+        },
+        [state.pagination, state.searchKey]
+    );
     const deleteExplore = (_id) => {
         axios.delete('/explore/' + _id).then(() => {
             message.success('删除成功！');
@@ -59,7 +62,7 @@ export default () => {
     };
     useEffect(() => {
         fetchData();
-    }, [state.isResetFetch]);
+    }, [fetchData, state.isResetFetch]);
     const CTitle = (
         <Space>
             <Button
@@ -72,17 +75,19 @@ export default () => {
         </Space>
     );
     return (
-        <div>
+        <React.Fragment>
             <BasicLayout>
                 <ActionCard title={CTitle}>
                     <List
                         className={style.wrap}
                         itemLayout="horizontal"
                         dataSource={state.exploreList}
-                        renderItem={(item: any) => (
+                        renderItem={(item) => (
                             <List.Item
+                                key={item.id}
                                 actions={[
                                     <Button
+                                        key="edit"
                                         size="small"
                                         title="编辑"
                                         type="link"
@@ -94,6 +99,7 @@ export default () => {
                                         编辑
                                     </Button>,
                                     <Popconfirm
+                                        key="delete"
                                         title="确认要删除？"
                                         onConfirm={() => deleteExplore(item._id)}
                                         okText="确定"
@@ -122,9 +128,9 @@ export default () => {
                                                 <p>
                                                     {item.links.map((item) => {
                                                         return (
-                                                            <Space style={{ display: 'flex' }}>
+                                                            <Space key={item} style={{ display: 'flex' }}>
                                                                 <span>{item.title}</span>
-                                                                <a target="_blank" href={item.link}>
+                                                                <a target="_blank" href={item.link} rel="noreferrer">
                                                                     {item.link}
                                                                 </a>
                                                             </Space>
@@ -132,8 +138,8 @@ export default () => {
                                                     })}
                                                 </p>
                                                 <p>
-                                                    {item.pics.map((item) => {
-                                                        return <Image width={120} src={item} />;
+                                                    {item.pics.map((item: string) => {
+                                                        return <Image key={item} width={120} src={item} alt="" />;
                                                     })}
                                                 </p>
                                             </div>
@@ -157,6 +163,8 @@ export default () => {
                     }}
                 ></Modal>
             )}
-        </div>
+        </React.Fragment>
     );
 };
+
+export default Index;

@@ -29,13 +29,13 @@ export const AppHeader = () => {
                 </a>
             </Link>
             <nav className={style.nav}>
-                <NavLink href="/blog" exact={true}>
+                <NavLink href="/blog">
                     <a className={style.navA}>
                         <HomeOutlined></HomeOutlined>
                         <span>首页</span>
                     </a>
                 </NavLink>
-                <NavLink href="/blog/expore" exact={true}>
+                <NavLink href="/blog/expore">
                     <a className={style.navA}>
                         <ShareAltOutlined />
                         <span>发现</span>

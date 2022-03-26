@@ -26,7 +26,7 @@ const updateUserInfo = (data) => {
     return axios.put('/user/update', data);
 };
 
-export default () => {
+export default function InfoForm() {
     const { loading, injectRequestLoading } = useRequestLoading();
     const { setImageUrl, UploadButton, handleUpload } = useImageUpload({
         style: {
@@ -49,7 +49,7 @@ export default () => {
             setImageUrl(res.data.avatar);
             form.setFieldsValue({ ...res.data, avatar });
         });
-    }, [1]);
+    }, [form, setImageUrl]);
 
     const onFinish = (values) => {
         return injectRequestLoading(updateUserInfo({ ...values, avatar: values.avatar[0].url })).then(() => {
@@ -115,4 +115,4 @@ export default () => {
             <Divider />
         </Form>
     );
-};
+}

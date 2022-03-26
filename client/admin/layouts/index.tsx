@@ -12,14 +12,14 @@ interface Props {
     children: React.ReactNode;
 }
 
-export default (props: Props) => {
+export default function Layouts(props: Props) {
     const [state] = useState({
         collapsed: false,
     });
 
     useEffect(() => {
         isLogin();
-    }, [1]);
+    }, []);
 
     return (
         <Layout style={{ marginLeft: state.collapsed ? 80 : 267 }}>
@@ -35,4 +35,4 @@ export default (props: Props) => {
             </Layout>
         </Layout>
     );
-};
+}

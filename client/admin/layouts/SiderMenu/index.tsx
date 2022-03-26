@@ -3,8 +3,6 @@ import Link from 'next/link';
 import defaultConfig from '@blog/client/configs/admin.default.config';
 import menus from '@blog/client/configs/admin.menu.config';
 import Router, { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { RootState } from '@blog/client/redux/store';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from '@blog/client/admin/utils/path.util';
 import { ReactSVG } from 'react-svg';
@@ -61,7 +59,7 @@ const logout = () => {
     return Router.push('/admin/login');
 };
 
-export default (props: Props) => {
+export default function SiderMenu(props: Props) {
     const { collapsed } = props;
     const [state, setState] = useState({
         mode: 'inline',
@@ -89,7 +87,7 @@ export default (props: Props) => {
             firstHide: false,
             ...(setMenuOpen({ router }) as any),
         }));
-    }, [1]);
+    }, [router]);
     const { selectedKey, openKey, firstHide } = state;
     const { data: config } = useFetchConfigQuery();
     const data = JSON.parse(localStorage.getItem(defaultConfig.userInfoKey));
@@ -111,10 +109,12 @@ export default (props: Props) => {
                 }}
             >
                 <Link href="/admin/dashboard">
-                    <div className={style.logo}>
-                        <ReactSVG src={config.siteLogo} />
-                        <h1>{config.siteTitle}</h1>
-                    </div>
+                    <a>
+                        <div className={style.logo}>
+                            <ReactSVG src={config.siteLogo} />
+                            <h1>{config.siteTitle}</h1>
+                        </div>
+                    </a>
                 </Link>
                 <div className={style.userMenu}>
                     <Menu mode="inline">
@@ -151,9 +151,11 @@ export default (props: Props) => {
                 <div style={{ overflowY: 'auto' }}>
                     <div className={style.homeMenuItem}>
                         <Link href="/admin/site">
-                            <Button>
-                                <HomeOutlined></HomeOutlined>浏览网站
-                            </Button>
+                            <a>
+                                <Button>
+                                    <HomeOutlined></HomeOutlined>浏览网站
+                                </Button>
+                            </a>
                         </Link>
                     </div>
                     <div className={style.menuTip}>管理</div>
@@ -171,4 +173,4 @@ export default (props: Props) => {
             </Sider>
         </div>
     );
-};
+}

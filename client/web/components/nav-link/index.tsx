@@ -13,18 +13,13 @@ const ActiveLink = (data: any) => {
 
     const aimRouter = queryString.parseUrl(props.href);
 
-    if (router.pathname === aimRouter.url) {
+    if (router.pathname === aimRouter.url && aimRouter.query.cid === router.query.cid) {
         className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
+    } else {
+        className = className.replace(` ${props.activeClassName}`, '');
     }
-    if (props.exact) {
-        if (router.query.cid || aimRouter.query.cid) {
-            // 当路由带有 ?cid= 激活相对应的链接
-            if (router.pathname === aimRouter.url && aimRouter.query.cid === router.query.cid) {
-                className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
-            } else {
-                className = className.replace(` ${props.activeClassName}`, '');
-            }
-        }
+    if (aimRouter.url === '/blog' && router.pathname === '/blog/articles' && !props.exact) {
+        className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
     }
 
     delete props.activeClassName;

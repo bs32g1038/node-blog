@@ -29,11 +29,15 @@
     color: var(--title-text-color);
 }
 .commentItemAvatar {
+    position: relative;
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    min-height: 32px;
     border-radius: 2px;
     margin-right: 10px;
     margin-top: 5px;
+    overflow: hidden;
 }
 .commentHeaderTime {
     margin-left: 5px;
@@ -91,4 +95,12 @@
         display: flex;
         align-items: center;
     }
+}
+
+.commentItemReplyAvatar {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    margin-right: 5px;
+    overflow: hidden;
 }

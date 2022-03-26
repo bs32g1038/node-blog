@@ -1,66 +1,65 @@
 import fs from 'fs-extra';
 import path from 'path';
 import sharp from 'sharp';
-import { isDevMode } from '@blog/server/configs/index.config';
-import { Injectable } from '@nestjs/common';
-import { ConfigService, registerAs } from '@nestjs/config';
-import { ConfigModel } from '@blog/server/models/config.model';
-import siteInfo from '@blog/server/configs/site.default.config';
-import { isEmpty, isEqual } from 'lodash';
-import { staticAssetsPath, publicPath } from '@blog/server/utils/path.util';
-import { Setting } from '@blog/server/models/config.model';
-import LRU from 'lru-cache';
 import toIco from 'to-ico';
+import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { DynamicConfig, DynamicConfigDocument } from '@blog/server/models/dynamic.config.model';
+import { isEmpty, isEqual } from 'lodash';
+import siteInfo from '@blog/server/configs/site.default.config';
+import logger from '@blog/server/utils/logger.util';
+import { isDevMode } from '@blog/server/configs/index.config';
+import { staticAssetsPath, publicPath } from '@blog/server/utils/path.util';
 
-const cache = new LRU({ max: 500 });
-const namespace = 'siteConfig';
-const CONFIG_KEY = 'app-config';
+export const CONFIG_KEY = 'app-config';
+
 const config = {
     ...siteInfo,
 };
 
-export const siteConfig = registerAs(namespace, () => {
-    return ConfigModel.findOne({ key: CONFIG_KEY }).then(async (res) => {
-        if (isEmpty(res)) {
-            const data = await ConfigModel.create({
-                key: CONFIG_KEY,
-                ...config,
-            });
-            return data.toObject();
-        }
-        return res.toObject();
-    });
-});
-
 @Injectable()
-export class AppConfigService {
-    private readonly namespace: string;
+export class DynamicConfigService {
+    _config: DynamicConfig = new DynamicConfig();
     isHasfavicon = true;
+    constructor(@InjectModel(DynamicConfig.name) private readonly configModel: Model<DynamicConfigDocument>) {
+        configModel.findOne({ key: CONFIG_KEY }).then(async (res) => {
+            if (isEmpty(res)) {
+                const data = await configModel.create({
+                    key: CONFIG_KEY,
+                    ...config,
+                });
+                logger.info('初始化配置成功！');
+                return this.setConfig(data.toObject());
+            }
+            return this.setConfig(res.toObject());
+        });
+    }
 
-    constructor(private configService: ConfigService) {
-        this.namespace = namespace;
-        this.setConfig(configService.get(this.namespace));
+    get config(): DynamicConfig {
+        return this._config;
     }
 
     setConfig(data) {
-        cache.set(this.namespace, data);
+        this._config = data;
+        return this._config;
     }
 
-    updateAppConfig = async (data) => {
+    setIsHasfavicon(bool: boolean) {
+        this.isHasfavicon = bool;
+    }
+
+    async updateConfig(data) {
         if (!isEmpty(data.siteLogo)) {
             const siteLogo = await this.handleSiteLogoUrl(data);
             Object.assign(data, {
                 siteLogo,
             });
         }
-        await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
-        const res = await ConfigModel.findOne({ key: CONFIG_KEY });
+        await this.configModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
+        const res = await this.configModel.findById(CONFIG_KEY);
         this.setConfig(res.toObject());
-        return config;
-    };
-
-    setIsHasfavicon(bool: boolean) {
-        this.isHasfavicon = bool;
+        return this.config;
     }
 
     /**
@@ -71,11 +70,7 @@ export class AppConfigService {
         if (isDevMode) {
             return '';
         }
-        return '//' + this.appConfig.siteDomain;
-    }
-
-    get appConfig(): Setting {
-        return cache.get(this.namespace) as any;
+        return '//' + this.config.siteDomain;
     }
 
     async handleSiteLogoUrl(data) {
@@ -88,7 +83,11 @@ export class AppConfigService {
         }
         await fs.copy(oldPath, copyAimPath);
         const content = await fs.readFile(oldPath);
-        await this.generateIco(content);
+        try {
+            await this.generateIco(content);
+        } catch (error) {
+            logger.error('生成 favicon 异常', error);
+        }
         return this.siteDomain + '/static/logo.svg';
     }
 

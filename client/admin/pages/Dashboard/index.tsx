@@ -25,7 +25,7 @@ const links = [
     },
 ];
 
-export default () => {
+const Dashboard = () => {
     const [state, setState] = useState({
         loading: false,
         statisticalInfo: {},
@@ -69,7 +69,7 @@ export default () => {
                 loading: false,
             }));
         });
-    }, [1]);
+    }, []);
 
     return (
         <BasicLayout>
@@ -88,3 +88,5 @@ export default () => {
         </BasicLayout>
     );
 };
+
+export default Dashboard;

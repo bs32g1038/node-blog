@@ -7,6 +7,7 @@ import { parseTime } from '@blog/client/libs/time';
 import style from './item.style.module.scss';
 
 const ThumbImg = React.forwardRef((props, ref) => <img {...props} className={style.thumbImg} ref={ref as any} />);
+ThumbImg.displayName = 'ThumbImg';
 
 const Item = (props: any) => {
     const item = props.item;

@@ -104,13 +104,13 @@ class GHAT {
         };
     }
 
-    drawImage(...args: any[]) {
+    drawImage(...args: number[]) {
         if (this.draw) {
             this.draw.fillRect(args[0], args[1], args[2], args[3]);
         }
     }
 
-    map(grid: any[] | boolean[][]) {
+    map(grid: number[][] | boolean[][]) {
         for (let y = 0; y < grid.length; y++) {
             for (let x = 0; x < grid[y].length; x++) {
                 if (grid[y][x] === true) {
@@ -129,7 +129,7 @@ class GHAT {
     }
 
     grid(md5Grid: boolean[]) {
-        const map: any[] = [];
+        const map: boolean[][] = [];
         for (let y = 0; y < this.PARTITIONS; y++) {
             map[y] = [];
             for (let x = 0; x < this.BASE_SEED; x++) {

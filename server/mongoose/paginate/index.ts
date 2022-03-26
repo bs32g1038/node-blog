@@ -13,8 +13,8 @@ export type IPaginate = {
     ) => { items: any[]; totalCount: number };
 };
 
-export default (schema: mongoose.Schema) => {
-    async function paginate(
+export default function paginate(schema: mongoose.Schema) {
+    async function _paginate(
         query: any,
         field: any,
         options: {
@@ -38,5 +38,5 @@ export default (schema: mongoose.Schema) => {
         const [items, totalCount] = await Promise.all([$FD, this.countDocuments(query)]);
         return { items, totalCount } as { items: any[]; totalCount: number };
     }
-    schema.statics.paginate = paginate;
-};
+    schema.statics.paginate = _paginate;
+}

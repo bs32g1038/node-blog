@@ -4,7 +4,7 @@ import InfoForm from './InfoForm';
 import PasswordForm from './PasswordForm';
 import style from './style.module.scss';
 
-export default () => {
+export default function UserInfoConfig() {
     return (
         <BasicLayout>
             <div className={style.wrap}>
@@ -13,4 +13,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}

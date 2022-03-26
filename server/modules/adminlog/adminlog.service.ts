@@ -1,10 +1,12 @@
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { AdminLogModel, AdminLog, IAdminLogModel } from '../../models/adminlog.model';
-import { InjectModel } from '../../utils/model.util';
+import { AdminLog, AdminLogDocument } from '../../models/adminlog.model';
+import { InjectModel } from '@nestjs/mongoose';
+import { IPaginate } from '@blog/server/mongoose/paginate';
 
 @Injectable()
 export class AdminLogService {
-    constructor(@InjectModel(AdminLogModel) private readonly adminLogModel: IAdminLogModel) {}
+    constructor(@InjectModel(AdminLog.name) private readonly adminLogModel: Model<AdminLogDocument> & IPaginate) {}
 
     async getAdminLogs(options: {
         page?: number;

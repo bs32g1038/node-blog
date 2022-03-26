@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
-import { Table, Button, Popconfirm, message } from 'antd';
+import { Table, Button, Popconfirm, message, Space } from 'antd';
 import Router from 'next/router';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
-import style from './style.module.scss';
-import useRequest from '@blog/client/admin/hooks/useRequest';
+import queryString from 'query-string';
+import ActionCard from '@blog/client/admin/components/ActionCard';
 
-export default () => {
+export default function Index() {
     const [state, setState] = useState({
         categories: [],
         selectedRowKeys: [],
         visible: false,
+        loading: false,
     });
-    const [categories, refresh, loading] = useRequest('/categories/', { page: 1, limit: 100 });
+    const fetchData = () => {
+        setState((data) => {
+            return { ...data, isResetFetch: false, loading: true };
+        });
+        const query = {
+            page: 1,
+            limit: 100,
+        };
+        axios.get('/categories?' + queryString.stringify(query)).then((res) => {
+            setState((data) => ({
+                ...data,
+                categories: res.data,
+                loading: false,
+            }));
+        });
+    };
     const deleteCategory = (_id) => {
         axios.delete('/categories/' + _id).then((res) => {
             message.success(`删除分类 ${res.data.name} 成功！`);
-            refresh();
+            fetchData();
         });
     };
     const batchDeleteCategory = () => {
@@ -33,7 +49,7 @@ export default () => {
                         ...data,
                         selectedRowKeys: [],
                     }));
-                    refresh();
+                    fetchData();
                 }
                 return message.error('删除分类失败，请重新尝试。');
             });
@@ -90,55 +106,59 @@ export default () => {
             },
         ];
     };
+    useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const { selectedRowKeys } = state;
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange.bind(this),
     };
+    const CTitle = (
+        <Space>
+            <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => Router.push('/admin/content/categories/edit')}
+            >
+                添加分类
+            </Button>
+            <Popconfirm
+                title="确认要删除？"
+                placement="right"
+                visible={state.visible}
+                onVisibleChange={() => {
+                    if (state.selectedRowKeys.length <= 0) {
+                        message.info('请选择要删除的分类');
+                        return;
+                    }
+                    setState((data) => ({
+                        ...data,
+                        visible: !state.visible,
+                    }));
+                }}
+                onConfirm={() => batchDeleteCategory()}
+                okText="确定"
+                cancelText="取消"
+            >
+                <Button danger={true} icon={<DeleteFilled />}>
+                    批量删除
+                </Button>
+            </Popconfirm>
+        </Space>
+    );
     return (
         <BasicLayout>
-            <div className="main-content">
-                <div className={style.adminPanelDiv} style={{ marginBottom: '20px' }}>
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => Router.push('/admin/content/categories/edit')}
-                    >
-                        添加分类
-                    </Button>
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.visible}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的分类');
-                                return;
-                            }
-                            setState((data) => ({
-                                ...data,
-                                visible: !state.visible,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteCategory()}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <Button danger={true} icon={<DeleteFilled />}>
-                            批量删除
-                        </Button>
-                    </Popconfirm>
-                </div>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={(record: any) => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        loading={loading}
-                        dataSource={categories as any}
-                    />
-                </div>
-            </div>
+            <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
+                <Table
+                    rowKey={(record: any) => record._id}
+                    rowSelection={rowSelection}
+                    columns={getTableColums()}
+                    loading={state.loading}
+                    dataSource={state.categories as any}
+                />
+            </ActionCard>
         </BasicLayout>
     );
-};
+}

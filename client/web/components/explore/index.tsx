@@ -24,7 +24,7 @@ const Page = () => {
                 className={style.wrap}
                 itemLayout="horizontal"
                 dataSource={exploreList}
-                renderItem={(item: any) => (
+                renderItem={(item) => (
                     <List.Item key={item._id}>
                         <Skeleton avatar title={false} loading={false} active>
                             <List.Item.Meta
@@ -36,26 +36,26 @@ const Page = () => {
                                     </Space>
                                 }
                                 description={
-                                    <div>
-                                        <p>{item.content}</p>
-                                        <p>
+                                    <Space direction="vertical" size={4}>
+                                        <div>{item.content}</div>
+                                        <div>
                                             {item.links.map((item) => {
                                                 return (
-                                                    <Space style={{ display: 'flex' }}>
+                                                    <Space key={item.link} style={{ display: 'flex' }}>
                                                         <span>{item.title}</span>
-                                                        <a target="_blank" href={item.link}>
+                                                        <a target="_blank" href={item.link} rel="noreferrer">
                                                             {item.link}
                                                         </a>
                                                     </Space>
                                                 );
                                             })}
-                                        </p>
-                                        <p>
-                                            {item.pics.map((item) => {
-                                                return <Image width={120} src={item} />;
+                                        </div>
+                                        <div>
+                                            {item.pics.map((item: string) => {
+                                                return <Image key={item} width={120} src={item} alt="" />;
                                             })}
-                                        </p>
-                                    </div>
+                                        </div>
+                                    </Space>
                                 }
                             />
                         </Skeleton>

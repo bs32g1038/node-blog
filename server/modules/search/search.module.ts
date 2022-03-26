@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
-import { ArticleModelProvider } from '../../models/article.model';
+import { ArticleModelModule } from '../../models/article.model';
 
 @Module({
+    imports: [ArticleModelModule],
     controllers: [SearchController],
-    providers: [ArticleModelProvider, SearchService],
+    providers: [SearchService],
 })
 export class SearchModule {}

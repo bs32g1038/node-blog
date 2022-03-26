@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Router, { useRouter } from 'next/router';
 import { Form, Input, Button, message } from 'antd';
 import axios from '@blog/client/admin/axios';
@@ -15,7 +15,7 @@ const ToastuiEditor = dynamic(() => import('@blog/client/admin/components/Toastu
 
 const { TextArea } = Input;
 
-export default () => {
+export default function Index() {
     const [editor, setEditor] = useState<any>(null);
     const [data, setData] = useState<any>({
         content: '',
@@ -26,7 +26,7 @@ export default () => {
 
     useEffect(() => {
         isLogin();
-    });
+    }, []);
 
     useEffect(() => {
         const { id } = router.query;
@@ -55,7 +55,8 @@ export default () => {
                 });
             });
         }
-    }, [1]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const createArticle = (data) => {
         return axios.post('/articles', data);
@@ -83,14 +84,15 @@ export default () => {
     };
 
     const { id } = router.query;
-    const debounceSetData = useCallback(
-        debounce((values: any) => {
-            setData((data) => ({
-                ...data,
-                ...values,
-            }));
-        }),
-        [1]
+    const debounceSetData = useMemo(
+        () =>
+            debounce((values: any) => {
+                setData((data) => ({
+                    ...data,
+                    ...values,
+                }));
+            }),
+        []
     );
 
     return (
@@ -157,4 +159,4 @@ export default () => {
             <ToastuiEditor initialValue={data.content} getEditor={(e) => setEditor(e)}></ToastuiEditor>
         </Form.Provider>
     );
-};
+}

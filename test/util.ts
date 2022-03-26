@@ -1,16 +1,15 @@
 import mongoose from 'mongoose';
 import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
+import { MONGODB, TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 import { DatabaseModule } from '../server/database/database.module';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AppConfigModule } from '@blog/server/modules/app-config/app.config.module';
-import { siteConfig } from '@blog/server/modules/app-config/app.config.service';
+import { DynamicConfigModule } from '@blog/server/modules/dynamic-config/dynamic.config.module';
 import { EmailModule } from '@blog/server/modules/email/email.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -26,12 +25,8 @@ export const initApp = async (metadata: ModuleMetadata) => {
     const module = await Test.createTestingModule({
         imports: [
             DatabaseModule,
-            ConfigModule.forRoot({
-                ignoreEnvFile: true,
-                isGlobal: true,
-                load: [siteConfig],
-            }),
-            AppConfigModule,
+            MongooseModule.forRoot(MONGODB.uri),
+            DynamicConfigModule,
             EmailModule,
             ...(metadata.imports || []),
         ],
@@ -48,7 +43,7 @@ export const closeApp = async (app: INestApplication) => {
     await mongoose.disconnect();
 };
 
-export const isExpectPass = (arr1: any[], arr2: any[], skipFields: string[] = []) => {
+export const isExpectPass = (arr1: unknown[], arr2: unknown[], skipFields: string[] = []) => {
     for (let i = 0; i < arr1.length; i++) {
         const rs = arr2.some((item) => {
             return Object.keys(item).every((key) => {

@@ -1,7 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import { Injectable } from '@nestjs/common';
 import Mail from 'nodemailer/lib/mailer';
-import { AppConfigService } from '../app-config/app.config.service';
+import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
 
 export interface EmailOptions {
     subject: string;
@@ -12,12 +12,12 @@ export interface EmailOptions {
 @Injectable()
 export class EmailService {
     private transporter: Mail;
-    constructor(private configService: AppConfigService) {
+    constructor(private configService: DynamicConfigService) {
         this.createTransporter();
     }
 
     isEnableSmtp() {
-        return this.configService.appConfig.isEnableSmtp;
+        return this.configService.config.isEnableSmtp;
     }
 
     createTransporter() {
@@ -25,18 +25,18 @@ export class EmailService {
             return;
         }
         this.transporter = nodemailer.createTransport({
-            host: this.configService.appConfig.smtpHost,
-            secure: this.configService.appConfig.smtpSecure,
-            port: this.configService.appConfig.smtpPort,
+            host: this.configService.config.smtpHost,
+            secure: this.configService.config.smtpSecure,
+            port: this.configService.config.smtpPort,
             auth: {
-                user: this.configService.appConfig.smtpAuthUser,
-                pass: this.configService.appConfig.smtpAuthpass,
+                user: this.configService.config.smtpAuthUser,
+                pass: this.configService.config.smtpAuthpass,
             },
         });
     }
 
     async updateEmailConfig(data) {
-        const config = await this.configService.updateAppConfig(data);
+        const config = await this.configService.updateConfig(data);
         this.createTransporter();
         return {
             smtpHost: config.smtpHost,
@@ -65,8 +65,8 @@ export class EmailService {
             return;
         }
         const options = Object.assign(mailOptions, {
-            from: `"${this.configService.appConfig.siteTitle}" <${this.configService.appConfig.smtpAuthUser}>`,
-            to: this.configService.appConfig.smtpAuthUser,
+            from: `"${this.configService.config.siteTitle}" <${this.configService.config.smtpAuthUser}>`,
+            to: this.configService.config.smtpAuthUser,
         });
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(options, (error, info) => {

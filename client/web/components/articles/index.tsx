@@ -7,8 +7,9 @@ import { useFetchArticlesQuery, fetchArticles, fetchCategories, useFetchConfigQu
 import { Empty, Skeleton, Pagination } from 'antd';
 import Link from '../link';
 import { useRouter } from 'next/router';
-import { isArray } from 'lodash';
+import { isArray, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
+import { isString } from 'markdown-it/lib/common/utils';
 
 const Page = () => {
     const router = useRouter();
@@ -16,8 +17,7 @@ const Page = () => {
     const page = Number(router.query.page || 1);
     const cid: string = isArray(router.query.cid) ? router.query.cid.join(',') : router.query.cid || '';
     const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
-    const { data, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
-    const { items = [], totalCount = 0 } = data || {};
+    const { data = { items: [], totalCount: 0 }, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
     return (
         <AppLayout>
             <Head>
@@ -31,13 +31,13 @@ const Page = () => {
                             <Skeleton active></Skeleton>
                         </div>
                     ))}
-                {!isLoading && items.length <= 0 ? (
+                {!isLoading && data.items.length <= 0 ? (
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<span>暂无数据~~</span>} />
                 ) : (
-                    items.map((item: any) => <ArticleItem item={item} key={item._id}></ArticleItem>)
+                    data.items.map((item) => <ArticleItem item={item} key={item._id}></ArticleItem>)
                 )}
             </>
-            {totalCount > 0 && (
+            {data.totalCount > 0 && (
                 <div style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'center' }}>
                     <Pagination
                         itemRender={(page, type, originalElement) => {
@@ -52,7 +52,7 @@ const Page = () => {
                         }}
                         defaultCurrent={page}
                         pageSize={10}
-                        total={totalCount}
+                        total={data.totalCount}
                     />
                 </div>
             )}
@@ -65,10 +65,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     await store.dispatch(fetchCategories.initiate());
     await store.dispatch(
         fetchArticles.initiate({
-            page,
+            page: isString(page) ? toInteger(page) : 1,
             filter: {
-                cid,
-                tag,
+                cid: isString(cid) ? cid : '',
+                tag: isString(tag) ? tag : '',
             },
         })
     );

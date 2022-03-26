@@ -1,24 +1,9 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { getProviderByModel } from '../utils/model.util';
-import paginate, { IPaginate } from '../mongoose/paginate';
+import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
-
-export interface Comment {
-    readonly _id?: string;
-    readonly nickName?: string;
-    readonly email?: string;
-    readonly website?: string;
-    readonly parentId?: string;
-    readonly reply?: string;
-    readonly article?: string;
-    readonly location?: string;
-    readonly pass?: boolean;
-    readonly content?: string;
-    readonly identity?: number;
-    readonly createdAt?: string | Date;
-    readonly updatedAt?: string | Date;
-}
+import { Article } from './article.model';
 
 export const CommentJoiSchema = {
     nickName: Joi.string()
@@ -47,82 +32,47 @@ export const CommentJoiSchema = {
     website: Joi.string().allow(''),
 };
 
-export interface CommentDocument extends Comment, Document {
-    readonly _id: string;
+export type CommentDocument = Comment & Document;
+
+@Schema({
+    timestamps: true,
+    collection: Comment.name.toLocaleLowerCase(),
+})
+export class Comment {
+    @Prop({ maxlength: 80, trim: true, required: true })
+    nickName: string;
+
+    @Prop({ maxlength: 80, trim: true, required: true })
+    email: string;
+
+    @Prop({ maxlength: 80, trim: true, default: '' })
+    website: string;
+
+    @Prop({ maxlength: 500, trim: true, required: true })
+    content: string;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Comment.name, default: null })
+    parentId: string;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Comment.name, default: null })
+    reply: string;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Article.name, equired: true })
+    article: string;
+
+    @Prop({ maxlength: 80, trim: true, default: '' })
+    location: string;
+
+    @Prop({ default: true })
+    pass: boolean;
+
+    // 管理员身份为1，0为游客
+    @Prop({ max: 4, default: 0 })
+    identity: number;
 }
 
-const CommentSchema = new mongoose.Schema(
-    {
-        nickName: {
-            type: String,
-            minlength: 1,
-            maxlength: 80,
-            trim: true,
-            required: true,
-        },
-        email: {
-            type: String,
-            minlength: 1,
-            maxlength: 80,
-            trim: true,
-            required: true,
-        },
-        website: {
-            type: String,
-            maxlength: 80,
-            trim: true,
-            default: '',
-        },
-        content: {
-            type: String,
-            minlength: 1,
-            maxlength: 500,
-            trim: true,
-            required: true,
-        },
-        parentId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'comment',
-            default: null,
-        },
-        reply: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'comment',
-            default: null,
-        },
-        article: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'article',
-            required: true,
-        },
-        location: {
-            type: String,
-            maxlength: 80,
-            trim: true,
-            default: '',
-        },
-        pass: {
-            type: Boolean,
-            default: true,
-        },
-        // 管理员身份为1，0为游客
-        identity: {
-            type: Number,
-            max: 4,
-            default: 0,
-        },
-    },
-    {
-        timestamps: true,
-    }
-).index({ createdAt: -1 });
+export const CommentSchema = SchemaFactory.createForClass(Comment);
 
-CommentSchema.plugin(paginate);
+export const CommentModelModule = getMongooseModule(Comment.name, CommentSchema);
 
-const CommentModel = mongoose.model<CommentDocument>('comment', CommentSchema, 'comment');
-
-export type ICommentModel = typeof CommentModel & IPaginate;
-
-export { CommentModel };
-
-export const CommentModelProvider = getProviderByModel(CommentModel);
+export const CommentModel = mongoose.model(Comment.name, CommentSchema, Comment.name.toLocaleLowerCase());

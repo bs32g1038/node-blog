@@ -1,27 +1,9 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { getProviderByModel } from '../utils/model.util';
-import paginate, { IPaginate } from '../mongoose/paginate';
+import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
-
-export interface Article {
-    readonly _id?: string;
-    readonly title: string;
-    readonly content: string;
-    readonly summary: string;
-    readonly screenshot?: string;
-    readonly category: string;
-    readonly commentCount?: number;
-    readonly viewsCount?: number;
-    readonly isDraft?: boolean;
-    readonly createdAt?: string | Date;
-    readonly updatedAt?: string | Date;
-    readonly tags?: string[];
-    readonly dayReadings?: Array<{
-        count?: number;
-        timestamp: number;
-    }>;
-}
+import { Category } from './category.model';
 
 export const ArticleJoiSchema = {
     title: Joi.string()
@@ -57,87 +39,62 @@ export const ArticleJoiSchema = {
     tags: Joi.array().items(Joi.string().max(20)),
 };
 
-const DayReadings = new mongoose.Schema({
-    count: {
-        type: Number,
-        default: 0,
-        required: true,
-    },
-    timestamp: { type: Number, required: true },
-});
+export type ArticleDocument = Article & Document;
 
-export interface ArticleDocument extends Article, Document {
-    readonly _id: string;
+@Schema()
+class DayReadings {
+    @Prop({ required: true, default: 0 })
+    count: number;
+
+    @Prop({ required: true })
+    timestamp: number;
 }
 
-const ArticleSchema = new mongoose.Schema(
-    {
-        title: {
-            type: String,
-            minlength: 1,
-            maxlength: 80,
-            trim: true,
-            required: true,
-        },
-        content: {
-            type: String,
-            minlength: 1,
-            maxlength: 15000,
-            trim: true,
-            required: true,
-        },
-        summary: {
-            type: String,
-            minlength: 1,
-            maxlength: 1000,
-            trim: true,
-            required: true,
-        },
-        screenshot: {
-            type: String,
-            maxlength: 100,
-            trim: true,
-        },
-        category: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'category',
-            required: true,
-        },
-        commentCount: {
-            type: Number,
-            default: 0,
-        },
-        viewsCount: {
-            type: Number,
-            default: 0,
-        },
-        //标签
-        tags: {
-            type: [{ type: String, maxlength: 20, lowercase: true, trim: true }],
-            index: true,
-        },
-        isDeleted: {
-            type: Boolean,
-            default: false,
-            select: false,
-        },
-        isDraft: {
-            type: Boolean,
-            default: false,
-        },
-        dayReadings: [DayReadings],
-    },
-    {
-        timestamps: true,
-    }
-);
+@Schema({
+    timestamps: true,
+    collection: Article.name.toLocaleLowerCase(),
+})
+export class Article {
+    _id: string;
 
-ArticleSchema.plugin(paginate);
+    createdAt: string | Date;
 
-const ArticleModel = mongoose.model<ArticleDocument>('article', ArticleSchema, 'article');
+    @Prop({ maxlength: 80, trim: true, required: true })
+    title: string;
 
-export type IArticleModel = typeof ArticleModel & IPaginate;
+    @Prop({ maxlength: 15000, trim: true, required: true })
+    content: string;
 
-export { ArticleModel };
+    @Prop({ maxlength: 1000, trim: true, required: true })
+    summary: string;
 
-export const ArticleModelProvider = getProviderByModel(ArticleModel);
+    @Prop({ maxlength: 100, trim: true })
+    screenshot: string;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Category.name, required: true })
+    category: Category;
+
+    @Prop({ default: 0 })
+    ArticleCount: number;
+
+    @Prop({ default: 0 })
+    viewsCount: number;
+
+    @Prop({ type: [{ type: String, maxlength: 20, lowercase: true, trim: true }], index: true })
+    tags: string;
+
+    @Prop({ default: false, select: false })
+    isDeleted: boolean;
+
+    @Prop({ default: false, select: false })
+    isDraft: boolean;
+
+    @Prop([DayReadings])
+    dayReadings: DayReadings[];
+}
+
+export const ArticleSchema = SchemaFactory.createForClass(Article);
+
+export const ArticleModelModule = getMongooseModule(Article.name, ArticleSchema);
+
+export const ArticleModel = mongoose.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());

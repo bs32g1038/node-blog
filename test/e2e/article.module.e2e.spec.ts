@@ -3,7 +3,7 @@ import { ArticleModule } from '@blog/server/modules/article/article.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { clearModelCollectionData } from '../models';
-import faker, { getArticle, getObjectId } from '../faker';
+import { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
 import queryString from 'query-string';
 import { getToken } from '../util';

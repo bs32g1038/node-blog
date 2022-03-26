@@ -17,10 +17,9 @@ const initLinkForms = [
     },
 ];
 
-export default (props: Props) => {
+export default React.memo(function Index(props: Props) {
     const [linkForms, setLinkForms] = useState(initLinkForms);
     const handleUpload = (info) => {
-        console.log(info);
         if (Array.isArray(info)) {
             return info;
         }
@@ -40,13 +39,15 @@ export default (props: Props) => {
     };
     const [form] = Form.useForm();
     useEffect(() => {
-        form.setFieldsValue({
-            ...initLinkForms[0],
-        });
-    }, []);
+        if (props.visible) {
+            form.setFieldsValue({
+                ...initLinkForms[0],
+            });
+        }
+    }, [form, props.visible]);
     useEffect(() => {
-        const { id } = props;
-        if (id) {
+        const { id, visible } = props;
+        if (id && visible) {
             axios.get('/explore/' + id).then((res) => {
                 if (res.data?.links?.length > 0) {
                     setLinkForms(res.data?.links);
@@ -66,7 +67,7 @@ export default (props: Props) => {
                 });
             });
         }
-    }, [props.id]);
+    }, [form, props]);
     const createExplore = (data) => {
         return axios.post('/explore', data);
     };
@@ -177,4 +178,4 @@ export default (props: Props) => {
             </Form>
         </Modal>
     );
-};
+});

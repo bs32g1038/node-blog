@@ -3,8 +3,8 @@ import React from 'react';
 import { parseTime } from '@blog/client/libs/time';
 import Comment from './comment';
 import { Breadcrumb } from 'antd';
-const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import dynamic from 'next/dynamic';
+const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
 const MarkdownBody = dynamic(() => import('../markdown-body'), { ssr: false });
 
@@ -13,7 +13,7 @@ interface Props {
     comments: any[];
 }
 
-export default (props: Props) => {
+export default function ArticleItem(props: Props) {
     const { article, comments } = props;
     return (
         <div className={style.article}>
@@ -85,4 +85,4 @@ export default (props: Props) => {
             <Comment article={article} comments={comments}></Comment>
         </div>
     );
-};
+}

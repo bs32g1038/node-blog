@@ -1,14 +1,15 @@
 import dayjs from 'dayjs';
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { CommentModel, ICommentModel } from '@blog/server/models/comment.model';
-import { InjectModel } from '@blog/server/utils/model.util';
+import { CommentDocument, Comment } from '@blog/server/models/comment.model';
 import { EmailService } from '@blog/server/modules/email/email.service';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class HasNewCommentTasksService {
     constructor(
-        @InjectModel(CommentModel) private readonly commentModel: ICommentModel,
+        @InjectModel(Comment.name) private readonly commentModel: Model<CommentDocument>,
         private readonly emailService: EmailService
     ) {}
 

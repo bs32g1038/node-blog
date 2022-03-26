@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import style from './style.module.scss';
 import BackTopBtn from '../back-top-button';

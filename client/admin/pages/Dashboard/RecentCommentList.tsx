@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Card } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
@@ -10,7 +12,7 @@ interface Props {
     loading: boolean;
 }
 
-export default (props: Props) => {
+export default function RecentCommentList(props: Props) {
     const { recentComments = [], loading = false } = props;
     return (
         <Card
@@ -71,4 +73,4 @@ export default (props: Props) => {
             </div>
         </Card>
     );
-};
+}

@@ -7,7 +7,7 @@ import { GithubIcon } from '../../icons';
 import spinner64 from './spinner-64.gif';
 import { searchArticles } from '@blog/client/web/api';
 
-const SearchResultList = (props: { isLoading: boolean; items: any[] }) => {
+const SearchResultList = (props: { isLoading: boolean; items: { _id: string; title: string }[] }) => {
     const { isLoading, items } = props;
     return (
         <ul className={style.searchList}>
@@ -81,8 +81,8 @@ export const SearchForm = (props) => {
     const onblur = () => {
         setIsActiveNavSearchDropdown(false);
     };
-    const oninput = (e: any) => {
-        if (e.target) {
+    const oninput = (e: React.MouseEvent<HTMLInputElement>) => {
+        if (e.target instanceof HTMLInputElement) {
             debounceFetchData(e.target.value);
         }
     };

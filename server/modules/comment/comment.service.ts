@@ -1,16 +1,18 @@
+import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
-import { Comment, ICommentModel, CommentModel } from '../../models/comment.model';
-import { IArticleModel, ArticleModel } from '../../models/article.model';
+import { Comment, CommentDocument } from '../../models/comment.model';
+import { Article, ArticleDocument } from '../../models/article.model';
 import { BadRequestException } from '@nestjs/common';
 import { QueryRules } from '../../utils/mongoose.query.util';
 import { isEmpty } from 'lodash';
+import { InjectModel } from '@nestjs/mongoose';
+import { IPaginate } from '@blog/server/mongoose/paginate';
 
 @Injectable()
 export class CommentService {
     constructor(
-        @InjectModel(CommentModel) private readonly commentModel: ICommentModel,
-        @InjectModel(ArticleModel) private readonly articleModel: IArticleModel
+        @InjectModel(Comment.name) private readonly commentModel: Model<CommentDocument> & IPaginate,
+        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>
     ) {}
 
     async create(newComment: Comment) {

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
 import { Input, Button, Alert, message, Form } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
-import useRequest from '@blog/client/admin/hooks/useRequest';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 import { ReactSVG } from 'react-svg';
@@ -11,13 +10,13 @@ import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import defaultConfig from '@blog/client/configs/admin.default.config';
 
-export default () => {
-    const [data] = useRequest('/getFirstLoginInfo', { page: 1, limit: 100 });
+export default function UserLogin() {
+    const [data, setData] = useState({ message: '' });
     const { data: appConfig } = useFetchConfigQuery();
     const { loading, setLoading, injectRequestLoading } = useRequestLoading();
-    const handleLogin = (data) => {
-        const str = encrypt(JSON.stringify(data));
-        injectRequestLoading(axios.post('/login', { key: str }))
+    const handleLogin = async (_data) => {
+        const str = encrypt(JSON.stringify(_data));
+        await injectRequestLoading(axios.post('/login', { key: str }))
             .then((res) => {
                 message.success('登陆成功！');
                 localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res.data));
@@ -28,6 +27,11 @@ export default () => {
                 setLoading(false);
             });
     };
+    useEffect(() => {
+        axios.get('/getFirstLoginInfo').then((res) => {
+            setData(res.data.data);
+        });
+    }, []);
     return (
         <div className={style.signIn}>
             <div className={style.signInMain}>
@@ -94,4 +98,4 @@ export default () => {
             </div>
         </div>
     );
-};
+}

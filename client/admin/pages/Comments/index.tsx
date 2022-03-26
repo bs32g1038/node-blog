@@ -9,8 +9,9 @@ import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
+import ActionCard from '@blog/client/admin/components/ActionCard';
 
-export default () => {
+export default function Comments() {
     const [state, setState] = useState({
         pagination: { current: 1, total: 0 },
         comments: [],
@@ -18,7 +19,6 @@ export default () => {
         loading: false,
         visiable: false,
     });
-
     const fetchData = (page = 1, limit = 10) => {
         setState((data) => ({
             ...data,
@@ -80,7 +80,8 @@ export default () => {
     };
     useEffect(() => {
         fetchData();
-    }, [1]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const getTableColums = () => {
         return [
             {
@@ -141,109 +142,106 @@ export default () => {
         onChange: onSelectChange.bind(this),
     };
     const expandedRowKeys = state.comments.map((item) => item._id);
+    const CTitle = (
+        <Popconfirm
+            title="确认要删除？"
+            placement="right"
+            visible={state.visiable}
+            onVisibleChange={() => {
+                if (state.selectedRowKeys.length <= 0) {
+                    message.info('请选择要删除的评论');
+                    return;
+                }
+                setState((data) => ({
+                    ...data,
+                    visiable: !state.visiable,
+                }));
+            }}
+            onConfirm={() => batchDeleteComment()}
+            okText="确定"
+            cancelText="取消"
+        >
+            <Button danger={true} icon={<DeleteFilled />}>
+                批量删除
+            </Button>
+        </Popconfirm>
+    );
     return (
         <BasicLayout>
-            <div className={style.wrap}>
-                <div className={style.adminPanelDiv} id="comments-panel">
-                    <Popconfirm
-                        title="确认要删除？"
-                        placement="right"
-                        visible={state.visiable}
-                        onVisibleChange={() => {
-                            if (state.selectedRowKeys.length <= 0) {
-                                message.info('请选择要删除的评论');
-                                return;
-                            }
-                            setState((data) => ({
-                                ...data,
-                                visiable: !state.visiable,
-                            }));
-                        }}
-                        onConfirm={() => batchDeleteComment()}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <Button danger={true} icon={<DeleteFilled />}>
-                            批量删除
-                        </Button>
-                    </Popconfirm>
-                </div>
-                <div className="table-wrapper">
-                    <Table
-                        rowKey={(record) => record._id}
-                        rowSelection={rowSelection}
-                        columns={getTableColums()}
-                        loading={state.loading}
-                        dataSource={state.comments}
-                        onChange={(pagination) => handleTableChange(pagination)}
-                        pagination={{
-                            showTotal: (total) => `共 ${total} 条评论数据`,
-                        }}
-                        expandedRowRender={(record) => {
-                            return (
-                                <React.Fragment>
-                                    {record.reply && (
-                                        <div>
-                                            <div className={style.tip}>
-                                                <BranchesOutlined />
-                                                引用：
-                                            </div>
-                                            <div className={style.replyListItem}>
-                                                <div className={style.userAvatar}>
-                                                    <img src={gernateAvatarImage(record.reply.nickName)} />
-                                                </div>
-                                                <div className={style.replyContent}>
-                                                    <div className={style.replyInfo}>
-                                                        <div className={style.baseInfo}>
-                                                            <div className="reply-author">{record.reply.nickName}</div>
-                                                            <a className="reply-time">
-                                                                在 {timeAgo(record.reply.createdAt)} 评论
-                                                            </a>
-                                                        </div>
-                                                        <div className={style.userAction}>
-                                                            <Button
-                                                                size="small"
-                                                                icon={<SendOutlined />}
-                                                                onClick={() => {
-                                                                    Router.push(
-                                                                        '/admin/content/comments/reply/' +
-                                                                            record.reply._id
-                                                                    );
-                                                                }}
-                                                            >
-                                                                回复
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        className={style.markdownText}
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: record.reply.content,
-                                                        }}
-                                                    ></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <div style={{ padding: '0 20px' }}>
+            <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
+                <Table
+                    rowKey={(record) => record._id}
+                    rowSelection={rowSelection}
+                    columns={getTableColums()}
+                    loading={state.loading}
+                    dataSource={state.comments}
+                    onChange={(pagination) => handleTableChange(pagination)}
+                    pagination={{
+                        showTotal: (total) => `共 ${total} 条评论数据`,
+                    }}
+                    expandedRowRender={(record) => {
+                        return (
+                            <React.Fragment>
+                                {record.reply && (
+                                    <div>
                                         <div className={style.tip}>
-                                            <CommentOutlined />
-                                            评论内容：
+                                            <BranchesOutlined />
+                                            引用：
                                         </div>
-                                        <div
-                                            className="markdown-body"
-                                            dangerouslySetInnerHTML={{
-                                                __html: record.content,
-                                            }}
-                                        ></div>
+                                        <div className={style.replyListItem}>
+                                            <div className={style.userAvatar}>
+                                                <img src={gernateAvatarImage(record.reply.nickName)} />
+                                            </div>
+                                            <div className={style.replyContent}>
+                                                <div className={style.replyInfo}>
+                                                    <div className={style.baseInfo}>
+                                                        <div className="reply-author">{record.reply.nickName}</div>
+                                                        <a className="reply-time">
+                                                            在 {timeAgo(record.reply.createdAt)} 评论
+                                                        </a>
+                                                    </div>
+                                                    <div className={style.userAction}>
+                                                        <Button
+                                                            size="small"
+                                                            icon={<SendOutlined />}
+                                                            onClick={() => {
+                                                                Router.push(
+                                                                    '/admin/content/comments/reply/' + record.reply._id
+                                                                );
+                                                            }}
+                                                        >
+                                                            回复
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className={style.markdownText}
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: record.reply.content,
+                                                    }}
+                                                ></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </React.Fragment>
-                            );
-                        }}
-                        expandedRowKeys={expandedRowKeys}
-                    />
-                </div>
-            </div>
+                                )}
+                                <div style={{ padding: '0 20px' }}>
+                                    <div className={style.tip}>
+                                        <CommentOutlined />
+                                        评论内容：
+                                    </div>
+                                    <div
+                                        className="markdown-body"
+                                        dangerouslySetInnerHTML={{
+                                            __html: record.content,
+                                        }}
+                                    ></div>
+                                </div>
+                            </React.Fragment>
+                        );
+                    }}
+                    expandedRowKeys={expandedRowKeys}
+                />
+            </ActionCard>
         </BasicLayout>
     );
-};
+}

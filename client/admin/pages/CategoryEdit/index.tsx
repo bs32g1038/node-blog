@@ -4,7 +4,7 @@ import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
 
-export default () => {
+export default function Index() {
     const router = useRouter();
     const [form] = Form.useForm();
     useEffect(() => {
@@ -59,4 +59,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}

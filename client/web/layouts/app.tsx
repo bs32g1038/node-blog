@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { AppFooter } from '../components/app-footer';
 import { AppHeader } from '../components/app-header';
 import { AboutPage } from '../components/about';
@@ -10,14 +10,13 @@ import { useFetchConfigQuery } from '../api';
 import styles from './app.module.scss';
 import { useAppDispatch } from '../hooks/app';
 
-const App = (props: { children: any }) => {
-    const children = props.children;
+const App = (props: { children?: ReactNode }) => {
     const theme = useSelector((state: RootState) => state.app.theme);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        const t = localStorage.getItem('theme');
+        const t = localStorage.getItem('theme') as 'light' | 'dark';
         t && dispatch(setTheme({ theme: t }));
-    }, []);
+    }, [dispatch]);
     const { data: config } = useFetchConfigQuery();
     return (
         <div className={styles.app}>
@@ -73,7 +72,7 @@ const App = (props: { children: any }) => {
                     `}
                 />
             )}
-            <div className="main">{children}</div>
+            <div className="main">{props.children}</div>
             <AppFooter />
             <AboutPage></AboutPage>
         </div>

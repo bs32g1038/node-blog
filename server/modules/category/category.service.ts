@@ -1,11 +1,11 @@
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
-import { Category, CategoryDocument, CategoryModel } from '../../models/category.model';
+import { Category, CategoryDocument } from '../../models/category.model';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class CategoryService {
-    constructor(@InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>) {}
+    constructor(@InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>) {}
 
     async create(newCategory: Category): Promise<Category> {
         return await this.categoryModel.create(newCategory);

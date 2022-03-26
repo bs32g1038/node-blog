@@ -1,7 +1,8 @@
+import { Model } from 'mongoose';
+import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@blog/server/utils/model.util';
+import { InjectModel } from '@nestjs/mongoose';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { ArticleModel, IArticleModel } from '@blog/server/models/article.model';
 
 import LRU from 'lru-cache';
 const cache = new LRU({ max: 500 });
@@ -37,7 +38,7 @@ export const incArticleDayReadingCount = (articleId: string, dayReadingsLen: num
 export class WriteDayReadingTasksService {
     isInserting = false;
 
-    constructor(@InjectModel(ArticleModel) private readonly articleModel: IArticleModel) {}
+    constructor(@InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>) {}
 
     /**
      * 定时写入，每10分钟执行一次检测
