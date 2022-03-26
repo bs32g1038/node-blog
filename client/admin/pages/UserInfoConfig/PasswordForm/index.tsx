@@ -20,7 +20,7 @@ const resetPassword = (data) => {
     return axios.put('/user/reset-password', data);
 };
 
-export default () => {
+export default function PasswordForm() {
     const [form] = Form.useForm();
     return (
         <Form
@@ -88,4 +88,4 @@ export default () => {
             </Form.Item>
         </Form>
     );
-};
+}

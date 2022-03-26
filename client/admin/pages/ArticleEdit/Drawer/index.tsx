@@ -10,7 +10,7 @@ import ImageCropper from '@blog/client/admin/components/ImageCropper';
 const Option = Select.Option;
 const { TextArea } = Input;
 
-export default ({ visible, onCancel, formData }) => {
+export default function Index({ visible, onCancel, formData }) {
     const { setImageUrl, UploadButton, handleUpload } = useImageUpload({
         style: {
             width: '100%',
@@ -33,13 +33,14 @@ export default ({ visible, onCancel, formData }) => {
         if (!visible && prevVisible) {
             form.resetFields();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visible]);
 
     useEffect(() => {
         axios.get('/categories/').then((res) => {
             setCategories(res.data);
         });
-    }, [1]);
+    }, []);
 
     const categoryOptions =
         categories &&
@@ -100,4 +101,4 @@ export default ({ visible, onCancel, formData }) => {
             </div>
         </Drawer>
     );
-};
+}

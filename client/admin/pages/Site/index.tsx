@@ -2,7 +2,7 @@ import React from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
 
-export default () => {
+export default function Site() {
     return (
         <BasicLayout>
             <div className={style.wrap}>
@@ -10,4 +10,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}

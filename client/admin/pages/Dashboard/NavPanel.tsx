@@ -7,7 +7,7 @@ interface Props {
     links: any[];
 }
 
-export default (props: Props) => {
+export default function NavPanel(props: Props) {
     const { links = [], loading = false } = props;
     return (
         <Card
@@ -26,4 +26,4 @@ export default (props: Props) => {
             </div>
         </Card>
     );
-};
+}

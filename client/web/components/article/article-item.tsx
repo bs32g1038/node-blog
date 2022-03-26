@@ -13,7 +13,7 @@ interface Props {
     comments: any[];
 }
 
-export default (props: Props) => {
+export default function ArticleItem(props: Props) {
     const { article, comments } = props;
     return (
         <div className={style.article}>
@@ -85,4 +85,4 @@ export default (props: Props) => {
             <Comment article={article} comments={comments}></Comment>
         </div>
     );
-};
+}

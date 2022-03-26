@@ -4,6 +4,9 @@ import { CommentForm } from '../comment-form';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import style from './comment-item.style.module.scss';
 import { xss } from '@blog/client/libs/marked';
+import { IComment } from '@blog/client/web/api';
+import Image from 'next/image';
+import { isString } from 'lodash';
 
 const handleEmoji = (text) => {
     const regex = /@\((.+?)\)/g;
@@ -23,23 +26,21 @@ const getBadgeVisitorOrAuthor = (identity) => {
     return identity !== 0 ? <span>博主</span> : <span>游客</span>;
 };
 
-const replyFn = (parentId: string, item: any) => {
+const ReplyComponent = (props: { parentId: string; item: IComment }) => {
+    const { parentId, item } = props;
     const [showCommentForm, setShowCommentForm] = useState('');
-    const [avatarSrc, setAvatarSrc] = useState('');
+    const [avatarSrc, setAvatarSrc] = useState('/null.png');
     useEffect(() => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
-    }, [item._id]);
+    }, [item.nickName]);
     return (
         <div className={style.commentReplyItem} key={item._id}>
             <div className={style.commentItemReplyContent}>
                 <div className={style.commentItemReplyInfo}>
                     <div className={style.left}>
-                        <span>&nbsp;&nbsp;</span>
-                        <img
-                            style={{ width: '16px', height: '16px' }}
-                            src={avatarSrc}
-                            className={style.commentItemAvatar}
-                        />
+                        <div className={style.commentItemReplyAvatar}>
+                            <Image width={72} height={72} src={avatarSrc} alt="" />
+                        </div>
                         <span>
                             <strong>{item.nickName}</strong>
                         </span>
@@ -72,24 +73,31 @@ const replyFn = (parentId: string, item: any) => {
                     ></p>
                 </div>
                 {showCommentForm === item._id && (
-                    <CommentForm url="/comments" parentId={parentId} articleId={item.article} replyId={item._id} />
+                    <CommentForm
+                        url="/comments"
+                        parentId={parentId}
+                        articleId={item.article as string}
+                        replyId={item._id}
+                    />
                 )}
             </div>
         </div>
     );
 };
 
-export const CommentItem = (props: { item: any; index: number }) => {
+export const CommentItem = (props: { item: IComment; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
-    const [avatarSrc, setAvatarSrc] = useState('');
+    const [avatarSrc, setAvatarSrc] = useState('/null.png');
     useEffect(() => {
         setAvatarSrc(gernateAvatarImage(props.item.nickName) || '');
-    }, [props.item._id]);
+    }, [props.item.nickName]);
     const item = props.item;
     return (
         <div className={style.commentItem}>
             <div className={style.commentItemInner}>
-                <img src={avatarSrc} className={style.commentItemAvatar} />
+                <div className={style.commentItemAvatar}>
+                    <Image width={72} height={72} src={avatarSrc} alt="" />
+                </div>
                 <div className={style.commentItemRight}>
                     <div className={style.commentHeader}>
                         <div className={style.commentHeaderLeft}>
@@ -115,14 +123,13 @@ export const CommentItem = (props: { item: any; index: number }) => {
                         <CommentForm
                             url="/comments"
                             parentId={item._id}
-                            articleId={item.article._id}
+                            articleId={isString(item.article) ? item.article : item.article._id}
                             replyId={item._id}
                         />
                     )}
                     <div className={style.commentReplyList}>
                         {item.comments?.items?.map((_) => {
-                            console.log(item);
-                            return replyFn(item._id, _);
+                            return <ReplyComponent key={item._id} parentId={item._id} item={_}></ReplyComponent>;
                         })}
                     </div>
                 </div>

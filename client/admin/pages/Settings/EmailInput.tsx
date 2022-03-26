@@ -17,7 +17,7 @@ const updateEmailConfig = (data) => {
     return axios.put('/email', data);
 };
 
-export default (props: Props) => {
+export default function EmailInput(props: Props) {
     const { data } = props;
     const [disabled, setDisabled] = useState(true);
     const { loading, injectRequestLoading } = useRequestLoading();
@@ -29,7 +29,7 @@ export default (props: Props) => {
     };
     useEffect(() => {
         form.setFieldsValue(data);
-    }, [data]);
+    }, [data, form]);
     return (
         <Form form={form} className="form" layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
             <div className={style.tip}>
@@ -86,4 +86,4 @@ export default (props: Props) => {
             )}
         </Form>
     );
-};
+}

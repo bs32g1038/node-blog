@@ -4,7 +4,7 @@ import style from './style.module.scss';
 const BackTopButton = () => {
     const $el = useRef(null);
     useEffect(() => {
-        let timer: any = null;
+        let timer = null;
         if ($el.current) {
             const backTopEl = $el.current;
             backTopEl.onclick = () => {
@@ -24,7 +24,7 @@ const BackTopButton = () => {
                 });
             };
         }
-    }, [1]);
+    }, []);
     return (
         <div className={style.backTopButton} title="返回顶部">
             <div ref={$el}>

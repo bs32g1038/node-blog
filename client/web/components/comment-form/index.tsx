@@ -46,10 +46,10 @@ export const CommentForm = (props: Props) => {
             localStorage.setItem(USER_COMMENT_INFO_KEY, JSON.stringify(data));
             setUserInfo(data);
         }
-    }, [1]);
+    }, []);
 
-    const submit = (): any => {
-        const data: any = {
+    const submit = () => {
+        const data = {
             nickName: userInfo.nickName,
             email: userInfo.email,
             article: props.articleId,

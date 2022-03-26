@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
-import { AppConfigModule } from './modules/app-config/app.config.module';
 import { EmailModule } from './modules/email/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AdminLogModule } from './modules/adminlog/adminlog.module';
@@ -17,23 +15,18 @@ import { UserModule } from './modules/user/user.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
 import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { isProdMode, MONGODB } from './configs/index.config';
-import { siteConfig } from './modules/app-config/app.config.service';
 import { TasksModule } from './modules/tasks/tasks.module';
 
 import { SSRModule } from '@blog/client/server';
 import { ExploreModule } from './modules/explore/explore.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.module';
 
 @Module({
     imports: [
         DatabaseModule,
         MongooseModule.forRoot(MONGODB.uri),
-        ConfigModule.forRoot({
-            ignoreEnvFile: true,
-            isGlobal: true,
-            load: [siteConfig],
-        }),
-        AppConfigModule,
+        DynamicConfigModule,
         EmailModule,
         AdminLogModule,
         DashboardModule,

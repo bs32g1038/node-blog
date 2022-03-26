@@ -9,11 +9,11 @@ import { APP_SERVER } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
 import { staticAssetsPath, assetsPath } from './utils/path.util';
-import { AppConfigService } from './modules/app-config/app.config.service';
+import { DynamicConfigService } from './modules/dynamic-config/dynamic.config.service';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    const configService = app.get(AppConfigService);
+    const configService = app.get(DynamicConfigService);
     app.use(helmet());
     app.use(json({ limit: '20mb' }));
     /**

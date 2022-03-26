@@ -8,7 +8,7 @@ type Props = Omit<EditorOptions, 'el'> & {
     getEditor?: (ed: Editor) => void;
 };
 
-export default (props: Props) => {
+export default function ToastuiEditor(props: Props) {
     const [editor, setEditor] = useState(null);
     const ref = useRef(null);
 
@@ -43,12 +43,13 @@ export default (props: Props) => {
         if (props.getEditor) {
             props.getEditor(ed);
         }
-    }, [1]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => {
         if (editor && props.initialValue !== '') {
             editor.setMarkdown(props.initialValue);
         }
-    }, [editor !== null && props.initialValue]);
+    }, [editor, props.initialValue]);
 
     return <div id="editor" ref={ref} className={style.toastuiEditorContents}></div>;
-};
+}

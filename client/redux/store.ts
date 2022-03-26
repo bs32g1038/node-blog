@@ -11,7 +11,7 @@ const initialState: State = {
     theme: 'light',
 };
 interface ThemeDataLoaded {
-    theme: any;
+    theme: State['theme'];
 }
 
 const app = createSlice({

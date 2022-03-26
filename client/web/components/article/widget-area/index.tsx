@@ -1,7 +1,8 @@
 import React from 'react';
-import { parseTime } from '@blog/client/libs/time';
 import style from './style.module.scss';
 import vultrPng from '@blog/client/assets/banners/vultr_banner_300x250.png';
+import { parseTime } from '@blog/client/libs/time';
+import Image from 'next/image';
 
 interface ItemProps {
     _id: string;
@@ -35,7 +36,7 @@ const Item = (props: Props) => {
     );
 };
 
-export default (props: { recentArticles: ItemProps[] }) => {
+export default function Index(props: { recentArticles: ItemProps[] }) {
     const { recentArticles } = props;
     let arr = recentArticles;
     if (Array.isArray(recentArticles) && recentArticles.length <= 0) {
@@ -48,17 +49,14 @@ export default (props: { recentArticles: ItemProps[] }) => {
                 {arr.map((item) => {
                     return <Item item={item} key={item._id}></Item>;
                 })}
-                <a href="https://www.vultr.com/?ref=7866918-4F" className="vultr" style={{ display: 'block' }}>
-                    <img
-                        src={vultrPng.src}
-                        style={{
-                            width: '200px',
-                            border: '1px solid var(--border-color)',
-                            height: 'auto',
-                        }}
-                    />
+                <a
+                    href="https://www.vultr.com/?ref=7866918-4F"
+                    className="vultr"
+                    style={{ display: 'block', border: '1px solid var(--border-color)' }}
+                >
+                    <Image src={vultrPng.src} width="300px" height="250px" alt="" />
                 </a>
             </div>
         </section>
     );
-};
+}

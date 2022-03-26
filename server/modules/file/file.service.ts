@@ -6,7 +6,7 @@ import { File, FileModel, IFileModel, FileType } from '@blog/server/models/file.
 import { MulterModule } from '@nestjs/platform-express';
 import { md5 } from '@blog/server/utils/crypto.util';
 import { creteUploadFile } from '@blog/server/utils/upload.util';
-import { AppConfigService } from '@blog/server/modules/app-config/app.config.service';
+import { DynamicConfigService } from '@blog/server/modules/dynamic-config/dynamic.config.service';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -38,7 +38,7 @@ export class FileService {
     ];
     constructor(
         @InjectModel(FileModel) private readonly fileModel: IFileModel,
-        private readonly configService: AppConfigService
+        private readonly configService: DynamicConfigService
     ) {}
 
     async getFileList(options: {

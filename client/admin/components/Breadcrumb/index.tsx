@@ -35,7 +35,7 @@ export const getBreadCrumbRoutes = (menus, router) => {
     return breadcrumbs;
 };
 
-export default () => {
+export default function _Breadcrumb() {
     const router = useRouter();
     const items = getBreadCrumbRoutes(menu, router);
     return (
@@ -50,4 +50,4 @@ export default () => {
             })}
         </div>
     );
-};
+}

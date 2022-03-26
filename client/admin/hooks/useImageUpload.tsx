@@ -41,7 +41,7 @@ interface Props {
 const isImage = (type) => isEqual(type, 'image');
 const isSvg = (type) => isEqual(type, 'svg');
 
-export default (props: Props) => {
+const Index = (props: Props) => {
     const { style = {}, disabled = false, type = 'image' } = props;
     const [isUploading, setUploading] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
@@ -85,6 +85,7 @@ export default (props: Props) => {
                 }}
                 {...props}
                 beforeUpload={(file) => {
+                    console.log(file);
                     if (isImage(type) && beforeUpload(file)) {
                         return props?.beforeUpload(file) || true;
                     }
@@ -111,3 +112,5 @@ export default (props: Props) => {
         setImageUrl,
     };
 };
+
+export default Index;

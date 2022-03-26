@@ -23,13 +23,13 @@ const PersonCommit = (props: ContributionProps) => {
                     startDate={new Date().getFullYear() + '-1-1'}
                     endDate={new Date().getFullYear() + 1 + '-1-1'}
                     values={values}
-                    classForValue={(value: any) => {
+                    classForValue={(value: Value) => {
                         if (!value) {
                             return 'color-empty';
                         }
                         return `color-github-${value.count}`;
                     }}
-                    tooltipDataAttrs={(value: any) => {
+                    tooltipDataAttrs={(value: Value) => {
                         if (!value.date) {
                             return {};
                         }

@@ -10,7 +10,7 @@ import {
     ShareAltOutlined,
 } from '@ant-design/icons';
 
-export default [
+const menuConfig = [
     {
         path: '/admin/dashboard',
         title: '仪表盘',
@@ -93,3 +93,5 @@ export default [
         exact: true,
     },
 ];
+
+export default menuConfig;

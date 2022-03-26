@@ -1,8 +1,7 @@
-import _jss from 'xss';
-const jsxss: any = _jss;
+import * as jsxss from 'xss';
 
 const Xss = new jsxss.FilterXSS({
-    onIgnoreTagAttr: (tag: any, name: any, value: any) => {
+    onIgnoreTagAttr: (tag: string, name: string, value: string) => {
         // 让 prettyprint 可以工作
         if (tag === 'pre' && name === 'class') {
             return name + '="' + jsxss.escapeAttrValue(value) + '"';
@@ -11,7 +10,7 @@ const Xss = new jsxss.FilterXSS({
     },
 });
 
-export const xss = (html: any) => {
+export const xss = (html: string) => {
     return Xss.process(html);
 };
 

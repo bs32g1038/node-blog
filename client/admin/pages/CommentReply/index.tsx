@@ -5,7 +5,7 @@ import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
 
-export default () => {
+export default function Index() {
     const [comment, setComment] = useState({
         article: {
             _id: '',
@@ -30,7 +30,7 @@ export default () => {
                 setComment(comment);
             });
         }
-    }, [1]);
+    }, [form, router.query]);
 
     const publish = (data) => {
         const { id } = router.query;
@@ -94,4 +94,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}

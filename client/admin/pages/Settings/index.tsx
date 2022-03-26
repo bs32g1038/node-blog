@@ -16,7 +16,7 @@ const updateConfig = (data) => {
     return axios.put('/configs', data);
 };
 
-export default () => {
+export default function Settings() {
     const [data, setData] = useState<any>({});
     const { loading, injectRequestLoading } = useRequestLoading();
 
@@ -36,7 +36,7 @@ export default () => {
         fetchConfig().then((res) => {
             setData(res.data);
         });
-    }, [1]);
+    }, []);
     return (
         <BasicLayout>
             <div className={style.wrap}>
@@ -109,4 +109,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}

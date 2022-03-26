@@ -11,7 +11,7 @@ const M = (props: any) => {
             initialValue: props.content,
             el: document.getElementById('editor-content'),
         });
-    }, []);
+    }, [props.content]);
     return <div id="editor-content" className={theme === 'dark' ? 'toastui-editor-dark' : ''}></div>;
 };
 export default M;

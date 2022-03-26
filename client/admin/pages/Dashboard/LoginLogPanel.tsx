@@ -7,7 +7,7 @@ interface Props {
     recentAdminLogs: any[];
 }
 
-export default (props: Props) => {
+export default function LoginLogPanel(props: Props) {
     const { recentAdminLogs = [], loading = false } = props;
     return (
         <Card style={{ marginBottom: 14 }} bordered={false} title="操作日志" loading={loading}>
@@ -27,4 +27,4 @@ export default (props: Props) => {
             </div>
         </Card>
     );
-};
+}

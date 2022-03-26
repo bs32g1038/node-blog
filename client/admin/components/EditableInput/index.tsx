@@ -20,7 +20,7 @@ interface Props {
     onFinish: (values) => void;
 }
 
-export default (props: Props) => {
+export default function Index(props: Props) {
     const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
     const [form] = Form.useForm();
     const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
@@ -50,7 +50,7 @@ export default (props: Props) => {
             });
         }
         form.setFieldsValue({ [name]: value });
-    }, [value]);
+    }, [form, name, setImageUrl, type, value]);
 
     const FORM_ITEM = {
         input: <Input placeholder={placeholder} size="large" disabled={disabled} />,
@@ -103,4 +103,4 @@ export default (props: Props) => {
             )}
         </Form>
     );
-};
+}

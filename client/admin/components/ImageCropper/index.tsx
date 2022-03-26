@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { FC, useCallback, useRef, useState } from 'react';
 import { Modal, UploadProps } from 'antd';
 import ReactCrop, { Crop } from 'react-image-crop';
@@ -6,8 +7,7 @@ import { RcFile } from 'antd/lib/upload/interface';
 import styles from './index.module.scss';
 
 import { getCroppedCanvas } from './util';
-
-const noop = (...args: any[]) => {};
+import { noop } from 'lodash';
 
 export interface ImageCropperProps {
     /**
@@ -112,7 +112,6 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
         height: 0,
         x: 0,
         y: 0,
-        aspect: aspectRatio,
     });
 
     // 图片引用
@@ -138,7 +137,7 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
 
         // 拦截上传
         const handleBeforeUpload: UploadProps['beforeUpload'] = (file: RcFile) => {
-            return new Promise(async (resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 fileRef.current = file;
                 resolveRef.current = resolve;
                 rejectRef.current = reject;
@@ -162,32 +161,24 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
                 beforeUpload: handleBeforeUpload,
             },
         };
-    }, [children]);
+    }, [children, formUploadProps]);
 
     // 图片加载回调
-    const onImageLoaded = useCallback(
-        (img: HTMLImageElement) => {
-            imgRef.current = img;
-            const aspect = props.aspectRatio;
-            const width = img.width - minWidth;
-            const height = img.height - minHeight;
-            const y = height / 2;
-            const x = width / 2;
-            setCrop((val) => {
-                return {
-                    ...val,
-                    unit: 'px',
-                    width: minWidth,
-                    height: minHeight,
-                    x,
-                    y,
-                    aspect,
-                };
-            });
-            return false;
-        },
-        [props.aspectRatio, minWidth, minHeight]
-    );
+    function onImageLoaded(e: React.SyntheticEvent<HTMLImageElement>) {
+        const { width, height } = e.currentTarget;
+        const y = (height - minHeight) / 2;
+        const x = (width - minWidth) / 2;
+        setCrop((val) => {
+            return {
+                ...val,
+                unit: 'px',
+                width: minWidth,
+                height: minHeight,
+                x,
+                y,
+            };
+        });
+    }
 
     // 关闭弹窗
     const onClose = useCallback(() => {
@@ -196,7 +187,6 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
 
     const onOk = useCallback(
         (crop) => {
-            console.log(crop);
             onClose();
 
             if (!imgRef.current || !fileRef.current || !crop) return;
@@ -239,7 +229,7 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
                 quality
             );
         },
-        [onClose, quality]
+        [minHeight, minWidth, onClose, quality]
     );
 
     // 不开启裁剪
@@ -269,7 +259,7 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
                     {/* 裁剪 */}
                     <div className={styles.imageCropperModal}>
                         <ReactCrop
-                            src={imageSrc}
+                            aspect={aspectRatio}
                             crop={crop}
                             keepSelection
                             maxWidth={maxWidth}
@@ -278,12 +268,13 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
                             minHeight={minHeight}
                             ruleOfThirds={grid}
                             circularCrop={circularCrop}
-                            onImageLoaded={onImageLoaded}
                             locked={Boolean(cropWidth || cropHeight)}
-                            onChange={(crop, percentCrop) => {
+                            onChange={(crop) => {
                                 setCrop(crop);
                             }}
-                        />
+                        >
+                            <img ref={imgRef} src={imageSrc} alt="" onLoad={onImageLoaded} />
+                        </ReactCrop>
                     </div>
                 </Modal>
             )}

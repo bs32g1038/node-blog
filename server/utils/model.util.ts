@@ -7,7 +7,7 @@ export function getModelToken(modelName: string): string {
 }
 
 // 根据 Model 获取 Provider
-export const getProviderByModel = (model: any) => {
+export const getProviderByModel = (model: { modelName: string }) => {
     return {
         provide: model.modelName + DB_MODEL_TOKEN_SUFFIX,
         useValue: model,
@@ -15,6 +15,6 @@ export const getProviderByModel = (model: any) => {
 };
 
 // 注入器
-export const InjectModel = (model: any) => {
+export const InjectModel = (model: { modelName: string }) => {
     return Inject(getModelToken(model.modelName));
 };

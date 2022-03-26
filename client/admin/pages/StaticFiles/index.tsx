@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from '@blog/client/admin/axios';
 import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 
-export default () => {
+export default function StaticFiles() {
     const [state, setState] = useState({
         files: [],
         visible: false,
@@ -31,26 +31,28 @@ export default () => {
         clipboard: null,
         delConfirmVisible: false,
     });
-    const fetchData = (page = 1, limit = 10) => {
-        setState((data) => ({
-            ...data,
-            loading: true,
-        }));
-        const query = {
-            limit,
-            page,
-        };
-        return axios.get('/files?' + queryString.stringify(query)).then((res) => {
-            const pagination = { ...state.pagination };
-            pagination.total = res.data.totalCount;
+    const fetchData = useCallback(
+        async (page = 1, limit = 10) => {
             setState((data) => ({
                 ...data,
+                loading: true,
+            }));
+            const query = {
+                limit,
+                page,
+            };
+            const res = await axios.get('/files?' + queryString.stringify(query));
+            const pagination = { ...state.pagination };
+            pagination.total = res.data.totalCount;
+            setState((data_1) => ({
+                ...data_1,
                 files: res.data.items,
                 loading: false,
                 pagination,
             }));
-        });
-    };
+        },
+        [state.pagination]
+    );
     const deleteFile = (_id) => {
         axios.delete('/files/' + _id).then(() => {
             message.success('删除文件成功');
@@ -179,21 +181,23 @@ export default () => {
         ];
     };
     useEffect(() => {
-        const c = new Clipboard('.btnCopy');
-        setState((data) => ({
-            ...data,
-            clipboard: c,
-        }));
-        c.on('success', function () {
-            message.success('复制链接成功');
-        });
-        fetchData();
+        if (!state.clipboard) {
+            const c = new Clipboard('.btnCopy');
+            setState((data) => ({
+                ...data,
+                clipboard: c,
+            }));
+            c.on('success', function () {
+                message.success('复制链接成功');
+            });
+            fetchData();
+        }
         return () => {
             if (state.clipboard) {
                 state.clipboard.destroy();
             }
         };
-    }, [1]);
+    }, [fetchData, state.clipboard]);
 
     const { selectedRowKeys } = state;
     const rowSelection = {
@@ -294,4 +298,4 @@ export default () => {
             </div>
         </BasicLayout>
     );
-};
+}
