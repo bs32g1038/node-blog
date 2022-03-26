@@ -1,21 +1,9 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { getProviderByModel } from '../utils/model.util';
-import paginate, { IPaginate } from '../mongoose/paginate';
+import { getMongooseModule } from '../mongoose';
+import { User } from './user.model';
 import Joi from '../joi';
-
-export interface AdminLog {
-    readonly _id?: string;
-    readonly user?: string;
-    readonly type?: string;
-    readonly data?: string;
-    readonly createdAt?: string | Date;
-    readonly updatedAt?: string | Date;
-}
-
-export interface AdminLogDocument extends AdminLog, Document {
-    readonly _id: string;
-}
 
 export const AdminLogJoiSchema = {
     type: Joi.string().max(20),
@@ -23,37 +11,24 @@ export const AdminLogJoiSchema = {
     user: Joi.objectId(),
 };
 
-const AdminLogSchema = new mongoose.Schema(
-    {
-        type: {
-            type: String,
-            trim: true,
-            required: true,
-        },
-        data: {
-            type: String,
-            trim: true,
-            default: '',
-        },
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'user',
-            required: true,
-        },
-    },
-    {
-        timestamps: true,
-    }
-);
+export type AdminLogDocument = AdminLog & Document;
 
-AdminLogSchema.index({ createdAt: -1 });
+@Schema({
+    timestamps: true,
+})
+export class AdminLog {
+    @Prop({ trim: true, required: true })
+    type: string;
 
-AdminLogSchema.plugin(paginate);
+    @Prop({ trim: true, default: '' })
+    data: string;
 
-const AdminLogModel = mongoose.model<AdminLogDocument>('adminlog', AdminLogSchema, 'adminlog');
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name, required: true })
+    user: User;
+}
 
-export type IAdminLogModel = typeof AdminLogModel & IPaginate;
+export const AdminLogSchema = SchemaFactory.createForClass(AdminLog);
 
-export { AdminLogModel };
+export const AdminLogModelModule = getMongooseModule(AdminLog.name, AdminLogSchema);
 
-export const AdminLogModelProvider = getProviderByModel(AdminLogModel);
+export const AdminLogModel = mongoose.model(AdminLog.name, AdminLogSchema, AdminLog.name.toLocaleLowerCase());

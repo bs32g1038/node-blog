@@ -2,18 +2,18 @@ import Joi from 'joi';
 import jwt from 'jsonwebtoken';
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
 import { TOKEN_SECRET_KEY } from '../../configs/index.config';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
-import { UserDocument, UserModel, UserJoiSchema } from '../../models/user.model';
+import { User, UserDocument, UserJoiSchema } from '../../models/user.model';
 import { AdminLogService } from '../adminlog/adminlog.service';
 import userDefaultData from '@blog/server/configs/user.default.config';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class LoginService {
     constructor(
         private readonly adminLogService: AdminLogService,
-        @InjectModel(UserModel) private readonly userModel: Model<UserDocument>
+        @InjectModel(User.name) private readonly userModel: Model<UserDocument>
     ) {}
 
     async getFirstLoginInfo() {

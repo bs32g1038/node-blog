@@ -1,11 +1,13 @@
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
-import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
+import { Article, ArticleDocument } from '../../models/article.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
+import { InjectModel } from '@nestjs/mongoose';
+import { IPaginate } from '@blog/server/mongoose/paginate';
 
 @Injectable()
 export class SearchService {
-    public constructor(@InjectModel(ArticleModel) private readonly articleModel: IArticleModel) {}
+    public constructor(@InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument> & IPaginate) {}
 
     public async getArticleList(options: { key?: string }): Promise<{ items: Article[]; totalCount: number }> {
         if (options.key) {

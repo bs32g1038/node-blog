@@ -1,12 +1,14 @@
 import path from 'path';
 import multr from 'multer';
+import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@blog/server/utils/model.util';
-import { File, FileModel, IFileModel, FileType } from '@blog/server/models/file.model';
+import { File, FileType, FileDocument } from '@blog/server/models/file.model';
 import { MulterModule } from '@nestjs/platform-express';
 import { md5 } from '@blog/server/utils/crypto.util';
 import { creteUploadFile } from '@blog/server/utils/upload.util';
 import { DynamicConfigService } from '@blog/server/modules/dynamic-config/dynamic.config.service';
+import { InjectModel } from '@nestjs/mongoose';
+import { IPaginate } from '@blog/server/mongoose/paginate';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -37,7 +39,7 @@ export class FileService {
         },
     ];
     constructor(
-        @InjectModel(FileModel) private readonly fileModel: IFileModel,
+        @InjectModel(File.name) private readonly fileModel: Model<FileDocument> & IPaginate,
         private readonly configService: DynamicConfigService
     ) {}
 

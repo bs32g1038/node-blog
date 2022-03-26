@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AdminLogController } from './adminlog.controller';
-import { AdminLogModelProvider } from '../../models/adminlog.model';
+import { AdminLogModelModule } from '../../models/adminlog.model';
 import { AdminLogService } from './adminlog.service';
 
 @Module({
+    imports: [AdminLogModelModule],
     controllers: [AdminLogController],
-    providers: [AdminLogModelProvider, AdminLogService],
+    providers: [AdminLogService],
 })
 export class AdminLogModule {}

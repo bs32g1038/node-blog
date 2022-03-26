@@ -1,14 +1,8 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { getProviderByModel } from '../utils/model.util';
+import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
-
-export interface Category {
-    readonly _id?: string;
-    readonly name?: string;
-    readonly order?: number;
-    readonly articleCount?: number;
-}
 
 export const CategoryJoiSchema = {
     name: Joi.string()
@@ -19,34 +13,34 @@ export const CategoryJoiSchema = {
         }),
 };
 
-export interface CategoryDocument extends Category, Document {
-    readonly _id: string;
+export type CategoryDocument = Category & Document;
+
+@Schema({
+    timestamps: true,
+    collection: Category.name.toLocaleLowerCase(),
+})
+export class Category {
+    @Prop({
+        maxlength: 80,
+        trim: true,
+        required: true,
+    })
+    name: string;
+
+    @Prop({
+        max: 200,
+        default: 0,
+    })
+    order: number;
+
+    @Prop({
+        default: 0,
+    })
+    articleCount: number;
 }
 
-const CategorySchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            minlength: 1,
-            maxlength: 80,
-            trim: true,
-            required: true,
-        },
-        order: {
-            type: Number,
-            max: 200,
-            default: 0,
-        },
-        articleCount: {
-            type: Number,
-            default: 0,
-        },
-    },
-    {
-        timestamps: true,
-    }
-);
+export const CategorySchema = SchemaFactory.createForClass(Category);
 
-export const CategoryModel = mongoose.model<CategoryDocument>('category', CategorySchema, 'category');
+export const CategoryModelModule = getMongooseModule(Category.name, CategorySchema);
 
-export const CategoryModelProvider = getProviderByModel(CategoryModel);
+export const CategoryModel = mongoose.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());

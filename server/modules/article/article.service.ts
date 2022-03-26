@@ -1,19 +1,20 @@
 import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '../../utils/model.util';
 import { incArticleDayReadingCount } from '@blog/server/modules/tasks/write.day.reading.tasks.service';
-import { Article, ArticleModel, IArticleModel } from '../../models/article.model';
-import { CategoryModel, CategoryDocument } from '../../models/category.model';
+import { CategoryDocument, Category } from '../../models/category.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
 import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { isEmpty, isEqual } from 'lodash';
 import dayjs from 'dayjs';
+import { Article, ArticleDocument } from '@blog/server/models/article.model';
+import { InjectModel } from '@nestjs/mongoose';
+import { IPaginate } from '@blog/server/mongoose/paginate';
 
 @Injectable()
 export class ArticleService {
     constructor(
-        @InjectModel(ArticleModel) private readonly articleModel: IArticleModel,
-        @InjectModel(CategoryModel) private readonly categoryModel: Model<CategoryDocument>
+        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument> & IPaginate,
+        @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>
     ) {}
 
     async create(articleDocument: Article) {

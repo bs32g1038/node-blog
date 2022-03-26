@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { getProviderByModel } from '../utils/model.util';
-import paginate, { IPaginate } from '../mongoose/paginate';
+import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
+import mongoose from 'mongoose';
 
 export enum FileType {
     image = 'image',
@@ -12,18 +12,6 @@ export enum FileType {
     other = 'other',
 }
 
-// export type FileType = 'image' | 'video' | 'audio' | 'document' | 'other';
-
-export interface File {
-    readonly _id?: string;
-    readonly name?: string;
-    readonly type?: 'image' | 'video' | 'audio' | 'document' | 'other';
-    readonly size?: number;
-    readonly url?: string;
-    readonly createdAt?: string | Date;
-    readonly updatedAt?: string | Date;
-}
-
 export const FileJoiSchema = {
     name: Joi.string().min(1).max(80),
     type: Joi.string(),
@@ -31,47 +19,42 @@ export const FileJoiSchema = {
     url: Joi.string().max(2000),
 };
 
-export interface FileDocument extends File, Document {
-    readonly _id: string;
+export type FileDocument = File & Document;
+
+@Schema({
+    timestamps: true,
+    collection: File.name.toLocaleLowerCase(),
+})
+export class File {
+    @Prop({
+        maxlength: 80,
+        trim: true,
+        required: true,
+    })
+    name: string;
+
+    @Prop({
+        enum: ['image', 'video', 'audio', 'document', 'other'],
+        trim: true,
+        required: true,
+    })
+    type: string;
+
+    @Prop({
+        type: Number,
+        required: true,
+    })
+    size: number;
+
+    @Prop({
+        trim: true,
+        required: true,
+    })
+    url: string;
 }
 
-const FileSchema = new mongoose.Schema(
-    {
-        // md5 处理后的文件名，应该带后缀
-        name: {
-            type: String,
-            minlength: 1,
-            maxlength: 80,
-            trim: true,
-            required: true,
-        },
-        type: {
-            type: String,
-            enum: ['image', 'video', 'audio', 'document', 'other'],
-            trim: true,
-            required: true,
-        },
-        size: {
-            type: Number,
-            required: true,
-        },
-        url: {
-            type: String,
-            trim: true,
-            required: true,
-        },
-    },
-    {
-        timestamps: true,
-    }
-).index({ createdAt: -1 });
+export const FileSchema = SchemaFactory.createForClass(File);
 
-FileSchema.plugin(paginate);
+export const FileModelModule = getMongooseModule(File.name, FileSchema);
 
-const FileModel = mongoose.model<FileDocument>('file', FileSchema, 'file');
-
-export type IFileModel = typeof FileModel & IPaginate;
-
-export { FileModel };
-
-export const FileModelProvider = getProviderByModel(FileModel);
+export const FileModel = mongoose.model(File.name, FileSchema, File.name.toLocaleLowerCase());

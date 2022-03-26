@@ -4,7 +4,6 @@ import sharp from 'sharp';
 import toIco from 'to-ico';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { ConfigModel } from '@blog/server/models/config.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { DynamicConfig, DynamicConfigDocument } from '@blog/server/models/dynamic.config.model';
 import { isEmpty, isEqual } from 'lodash';
@@ -57,7 +56,7 @@ export class DynamicConfigService {
                 siteLogo,
             });
         }
-        await ConfigModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
+        await this.configModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
         const res = await this.configModel.findById(CONFIG_KEY);
         this.setConfig(res.toObject());
         return this.config;

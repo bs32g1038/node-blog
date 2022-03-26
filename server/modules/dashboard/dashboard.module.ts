@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { DashboardController } from './dashboard.controller';
 import { DashboardService } from './dashboard.service';
-import { CommentModelProvider } from '../../models/comment.model';
-import { ArticleModelProvider } from '../../models/article.model';
-import { CategoryModelProvider } from '../../models/category.model';
+import { CommentModelModule } from '../../models/comment.model';
+import { ArticleModelModule } from '../../models/article.model';
+import { CategoryModelModule } from '../../models/category.model';
 
 @Module({
+    imports: [CommentModelModule, ArticleModelModule, CategoryModelModule],
     controllers: [DashboardController],
-    providers: [ArticleModelProvider, CategoryModelProvider, CommentModelProvider, DashboardService],
+    providers: [DashboardService],
 })
 export class DashboardModule {}
