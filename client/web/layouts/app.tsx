@@ -41,6 +41,7 @@ const App = (props: { children?: ReactNode }) => {
                             --footer-text-color: var(--secondary-text-color);
                             --main-bg-color: #fff;
                             --app-background-color: #f5f5f5;
+                            --explore-color-border-default: rgba(235, 236, 237, 0.8);
                         }
                     `}
                 />
@@ -58,6 +59,7 @@ const App = (props: { children?: ReactNode }) => {
                             --footer-text-color: var(--secondary-text-color);
                             --main-bg-color: #141414;
                             --app-background-color: rgb(10, 10, 10);
+                            --explore-color-border-default: rgba(55, 53, 47, 0.16);
                         }
                         .ant-pagination-prev,
                         .ant-pagination-next,

@@ -1,19 +1,19 @@
 .wrap {
     background-color: var(--main-bg-color);
     padding: 20px 30px;
-    width: 80%;
-    margin: 0 auto;
     color: var(--secondary-text-color);
     :global {
         .ant-list-item {
-            border-bottom: 1px solid var(--border-color);
+            border: 1px solid var(--explore-color-border-default) !important;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            transition: background 0.12s ease-in 0s;
         }
         .ant-list-item-meta-description {
             color: var(--primary-text-color);
+            position: relative;
         }
     }
 }
 
-.title {
-    color: var(--secondary-text-color);
-}

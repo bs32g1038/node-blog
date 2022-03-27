@@ -2,12 +2,10 @@ import React from 'react';
 import Head from 'next/head';
 import AppLayout from '@blog/client/web/layouts/app';
 import { fetchExplore, useFetchConfigQuery, useFetchExploreQuery } from '@blog/client/web/api';
-import { Skeleton, Space, Image } from 'antd';
+import { Space, Image, Row } from 'antd';
 import { wrapper } from '@blog/client/redux/store';
 import style from './style.module.scss';
-import { TagOutlined } from '@ant-design/icons';
-import { List, Avatar } from 'antd';
-import exlporeAvatar from '@blog/client/assets/svgs/explore-avatar.svg';
+import { List } from 'antd';
 import { parseTime } from '@blog/client/libs/time';
 
 const Page = () => {
@@ -24,21 +22,21 @@ const Page = () => {
                 className={style.wrap}
                 itemLayout="horizontal"
                 dataSource={exploreList}
+                bordered={false}
                 renderItem={(item) => (
                     <List.Item key={item._id}>
-                        <Skeleton avatar title={false} loading={false} active>
-                            <List.Item.Meta
-                                avatar={<Avatar src={exlporeAvatar} />}
-                                title={
-                                    <Space className={style.title}>
-                                        <TagOutlined />
-                                        <span className={style.commentHeaderTime}>{parseTime(item.createdAt)}</span>
-                                    </Space>
-                                }
-                                description={
-                                    <Space direction="vertical" size={4}>
+                        <List.Item.Meta
+                            description={
+                                <Row gutter={12} justify="space-between" wrap={false}>
+                                    <div style={{ width: '100%' }}>
                                         <div>{item.content}</div>
                                         <div>
+                                            <Space style={{ display: 'flex' }}>
+                                                <span>创建日期</span>
+                                                <span className={style.commentHeaderTime}>
+                                                    {parseTime(item.createdAt)}
+                                                </span>
+                                            </Space>
                                             {item.links.map((item) => {
                                                 return (
                                                     <Space key={item.link} style={{ display: 'flex' }}>
@@ -50,15 +48,15 @@ const Page = () => {
                                                 );
                                             })}
                                         </div>
-                                        <div>
-                                            {item.pics.map((item: string) => {
-                                                return <Image key={item} width={120} src={item} alt="" />;
-                                            })}
-                                        </div>
-                                    </Space>
-                                }
-                            />
-                        </Skeleton>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        {item.pics.map((item: string) => {
+                                            return <Image key={item} width={120} height={100} src={item} alt="" />;
+                                        })}
+                                    </div>
+                                </Row>
+                            }
+                        />
                     </List.Item>
                 )}
             />
