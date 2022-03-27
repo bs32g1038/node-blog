@@ -70,5 +70,13 @@
         .react-calendar-heatmap .color-gitlab-4 {
             fill: #254e77;
         }
+        .music-player {
+            background-color: var(--main-bg-color);
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            padding: 5px 0;
+            color: var(--primary-text-color);
+        }
     }
 }

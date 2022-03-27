@@ -9,6 +9,8 @@ import Head from 'next/head';
 import { useFetchConfigQuery } from '../api';
 import styles from './app.module.scss';
 import { useAppDispatch } from '../hooks/app';
+import ReactBsMusicPlayer from 'react-bs-music-player';
+import songs from '../data/songs.json';
 
 const App = (props: { children?: ReactNode }) => {
     const theme = useSelector((state: RootState) => state.app.theme);
@@ -75,6 +77,7 @@ const App = (props: { children?: ReactNode }) => {
             <div className="main">{props.children}</div>
             <AppFooter />
             <AboutPage></AboutPage>
+            <ReactBsMusicPlayer musicList={songs}></ReactBsMusicPlayer>
         </div>
     );
 };

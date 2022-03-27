@@ -9,6 +9,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/antd.css';
 import 'react-image-crop/dist/ReactCrop.css';
 import '@blog/client/common/global.scss';
+import 'react-bs-music-player/dist/style.css';
 
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {

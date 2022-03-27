@@ -123,6 +123,7 @@
     "query-string": "^7.1.1",
     "rc-tween-one": "^3.0.3",
     "react": "^17.0.2",
+    "react-bs-music-player": "^0.1.0",
     "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
