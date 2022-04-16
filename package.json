@@ -181,5 +181,8 @@
         "diagnostics": false
       }
     }
+  },
+  "resolutions": {
+    "@types/react": "^17.0.38"
   }
 }
