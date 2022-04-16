@@ -3,7 +3,6 @@ import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
 import { MONGODB, TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
-import { DatabaseModule } from '../server/database/database.module';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { INestApplication } from '@nestjs/common';
@@ -23,13 +22,7 @@ export const verifyToken = (str) => {
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const module = await Test.createTestingModule({
-        imports: [
-            DatabaseModule,
-            MongooseModule.forRoot(MONGODB.uri),
-            DynamicConfigModule,
-            EmailModule,
-            ...(metadata.imports || []),
-        ],
+        imports: [MongooseModule.forRoot(MONGODB.uri), DynamicConfigModule, EmailModule, ...(metadata.imports || [])],
         providers: metadata.providers,
     }).compile();
     const app = module.createNestApplication();

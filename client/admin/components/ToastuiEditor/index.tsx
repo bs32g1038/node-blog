@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ReactElement } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Editor, { EditorOptions } from '@toast-ui/editor';
 import axios from '@blog/client/admin/axios';
@@ -8,7 +8,7 @@ type Props = Omit<EditorOptions, 'el'> & {
     getEditor?: (ed: Editor) => void;
 };
 
-export default function ToastuiEditor(props: Props) {
+export default function ToastuiEditor(props: Props): ReactElement {
     const [editor, setEditor] = useState(null);
     const ref = useRef(null);
 
