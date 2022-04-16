@@ -100,8 +100,6 @@ const Index = () => {
                                         key="delete"
                                         title="确认要删除？"
                                         onConfirm={() => deleteExplore(item._id)}
-                                        okText="确定"
-                                        cancelText="取消"
                                     >
                                         <Button danger type="link" size="small" title="删除" icon={<DeleteFilled />}>
                                             删除

@@ -59,7 +59,7 @@ export default function Index() {
                 data: { articleIds: state.selectedRowKeys },
             })
             .then((res) => {
-                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                if (res && res.data && res.data.deletedCount > 0) {
                     message.success('删除文章成功！');
                     setState((data) => ({
                         ...data,
@@ -103,12 +103,7 @@ export default function Index() {
                                 >
                                     编辑
                                 </Button>
-                                <Popconfirm
-                                    title="确认要删除？"
-                                    onConfirm={() => deleteArticle(record._id)}
-                                    okText="确定"
-                                    cancelText="取消"
-                                >
+                                <Popconfirm title="确认要删除？" onConfirm={() => deleteArticle(record._id)}>
                                     <Button danger type="link" size="small" title="删除" icon={<DeleteFilled />}>
                                         删除
                                     </Button>
@@ -186,6 +181,7 @@ export default function Index() {
                     title="确认要删除？"
                     placement="right"
                     visible={state.visible}
+                    onConfirm={() => batchDeleteArticle()}
                     onVisibleChange={() => {
                         if (state.selectedRowKeys.length <= 0) {
                             message.info('请选择要删除的文章');
@@ -196,9 +192,6 @@ export default function Index() {
                             visible: !state.visible,
                         }));
                     }}
-                    onConfirm={() => batchDeleteArticle()}
-                    okText="确定"
-                    cancelText="取消"
                 >
                     <Button danger={true} icon={<DeleteFilled />}>
                         批量删除

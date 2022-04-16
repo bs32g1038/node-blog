@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from './database/database.module';
 import { EmailModule } from './modules/email/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AdminLogModule } from './modules/adminlog/adminlog.module';
@@ -24,7 +23,6 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
 
 @Module({
     imports: [
-        DatabaseModule,
         MongooseModule.forRoot(MONGODB.uri),
         DynamicConfigModule,
         EmailModule,

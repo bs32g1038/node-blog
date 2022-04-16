@@ -52,7 +52,7 @@ export default function Comments() {
                 data: { commentIds: state.selectedRowKeys },
             })
             .then((res) => {
-                if (res && res.data && res.data.ok === 1 && res.data.deletedCount > 0) {
+                if (res && res.data && res.data.deletedCount > 0) {
                     message.success('删除评论成功！');
                     setState((data) => ({
                         ...data,
@@ -121,12 +121,7 @@ export default function Comments() {
                             回复
                         </Button>
                         ,
-                        <Popconfirm
-                            title="确认要删除？"
-                            onConfirm={() => deleteComment(record._id)}
-                            okText="确定"
-                            cancelText="取消"
-                        >
+                        <Popconfirm title="确认要删除？" onConfirm={() => deleteComment(record._id)}>
                             <Button danger={true} size="small" title="删除" icon={<DeleteFilled />}>
                                 删除
                             </Button>
@@ -158,8 +153,6 @@ export default function Comments() {
                 }));
             }}
             onConfirm={() => batchDeleteComment()}
-            okText="确定"
-            cancelText="取消"
         >
             <Button danger={true} icon={<DeleteFilled />}>
                 批量删除

@@ -85,12 +85,11 @@ const Index = (props: Props) => {
                 }}
                 {...props}
                 beforeUpload={(file) => {
-                    console.log(file);
                     if (isImage(type) && beforeUpload(file)) {
-                        return props?.beforeUpload(file) || true;
+                        return props?.beforeUpload?.(file) || true;
                     }
                     if (isSvg(type) && svgBeforeUpload(file)) {
-                        return props?.beforeUpload(file) || true;
+                        return props?.beforeUpload?.(file) || true;
                     }
                 }}
             >

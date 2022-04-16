@@ -75,12 +75,7 @@ export default function PasswordForm() {
                 <Input.Password size="large" placeholder="请再次输入密码" />
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-                <Popconfirm
-                    title="你确定要重置密码吗？"
-                    okText="确定"
-                    cancelText="取消"
-                    onConfirm={() => form.submit()}
-                >
+                <Popconfirm title="你确定要重置密码吗？" onConfirm={() => form.submit()}>
                     <Button type="primary" danger={true}>
                         改变密码
                     </Button>

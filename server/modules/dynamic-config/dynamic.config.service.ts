@@ -57,7 +57,7 @@ export class DynamicConfigService {
             });
         }
         await this.configModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
-        const res = await this.configModel.findById(CONFIG_KEY);
+        const res = await this.configModel.findOne({ key: CONFIG_KEY });
         this.setConfig(res.toObject());
         return this.config;
     }

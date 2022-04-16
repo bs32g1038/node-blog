@@ -64,7 +64,7 @@ export default function SiderMenu(props: Props) {
     const [state, setState] = useState({
         mode: 'inline',
         openKey: [],
-        selectedKey: '',
+        selectedKey: [''],
         firstHide: true,
     });
     const router = useRouter();
