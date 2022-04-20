@@ -126,7 +126,7 @@
     "react-bs-music-player": "^0.1.0",
     "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
+    "react-redux": "^8.0.1",
     "react-svg": "^14.1.15",
     "react-tooltip": "^4.2.21",
     "rimraf": "^3.0.2",
