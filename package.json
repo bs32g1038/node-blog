@@ -56,7 +56,7 @@
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.4.4",
     "lru-cache": "^7.7.1",
-    "markdown-it": "^12.3.2",
+    "markdown-it": "^13.0.0",
     "mongoose": "^6.2.8",
     "nodemailer": "^6.7.3",
     "path-to-regexp": "^6.2.0",
