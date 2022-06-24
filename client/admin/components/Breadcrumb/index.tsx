@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Space } from 'antd';
 import { useRouter } from 'next/router';
 import { pathToRegexp } from 'path-to-regexp';
 import { urlToList } from '@blog/client/admin/utils/url.util';
@@ -39,15 +39,17 @@ export default function _Breadcrumb() {
     const router = useRouter();
     const items = getBreadCrumbRoutes(menu, router);
     return (
-        <div className={style.breadcrumb}>
+        <Breadcrumb className={style.breadcrumb}>
             {items.map((item) => {
                 return (
                     <Breadcrumb.Item key={item.path}>
-                        {item.breadcrumbIcon}
-                        <span>{item.breadcrumbName}</span>
+                        <Space>
+                            {item.breadcrumbIcon}
+                            <span>{item.breadcrumbName}</span>
+                        </Space>
                     </Breadcrumb.Item>
                 );
             })}
-        </div>
+        </Breadcrumb>
     );
 }

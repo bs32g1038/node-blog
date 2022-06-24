@@ -15,26 +15,29 @@ const { Sider } = Layout;
 const MenuList = (props) => {
     const renderMenuItem = (
         item // item.route 菜单单独跳转的路由
-    ) => (
-        <Menu.Item key={item.path}>
+    ) => ({
+        label: (
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true}>
                 <a className={style.menuLinkA}>
                     {item.icon}
                     <span className="nav-text">{item.title}</span>
                 </a>
             </Link>
-        </Menu.Item>
-    );
+        ),
+    });
     return (
-        <Menu {...props}>
-            {menus &&
+        <Menu
+            {...props}
+            items={
+                menus &&
                 menus
                     .filter((item) => item.title && !item.hidden)
                     .map((item) => {
                         return renderMenuItem(item);
                     })
-                    .filter((item) => item)}
-        </Menu>
+                    .filter((item) => item)
+            }
+        ></Menu>
     );
 };
 
@@ -117,36 +120,47 @@ export default function SiderMenu(props: Props) {
                     </a>
                 </Link>
                 <div className={style.userMenu}>
-                    <Menu mode="inline">
-                        <Menu.SubMenu
-                            key="userSubMenu"
-                            title={
-                                <div className={style.userPanel}>
-                                    <div className="avatar-wrap">
-                                        <Avatar src={data.avatar} size={34} icon={<UserOutlined />} />
+                    <Menu
+                        mode="inline"
+                        items={[
+                            {
+                                key: '/admin/user',
+                                label: (
+                                    <div className={style.userPanel}>
+                                        <div className="avatar-wrap">
+                                            <Avatar src={data.avatar} size={34} icon={<UserOutlined />} />
+                                        </div>
+                                        <div>
+                                            <h2>{data.userName}</h2>
+                                            <p>{data.account}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h2>{data.userName}</h2>
-                                        <p>{data.account}</p>
-                                    </div>
-                                </div>
-                            }
-                        >
-                            <Menu.Item key="/admin/user/person">
-                                <Link href="/admin/user/person" passHref={true}>
-                                    <a>
-                                        <SettingOutlined />
-                                        <span>配置个人信息</span>
-                                    </a>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="logout" onClick={() => logout()}>
-                                <LogoutOutlined />
-                                <span>退出登录</span>
-                            </Menu.Item>
-                            <Menu.Divider></Menu.Divider>
-                        </Menu.SubMenu>
-                    </Menu>
+                                ),
+                                children: [
+                                    {
+                                        key: '/admin/user/person',
+                                        label: (
+                                            <Link href="/admin/user/person" passHref={true}>
+                                                <a>
+                                                    <SettingOutlined />
+                                                    <span>配置个人信息</span>
+                                                </a>
+                                            </Link>
+                                        ),
+                                    },
+                                    {
+                                        key: '/admin/user/logout',
+                                        label: (
+                                            <div onClick={() => logout()}>
+                                                <LogoutOutlined />
+                                                <span>退出登录</span>
+                                            </div>
+                                        ),
+                                    },
+                                ],
+                            },
+                        ]}
+                    ></Menu>
                 </div>
                 <div style={{ overflowY: 'auto' }}>
                     <div className={style.homeMenuItem}>
