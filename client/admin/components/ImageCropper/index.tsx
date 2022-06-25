@@ -80,6 +80,10 @@ export interface ImageCropperProps {
      * @default '取消'
      */
     modalCancel?: string;
+    /**
+     * 子组件
+     */
+    children?: React.ReactNode;
 }
 
 // 基础裁剪封装

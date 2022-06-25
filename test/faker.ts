@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 export const getObjectId = () => {
     return new mongoose.Types.ObjectId().toString();
@@ -19,7 +19,7 @@ export const getExplore = () => {
 
 export const getArticle = (obj = {}) => {
     return {
-        title: faker.lorem.sentence(),
+        title: faker.lorem.words(),
         content: faker.lorem.paragraphs(),
         summary: faker.lorem.paragraph(),
         screenshot: faker.image.imageUrl(),
