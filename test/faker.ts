@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 export const getObjectId = () => {
     return new mongoose.Types.ObjectId().toString();
