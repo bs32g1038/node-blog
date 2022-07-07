@@ -24,7 +24,7 @@ const Page = () => {
                 <title>{config.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
-            <>
+            <div style={{ margin: '20px 0' }}>
                 {isLoading &&
                     new Array(10).fill('').map((_, index) => (
                         <div style={{ padding: '0 40px 20px' }} key={`article-item-loading-${index}`}>
@@ -36,7 +36,7 @@ const Page = () => {
                 ) : (
                     data.items.map((item) => <ArticleItem item={item} key={item._id}></ArticleItem>)
                 )}
-            </>
+            </div>
             {data.totalCount > 0 && (
                 <div style={{ display: 'flex', flex: '1 0 auto', justifyContent: 'center' }}>
                     <Pagination

@@ -6,6 +6,7 @@ import { LazyLoad } from '../lazy-load';
 import { parseTime } from '@blog/client/libs/time';
 import style from './item.style.module.scss';
 import { uniqueId } from 'lodash';
+import { Space } from 'antd';
 
 const ThumbImg = React.forwardRef((props, ref) => <img {...props} className={style.thumbImg} ref={ref as any} />);
 ThumbImg.displayName = 'ThumbImg';
@@ -32,11 +33,13 @@ const Item = (props: any) => {
                 {item.tags.length > 0 && (
                     <div className={style.tags}>
                         <TagIcon className={style.tagIcon}></TagIcon>
-                        {item.tags.map((name: any) => (
-                            <Link href={`/blog/articles?tag=${name}`} passHref={true} key={uniqueId()}>
-                                <a>{name}</a>
-                            </Link>
-                        ))}
+                        <Space>
+                            {item.tags.map((name: any) => (
+                                <Link href={`/blog/articles?tag=${name}`} passHref={true} key={uniqueId()}>
+                                    <a>{name}</a>
+                                </Link>
+                            ))}
+                        </Space>
                     </div>
                 )}
             </div>

@@ -2,9 +2,9 @@
     background-color: var(--main-bg-color);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #8c8c8c1f;
-    margin: 20px 30px;
-    padding: 0 10px;
+    border-top: 1px solid #8c8c8c1f;
+    margin: 0 30px;
+    padding: 14px 10px;
     h2 {
         font-size: 20px;
         cursor: pointer;
@@ -13,6 +13,9 @@
         margin-bottom: 14px;
         font-weight: bold;
         line-height: 1.2;
+    }
+    &:last-child {
+        border-bottom: 1px solid #8c8c8c1f;
     }
 }
 

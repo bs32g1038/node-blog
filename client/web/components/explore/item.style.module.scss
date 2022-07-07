@@ -1,0 +1,20 @@
+.item {
+    background-color: var(--main-bg-color);
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #8c8c8c1f;
+    border-left: 1px solid #8c8c8c1f;
+    border-right: 1px solid #8c8c8c1f;
+    padding: 15px 10px;
+    justify-content: space-between;
+    &:last-child {
+        border-bottom: 1px solid #8c8c8c1f;
+    }
+}
+
+.itemMeta {
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: var(--secondary-text-color);
+    line-height: 1;
+}

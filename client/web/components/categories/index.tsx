@@ -10,27 +10,24 @@ const Categories = () => {
     const { data = [] } = useFetchCategoriesQuery();
     return (
         <div className={style.categories}>
-            <NavLink exact={true} href="/blog">
-                <a className={style.categoryItemA}>全部</a>
-            </NavLink>
-            {data.map((item) => (
-                <NavLink key={item._id} href={`/blog/articles?cid=${item._id}`} exact={true}>
-                    <a className={style.categoryItemA}>
-                        {item.name}
-                        <span>({item.articleCount})</span>
-                    </a>
+            <div className={style.categoriesInnter}>
+                <NavLink exact={true} href="/blog">
+                    <a className={style.categoryItemA}>全部</a>
                 </NavLink>
-            ))}
-            {router.query.tag && (
-                <Tag
-                    closable
-                    onClose={() => {
-                        Router.push('/blog/articles');
-                    }}
-                >
-                    {router.query.tag}
-                </Tag>
-            )}
+                {data.map((item) => (
+                    <NavLink key={item._id} href={`/blog/articles?cid=${item._id}`} exact={true}>
+                        <a className={style.categoryItemA}>
+                            {item.name}
+                            <span>({item.articleCount})</span>
+                        </a>
+                    </NavLink>
+                ))}
+                {router.query.tag && (
+                    <NavLink exact={true} href={`/blog/articles?tag=${router.query.tag}`}>
+                        <a className={style.categoryItemA}>{router.query.tag}</a>
+                    </NavLink>
+                )}
+            </div>
         </div>
     );
 };

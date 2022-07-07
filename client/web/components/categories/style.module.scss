@@ -1,39 +1,39 @@
 .categories {
     background-color: var(--main-bg-color);
-    padding: 20px 20px 10px;
-    border-bottom: 1px solid #8c8c8c1f;
+    padding: 2px 36px;
     font-size: 14px;
     color: var(--second-text-color);
-    margin: 0 20px;
+    margin-top: 20px;
+}
+
+.categoriesInnter {
+    padding: 2px 2px;
+    background-color: var(--app-background-color);
+    display: inline-block;
+    border-radius: 3px;
 }
 
 .categoryItemA {
     text-decoration: none;
     cursor: pointer;
+    text-decoration: none;
     color: var(--primary-text-color);
-    margin-right: 30px;
-    margin-bottom: 20px;
+    padding: 3px 10px;
+    margin-right: 3px;
     display: inline-block;
+    background-color: var(--app-background-color);
+    transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
     &:hover {
         text-decoration: none;
         color: var(--primary-text-color);
+        background-color: var(--main-bg-color);
+        border-radius: 3px;
     }
     &:global(.active) {
-        position: relative;
-        font-weight: 700;
-        &:after {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            left: 0;
-            width: 14px;
-            margin: auto;
-            content: '';
-            border-top: 5px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 5px solid #f86422;
-            border-left: 7px solid transparent;
-            box-sizing: border-box;
-        }
+        background-color: var(--main-bg-color);
+        border-radius: 3px;
+    }
+    &:last-child {
+        margin-right: 0;
     }
 }
