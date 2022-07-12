@@ -40,7 +40,7 @@
     "@nestjs/common": "^8.4.7",
     "@nestjs/core": "^8.4.7",
     "@nestjs/mongoose": "^9.1.1",
-    "@nestjs/platform-express": "^8.4.7",
+    "@nestjs/platform-express": "^9.0.2",
     "@nestjs/schedule": "^2.0.1",
     "@types/fs-extra": "^9.0.13",
     "@types/serve-favicon": "^2.5.3",
