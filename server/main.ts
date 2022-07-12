@@ -14,7 +14,13 @@ import { DynamicConfigService } from './modules/dynamic-config/dynamic.config.se
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     const configService = app.get(DynamicConfigService);
-    app.use(helmet());
+    app.use(
+        helmet.contentSecurityPolicy({
+            directives: {
+                'worker-src': 'blob:',
+            },
+        })
+    );
     app.use(json({ limit: '20mb' }));
     /**
      * 此处用于兼容 favicon 不存在配置

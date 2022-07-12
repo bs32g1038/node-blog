@@ -1,6 +1,5 @@
 import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { incArticleDayReadingCount } from '@blog/server/modules/tasks/write.day.reading.tasks.service';
 import { CategoryDocument, Category } from '../../models/category.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
 import cache, { TimeExpression } from '@blog/server/utils/cache.util';
@@ -79,9 +78,23 @@ export class ArticleService {
             throw new NotFoundException('没有该文章');
         }
 
-        if (article && article._id) {
-            incArticleDayReadingCount(article._id, (article.dayReadings && article.dayReadings.length) || 0);
+        const timestamp = new Date(new Date().setHours(0, 0, 0, 0)).valueOf();
+        const res = article.dayReadings.find((item) => {
+            if (item.timestamp === timestamp) {
+                return true;
+            }
+            return false;
+        });
+        if (res) {
+            res.count += 1;
+        } else {
+            if (article.dayReadings.length >= 14) {
+                article.dayReadings.pop();
+            }
+            article.dayReadings.push({ timestamp, count: 1 });
         }
+        article.save();
+
         if (article) {
             const data: any = article.toObject();
             const [prev, next] = await Promise.all([
