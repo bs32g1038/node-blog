@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { timeAgo } from '@blog/client/libs/time';
+import { parseTime } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import style from './comment-item.style.module.scss';
@@ -7,6 +7,7 @@ import { xss } from '@blog/client/libs/marked';
 import { IComment } from '@blog/client/web/api';
 import Image from 'next/image';
 import { isString } from 'lodash';
+import { Space } from 'antd';
 
 const handleEmoji = (text) => {
     const regex = /@\((.+?)\)/g;
@@ -34,43 +35,36 @@ const ReplyComponent = (props: { parentId: string; item: IComment }) => {
         setAvatarSrc(gernateAvatarImage(item.nickName) || '');
     }, [item.nickName]);
     return (
-        <div className={style.commentReplyItem} key={item._id}>
+        <div className={style.commentReplyItem}>
             <div className={style.commentItemReplyContent}>
                 <div className={style.commentItemReplyInfo}>
                     <div className={style.left}>
-                        <div className={style.commentItemReplyAvatar}>
-                            <Image width={72} height={72} src={avatarSrc} alt="" />
-                        </div>
-                        <span>
-                            <strong>{item.nickName}</strong>
-                        </span>
-                        <span className={style.divide}></span>
-                        {getBadgeVisitorOrAuthor(item.identity)}
-                        <span className={style.divide}></span>
-                        <span>{timeAgo(item.createdAt)}</span>
-                    </div>
-                    <div className={style.commentHeaderRight}>
-                        <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
-                    </div>
-                </div>
-                <div style={{ marginBottom: 0, marginTop: '10px' }}>
-                    {item.reply && (
-                        <div className={style.parentWrapper}>
-                            <div>“</div>
-                            <div
-                                className={style.parentContent}
+                        <Space size={4}>
+                            <div className={style.commentItemReplyAvatar}>
+                                <Image width={72} height={72} src={avatarSrc} alt="" />
+                            </div>
+                            <span>
+                                <strong>{item.nickName}</strong>
+                            </span>
+                            <div className={style.replyNickName}>{item.reply && <div>@{item.reply.nickName}</div>}</div>
+                            <p
+                                className={style.replyContent}
                                 dangerouslySetInnerHTML={{
-                                    __html: xss(handleEmoji(item.reply.content)),
+                                    __html: xss(handleEmoji(item.content)),
                                 }}
-                            ></div>
-                            <div>”</div>
-                        </div>
-                    )}
-                    <p
-                        dangerouslySetInnerHTML={{
-                            __html: xss(handleEmoji(item.content)),
-                        }}
-                    ></p>
+                            ></p>
+                        </Space>
+                    </div>
+                    <Space style={{ paddingLeft: '25px' }}>
+                        {getBadgeVisitorOrAuthor(item.identity)}
+                        <span>{parseTime(item.createdAt)}</span>
+                        <a
+                            style={{ color: 'var(--secondary-text-color)' }}
+                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
+                        >
+                            回复
+                        </a>
+                    </Space>
                 </div>
                 {showCommentForm === item._id && (
                     <CommentForm
@@ -96,29 +90,30 @@ export const CommentItem = (props: { item: IComment; index: number }) => {
         <div className={style.commentItem}>
             <div className={style.commentItemInner}>
                 <div className={style.commentItemAvatar}>
-                    <Image width={72} height={72} src={avatarSrc} alt="" />
+                    <Image width={48} height={48} src={avatarSrc} alt="" />
                 </div>
                 <div className={style.commentItemRight}>
                     <div className={style.commentHeader}>
-                        <div className={style.commentHeaderLeft}>
-                            <div className={style.commentHeaderLeftContent}>
-                                <span className={style.commentItemNickName}>{item.nickName}</span>
-                                <span className={style.divide}></span>
-                                {getBadgeVisitorOrAuthor(item.identity)}
-                                <span className={style.divide}></span>
-                                <span className={style.commentHeaderTime}>{timeAgo(item.createdAt)}</span>
-                            </div>
+                        <div className={style.commentHeaderLeftContent}>
+                            <span className={style.commentItemNickName}>{item.nickName}</span>
                         </div>
-                        <div className={style.commentHeaderRight}>
-                            <a onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}>回复</a>
-                        </div>
+                        <p
+                            className={style.commentItemContent}
+                            dangerouslySetInnerHTML={{
+                                __html: xss(handleEmoji(item.content)),
+                            }}
+                        ></p>
+                        <Space>
+                            {getBadgeVisitorOrAuthor(item.identity)}
+                            <span>{parseTime(item.createdAt)}</span>
+                            <a
+                                style={{ color: 'var(--secondary-text-color)' }}
+                                onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
+                            >
+                                回复
+                            </a>
+                        </Space>
                     </div>
-                    <p
-                        style={{ marginBottom: '8px', marginTop: '8px' }}
-                        dangerouslySetInnerHTML={{
-                            __html: xss(handleEmoji(item.content)),
-                        }}
-                    ></p>
                     {showCommentForm === item._id && (
                         <CommentForm
                             url="/comments"
@@ -129,7 +124,7 @@ export const CommentItem = (props: { item: IComment; index: number }) => {
                     )}
                     <div className={style.commentReplyList}>
                         {item.comments?.items?.map((_) => {
-                            return <ReplyComponent key={item._id} parentId={item._id} item={_}></ReplyComponent>;
+                            return <ReplyComponent key={_._id} parentId={item._id} item={_}></ReplyComponent>;
                         })}
                     </div>
                 </div>

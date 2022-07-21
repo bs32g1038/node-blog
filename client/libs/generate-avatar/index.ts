@@ -61,7 +61,7 @@ class GHAT {
     fillStyle?: string;
     SEED_W: number;
 
-    constructor(w = 72) {
+    constructor(w = 96) {
         this.w = w;
         this.h = w; //h;
 

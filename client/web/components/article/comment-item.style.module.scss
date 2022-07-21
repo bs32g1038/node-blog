@@ -8,11 +8,7 @@
 .commentItemRight {
     width: 100%;
 }
-.commentHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+
 .commentHeaderLeft {
     display: flex;
     align-items: center;
@@ -23,21 +19,27 @@
 .commentHeaderLeftContent {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .commentItemNickName {
     font-weight: 500;
-    color: var(--title-text-color);
+    color: var(--primary-text-color);
 }
 .commentItemAvatar {
     position: relative;
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
     min-width: 32px;
     min-height: 32px;
     border-radius: 2px;
     margin-right: 10px;
     margin-top: 5px;
     overflow: hidden;
+}
+.commentItemContent {
+    color: var(--primary-text-color);
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 .commentHeaderTime {
     margin-left: 5px;
@@ -51,12 +53,11 @@
 }
 
 .commentReplyItem {
-    border-top: 1px dashed var(--border-color);
     background: var(--main-bg-color);
 }
 
 .commentItemReplyContent {
-    padding: 10px 12px;
+    padding: 10px 12px 10px 0;
     border-radius: 4px;
 }
 
@@ -83,8 +84,6 @@
 }
 
 .commentItemReplyInfo {
-    display: flex;
-    align-items: center;
     color: var(--secondary-text-color);
     font-size: 14px;
     justify-content: space-between;
@@ -92,9 +91,23 @@
         display: block;
     }
     .left {
-        display: flex;
-        align-items: center;
+        color: var(--primary-text-color);
+        p {
+            margin: 0;
+        }
     }
+    .replyNickName {
+        color: var(--primary-text-color);
+    }
+    .replyContent {
+        color: var(--primary-text-color);
+    }
+}
+
+.commentHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .commentItemReplyAvatar {
