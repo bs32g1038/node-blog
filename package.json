@@ -110,7 +110,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "find-root": "^1.1.0",
-    "framer-motion": "^6.3.13",
+    "framer-motion": "^7.0.0",
     "http-proxy-middleware": "^2.0.6",
     "husky": "^8.0.1",
     "jest": "^28.1.1",
