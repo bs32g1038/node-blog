@@ -65,7 +65,7 @@
     "rxjs": "^7.5.5",
     "scroll-into-view-if-needed": "^2.2.29",
     "serve-favicon": "^2.5.0",
-    "sharp": "^0.30.7",
+    "sharp": "^0.31.2",
     "to-ico": "^1.1.5",
     "validator": "^13.7.0",
     "xss": "^1.0.13"
