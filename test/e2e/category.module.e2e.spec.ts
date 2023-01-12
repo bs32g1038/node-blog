@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { getCategory, getObjectId } from '../faker';
 import { CategoryModel, clearModelCollectionData } from '../models';
-import queryString from 'query-string';
 import { getToken } from '../util';
 const __TOKEN__ = getToken();
 
@@ -54,7 +53,8 @@ describe('category.module.e2e', () => {
             await CategoryModel.create(categories);
 
             return request(app.getHttpServer())
-                .get('/api/categories?' + queryString.stringify({ page: 1, limit: 20 }))
+                .get('/api/categories?')
+                .query({ page: 1, limit: 20 })
                 .expect(200)
                 .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(20);
