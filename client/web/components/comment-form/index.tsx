@@ -6,7 +6,6 @@ import { USER_COMMENT_INFO_KEY } from './constant';
 import axios from '@blog/client/web/utils/axios';
 import { Alert, Tooltip, Input, Button } from 'antd';
 import style from './style.module.scss';
-import dynamic from 'next/dynamic';
 import Avatar from 'boring-avatars';
 
 interface Props {
