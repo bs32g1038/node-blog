@@ -19,7 +19,7 @@ const PersonCommit = (props: ContributionProps) => {
         <div className={style.contribution}>
             <div>
                 <h3 className={style.title}>在这一年博主共写作 {totalCountInYear} 篇文章</h3>
-                <CalendarHeatmap
+                {/* <CalendarHeatmap
                     startDate={new Date().getFullYear() + '-1-1'}
                     endDate={new Date().getFullYear() + 1 + '-1-1'}
                     values={values}
@@ -41,7 +41,7 @@ const PersonCommit = (props: ContributionProps) => {
                     horizontal={true}
                     gutterSize={4}
                 />
-                {props.values[0] && <ReactTooltip></ReactTooltip>}
+                {props.values[0] && <ReactTooltip></ReactTooltip>} */}
             </div>
         </div>
     );

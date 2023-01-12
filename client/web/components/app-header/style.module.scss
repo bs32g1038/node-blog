@@ -1,7 +1,7 @@
 .appHeader {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 15px 20px;
     background-color: #fff;
     border-bottom: 1px solid #8c8c8c1f;
     background-color: var(--main-bg-color);
@@ -15,8 +15,9 @@
     align-items: center;
     cursor: pointer;
     font-weight: 600;
-    margin-right: 15px;
+    margin-right: 5px;
     margin-bottom: 0;
+    text-decoration: none;
     h1 {
         font-family: logoFont;
         font-size: 16px;
@@ -34,8 +35,8 @@
     align-items: center;
     svg {
         margin-right: 8px;
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         fill: var(--title-text-color);
     }
 }
@@ -55,6 +56,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
     &:focus {
         box-shadow: none;
     }

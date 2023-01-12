@@ -73,7 +73,7 @@ export default function StaticFiles() {
                     }));
                     return fetchData();
                 }
-                return message.error('删除文件失败，请重新尝试。');
+                message.error('删除文件失败，请重新尝试。');
             });
     };
     const handleOk = () => {

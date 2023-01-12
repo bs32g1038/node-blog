@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { EmailModule } from './modules/email/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AdminLogModule } from './modules/adminlog/adminlog.module';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ArticleModule } from './modules/article/article.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CommentModule } from './modules/comment/comment.module';
@@ -17,7 +16,6 @@ import { isProdMode, MONGODB } from './configs/index.config';
 import { TasksModule } from './modules/tasks/tasks.module';
 
 import { SSRModule } from '@blog/client/server';
-import { ExploreModule } from './modules/explore/explore.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.module';
 
@@ -27,7 +25,6 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
         DynamicConfigModule,
         EmailModule,
         AdminLogModule,
-        DashboardModule,
         ArticleModule,
         CategoryModule,
         CommentModule,
@@ -36,7 +33,6 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
         LoginModule,
         SearchModule,
         UserModule,
-        ExploreModule,
         ...(isProdMode ? [ScheduleModule.forRoot(), TasksModule] : []),
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],

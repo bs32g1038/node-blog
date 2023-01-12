@@ -15,6 +15,7 @@ export default function Index({ visible, onCancel, formData }) {
         style: {
             width: '100%',
             minHeight: '80px',
+            maxHeight: '110px',
         },
     });
     const [categories, setCategories] = useState([]);

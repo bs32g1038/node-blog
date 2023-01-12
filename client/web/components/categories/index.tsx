@@ -1,32 +1,53 @@
 import React from 'react';
-import NavLink from '../nav-link';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import style from './style.module.scss';
-import { Tag } from 'antd';
 import { useFetchCategoriesQuery } from '@blog/client/web/api';
+import { Segmented } from 'antd';
 
 const Categories = () => {
     const router = useRouter();
     const { data = [] } = useFetchCategoriesQuery();
+    const _id = router.query.cid;
+    let value = data.find((item) => item._id === _id)?._id ?? '全部';
+    const _data: any[] = [...data];
+    if (router.query.tag) {
+        value = data.find((item) => item.name === router.query.tag)?._id ?? (router.query.tag as string);
+        if (value === router.query.tag) {
+            _data.push({
+                _id: router.query.tag,
+                name: router.query.tag,
+                isTag: true,
+            });
+        }
+    }
     return (
         <div className={style.categories}>
             <div className={style.categoriesInnter}>
-                <NavLink exact={true} href="/blog">
-                    <a className={style.categoryItemA}>全部</a>
-                </NavLink>
-                {data.map((item) => (
-                    <NavLink key={item._id} href={`/blog/articles?cid=${item._id}`} exact={true}>
-                        <a className={style.categoryItemA}>
-                            {item.name}
-                            <span>({item.articleCount})</span>
-                        </a>
-                    </NavLink>
-                ))}
-                {router.query.tag && (
-                    <NavLink exact={true} href={`/blog/articles?tag=${router.query.tag}`}>
-                        <a className={style.categoryItemA}>{router.query.tag}</a>
-                    </NavLink>
-                )}
+                <Segmented
+                    value={value}
+                    options={[
+                        {
+                            label: '全部',
+                            value: '全部',
+                        },
+                        ..._data.map((item) => ({
+                            label: (
+                                <a key={item._id} href={`/blog/articles?cid=${item._id}`}>
+                                    {item.name}
+                                    {!item.isTag && <span>({item.articleCount})</span>}
+                                </a>
+                            ),
+                            value: item._id,
+                        })),
+                    ]}
+                    onChange={(val) => {
+                        if (val === '全部') {
+                            router.push('/blog/articles');
+                            return;
+                        }
+                        router.push(`/blog/articles?cid=${val}`);
+                    }}
+                ></Segmented>
             </div>
         </div>
     );

@@ -5,10 +5,11 @@ import { wrapper } from '@blog/client/redux/store';
 import { fetchConfig } from '@blog/client/web/api';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 import 'react-image-crop/dist/ReactCrop.css';
 import '@blog/client/common/global.scss';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {

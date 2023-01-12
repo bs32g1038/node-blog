@@ -8,6 +8,7 @@ import { ReactSVG } from 'react-svg';
 import { EmailIcon, WechatIcon, QQIcon, GithubIcon } from '../../icons';
 import icpPng from '@blog/client/assets/images/icp.png';
 import { useFetchConfigQuery } from '../../api';
+import { Space } from 'antd';
 
 export const AppFooter = () => {
     const { data: config } = useFetchConfigQuery();
@@ -40,12 +41,21 @@ export const AppFooter = () => {
                     </div>
                 </div>
                 <div className={style.statement}>
-                    <BlogRuningTime></BlogRuningTime>&nbsp;&nbsp;版权 © 2016-{new Date().getFullYear()}{' '}
-                    {config.siteTitle}
-                    <a href={config.icpGovCn}>
-                        <img src={icpPng.src} alt={icpPng.src} />
-                        <span>{config.siteIcp}</span>
-                    </a>
+                    <Space
+                        style={{
+                            fontSize: 12,
+                        }}
+                    >
+                        <span>运行时间：</span>
+                        <BlogRuningTime></BlogRuningTime>
+                    </Space>
+                    <div>
+                        版权 © 2016-{new Date().getFullYear()} {config.siteTitle}
+                        <a href={config.icpGovCn}>
+                            <img src={icpPng.src} alt={icpPng.src} />
+                            <span>{config.siteIcp}</span>
+                        </a>
+                    </div>
                 </div>
             </section>
             <section className={style.support}>

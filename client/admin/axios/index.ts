@@ -36,7 +36,7 @@ const errorHandler = (error) => {
 };
 
 axios.interceptors.request.use(
-    function (c) {
+    function (c: any) {
         const tokenKey = config.tokenKey;
         const token = localStorage.getItem(tokenKey);
         if (!(c.url && (c.url.includes('getFirstLoginInfo') || c.url.includes('login')))) {

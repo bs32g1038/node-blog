@@ -7,10 +7,7 @@ import axios from '@blog/client/web/utils/axios';
 import { Alert, Tooltip, Input, Button } from 'antd';
 import style from './style.module.scss';
 import dynamic from 'next/dynamic';
-
-const Avatar = dynamic(() => import('./avatar'), {
-    ssr: false,
-});
+import Avatar from 'boring-avatars';
 
 interface Props {
     url: string;
@@ -99,7 +96,7 @@ export const CommentForm = (props: Props) => {
             />
             <div className={style.userInfo}>
                 <span className={style.userInfoText}>游客账户：</span>
-                <Avatar nickName={userInfo.nickName}></Avatar>
+                <Avatar size={20} name={userInfo.nickName} variant="beam" />
                 <span className={style.userInfoText}>{userInfo.nickName}</span>
             </div>
             <div className={style.inputWrap}>

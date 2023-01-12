@@ -6,8 +6,6 @@ import { isLogin } from '@blog/client/admin/api/is.login.api';
 import { Layout, BackTop } from 'antd';
 const { Content } = Layout;
 
-import 'antd/dist/antd.css';
-
 interface Props {
     children: React.ReactNode;
 }

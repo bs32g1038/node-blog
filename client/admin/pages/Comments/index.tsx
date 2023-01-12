@@ -60,7 +60,7 @@ export default function Comments() {
                     }));
                     return fetchData();
                 }
-                return message.error('删除评论失败，请重新尝试。');
+                message.error('删除评论失败，请重新尝试。');
             });
     };
     const handleTableChange = (pagination) => {

@@ -30,7 +30,7 @@ jobs:
         yarn run build
         yarn run test:cov
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@master
+      uses: codecov/codecov-action@v3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
       env:

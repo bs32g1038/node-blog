@@ -18,6 +18,7 @@ const App = (props: { children?: ReactNode }) => {
         t && dispatch(setTheme({ theme: t }));
     }, [dispatch]);
     const { data: config } = useFetchConfigQuery();
+
     return (
         <div className={styles.app}>
             <AppHeader />

@@ -13,6 +13,11 @@
 }
 .leftItem {
     display: flex;
+    color: rgba(0, 0, 0, 0.65);
+    a {
+        color: rgba(0, 0, 0, 0.65);
+        text-decoration: none;
+    }
 }
 .name {
     padding-right: 8px;

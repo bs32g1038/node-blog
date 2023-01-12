@@ -2,19 +2,23 @@
     line-height: 1.6;
     display: flex;
     flex-direction: column;
-    width: 820px;
+    width: 660px;
     margin: 0 auto;
     flex: 1 0 auto;
+    font-size: 14px;
     :global {
         @keyframes slideInUp {
             from {
                 transform: translate3d(0, 100%, 0);
                 visibility: visible;
             }
-
             to {
                 transform: translate3d(0, 0, 0);
             }
+        }
+        a {
+            text-decoration: none;
+            color: var(--primary-text-color);
         }
         .slideInUp {
             animation-name: slideInUp;

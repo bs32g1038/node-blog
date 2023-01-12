@@ -107,13 +107,11 @@
 .commentHeaderRight {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .commentItemReplyAvatar {
     width: 16px;
     height: 16px;
     border-radius: 4px;
-    margin-right: 5px;
-    overflow: hidden;
+    margin-top: -1px;
 }

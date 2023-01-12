@@ -21,7 +21,7 @@ export default function UserLogin() {
                 message.success('登陆成功！');
                 localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res.data));
                 localStorage.setItem(defaultConfig.tokenKey, res.data.token);
-                Router.push('/admin/dashboard');
+                Router.push('/admin/content/articles');
             })
             .catch(() => {
                 setLoading(false);
@@ -29,7 +29,7 @@ export default function UserLogin() {
     };
     useEffect(() => {
         axios.get('/getFirstLoginInfo').then((res) => {
-            setData(res.data.data);
+            setData(res.data);
         });
     }, []);
     return (
@@ -92,7 +92,7 @@ export default function UserLogin() {
                         rel="noopener noreferrer"
                         target="_blank"
                     >
-                        LIZCBLOG
+                        NODEBLOG
                     </a>
                 </div>
             </div>

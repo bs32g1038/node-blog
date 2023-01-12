@@ -1,9 +1,12 @@
 .categories {
     background-color: var(--main-bg-color);
-    padding: 2px 36px;
+    padding: 0 30px;
     font-size: 14px;
     color: var(--second-text-color);
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .categoriesInnter {
@@ -18,9 +21,6 @@
     cursor: pointer;
     text-decoration: none;
     color: var(--primary-text-color);
-    padding: 3px 10px;
-    margin-right: 3px;
-    display: inline-block;
     background-color: var(--app-background-color);
     transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
     &:hover {

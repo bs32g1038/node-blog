@@ -109,10 +109,10 @@ export class ArticleService {
         return article;
     }
 
-    async getRandomArticles(size = 9) {
+    async getRandomArticles(size = 3) {
         return await this.articleModel.aggregate([
             { $sample: { size } },
-            { $project: { title: 1, screenshot: 1, createdAt: 1 } },
+            // { $project: { title: 1, summary: 1, screenshot: 1, createdAt: 1 } },
         ]);
     }
 
@@ -122,6 +122,7 @@ export class ArticleService {
         if (!article) {
             throw new NotFoundException();
         }
+        ``;
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         return null;
     }
