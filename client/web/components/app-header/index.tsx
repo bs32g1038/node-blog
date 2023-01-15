@@ -11,6 +11,7 @@ import { setTheme } from '@blog/client/redux/store';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import { useAppDispatch } from '@blog/client/web/hooks/app';
 import { SearchForm } from './search-form';
+import clsx from 'clsx';
 
 export const AppHeader = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export const AppHeader = () => {
                 <h1>{config.siteTitle}</h1>
             </Link>
             <nav className={style.nav}>
-                <NavLink href="/blog" className={style.navA}>
+                <NavLink href="/blog" className={clsx(style.navA, 'active')}>
                     <HomeOutlined></HomeOutlined>
                     <span>首页</span>
                 </NavLink>

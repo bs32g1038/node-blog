@@ -109,6 +109,7 @@
     "axios": "^1.2.2",
     "boring-avatars": "^1.7.0",
     "clipboard": "^2.0.11",
+    "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
     "eslint": "^8.31.0",
     "eslint-config-airbnb": "^19.0.4",
