@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from '@blog/client/admin/axios';
-import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import Clipboard from 'clipboard';
 import { InboxOutlined } from '@ant-design/icons';
@@ -41,7 +40,7 @@ export default function StaticFiles() {
                 limit,
                 page,
             };
-            const res = await axios.get('/files?' + queryString.stringify(query));
+            const res = await axios.get('/files?', { params: query });
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
             setState((data_1) => ({
@@ -237,9 +236,9 @@ export default function StaticFiles() {
                     <Popconfirm
                         title="确认要删除？"
                         placement="right"
-                        visible={state.delConfirmVisible}
+                        open={state.delConfirmVisible}
                         onConfirm={() => batchDeleteFile()}
-                        onVisibleChange={() => {
+                        onOpenChange={() => {
                             if (state.selectedRowKeys.length <= 0) {
                                 message.info('请选择要删除的文件');
                                 return;
@@ -257,7 +256,7 @@ export default function StaticFiles() {
                 </div>
                 <Modal
                     title="上传文件"
-                    visible={state.visible}
+                    open={state.visible}
                     onOk={() => handleOk()}
                     onCancel={() =>
                         setState((data) => ({

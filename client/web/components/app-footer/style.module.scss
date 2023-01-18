@@ -1,16 +1,16 @@
 .appFooter {
+    background-color: var(--main-bg-color);
+    color: var(--footer-text-color);
     position: relative;
+}
+
+.info {
     flex: 0 0 auto;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px 0;
     font-size: 13px;
-    background-color: var(--main-bg-color);
     display: flex;
-    color: var(--footer-text-color);
-}
-
-.content {
 }
 
 .siteInfo {
@@ -50,6 +50,7 @@
     }
     svg {
         fill: var(--footer-text-color);
+        width: 14px;
         height: 14px;
         vertical-align: text-bottom;
     }
@@ -85,4 +86,14 @@
             padding-right: 5px;
         }
     }
+}
+
+.invite {
+    padding: 10px 20px;
+}
+
+.inviteTitle {
+    color: var(--secondary-text-color);
+    font-size: 13px;
+    margin-bottom: 5px;
 }

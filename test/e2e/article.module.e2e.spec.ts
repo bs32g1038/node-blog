@@ -5,7 +5,6 @@ import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { clearModelCollectionData } from '../models';
 import { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
-import * as queryString from 'query-string';
 import { getToken } from '../util';
 const __TOKEN__ = getToken();
 
@@ -155,20 +154,6 @@ describe('article.module.e2e', () => {
                 .expect(200)
                 .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(3);
-                });
-        });
-    });
-
-    describe('get articles aggregation by date', () => {
-        test('success', async () => {
-            const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
-
-            return request(app.getHttpServer())
-                .get('/api/articles-aggregation/date')
-                .expect(200)
-                .then((res) => {
-                    expect(res.body.length).toBeGreaterThanOrEqual(1);
                 });
         });
     });

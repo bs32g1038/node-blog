@@ -5,7 +5,6 @@ import axios from '@blog/client/admin/axios';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
 import Drawer from './Drawer';
 import Link from 'next/link';
-import { isLogin } from '@blog/client/admin/api/is.login.api';
 import { debounce } from 'lodash';
 import isLength from 'validator/lib/isLength';
 import dynamic from 'next/dynamic';
@@ -24,10 +23,6 @@ export default function Index() {
     const [showDrawer, setShowDrawer] = useState(false);
 
     useEffect(() => {
-        isLogin();
-    }, []);
-
-    useEffect(() => {
         const { id } = router.query;
         if (id) {
             axios.get('/articles/' + id).then((res) => {
@@ -37,16 +32,9 @@ export default function Index() {
                     title: article.title,
                     content: article.content || '',
                     category: category._id,
-                    screenshot: [
-                        {
-                            uid: -1,
-                            status: 'done',
-                            url: article.screenshot,
-                        },
-                    ],
                     tags: article.tags,
                     summary: article.summary,
-                    imgUrl: article.screenshot,
+                    screenshot: article.screenshot,
                 });
                 form.setFieldsValue({
                     title: article.title,
@@ -70,10 +58,6 @@ export default function Index() {
         if (!isLength(data?.content, { min: 1, max: 15000 })) {
             return message.error('文章详情不能为空，且最多15000个字符!');
         }
-        Object.assign(data, {
-            content: data?.content,
-            screenshot: data.screenshot[0].url,
-        });
         const p = id ? updateArticle(id, data) : createArticle(data);
         p.then(() => {
             message.success('提交成功 ！');

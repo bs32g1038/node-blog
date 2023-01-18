@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Divider, Select } from 'antd';
 import style from './search-form.style.module.scss';
 import { debounce } from 'lodash';
 import { GithubIcon } from '../../icons';
-import { searchArticles } from '@blog/client/web/api';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { useLazySearchArticlesQuery } from '../../api';
 
 export const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) => {
     const { isLoading, totalCount } = props;
@@ -24,35 +24,10 @@ export const SearchResultFooter = (props: { isLoading: boolean; totalCount: numb
 };
 
 export const SearchForm = (props) => {
-    const cacheEmptyKey = Symbol('cache init data');
-    const cache = {};
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
-    const [items, setItems] = useState([]);
-    const [totalCount, setTotalCount] = useState(-1);
-
+    const [search, { data: { items = [], totalCount = 0 } = {}, isLoading }] = useLazySearchArticlesQuery();
     const fetchData = (key: string) => {
-        const data = cache[key === '' ? cacheEmptyKey : key];
-        if (data) {
-            setItems(data.items);
-            setTotalCount(data.totalCount);
-            return Promise.resolve();
-        }
-        setIsLoading(true);
-        return searchArticles(key).then((_) => {
-            if (_.data) {
-                if (key === '') {
-                    cache[cacheEmptyKey] = _.data;
-                } else {
-                    cache[key] = _.data;
-                }
-                setItems(_.data.items);
-                setTotalCount(_.data.totalCount);
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 400);
-            }
-        });
+        return search({ key });
     };
     const debounceFetchData = debounce(fetchData, 200);
     return (

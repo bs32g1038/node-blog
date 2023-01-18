@@ -12,7 +12,7 @@ const errorHandler = (error) => {
     const { response = {}, code, message: msg } = error;
     if (code === 'ECONNABORTED' || msg.includes('timeout')) {
         message.error('网络超时');
-        return Promise.reject(error);
+        return Promise.resolve(error);
     }
     const { status } = response;
     switch (status) {
@@ -20,12 +20,12 @@ const errorHandler = (error) => {
             // 返回 401 清除token信息并跳转到登录页面
             localStorage.removeItem(config.tokenKey);
             Router.push('/admin/login');
-            return Promise.reject(error);
+            return Promise.resolve(error);
         case 403:
             // 返回 401 清除token信息并跳转到登录页面
             localStorage.removeItem(config.tokenKey);
             Router.push('/admin/login');
-            return Promise.reject(error);
+            return Promise.resolve(error);
         default:
             break;
     }

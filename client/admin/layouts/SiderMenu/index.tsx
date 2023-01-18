@@ -5,10 +5,9 @@ import menus from '@blog/client/configs/admin.menu.config';
 import Router, { useRouter } from 'next/router';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from '@blog/client/admin/utils/path.util';
-import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
 
-import { Layout, Menu, Avatar, Button } from 'antd';
+import { Layout, Menu, Avatar, Button, Image } from 'antd';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 const { Sider } = Layout;
 
@@ -111,7 +110,7 @@ export default function SiderMenu(props: Props) {
             >
                 <Link href="/admin/content/articles">
                     <div className={style.logo}>
-                        <ReactSVG src={config.siteLogo} />
+                        <Image preview={false} width={32} height={32} src={config.siteLogo} alt="" />
                         <h1>{config.siteTitle}</h1>
                     </div>
                 </Link>

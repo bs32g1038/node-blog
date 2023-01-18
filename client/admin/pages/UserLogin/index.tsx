@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
-import { Input, Button, Alert, message, Form } from 'antd';
+import { Input, Button, Alert, message, Form, Image } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
-import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import defaultConfig from '@blog/client/configs/admin.default.config';
@@ -36,7 +35,7 @@ export default function UserLogin() {
         <div className={style.signIn}>
             <div className={style.signInMain}>
                 <div className="header">
-                    <ReactSVG className="brand" src={appConfig.siteLogo} />
+                    <Image preview={false} className="brand" src={appConfig.siteLogo} alt="" />
                     <div className="header-title">
                         <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>

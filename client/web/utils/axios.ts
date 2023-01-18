@@ -2,9 +2,9 @@ import axios from 'axios';
 
 let baseUrl = '';
 if (typeof window !== 'undefined') {
-    baseUrl = '/api';
+    baseUrl = '';
 } else {
-    baseUrl = 'http://127.0.0.1:8080/api';
+    baseUrl = 'http://127.0.0.1:8080';
 }
 
 const instance = axios.create({

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
-import queryString from 'query-string';
 import { parseTime } from '@blog/client/libs/time';
 import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import { Table, Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space } from 'antd';
@@ -36,7 +35,7 @@ export default function Index() {
                 title: state.searchKey,
             });
         }
-        axios.get('/articles?' + queryString.stringify(query)).then((res) => {
+        axios.get('/articles?', { params: query }).then((res) => {
             const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
             setState((data) => ({
                 ...data,
@@ -180,9 +179,9 @@ export default function Index() {
                 <Popconfirm
                     title="确认要删除？"
                     placement="right"
-                    visible={state.visible}
+                    open={state.visible}
                     onConfirm={() => batchDeleteArticle()}
-                    onVisibleChange={() => {
+                    onOpenChange={() => {
                         if (state.selectedRowKeys.length <= 0) {
                             message.info('请选择要删除的文章');
                             return;

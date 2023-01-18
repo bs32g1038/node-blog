@@ -6,6 +6,9 @@ import { Breadcrumb } from 'antd';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
+import clsx from 'clsx';
 
 interface Props {
     article: any;
@@ -14,6 +17,7 @@ interface Props {
 
 export default function ArticleItem(props: Props) {
     const { article, comments } = props;
+    const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <div className={style.article}>
             <Breadcrumb separator=">">
@@ -43,8 +47,12 @@ export default function ArticleItem(props: Props) {
                     <span>阅读次数{article.viewsCount}</span>
                 </div>
             </div>
-            <div className="toastui-editor-contents">
-                <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+            <div
+                className={clsx({
+                    'toastui-editor-dark': theme === 'dark',
+                })}
+            >
+                <div className="toastui-editor-contents" dangerouslySetInnerHTML={{ __html: article.content }}></div>
             </div>
             <div className={style.statement}>
                 <div>

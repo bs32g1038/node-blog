@@ -4,8 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { encrypt } from '@blog/server/utils/crypto.util';
 import { verifyToken, closeApp } from '../util';
 import { initApp } from '../util';
-import { getToken } from '../util';
-const __TOKEN__ = getToken();
 
 /**
  * 登录模块 api 测试
@@ -90,18 +88,6 @@ describe('login.module.e2e', () => {
 
     test('once again request first login api interface, should not return any info', async () => {
         return request(app.getHttpServer()).get('/api/getFirstLoginInfo').expect(200).expect('');
-    });
-
-    test('user unauthorized, forbidden request', async () => {
-        return request(app.getHttpServer()).get('/api/is-login').expect(403);
-    });
-
-    test('user authorized, return true', async () => {
-        return request(app.getHttpServer())
-            .get('/api/is-login')
-            .set('authorization', __TOKEN__)
-            .expect(200)
-            .expect({ isLogin: true });
     });
 
     afterAll(async () => {

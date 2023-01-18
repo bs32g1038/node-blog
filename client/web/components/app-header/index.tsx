@@ -3,7 +3,7 @@ import style from './style.module.scss';
 import NavLink from '../nav-link';
 import Link from '../link';
 import { useSelector } from 'react-redux';
-import { Button, Image } from 'antd';
+import { Button } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { GithubIcon, MoonIcon, RssIcon, SunIcon } from '@blog/client/web/icons';
 import { RootState } from '@blog/client/redux/store';
@@ -12,6 +12,7 @@ import { useFetchConfigQuery } from '@blog/client/web/api';
 import { useAppDispatch } from '@blog/client/web/hooks/app';
 import { SearchForm } from './search-form';
 import clsx from 'clsx';
+import LogoSvg from '../logo-svg';
 
 export const AppHeader = () => {
     const dispatch = useAppDispatch();
@@ -20,9 +21,7 @@ export const AppHeader = () => {
     return (
         <header className={style.appHeader}>
             <Link href="/blog" passHref={true} className={style.siteTitle}>
-                <div className={style.siteTileSvgWrap}>
-                    <Image preview={false} width={32} height={32} src={config.siteLogo} alt=""></Image>
-                </div>
+                <LogoSvg className={style.siteTileSvgWrap}></LogoSvg>
                 <h1>{config.siteTitle}</h1>
             </Link>
             <nav className={style.nav}>

@@ -5,7 +5,6 @@ import { Table, Button, Popconfirm, message, Space } from 'antd';
 import Router from 'next/router';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
-import queryString from 'query-string';
 import ActionCard from '@blog/client/admin/components/ActionCard';
 
 export default function Index() {
@@ -23,7 +22,7 @@ export default function Index() {
             page: 1,
             limit: 100,
         };
-        axios.get('/categories?' + queryString.stringify(query)).then((res) => {
+        axios.get('/categories', { params: query }).then((res) => {
             setState((data) => ({
                 ...data,
                 categories: res.data,
@@ -122,9 +121,9 @@ export default function Index() {
             <Popconfirm
                 title="确认要删除？"
                 placement="right"
-                visible={state.visible}
+                open={state.visible}
                 onConfirm={() => batchDeleteCategory()}
-                onVisibleChange={() => {
+                onOpenChange={() => {
                     if (state.selectedRowKeys.length <= 0) {
                         message.info('请选择要删除的分类');
                         return;

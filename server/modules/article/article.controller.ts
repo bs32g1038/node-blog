@@ -67,12 +67,4 @@ export class ArticleController {
     deleteArticles(@JoiBody(generateObjectIdsSchema('articleIds')) body: { articleIds: string[] }): Promise<any> {
         return this.articleService.batchDelete(body.articleIds);
     }
-
-    /**
-     * 文章以日期进行聚合
-     */
-    @Get('/articles-aggregation/date')
-    public async articlesAggregation() {
-        return await this.articleService.articlesAggregation();
-    }
 }

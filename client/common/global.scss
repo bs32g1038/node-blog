@@ -13,6 +13,5 @@ body,
     font-style: normal;
 }
 
-.bytemd {
-    height: auto !important;
-}
+@import './toastui-editor-viewer.scss';
+@import './toastui-editor-dark.scss';

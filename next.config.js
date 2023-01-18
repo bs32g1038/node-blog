@@ -14,9 +14,9 @@ module.exports = {
             },
             parser: {
                 dataUrlCondition: {
-                    maxSize: 100 * 1024
-                }
-            }
+                    maxSize: 100 * 1024,
+                },
+            },
         });
         config.resolve.alias = {
             ...config.resolve.alias,

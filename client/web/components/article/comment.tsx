@@ -9,7 +9,7 @@ const comemnt = (props: { article: any; comments: any }) => {
     return (
         <div className={styles.commentForm}>
             <h3 className={styles.commentFormTitle}>--发表评论--</h3>
-            <CommentForm url="/comments" articleId={article._id} />
+            <CommentForm url="/api/comments" articleId={article._id} />
             <div>
                 {comments.map((item: any, index: number) => (
                     <CommentItem item={item} index={index} key={item._id}></CommentItem>

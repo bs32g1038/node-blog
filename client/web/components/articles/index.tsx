@@ -7,9 +7,8 @@ import { useFetchArticlesQuery, fetchArticles, fetchCategories, useFetchConfigQu
 import { Empty, Skeleton, Pagination } from 'antd';
 import Link from '../link';
 import { useRouter } from 'next/router';
-import { isArray, toInteger } from 'lodash';
+import { isArray, isString, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
-import { isString } from 'markdown-it/lib/common/utils';
 
 const Page = () => {
     const router = useRouter();

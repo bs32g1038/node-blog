@@ -2,9 +2,7 @@ import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryDocument, Category } from '../../models/category.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
-import cache, { TimeExpression } from '@blog/server/utils/cache.util';
 import { isEmpty, isEqual } from 'lodash';
-import dayjs from 'dayjs';
 import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
@@ -110,10 +108,7 @@ export class ArticleService {
     }
 
     async getRandomArticles(size = 3) {
-        return await this.articleModel.aggregate([
-            { $sample: { size } },
-            // { $project: { title: 1, summary: 1, screenshot: 1, createdAt: 1 } },
-        ]);
+        return await this.articleModel.aggregate([{ $sample: { size } }]);
     }
 
     async deleteArticle(id: string) {
@@ -138,37 +133,5 @@ export class ArticleService {
             });
             return this.articleModel.deleteMany({ _id: { $in: articleIds } });
         });
-    }
-
-    public async articlesAggregation() {
-        const key = 'articlesAggregation#date';
-        if (cache.get(key)) {
-            return cache.get(key);
-        }
-        const data = await this.articleModel.aggregate([
-            {
-                $match: {
-                    createdAt: {
-                        $gte: dayjs().startOf('year').toDate(),
-                    },
-                },
-            },
-            {
-                $group: {
-                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } } as any,
-                    articles: {
-                        $push: '$_id',
-                    },
-                },
-            },
-            {
-                $project: {
-                    createdAt: 1,
-                    articles: 1,
-                },
-            },
-        ]);
-        cache.set(key, data, { ttl: TimeExpression.TIME_5_MINUTES });
-        return data;
     }
 }
