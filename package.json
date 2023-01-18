@@ -28,7 +28,8 @@
     "test:cov": "cross-env NODE_ENV=test jest --runInBand --maxConcurrency=1 --coverage",
     "test:debug": "cross-env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "fix:prod:comment:count": "tsc -p tsconfig.build.json && cross-env NODE_ENV=production node dist/scripts/fix_comment_count.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "fix:prod:make": "tsc -p tsconfig.build.json && cross-env NODE_ENV=development node dist-server/scripts/make.js"
   },
   "lint-staged": {
     "*.ts?(x)": [

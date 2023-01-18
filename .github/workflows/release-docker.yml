@@ -4,16 +4,16 @@ on:
   push:
     branches:
     - release
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: bs32g1038/node-blog:v5
+        name: bs32g1038/node-blog
         username: ${{ github.actor }}
         password: ${{ secrets.DOCKER_TOKEN }}
         registry: ghcr.io
