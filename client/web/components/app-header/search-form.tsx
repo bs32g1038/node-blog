@@ -1,30 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { Input } from 'antd';
+import React from 'react';
+import { Divider, Select } from 'antd';
 import style from './search-form.style.module.scss';
 import { debounce } from 'lodash';
-import Link from '../link';
 import { GithubIcon } from '../../icons';
-import spinner64 from './spinner-64.gif';
-import { searchArticles } from '@blog/client/web/api';
+import { SearchOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
+import { useLazySearchArticlesQuery } from '../../api';
 
-const SearchResultList = (props: { isLoading: boolean; items: { _id: string; title: string }[] }) => {
-    const { isLoading, items } = props;
-    return (
-        <ul className={style.searchList}>
-            {!isLoading &&
-                items.map((item: { _id: string; title: string }) => (
-                    <li key={item._id}>
-                        <Link href={'/blog/articles/' + item._id} passHref={true}>
-                            <a>{item.title}</a>
-                        </Link>
-                    </li>
-                ))}
-            {isLoading && <span style={{ backgroundImage: `url(${spinner64.src})` }}></span>}
-        </ul>
-    );
-};
-
-const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) => {
+export const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) => {
     const { isLoading, totalCount } = props;
     return (
         <div className={style.panelFooter}>
@@ -41,82 +24,41 @@ const SearchResultFooter = (props: { isLoading: boolean; totalCount: number }) =
 };
 
 export const SearchForm = (props) => {
-    const cacheEmptyKey = Symbol('cache init data');
-    const cache = {};
-    const $input = useRef<HTMLInputElement>(null);
-    const [isActiveNavSearchDropdown, setIsActiveNavSearchDropdown] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [items, setItems] = useState([]);
-    const [totalCount, setTotalCount] = useState(-1);
-
+    const router = useRouter();
+    const [search, { data: { items = [], totalCount = 0 } = {}, isLoading }] = useLazySearchArticlesQuery();
     const fetchData = (key: string) => {
-        const data = cache[key === '' ? cacheEmptyKey : key];
-        if (data) {
-            setItems(data.items);
-            setTotalCount(data.totalCount);
-            return Promise.resolve();
-        }
-        setIsLoading(true);
-        return searchArticles(key).then((_) => {
-            if (_.data) {
-                if (key === '') {
-                    cache[cacheEmptyKey] = _.data;
-                } else {
-                    cache[key] = _.data;
-                }
-                setItems(_.data.items);
-                setTotalCount(_.data.totalCount);
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 400);
-            }
-        });
+        return search({ key });
     };
     const debounceFetchData = debounce(fetchData, 200);
-
-    const onfocus = () => {
-        debounceFetchData('');
-        setIsActiveNavSearchDropdown(true);
-    };
-    const onblur = () => {
-        setIsActiveNavSearchDropdown(false);
-    };
-    const oninput = (e: React.MouseEvent<HTMLInputElement>) => {
-        if (e.target instanceof HTMLInputElement) {
-            debounceFetchData(e.target.value);
-        }
-    };
-    const foldNavList = () => {
-        setIsActiveNavSearchDropdown(false);
-        if ($input.current) {
-            $input.current.blur();
-        }
-    };
     return (
         <div className={style.searchForm} style={props.style}>
-            <Input.Search
-                onSearch={() => {
-                    setIsActiveNavSearchDropdown(() => {
-                        return true;
-                    });
+            <Select
+                showSearch
+                style={{ width: '220px', marginRight: '10px' }}
+                placeholder={'请输入关键词'}
+                defaultActiveFirstOption={false}
+                filterOption={false}
+                onSearch={(value) => debounceFetchData(value)}
+                onChange={(value) => {
+                    router.push('/blog/articles/' + value);
                 }}
-                onFocus={onfocus}
-                onInput={oninput}
-                onBlur={onblur}
-                placeholder="请输入关键词"
+                onFocus={() => {
+                    debounceFetchData('');
+                }}
+                options={items.map((item: { _id: string; title: string }) => ({
+                    label: item.title,
+                    value: item._id,
+                }))}
+                suffixIcon={<SearchOutlined></SearchOutlined>}
+                showArrow={true}
+                dropdownRender={(menu) => (
+                    <>
+                        {menu}
+                        <Divider style={{ margin: '8px 0' }} />
+                        <SearchResultFooter isLoading={isLoading} totalCount={totalCount}></SearchResultFooter>
+                    </>
+                )}
             />
-            <div
-                onMouseDown={(event) => event.preventDefault()}
-                className={style.searchPanel}
-                style={{ display: isActiveNavSearchDropdown ? 'block' : 'none' }}
-            >
-                <div className={style.panelHeader}>
-                    博客
-                    <span onClick={foldNavList}>收起</span>
-                </div>
-                <SearchResultList items={items} isLoading={isLoading}></SearchResultList>
-                <SearchResultFooter isLoading={isLoading} totalCount={totalCount}></SearchResultFooter>
-            </div>
         </div>
     );
 };

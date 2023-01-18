@@ -7,9 +7,8 @@ import { useFetchArticlesQuery, fetchArticles, fetchCategories, useFetchConfigQu
 import { Empty, Skeleton, Pagination } from 'antd';
 import Link from '../link';
 import { useRouter } from 'next/router';
-import { isArray, toInteger } from 'lodash';
+import { isArray, isString, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
-import { isString } from 'markdown-it/lib/common/utils';
 
 const Page = () => {
     const router = useRouter();
@@ -18,13 +17,14 @@ const Page = () => {
     const cid: string = isArray(router.query.cid) ? router.query.cid.join(',') : router.query.cid || '';
     const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
     const { data = { items: [], totalCount: 0 }, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
+
     return (
         <AppLayout>
             <Head>
                 <title>{config.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
-            <div style={{ margin: '20px 0' }}>
+            <div style={{ margin: '15px 0' }}>
                 {isLoading &&
                     new Array(10).fill('').map((_, index) => (
                         <div style={{ padding: '0 40px 20px' }} key={`article-item-loading-${index}`}>
@@ -44,7 +44,7 @@ const Page = () => {
                             if (page >= 1 && type == 'page') {
                                 return (
                                     <Link href={`/blog/articles?page=${page}`} passHref={true}>
-                                        <a>{page}</a>
+                                        {page}
                                     </Link>
                                 );
                             }

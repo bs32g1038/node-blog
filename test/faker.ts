@@ -7,7 +7,7 @@ export const getObjectId = () => {
 
 export const getCategory = () => {
     return {
-        name: faker.name.findName(),
+        name: faker.name.fullName(),
     };
 };
 
@@ -19,9 +19,9 @@ export const getExplore = () => {
 
 export const getArticle = (obj = {}) => {
     return {
-        title: faker.lorem.words(),
+        title: faker.lorem.sentence(7),
         content: faker.lorem.paragraphs(),
-        summary: faker.lorem.paragraph(),
+        summary: faker.lorem.sentence(20),
         screenshot: faker.image.imageUrl(),
         category: getObjectId(),
         tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
@@ -31,7 +31,7 @@ export const getArticle = (obj = {}) => {
 
 export const getComment = (obj = {}) => {
     return {
-        nickName: faker.name.findName(),
+        nickName: faker.name.fullName(),
         email: 'bs32g1038@163.com',
         article: null,
         reply: null,

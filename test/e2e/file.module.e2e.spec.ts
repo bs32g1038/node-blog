@@ -6,7 +6,6 @@ import { getFile, getObjectId } from '../faker';
 import { FileModel, clearModelCollectionData } from '../models';
 import path from 'path';
 import { rootPath } from '@blog/server/utils/path.util';
-import queryString from 'query-string';
 import { getToken } from '../util';
 const __TOKEN__ = getToken();
 
@@ -176,7 +175,8 @@ describe('file.module.e2e', () => {
         const files = generateDataList(() => getFile(), 30);
         await FileModel.create(files);
         return request(app.getHttpServer())
-            .get(`/api/files?${queryString.stringify({ page: 1, limit: 30 })}`)
+            .get(`/api/files?`)
+            .query({ page: 1, limit: 30 })
             .set('authorization', __TOKEN__)
             .expect(200)
             .then((res) => {

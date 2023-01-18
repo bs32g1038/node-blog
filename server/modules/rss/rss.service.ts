@@ -2,11 +2,8 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import data2xml from 'data2xml';
 import { RSS as RSSCONFIG, ADMIN_USER_INFO } from '../../configs/index.config';
-import MarkdownIt from 'markdown-it';
 import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
-
-const markdown = new MarkdownIt();
 
 const convert = data2xml();
 
@@ -59,7 +56,7 @@ export class RssService {
                 title: article.title,
                 link: RSSCONFIG.link + '/articles/' + article._id,
                 guid: RSSCONFIG.link + '/articles/' + article._id,
-                description: markdown.render(article.content),
+                description: article.content,
                 author: ADMIN_USER_INFO.email,
                 pubDate: article.createdAt,
             });

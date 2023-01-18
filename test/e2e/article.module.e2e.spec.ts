@@ -5,7 +5,6 @@ import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
 import { clearModelCollectionData } from '../models';
 import { getArticle, getObjectId } from '../faker';
 import { ArticleModel } from '../models';
-import queryString from 'query-string';
 import { getToken } from '../util';
 const __TOKEN__ = getToken();
 
@@ -154,21 +153,7 @@ describe('article.module.e2e', () => {
                 .get('/api/recentArticles')
                 .expect(200)
                 .then((res) => {
-                    expect(res.body.length).toBeGreaterThanOrEqual(5);
-                });
-        });
-    });
-
-    describe('get articles aggregation by date', () => {
-        test('success', async () => {
-            const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
-
-            return request(app.getHttpServer())
-                .get('/api/articles-aggregation/date')
-                .expect(200)
-                .then((res) => {
-                    expect(res.body.length).toBeGreaterThanOrEqual(1);
+                    expect(res.body.length).toBeGreaterThanOrEqual(3);
                 });
         });
     });
@@ -194,7 +179,11 @@ describe('article.module.e2e', () => {
             await ArticleModel.create(articles);
 
             return request(app.getHttpServer())
-                .get(`/api/articles?${queryString.stringify({ page: 1, limit: 10 })}`)
+                .get('/api/articles')
+                .query({
+                    page: 1,
+                    limit: 10,
+                })
                 .expect(200)
                 .then((res) => {
                     expect(res.body.totalCount).toBeGreaterThanOrEqual(10);

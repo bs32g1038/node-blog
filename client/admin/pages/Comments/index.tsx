@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@blog/client/admin/axios';
-import queryString from 'query-string';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
@@ -28,7 +27,7 @@ export default function Comments() {
             limit,
             page,
         };
-        axios.get('/admin-comments?' + queryString.stringify(query)).then((res) => {
+        axios.get('/admin-comments', { params: query }).then((res) => {
             const pagination = { ...state.pagination };
             pagination.total = res.data.totalCount;
             setState((data) => ({
@@ -60,7 +59,7 @@ export default function Comments() {
                     }));
                     return fetchData();
                 }
-                return message.error('删除评论失败，请重新尝试。');
+                message.error('删除评论失败，请重新尝试。');
             });
     };
     const handleTableChange = (pagination) => {
@@ -141,8 +140,8 @@ export default function Comments() {
         <Popconfirm
             title="确认要删除？"
             placement="right"
-            visible={state.visiable}
-            onVisibleChange={() => {
+            open={state.visiable}
+            onOpenChange={() => {
                 if (state.selectedRowKeys.length <= 0) {
                     message.info('请选择要删除的评论');
                     return;
@@ -183,7 +182,7 @@ export default function Comments() {
                                         </div>
                                         <div className={style.replyListItem}>
                                             <div className={style.userAvatar}>
-                                                <img src={gernateAvatarImage(record.reply.nickName)} />
+                                                <img src={gernateAvatarImage(record.reply.nickName)} alt="" />
                                             </div>
                                             <div className={style.replyContent}>
                                                 <div className={style.replyInfo}>

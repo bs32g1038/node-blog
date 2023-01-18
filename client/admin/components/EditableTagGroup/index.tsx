@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Tag, Input } from 'antd';
-import TweenOneGroup from 'rc-tween-one/lib/TweenOneGroup';
+
 export default class EditableTagGroup extends React.Component<any, any> {
     input: any;
     static getDerivedStateFromProps(nextProps) {
@@ -85,25 +85,7 @@ export default class EditableTagGroup extends React.Component<any, any> {
         const tagChild = tags.map(this.forMap);
         return (
             <div>
-                {this.state.tags.length > 0 && (
-                    <div style={{ marginBottom: 16 }}>
-                        <TweenOneGroup
-                            enter={{
-                                scale: 0.8,
-                                opacity: 0,
-                                type: 'from',
-                                duration: 100,
-                                onComplete: (e: any) => {
-                                    e.target.style = '';
-                                },
-                            }}
-                            leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
-                            appear={false}
-                        >
-                            {tagChild}
-                        </TweenOneGroup>
-                    </div>
-                )}
+                {this.state.tags.length > 0 && <div style={{ marginBottom: 16 }}>{tagChild}</div>}
                 {inputVisible && (
                     <Input
                         ref={this.saveInputRef}

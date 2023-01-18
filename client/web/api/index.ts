@@ -1,6 +1,5 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
-import queryString from 'query-string';
 import axios from '@blog/client/web/utils/axios';
 import { AxiosRequestConfig, AxiosError } from 'axios';
 
@@ -10,13 +9,14 @@ const axiosBaseQuery =
             url: string;
             method: AxiosRequestConfig['method'];
             data?: AxiosRequestConfig['data'];
+            params?: AxiosRequestConfig['params'];
         },
         unknown,
         unknown
     > =>
-    async ({ url, method, data }) => {
+    async ({ url, method, data, params }) => {
         try {
-            const result = await axios({ url, method, data });
+            const result = await axios({ url, method, data, params });
             return { data: result.data };
         } catch (axiosError) {
             const err = axiosError as AxiosError;
@@ -124,28 +124,19 @@ export const appApi = createApi({
     },
     endpoints: (builder) => ({
         fetchConfig: builder.query<Iconfig, void>({
-            query: () => ({ url: `/configs`, method: 'get' }),
+            query: () => ({ url: `/api/configs`, method: 'get' }),
         }),
         fetchRecentArticles: builder.query<ArticleQueryDataLoaded[], void>({
-            query: () => ({ url: `/recentArticles`, method: 'get' }),
+            query: () => ({ url: `/api/recentArticles`, method: 'get' }),
         }),
         fetchArticle: builder.query<ArticleQueryDataLoaded, string | string[]>({
-            query: (id) => ({ url: '/articles/' + id, method: 'get' }),
+            query: (id) => ({ url: '/api/articles/' + id, method: 'get' }),
         }),
         fetchComments: builder.query<CommentQueryDataLoaded, string | string[]>({
-            query: (id) => ({ url: `/comments?articleId=${id}`, method: 'get' }),
+            query: (id) => ({ url: `/api/comments?articleId=${id}`, method: 'get' }),
         }),
         fetchCategories: builder.query<CategoryQueryDataLoaded[], void>({
-            query: () => ({ url: `/categories`, method: 'get' }),
-        }),
-        fetchArticlesAggregationMapDate: builder.query<
-            {
-                _id: string;
-                articles: string[];
-            }[],
-            void
-        >({
-            query: () => ({ url: `/articles-aggregation/date`, method: 'get' }),
+            query: () => ({ url: `/api/categories`, method: 'get' }),
         }),
         fetchArticles: builder.query<
             ArticlesQueryDataLoaded,
@@ -167,16 +158,25 @@ export const appApi = createApi({
                         tag: filter.tag,
                     });
                 }
-                return { url: `/articles?${queryString.stringify(query)}`, method: 'get' };
+                return { url: '/api/articles', method: 'get', params: query };
             },
         }),
         fetchExplore: builder.query<IExploreReponse, void>({
-            query: () => ({ url: `/explore`, method: 'get' }),
+            query: () => ({ url: `/api/explore`, method: 'get' }),
+        }),
+        fetchConfigSvg: builder.query<any, { url: string }>({
+            query: (params) => ({ url: params.url.replace('/api', ''), method: 'get' }),
+        }),
+        searchArticles: builder.query<any, { key: string }>({
+            query: (params) => ({
+                url: '/api/search',
+                method: 'get',
+                params,
+            }),
         }),
     }),
 });
 
-// Export hooks for usage in functional components
 export const {
     useFetchCategoriesQuery,
     useFetchCommentsQuery,
@@ -184,8 +184,9 @@ export const {
     useFetchRecentArticlesQuery,
     useFetchArticlesQuery,
     useFetchConfigQuery,
-    useFetchArticlesAggregationMapDateQuery,
     useFetchExploreQuery,
+    useFetchConfigSvgQuery,
+    useLazySearchArticlesQuery,
 } = appApi;
 
 export const {
@@ -196,8 +197,5 @@ export const {
     fetchComments,
     fetchRecentArticles,
     fetchExplore,
+    fetchConfigSvg,
 } = appApi.endpoints;
-
-export const searchArticles = (key: string) => {
-    return axios.get('/search?key=' + key);
-};

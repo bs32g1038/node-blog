@@ -241,16 +241,14 @@ const ImageCropper: FC<ImageCropperProps> = (props) => {
 
     return (
         <>
-            {/* 上传 */}
             {renderUpload()}
-            {/* 弹窗 */}
             {imageSrc && (
                 <Modal
                     bodyStyle={{
                         maxHeight: '300px',
                         overflow: 'auto',
                     }}
-                    visible={true}
+                    open={true}
                     okText={modalOk}
                     title={modalTitle}
                     width={modalWidth}

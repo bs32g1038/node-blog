@@ -1,22 +1,15 @@
 import React from 'react';
 import {
-    DashboardOutlined,
     FormOutlined,
     CommentOutlined,
     AppstoreOutlined,
     FileOutlined,
     UserOutlined,
     SettingOutlined,
-    ShareAltOutlined,
+    ExceptionOutlined,
 } from '@ant-design/icons';
 
 const menuConfig = [
-    {
-        path: '/admin/dashboard',
-        title: '仪表盘',
-        icon: <DashboardOutlined />,
-    },
-
     {
         path: '/admin/content/articles',
         title: '文章管理',
@@ -64,12 +57,6 @@ const menuConfig = [
         ],
     },
     {
-        path: '/admin/explore',
-        title: '发现管理',
-        icon: <ShareAltOutlined />,
-        exact: true,
-    },
-    {
         path: '/admin/code/static-files',
         title: '静态文件',
         icon: <FileOutlined />,
@@ -90,6 +77,12 @@ const menuConfig = [
         path: '/admin/settings',
         icon: <SettingOutlined />,
         title: '系统配置',
+        exact: true,
+    },
+    {
+        path: '/admin/adminlog',
+        icon: <ExceptionOutlined />,
+        title: '日志',
         exact: true,
     },
 ];

@@ -3,6 +3,7 @@ import style from './style.module.scss';
 import vultrPng from '@blog/client/assets/banners/vultr_banner_300x250.png';
 import { parseTime } from '@blog/client/libs/time';
 import Image from 'next/image';
+import ArticleItem from '../../articles/item';
 
 interface ItemProps {
     _id: string;
@@ -30,6 +31,7 @@ const Item = (props: Props) => {
                 <a href={`/blog/articles/${item._id}`}>
                     <h2 className={style.articleTitle}>{item.title}</h2>
                 </a>
+                {/* <div className={style.articleSummary}>{item.summary}</div> */}
                 <span className={style.articleTime}>{parseTime(item.createdAt)}</span>
             </div>
         </div>
@@ -45,18 +47,9 @@ export default function Index(props: { recentArticles: ItemProps[] }) {
     return (
         <section className={style.widgetArea}>
             <h3 className={style.widgetAreaTitle}>最近文章</h3>
-            <div>
-                {arr.map((item) => {
-                    return <Item item={item} key={item._id}></Item>;
-                })}
-                <a
-                    href="https://www.vultr.com/?ref=7866918-4F"
-                    className="vultr"
-                    style={{ display: 'block', border: '1px solid var(--border-color)' }}
-                >
-                    <Image src={vultrPng.src} width="300px" height="250px" alt="" />
-                </a>
-            </div>
+            {recentArticles.map((item) => (
+                <ArticleItem item={item} key={item._id}></ArticleItem>
+            ))}
         </section>
     );
 }

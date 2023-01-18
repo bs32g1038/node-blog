@@ -14,23 +14,24 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+        mongodb-version: ['5.0']
     steps:
     - uses: actions/checkout@master
     - name: Launch MongoDB
-      uses: wbari/start-mongoDB@master
+      uses: supercharge/mongodb-github-action@1.8.0
       with:
-        mongoDBVersion: 5
+        mongodb-version: ${{ matrix.mongodb-version }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@master
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install, build, and test
+    - name: npm install, build, and test
       run: |
-        yarn install
-        yarn run build
-        yarn run test:cov
+        npm install
+        npm run build
+        npm run test:cov
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@master
+      uses: codecov/codecov-action@v3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
       env:

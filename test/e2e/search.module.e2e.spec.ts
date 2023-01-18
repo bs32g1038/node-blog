@@ -2,7 +2,6 @@ import request from 'supertest';
 import { SearchModule } from '@blog/server/modules/search/search.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, closeApp } from '../util';
-import queryString from 'query-string';
 import { ArticleModel, clearModelCollectionData } from '../models';
 import { getArticle } from '../faker';
 
@@ -41,7 +40,8 @@ describe('search.module.e2e', () => {
         await ArticleModel.create(articles);
 
         return request(app.getHttpServer())
-            .get('/api/search?' + queryString.stringify({ key: '' }))
+            .get('/api/search?')
+            .query({ key: '' })
             .expect(200)
             .then((res) => {
                 expect(Array.isArray(res.body.items)).toEqual(true);
@@ -57,7 +57,8 @@ describe('search.module.e2e', () => {
         const title = articles[0].title.slice(0, 10);
 
         return request(app.getHttpServer())
-            .get('/api/search?' + queryString.stringify({ key: title }))
+            .get('/api/search?')
+            .query({ key: title })
             .expect(200)
             .then((res) => {
                 expect(Array.isArray(res.body.items)).toEqual(true);
@@ -72,9 +73,7 @@ describe('search.module.e2e', () => {
 
         const title = articles[0].title + '1234567890';
 
-        return request(app.getHttpServer())
-            .get('/api/search?' + queryString.stringify({ key: title }))
-            .expect(400);
+        return request(app.getHttpServer()).get('/api/search?').query({ key: title }).expect(400);
     });
 
     afterAll(async () => {

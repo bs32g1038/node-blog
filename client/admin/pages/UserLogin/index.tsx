@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import axios from '@blog/client/admin/axios';
-import { Input, Button, Alert, message, Form } from 'antd';
+import { Input, Button, Alert, message, Form, Image } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
-import { ReactSVG } from 'react-svg';
 import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import defaultConfig from '@blog/client/configs/admin.default.config';
@@ -21,7 +20,7 @@ export default function UserLogin() {
                 message.success('登陆成功！');
                 localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res.data));
                 localStorage.setItem(defaultConfig.tokenKey, res.data.token);
-                Router.push('/admin/dashboard');
+                Router.push('/admin/content/articles');
             })
             .catch(() => {
                 setLoading(false);
@@ -29,14 +28,14 @@ export default function UserLogin() {
     };
     useEffect(() => {
         axios.get('/getFirstLoginInfo').then((res) => {
-            setData(res.data.data);
+            setData(res.data);
         });
     }, []);
     return (
         <div className={style.signIn}>
             <div className={style.signInMain}>
                 <div className="header">
-                    <ReactSVG className="brand" src={appConfig.siteLogo} />
+                    <Image preview={false} className="brand" src={appConfig.siteLogo} alt="" />
                     <div className="header-title">
                         <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>
@@ -92,7 +91,7 @@ export default function UserLogin() {
                         rel="noopener noreferrer"
                         target="_blank"
                     >
-                        LIZCBLOG
+                        NODEBLOG
                     </a>
                 </div>
             </div>

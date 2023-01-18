@@ -1,7 +1,6 @@
 .article {
-    max-width: 610px;
     background-color: var(--main-bg-color);
-    padding: 20px;
+    padding: 20px 30px 20px 30px;
     :global(.ant-breadcrumb) {
         font-size: 13px;
         margin-bottom: 8px;
@@ -35,17 +34,19 @@
 }
 
 .statement {
-    font-size: 14px;
+    font-size: 13px;
+    margin-top: 20px;
     margin-bottom: 20px;
     padding: 8px 16px;
     background-color: var(--blackground-color);
     border-radius: 3px;
-    border: 1px solid var(--border-color);
+    border: 1px dashed var(--border-color);
     color: var(--primary-text-color);
+    a {
+        font-size: 13px;
+    }
 }
 
 .footer {
-    display: flex;
-    justify-content: space-between;
     color: var(--secondary-text-color);
 }

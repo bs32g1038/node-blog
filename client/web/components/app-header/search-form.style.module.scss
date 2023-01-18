@@ -1,67 +1,6 @@
 .searchForm {
     position: relative;
     width: 220px;
-    input {
-        background-color: var(--main-bg-color);
-        border: 1px solid var(--border-color);
-        color: var(--primary-text-color);
-    }
-    button {
-        background-color: var(--main-bg-color);
-        border: 1px solid var(--border-color);
-        &:hover {
-            background-color: var(--main-bg-color);
-        }
-    }
-    svg {
-        fill: var(--secondary-text-color);
-    }
-}
-
-.searchPanel {
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    z-index: 100;
-    background-color: var(--main-bg-color);
-    border: 1px solid var(--border-color);
-    max-height: 300px;
-    overflow-y: auto;
-    span {
-        cursor: pointer;
-    }
-}
-
-.searchList {
-    list-style: none;
-    padding: 0 10px;
-    li {
-        margin: 10px 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        display: block;
-    }
-    a {
-        color: var(--primary-text-color);
-    }
-    span {
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 24px;
-        height: 24px;
-        display: block;
-        margin: 8px auto;
-    }
-}
-
-.panelHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 10px 0;
-    font-size: 13px;
-    color: var(--primary-text-color);
 }
 
 .panelFooter {

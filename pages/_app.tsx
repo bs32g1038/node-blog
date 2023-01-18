@@ -2,17 +2,17 @@ import App from 'next/app';
 import React from 'react';
 import versionInfo from '../package.json';
 import { wrapper } from '@blog/client/redux/store';
-import { fetchConfig } from '@blog/client/web/api';
+import { fetchConfig, fetchConfigSvg } from '@blog/client/web/api';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 import 'react-image-crop/dist/ReactCrop.css';
 import '@blog/client/common/global.scss';
 
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
-        await store.dispatch(fetchConfig.initiate());
+        const res = await store.dispatch(fetchConfig.initiate());
+        await store.dispatch(fetchConfigSvg.initiate({ url: res.data.siteLogo }));
         return {
             pageProps: {
                 ...(await App.getInitialProps(context)).pageProps,

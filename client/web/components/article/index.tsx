@@ -25,13 +25,11 @@ const Page = () => {
     const { data: recentArticles = [] } = useFetchRecentArticlesQuery();
     return (
         <AppLayout>
-            <div style={{ display: 'flex' }}>
-                <Head>
-                    <title>{article.title + ' - ' + config.siteTitle}</title>
-                </Head>
-                <ArticleItem article={article} comments={comments}></ArticleItem>
-                <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
-            </div>
+            <Head>
+                <title>{article.title + ' - ' + config.siteTitle}</title>
+            </Head>
+            <ArticleItem article={article} comments={comments}></ArticleItem>
+            <WidgetArea recentArticles={recentArticles.slice(0, 5)}></WidgetArea>
         </AppLayout>
     );
 };

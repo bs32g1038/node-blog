@@ -1,10 +1,10 @@
 .widgetArea {
-    width: 200px;
     padding-top: 20px;
 }
 .widgetAreaTitle {
     font-size: 14px;
     color: var(--primary-text-color);
+    padding: 0 30px;
 }
 .articleItem {
     width: 100%;
@@ -12,28 +12,17 @@
     margin-bottom: 15px;
 }
 .media {
-    max-width: 28%;
     position: relative;
-    width: 100%;
-    &:after {
-        content: '';
-        display: block;
-        padding-top: 100%;
-        padding-top: 75%;
-    }
 }
 .mediaContent {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: 0;
     border-radius: 2px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: rgba(120, 120, 120, 0.1);
+    min-width: 120px;
+    display: block;
+    min-height: 80px;
 }
 .statement {
     font-size: 14px;
@@ -49,13 +38,21 @@
     justify-content: space-between;
     flex-direction: column;
     margin-left: 10px;
+    gap: 4px;
 }
 .articleTitle {
     display: -webkit-box;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--primary-text-color);
+}
+.articleSummary {
+    font-size: 13px;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    font-size: 14px;
-    color: var(--primary-text-color);
+    text-overflow: ellipsis;
+    color: var(--secondary-text-color);
 }
 .articleTime {
     font-size: 13px;

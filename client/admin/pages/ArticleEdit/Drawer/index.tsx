@@ -3,20 +3,13 @@ import { Form, Input, Select, Button, Drawer } from 'antd';
 import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
-import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import style from './style.module.scss';
-import ImageCropper from '@blog/client/admin/components/ImageCropper';
+import UploadButton from '@blog/client/admin/components/UploadButton';
 
 const Option = Select.Option;
 const { TextArea } = Input;
 
 export default function Index({ visible, onCancel, formData }) {
-    const { setImageUrl, UploadButton, handleUpload } = useImageUpload({
-        style: {
-            width: '100%',
-            minHeight: '80px',
-        },
-    });
     const [categories, setCategories] = useState([]);
     const [form] = Form.useForm();
 
@@ -27,11 +20,11 @@ export default function Index({ visible, onCancel, formData }) {
     const prevVisible = prevVisibleRef.current;
 
     useEffect(() => {
-        if (formData) {
-            setImageUrl(formData.imgUrl);
-        }
+        console.log(formData);
         if (!visible && prevVisible) {
             form.resetFields();
+        } else {
+            form.setFieldsValue(formData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visible]);
@@ -60,7 +53,8 @@ export default function Index({ visible, onCancel, formData }) {
                     onCancel(false);
                 }
             }}
-            visible={visible}
+            open={visible}
+            destroyOnClose
         >
             <div className={style.drawerContent}>
                 <Form layout="vertical" form={form} name="articleConfigForm" initialValues={formData}>
@@ -68,13 +62,9 @@ export default function Index({ visible, onCancel, formData }) {
                         required={true}
                         label="封面图片"
                         name="screenshot"
-                        valuePropName="fileList"
-                        getValueFromEvent={handleUpload}
                         rules={[{ required: true, message: '封面图片不能为空!' }]}
                     >
-                        <ImageCropper aspectRatio={3 / 2} minWidth={300} maxWidth={300} minHeight={200} maxHeight={200}>
-                            <UploadButton></UploadButton>
-                        </ImageCropper>
+                        <UploadButton></UploadButton>
                     </Form.Item>
                     <Form.Item name="category" label="文章分类" rules={[{ required: true, message: '分类不能为空!' }]}>
                         <Select placeholder="请选择一个分类">{categoryOptions}</Select>

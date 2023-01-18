@@ -1,31 +1,44 @@
-import Link from '../link';
-import { withRouter } from 'next/router';
-import React, { Children } from 'react';
-import queryString from 'query-string';
+import { useRouter } from 'next/router';
+import Link, { LinkProps } from 'next/link';
+import React, { PropsWithChildren, useState, useEffect } from 'react';
 
-const ActiveLink = (data: any) => {
-    const { router, children, ...props } = data;
-
-    const child = Children.only(children);
-
-    let className = child.props.className || null;
-    props.activeClassName = props.activeClassName || 'active';
-
-    const aimRouter = queryString.parseUrl(props.href);
-
-    if (router.pathname === aimRouter.url && aimRouter.query.cid === router.query.cid) {
-        className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
-    } else {
-        className = className.replace(` ${props.activeClassName}`, '');
-    }
-    if (aimRouter.url === '/blog' && router.pathname === '/blog/articles' && !props.exact) {
-        className = `${className !== null ? className : ''} ${props.activeClassName}`.trim();
-    }
-
-    delete props.activeClassName;
-    delete props.exact;
-
-    return <Link {...props}>{React.cloneElement(child, { className })}</Link>;
+type ActiveLinkProps = LinkProps & {
+    className?: string;
+    activeClassName?: string;
 };
 
-export default withRouter(ActiveLink);
+const ActiveLink = ({
+    children,
+    activeClassName = 'active',
+    className,
+    ...props
+}: PropsWithChildren<ActiveLinkProps>) => {
+    const { asPath, isReady } = useRouter();
+    const [computedClassName, setComputedClassName] = useState(className);
+
+    useEffect(() => {
+        // Check if the router fields are updated client-side
+        if (isReady) {
+            // Dynamic route will be matched via props.as
+            // Static route will be matched via props.href
+            const linkPathname = new URL((props.as || props.href) as string, location.href).pathname;
+
+            // Using URL().pathname to get rid of query and hash
+            const activePathname = new URL(asPath, location.href).pathname;
+
+            const newClassName = linkPathname === activePathname ? `${className} ${activeClassName}`.trim() : className;
+
+            if (newClassName !== computedClassName) {
+                setComputedClassName(newClassName);
+            }
+        }
+    }, [asPath, isReady, props.as, props.href, activeClassName, className, computedClassName]);
+
+    return (
+        <Link className={computedClassName} {...props}>
+            {children}
+        </Link>
+    );
+};
+
+export default ActiveLink;

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { parseTime } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
-import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import style from './comment-item.style.module.scss';
 import { xss } from '@blog/client/libs/marked';
 import { IComment } from '@blog/client/web/api';
-import Image from 'next/image';
 import { isString } from 'lodash';
 import { Space } from 'antd';
+import Avatar from 'boring-avatars';
 
 const handleEmoji = (text) => {
     const regex = /@\((.+?)\)/g;
@@ -30,10 +29,6 @@ const getBadgeVisitorOrAuthor = (identity) => {
 const ReplyComponent = (props: { parentId: string; item: IComment }) => {
     const { parentId, item } = props;
     const [showCommentForm, setShowCommentForm] = useState('');
-    const [avatarSrc, setAvatarSrc] = useState('/null.png');
-    useEffect(() => {
-        setAvatarSrc(gernateAvatarImage(item.nickName) || '');
-    }, [item.nickName]);
     return (
         <div className={style.commentReplyItem}>
             <div className={style.commentItemReplyContent}>
@@ -41,7 +36,7 @@ const ReplyComponent = (props: { parentId: string; item: IComment }) => {
                     <div className={style.left}>
                         <Space size={4}>
                             <div className={style.commentItemReplyAvatar}>
-                                <Image width={72} height={72} src={avatarSrc} alt="" />
+                                <Avatar size={16} name={item.nickName} variant="beam" />
                             </div>
                             <span>
                                 <strong>{item.nickName}</strong>
@@ -81,16 +76,12 @@ const ReplyComponent = (props: { parentId: string; item: IComment }) => {
 
 export const CommentItem = (props: { item: IComment; index: number }) => {
     const [showCommentForm, setShowCommentForm] = useState('');
-    const [avatarSrc, setAvatarSrc] = useState('/null.png');
-    useEffect(() => {
-        setAvatarSrc(gernateAvatarImage(props.item.nickName) || '');
-    }, [props.item.nickName]);
     const item = props.item;
     return (
         <div className={style.commentItem}>
             <div className={style.commentItemInner}>
                 <div className={style.commentItemAvatar}>
-                    <Image width={48} height={48} src={avatarSrc} alt="" />
+                    <Avatar size={40} name={item.nickName} variant="beam" />
                 </div>
                 <div className={style.commentItemRight}>
                     <div className={style.commentHeader}>

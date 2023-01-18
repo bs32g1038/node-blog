@@ -6,7 +6,9 @@ import { Breadcrumb } from 'antd';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
-const MarkdownBody = dynamic(() => import('../markdown-body'), { ssr: false });
+import { useSelector } from 'react-redux';
+import { RootState } from '@blog/client/redux/store';
+import clsx from 'clsx';
 
 interface Props {
     article: any;
@@ -15,13 +17,14 @@ interface Props {
 
 export default function ArticleItem(props: Props) {
     const { article, comments } = props;
+    const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <div className={style.article}>
             <Breadcrumb separator=">">
                 <Breadcrumb.Item>首页</Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}>
-                        <a>{article.category && article.category.name}</a>
+                        {article.category && article.category.name}
                     </Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
@@ -30,24 +33,26 @@ export default function ArticleItem(props: Props) {
             </Breadcrumb>
             <div className={style.articleMeta}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
-                    <a>
-                        <h2 className={style.articleTitle}>{article.title}</h2>
-                    </a>
+                    <h2 className={style.articleTitle}>{article.title}</h2>
                 </Link>
                 <div className={style.articleMetaInfo}>
                     <span>发表于{parseTime(article.createdAt)}</span>
                     <span>
                         分类于
                         <Link href={`/blog/articles?cid=${article.category && article.category._id}`} passHref={true}>
-                            <a>{article.category && article.category.name}</a>
+                            {article.category && article.category.name}
                         </Link>
                     </span>
                     <span>{article.commentCount}条评论</span>
                     <span>阅读次数{article.viewsCount}</span>
                 </div>
             </div>
-            <div className={style.articleContent}>
-                <MarkdownBody content={article.content} />
+            <div
+                className={clsx({
+                    'toastui-editor-dark': theme === 'dark',
+                })}
+            >
+                <div className="toastui-editor-contents" dangerouslySetInnerHTML={{ __html: article.content }}></div>
             </div>
             <div className={style.statement}>
                 <div>
@@ -69,7 +74,7 @@ export default function ArticleItem(props: Props) {
                     <div>
                         <strong>上一篇：</strong>
                         <Link href={`/blog/articles/${article.prev._id}`} passHref={true}>
-                            <a>{article.prev.title}</a>
+                            {article.prev.title}
                         </Link>
                     </div>
                 )}
@@ -77,7 +82,7 @@ export default function ArticleItem(props: Props) {
                     <div>
                         <strong>下一篇：</strong>
                         <Link href={`/blog/articles/${article.next._id}`} passHref={true}>
-                            <a>{article.next.title}</a>
+                            {article.next.title}
                         </Link>
                     </div>
                 )}

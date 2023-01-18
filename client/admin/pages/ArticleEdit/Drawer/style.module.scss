@@ -1,7 +1,14 @@
 .drawerContent {
     :global(.ant-upload) {
-        width: 282px;
-        height: auto;
-        display: block !important;
+        width: 200px !important;
+        height: auto !important;
+        min-height: 80px !important;
+    }
+    :global {
+        img {
+            width: 200px !important;
+            height: 150px !important;
+            object-fit: contain;
+        }
     }
 }
