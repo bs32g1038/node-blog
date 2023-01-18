@@ -37,13 +37,16 @@ export default function ArticleItem(props: Props) {
                 </Link>
                 <div className={style.articleMetaInfo}>
                     <span>发表于{parseTime(article.createdAt)}</span>
+                    <span>·</span>
                     <span>
                         分类于
                         <Link href={`/blog/articles?cid=${article.category && article.category._id}`} passHref={true}>
                             {article.category && article.category.name}
                         </Link>
                     </span>
+                    <span>·</span>
                     <span>{article.commentCount}条评论</span>
+                    <span>·</span>
                     <span>阅读次数{article.viewsCount}</span>
                 </div>
             </div>

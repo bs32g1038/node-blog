@@ -18,15 +18,14 @@
 .articleTitle {
     font-size: 24px;
     color: var(--title-text-color);
+    font-weight: 600;
 }
 .articleMetaInfo {
     display: flex;
     align-items: center;
     color: var(--secondary-text-color);
     font-size: 14px;
-    span {
-        margin-right: 10px;
-    }
+    gap: 5px;
     a {
         color: var(--secondary-text-color);
         text-decoration: underline;
@@ -49,4 +48,7 @@
 
 .footer {
     color: var(--secondary-text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
