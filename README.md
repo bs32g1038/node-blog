@@ -11,7 +11,10 @@
 
 </div>
 
-![博客首页](https://github.com/bs32g1038/node-blog/blob/master/docs/images/home.png?raw=true)
+<p align="center" dir="auto">
+<img src="https://github.com/bs32g1038/node-blog/raw/master/docs/images/home.png?raw=true" alt="博客首页" style="max-width: 100%;width: 620px;">
+</p>
+
 
 * **preview :** [https://www.lizc.net](https://www.lizc.net "blog")
 
