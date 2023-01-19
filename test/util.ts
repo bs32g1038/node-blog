@@ -22,6 +22,7 @@ export const verifyToken = (str) => {
 };
 
 export const initApp = async (metadata: ModuleMetadata) => {
+    // eslint-disable-next-line @next/next/no-assign-module-variable
     const module = await Test.createTestingModule({
         imports: [
             DatabaseModule,
@@ -39,8 +40,12 @@ export const initApp = async (metadata: ModuleMetadata) => {
 };
 
 export const closeApp = async (app: INestApplication) => {
-    await app.close();
-    await mongoose.disconnect();
+    try {
+        await app.close();
+        await mongoose.disconnect();
+    } catch (error) {
+        console.log('closeApp', error);
+    }
 };
 
 export const isExpectPass = (arr1: unknown[], arr2: unknown[], skipFields: string[] = []) => {
