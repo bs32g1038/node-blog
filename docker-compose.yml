@@ -1,7 +1,7 @@
 version: '3'
 services:
   server:
-    image: bs32g1038/node-blog
+    image: bs32g1038/node-blog:release
     depends_on:
       - db
     volumes:
