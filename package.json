@@ -71,7 +71,7 @@
     "xss": "^1.0.14"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5.0.0",
+    "@ant-design/icons": "^5.0.1",
     "@ant-design/plots": "^1.2.4",
     "@emotion/react": "^11.10.5",
     "@eslint/eslintrc": "^1.4.1",
