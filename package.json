@@ -101,7 +101,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/supertest": "^2.0.12",
-    "@types/validator": "^13.7.10",
+    "@types/validator": "^13.7.11",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "antd": "^5.1.5",
