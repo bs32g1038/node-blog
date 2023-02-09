@@ -1,11 +1,11 @@
 import { noop } from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 import FilerobotImageEditor from 'react-filerobot-image-editor';
-import { TABS, TOOLS } from 'react-filerobot-image-editor';
+import { TABS } from 'react-filerobot-image-editor';
 
 interface Props {
     src: string;
-    onSave: () => void;
+    onSave: (editedImageObject: any, designState: any) => void;
 }
 
 export default function App(props: Props) {
@@ -25,7 +25,7 @@ export default function App(props: Props) {
                 tabsIds={[TABS.ADJUST]}
                 savingPixelRatio={0}
                 previewPixelRatio={0}
-                moreSaveOptions={[]}
+                useBackendTranslations={false}
             />
         </div>
     );

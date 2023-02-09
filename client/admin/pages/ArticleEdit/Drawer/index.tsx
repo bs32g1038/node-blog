@@ -4,8 +4,7 @@ import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
 import style from './style.module.scss';
-import UploadButton from '@blog/client/admin/components/UploadButton';
-import ImageCropper from '@blog/client/admin/components/ImageCropper';
+import UploadImageButton from '@blog/client/admin/components/UploadImageButton';
 
 const Option = Select.Option;
 const { TextArea } = Input;
@@ -64,7 +63,7 @@ export default function Index({ visible, onCancel, formData }) {
                         name="screenshot"
                         rules={[{ required: true, message: '封面图片不能为空!' }]}
                     >
-                        <UploadButton></UploadButton>
+                        <UploadImageButton></UploadImageButton>
                     </Form.Item>
                     <Form.Item name="category" label="文章分类" rules={[{ required: true, message: '分类不能为空!' }]}>
                         <Select placeholder="请选择一个分类">{categoryOptions}</Select>

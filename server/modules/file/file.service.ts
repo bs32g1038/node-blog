@@ -15,7 +15,7 @@ MulterModule.register({
     storage: multr.memoryStorage(),
 });
 
-async function resize(inputBuf, x, y) {
+async function resize(inputBuf) {
     const img = sharp(inputBuf);
     const meta = await img.metadata();
     const buf = await img.toBuffer();
@@ -100,7 +100,7 @@ export class FileService {
                 break;
             }
         }
-        const rs = await resize(file.buffer, 900, 600);
+        const rs = await resize(file.buffer);
         // 文件处理
         const domain = this.configService.siteDomain;
         const p = await creteUploadFile(fileName, rs.buf);
