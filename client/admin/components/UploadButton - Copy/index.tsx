@@ -119,15 +119,16 @@ export default function UploadButton(props: Props) {
             {open.visible && (
                 <ImageEditor
                     src={open.src}
-                    onSave={async (editedImageObject, designState) => {
-                        const res: Response = await fetch(designState.imgSrc);
-                        const blob: Blob = await res.blob();
-                        if (!blob) return;
-                        const { type, name, uid } = open;
-                        const newFile = new File([blob], name, { type });
-                        (newFile as any).uid = uid;
-                        setOpen((d) => ({ ...d, visible: false }));
-                        refResolve.current(newFile);
+                    onSave={(editedImageObject, designState) => {
+                        console.log('saved', editedImageObject, designState);
+                        editedImageObject.imageCanvas.toBlob(async (blob) => {
+                            if (!blob) return;
+                            const { type, name, uid } = open;
+                            const newFile = new File([blob], name, { type });
+                            (newFile as any).uid = uid;
+                            setOpen((d) => ({ ...d, visible: false }));
+                            refResolve.current(newFile);
+                        });
                     }}
                 ></ImageEditor>
             )}

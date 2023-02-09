@@ -5,6 +5,7 @@ import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
 import style from './style.module.scss';
 import UploadButton from '@blog/client/admin/components/UploadButton';
+import ImageCropper from '@blog/client/admin/components/ImageCropper';
 
 const Option = Select.Option;
 const { TextArea } = Input;
@@ -20,7 +21,6 @@ export default function Index({ visible, onCancel, formData }) {
     const prevVisible = prevVisibleRef.current;
 
     useEffect(() => {
-        console.log(formData);
         if (!visible && prevVisible) {
             form.resetFields();
         } else {

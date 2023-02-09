@@ -7,6 +7,17 @@
             pointer-events: none;
             height: 0;
         }
+        .ProseMirror {
+            img {
+                height: auto;
+                max-width: 100%;
+
+                &.ProseMirror-selectednode {
+                    border: 1px solid #e5e5e5;
+                    padding: 1px;
+                }
+            }
+        }
     }
 }
 
@@ -14,8 +25,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 1px solid rgba(26, 26, 26, 0.08);
-    border-bottom: 1px solid #ebebeb;
     align-items: center;
 }
 
@@ -54,14 +63,18 @@
             width: 20px;
             height: 20px;
         }
+        .ant-upload-wrapper {
+            line-height: 0;
+        }
     }
 }
 
 .editor {
     width: 600px;
     margin: 0 auto;
-    border: 1px solid #ebebeb;
     border-top: none;
-    padding: 0 10px 10px;
-    height: calc(100vh - 100px);
+    padding: 20px;
+    height: calc(100vh - 140px);
+    border: none;
+    overflow-y: auto;
 }

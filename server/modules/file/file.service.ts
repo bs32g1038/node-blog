@@ -9,10 +9,21 @@ import { creteUploadFile } from '@blog/server/utils/upload.util';
 import { DynamicConfigService } from '@blog/server/modules/dynamic-config/dynamic.config.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
+import sharp from 'sharp';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
 });
+
+async function resize(inputBuf, x, y) {
+    const img = sharp(inputBuf);
+    const meta = await img.metadata();
+    const buf = await img.toBuffer();
+    return {
+        buf,
+        format: meta.format,
+    };
+}
 
 @Injectable()
 export class FileService {
@@ -89,10 +100,10 @@ export class FileService {
                 break;
             }
         }
-
+        const rs = await resize(file.buffer, 900, 600);
         // 文件处理
         const domain = this.configService.siteDomain;
-        const p = await creteUploadFile(fileName, file.buffer);
+        const p = await creteUploadFile(fileName, rs.buf);
         const url = domain + p;
         const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
         if (result) {

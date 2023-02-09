@@ -51,9 +51,12 @@ export default function ArticleItem(props: Props) {
                 </div>
             </div>
             <div
-                className={clsx({
-                    'toastui-editor-dark': theme === 'dark',
-                })}
+                className={clsx(
+                    {
+                        'toastui-editor-dark': theme === 'dark',
+                    },
+                    style.editor
+                )}
             >
                 <div className="toastui-editor-contents" dangerouslySetInnerHTML={{ __html: article.content }}></div>
             </div>

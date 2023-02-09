@@ -1,29 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Form, Button, Switch, message } from 'antd';
 import { EditOutlined, SendOutlined, CloseOutlined, CheckOutlined, SoundOutlined } from '@ant-design/icons';
-import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
-import axios from '@blog/client/admin/axios';
 import style from './style.module.scss';
+import { useTestEmailMutation, useUpdateEmailConfigMutation } from './service';
 
 interface Props {
     data?: object;
 }
 
-const testEmail = () => {
-    return axios.post('/email/test');
-};
-
-const updateEmailConfig = (data) => {
-    return axios.put('/email', data);
-};
-
 export default function EmailInput(props: Props) {
+    const [testEmail, { isLoading: testEmailLoading }] = useTestEmailMutation();
+    const [updateEmailConfig, { isLoading: updateLoading }] = useUpdateEmailConfigMutation();
     const { data } = props;
     const [disabled, setDisabled] = useState(true);
-    const { loading, injectRequestLoading } = useRequestLoading();
     const [form] = Form.useForm();
     const onFinish = (values) => {
-        injectRequestLoading(updateEmailConfig(values)).then(() => {
+        updateEmailConfig(values).then(() => {
             message.success('更新成功');
         });
     };
@@ -65,18 +57,20 @@ export default function EmailInput(props: Props) {
             </Form.Item>
             {!disabled && (
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" loading={loading} style={{ marginRight: '10px' }}>
+                    <Button type="primary" htmlType="submit" loading={updateLoading} style={{ marginRight: '10px' }}>
                         <SendOutlined></SendOutlined>保存邮箱配置
                     </Button>
                     <Button
-                        loading={loading}
+                        loading={testEmailLoading}
                         onClick={() => {
-                            injectRequestLoading(testEmail()).then((res) => {
-                                if (res && res.data === true) {
-                                    return message.success('邮箱配置正常！');
-                                }
-                                message.error('邮箱配置错误！');
-                            });
+                            testEmail()
+                                .unwrap()
+                                .then((res) => {
+                                    if (res === true) {
+                                        return message.success('邮箱配置正常！');
+                                    }
+                                    message.error('邮箱配置错误！');
+                                });
                         }}
                     >
                         <SoundOutlined />

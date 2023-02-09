@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { appApi } from '@blog/client/web/api';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { adminApi } from '@blog/client/admin/api';
 
 interface State {
     theme: 'light' | 'dark';
@@ -33,8 +34,9 @@ export const makeStore = () =>
         reducer: {
             app: app.reducer,
             [appApi.reducerPath]: appApi.reducer,
+            [adminApi.reducerPath]: adminApi.reducer,
         },
-        middleware: (gDM) => gDM().concat(appApi.middleware),
+        middleware: (gDM) => gDM().concat(appApi.middleware).concat(adminApi.middleware),
     });
 
 export type AppStore = ReturnType<typeof makeStore>;

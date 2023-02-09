@@ -87,6 +87,11 @@
         max-width: 100%;
         transition: all 444ms ease-in-out;
     }
+    :global {
+        .ant-image {
+            height: 100%;
+        }
+    }
     &:after {
         content: '';
         display: block;

@@ -6,7 +6,7 @@ export default function Site() {
     return (
         <BasicLayout>
             <div className={style.wrap}>
-                <iframe className={style.Iframe} src="/" frameBorder="0"></iframe>
+                <iframe className={style.Iframe} src="/"></iframe>
             </div>
         </BasicLayout>
     );
