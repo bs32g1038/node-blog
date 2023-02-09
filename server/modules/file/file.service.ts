@@ -86,7 +86,7 @@ export class FileService {
 
         const suffix = path.extname(file.originalname);
         const fileName = name + suffix;
-
+        let buf = file.buffer;
         let type = FileType.other;
         for (const item of this.FILE_TYPE_MAP_MIMETYPE) {
             const rs = item.mimetypes.some((t) => {
@@ -97,13 +97,13 @@ export class FileService {
                     throw new BadRequestException('图片最大为 2MB');
                 }
                 type = item.type;
+                buf = (await resize(file.buffer)).buf;
                 break;
             }
         }
-        const rs = await resize(file.buffer);
         // 文件处理
         const domain = this.configService.siteDomain;
-        const p = await creteUploadFile(fileName, rs.buf);
+        const p = await creteUploadFile(fileName, buf);
         const url = domain + p;
         const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
         if (result) {
