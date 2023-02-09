@@ -93,11 +93,13 @@ export class FileService {
                 return mimetype.toLocaleLowerCase().includes(t);
             });
             if (rs) {
-                if (item.type === FileType.image && Number(size) > 1024 * 1024 * 2) {
-                    throw new BadRequestException('图片最大为 2MB');
+                if (item.type === FileType.image) {
+                    if (Number(size) > 1024 * 1024 * 2) {
+                        throw new BadRequestException('图片最大为 2MB');
+                    }
+                    buf = (await resize(file.buffer)).buf;
                 }
                 type = item.type;
-                buf = (await resize(file.buffer)).buf;
                 break;
             }
         }
