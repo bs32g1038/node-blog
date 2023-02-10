@@ -27,11 +27,17 @@ export type FileDocument = File & Document;
 })
 export class File {
     @Prop({
-        maxlength: 80,
         trim: true,
         required: true,
     })
     name: string;
+
+    @Prop({
+        maxlength: 80,
+        trim: true,
+        required: true,
+    })
+    originName: string;
 
     @Prop({
         enum: ['image', 'video', 'audio', 'document', 'other'],

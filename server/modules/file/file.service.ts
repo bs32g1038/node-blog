@@ -117,6 +117,7 @@ export class FileService {
         }
         const _file = await this.fileModel.create({
             name: fileName,
+            originName: file.originalname,
             type,
             size,
             url,

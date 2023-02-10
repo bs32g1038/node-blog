@@ -8,7 +8,7 @@ import style from './style.module.scss';
 import { useLazyFetchAdminConfigsQuery, useUpdateAdminConfigsMutation } from './service';
 
 export default function Settings() {
-    const [fetchConfig, { data }] = useLazyFetchAdminConfigsQuery();
+    const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
     const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
     const onFinish = (values) => {
         const data = values;
