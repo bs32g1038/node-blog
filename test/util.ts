@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
 import { MONGODB, TOKEN_SECRET_KEY } from '../server/configs/index.config';
@@ -42,7 +41,6 @@ export const initApp = async (metadata: ModuleMetadata) => {
 export const closeApp = async (app: INestApplication) => {
     try {
         await app.close();
-        await mongoose.disconnect();
     } catch (error) {
         console.log('closeApp', error);
     }
