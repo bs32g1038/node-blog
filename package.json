@@ -109,7 +109,7 @@
     "boring-avatars": "^1.7.0",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
-    "eslint": "^8.33.0",
+    "eslint": "^8.34.0",
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
