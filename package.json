@@ -76,7 +76,7 @@
     "@eslint/eslintrc": "^1.4.1",
     "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "^9.2.0",
-    "@nestjs/testing": "^9.3.7",
+    "@nestjs/testing": "^9.3.8",
     "@next/eslint-plugin-next": "^13.1.6",
     "@reduxjs/toolkit": "^1.9.2",
     "@tiptap/extension-image": "^2.0.0-beta.217",
