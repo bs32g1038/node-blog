@@ -6,7 +6,6 @@ import { fetchConfig, fetchConfigSvg } from '@blog/client/web/api';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/reset.css';
-import 'react-image-crop/dist/ReactCrop.css';
 import '@blog/client/common/global.scss';
 
 class MyApp extends App {

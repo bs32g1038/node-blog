@@ -1,63 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import axios from '@blog/client/admin/axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import { parseTime } from '@blog/client/libs/time';
-import { Table, Button, Popconfirm, message, Space } from 'antd';
+import { Button, Popconfirm, message, Space } from 'antd';
 import Router from 'next/router';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
+import { useDeleteCategoriesMutation, useDeleteCategoryMutation, useLazyFetchCategoriesQuery } from './service';
+import CTable from '@blog/client/admin/components/CTable';
 
 export default function Index() {
-    const [state, setState] = useState({
-        categories: [],
-        selectedRowKeys: [],
-        visible: false,
-        loading: false,
-    });
-    const fetchData = () => {
-        setState((data) => {
-            return { ...data, isResetFetch: false, loading: true };
-        });
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [fetchCategories, { data = [], isLoading }] = useLazyFetchCategoriesQuery();
+    const fetchData = useCallback(() => {
         const query = {
             page: 1,
             limit: 100,
         };
-        axios.get('/categories', { params: query }).then((res) => {
-            setState((data) => ({
-                ...data,
-                categories: res.data,
-                loading: false,
-            }));
-        });
-    };
-    const deleteCategory = (_id) => {
-        axios.delete('/categories/' + _id).then((res) => {
-            message.success(`删除分类 ${res.data.name} 成功！`);
-            fetchData();
-        });
-    };
-    const batchDeleteCategory = () => {
-        axios
-            .delete('/categories', {
-                data: { categoryIds: state.selectedRowKeys },
-            })
+        fetchCategories(query);
+    }, [fetchCategories]);
+    const [_deleteCategory, { isLoading: isDeleteCategoryLoading }] = useDeleteCategoryMutation();
+    const deleteCategory = (id) => {
+        _deleteCategory({ id })
+            .unwrap()
             .then((res) => {
-                if (res && res.data && res.data.deletedCount > 0) {
+                message.success(`删除分类 ${res.name} 成功！`);
+                fetchData();
+            });
+    };
+    const [deleteCategories, { isLoading: isDeleteCategoriesLoading }] = useDeleteCategoriesMutation();
+    const batchDeleteCategory = () => {
+        deleteCategories({ categoryIds: selectedRowKeys })
+            .unwrap()
+            .then((res) => {
+                if (res && res.deletedCount > 0) {
                     message.success(`删除分类成功！`);
-                    setState((data) => ({
-                        ...data,
-                        selectedRowKeys: [],
-                    }));
                     return fetchData();
                 }
                 message.error('删除分类失败，请重新尝试。');
             });
-    };
-    const onSelectChange = (selectedRowKeys) => {
-        setState((data) => ({
-            ...data,
-            selectedRowKeys,
-        }));
     };
     const getTableColums = () => {
         return [
@@ -102,12 +83,10 @@ export default function Index() {
     };
     useEffect(() => {
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    const { selectedRowKeys } = state;
+    }, [fetchData]);
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+        onChange: setSelectedRowKeys,
     };
     const CTitle = (
         <Space>
@@ -121,17 +100,14 @@ export default function Index() {
             <Popconfirm
                 title="确认要删除？"
                 placement="right"
-                open={state.visible}
+                open={visible}
                 onConfirm={() => batchDeleteCategory()}
                 onOpenChange={() => {
-                    if (state.selectedRowKeys.length <= 0) {
+                    if (selectedRowKeys.length <= 0) {
                         message.info('请选择要删除的分类');
                         return;
                     }
-                    setState((data) => ({
-                        ...data,
-                        visible: !state.visible,
-                    }));
+                    setVisible(!visible);
                 }}
             >
                 <Button danger={true} icon={<DeleteFilled />}>
@@ -143,12 +119,12 @@ export default function Index() {
     return (
         <BasicLayout>
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
-                <Table
+                <CTable
                     rowKey={(record: any) => record._id}
                     rowSelection={rowSelection}
                     columns={getTableColums()}
-                    loading={state.loading}
-                    dataSource={state.categories as any}
+                    loading={isLoading || isDeleteCategoryLoading || isDeleteCategoriesLoading}
+                    dataSource={data}
                 />
             </ActionCard>
         </BasicLayout>

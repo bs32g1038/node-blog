@@ -1,69 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Router from 'next/router';
-import axios from '@blog/client/admin/axios';
 import { parseTime } from '@blog/client/libs/time';
-import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
-import { Table, Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space } from 'antd';
+import { Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space } from 'antd';
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
+import { useDeleteArticleMutation, useDeleteArticlesMutation, useLazyFetchArticlesQuery } from './service';
+import CTable from '@blog/client/admin/components/CTable';
 
 export default function Index() {
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [visible, setVisible] = useState(false);
     const [state, setState] = useState({
-        articles: [],
-        pagination: {
-            current: 1,
-            total: 0,
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} 条数据`,
-        },
-        selectedRowKeys: [],
-        loading: false,
-        visible: false,
+        current: 1,
+        pageSize: 10,
         searchKey: '',
-        isResetFetch: false,
     });
-    const fetchData = (page = 1, limit = 10) => {
-        setState((data) => {
-            return { ...data, isResetFetch: false, loading: true };
-        });
+    const [fetchArticles, { data = { items: [], count: 0 }, isLoading }] = useLazyFetchArticlesQuery();
+    const fetchData = useCallback(() => {
         const query = {
-            limit,
-            page,
+            page: state.current || 1,
+            limit: state.pageSize || 10,
+            ...(state.searchKey ? { title: state.searchKey } : {}),
         };
-        if (state.searchKey) {
-            Object.assign(query, {
-                title: state.searchKey,
+        fetchArticles(query)
+            .unwrap()
+            .then((res) => {
+                if (res.items.length === 0 && state.current > 1) {
+                    setState((s) => {
+                        const temp = { ...s };
+                        Object.assign(temp, {
+                            current: temp.current - 1,
+                        });
+                        return temp;
+                    });
+                }
             });
-        }
-        axios.get('/articles?', { params: query }).then((res) => {
-            const pagination = { ...state.pagination, current: page, total: res.data.totalCount };
-            setState((data) => ({
-                ...data,
-                articles: res.data.items,
-                loading: false,
-                pagination,
-            }));
-            scrollIntoView('article-panel');
-        });
-    };
-    const deleteArticle = (_id) => {
-        axios.delete('/articles/' + _id).then(() => {
+    }, [state, fetchArticles]);
+    const [_deleteArticle, { isLoading: isDeleteArticleLoading }] = useDeleteArticleMutation();
+    const deleteArticle = (id) => {
+        _deleteArticle({ id }).then(() => {
             message.success('删除文章成功！');
             fetchData();
         });
     };
+    const [deleteArticles, { isLoading: isDeleteArticlesLoading }] = useDeleteArticlesMutation();
     const batchDeleteArticle = () => {
-        axios
-            .delete('/articles', {
-                data: { articleIds: state.selectedRowKeys },
-            })
+        deleteArticles({
+            articleIds: selectedRowKeys,
+        })
+            .unwrap()
             .then((res) => {
-                if (res && res.data && res.data.deletedCount > 0) {
+                if (res && res.deletedCount > 0) {
                     message.success('删除文章成功！');
-                    setState((data) => ({
-                        ...data,
-                        selectedRowKeys: [],
-                    }));
                     return fetchData();
                 }
                 message.error('删除文章失败，请重新尝试。');
@@ -143,25 +132,18 @@ export default function Index() {
         ];
     };
     const handleTableChange = (pagination) => {
-        const pager = { ...state.pagination };
-        pager.current = pagination.current;
         setState((data) => ({
             ...data,
-            pagination: pager,
+            current: pagination.current,
         }));
-        fetchData(pagination.current, pagination.pageSize);
+        fetchData();
     };
     const onSelectChange = (selectedRowKeys) => {
-        setState((data) => ({
-            ...data,
-            selectedRowKeys,
-        }));
+        setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    const { selectedRowKeys } = state;
+    }, [fetchData]);
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange.bind(this),
@@ -179,17 +161,14 @@ export default function Index() {
                 <Popconfirm
                     title="确认要删除？"
                     placement="right"
-                    open={state.visible}
+                    open={visible}
                     onConfirm={() => batchDeleteArticle()}
                     onOpenChange={() => {
-                        if (state.selectedRowKeys.length <= 0) {
+                        if (selectedRowKeys.length <= 0) {
                             message.info('请选择要删除的文章');
                             return;
                         }
-                        setState((data) => ({
-                            ...data,
-                            visible: !state.visible,
-                        }));
+                        setVisible(!visible);
                     }}
                 >
                     <Button danger={true} icon={<DeleteFilled />}>
@@ -239,13 +218,17 @@ export default function Index() {
     return (
         <BasicLayout>
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
-                <Table
+                <CTable
                     rowKey={(record) => record._id}
                     rowSelection={rowSelection}
                     columns={getTableColums()}
-                    dataSource={state.articles}
-                    pagination={state.pagination}
-                    loading={state.loading}
+                    dataSource={data.items}
+                    pagination={{
+                        current: state.current,
+                        pageSize: state.pageSize,
+                        total: data.totalCount,
+                    }}
+                    loading={isLoading || isDeleteArticlesLoading || isDeleteArticleLoading}
                     onChange={(pagination) => handleTableChange(pagination)}
                 />
             </ActionCard>

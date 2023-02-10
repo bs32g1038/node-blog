@@ -43,6 +43,7 @@ export const getComment = (obj = {}) => {
 export const getFile = (obj = {}) => {
     return {
         name: faker.lorem.word() + '.jpg',
+        originName: faker.lorem.word() + '.jpg',
         url: faker.image.imageUrl(),
         size: 2000,
         type: 'image',

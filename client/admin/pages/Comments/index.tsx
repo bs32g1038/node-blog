@@ -1,86 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import axios from '@blog/client/admin/axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import { timeAgo } from '@blog/client/libs/time';
 import { Table, Button, Popconfirm, message } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
-import scrollIntoView from '@blog/client/admin/utils/scroll.into.view';
 import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
 import ActionCard from '@blog/client/admin/components/ActionCard';
+import { useDeleteCommentMutation, useDeleteCommentsMutation, useLazyFetchCommentsQuery } from './service';
 
 export default function Comments() {
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useLazyFetchCommentsQuery();
     const [state, setState] = useState({
-        pagination: { current: 1, total: 0 },
-        comments: [],
-        selectedRowKeys: [],
-        loading: false,
-        visiable: false,
+        current: 1,
+        pageSize: 10,
     });
-    const fetchData = (page = 1, limit = 10) => {
-        setState((data) => ({
-            ...data,
-            loading: true,
-        }));
+    const fetchData = useCallback(() => {
         const query = {
-            limit,
-            page,
+            page: state.current || 1,
+            limit: state.pageSize || 10,
         };
-        axios.get('/admin-comments', { params: query }).then((res) => {
-            const pagination = { ...state.pagination };
-            pagination.total = res.data.totalCount;
-            setState((data) => ({
-                ...data,
-                comments: res.data.items,
-                loading: false,
-                pagination,
-            }));
-            scrollIntoView('comments-panel');
-        });
-    };
-    const deleteComment = (_id) => {
-        axios.delete('/comments/' + _id).then(() => {
+        fetchComments(query)
+            .unwrap()
+            .then((res) => {
+                if (res.items.length === 0 && state.current > 1) {
+                    setState((s) => {
+                        const temp = { ...s };
+                        Object.assign(temp, {
+                            current: temp.current - 1,
+                        });
+                        return temp;
+                    });
+                }
+            });
+    }, [fetchComments, state]);
+    const [_deleteComment] = useDeleteCommentMutation();
+    const deleteComment = (id) => {
+        _deleteComment({ id }).then(() => {
             message.success('删除评论成功');
             fetchData();
         });
     };
+    const [_deleteComments] = useDeleteCommentsMutation();
     const batchDeleteComment = () => {
-        axios
-            .delete('/comments', {
-                data: { commentIds: state.selectedRowKeys },
-            })
+        _deleteComments({ commentIds: selectedRowKeys })
+            .unwrap()
             .then((res) => {
-                if (res && res.data && res.data.deletedCount > 0) {
+                if (res && res.deletedCount > 0) {
                     message.success('删除评论成功！');
-                    setState((data) => ({
-                        ...data,
-                        selectedRowKeys: [],
-                    }));
                     return fetchData();
                 }
                 message.error('删除评论失败，请重新尝试。');
             });
     };
     const handleTableChange = (pagination) => {
-        const pager = { ...state.pagination };
-        pager.current = pagination.current;
         setState((data) => ({
             ...data,
-            pagination: pager,
+            current: pagination.current,
         }));
-        fetchData(pagination.current, pagination.pageSize);
+        fetchData();
     };
     const onSelectChange = (selectedRowKeys) => {
-        setState((data) => ({
-            ...data,
-            selectedRowKeys,
-        }));
+        setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [fetchData]);
     const getTableColums = () => {
         return [
             {
@@ -130,26 +117,22 @@ export default function Comments() {
             },
         ];
     };
-    const { selectedRowKeys } = state;
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange.bind(this),
     };
-    const expandedRowKeys = state.comments.map((item) => item._id);
+    const expandedRowKeys = data.items.map((item) => item._id);
     const CTitle = (
         <Popconfirm
             title="确认要删除？"
             placement="right"
-            open={state.visiable}
+            open={visible}
             onOpenChange={() => {
-                if (state.selectedRowKeys.length <= 0) {
+                if (selectedRowKeys.length <= 0) {
                     message.info('请选择要删除的评论');
                     return;
                 }
-                setState((data) => ({
-                    ...data,
-                    visiable: !state.visiable,
-                }));
+                setVisible(!visible);
             }}
             onConfirm={() => batchDeleteComment()}
         >
@@ -165,8 +148,8 @@ export default function Comments() {
                     rowKey={(record) => record._id}
                     rowSelection={rowSelection}
                     columns={getTableColums()}
-                    loading={state.loading}
-                    dataSource={state.comments}
+                    loading={isLoading}
+                    dataSource={data.items}
                     onChange={(pagination) => handleTableChange(pagination)}
                     pagination={{
                         showTotal: (total) => `共 ${total} 条评论数据`,

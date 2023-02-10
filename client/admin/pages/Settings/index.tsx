@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
 import { message } from 'antd';
 import isFQDN from 'validator/lib/isFQDN';
-import axios from '@blog/client/admin/axios';
-import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import EditableInput from '@blog/client/admin/components/EditableInput';
 import EmailInput from './EmailInput';
 import style from './style.module.scss';
-
-const fetchConfig = () => {
-    return axios.get('/configs/admin');
-};
-
-const updateConfig = (data) => {
-    return axios.put('/configs', data);
-};
+import { useLazyFetchAdminConfigsQuery, useUpdateAdminConfigsMutation } from './service';
 
 export default function Settings() {
-    const [data, setData] = useState<any>({});
-    const { loading, injectRequestLoading } = useRequestLoading();
-
+    const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
+    const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
     const onFinish = (values) => {
         const data = values;
         if (data.siteLogo) {
@@ -27,16 +17,14 @@ export default function Settings() {
                 siteLogo: data.siteLogo[0].url,
             });
         }
-        injectRequestLoading(updateConfig(data)).then(() => {
+        updateConfig(data).then(() => {
             message.success('更新成功');
         });
     };
 
     useEffect(() => {
-        fetchConfig().then((res) => {
-            setData(res.data);
-        });
-    }, []);
+        fetchConfig();
+    }, [fetchConfig]);
     return (
         <BasicLayout>
             <div className={style.wrap}>
@@ -46,7 +34,7 @@ export default function Settings() {
                     label="网站标题"
                     name="siteTitle"
                     placeholder="请输入网站标题"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>
                 <EditableInput
@@ -54,7 +42,7 @@ export default function Settings() {
                     label="网站域名"
                     name="siteDomain"
                     placeholder="请输入网站域名"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                     rules={[
                         {
@@ -72,7 +60,7 @@ export default function Settings() {
                     label="网站备案icp"
                     name="siteIcp"
                     placeholder="请输入备案icp"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>
                 <EditableInput
@@ -81,7 +69,7 @@ export default function Settings() {
                     value={data.siteLogo}
                     label="网站LOGO"
                     name="siteLogo"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>
                 <div className={style.tip}>网站 META 配置</div>
@@ -92,7 +80,7 @@ export default function Settings() {
                     label="META keywords"
                     name="siteMetaKeyWords"
                     placeholder="请输入keywords"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>
                 <EditableInput
@@ -102,7 +90,7 @@ export default function Settings() {
                     label="META 描述"
                     name="siteMetaDescription"
                     placeholder="请输入描述"
-                    loading={loading}
+                    loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>
                 <EmailInput data={data}></EmailInput>

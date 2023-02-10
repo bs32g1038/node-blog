@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Router from 'next/router';
-import axios from '@blog/client/admin/axios';
 import { Input, Button, Alert, message, Form, Image } from 'antd';
 import { encrypt } from '@blog/client/admin/utils/crypto.util';
-import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import defaultConfig from '@blog/client/configs/admin.default.config';
+import { useFetchFirstMessageQuery, useLoginMutation } from './service';
 
 export default function UserLogin() {
-    const [data, setData] = useState({ message: '' });
+    const { data = { message: '' } } = useFetchFirstMessageQuery();
     const { data: appConfig } = useFetchConfigQuery();
-    const { loading, setLoading, injectRequestLoading } = useRequestLoading();
+    const [login, { isLoading }] = useLoginMutation();
     const handleLogin = async (_data) => {
         const str = encrypt(JSON.stringify(_data));
-        await injectRequestLoading(axios.post('/login', { key: str }))
+        await login({ key: str })
+            .unwrap()
             .then((res) => {
                 message.success('登陆成功！');
-                localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res.data));
-                localStorage.setItem(defaultConfig.tokenKey, res.data.token);
+                localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res));
+                localStorage.setItem(defaultConfig.tokenKey, res.token);
                 Router.push('/admin/content/articles');
-            })
-            .catch(() => {
-                setLoading(false);
             });
     };
-    useEffect(() => {
-        axios.get('/getFirstLoginInfo').then((res) => {
-            setData(res.data);
-        });
-    }, []);
     return (
         <div className={style.signIn}>
             <div className={style.signInMain}>
@@ -77,7 +69,7 @@ export default function UserLogin() {
                             <Input prefix={<LockOutlined />} type="password" placeholder="请填写" />
                         </Form.Item>
                         <Form.Item label="操作：" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
-                            <Button loading={loading} type="primary" htmlType="submit" className="login-form-button">
+                            <Button loading={isLoading} type="primary" htmlType="submit" className="login-form-button">
                                 登陆
                             </Button>
                         </Form.Item>

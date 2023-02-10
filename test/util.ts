@@ -22,8 +22,7 @@ export const verifyToken = (str) => {
 };
 
 export const initApp = async (metadata: ModuleMetadata) => {
-    // eslint-disable-next-line @next/next/no-assign-module-variable
-    const module = await Test.createTestingModule({
+    const testModule = await Test.createTestingModule({
         imports: [
             DatabaseModule,
             MongooseModule.forRoot(MONGODB.uri),
@@ -31,9 +30,9 @@ export const initApp = async (metadata: ModuleMetadata) => {
             EmailModule,
             ...(metadata.imports || []),
         ],
-        providers: metadata.providers,
+        providers: metadata.providers ?? [],
     }).compile();
-    const app = module.createNestApplication();
+    const app = testModule.createNestApplication();
     app.useGlobalFilters(new AllExceptionsFilter());
     await app.init();
     return app;

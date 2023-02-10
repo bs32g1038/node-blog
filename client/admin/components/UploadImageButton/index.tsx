@@ -2,8 +2,11 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Image, message, UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { isEqual, noop } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import config from '@blog/client/configs/admin.default.config';
+import dynamic from 'next/dynamic';
+
+const ImageEditor = dynamic(() => import('./ImageEditor'), { ssr: false });
 
 const isImage = (type) => isEqual(type, 'image');
 const isSvg = (type) => isEqual(type, 'svg');
@@ -61,10 +64,39 @@ export default function UploadButton(props: Props) {
         onChange: handleChange,
         multiple: true,
     };
+    const [open, setOpen] = useState({
+        visible: false,
+        src: '',
+        type: '',
+        name: '',
+        uid: '',
+    });
+    const refResolve = useRef(noop);
+    const refReject = useRef(noop);
     return (
         <React.Fragment>
             <Upload
                 {...updateLoadProps}
+                beforeUpload={(file) => {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', () => {
+                        if (reader.result) {
+                            const { type, name, uid } = file;
+                            setOpen({
+                                visible: true,
+                                src: String(reader.result),
+                                type,
+                                name,
+                                uid,
+                            });
+                        }
+                    });
+                    reader.readAsDataURL(file);
+                    return new Promise((resolve, reject) => {
+                        refResolve.current = resolve;
+                        refReject.current = reject;
+                    });
+                }}
                 listType="picture-card"
                 fileList={fileList}
                 maxCount={1}
@@ -84,6 +116,21 @@ export default function UploadButton(props: Props) {
                     </div>
                 )}
             </Upload>
+            {open.visible && (
+                <ImageEditor
+                    src={open.src}
+                    onSave={async (_, designState) => {
+                        const res: Response = await fetch(designState.imgSrc);
+                        const blob: Blob = await res.blob();
+                        if (!blob) return;
+                        const { type, name, uid } = open;
+                        const newFile = new File([blob], name, { type });
+                        (newFile as any).uid = uid;
+                        setOpen((d) => ({ ...d, visible: false }));
+                        refResolve.current(newFile);
+                    }}
+                ></ImageEditor>
+            )}
         </React.Fragment>
     );
 }

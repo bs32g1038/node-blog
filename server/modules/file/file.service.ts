@@ -9,10 +9,21 @@ import { creteUploadFile } from '@blog/server/utils/upload.util';
 import { DynamicConfigService } from '@blog/server/modules/dynamic-config/dynamic.config.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
+import sharp from 'sharp';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
 });
+
+async function resize(inputBuf) {
+    const img = sharp(inputBuf);
+    const meta = await img.metadata();
+    const buf = await img.toBuffer();
+    return {
+        buf,
+        format: meta.format,
+    };
+}
 
 @Injectable()
 export class FileService {
@@ -75,24 +86,30 @@ export class FileService {
 
         const suffix = path.extname(file.originalname);
         const fileName = name + suffix;
-
+        let buf = file.buffer;
         let type = FileType.other;
         for (const item of this.FILE_TYPE_MAP_MIMETYPE) {
             const rs = item.mimetypes.some((t) => {
                 return mimetype.toLocaleLowerCase().includes(t);
             });
             if (rs) {
-                if (item.type === FileType.image && Number(size) > 1024 * 1024 * 2) {
-                    throw new BadRequestException('图片最大为 2MB');
+                if (item.type === FileType.image) {
+                    if (Number(size) > 1024 * 1024 * 2) {
+                        throw new BadRequestException('图片最大为 2MB');
+                    }
+                    try {
+                        buf = (await resize(file.buffer)).buf;
+                    } catch (error) {
+                        /* empty */
+                    }
                 }
                 type = item.type;
                 break;
             }
         }
-
         // 文件处理
         const domain = this.configService.siteDomain;
-        const p = await creteUploadFile(fileName, file.buffer);
+        const p = await creteUploadFile(fileName, buf);
         const url = domain + p;
         const result = await this.fileModel.findOneAndUpdate({ name: fileName }, { url });
         if (result) {
@@ -100,6 +117,7 @@ export class FileService {
         }
         const _file = await this.fileModel.create({
             name: fileName,
+            originName: file.originalname,
             type,
             size,
             url,

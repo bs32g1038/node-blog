@@ -7,8 +7,8 @@ import Drawer from './Drawer';
 import Link from 'next/link';
 import { debounce } from 'lodash';
 import isLength from 'validator/lib/isLength';
-import dynamic from 'next/dynamic';
 import style from './style.module.scss';
+import dynamic from 'next/dynamic';
 
 const JEditor = dynamic(() => import('@blog/client/admin/components/JEditor'), { ssr: false });
 

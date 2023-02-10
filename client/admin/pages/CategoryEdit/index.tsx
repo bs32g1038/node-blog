@@ -1,30 +1,29 @@
 import React, { useEffect } from 'react';
-import axios from '@blog/client/admin/axios';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
+import { useCreateCategoryMutation, useLazyFetchCategoryQuery, useUpdateCategoryMutation } from '../Categories/service';
 
 export default function Index() {
     const router = useRouter();
     const [form] = Form.useForm();
+    const [fetchCategory] = useLazyFetchCategoryQuery();
     useEffect(() => {
         const { id } = router.query;
         if (id) {
-            axios.get('/categories/' + id).then((res) => {
-                const category = res.data;
-                form.setFieldsValue(category);
-            });
+            fetchCategory({ id: id.toString() })
+                .unwrap()
+                .then((res) => {
+                    const category = res.data;
+                    form.setFieldsValue(category);
+                });
         }
-    }, [1]);
-    const createCategory = (data) => {
-        return axios.post('/categories', data);
-    };
-    const updateCategory = (id, data) => {
-        return axios.put('/categories/' + id, data);
-    };
+    }, [fetchCategory, form, router.query]);
+    const [createCategory] = useCreateCategoryMutation();
+    const [updateCategory] = useUpdateCategoryMutation();
     const publish = (data) => {
         const { id } = router.query;
-        const p = id ? updateCategory(id, data) : createCategory(data);
+        const p = id ? updateCategory({ id: id.toString(), data }) : createCategory(data);
         p.then(() => {
             message.success('提交成功');
             Router.push('/admin/content/categories');
