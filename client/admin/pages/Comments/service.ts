@@ -2,7 +2,7 @@ import { adminApi } from '@blog/client/admin/api';
 
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchComments: build.query<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
+        fetchComments: build.mutation<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
             query: () => ({
                 url: '/admin-comments',
                 method: 'get',
@@ -25,4 +25,4 @@ export const indexApi = adminApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useLazyFetchCommentsQuery, useDeleteCommentMutation, useDeleteCommentsMutation } = indexApi;
+export const { useFetchCommentsMutation, useDeleteCommentMutation, useDeleteCommentsMutation } = indexApi;

@@ -8,7 +8,7 @@ import style from '@blog/client/admin/styles/index.module.scss';
 import { CloudUploadOutlined, CopyFilled, DeleteFilled, FileFilled, VideoCameraOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import CTable from '../../components/CTable';
-import { useDeleteFileMutation, useDeleteFilesMutation, useLazyFetchStaticFilesQuery } from './service';
+import { useDeleteFileMutation, useDeleteFilesMutation, useFetchStaticFilesMutation } from './service';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 
 export default function StaticFiles() {
@@ -20,7 +20,7 @@ export default function StaticFiles() {
         pageSize: 10,
         searchKey: '',
     });
-    const [fetchFiles, { data = { items: [], totalCount: 0 }, isLoading }] = useLazyFetchStaticFilesQuery();
+    const [fetchFiles, { data = { items: [], totalCount: 0 }, isLoading }] = useFetchStaticFilesMutation();
     const fetchData = useCallback(() => {
         const query = {
             page: state.current || 1,

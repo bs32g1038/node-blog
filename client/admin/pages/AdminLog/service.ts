@@ -2,7 +2,7 @@ import { adminApi } from '@blog/client/admin/api';
 
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchAdminLogs: build.query<any, { limit: number; page: number }>({
+        fetchAdminLogs: build.mutation<any, { limit: number; page: number }>({
             query: (params) => ({
                 url: '/admin-logs',
                 method: 'get',
@@ -13,4 +13,4 @@ export const indexApi = adminApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useLazyFetchAdminLogsQuery } = indexApi;
+export const { useFetchAdminLogsMutation } = indexApi;

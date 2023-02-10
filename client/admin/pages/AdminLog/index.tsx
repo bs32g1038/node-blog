@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import BasicLayout from '@blog/client/admin/layouts';
-import { useLazyFetchAdminLogsQuery } from './service';
+import { useFetchAdminLogsMutation } from './service';
 import CTable from '../../components/CTable';
 import { parseTime } from '@blog/client/libs/time';
 
@@ -9,7 +9,7 @@ export default function StaticFiles() {
         current: 1,
         pageSize: 10,
     });
-    const [fetchAdminLogs, { data = { items: [], count: 0 }, isLoading }] = useLazyFetchAdminLogsQuery();
+    const [fetchAdminLogs, { data = { items: [], count: 0 }, isLoading }] = useFetchAdminLogsMutation();
     const fetchData = useCallback(() => {
         const query = {
             page: state.current || 1,

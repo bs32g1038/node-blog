@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { timeAgo } from '@blog/client/libs/time';
-import { Table, Button, Popconfirm, message } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 import { gernateAvatarImage } from '@blog/client/common/helper.util';
 import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import style from './style.module.scss';
 import ActionCard from '@blog/client/admin/components/ActionCard';
-import { useDeleteCommentMutation, useDeleteCommentsMutation, useLazyFetchCommentsQuery } from './service';
+import { useDeleteCommentMutation, useDeleteCommentsMutation, useFetchCommentsMutation } from './service';
+import CTable from '@blog/client/admin/components/CTable';
 
 export default function Comments() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useLazyFetchCommentsQuery();
+    const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useFetchCommentsMutation();
     const [state, setState] = useState({
         current: 1,
         pageSize: 10,
@@ -144,7 +145,7 @@ export default function Comments() {
     return (
         <BasicLayout>
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
-                <Table
+                <CTable
                     rowKey={(record) => record._id}
                     rowSelection={rowSelection}
                     columns={getTableColums()}
@@ -152,7 +153,9 @@ export default function Comments() {
                     dataSource={data.items}
                     onChange={(pagination) => handleTableChange(pagination)}
                     pagination={{
-                        showTotal: (total) => `共 ${total} 条评论数据`,
+                        current: state.current,
+                        pageSize: state.pageSize,
+                        total: data.totalCount,
                     }}
                     expandedRowRender={(record) => {
                         return (

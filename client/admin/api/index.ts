@@ -28,5 +28,14 @@ const axiosBaseQuery =
 export const adminApi = createApi({
     reducerPath: 'adminApi',
     baseQuery: axiosBaseQuery(),
-    endpoints: () => ({}),
+    endpoints: (build) => ({
+        fetchUserInfo: build.query<any, void>({
+            query: () => ({
+                url: '/user/login-info',
+                method: 'get',
+            }),
+        }),
+    }),
 });
+
+export const { useFetchUserInfoQuery } = adminApi;

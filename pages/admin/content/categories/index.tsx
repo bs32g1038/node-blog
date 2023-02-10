@@ -1,2 +1,2 @@
-import { noSSRWithLoadingDynamic } from '@blog/client/admin/utils/dynamic.import.util';
-export default noSSRWithLoadingDynamic(import('@blog/client/admin/pages/Categories'));
+import Categories from '@blog/client/admin/pages/Categories';
+export default Categories;

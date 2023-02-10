@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { message } from 'antd';
-import { Form, Input, Alert, Button, Divider } from 'antd';
+import { Form, Input, Button, Divider } from 'antd';
 import axios from '@blog/client/admin/axios';
 import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
@@ -66,12 +66,6 @@ export default function InfoForm() {
             scrollToFirstError
             style={{ maxWidth: '540px', margin: '0 auto', width: '100%' }}
         >
-            <Alert
-                message="数据更改后，将会在下次登录生效！"
-                type="warning"
-                showIcon={true}
-                style={{ marginBottom: '10px' }}
-            />
             <Form.Item
                 required={true}
                 label="头像"

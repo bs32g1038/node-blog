@@ -2,7 +2,7 @@ import { adminApi } from '@blog/client/admin/api';
 
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchArticles: build.query<any, { limit: number; page: number; title?: string }>({
+        fetchArticles: build.mutation<any, { limit: number; page: number; title?: string }>({
             query: (params) => ({
                 url: '/articles',
                 method: 'get',
@@ -26,4 +26,4 @@ export const indexApi = adminApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useLazyFetchArticlesQuery, useDeleteArticleMutation, useDeleteArticlesMutation } = indexApi;
+export const { useFetchArticlesMutation, useDeleteArticleMutation, useDeleteArticlesMutation } = indexApi;

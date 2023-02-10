@@ -2,7 +2,7 @@ import { adminApi } from '@blog/client/admin/api';
 
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchStaticFiles: build.query<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
+        fetchStaticFiles: build.mutation<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
             query: () => ({
                 url: '/files',
                 method: 'get',
@@ -25,4 +25,4 @@ export const indexApi = adminApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useLazyFetchStaticFilesQuery, useDeleteFileMutation, useDeleteFilesMutation } = indexApi;
+export const { useFetchStaticFilesMutation, useDeleteFileMutation, useDeleteFilesMutation } = indexApi;

@@ -6,6 +6,7 @@ import { auth } from '../../utils/auth.util';
 import { JoiBody } from '../../decorators/joi.decorator';
 import { decrypt, getDerivedKey } from '../../utils/crypto.util';
 import Joi from 'joi';
+import { Roles } from '@blog/server/decorators/roles.decorator';
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)
@@ -13,6 +14,7 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get('login-info')
+    @Roles('admin')
     async getUserLoginInfo(@Req() req: Request) {
         const user: any = auth(req);
         if (user) {

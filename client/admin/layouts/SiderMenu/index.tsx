@@ -6,9 +6,9 @@ import Router, { useRouter } from 'next/router';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } from '@blog/client/admin/utils/path.util';
 import style from './style.module.scss';
-
-import { Layout, Menu, Avatar, Button, Image } from 'antd';
+import { Layout, Menu, Avatar, Button, Image, Spin } from 'antd';
 import { useFetchConfigQuery } from '@blog/client/web/api';
+import { useFetchUserInfoQuery } from '../../api';
 const { Sider } = Layout;
 
 const MenuList = (props) => {
@@ -61,6 +61,7 @@ const logout = () => {
 
 export default function SiderMenu(props: Props) {
     const { collapsed } = props;
+    const { data: user, isLoading: isFetchUserLoading } = useFetchUserInfoQuery();
     const [state, setState] = useState({
         mode: 'inline',
         openKey: [],
@@ -90,7 +91,6 @@ export default function SiderMenu(props: Props) {
     }, [router]);
     const { selectedKey, openKey, firstHide } = state;
     const { data: config } = useFetchConfigQuery();
-    const data = JSON.parse(localStorage.getItem(defaultConfig.userInfoKey));
     return (
         <div className={style.wrap}>
             <Sider
@@ -115,45 +115,47 @@ export default function SiderMenu(props: Props) {
                     </div>
                 </Link>
                 <div className={style.userMenu}>
-                    <Menu
-                        mode="inline"
-                        items={[
-                            {
-                                key: '/admin/user',
-                                label: (
-                                    <div className={style.userPanel}>
-                                        <div className="avatar-wrap">
-                                            <Avatar src={data.avatar} size={34} icon={<UserOutlined />} />
-                                        </div>
-                                        <div>
-                                            <h2>{data.userName}</h2>
-                                            <p>{data.account}</p>
-                                        </div>
-                                    </div>
-                                ),
-                                children: [
-                                    {
-                                        key: '/admin/user/person',
-                                        label: (
-                                            <Link href="/admin/user/person" passHref={true}>
-                                                <SettingOutlined />
-                                                <span>配置个人信息</span>
-                                            </Link>
-                                        ),
-                                    },
-                                    {
-                                        key: '/admin/user/logout',
-                                        label: (
-                                            <div onClick={() => logout()}>
-                                                <LogoutOutlined />
-                                                <span>退出登录</span>
+                    <Spin spinning={isFetchUserLoading}>
+                        <Menu
+                            mode="inline"
+                            items={[
+                                {
+                                    key: '/admin/user',
+                                    label: user && (
+                                        <div className={style.userPanel}>
+                                            <div className="avatar-wrap">
+                                                <Avatar src={user.avatar} size={34} icon={<UserOutlined />} />
                                             </div>
-                                        ),
-                                    },
-                                ],
-                            },
-                        ]}
-                    ></Menu>
+                                            <div>
+                                                <h2>{user.userName}</h2>
+                                                <p>{user.account}</p>
+                                            </div>
+                                        </div>
+                                    ),
+                                    children: [
+                                        {
+                                            key: '/admin/user/person',
+                                            label: (
+                                                <Link href="/admin/user/person" passHref={true}>
+                                                    <SettingOutlined />
+                                                    <span>配置个人信息</span>
+                                                </Link>
+                                            ),
+                                        },
+                                        {
+                                            key: '/admin/user/logout',
+                                            label: (
+                                                <div onClick={() => logout()}>
+                                                    <LogoutOutlined />
+                                                    <span>退出登录</span>
+                                                </div>
+                                            ),
+                                        },
+                                    ],
+                                },
+                            ]}
+                        ></Menu>
+                    </Spin>
                 </div>
                 <div style={{ overflowY: 'auto' }}>
                     <div className={style.homeMenuItem}>

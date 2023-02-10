@@ -5,38 +5,41 @@ import { Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space 
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
-import { useDeleteArticleMutation, useDeleteArticlesMutation, useLazyFetchArticlesQuery } from './service';
+import { useDeleteArticleMutation, useDeleteArticlesMutation, useFetchArticlesMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
 
 export default function Index() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [searchKey, setSearchKey] = useState('');
     const [state, setState] = useState({
         current: 1,
         pageSize: 10,
-        searchKey: '',
     });
-    const [fetchArticles, { data = { items: [], count: 0 }, isLoading }] = useLazyFetchArticlesQuery();
-    const fetchData = useCallback(() => {
-        const query = {
-            page: state.current || 1,
-            limit: state.pageSize || 10,
-            ...(state.searchKey ? { title: state.searchKey } : {}),
-        };
-        fetchArticles(query)
-            .unwrap()
-            .then((res) => {
-                if (res.items.length === 0 && state.current > 1) {
-                    setState((s) => {
-                        const temp = { ...s };
-                        Object.assign(temp, {
-                            current: temp.current - 1,
+    const [fetchArticles, { data = { items: [], count: 0 }, isLoading }] = useFetchArticlesMutation();
+    const fetchData = useCallback(
+        (searchKey = '') => {
+            const query = {
+                page: state.current || 1,
+                limit: state.pageSize || 10,
+                ...(searchKey ? { title: searchKey } : {}),
+            };
+            fetchArticles(query)
+                .unwrap()
+                .then((res) => {
+                    if (res.items.length === 0 && state.current > 1) {
+                        setState((s) => {
+                            const temp = { ...s };
+                            Object.assign(temp, {
+                                current: temp.current - 1,
+                            });
+                            return temp;
                         });
-                        return temp;
-                    });
-                }
-            });
-    }, [state, fetchArticles]);
+                    }
+                });
+        },
+        [state, fetchArticles]
+    );
     const [_deleteArticle, { isLoading: isDeleteArticleLoading }] = useDeleteArticleMutation();
     const deleteArticle = (id) => {
         _deleteArticle({ id }).then(() => {
@@ -136,7 +139,6 @@ export default function Index() {
             ...data,
             current: pagination.current,
         }));
-        fetchData();
     };
     const onSelectChange = (selectedRowKeys) => {
         setSelectedRowKeys(selectedRowKeys);
@@ -181,20 +183,17 @@ export default function Index() {
                     type="text"
                     name="searchTitle"
                     placeholder="请输入文章标题关键词"
-                    value={state.searchKey}
+                    value={searchKey}
                     onChange={(e) => {
                         const value = e.currentTarget.value;
-                        setState((val) => ({
-                            ...val,
-                            searchKey: value,
-                        }));
+                        setSearchKey(value);
                     }}
                 />
                 <Button
                     type="primary"
                     icon={<SearchOutlined />}
                     onClick={() => {
-                        fetchData();
+                        fetchData(searchKey);
                     }}
                 >
                     查询
@@ -215,6 +214,7 @@ export default function Index() {
             </Space>
         </Row>
     );
+    console.log(isLoading);
     return (
         <BasicLayout>
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>

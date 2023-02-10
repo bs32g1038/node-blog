@@ -5,8 +5,8 @@ import { encrypt } from '@blog/client/admin/utils/crypto.util';
 import { UserOutlined, LockOutlined, AliwangwangOutlined } from '@ant-design/icons';
 import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
-import defaultConfig from '@blog/client/configs/admin.default.config';
 import { useFetchFirstMessageQuery, useLoginMutation } from './service';
+import defaultConfig from '@blog/client/configs/admin.default.config';
 
 export default function UserLogin() {
     const { data = { message: '' } } = useFetchFirstMessageQuery();
@@ -17,9 +17,8 @@ export default function UserLogin() {
         await login({ key: str })
             .unwrap()
             .then((res) => {
-                message.success('登陆成功！');
-                localStorage.setItem(defaultConfig.userInfoKey, JSON.stringify(res));
                 localStorage.setItem(defaultConfig.tokenKey, res.token);
+                message.success('登陆成功！');
                 Router.push('/admin/content/articles');
             });
     };
@@ -27,7 +26,7 @@ export default function UserLogin() {
         <div className={style.signIn}>
             <div className={style.signInMain}>
                 <div className="header">
-                    <Image preview={false} className="brand" src={appConfig.siteLogo} alt="" />
+                    <Image width={60} preview={false} className="brand" src={appConfig.siteLogo} alt="" />
                     <div className="header-title">
                         <h2>{appConfig.siteTitle}</h2>
                         <p>轻量级 NODE BLOG 系统</p>
@@ -37,9 +36,11 @@ export default function UserLogin() {
                     <div className={style.signInHeader}>
                         <h3 className={style.signInTitle}>后台登陆</h3>
                     </div>
-                    {data && <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />}
+                    {data?.message && (
+                        <Alert message={data.message} type="warning" style={{ margin: '0 20px 20px 20px' }} />
+                    )}
                     <Form onFinish={handleLogin} className="login-form">
-                        {data && (
+                        {data?.message && (
                             <Form.Item
                                 name="userName"
                                 label="用户名："
