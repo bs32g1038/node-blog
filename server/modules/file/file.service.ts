@@ -97,7 +97,11 @@ export class FileService {
                     if (Number(size) > 1024 * 1024 * 2) {
                         throw new BadRequestException('图片最大为 2MB');
                     }
-                    buf = (await resize(file.buffer)).buf;
+                    try {
+                        buf = (await resize(file.buffer)).buf;
+                    } catch (error) {
+                        /* empty */
+                    }
                 }
                 type = item.type;
                 break;
