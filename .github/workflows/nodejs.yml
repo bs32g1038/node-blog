@@ -30,9 +30,3 @@ jobs:
         npm install
         npm run build
         npm run test:cov
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-      env:
-        CI: true
