@@ -53,7 +53,7 @@
     "express-rate-limit": "^6.7.0",
     "fs-extra": "^11.1.0",
     "helmet": "^6.0.1",
-    "joi": "^17.7.0",
+    "joi": "^17.7.1",
     "jsonwebtoken": "^9.0.0",
     "log4js": "^6.7.1",
     "lru-cache": "^7.14.1",
