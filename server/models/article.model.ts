@@ -96,5 +96,3 @@ export class Article {
 export const ArticleSchema = SchemaFactory.createForClass(Article);
 
 export const ArticleModelModule = getMongooseModule(Article.name, ArticleSchema);
-
-export const ArticleModel = mongoose.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());

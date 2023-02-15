@@ -62,5 +62,3 @@ export class File {
 export const FileSchema = SchemaFactory.createForClass(File);
 
 export const FileModelModule = getMongooseModule(File.name, FileSchema);
-
-export const FileModel = mongoose.model(File.name, FileSchema, File.name.toLocaleLowerCase());

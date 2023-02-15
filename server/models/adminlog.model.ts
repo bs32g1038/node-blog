@@ -30,5 +30,3 @@ export class AdminLog {
 export const AdminLogSchema = SchemaFactory.createForClass(AdminLog);
 
 export const AdminLogModelModule = getMongooseModule(AdminLog.name, AdminLogSchema);
-
-export const AdminLogModel = mongoose.model(AdminLog.name, AdminLogSchema, AdminLog.name.toLocaleLowerCase());

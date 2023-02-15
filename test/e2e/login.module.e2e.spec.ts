@@ -2,19 +2,26 @@ import request from 'supertest';
 import { LoginModule } from '@blog/server/modules/login/login.module';
 import { INestApplication } from '@nestjs/common';
 import { encrypt } from '@blog/server/utils/crypto.util';
-import { verifyToken, closeApp } from '../util';
+import { verifyToken } from '../util';
 import { initApp } from '../util';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection } from 'mongoose';
 
 /**
  * 登录模块 api 测试
  */
 describe('login.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [LoginModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
     });
 
     test('first login tip info', async () => {
@@ -91,6 +98,9 @@ describe('login.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

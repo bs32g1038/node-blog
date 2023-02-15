@@ -1,8 +1,10 @@
 import request from 'supertest';
 import { AdminLogModule } from '@blog/server/modules/adminlog/adminlog.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, closeApp } from '../util';
+import { initApp } from '../util';
 import { getToken } from '../util';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection } from 'mongoose';
 const __TOKEN__ = getToken();
 
 /**
@@ -10,11 +12,16 @@ const __TOKEN__ = getToken();
  */
 describe('adminlog.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [AdminLogModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
     });
 
     test('get admin logs success', async () => {
@@ -26,6 +33,9 @@ describe('adminlog.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

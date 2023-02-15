@@ -42,5 +42,3 @@ export class Category {
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
 export const CategoryModelModule = getMongooseModule(Category.name, CategorySchema);
-
-export const CategoryModel = mongoose.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());

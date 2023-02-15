@@ -66,5 +66,3 @@ UserSchema.index({
 });
 
 export const UserModelModule = getMongooseModule(User.name, UserSchema);
-
-export const UserModel = mongoose.model(User.name, UserSchema, User.name.toLocaleLowerCase());

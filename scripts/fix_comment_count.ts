@@ -1,16 +1,17 @@
 import { MONGODB } from '../server/configs/index.config';
 import mongoose from 'mongoose';
-import { ArticleModel, CommentModel } from '../test/models';
+import { createModels } from '../test/util';
 
 const init = async () => {
     const conn = await mongoose.connect(MONGODB.uri);
+    const { articleModel, commentModel }: any = await createModels({ isMemory: false, connection: conn });
 
-    const articles = await ArticleModel.find({});
+    const articles = await articleModel.find({});
 
     await Promise.all(
         articles.map(async (item) => {
-            const count = await CommentModel.countDocuments({ article: item._id });
-            await ArticleModel.updateOne({ _id: item._id }, { commentCount: count });
+            const count = await commentModel.countDocuments({ article: item._id });
+            await articleModel.updateOne({ _id: item._id }, { commentCount: count });
         })
     );
 

@@ -1,10 +1,13 @@
 import request from 'supertest';
 import { CommentModule } from '@blog/server/modules/comment/comment.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
+import { initApp, generateDataList, isExpectPass } from '../util';
 import { getComment, getArticle, getObjectId } from '../faker';
-import { CommentModel, ArticleModel, clearModelCollectionData } from '../models';
 import { getToken } from '../util';
+import { Article } from '@blog/server/models/article.model';
+import { Model, Connection } from 'mongoose';
+import { Comment } from '@blog/server/models/comment.model';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 const __TOKEN__ = getToken();
 
 /**
@@ -12,20 +15,30 @@ const __TOKEN__ = getToken();
  */
 describe('comment.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
+    let articleModel: Model<Article>;
+    let commentModel: Model<Comment>;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [CommentModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
+        articleModel = instance.articleModel;
+        commentModel = instance.commentModel;
     });
 
     beforeEach(async () => {
-        await clearModelCollectionData();
+        await articleModel.deleteMany({});
+        await commentModel.deleteMany({});
     });
 
     describe('create comment', () => {
         test('permission:visitor', async () => {
-            const article = await ArticleModel.create(getArticle());
+            const article = await articleModel.create(getArticle());
             const comment = getComment({ article: article._id.toString() });
 
             return request(app.getHttpServer())
@@ -44,7 +57,7 @@ describe('comment.module.e2e', () => {
         });
 
         test('permission:admin', async () => {
-            const article = await ArticleModel.create(getArticle());
+            const article = await articleModel.create(getArticle());
             const replyComment = {
                 article: article._id.toString(),
                 content: getComment().content,
@@ -70,9 +83,9 @@ describe('comment.module.e2e', () => {
 
     describe('get comment list', () => {
         test('default query', async () => {
-            const article = await ArticleModel.create(getArticle());
+            const article = await articleModel.create(getArticle());
             const comments = generateDataList(() => getComment({ article: article._id.toString() }), 10);
-            await CommentModel.create(comments);
+            await commentModel.create(comments);
 
             return request(app.getHttpServer())
                 .get('/api/comments')
@@ -95,9 +108,9 @@ describe('comment.module.e2e', () => {
     });
 
     test('get one comment success', async () => {
-        const article = await ArticleModel.create(getArticle());
+        const article = await articleModel.create(getArticle());
         const comment = getComment({ article: article._id.toString() });
-        const { _id } = await CommentModel.create(comment);
+        const { _id } = await commentModel.create(comment);
 
         return request(app.getHttpServer())
             .get('/api/comments/' + _id.toString())
@@ -114,9 +127,9 @@ describe('comment.module.e2e', () => {
     });
 
     test('update comment success', async () => {
-        const article = await ArticleModel.create(getArticle());
+        const article = await articleModel.create(getArticle());
         const comment = getComment({ article: article._id.toString() });
-        const { _id } = await CommentModel.create(comment);
+        const { _id } = await commentModel.create(comment);
 
         return request(app.getHttpServer())
             .put('/api/comments/' + _id.toString())
@@ -135,9 +148,9 @@ describe('comment.module.e2e', () => {
 
     test('delete comment success', async () => {
         const article = getArticle();
-        const { _id: articleId } = await ArticleModel.create(article);
+        const { _id: articleId } = await articleModel.create(article);
         const comment = getComment({ article: articleId });
-        const { _id } = await CommentModel.create(comment);
+        const { _id } = await commentModel.create(comment);
 
         return request(app.getHttpServer())
             .delete('/api/comments/' + _id)
@@ -169,9 +182,9 @@ describe('comment.module.e2e', () => {
 
         test('batch delete the data success', async () => {
             const article = getArticle();
-            const { _id: articleId } = await ArticleModel.create(article);
+            const { _id: articleId } = await articleModel.create(article);
             const comment = getComment({ article: articleId });
-            const { _id } = await CommentModel.create(comment);
+            const { _id } = await commentModel.create(comment);
 
             return request(app.getHttpServer())
                 .delete('/api/comments')
@@ -184,6 +197,9 @@ describe('comment.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

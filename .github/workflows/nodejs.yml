@@ -17,10 +17,6 @@ jobs:
         mongodb-version: ['5.0']
     steps:
     - uses: actions/checkout@v2
-    - name: Launch MongoDB
-      uses: supercharge/mongodb-github-action@1.8.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@master
       with:

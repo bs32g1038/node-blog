@@ -1,12 +1,14 @@
 import request from 'supertest';
 import { FileModule } from '@blog/server/modules/file/file.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, isExpectPass, generateDataList, closeApp } from '../util';
+import { initApp, isExpectPass, generateDataList } from '../util';
 import { getFile, getObjectId } from '../faker';
-import { FileModel, clearModelCollectionData } from '../models';
 import path from 'path';
 import { rootPath } from '@blog/server/utils/path.util';
 import { getToken } from '../util';
+import { File } from '@blog/server/models/file.model';
+import { Model, Connection } from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 const __TOKEN__ = getToken();
 
 const resolve = (str: string) => {
@@ -18,15 +20,22 @@ const resolve = (str: string) => {
  */
 describe('file.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
+    let fileModel: Model<File>;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [FileModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
+        fileModel = instance.fileModel;
     });
 
     beforeEach(async () => {
-        return await clearModelCollectionData();
+        await fileModel.deleteMany({});
     });
 
     test('upload static .text file success', async () => {
@@ -115,7 +124,7 @@ describe('file.module.e2e', () => {
 
     test('delete file success', async () => {
         const file = getFile();
-        const { _id } = await FileModel.create(file);
+        const { _id } = await fileModel.create(file);
         return request(app.getHttpServer())
             .delete(`/api/files/${_id}`)
             .set('authorization', __TOKEN__)
@@ -133,7 +142,7 @@ describe('file.module.e2e', () => {
 
     test('batch delete file success, fields is a object id array & in db', async () => {
         const file = getFile();
-        const { _id } = await FileModel.create(file);
+        const { _id } = await fileModel.create(file);
         return request(app.getHttpServer())
             .delete('/api/files')
             .set('authorization', __TOKEN__)
@@ -159,7 +168,7 @@ describe('file.module.e2e', () => {
 
     test('get file items should success, when default empty query', async () => {
         const files = generateDataList(() => getFile(), 30);
-        await FileModel.create(files);
+        await fileModel.create(files);
         return request(app.getHttpServer())
             .get(`/api/files`)
             .set('authorization', __TOKEN__)
@@ -173,7 +182,7 @@ describe('file.module.e2e', () => {
 
     test('get file items success, when page & limit is reasonable data', async () => {
         const files = generateDataList(() => getFile(), 30);
-        await FileModel.create(files);
+        await fileModel.create(files);
         return request(app.getHttpServer())
             .get(`/api/files?`)
             .query({ page: 1, limit: 30 })
@@ -186,6 +195,9 @@ describe('file.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

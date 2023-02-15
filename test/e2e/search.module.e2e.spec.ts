@@ -1,29 +1,34 @@
 import request from 'supertest';
 import { SearchModule } from '@blog/server/modules/search/search.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, closeApp } from '../util';
-import { ArticleModel, clearModelCollectionData } from '../models';
+import { initApp, generateDataList } from '../util';
 import { getArticle } from '../faker';
+import { Connection, Model } from 'mongoose';
+import { Article } from '@blog/server/models/article.model';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 /**
  * 搜索模块 api 测试
  */
 describe('search.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
+    let articleModel: Model<Article>;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [SearchModule],
         });
-    });
-
-    beforeEach(async () => {
-        return await clearModelCollectionData();
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
+        articleModel = instance.articleModel;
     });
 
     test('get search result list success, default empty query', async () => {
         const articles = generateDataList(() => getArticle(), 10);
-        await ArticleModel.create(articles);
+        await articleModel.create(articles);
 
         return request(app.getHttpServer())
             .get('/api/search')
@@ -37,7 +42,7 @@ describe('search.module.e2e', () => {
 
     test('get search result list success, when key is empty', async () => {
         const articles = generateDataList(() => getArticle(), 10);
-        await ArticleModel.create(articles);
+        await articleModel.create(articles);
 
         return request(app.getHttpServer())
             .get('/api/search?')
@@ -52,7 +57,7 @@ describe('search.module.e2e', () => {
 
     test('get search result list success, when the key min length is 1 & max length is 10', async () => {
         const articles = generateDataList(() => getArticle(), 10);
-        await ArticleModel.create(articles);
+        await articleModel.create(articles);
 
         const title = articles[0].title.slice(0, 10);
 
@@ -69,7 +74,7 @@ describe('search.module.e2e', () => {
 
     test('bad request, get search result list failure, when the key length over 10', async () => {
         const articles = generateDataList(() => getArticle(), 10);
-        await ArticleModel.create(articles);
+        await articleModel.create(articles);
 
         const title = articles[0].title + '1234567890';
 
@@ -77,6 +82,9 @@ describe('search.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

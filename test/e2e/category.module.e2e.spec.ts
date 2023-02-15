@@ -1,10 +1,12 @@
 import request from 'supertest';
 import { CategoryModule } from '@blog/server/modules/category/category.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
+import { initApp, generateDataList, isExpectPass } from '../util';
 import { getCategory, getObjectId } from '../faker';
-import { CategoryModel, clearModelCollectionData } from '../models';
 import { getToken } from '../util';
+import { Connection, Model } from 'mongoose';
+import { Category } from '@blog/server/models/category.model';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 const __TOKEN__ = getToken();
 
 /**
@@ -12,15 +14,22 @@ const __TOKEN__ = getToken();
  */
 describe('category.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
+    let categoryModel: Model<Category>;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [CategoryModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
+        categoryModel = instance.categoryModel;
     });
 
     beforeEach(async () => {
-        await clearModelCollectionData();
+        await categoryModel.deleteMany({});
     });
 
     test('create category success', async () => {
@@ -36,7 +45,7 @@ describe('category.module.e2e', () => {
     describe('get category list', () => {
         test('default empty query', async () => {
             const categories = generateDataList(() => getCategory(), 10);
-            await CategoryModel.create(categories);
+            await categoryModel.create(categories);
 
             return request(app.getHttpServer())
                 .get('/api/categories')
@@ -50,8 +59,7 @@ describe('category.module.e2e', () => {
 
         test('a resonable pagination', async () => {
             const categories = generateDataList(() => getCategory(), 20);
-            await CategoryModel.create(categories);
-
+            await categoryModel.create(categories);
             return request(app.getHttpServer())
                 .get('/api/categories?')
                 .query({ page: 1, limit: 20 })
@@ -65,7 +73,7 @@ describe('category.module.e2e', () => {
 
     test('get one category', async () => {
         const category = getCategory();
-        const { _id } = await CategoryModel.create(category);
+        const { _id } = await categoryModel.create(category);
 
         return request(app.getHttpServer())
             .get('/api/categories/' + _id)
@@ -78,7 +86,7 @@ describe('category.module.e2e', () => {
 
     test('update category', async () => {
         const category = getCategory();
-        const { _id } = await CategoryModel.create(category);
+        const { _id } = await categoryModel.create(category);
 
         return request(app.getHttpServer())
             .put('/api/categories/' + _id)
@@ -93,7 +101,7 @@ describe('category.module.e2e', () => {
 
     test('delete category', async () => {
         const category = getCategory();
-        const { _id } = await CategoryModel.create(category);
+        const { _id } = await categoryModel.create(category);
         return request(app.getHttpServer())
             .delete('/api/categories/' + _id)
             .set('authorization', __TOKEN__)
@@ -124,7 +132,7 @@ describe('category.module.e2e', () => {
 
         test('batch delete the data success', async () => {
             const category = getCategory();
-            const { _id } = await CategoryModel.create(category);
+            const { _id } = await categoryModel.create(category);
 
             return request(app.getHttpServer())
                 .delete('/api/categories')
@@ -137,6 +145,9 @@ describe('category.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.dropDatabase();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

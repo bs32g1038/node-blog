@@ -74,5 +74,3 @@ export class Comment {
 export const CommentSchema = SchemaFactory.createForClass(Comment);
 
 export const CommentModelModule = getMongooseModule(Comment.name, CommentSchema);
-
-export const CommentModel = mongoose.model(Comment.name, CommentSchema, Comment.name.toLocaleLowerCase());
