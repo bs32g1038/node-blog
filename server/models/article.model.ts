@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
 import { Category } from './category.model';
+import paginate from '../mongoose/paginate';
 
 export const ArticleJoiSchema = {
     title: Joi.string()
@@ -95,6 +96,6 @@ export class Article {
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
 
-export const ArticleModelModule = getMongooseModule(Article.name, ArticleSchema);
+ArticleSchema.plugin(paginate);
 
-export const ArticleModel = mongoose.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());
+export const ArticleModelModule = getMongooseModule(Article.name, ArticleSchema);

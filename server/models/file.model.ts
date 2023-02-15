@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
-import mongoose from 'mongoose';
+import paginate from '../mongoose/paginate';
 
 export enum FileType {
     image = 'image',
@@ -61,6 +61,6 @@ export class File {
 
 export const FileSchema = SchemaFactory.createForClass(File);
 
-export const FileModelModule = getMongooseModule(File.name, FileSchema);
+FileSchema.plugin(paginate);
 
-export const FileModel = mongoose.model(File.name, FileSchema, File.name.toLocaleLowerCase());
+export const FileModelModule = getMongooseModule(File.name, FileSchema);

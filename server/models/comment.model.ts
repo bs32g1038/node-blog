@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
 import { Article } from './article.model';
+import paginate from '../mongoose/paginate';
 
 export const CommentJoiSchema = {
     nickName: Joi.string()
@@ -73,6 +74,6 @@ export class Comment {
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
 
-export const CommentModelModule = getMongooseModule(Comment.name, CommentSchema);
+CommentSchema.plugin(paginate);
 
-export const CommentModel = mongoose.model(Comment.name, CommentSchema, Comment.name.toLocaleLowerCase());
+export const CommentModelModule = getMongooseModule(Comment.name, CommentSchema);

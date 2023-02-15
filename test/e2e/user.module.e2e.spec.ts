@@ -1,9 +1,11 @@
 import request from 'supertest';
 import { UserModule } from '@blog/server/modules/user/user.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, closeApp } from '../util';
+import { initApp } from '../util';
 import { encrypt } from '@blog/server/utils/crypto.util';
 import { getToken } from '../util';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection } from 'mongoose';
 const __TOKEN__ = getToken();
 
 /**
@@ -11,11 +13,16 @@ const __TOKEN__ = getToken();
  */
 describe('user.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [UserModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
     });
 
     test('get user login info success', async () => {
@@ -61,6 +68,8 @@ describe('user.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

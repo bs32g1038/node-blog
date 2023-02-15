@@ -1,11 +1,12 @@
 import request from 'supertest';
 import { ArticleModule } from '@blog/server/modules/article/article.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, isExpectPass, closeApp } from '../util';
-import { clearModelCollectionData } from '../models';
+import { initApp, generateDataList, isExpectPass } from '../util';
 import { getArticle, getObjectId } from '../faker';
-import { ArticleModel } from '../models';
 import { getToken } from '../util';
+import { Connection, Model } from 'mongoose';
+import { Article } from '@blog/server/models/article.model';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 const __TOKEN__ = getToken();
 
 /**
@@ -13,15 +14,22 @@ const __TOKEN__ = getToken();
  */
 describe('article.module.e2e', () => {
     let app: INestApplication;
+    let mongod: MongoMemoryServer;
+    let mongooseConnection: Connection;
+    let articleModel: Model<Article>;
 
     beforeAll(async () => {
-        app = await initApp({
+        const instance = await initApp({
             imports: [ArticleModule],
         });
+        app = instance.app;
+        mongod = instance.mongod;
+        mongooseConnection = instance.mongooseConnection;
+        articleModel = instance.articleModel;
     });
 
     beforeEach(async () => {
-        await clearModelCollectionData();
+        await articleModel.deleteMany({});
     });
 
     describe('create', () => {
@@ -50,7 +58,7 @@ describe('article.module.e2e', () => {
     describe('update', () => {
         test('update article success', async () => {
             const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
+            const { _id } = await articleModel.create(article);
 
             return request(app.getHttpServer())
                 .put('/api/articles/' + _id)
@@ -61,7 +69,7 @@ describe('article.module.e2e', () => {
 
         test('update article new category id success & the articleCount should be updated in category', async () => {
             const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
+            const { _id } = await articleModel.create(article);
 
             const newCategory = getObjectId();
             return request(app.getHttpServer())
@@ -114,7 +122,7 @@ describe('article.module.e2e', () => {
 
         test('batch delete the data success', async () => {
             const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
+            const { _id } = await articleModel.create(article);
 
             return request(app.getHttpServer())
                 .delete('/api/articles')
@@ -129,7 +137,7 @@ describe('article.module.e2e', () => {
     describe('delete one', () => {
         test('delete the article success', async () => {
             const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
+            const { _id } = await articleModel.create(article);
             return request(app.getHttpServer())
                 .delete('/api/articles/' + _id)
                 .set('authorization', __TOKEN__)
@@ -147,7 +155,7 @@ describe('article.module.e2e', () => {
     describe('get recent articles', () => {
         test('success', async () => {
             const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
+            await articleModel.create(articles);
 
             return request(app.getHttpServer())
                 .get('/api/recentArticles')
@@ -161,7 +169,7 @@ describe('article.module.e2e', () => {
     describe('get one article', () => {
         test('get article success, the content is a common string', async () => {
             const article = getArticle();
-            const { _id } = await ArticleModel.create(article);
+            const { _id } = await articleModel.create(article);
 
             return request(app.getHttpServer())
                 .get('/api/articles/' + _id + '?md=false')
@@ -176,7 +184,7 @@ describe('article.module.e2e', () => {
     describe('get article list', () => {
         test('set pagination', async () => {
             const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
+            await articleModel.create(articles);
 
             return request(app.getHttpServer())
                 .get('/api/articles')
@@ -193,7 +201,7 @@ describe('article.module.e2e', () => {
 
         test('filter the data by tag field', async () => {
             const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
+            await articleModel.create(articles);
             return request(app.getHttpServer())
                 .get(`/api/articles?tag=${articles[0].tags[0]}`)
                 .expect(200)
@@ -205,7 +213,7 @@ describe('article.module.e2e', () => {
 
         test('filter the data by category field', async () => {
             const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
+            await articleModel.create(articles);
 
             return request(app.getHttpServer())
                 .get(`/api/articles?cid=${articles[0].category}`)
@@ -218,7 +226,7 @@ describe('article.module.e2e', () => {
 
         test('filter the data by title field', async () => {
             const articles = generateDataList(() => getArticle(), 10);
-            await ArticleModel.create(articles);
+            await articleModel.create(articles);
             const title = articles[0].title.slice(0, 10);
 
             return request(app.getHttpServer())
@@ -232,6 +240,8 @@ describe('article.module.e2e', () => {
     });
 
     afterAll(async () => {
-        await closeApp(app);
+        await app.close();
+        await mongooseConnection.close();
+        await mongod.stop();
     });
 });

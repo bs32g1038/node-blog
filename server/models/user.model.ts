@@ -6,7 +6,7 @@ import { sha1 } from '../utils/crypto.util';
 export type UserDocument = User & Document;
 
 import Joi from '../joi';
-import mongoose from 'mongoose';
+import paginate from '../mongoose/paginate';
 
 export const UserJoiSchema = {
     userName: Joi.string().min(1).max(30).required().error(new Error('用户名长度在1-30之间！')),
@@ -65,6 +65,6 @@ UserSchema.index({
     createdAt: -1,
 });
 
-export const UserModelModule = getMongooseModule(User.name, UserSchema);
+UserSchema.plugin(paginate);
 
-export const UserModel = mongoose.model(User.name, UserSchema, User.name.toLocaleLowerCase());
+export const UserModelModule = getMongooseModule(User.name, UserSchema);

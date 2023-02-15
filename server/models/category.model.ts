@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
 import Joi from '../joi';
+import paginate from '../mongoose/paginate';
 
 export const CategoryJoiSchema = {
     name: Joi.string()
@@ -41,6 +41,6 @@ export class Category {
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
-export const CategoryModelModule = getMongooseModule(Category.name, CategorySchema);
+CategorySchema.plugin(paginate);
 
-export const CategoryModel = mongoose.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());
+export const CategoryModelModule = getMongooseModule(Category.name, CategorySchema);

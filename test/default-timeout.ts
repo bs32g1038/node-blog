@@ -1,1 +1,1 @@
-export default jest.setTimeout(15000);
+export default jest.setTimeout(20000);

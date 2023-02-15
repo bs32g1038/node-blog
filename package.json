@@ -38,10 +38,10 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "^9.3.8",
-    "@nestjs/core": "^9.3.8",
+    "@nestjs/common": "^9.3.9",
+    "@nestjs/core": "^9.3.9",
     "@nestjs/mongoose": "^9.2.1",
-    "@nestjs/platform-express": "^9.3.8",
+    "@nestjs/platform-express": "^9.3.9",
     "@nestjs/schedule": "^2.2.0",
     "@types/fs-extra": "^11.0.1",
     "@types/serve-favicon": "^2.5.3",
@@ -75,7 +75,7 @@
     "@eslint/eslintrc": "^1.4.1",
     "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "^9.2.0",
-    "@nestjs/testing": "^9.3.8",
+    "@nestjs/testing": "^9.3.9",
     "@next/eslint-plugin-next": "^13.1.6",
     "@reduxjs/toolkit": "^1.9.2",
     "@tiptap/extension-image": "^2.0.0-beta.217",
@@ -97,7 +97,7 @@
     "@types/node": "^18.13.0",
     "@types/nodemailer": "^6.4.7",
     "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "^18.0.11",
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.12",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
@@ -173,6 +173,9 @@
       "!./server/joi/schemas/**",
       "!./server/mongoose/**",
       "!./server/models/**"
+    ],
+    "setupFilesAfterEnv": [
+        "<rootDir>/test/default-timeout.ts"
     ]
   },
   "resolutions": {

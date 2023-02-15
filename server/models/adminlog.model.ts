@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
 import { User } from './user.model';
 import Joi from '../joi';
+import paginate from '../mongoose/paginate';
 
 export const AdminLogJoiSchema = {
     type: Joi.string().max(20),
@@ -29,6 +30,6 @@ export class AdminLog {
 
 export const AdminLogSchema = SchemaFactory.createForClass(AdminLog);
 
-export const AdminLogModelModule = getMongooseModule(AdminLog.name, AdminLogSchema);
+AdminLogSchema.plugin(paginate);
 
-export const AdminLogModel = mongoose.model(AdminLog.name, AdminLogSchema, AdminLog.name.toLocaleLowerCase());
+export const AdminLogModelModule = getMongooseModule(AdminLog.name, AdminLogSchema);
