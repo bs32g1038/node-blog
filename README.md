@@ -19,6 +19,14 @@
 
 * **preview :** [https://www.lizc.net](https://www.lizc.net "blog")
 
+* **screenshots :**
+<p align="center" dir="auto">
+<img src="https://github.com/bs32g1038/node-blog/raw/master/docs/images/1.png?raw=true" alt="博客首页" style="max-width: 100%;width: 210px;">
+<img src="https://github.com/bs32g1038/node-blog/raw/master/docs/images/2.png?raw=true" alt="博客首页" style="max-width: 100%;width: 210px;">
+<img src="https://github.com/bs32g1038/node-blog/raw/master/docs/images/3.png?raw=true" alt="博客首页" style="max-width: 100%;width: 210px;">
+<img src="https://github.com/bs32g1038/node-blog/raw/master/docs/images/4.png?raw=true" alt="博客首页" style="max-width: 100%;width: 210px;">
+</p>
+
 ## Features
 
 * 🌙☀ Theme: Support light and dark themes
