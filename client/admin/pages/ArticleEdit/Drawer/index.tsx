@@ -1,38 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select, Button, Drawer } from 'antd';
-import axios from '@blog/client/admin/axios';
 import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import { DeleteFilled, SendOutlined } from '@ant-design/icons';
 import style from './style.module.scss';
 import UploadImageButton from '@blog/client/admin/components/UploadImageButton';
+import { useFetchCategoriesMutation } from '../../Categories/service';
 
 const Option = Select.Option;
 const { TextArea } = Input;
 
 export default function Index({ visible, onCancel, formData }) {
-    const [categories, setCategories] = useState([]);
+    const [fetchCategories, { data: categories = [], isLoading }] = useFetchCategoriesMutation();
     const [form] = Form.useForm();
 
-    const prevVisibleRef = useRef();
     useEffect(() => {
-        prevVisibleRef.current = visible;
-    }, [visible]);
-    const prevVisible = prevVisibleRef.current;
+        form.setFieldsValue(formData);
+    }, [form, formData]);
 
     useEffect(() => {
-        if (!visible && prevVisible) {
-            form.resetFields();
-        } else {
-            form.setFieldsValue(formData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visible]);
-
-    useEffect(() => {
-        axios.get('/categories/').then((res) => {
-            setCategories(res.data);
-        });
-    }, []);
+        fetchCategories({ page: 1, limit: 100 });
+    }, [fetchCategories]);
 
     const categoryOptions =
         categories &&
@@ -66,7 +53,9 @@ export default function Index({ visible, onCancel, formData }) {
                         <UploadImageButton></UploadImageButton>
                     </Form.Item>
                     <Form.Item name="category" label="文章分类" rules={[{ required: true, message: '分类不能为空!' }]}>
-                        <Select placeholder="请选择一个分类">{categoryOptions}</Select>
+                        <Select loading={isLoading} placeholder="请选择一个分类">
+                            {categoryOptions}
+                        </Select>
                     </Form.Item>
                     <Form.Item name="tags" label="文章标签">
                         <EditableTagGroup />

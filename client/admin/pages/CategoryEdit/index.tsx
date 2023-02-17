@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
-import { useCreateCategoryMutation, useLazyFetchCategoryQuery, useUpdateCategoryMutation } from '../Categories/service';
+import { useCreateCategoryMutation, useFetchCategoryMutation, useUpdateCategoryMutation } from '../Categories/service';
 
 export default function Index() {
     const router = useRouter();
     const [form] = Form.useForm();
-    const [fetchCategory] = useLazyFetchCategoryQuery();
+    const [fetchCategory] = useFetchCategoryMutation();
     useEffect(() => {
         const { id } = router.query;
         if (id) {

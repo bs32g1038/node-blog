@@ -2,13 +2,13 @@ import { adminApi } from '@blog/client/admin/api';
 
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
-        fetchCategories: build.query<any, { limit: number; page: number }>({
+        fetchCategories: build.mutation<any, { limit: number; page: number }>({
             query: () => ({
                 url: '/categories',
                 method: 'get',
             }),
         }),
-        fetchCategory: build.query<any, { id: string }>({
+        fetchCategory: build.mutation<any, { id: string }>({
             query: (params) => ({
                 url: '/categories/' + params.id,
                 method: 'get',
@@ -46,8 +46,8 @@ export const indexApi = adminApi.injectEndpoints({
 });
 
 export const {
-    useLazyFetchCategoryQuery,
-    useLazyFetchCategoriesQuery,
+    useFetchCategoriesMutation,
+    useFetchCategoryMutation,
     useDeleteCategoryMutation,
     useDeleteCategoriesMutation,
     useCreateCategoryMutation,

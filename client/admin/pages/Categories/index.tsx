@@ -5,13 +5,13 @@ import Router from 'next/router';
 import { PlusOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
-import { useDeleteCategoriesMutation, useDeleteCategoryMutation, useLazyFetchCategoriesQuery } from './service';
+import { useDeleteCategoriesMutation, useDeleteCategoryMutation, useFetchCategoriesMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
 
 export default function Index() {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [fetchCategories, { data = [], isLoading }] = useLazyFetchCategoriesQuery();
+    const [fetchCategories, { data = [], isLoading }] = useFetchCategoriesMutation();
     const fetchData = useCallback(() => {
         const query = {
             page: 1,

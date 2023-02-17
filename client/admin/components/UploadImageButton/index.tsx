@@ -119,8 +119,8 @@ export default function UploadButton(props: Props) {
             {open.visible && (
                 <ImageEditor
                     src={open.src}
-                    onSave={async (_, designState) => {
-                        const res: Response = await fetch(designState.imgSrc);
+                    onSave={async (_) => {
+                        const res: Response = await fetch(_.imageBase64);
                         const blob: Blob = await res.blob();
                         if (!blob) return;
                         const { type, name, uid } = open;
