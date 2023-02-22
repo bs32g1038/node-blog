@@ -7,6 +7,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/reset.css';
 import '@blog/client/common/global.scss';
+import Head from 'next/head';
 
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
@@ -15,6 +16,7 @@ class MyApp extends App {
         return {
             pageProps: {
                 ...(await App.getInitialProps(context)).pageProps,
+                siteLogo: res.data.siteLogo,
             },
         };
     });
@@ -36,6 +38,9 @@ class MyApp extends App {
         const { Component, pageProps } = this.props as any;
         return (
             <ConfigProvider locale={zhCN}>
+                <Head>
+                    <link rel="icon" type="image/svg+xml" href={pageProps?.siteLogo}></link>
+                </Head>
                 <Component {...pageProps} />
             </ConfigProvider>
         );

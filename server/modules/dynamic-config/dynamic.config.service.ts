@@ -1,7 +1,5 @@
 import fs from 'fs-extra';
 import path from 'path';
-import sharp from 'sharp';
-import toIco from 'to-ico';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -82,36 +80,6 @@ export class DynamicConfigService {
             return data.siteLogo;
         }
         await fs.copy(oldPath, copyAimPath);
-        const content = await fs.readFile(oldPath);
-        try {
-            await this.generateIco(content);
-        } catch (error) {
-            logger.error('生成 favicon 异常', error);
-        }
         return this.siteDomain + '/static/logo.svg';
-    }
-
-    async generateIco(content: Buffer) {
-        return new Promise((resolve, reject) => {
-            const pngPath = path.normalize(staticAssetsPath + '/favicon.png');
-            const icoPath = path.normalize(staticAssetsPath + '/favicon.ico');
-            sharp(content)
-                .resize(64, 64)
-                .png()
-                .toFile(pngPath, async (err) => {
-                    if (err) {
-                        reject(new Error('生成favicon.png文件出错'));
-                    }
-                    try {
-                        toIco(await fs.readFile(pngPath)).then(async (buf) => {
-                            await fs.writeFile(icoPath, buf);
-                            this.setIsHasfavicon(true);
-                        });
-                    } catch (err) {
-                        reject(new Error('生成favicon.ico文件出错'));
-                    }
-                    resolve(true);
-                });
-        });
     }
 }
