@@ -33,7 +33,7 @@ export const createModels = async ({
     isMemory?: boolean;
     connection?: any;
 }) => {
-    const mongoServer = await MongoMemoryServer.create();
+    const mongoServer = isMemory ? await MongoMemoryServer.create() : null;
     const mongooseConnection = isMemory
         ? await mongoose.createConnection(mongoServer.getUri(), { dbName: 'test' }).asPromise()
         : connection || mongoose;
