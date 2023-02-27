@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Input, Form, Button } from 'antd';
 import { EditOutlined, SendOutlined } from '@ant-design/icons';
 import { AutoSizeType } from 'rc-textarea';
-import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
-import { isEqual } from 'lodash';
 import { Rule } from 'antd/lib/form';
 import style from './style.module.scss';
+import UploadButton from '../UploadButton';
 
 interface Props {
     label: string;
@@ -14,7 +13,7 @@ interface Props {
     name: string;
     value?: string;
     loading: boolean;
-    type?: 'input' | 'textarea' | 'upload';
+    type?: 'input' | 'textarea' | 'upload' | 'svg';
     autoSize?: AutoSizeType;
     rules?: Rule[];
     onFinish: (values) => void;
@@ -23,13 +22,6 @@ interface Props {
 export default function Index(props: Props) {
     const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
     const [form] = Form.useForm();
-    const { setImageUrl, handleUpload, UploadButton } = useImageUpload({
-        type: 'svg',
-        style: {
-            width: '60px',
-            height: '60px',
-        },
-    });
     const [disabled, setDisabled] = useState(true);
     const onFinish = (values) => {
         if (props.onFinish) {
@@ -37,25 +29,14 @@ export default function Index(props: Props) {
         }
     };
     useEffect(() => {
-        if (isEqual(type, 'upload')) {
-            setImageUrl(value);
-            return form.setFieldsValue({
-                [name]: [
-                    {
-                        uid: -1,
-                        status: 'done',
-                        url: value,
-                    },
-                ],
-            });
-        }
         form.setFieldsValue({ [name]: value });
-    }, [form, name, setImageUrl, type, value]);
+    }, [form, name, value]);
 
     const FORM_ITEM = {
         input: <Input placeholder={placeholder} size="large" disabled={disabled} />,
         textarea: <Input.TextArea autoSize={autoSize} placeholder={placeholder} disabled={disabled} />,
         upload: <UploadButton disabled={disabled}></UploadButton>,
+        svg: <UploadButton type="svg" disabled={disabled}></UploadButton>,
     };
 
     return (
@@ -75,15 +56,9 @@ export default function Index(props: Props) {
                     )}
                 </label>
             </div>
-            {isEqual(type, 'upload') ? (
-                <Form.Item extra={extra} valuePropName="fileList" name={name} getValueFromEvent={handleUpload}>
-                    {FORM_ITEM[type]}
-                </Form.Item>
-            ) : (
-                <Form.Item extra={extra} rules={rules} name={name}>
-                    {FORM_ITEM[type]}
-                </Form.Item>
-            )}
+            <Form.Item extra={extra} rules={rules} name={name}>
+                {FORM_ITEM[type]}
+            </Form.Item>
             {!disabled && (
                 <Form.Item className="footer">
                     <Button type="primary" htmlType="submit" loading={loading}>

@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { message } from 'antd';
 import { Form, Input, Button, Divider } from 'antd';
 import axios from '@blog/client/admin/axios';
-import useImageUpload from '@blog/client/admin/hooks/useImageUpload';
 import useRequestLoading from '@blog/client/admin/hooks/useRequestLoading';
+import UploadButton from '@blog/client/admin/components/UploadButton';
+import { useRouter } from 'next/router';
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -27,36 +28,20 @@ const updateUserInfo = (data) => {
 };
 
 export default function InfoForm() {
+    const router = useRouter();
     const { loading, injectRequestLoading } = useRequestLoading();
-    const { setImageUrl, UploadButton, handleUpload } = useImageUpload({
-        style: {
-            width: '70px',
-            height: '70px',
-            borderRadius: '50%',
-        },
-    });
     const [form] = Form.useForm();
-
     useEffect(() => {
         getLoginInfo().then((res) => {
-            const avatar = [
-                {
-                    uid: -1,
-                    status: 'done',
-                    url: res.data.avatar,
-                },
-            ];
-            setImageUrl(res.data.avatar);
-            form.setFieldsValue({ ...res.data, avatar });
+            form.setFieldsValue({ ...res.data, avatar: res.data.avatar });
         });
-    }, [form, setImageUrl]);
-
+    }, [form]);
     const onFinish = (values) => {
-        return injectRequestLoading(updateUserInfo({ ...values, avatar: values.avatar[0].url })).then(() => {
+        return injectRequestLoading(updateUserInfo(values)).then(() => {
             message.success('更新成功！');
+            router.reload();
         });
     };
-
     return (
         <Form
             layout="vertical"
@@ -70,8 +55,6 @@ export default function InfoForm() {
                 required={true}
                 label="头像"
                 name="avatar"
-                valuePropName="fileList"
-                getValueFromEvent={handleUpload}
                 rules={[{ required: true, message: '封面图片不能为空!' }]}
             >
                 <UploadButton></UploadButton>

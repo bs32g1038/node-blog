@@ -11,13 +11,7 @@ export default function Settings() {
     const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
     const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
     const onFinish = (values) => {
-        const data = values;
-        if (data.siteLogo) {
-            Object.assign(data, {
-                siteLogo: data.siteLogo[0].url,
-            });
-        }
-        updateConfig(data).then(() => {
+        updateConfig(values).then(() => {
             message.success('更新成功');
         });
     };
@@ -64,7 +58,7 @@ export default function Settings() {
                     onFinish={onFinish}
                 ></EditableInput>
                 <EditableInput
-                    type="upload"
+                    type="svg"
                     extra="目前仅支持svg文件上传，使用svg文件logo可以兼容主题换色。"
                     value={data.siteLogo}
                     label="网站LOGO"
