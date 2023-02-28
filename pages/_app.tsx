@@ -12,7 +12,13 @@ import Head from 'next/head';
 class MyApp extends App {
     public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
         const res = await store.dispatch(fetchConfig.initiate());
-        await store.dispatch(fetchConfigSvg.initiate({ url: res.data.siteLogo }));
+        let url = res.data.siteLogo;
+        if (res.data.siteLogo.indexOf(res.data.siteDomain) > 0) {
+            url = res.data.siteLogo.substring(
+                res.data.siteLogo.indexOf(res.data.siteDomain) + res.data.siteDomain.length
+            );
+        }
+        await store.dispatch(fetchConfigSvg.initiate({ url }));
         return {
             pageProps: {
                 ...(await App.getInitialProps(context)).pageProps,
