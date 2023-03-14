@@ -10,8 +10,10 @@ import BasicLayout from '@blog/client/admin/layouts';
 import CTable from '../../components/CTable';
 import { useDeleteFileMutation, useDeleteFilesMutation, useFetchStaticFilesMutation } from './service';
 import { useFetchConfigQuery } from '@blog/client/web/api';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function StaticFiles() {
+export default function StaticFiles(props) {
+    wrapper.useHydration(props);
     const { data: appConfig } = useFetchConfigQuery();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);

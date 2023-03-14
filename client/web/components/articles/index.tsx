@@ -10,14 +10,14 @@ import { useRouter } from 'next/router';
 import { isArray, isString, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
 
-const Page = () => {
+const Page = (props) => {
+    wrapper.useHydration(props);
     const router = useRouter();
     const { data: config } = useFetchConfigQuery();
     const page = Number(router.query.page || 1);
     const cid: string = isArray(router.query.cid) ? router.query.cid.join(',') : router.query.cid || '';
     const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
     const { data = { items: [], totalCount: 0 }, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
-
     return (
         <AppLayout>
             <Head>
@@ -43,7 +43,13 @@ const Page = () => {
                         itemRender={(page, type, originalElement) => {
                             if (page >= 1 && type == 'page') {
                                 return (
-                                    <Link href={`/blog/articles?page=${page}`} passHref={true}>
+                                    <Link
+                                        href={{
+                                            pathname: '/blog/articles',
+                                            query: { ...router.query, page },
+                                        }}
+                                        passHref={true}
+                                    >
                                         {page}
                                     </Link>
                                 );

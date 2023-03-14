@@ -9,12 +9,14 @@ import { debounce } from 'lodash';
 import isLength from 'validator/lib/isLength';
 import style from './style.module.scss';
 import dynamic from 'next/dynamic';
+import { wrapper } from '@blog/client/redux/store';
 
 const JEditor = dynamic(() => import('@blog/client/admin/components/JEditor'), { ssr: false });
 
 const { TextArea } = Input;
 
-export default function Index() {
+export default function Index(props) {
+    wrapper.useHydration(props);
     const [data, setData] = useState<any>({
         content: '',
     });

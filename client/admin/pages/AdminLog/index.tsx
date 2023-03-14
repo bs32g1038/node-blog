@@ -3,8 +3,10 @@ import BasicLayout from '@blog/client/admin/layouts';
 import { useFetchAdminLogsMutation } from './service';
 import CTable from '../../components/CTable';
 import { parseTime } from '@blog/client/libs/time';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function StaticFiles() {
+export default function Index(props) {
+    wrapper.useHydration(props);
     const [state, setState] = useState({
         current: 1,
         pageSize: 10,

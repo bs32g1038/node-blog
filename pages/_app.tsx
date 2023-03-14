@@ -1,5 +1,5 @@
 import App from 'next/app';
-import React from 'react';
+import React, { useEffect } from 'react';
 import versionInfo from '../package.json';
 import { wrapper } from '@blog/client/redux/store';
 import { fetchConfig, fetchConfigSvg } from '@blog/client/web/api';
@@ -8,25 +8,11 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/reset.css';
 import '@blog/client/common/global.scss';
 import Head from 'next/head';
+import { Provider } from 'react-redux';
 
-class MyApp extends App {
-    public static getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
-        const res = await store.dispatch(fetchConfig.initiate());
-        let url = res.data.siteLogo;
-        if (res.data.siteLogo.indexOf(res.data.siteDomain) > 0) {
-            url = res.data.siteLogo.substring(
-                res.data.siteLogo.indexOf(res.data.siteDomain) + res.data.siteDomain.length
-            );
-        }
-        await store.dispatch(fetchConfigSvg.initiate({ url }));
-        return {
-            pageProps: {
-                ...(await App.getInitialProps(context)).pageProps,
-                siteLogo: res.data.siteLogo,
-            },
-        };
-    });
-    componentDidMount() {
+function MyApp({ Component, pageProps }) {
+    const store = wrapper.useStore();
+    useEffect(() => {
         const info = [
             `Version: ${versionInfo.version}`,
             `Author: ${versionInfo.author.name + ' - ' + versionInfo.author.email}`,
@@ -39,18 +25,32 @@ class MyApp extends App {
             // eslint-disable-next-line no-console
             console.log(message);
         }
-    }
-    public render() {
-        const { Component, pageProps } = this.props as any;
-        return (
+    }, []);
+    return (
+        <Provider store={store}>
             <ConfigProvider locale={zhCN}>
                 <Head>
                     <link rel="icon" type="image/svg+xml" href={pageProps?.siteLogo}></link>
                 </Head>
-                <Component {...pageProps} />
+                <Component {...(pageProps as any)} />
             </ConfigProvider>
-        );
-    }
+        </Provider>
+    );
 }
 
-export default wrapper.withRedux(MyApp);
+MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
+    const res = await store.dispatch(fetchConfig.initiate());
+    let url = res.data.siteLogo;
+    if (res.data.siteLogo.indexOf(res.data.siteDomain) > 0) {
+        url = res.data.siteLogo.substring(res.data.siteLogo.indexOf(res.data.siteDomain) + res.data.siteDomain.length);
+    }
+    await store.dispatch(fetchConfigSvg.initiate({ url }));
+    return {
+        pageProps: {
+            ...(await App.getInitialProps(context)).pageProps,
+            siteLogo: res.data.siteLogo,
+        },
+    };
+});
+
+export default MyApp;

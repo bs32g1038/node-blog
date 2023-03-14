@@ -3,8 +3,10 @@ import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
 import { useCreateCategoryMutation, useFetchCategoryMutation, useUpdateCategoryMutation } from '../Categories/service';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function Index() {
+export default function Index(props) {
+    wrapper.useHydration(props);
     const router = useRouter();
     const [form] = Form.useForm();
     const [fetchCategory] = useFetchCategoryMutation();

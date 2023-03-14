@@ -12,7 +12,8 @@ import {
 } from '@blog/client/web/api';
 import { useRouter } from 'next/router';
 
-const Page = () => {
+const Page = (props) => {
+    wrapper.useHydration(props);
     const router = useRouter();
     const { data: config } = useFetchConfigQuery();
     const { data: article } = useFetchArticleQuery(router.query.id as string);

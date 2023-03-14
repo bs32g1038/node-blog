@@ -9,8 +9,10 @@ import style from './style.module.scss';
 import ActionCard from '@blog/client/admin/components/ActionCard';
 import { useDeleteCommentMutation, useDeleteCommentsMutation, useFetchCommentsMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function Comments() {
+export default function Comments(props) {
+    wrapper.useHydration(props);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
     const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useFetchCommentsMutation();

@@ -6,8 +6,10 @@ import EditableInput from '@blog/client/admin/components/EditableInput';
 import EmailInput from './EmailInput';
 import style from './style.module.scss';
 import { useLazyFetchAdminConfigsQuery, useUpdateAdminConfigsMutation } from './service';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function Settings() {
+export default function Settings(props) {
+    wrapper.useHydration(props);
     const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
     const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
     const onFinish = (values) => {

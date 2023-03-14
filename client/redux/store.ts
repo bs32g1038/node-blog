@@ -29,14 +29,14 @@ const app = createSlice({
 
 export const { setTheme } = app.actions;
 
-export const makeStore = () =>
+export const makeStore = ({ reduxWrapperMiddleware }) =>
     configureStore({
         reducer: {
             app: app.reducer,
             [appApi.reducerPath]: appApi.reducer,
             [adminApi.reducerPath]: adminApi.reducer,
         },
-        middleware: (gDM) => gDM().concat(appApi.middleware).concat(adminApi.middleware),
+        middleware: (gDM) => gDM().concat(appApi.middleware).concat(adminApi.middleware).concat(reduxWrapperMiddleware),
     });
 
 export type AppStore = ReturnType<typeof makeStore>;

@@ -115,7 +115,7 @@
     "mongodb-memory-server": "^8.11.5",
     "nanoid": "^4.0.1",
     "next": "^13.1.6",
-    "next-redux-wrapper": "^8.1.0",
+    "next-redux-wrapper": "^9.0.0-rc.2",
     "prettier": "^2.8.4",
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -172,8 +172,5 @@
     "setupFilesAfterEnv": [
       "<rootDir>/test/default-timeout.ts"
     ]
-  },
-  "resolutions": {
-    "@types/react": "^17.0.38"
   }
 }

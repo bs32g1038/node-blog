@@ -4,8 +4,10 @@ import { parseTime } from '@blog/client/libs/time';
 import { Form, Input, Button, message } from 'antd';
 import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function Index() {
+export default function Index(props) {
+    wrapper.useHydration(props);
     const [comment, setComment] = useState({
         article: {
             _id: '',

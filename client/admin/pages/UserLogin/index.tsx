@@ -7,8 +7,10 @@ import style from './style.module.scss';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import { useFetchFirstMessageQuery, useLoginMutation } from './service';
 import defaultConfig from '@blog/client/configs/admin.default.config';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function UserLogin() {
+export default function UserLogin(props) {
+    wrapper.useHydration(props);
     const { data = { message: '' } } = useFetchFirstMessageQuery();
     const { data: appConfig } = useFetchConfigQuery();
     const [login, { isLoading }] = useLoginMutation();

@@ -7,8 +7,10 @@ import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
 import { useDeleteArticleMutation, useDeleteArticlesMutation, useFetchArticlesMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
+import { wrapper } from '@blog/client/redux/store';
 
-export default function Index() {
+export default function Index(props) {
+    wrapper.useHydration(props);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
     const [searchKey, setSearchKey] = useState('');
