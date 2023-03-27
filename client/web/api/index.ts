@@ -1,5 +1,4 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
-import { HYDRATE } from 'next-redux-wrapper';
 import axios from '@blog/client/web/utils/axios';
 import { AxiosRequestConfig, AxiosError } from 'axios';
 
@@ -117,11 +116,6 @@ interface IExploreReponse {
 export const appApi = createApi({
     reducerPath: 'appApi',
     baseQuery: axiosBaseQuery(),
-    extractRehydrationInfo(action, { reducerPath }) {
-        if (action.type === HYDRATE) {
-            return action.payload[reducerPath];
-        }
-    },
     endpoints: (builder) => ({
         fetchConfig: builder.query<Iconfig, void>({
             query: () => ({ url: `/api/configs`, method: 'get' }),
