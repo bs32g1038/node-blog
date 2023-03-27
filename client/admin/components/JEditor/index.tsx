@@ -171,7 +171,7 @@ export default React.forwardRef(function JEditor(props: Props, ref) {
         <div className={style.wrap}>
             <MenuBar loading={loading} editor={editor} len={editor?.getText()?.length ?? 0} />
             <div className={style.editor}>
-                <EditorContent className={'toastui-editor-contents'} editor={editor} />
+                <EditorContent className="rich-text" editor={editor} />
             </div>
         </div>
     );

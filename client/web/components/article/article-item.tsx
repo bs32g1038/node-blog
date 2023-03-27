@@ -52,14 +52,14 @@ export default function ArticleItem(props: Props) {
             </div>
             <div
                 className={clsx(
+                    'rich-text',
                     {
-                        'toastui-editor-dark': theme === 'dark',
+                        dark: theme === 'dark',
                     },
                     style.editor
                 )}
-            >
-                <div className="toastui-editor-contents" dangerouslySetInnerHTML={{ __html: article.content }}></div>
-            </div>
+                dangerouslySetInnerHTML={{ __html: article.content }}
+            ></div>
             <div className={style.statement}>
                 <div>
                     <strong>本文链接：</strong>

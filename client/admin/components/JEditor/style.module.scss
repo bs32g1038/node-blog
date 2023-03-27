@@ -49,13 +49,19 @@
             border: 1px solid transparent;
             box-sizing: border-box;
             cursor: pointer;
-            height: 20px;
-            line-height: 20px;
             white-space: nowrap;
             position: relative;
             display: block;
+            padding: 0px 4px;
+            box-shadow: none;
             &.is-active {
                 color: #056de8;
+            }
+            &:hover {
+                color: #4096ff;
+                background: #eee;
+                border-radius: 2px;
+                border-color: #eee;
             }
         }
         svg {
