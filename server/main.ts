@@ -12,10 +12,8 @@ import { staticAssetsPath, assetsPath } from './utils/path.util';
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.use(
-        helmet.contentSecurityPolicy({
-            directives: {
-                'worker-src': 'blob:',
-            },
+        helmet({
+            contentSecurityPolicy: false,
         })
     );
     app.use(json({ limit: '20mb' }));

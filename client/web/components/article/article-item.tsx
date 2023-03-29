@@ -20,17 +20,27 @@ export default function ArticleItem(props: Props) {
     const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <div className={style.article}>
-            <Breadcrumb separator=">">
-                <Breadcrumb.Item>首页</Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <Link href={'/blog/articles?cid=' + (article.category && article.category._id)} passHref={true}>
-                        {article.category && article.category.name}
-                    </Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <span>{article.title}</span>
-                </Breadcrumb.Item>
-            </Breadcrumb>
+            <Breadcrumb
+                separator=">"
+                items={[
+                    {
+                        title: '首页',
+                    },
+                    {
+                        title: (
+                            <Link
+                                href={'/blog/articles?cid=' + (article.category && article.category._id)}
+                                passHref={true}
+                            >
+                                {article.category && article.category.name}
+                            </Link>
+                        ),
+                    },
+                    {
+                        title: article.title,
+                    },
+                ]}
+            ></Breadcrumb>
             <div className={style.articleMeta}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
                     <h2 className={style.articleTitle}>{article.title}</h2>

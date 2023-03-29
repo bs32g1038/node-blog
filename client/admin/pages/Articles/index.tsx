@@ -216,7 +216,6 @@ export default function Index(props) {
             </Space>
         </Row>
     );
-    console.log(isLoading);
     return (
         <BasicLayout>
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>

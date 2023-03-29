@@ -39,17 +39,18 @@ export default function _Breadcrumb() {
     const router = useRouter();
     const items = getBreadCrumbRoutes(menu, router);
     return (
-        <Breadcrumb className={style.breadcrumb}>
-            {items.map((item) => {
-                return (
-                    <Breadcrumb.Item key={item.path}>
+        <Breadcrumb
+            className={style.breadcrumb}
+            items={items.map((item) => {
+                return {
+                    title: (
                         <Space>
                             {item.breadcrumbIcon}
                             <span>{item.breadcrumbName}</span>
                         </Space>
-                    </Breadcrumb.Item>
-                );
+                    ),
+                };
             })}
-        </Breadcrumb>
+        />
     );
 }

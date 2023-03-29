@@ -2,10 +2,32 @@ import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryDocument, Category } from '../../models/category.model';
 import { QueryRules } from '../../utils/mongoose.query.util';
-import { isEmpty, isEqual } from 'lodash';
+import { isEmpty, isEqual, omit } from 'lodash';
 import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
+import { stripHtml } from 'string-strip-html';
+
+function truncateString(str, maxLength = 180) {
+    let result = '';
+    let charCount = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charAt(i);
+        // eslint-disable-next-line no-control-regex
+        if (/[^\x00-\xff]/.test(char)) {
+            // 检测是否是中文字符
+            charCount += 2;
+        } else {
+            charCount += 1;
+        }
+        if (charCount <= maxLength) {
+            result += char;
+        } else {
+            break;
+        }
+    }
+    return result + '...';
+}
 
 @Injectable()
 export class ArticleService {
@@ -56,13 +78,23 @@ export class ArticleService {
             title: (str: string) => ({ title: new RegExp(str) }),
         }).generateQuery();
         const query = { isDeleted: false, ...q };
-        const { items, totalCount } = await this.articleModel.paginate(query, '-content', {
+        const { items, totalCount } = await this.articleModel.paginate(query, '', {
             page,
             limit,
             sort,
             populate: [{ path: 'category' }],
         });
-        return { items, totalCount };
+        return {
+            items: (items as any).map((item) => {
+                const data = item.toJSON();
+                const textContent = stripHtml(data.content).result;
+                return {
+                    ...omit(data, 'content'),
+                    summary: truncateString(textContent),
+                };
+            }),
+            totalCount,
+        };
     }
 
     async getArticle(id: string) {

@@ -21,7 +21,6 @@ export const getArticle = (obj = {}) => {
     return {
         title: faker.lorem.sentence(7),
         content: faker.lorem.paragraphs(),
-        summary: faker.lorem.sentence(20),
         screenshot: faker.image.imageUrl(),
         category: getObjectId(),
         tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
