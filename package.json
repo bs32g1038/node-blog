@@ -75,7 +75,7 @@
     "@next/eslint-plugin-next": "^13.2.4",
     "@reduxjs/toolkit": "^1.9.3",
     "@tiptap/extension-image": "^2.0.0",
-    "@tiptap/extension-link": "^2.0.0",
+    "@tiptap/extension-link": "^2.0.1",
     "@tiptap/extension-placeholder": "^2.0.0",
     "@tiptap/pm": "^2.0.0",
     "@tiptap/react": "^2.0.0",
