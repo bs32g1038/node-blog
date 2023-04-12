@@ -70,6 +70,7 @@ export class ArticleService {
         limit?: number;
         sort?: object;
         title?: string;
+        isDraft?: boolean;
     }) {
         const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
         const q = new QueryRules(options, {
@@ -77,7 +78,11 @@ export class ArticleService {
             tag: (str: string) => ({ tags: { $elemMatch: { $regex: new RegExp(str, 'i') } } }),
             title: (str: string) => ({ title: new RegExp(str) }),
         }).generateQuery();
-        const query = { isDeleted: false, ...q };
+        const query = {
+            isDeleted: false,
+            ...q,
+            ...(options.isDraft === false ? { isDraft: options.isDraft } : {}),
+        };
         const { items, totalCount } = await this.articleModel.paginate(query, '', {
             page,
             limit,

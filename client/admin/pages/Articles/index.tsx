@@ -126,7 +126,7 @@ export default function Index(props) {
                 title: '状态',
                 dataIndex: 'isDraft',
                 render: (text, record) =>
-                    record.isDraft ? <Tag color="rgb(229, 239, 245);">草稿</Tag> : <Tag color="default">已发布</Tag>,
+                    record.isDraft ? <Tag color="default">草稿</Tag> : <Tag color="green">已发布</Tag>,
             },
             {
                 title: '创建时间',

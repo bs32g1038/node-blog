@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { Article, ArticleJoiSchema } from '../../models/article.model';
 import { Roles } from '../../decorators/roles.decorator';
 import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import Joi, { ObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
-
+import { auth } from '@blog/server/utils/auth.util';
+import { Request } from 'express';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class ArticleController {
@@ -25,10 +26,12 @@ export class ArticleController {
 
     @Get('/articles')
     public async getArticles(
+        @Req() req: Request,
         @JoiQuery({
             cid: Joi.objectId(),
             tag: Joi.string().max(20),
             title: Joi.string().trim().max(80),
+            isDraft: Joi.boolean(),
             ...StandardPaginationSchema,
         })
         query: {
@@ -37,8 +40,12 @@ export class ArticleController {
             cid: string;
             tag: string;
             title: string;
+            isDraft: boolean;
         }
     ) {
+        if (!auth(req)) {
+            query.isDraft = false;
+        }
         const { items, totalCount } = await this.articleService.getArticleList(query);
         return {
             items,

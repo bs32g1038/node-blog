@@ -22,8 +22,35 @@ export const indexApi = adminApi.injectEndpoints({
                 data,
             }),
         }),
+        createArticle: build.mutation<any, any>({
+            query: (data) => ({
+                url: '/articles',
+                method: 'post',
+                data,
+            }),
+        }),
+        updateArticle: build.mutation<any, { id: string; data: any }>({
+            query: (data) => ({
+                url: '/articles/' + data.id,
+                method: 'put',
+                data: data.data,
+            }),
+        }),
+        fetchArticle: build.mutation<any, { id: string }>({
+            query: (params) => ({
+                url: '/articles/' + params.id,
+                method: 'get',
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useFetchArticlesMutation, useDeleteArticleMutation, useDeleteArticlesMutation } = indexApi;
+export const {
+    useFetchArticlesMutation,
+    useDeleteArticleMutation,
+    useDeleteArticlesMutation,
+    useCreateArticleMutation,
+    useUpdateArticleMutation,
+    useFetchArticleMutation,
+} = indexApi;

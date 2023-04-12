@@ -17,7 +17,7 @@ export const ArticleJoiSchema = {
     content: Joi.string()
         .trim()
         .min(1)
-        .max(5000)
+        .max(15000)
         .alter({
             post: (schema) => schema.required(),
         }),
@@ -31,6 +31,7 @@ export const ArticleJoiSchema = {
         post: (schema) => schema.required(),
     }),
     tags: Joi.array().items(Joi.string().max(20)),
+    isDraft: Joi.boolean().optional(),
 };
 
 export type ArticleDocument = Article & Document;
@@ -56,7 +57,7 @@ export class Article {
     @Prop({ maxlength: 80, trim: true, required: true })
     title: string;
 
-    @Prop({ maxlength: 5000, trim: true, required: true })
+    @Prop({ maxlength: 15000, trim: true, required: true })
     content: string;
 
     @Prop({ maxlength: 100, trim: true })
@@ -77,7 +78,7 @@ export class Article {
     @Prop({ default: false, select: false })
     isDeleted: boolean;
 
-    @Prop({ default: false, select: false })
+    @Prop({ default: false })
     isDraft: boolean;
 
     @Prop([DayReadings])

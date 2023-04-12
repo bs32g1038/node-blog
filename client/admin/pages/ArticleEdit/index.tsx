@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
-import { Form, Input, Button, message } from 'antd';
-import axios from '@blog/client/admin/axios';
-import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
-import Drawer from './Drawer';
+import { Form, Input, Button, message, Select, Spin } from 'antd';
+import { ArrowLeftOutlined, BulbOutlined, SendOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { debounce } from 'lodash';
 import isLength from 'validator/lib/isLength';
 import style from './style.module.scss';
 import dynamic from 'next/dynamic';
 import { wrapper } from '@blog/client/redux/store';
+import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
+import UploadImageButton from '@blog/client/admin/components/UploadImageButton';
+import { useFetchCategoriesMutation } from '../Categories/service';
+import { useCreateArticleMutation, useFetchArticleMutation, useUpdateArticleMutation } from '../Articles/service';
 
 const JEditor = dynamic(() => import('@blog/client/admin/components/JEditor'), { ssr: false });
 
@@ -17,88 +18,71 @@ const { TextArea } = Input;
 
 export default function Index(props) {
     wrapper.useHydration(props);
-    const [data, setData] = useState<any>({
-        content: '',
-    });
+
     const router = useRouter();
     const [form] = Form.useForm();
-    const [showDrawer, setShowDrawer] = useState(false);
+    const [fetchArticle, { isLoading }] = useFetchArticleMutation();
+    const [fetchCategories, { data: categories = [], isLoading: categoryLoading }] = useFetchCategoriesMutation();
+    const [createArticle, { isLoading: createLoading }] = useCreateArticleMutation();
+    const [updateArticle, { isLoading: updateLoading }] = useUpdateArticleMutation();
+
+    useEffect(() => {
+        fetchCategories({ page: 1, limit: 100 });
+    }, [fetchCategories]);
 
     useEffect(() => {
         const { id } = router.query;
         if (id) {
-            axios.get('/articles/' + id).then((res) => {
-                const article = res.data;
-                const category = article.category || {};
-                setData({
-                    title: article.title,
-                    content: article.content || '',
-                    category: category._id,
-                    tags: article.tags,
-                    summary: article.summary,
-                    screenshot: article.screenshot,
+            fetchArticle({ id } as any)
+                .unwrap()
+                .then((article) => {
+                    const category = article.category || {};
+                    form.setFieldsValue({
+                        title: article.title,
+                        content: article.content || '',
+                        category: category._id,
+                        tags: article.tags,
+                        summary: article.summary,
+                        screenshot: article.screenshot,
+                    });
                 });
-                form.setFieldsValue({
-                    title: article.title,
-                    content: article.content || '',
-                });
-            });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [fetchArticle, form, router.query]);
 
-    const createArticle = (data) => {
-        return axios.post('/articles', data);
-    };
-
-    const updateArticle = (id, data) => {
-        return axios.put('/articles/' + id, data);
-    };
+    const { id } = router.query;
 
     const publish = (data) => {
         const { id } = router.query;
         if (!isLength(data?.content, { min: 1, max: 15000 })) {
             return message.error('文章详情不能为空，且最多15000个字符!');
         }
-        const p = id ? updateArticle(id, data) : createArticle(data);
+        const p = id ? updateArticle({ id, data } as any) : createArticle(data);
         p.then(() => {
             message.success('提交成功 ！');
             Router.push('/admin/content/articles');
         });
     };
 
-    const { id } = router.query;
-    const debounceSetData = useMemo(
-        () =>
-            debounce((values: any) => {
-                setData((data) => ({
-                    ...data,
-                    ...values,
-                }));
-            }),
-        []
-    );
+    const categoryOptions =
+        categories &&
+        categories.map((category) => (
+            <Select.Option key={category._id} value={category._id}>
+                {category.name}
+            </Select.Option>
+        ));
 
     return (
-        <Form.Provider
-            onFormChange={(name, { forms }) => {
-                if (name === 'articleConfigForm') {
-                    const { articleConfigForm } = forms;
-                    const values = articleConfigForm.getFieldsValue();
-                    debounceSetData(values);
-                }
-            }}
-            onFormFinish={(name, { values, forms }) => {
-                if (name === 'contentForm') {
-                    setShowDrawer(true);
-                } else {
-                    const { contentForm } = forms;
-                    const data = contentForm.getFieldsValue();
-                    publish({ ...values, ...data });
-                }
-            }}
-        >
-            <Form form={form} initialValues={{ content: '' }} name="contentForm">
+        <Spin spinning={isLoading}>
+            <Form
+                form={form}
+                layout="vertical"
+                initialValues={{ content: '' }}
+                onFinish={(vals) => {
+                    form.validateFields().then(() => {
+                        publish({ ...vals, isDraft: false });
+                    });
+                }}
+            >
                 <div className={style.header}>
                     <div className={style.leftItem}>
                         <div className={style.name}>
@@ -112,7 +96,7 @@ export default function Index(props) {
                     <div className={style.editorWrap}>
                         <Form.Item
                             name="title"
-                            style={{ maxWidth: '700px', width: '100%', margin: '0 auto' }}
+                            style={{ maxWidth: '800px', width: '100%', margin: '0 auto' }}
                             rules={[{ required: true, message: '标题不能为空！，且最多80个字符!', max: 80 }]}
                         >
                             <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
@@ -120,27 +104,49 @@ export default function Index(props) {
                     </div>
                     <section className="view-actions">
                         <Button
-                            type="link"
+                            type="text"
                             onClick={() => {
-                                form.submit();
+                                form.validateFields().then(() => {
+                                    publish({ ...form.getFieldsValue(), isDraft: true });
+                                });
                             }}
                         >
-                            <SettingOutlined></SettingOutlined>
-                            发布
+                            <BulbOutlined />
+                            存为草稿
                         </Button>
-                        <Drawer
-                            formData={data}
-                            visible={showDrawer}
-                            onCancel={() => {
-                                setShowDrawer(false);
-                            }}
-                        ></Drawer>
+                        <Button htmlType="submit" type="link" loading={createLoading || updateLoading}>
+                            <SendOutlined />发 布
+                        </Button>
                     </section>
                 </div>
-                <Form.Item name="content">
-                    <JEditor></JEditor>
-                </Form.Item>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={style.drawerContent}>
+                        <Form.Item
+                            required={true}
+                            label="封面图片"
+                            name="screenshot"
+                            rules={[{ required: true, message: '封面图片不能为空!' }]}
+                        >
+                            <UploadImageButton></UploadImageButton>
+                        </Form.Item>
+                        <Form.Item
+                            name="category"
+                            label="文章分类"
+                            rules={[{ required: true, message: '分类不能为空!' }]}
+                        >
+                            <Select loading={categoryLoading} placeholder="请选择一个分类">
+                                {categoryOptions}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name="tags" label="文章标签">
+                            <EditableTagGroup />
+                        </Form.Item>
+                    </div>
+                    <Form.Item name="content">
+                        <JEditor></JEditor>
+                    </Form.Item>
+                </div>
             </Form>
-        </Form.Provider>
+        </Spin>
     );
 }
