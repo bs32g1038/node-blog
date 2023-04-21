@@ -133,8 +133,8 @@ export class ArticleService {
         if (article) {
             const data: any = article.toObject();
             const [prev, next] = await Promise.all([
-                this.articleModel.find({ _id: { $gt: id } }, 'title', { sort: { _id: 1 } }),
-                this.articleModel.find({ _id: { $lt: id } }, 'title', { sort: { _id: -1 } }),
+                this.articleModel.find({ _id: { $gt: id }, isDraft: false }, 'title', { sort: { _id: 1 } }),
+                this.articleModel.find({ _id: { $lt: id }, isDraft: false }, 'title', { sort: { _id: -1 } }),
             ]);
             data.prev = prev.length > 0 ? prev[0] : null;
             data.next = next.length > 0 ? next[0] : null;
