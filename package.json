@@ -70,7 +70,7 @@
     "@ant-design/plots": "^1.2.5",
     "@emotion/react": "^11.10.6",
     "@faker-js/faker": "^7.6.0",
-    "@nestjs/cli": "^9.3.0",
+    "@nestjs/cli": "^9.4.2",
     "@nestjs/testing": "^9.4.0",
     "@next/eslint-plugin-next": "^13.3.0",
     "@reduxjs/toolkit": "^1.9.3",
