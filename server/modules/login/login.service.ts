@@ -77,7 +77,7 @@ export class LoginService {
                 email: user.email,
                 account,
                 token: jwt.sign({ account, roles: ['admin'] }, TOKEN_SECRET_KEY, {
-                    expiresIn: 60 * 60,
+                    expiresIn: '7d',
                 }),
             };
         }
