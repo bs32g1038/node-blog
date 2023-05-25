@@ -39,7 +39,7 @@ export default function Index(props) {
         if (comment.parentId) {
             Object.assign(data, { reply: id, parentId: comment.parentId });
         } else {
-            Object.assign(data, { parentId: id });
+            Object.assign(data, { reply: id, parentId: id });
         }
         axios.post('/admin/reply-comment/', data).then(() => {
             message.success('提交成功');

@@ -15,7 +15,7 @@ const Emoji = (props: Props) => {
             if (event.target.nodeName.toLowerCase() === 'button') {
                 $el = event.target;
             } else if (event.target.nodeName.toLowerCase() === 'img') {
-                $el = event.target.parentNode;
+                $el = event.target.parentNode.parentNode;
             }
             if ($el) {
                 const text = $el.getAttribute('data-input').trim();

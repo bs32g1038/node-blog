@@ -27,7 +27,6 @@ export class CommentController {
     @Post('/admin/reply-comment')
     @Roles('admin')
     async adminReplyComment(
-        @Req() req: Request,
         @JoiBody(
             {
                 article: CommentJoiSchema.article,
@@ -39,12 +38,6 @@ export class CommentController {
         )
         comment: Comment
     ) {
-        Object.assign(comment, {
-            identity: 1,
-            nickName: ADMIN_USER_INFO.nickName,
-            email: ADMIN_USER_INFO.email,
-            location: ADMIN_USER_INFO.location,
-        });
         const data = await this.commentService.create(comment);
         return data;
     }

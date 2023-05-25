@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { timeAgo } from '@blog/client/libs/time';
-import { Button, Popconfirm, message } from 'antd';
-import { gernateAvatarImage } from '@blog/client/common/helper.util';
+import { parseTime, timeAgo } from '@blog/client/libs/time';
+import { Button, Popconfirm, Space, message } from 'antd';
+import { handleEmoji } from '@blog/client/common/helper.util';
 import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
@@ -10,6 +10,8 @@ import ActionCard from '@blog/client/admin/components/ActionCard';
 import { useDeleteCommentMutation, useDeleteCommentsMutation, useFetchCommentsMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
 import { wrapper } from '@blog/client/redux/store';
+import Avatar from 'boring-avatars';
+import { xss } from '@blog/client/libs/marked';
 
 export default function Comments(props) {
     wrapper.useHydration(props);
@@ -79,27 +81,22 @@ export default function Comments(props) {
                 width: 160,
             },
             {
-                title: 'email',
-                dataIndex: 'email',
-                width: 100,
+                title: '文章标题',
+                dataIndex: 'article',
+                render: (text, record) => (record.article && record.article.title) || '--',
             },
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                width: 140,
-                render: (text, record) => timeAgo(record.createdAt),
-            },
-            {
-                title: '文章标题',
-                dataIndex: 'article',
-                render: (text, record) => (record.article && record.article.title) || '--',
+                width: 180,
+                render: (text, record) => parseTime(record.createdAt),
             },
             {
                 title: '操作',
                 key: 'operation',
                 width: 180,
                 render: (text, record) => (
-                    <div>
+                    <Space>
                         <Button
                             type="primary"
                             size="small"
@@ -109,13 +106,12 @@ export default function Comments(props) {
                         >
                             回复
                         </Button>
-                        ,
                         <Popconfirm title="确认要删除？" onConfirm={() => deleteComment(record._id)}>
                             <Button danger={true} size="small" title="删除" icon={<DeleteFilled />}>
                                 删除
                             </Button>
                         </Popconfirm>
-                    </div>
+                    </Space>
                 ),
             },
         ];
@@ -170,7 +166,7 @@ export default function Comments(props) {
                                         </div>
                                         <div className={style.replyListItem}>
                                             <div className={style.userAvatar}>
-                                                <img src={gernateAvatarImage(record.reply.nickName)} alt="" />
+                                                <Avatar size={32} name={record.reply.nickName} variant="beam" />
                                             </div>
                                             <div className={style.replyContent}>
                                                 <div className={style.replyInfo}>
@@ -197,7 +193,7 @@ export default function Comments(props) {
                                                 <div
                                                     className={style.markdownText}
                                                     dangerouslySetInnerHTML={{
-                                                        __html: record.reply.content,
+                                                        __html: xss(handleEmoji(record.reply.content)),
                                                     }}
                                                 ></div>
                                             </div>
@@ -212,7 +208,7 @@ export default function Comments(props) {
                                     <div
                                         className="markdown-body"
                                         dangerouslySetInnerHTML={{
-                                            __html: record.content,
+                                            __html: xss(handleEmoji(record.content)),
                                         }}
                                     ></div>
                                 </div>

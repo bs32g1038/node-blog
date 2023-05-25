@@ -7,15 +7,25 @@ import { QueryRules } from '../../utils/mongoose.query.util';
 import { isEmpty } from 'lodash';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
+import { User, UserDocument } from '@blog/server/models/user.model';
 
 @Injectable()
 export class CommentService {
     constructor(
         @InjectModel(Comment.name) private readonly commentModel: Model<CommentDocument> & IPaginate,
-        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>
+        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>,
+        @InjectModel(User.name) private readonly userModel: Model<UserDocument>
     ) {}
 
     async create(newComment: Comment) {
+        const res = (await this.userModel.find({})).at(0);
+        if (res) {
+            Object.assign(newComment, {
+                identity: 1,
+                nickName: res.userName,
+                email: res.email,
+            });
+        }
         const article = await this.articleModel.findById(newComment.article);
         if (isEmpty(article)) {
             throw new BadRequestException('[article]文章id为错误数据');
