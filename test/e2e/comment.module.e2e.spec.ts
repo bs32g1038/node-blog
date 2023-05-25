@@ -19,6 +19,7 @@ describe('comment.module.e2e', () => {
     let mongooseConnection: Connection;
     let articleModel: Model<Article>;
     let commentModel: Model<Comment>;
+    let userModel: Model<Comment>;
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -29,6 +30,7 @@ describe('comment.module.e2e', () => {
         mongooseConnection = instance.mongooseConnection;
         articleModel = instance.articleModel;
         commentModel = instance.commentModel;
+        userModel = instance.userModel;
     });
 
     beforeEach(async () => {
@@ -57,6 +59,12 @@ describe('comment.module.e2e', () => {
         });
 
         test('permission:admin', async () => {
+            await userModel.create({
+                userName: 'bs32g1038',
+                account: 'bs32g1038',
+                password: 'test',
+                email: 'bs32g1038@163.com',
+            });
             const article = await articleModel.create(getArticle());
             const replyComment = {
                 article: article._id.toString(),
