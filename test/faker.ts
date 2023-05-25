@@ -7,7 +7,7 @@ export const getObjectId = () => {
 
 export const getCategory = () => {
     return {
-        name: faker.name.fullName(),
+        name: faker.person.fullName(),
     };
 };
 
@@ -21,7 +21,7 @@ export const getArticle = (obj = {}) => {
     return {
         title: faker.lorem.sentence(7),
         content: faker.lorem.paragraphs(),
-        screenshot: faker.image.imageUrl(),
+        screenshot: faker.image.url(),
         category: getObjectId(),
         tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
         ...obj,
@@ -30,7 +30,7 @@ export const getArticle = (obj = {}) => {
 
 export const getComment = (obj = {}) => {
     return {
-        nickName: faker.name.fullName(),
+        nickName: faker.person.fullName(),
         email: 'bs32g1038@163.com',
         article: null,
         reply: null,
@@ -43,7 +43,7 @@ export const getFile = (obj = {}) => {
     return {
         name: faker.lorem.word() + '.jpg',
         originName: faker.lorem.word() + '.jpg',
-        url: faker.image.imageUrl(),
+        url: faker.image.url(),
         size: 2000,
         type: 'image',
         ...obj,
