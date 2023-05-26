@@ -38,7 +38,7 @@ export class CommentController {
         )
         comment: Comment
     ) {
-        const data = await this.commentService.create(comment);
+        const data = await this.commentService.create(comment, true);
         return data;
     }
 

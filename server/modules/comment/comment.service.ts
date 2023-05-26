@@ -17,14 +17,16 @@ export class CommentService {
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>
     ) {}
 
-    async create(newComment: Comment) {
-        const res = (await this.userModel.find({})).at(0);
-        if (res) {
-            Object.assign(newComment, {
-                identity: 1,
-                nickName: res.userName,
-                email: res.email,
-            });
+    async create(newComment: Comment, isAdmin = false) {
+        if (isAdmin) {
+            const res = (await this.userModel.find({})).at(0);
+            if (res) {
+                Object.assign(newComment, {
+                    identity: 1,
+                    nickName: res.userName,
+                    email: res.email,
+                });
+            }
         }
         const article = await this.articleModel.findById(newComment.article);
         if (isEmpty(article)) {
