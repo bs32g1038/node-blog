@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { Form, Input, Button, message, Select, Spin } from 'antd';
-import { ArrowLeftOutlined, BulbOutlined, SendOutlined } from '@ant-design/icons';
+import { Form, Input, Button, message, Select, Spin, Popover, List, Space } from 'antd';
+import { ArrowLeftOutlined, HistoryOutlined, SendOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import isLength from 'validator/lib/isLength';
 import style from './style.module.scss';
@@ -11,6 +11,14 @@ import EditableTagGroup from '@blog/client/admin/components/EditableTagGroup';
 import UploadImageButton from '@blog/client/admin/components/UploadImageButton';
 import { useFetchCategoriesMutation } from '../Categories/service';
 import { useCreateArticleMutation, useFetchArticleMutation, useUpdateArticleMutation } from '../Articles/service';
+import {
+    useCreateDrfatMutation,
+    useFetchDrfatMutation,
+    useFetchDrfatsMutation,
+    useUpdateDrfatMutation,
+} from './service';
+import { debounce } from 'lodash';
+import { parseTime } from '@blog/client/libs/time';
 
 const JEditor = dynamic(() => import('@blog/client/admin/components/JEditor'), { ssr: false });
 
@@ -26,17 +34,25 @@ export default function Index(props) {
     const [createArticle, { isLoading: createLoading }] = useCreateArticleMutation();
     const [updateArticle, { isLoading: updateLoading }] = useUpdateArticleMutation();
 
+    const [fetchDrafts, { isLoading: draftsLoading, data: draftListData }] = useFetchDrfatsMutation();
+    const [fetchDraft, { isLoading: draftLoading }] = useFetchDrfatMutation();
+    const [createDrfat, { isLoading: createDraftLoading }] = useCreateDrfatMutation();
+    const [updateDrfat, { isLoading: updateDraftLoading }] = useUpdateDrfatMutation();
+    const [page, setPage] = useState(1);
+
     useEffect(() => {
         fetchCategories({ page: 1, limit: 100 });
     }, [fetchCategories]);
 
+    const { id, type } = router.query;
+
     useEffect(() => {
-        const { id } = router.query;
-        if (id) {
+        if (id && type != 'draft') {
             fetchArticle({ id } as any)
                 .unwrap()
                 .then((article) => {
                     const category = article.category || {};
+                    form.resetFields();
                     form.setFieldsValue({
                         title: article.title,
                         content: article.content || '',
@@ -47,9 +63,25 @@ export default function Index(props) {
                     });
                 });
         }
-    }, [fetchArticle, form, router.query]);
-
-    const { id } = router.query;
+        if (id && type === 'draft') {
+            fetchDraft(id)
+                .unwrap()
+                .then((res) => {
+                    console.log(res);
+                    const article = res.data;
+                    form.resetFields();
+                    form.setFieldsValue({
+                        title: article.title,
+                        content: article.content || '',
+                        category: article.category,
+                        tags: article.tags,
+                        summary: article.summary,
+                        screenshot: article.screenshot,
+                    });
+                });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchDraft, fetchArticle, form, id]);
 
     const publish = (data) => {
         const { id } = router.query;
@@ -71,12 +103,40 @@ export default function Index(props) {
             </Select.Option>
         ));
 
+    const onValuesChange = useMemo(() => {
+        return debounce((_, values) => {
+            if (id) {
+                return updateDrfat({ id, data: values } as any)
+                    .unwrap()
+                    .then((res) => {
+                        router.replace({
+                            pathname: '/admin/content/articles/edit/' + res._id,
+                            query: {
+                                type: 'draft',
+                            },
+                        });
+                    });
+            }
+            createDrfat({ data: values })
+                .unwrap()
+                .then((res) => {
+                    router.replace({
+                        pathname: '/admin/content/articles/edit/' + res._id,
+                        query: {
+                            type: 'draft',
+                        },
+                    });
+                });
+        }, 400);
+    }, [createDrfat, id, router, updateDrfat]);
+
     return (
-        <Spin spinning={isLoading}>
+        <Spin spinning={isLoading || draftLoading}>
             <Form
                 form={form}
                 layout="vertical"
                 initialValues={{ content: '' }}
+                onValuesChange={onValuesChange}
                 onFinish={(vals) => {
                     form.validateFields().then(() => {
                         publish({ ...vals, isDraft: false });
@@ -103,48 +163,89 @@ export default function Index(props) {
                         </Form.Item>
                     </div>
                     <section className="view-actions">
-                        <Button
-                            type="text"
-                            onClick={() => {
-                                form.validateFields().then(() => {
-                                    publish({ ...form.getFieldsValue(), isDraft: true });
-                                });
-                            }}
+                        <Spin size="small" spinning={createDraftLoading || updateDraftLoading} />
+                        <Popover
+                            content={
+                                <List
+                                    loading={draftsLoading}
+                                    size="small"
+                                    itemLayout="vertical"
+                                    dataSource={(draftListData?.items ?? []) as any[]}
+                                    pagination={{
+                                        size: 'small',
+                                        onChange: (page) => {
+                                            setPage(page);
+                                        },
+                                        pageSize: 10,
+                                    }}
+                                    renderItem={(item) => (
+                                        <List.Item>
+                                            <Button
+                                                size="small"
+                                                type="link"
+                                                onClick={() => {
+                                                    Router.push({
+                                                        pathname: '/admin/content/articles/edit/' + item._id,
+                                                        query: {
+                                                            type: 'draft',
+                                                        },
+                                                    });
+                                                }}
+                                            >
+                                                {parseTime(item?.updatedAt ?? '')}
+                                            </Button>
+                                        </List.Item>
+                                    )}
+                                />
+                            }
+                            trigger="click"
+                            placement="bottomLeft"
                         >
-                            <BulbOutlined />
-                            存为草稿
-                        </Button>
+                            <Button
+                                type="text"
+                                onClick={() => {
+                                    return fetchDrafts({ page, limit: 10 });
+                                }}
+                            >
+                                <HistoryOutlined />
+                                历史记录
+                            </Button>
+                        </Popover>
                         <Button htmlType="submit" type="link" loading={createLoading || updateLoading}>
                             <SendOutlined />发 布
                         </Button>
                     </section>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div className={style.drawerContent}>
-                        <Form.Item
-                            required={true}
-                            label="封面图片"
-                            name="screenshot"
-                            rules={[{ required: true, message: '封面图片不能为空!' }]}
-                        >
-                            <UploadImageButton></UploadImageButton>
-                        </Form.Item>
-                        <Form.Item
-                            name="category"
-                            label="文章分类"
-                            rules={[{ required: true, message: '分类不能为空!' }]}
-                        >
-                            <Select loading={categoryLoading} placeholder="请选择一个分类">
-                                {categoryOptions}
-                            </Select>
-                        </Form.Item>
-                        <Form.Item name="tags" label="文章标签">
-                            <EditableTagGroup />
-                        </Form.Item>
+                    <div style={{ display: 'flex', width: '920px' }}>
+                        <div className={style.drawerContent}>
+                            <Form.Item
+                                required={true}
+                                label="封面图片"
+                                name="screenshot"
+                                rules={[{ required: true, message: '封面图片不能为空!' }]}
+                            >
+                                <UploadImageButton></UploadImageButton>
+                            </Form.Item>
+                            <Form.Item
+                                name="category"
+                                label="文章分类"
+                                rules={[{ required: true, message: '分类不能为空!' }]}
+                            >
+                                <Select loading={categoryLoading} placeholder="请选择一个分类">
+                                    {categoryOptions}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item name="tags" label="文章标签">
+                                <EditableTagGroup />
+                            </Form.Item>
+                        </div>
+                        <div style={{ flex: '1 0 auto' }}>
+                            <Form.Item name="content">
+                                <JEditor></JEditor>
+                            </Form.Item>
+                        </div>
                     </div>
-                    <Form.Item name="content">
-                        <JEditor></JEditor>
-                    </Form.Item>
                 </div>
             </Form>
         </Spin>
