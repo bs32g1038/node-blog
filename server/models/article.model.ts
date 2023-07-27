@@ -31,7 +31,6 @@ export const ArticleJoiSchema = {
         post: (schema) => schema.required(),
     }),
     tags: Joi.array().items(Joi.string().max(20)),
-    isDraft: Joi.boolean().optional(),
 };
 
 export type ArticleDocument = Article & Document;
@@ -77,9 +76,6 @@ export class Article {
 
     @Prop({ default: false, select: false })
     isDeleted: boolean;
-
-    @Prop({ default: false })
-    isDraft: boolean;
 
     @Prop([DayReadings])
     dayReadings: DayReadings[];

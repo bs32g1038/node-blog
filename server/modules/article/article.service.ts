@@ -49,7 +49,7 @@ export class ArticleService {
             runValidators: true,
         });
         if (isEmpty(article)) {
-            if (this.draftModel.findById(_id)) {
+            if (await this.draftModel.findById(_id)) {
                 return await this.create({ _id, ...data });
             }
             throw new BadRequestException('找不到该文章！');
@@ -75,7 +75,6 @@ export class ArticleService {
         limit?: number;
         sort?: object;
         title?: string;
-        isDraft?: boolean;
     }) {
         const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
         const q = new QueryRules(options, {
@@ -86,7 +85,6 @@ export class ArticleService {
         const query = {
             isDeleted: false,
             ...q,
-            ...(options.isDraft === false ? { isDraft: options.isDraft } : {}),
         };
         const { items, totalCount } = await this.articleModel.paginate(query, '', {
             page,
