@@ -53,6 +53,7 @@ client // client ui
 - [x] Search support
 - [x] Mobile web support
 - [x] Light theme &  Dark theme
+- [x] Article draft record
 - [x] Other support ...
 
 ## Development
