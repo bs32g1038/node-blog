@@ -6,6 +6,7 @@ import { getToken } from '../util';
 import { Connection, Model } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Draft } from '@blog/server/models/draft.model';
+import { getObjectId } from '../faker';
 const __TOKEN__ = getToken();
 
 /**
@@ -64,6 +65,15 @@ describe('draft.module.e2e', () => {
                 .send(draft)
                 .expect(200);
         });
+
+        test('if not found the draft, it create draft should success', async () => {
+            const draft = { data: {}, type: 'article' };
+            return request(app.getHttpServer())
+                .put('/api/drafts/' + getObjectId())
+                .set('authorization', __TOKEN__)
+                .send(draft)
+                .expect(200);
+        });
     });
 
     describe('get one draft', () => {
@@ -78,6 +88,13 @@ describe('draft.module.e2e', () => {
                     const a = res.body;
                     expect(a.data).toEqual(draft.data);
                 });
+        });
+
+        test('get draft not found', async () => {
+            return request(app.getHttpServer())
+                .get('/api/drafts/' + getObjectId())
+                .set('authorization', __TOKEN__)
+                .expect(404);
         });
     });
 
