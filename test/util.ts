@@ -15,6 +15,7 @@ import { Comment, CommentSchema } from '@blog/server/models/comment.model';
 import { User, UserSchema } from '@blog/server/models/user.model';
 import { AdminLog, AdminLogSchema } from '@blog/server/models/adminlog.model';
 import { File, FileSchema } from '@blog/server/models/file.model';
+import { Draft, DraftSchema } from '@blog/server/models/draft.model';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -43,6 +44,7 @@ export const createModels = async ({
     const userModel = mongooseConnection.model(User.name, UserSchema, User.name.toLocaleLowerCase());
     const adminLogModel = mongooseConnection.model(AdminLog.name, AdminLogSchema, AdminLog.name.toLocaleLowerCase());
     const fileModel = mongooseConnection.model(File.name, FileSchema, File.name.toLocaleLowerCase());
+    const draftModel = mongooseConnection.model(Draft.name, DraftSchema, Draft.name.toLocaleLowerCase());
     return {
         mongod: mongoServer,
         mongooseConnection,
@@ -52,6 +54,7 @@ export const createModels = async ({
         userModel,
         adminLogModel,
         fileModel,
+        draftModel,
     };
 };
 

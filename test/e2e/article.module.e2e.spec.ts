@@ -7,6 +7,8 @@ import { getToken } from '../util';
 import { Connection, Model } from 'mongoose';
 import { Article } from '@blog/server/models/article.model';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Draft } from '@blog/server/models/draft.model';
+
 const __TOKEN__ = getToken();
 
 /**
@@ -17,6 +19,7 @@ describe('article.module.e2e', () => {
     let mongod: MongoMemoryServer;
     let mongooseConnection: Connection;
     let articleModel: Model<Article>;
+    let draftModel: Model<Draft>;
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -26,6 +29,7 @@ describe('article.module.e2e', () => {
         mongod = instance.mongod;
         mongooseConnection = instance.mongooseConnection;
         articleModel = instance.articleModel;
+        draftModel = instance.draftModel;
     });
 
     beforeEach(async () => {
@@ -88,13 +92,15 @@ describe('article.module.e2e', () => {
                 .expect(400);
         });
 
-        test('bad request, update the article data & the data not found in db', async () => {
+        test('should success!, update the article data & the data not found in db and the data is in draft box', async () => {
+            const draft = { data: {}, type: 'article' };
+            const { _id } = await draftModel.create(draft);
             const article = getArticle();
             return request(app.getHttpServer())
-                .put('/api/articles/' + getObjectId())
+                .put('/api/articles/' + _id)
                 .set('authorization', __TOKEN__)
                 .send(article)
-                .expect(400);
+                .expect(200);
         });
     });
 

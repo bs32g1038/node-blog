@@ -7,6 +7,7 @@ import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
 import { stripHtml } from 'string-strip-html';
+import { Draft } from '@blog/server/models/draft.model';
 
 function truncateString(str, maxLength = 180) {
     let result = '';
@@ -33,7 +34,8 @@ function truncateString(str, maxLength = 180) {
 export class ArticleService {
     constructor(
         @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument> & IPaginate,
-        @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>
+        @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>,
+        @InjectModel(Draft.name) private readonly draftModel: Model<ArticleDocument> & IPaginate
     ) {}
 
     async create(articleDocument: Article) {
@@ -47,6 +49,9 @@ export class ArticleService {
             runValidators: true,
         });
         if (isEmpty(article)) {
+            if (await this.draftModel.findById(_id)) {
+                return await this.create({ _id, ...data });
+            }
             throw new BadRequestException('找不到该文章！');
         }
         if (article.category && !isEqual(article.category.toString(), data.category)) {
@@ -70,7 +75,6 @@ export class ArticleService {
         limit?: number;
         sort?: object;
         title?: string;
-        isDraft?: boolean;
     }) {
         const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
         const q = new QueryRules(options, {
@@ -81,7 +85,6 @@ export class ArticleService {
         const query = {
             isDeleted: false,
             ...q,
-            ...(options.isDraft === false ? { isDraft: options.isDraft } : {}),
         };
         const { items, totalCount } = await this.articleModel.paginate(query, '', {
             page,

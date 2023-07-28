@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { EmailModule } from './modules/email/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AdminLogModule } from './modules/adminlog/adminlog.module';
@@ -11,9 +11,9 @@ import { LoginModule } from './modules/login/login.module';
 import { SearchModule } from './modules/search/search.module';
 import { UserModule } from './modules/user/user.module';
 import { RateLimitMiddleware } from './middlewares/rate-limit.middleware';
-import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { isProdMode, MONGODB } from './configs/index.config';
 import { TasksModule } from './modules/tasks/tasks.module';
+import { DraftModule } from './modules/draft/draft.module';
 
 import { SSRModule } from '@blog/client/server';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -33,6 +33,7 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
         LoginModule,
         SearchModule,
         UserModule,
+        DraftModule,
         ...(isProdMode ? [ScheduleModule.forRoot(), TasksModule] : []),
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],
