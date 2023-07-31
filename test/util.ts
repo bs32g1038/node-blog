@@ -36,7 +36,7 @@ export const createModels = async ({
 }) => {
     const mongoServer = isMemory ? await MongoMemoryServer.create() : null;
     const mongooseConnection = isMemory
-        ? await mongoose.createConnection(mongoServer.getUri(), { dbName: 'test' }).asPromise()
+        ? await mongoose.createConnection(mongoServer.getUri(), {}).asPromise()
         : connection || mongoose;
     const articleModel = mongooseConnection.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());
     const categoryModel = mongooseConnection.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());
@@ -62,12 +62,7 @@ export const initApp = async (metadata: ModuleMetadata) => {
     const model = await createModels({ isMemory: true });
     const testModule = await Test.createTestingModule({
         imports: [
-            MongooseModule.forRoot(model.mongod.getUri(), {
-                connectionFactory: (connection) => {
-                    connection.close();
-                    return model.mongooseConnection;
-                },
-            }),
+            MongooseModule.forRoot(model.mongod.getUri()),
             DynamicConfigModule,
             EmailModule,
             ...(metadata.imports || []),
