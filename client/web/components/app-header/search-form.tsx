@@ -50,7 +50,6 @@ export const SearchForm = (props) => {
                     value: item._id,
                 }))}
                 suffixIcon={<SearchOutlined></SearchOutlined>}
-                showArrow={true}
                 dropdownRender={(menu) => (
                     <>
                         {menu}

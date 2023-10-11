@@ -71,7 +71,6 @@ export default function StaticFiles(props) {
             ...data,
             current: pagination.current,
         }));
-        fetchData();
     };
     const onSelectChange = (selectedRowKeys) => {
         setSelectedRowKeys(selectedRowKeys);
@@ -139,7 +138,7 @@ export default function StaticFiles(props) {
                     <div>
                         {!record.isdir && (
                             <CopyToClipboard
-                                text={appConfig.siteDomain + '/' + record.url}
+                                text={appConfig.siteDomain + record.url}
                                 onCopy={() => {
                                     message.success('复制链接成功');
                                 }}

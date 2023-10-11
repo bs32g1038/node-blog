@@ -3,9 +3,10 @@ import { adminApi } from '@blog/client/admin/api';
 export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
         fetchStaticFiles: build.mutation<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
-            query: () => ({
+            query: (params) => ({
                 url: '/files',
                 method: 'get',
+                params,
             }),
         }),
         deleteFile: build.mutation<any, { id: string }>({

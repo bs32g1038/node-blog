@@ -9,7 +9,10 @@ interface Options {
 
 @Injectable()
 export class JoiValidationPipeTransform implements PipeTransform {
-    public constructor(private readonly schema: object, private readonly options: Options = {}) {}
+    public constructor(
+        private readonly schema: object,
+        private readonly options: Options = {}
+    ) {}
 
     public transform(data: any) {
         let joiObject: Schema = Joi.object(this.schema);

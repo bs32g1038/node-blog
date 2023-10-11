@@ -4,8 +4,21 @@ body,
     height: 100%;
     min-height: 100%;
     background-color: var(--app-background-color);
-    font-family: -apple-system, system-ui, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif,
-        BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial !important;
+    font-family:
+        -apple-system,
+        system-ui,
+        Segoe UI,
+        Roboto,
+        Ubuntu,
+        Cantarell,
+        Noto Sans,
+        sans-serif,
+        BlinkMacSystemFont,
+        Helvetica Neue,
+        PingFang SC,
+        Hiragino Sans GB,
+        Microsoft YaHei,
+        Arial !important;
 }
 
 @font-face {

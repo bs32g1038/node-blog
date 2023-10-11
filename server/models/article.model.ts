@@ -31,6 +31,7 @@ export const ArticleJoiSchema = {
         post: (schema) => schema.required(),
     }),
     tags: Joi.array().items(Joi.string().max(20)),
+    isDraft: Joi.any(),
 };
 
 export type ArticleDocument = Article & Document;

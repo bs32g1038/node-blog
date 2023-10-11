@@ -33,7 +33,9 @@
     flex-wrap: wrap;
     gap: 15px;
     align-items: center;
-    transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+    transition:
+        visibility 0.2s 0.4s,
+        opacity 0.2s 0.4s;
     flex-wrap: wrap;
     padding: 5px 0;
     background: #fff;
