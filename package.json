@@ -77,7 +77,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@tiptap/extension-image": "^2.1.12",
     "@tiptap/extension-link": "^2.1.12",
-    "@tiptap/extension-placeholder": "^2.1.12",
+    "@tiptap/extension-placeholder": "^2.1.13",
     "@tiptap/pm": "^2.1.12",
     "@tiptap/react": "^2.1.12",
     "@tiptap/starter-kit": "^2.1.12",
