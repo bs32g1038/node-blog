@@ -54,7 +54,7 @@
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "log4js": "^6.9.1",
-    "lru-cache": "^10.0.3",
+    "lru-cache": "^10.1.0",
     "mongoose": "^8.0.1",
     "nodemailer": "^6.9.7",
     "path-to-regexp": "^6.2.1",
