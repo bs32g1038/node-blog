@@ -8,7 +8,6 @@ import { useFetchConfigQuery } from '../../api';
 import { Space } from 'antd';
 import LogoSvg from '../logo-svg';
 import bannerjpg from '@blog/client/assets/banners/1040X100.jpg';
-import Image from 'next/image';
 
 export const AppFooter = () => {
     const { data: config } = useFetchConfigQuery();
@@ -86,7 +85,7 @@ export const AppFooter = () => {
                     href="https://curl.qcloud.com/Fmz3Mj1W"
                     style={{ position: 'relative', display: 'block', height: 62, margin: '0 auto' }}
                 >
-                    <Image src={bannerjpg.src} fill={true} quality={100} alt="" />
+                    <img src={bannerjpg.src} style={{ width: '100%' }} alt="" />
                 </a>
             </div>
         </footer>

@@ -1,7 +1,7 @@
 FROM node:20-alpine3.17
 WORKDIR /code
 COPY ./package.json /code
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . /code
 RUN npm run build
 FROM node:20-alpine3.17
