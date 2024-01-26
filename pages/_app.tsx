@@ -10,7 +10,7 @@ import '@blog/client/common/global.scss';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: any) {
     const store = wrapper.useStore();
     useEffect(() => {
         const info = [

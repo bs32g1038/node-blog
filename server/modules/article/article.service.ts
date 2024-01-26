@@ -6,7 +6,7 @@ import { isEmpty, isEqual, omit } from 'lodash';
 import { Article, ArticleDocument } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { IPaginate } from '@blog/server/mongoose/paginate';
-import { stripHtml } from 'string-strip-html';
+import sanitizeHtml from 'sanitize-html';
 import { Draft } from '@blog/server/models/draft.model';
 
 function truncateString(str, maxLength = 180) {
@@ -95,7 +95,10 @@ export class ArticleService {
         return {
             items: (items as any).map((item) => {
                 const data = item.toJSON();
-                const textContent = stripHtml(data.content).result;
+                const textContent = sanitizeHtml(data.content, {
+                    allowedTags: [],
+                    allowedAttributes: {},
+                });
                 return {
                     ...omit(data, 'content'),
                     summary: truncateString(textContent),
