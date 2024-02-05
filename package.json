@@ -97,7 +97,7 @@
     "@types/validator": "^13.11.8",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
-    "antd": "^5.13.2",
+    "antd": "^5.14.0",
     "axios": "^1.6.7",
     "boring-avatars": "^1.10.1",
     "clsx": "^2.1.0",
