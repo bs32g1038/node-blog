@@ -4,5 +4,6 @@
 
 .commentFormTitle {
     color: var(--primary-text-color);
-    text-align: center;
+    display: flex;
+    gap: 5px;
 }

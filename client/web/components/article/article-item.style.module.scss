@@ -1,6 +1,6 @@
 .article {
-    background-color: var(--main-bg-color);
-    padding: 20px 30px 20px 30px;
+    // background-color: var(--main-bg-color);
+    padding: 20px 0 20px 0;
     :global(.ant-breadcrumb) {
         font-size: 13px;
         margin-bottom: 8px;
@@ -12,49 +12,84 @@
         }
     }
 }
-.articleMeta {
-    margin-bottom: 12px;
+
+.media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    -ms-flex-negative: 0;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    &:after {
+        content: '';
+        display: block;
+        padding-top: 30%;
+    }
 }
+
+.mediaContent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    border-radius: inherit;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba(120, 120, 120, 0.1);
+}
+
+.articleMeta {
+    // margin-bottom: 20px;
+}
+
 .articleTitle {
-    font-size: 24px;
+    font-size: 28px;
     color: var(--title-text-color);
     font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 14px;
 }
 .articleMetaInfo {
     display: flex;
     align-items: center;
     color: var(--secondary-text-color);
     font-size: 14px;
-    gap: 5px;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: space-between;
     a {
-        color: var(--secondary-text-color);
-        text-decoration: underline;
+        color: var(--secondary-text-color) !important;
+        text-decoration: underline !important;
     }
 }
 
 .statement {
-    font-size: 13px;
+    font-size: 14px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 8px 16px;
     background-color: var(--blackground-color);
     border-radius: 3px;
-    border: 1px dashed var(--border-color);
     color: var(--primary-text-color);
     a {
-        font-size: 13px;
+        font-size: 14px;
+        color: #f86422 !important;
     }
 }
 
 .footer {
     color: var(--secondary-text-color);
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
 }
 
 .editor {
-    a {
-        color: #4b96e6;
-    }
+    border-top: 1px solid var(--border-color) !important;
+    padding-top: 16px;
 }

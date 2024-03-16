@@ -2,8 +2,8 @@
     background-color: var(--main-bg-color);
     display: flex;
     align-items: center;
-    border-top: 1px solid #8c8c8c1f;
-    padding: 14px 30px;
+    border-top: 1px dashed var(--border-color);
+    padding: 14px 0;
     h2 {
         font-size: 20px;
         cursor: pointer;
@@ -11,10 +11,11 @@
         color: var(--title-text-color);
         margin-bottom: 14px;
         font-weight: bold;
-        line-height: 1.2;
+        line-height: 1.5;
     }
     &:last-child {
-        border-bottom: 1px solid #8c8c8c1f;
+        border-bottom: 1px dashed var(--border-color);
+        padding: 14px 0;
     }
 }
 
@@ -24,9 +25,9 @@
 }
 
 .itemMeta {
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 12px;
-    color: var(--secondary-text-color);
+    color: var(--meta-text-color);
     line-height: 1;
     em {
         margin-left: 4px;
@@ -36,10 +37,16 @@
 
 .itemSummary {
     white-space: normal;
-    color: var(--primary-text-color);
-    font-size: 14px;
-    line-height: 1.6;
+    word-break: break-all;
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    line-height: 1.8;
     margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tags {
@@ -68,8 +75,8 @@
 
 .thumbImgWrap {
     height: auto;
-    height: 100px;
-    width: 150px;
+    height: 110px;
+    width: 160px;
     position: relative;
     position: relative;
     display: block;

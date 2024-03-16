@@ -1,9 +1,7 @@
 .app {
-    line-height: 1.6;
+    line-height: 1.5;
     display: flex;
     flex-direction: column;
-    width: 680px;
-    margin: 0 auto;
     flex: 1 0 auto;
     font-size: 14px;
     :global {
@@ -25,7 +23,9 @@
         }
         .main {
             flex: 1 0 auto;
-            background-color: var(--main-bg-color);
+            width: 660px;
+            margin: 0 auto;
+            // background-color: var(--main-bg-color);
         }
         .react-calendar-heatmap text {
             font-size: 10px;

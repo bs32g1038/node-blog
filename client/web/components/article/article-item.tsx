@@ -1,14 +1,15 @@
 import Link from '../link';
 import React from 'react';
-import { parseTime } from '@blog/client/libs/time';
+import { timeAgo } from '@blog/client/libs/time';
 import Comment from './comment';
-import { Breadcrumb } from 'antd';
+import { Space } from 'antd';
 import dynamic from 'next/dynamic';
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 import clsx from 'clsx';
+import { CommentOutlined, EyeOutlined } from '@ant-design/icons';
 
 interface Props {
     article: any;
@@ -20,56 +21,54 @@ export default function ArticleItem(props: Props) {
     const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <div className={style.article}>
-            <Breadcrumb
-                separator=">"
-                items={[
-                    {
-                        title: '首页',
-                    },
-                    {
-                        title: (
-                            <Link
-                                href={'/blog/articles?cid=' + (article.category && article.category._id)}
-                                passHref={true}
-                            >
-                                {article.category && article.category.name}
-                            </Link>
-                        ),
-                    },
-                    {
-                        title: article.title,
-                    },
-                ]}
-            ></Breadcrumb>
+            <div className={style.media}>
+                <div
+                    className={style.mediaContent}
+                    style={{
+                        backgroundImage: `url(${article.screenshot})`,
+                    }}
+                ></div>
+            </div>
             <div className={style.articleMeta}>
                 <Link href={`/blog/articles/${article._id}`} passHref={true}>
                     <h2 className={style.articleTitle}>{article.title}</h2>
                 </Link>
                 <div className={style.articleMetaInfo}>
-                    <span>发表于{parseTime(article.createdAt)}</span>
-                    <span>·</span>
-                    <span>
-                        分类于
-                        <Link href={`/blog/articles?cid=${article.category && article.category._id}`} passHref={true}>
-                            {article.category && article.category.name}
-                        </Link>
-                    </span>
-                    <span>·</span>
-                    <span>{article.commentCount}条评论</span>
-                    <span>·</span>
-                    <span>阅读次数{article.viewsCount}</span>
+                    <Space size={10}>
+                        <span>{timeAgo(article.createdAt)}</span>
+                        <span>·</span>
+                        <span>
+                            <Link
+                                href={`/blog/articles?cid=${article.category && article.category._id}`}
+                                passHref={true}
+                            >
+                                {article.category && article.category.name}
+                            </Link>
+                        </span>
+                    </Space>
+                    <Space size={20}>
+                        <Space>
+                            <EyeOutlined style={{ fontSize: 16 }}></EyeOutlined>
+                            <span>{article.viewsCount}</span>
+                        </Space>
+                        <Space>
+                            <CommentOutlined style={{ fontSize: 16 }}></CommentOutlined>
+                            <span>{article.commentCount}</span>
+                        </Space>
+                    </Space>
                 </div>
             </div>
             <div
                 className={clsx(
-                    'rich-text',
+                    'rich-text-editor rich-text',
                     {
                         dark: theme === 'dark',
                     },
                     style.editor
                 )}
-                dangerouslySetInnerHTML={{ __html: article.content }}
-            ></div>
+            >
+                <div className="ck-content" dangerouslySetInnerHTML={{ __html: article.content }}></div>
+            </div>
             <div className={style.statement}>
                 <div>
                     <strong>本文链接：</strong>

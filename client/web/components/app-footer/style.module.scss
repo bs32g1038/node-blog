@@ -1,19 +1,36 @@
 .appFooter {
     background-color: var(--main-bg-color);
-    color: var(--footer-text-color);
+    color: var(--primary-text-color);
+    // border-top: 1px dashed #eee;
+    margin-top: 15px;
+    // padding-top: 10px;
+}
+
+.appFooterMain {
+    width: 660px;
+    margin: 0 auto;
     position: relative;
 }
 
 .info {
-    flex: 0 0 auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px 0;
-    font-size: 13px;
+    padding: 10px 0 0;
+    font-size: 14px;
     display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+    // justify-content: space-between;
 }
 
 .siteInfo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .svgWrap {
@@ -37,6 +54,7 @@
 
 .siteTitle {
     margin-bottom: 0;
+    color: #f86422;
 }
 
 .contact {
@@ -50,33 +68,19 @@
     }
     svg {
         fill: var(--footer-text-color);
-        width: 14px;
-        height: 14px;
+        width: 18px;
+        height: 18px;
         vertical-align: text-bottom;
     }
 }
 
 .statement {
-    font-size: 12px;
+    font-size: 14px;
     img {
         width: 16px;
         height: 16px;
         display: inline-block;
         vertical-align: text-bottom;
-    }
-}
-
-.support {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 0 0 200px;
-    h3 {
-        color: var(--footer-text-color);
-    }
-    img {
-        width: 24px;
-        height: 24px;
     }
 }
 
@@ -86,14 +90,29 @@
             padding-right: 5px;
         }
     }
+    img {
+        width: 24px;
+        height: 24px;
+        margin-left: 5px;
+        margin-bottom: 2px;
+    }
 }
 
 .invite {
-    padding: 10px 20px;
+    padding: 5px 0 10px;
 }
 
 .inviteTitle {
-    color: var(--secondary-text-color);
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 5px;
+}
+
+.siteIcp {
+    color: var(--primary-text-color);
+    color: #f86422;
+}
+
+.icpGovCn {
+    display: flex;
+    gap: 2px;
 }

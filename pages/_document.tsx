@@ -29,6 +29,7 @@ class MyDocument extends Document {
                             __html: `</script>${extractStyle(cache)}<script>`,
                         }}
                     />
+                    <script async src="//cdn.embedly.com/widgets/platform.js"></script>
                 </>
             ),
         };

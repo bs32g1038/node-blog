@@ -39,6 +39,7 @@ export default function Index(props) {
     const [createDrfat, { isLoading: createDraftLoading }] = useCreateDrfatMutation();
     const [updateDrfat, { isLoading: updateDraftLoading }] = useUpdateDrfatMutation();
     const [page, setPage] = useState(1);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         fetchCategories({ page: 1, limit: 100 });
@@ -134,7 +135,7 @@ export default function Index(props) {
         <Spin spinning={isLoading || draftLoading}>
             <Form
                 form={form}
-                layout="vertical"
+                layout="horizontal"
                 initialValues={{ content: '' }}
                 onValuesChange={onValuesChange}
                 onFinish={(vals) => {
@@ -211,42 +212,69 @@ export default function Index(props) {
                                 历史记录
                             </Button>
                         </Popover>
-                        <Button htmlType="submit" type="link" loading={createLoading || updateLoading}>
-                            <SendOutlined />发 布
-                        </Button>
+                        <Popover
+                            trigger="click"
+                            placement="bottomLeft"
+                            open={isOpen}
+                            onOpenChange={(newOpen: boolean) => {
+                                setIsOpen(newOpen);
+                            }}
+                            content={
+                                <div className={style.drawerContent}>
+                                    <Form.Item
+                                        required={true}
+                                        label="封面图片"
+                                        name="screenshot"
+                                        rules={[{ required: true, message: '封面图片不能为空!' }]}
+                                    >
+                                        <UploadImageButton></UploadImageButton>
+                                    </Form.Item>
+                                    <Form.Item
+                                        name="category"
+                                        label="文章分类"
+                                        rules={[{ required: true, message: '分类不能为空!' }]}
+                                    >
+                                        <Select loading={categoryLoading} placeholder="请选择一个分类">
+                                            {categoryOptions}
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item name="tags" label="文章标签">
+                                        <EditableTagGroup />
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Space style={{ justifyContent: 'flex-end', display: 'flex' }}>
+                                            <Button
+                                                type="primary"
+                                                ghost
+                                                onClick={() => {
+                                                    setIsOpen(false);
+                                                }}
+                                            >
+                                                取消
+                                            </Button>
+                                            <Button
+                                                loading={createLoading || updateLoading}
+                                                type="primary"
+                                                onClick={() => {
+                                                    form.submit();
+                                                }}
+                                            >
+                                                提交
+                                            </Button>
+                                        </Space>
+                                    </Form.Item>
+                                </div>
+                            }
+                        >
+                            <Button type="link">
+                                <SendOutlined />发 布
+                            </Button>
+                        </Popover>
                     </section>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ display: 'flex', width: '920px' }}>
-                        <div className={style.drawerContent}>
-                            <Form.Item
-                                required={true}
-                                label="封面图片"
-                                name="screenshot"
-                                rules={[{ required: true, message: '封面图片不能为空!' }]}
-                            >
-                                <UploadImageButton></UploadImageButton>
-                            </Form.Item>
-                            <Form.Item
-                                name="category"
-                                label="文章分类"
-                                rules={[{ required: true, message: '分类不能为空!' }]}
-                            >
-                                <Select loading={categoryLoading} placeholder="请选择一个分类">
-                                    {categoryOptions}
-                                </Select>
-                            </Form.Item>
-                            <Form.Item name="tags" label="文章标签">
-                                <EditableTagGroup />
-                            </Form.Item>
-                        </div>
-                        <div style={{ flex: '1 0 auto' }}>
-                            <Form.Item name="content">
-                                <JEditor></JEditor>
-                            </Form.Item>
-                        </div>
-                    </div>
-                </div>
+                <Form.Item name="content">
+                    <JEditor></JEditor>
+                </Form.Item>
             </Form>
         </Spin>
     );
