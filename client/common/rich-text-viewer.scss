@@ -237,6 +237,15 @@ table.ProseMirror-selectednode {
         line-height: 2;
     }
 
+    .ck-content blockquote {
+        color: #999;
+        font-size: 14px;
+    }
+
+    .ck-content blockquote p {
+        margin-bottom: 0;
+    }
+
     // .ck-content pre {
     //     color: #8c8e94;
     //     background-color: #f4f7f8;

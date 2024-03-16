@@ -55,7 +55,7 @@ const editorConfiguration = {
 
 export default function EditorDemo(props: EditorDemoProps): JSX.Element {
     return (
-        <div className={style.wrap + ' rich-text'}>
+        <div className={style.wrap + ' rich-text-editor'}>
             <CKEditor
                 editor={ClassicEditor as any}
                 config={editorConfiguration as any}
