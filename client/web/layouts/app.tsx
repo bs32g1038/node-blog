@@ -67,7 +67,7 @@ const App = (props: { children?: ReactNode }) => {
                                 --main-bg-color: #141414;
                                 --app-background-color: #141414;
                                 --explore-color-border-default: rgba(55, 53, 47, 0.16);
-                                --app-header-box-shadow: rgba(90, 135, 180, 0.1);
+                                --app-header-box-shadow: rgba(45, 45, 45, 0.2);
                             }
                             .ant-pagination-prev,
                             .ant-pagination-next,
