@@ -250,8 +250,9 @@ table.ProseMirror-selectednode {
         max-width: 100%;
     }
 
-    .rich-text .ck-content a {
+    .ck-content a {
         color: #f86422 !important;
+        word-break: break-all;
     }
 
     // .ck-content pre {
