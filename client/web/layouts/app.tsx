@@ -36,16 +36,18 @@ const App = (props: { children?: ReactNode }) => {
                         styles={css`
                             :root {
                                 --title-text-color: rgba(0, 0, 0, 0.85);
-                                --primary-text-color: rgba(0, 0, 0, 0.65);
-                                --secondary-text-color: rgba(0, 0, 0, 0.45);
+                                --primary-text-color: rgba(0, 0, 0, 0.8);
+                                --secondary-text-color: rgba(0, 0, 0, 0.65);
+                                --meta-text-color: rgba(0, 0, 0, 0.45);
                                 --disabal-color: rgba(0, 0, 0, 0.25);
-                                --border-color: rgba(0, 0, 0, 0.15);
+                                --border-color: rgba(0, 0, 0, 0.06);
                                 --dividers-color: rgba(0, 0, 0, 0.06);
                                 --blackground-color: rgba(0, 0, 0, 0.04);
                                 --footer-text-color: var(--secondary-text-color);
                                 --main-bg-color: #fff;
-                                --app-background-color: #f5f5f5;
+                                --app-background-color: #fff;
                                 --explore-color-border-default: rgba(235, 236, 237, 0.8);
+                                --app-header-box-shadow: rgba(17, 58, 93, 0.1);
                             }
                         `}
                     />
@@ -56,14 +58,16 @@ const App = (props: { children?: ReactNode }) => {
                                 --title-text-color: rgba(255, 255, 255, 0.85);
                                 --primary-text-color: rgba(255, 255, 255, 0.65);
                                 --secondary-text-color: rgba(255, 255, 255, 0.45);
+                                --meta-text-color: rgba(255, 255, 255, 0.45);
                                 --disabal-color: rgba(255, 255, 255, 0.25);
-                                --border-color: rgba(255, 255, 255, 0.15);
+                                --border-color: rgba(255, 255, 255, 0.06);
                                 --dividers-color: rgba(255, 255, 255, 0.06);
                                 --blackground-color: rgba(255, 255, 255, 0.04);
                                 --footer-text-color: var(--secondary-text-color);
                                 --main-bg-color: #141414;
-                                --app-background-color: rgb(10, 10, 10);
+                                --app-background-color: #141414;
                                 --explore-color-border-default: rgba(55, 53, 47, 0.16);
+                                --app-header-box-shadow: rgba(45, 45, 45, 0.2);
                             }
                             .ant-pagination-prev,
                             .ant-pagination-next,

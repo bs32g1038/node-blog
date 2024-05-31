@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { parseTime, timeAgo } from '@blog/client/libs/time';
+import React from 'react';
+import { timeAgo } from '@blog/client/libs/time';
 import { CommentForm } from '../comment-form';
 import style from './comment-item.style.module.scss';
 import { xss } from '@blog/client/libs/marked';
@@ -14,104 +14,74 @@ const getBadgeVisitorOrAuthor = (identity) => {
     return identity !== 0 ? <span>博主</span> : <span>游客</span>;
 };
 
-const ReplyComponent = (props: { parentId: string; item: IComment; parentNickName: string }) => {
-    const { parentId, item, parentNickName } = props;
-    const [showCommentForm, setShowCommentForm] = useState('');
-    return (
-        <div className={style.commentReplyItem}>
-            <div className={style.commentItemReplyContent}>
-                <div className={style.commentItemReplyInfo}>
-                    <div className={style.left}>
-                        <div className={style.commentItemReplyAvatar}>
-                            <Avatar size={16} name={item.nickName} variant="beam" />
-                        </div>
-                        <span className={style.commentItemNickName}>{item.nickName}</span>
-                        <span className={style.time}>{getBadgeVisitorOrAuthor(item.identity)}</span>
-                        <span className={style.time}>{timeAgo(item.createdAt)}</span>
-                        <div className={style.replyNickName}>
-                            {item.reply ? `@${item.reply.nickName}` : parentId && `@${parentNickName}`}
-                        </div>
-                    </div>
-                    <Button
-                        type="text"
-                        size="small"
-                        style={{ color: 'var(--secondary-text-color)' }}
-                        onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
-                        icon={<CommentOutlined></CommentOutlined>}
-                    >
-                        评论
-                    </Button>
-                </div>
-                <Space size={4} align="start">
-                    <p
-                        className={style.replyContent}
-                        dangerouslySetInnerHTML={{
-                            __html: xss(handleEmoji(item.content)),
-                        }}
-                    ></p>
-                </Space>
-                {showCommentForm === item._id && (
-                    <CommentForm
-                        url="/api/comments"
-                        parentId={parentId}
-                        articleId={item.article as string}
-                        replyId={item._id}
-                    />
-                )}
-            </div>
-        </div>
-    );
-};
-
-export const CommentItem = (props: { item: IComment; index: number }) => {
-    const [showCommentForm, setShowCommentForm] = useState('');
+export const CommentItem = (props: {
+    item: IComment;
+    showCommentForm: string;
+    setShowCommentForm: any;
+    parentNickName?: string;
+    parentId?: string;
+}) => {
+    const { showCommentForm, setShowCommentForm, parentId, parentNickName } = props;
     const item = props.item;
     return (
         <div className={style.commentItem}>
             <div className={style.commentItemInner}>
                 <div className={style.commentItemAvatar}>
-                    <Avatar size={40} name={item.nickName} variant="beam" />
+                    <Avatar size={40} name={item.nickName} square variant="beam" />
                 </div>
                 <div className={style.commentItemRight}>
-                    <div className={style.commentHeader}>
-                        <div className={style.commentHeaderLeftContent}>
-                            <span className={style.commentItemNickName}>{item.nickName}</span>
-                            <span className={style.time}>{getBadgeVisitorOrAuthor(item.identity)}</span>
-                            <span className={style.time}>{parseTime(item.createdAt)}</span>
+                    <div className={style.commentItemRightTop}>
+                        <div className={style.commentHeader}>
+                            <div className={style.commentHeaderLeftContent}>
+                                <span className={style.commentItemNickName}>{item.nickName}</span>
+                            </div>
                         </div>
-                        <Button
-                            type="text"
-                            size="small"
-                            style={{ color: 'var(--secondary-text-color)' }}
-                            onClick={() => setShowCommentForm(showCommentForm ? '' : item._id)}
-                            icon={<CommentOutlined></CommentOutlined>}
-                        >
-                            评论
-                        </Button>
+                        <p
+                            className={style.commentItemContent}
+                            dangerouslySetInnerHTML={{
+                                __html:
+                                    (item.reply
+                                        ? `@${item.reply.nickName}：`
+                                        : parentId
+                                          ? `@${parentNickName}：`
+                                          : '') + xss(handleEmoji(item.content).replace(/\n/g, '<br>')),
+                            }}
+                        ></p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Space>
+                                <span className={style.time}>{getBadgeVisitorOrAuthor(item.identity)}</span>
+                                <span>·</span>
+                                <span className={style.time}>{timeAgo(item.createdAt)}</span>
+                            </Space>
+                            <Button
+                                type="text"
+                                style={{ color: 'var(--secondary-text-color)' }}
+                                onClick={() => setShowCommentForm(showCommentForm === item._id ? '' : item._id)}
+                            >
+                                <CommentOutlined style={{ fontSize: 16 }}></CommentOutlined>
+                            </Button>
+                        </div>
+                        {showCommentForm === item._id && (
+                            <CommentForm
+                                url="/api/comments"
+                                parentId={parentId || item._id}
+                                articleId={isString(item.article) ? item.article : item.article._id}
+                                replyId={item._id}
+                                placeholder={`回复@${item.nickName}`}
+                            />
+                        )}
                     </div>
-                    <p
-                        className={style.commentItemContent}
-                        dangerouslySetInnerHTML={{
-                            __html: xss(handleEmoji(item.content)),
-                        }}
-                    ></p>
-                    {showCommentForm === item._id && (
-                        <CommentForm
-                            url="/api/comments"
-                            parentId={item._id}
-                            articleId={isString(item.article) ? item.article : item.article._id}
-                            replyId={item._id}
-                        />
-                    )}
                     <div className={style.commentReplyList}>
                         {item.comments?.items?.map((_) => {
                             return (
-                                <ReplyComponent
+                                <CommentItem
+                                    showCommentForm={showCommentForm}
+                                    setShowCommentForm={setShowCommentForm}
                                     key={_._id}
                                     parentNickName={item.nickName}
                                     parentId={item._id}
                                     item={_}
-                                ></ReplyComponent>
+                                ></CommentItem>
                             );
                         })}
                     </div>

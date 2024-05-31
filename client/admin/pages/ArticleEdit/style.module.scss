@@ -1,33 +1,7 @@
-.header {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    padding: 10px 40px;
-    z-index: 799;
-    display: flex;
-    :global(.view-actions) {
-        display: flex;
-        align-items: center;
-    }
-}
-.leftItem {
-    display: flex;
-    color: rgba(0, 0, 0, 0.65);
-    a {
-        color: rgba(0, 0, 0, 0.65);
-        text-decoration: none;
-    }
-}
-.name {
-    padding-right: 8px;
-}
-.type {
-    padding-left: 8px;
-    border-left: 1px solid rgba(0, 0, 0, 0.15);
-}
 .editorWrap {
-    flex: 1 0 auto;
+    margin: 0 auto;
+    width: 700px;
+    padding-top: 20px;
     :global(textarea.ant-input) {
         font-size: 24px;
         font-weight: 700;
@@ -37,20 +11,22 @@
             box-shadow: none;
         }
     }
-}
-.drawerContent {
-    width: 240px;
-    padding: 20px;
     :global(.ant-upload) {
         width: 200px !important;
         height: auto !important;
         min-height: 80px !important;
     }
-    :global {
-        img {
-            width: 200px !important;
-            height: 150px !important;
-            object-fit: contain;
-        }
+    img {
+        width: 200px !important;
+        height: 150px !important;
+        object-fit: contain;
+    }
+}
+
+.back {
+    a {
+        color: rgba(0, 0, 0, 0.65);
+        text-decoration: none;
+        font-weight: normal;
     }
 }

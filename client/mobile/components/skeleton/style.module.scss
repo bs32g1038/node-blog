@@ -1,0 +1,20 @@
+@keyframes SkeletonLoading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+.skeleton {
+    box-shadow: none !important;
+    background-clip: padding-box !important;
+    cursor: default;
+    color: transparent !important;
+    pointer-events: none;
+    user-select: none;
+    background: linear-gradient(90deg, #fff 25%, #ccc 37%, #fff 63%);
+    background-size: 400% 100%;
+    animation: SkeletonLoading 1.4s ease infinite;
+}

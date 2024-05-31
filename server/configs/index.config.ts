@@ -13,9 +13,9 @@ export const MONGODB = {
     uri: isDevMode
         ? 'mongodb://localhost:27017/dev'
         : isTestMode
-        ? 'mongodb://localhost:27017/test'
-        : process.env.MONGODB_URL ||
-          `mongodb://${process.env.MONGODB_HOSTNAME || 'localhost'}:${process.env.MONGODB_PORT || '27017'}/blog`,
+          ? 'mongodb://localhost:27017/test'
+          : process.env.MONGODB_URL ||
+            `mongodb://${process.env.MONGODB_HOSTNAME || 'localhost'}:${process.env.MONGODB_PORT || '27017'}/blog`,
     username: process.env.MONGODB_USERNAME || '',
     password: process.env.MONGODB_PASSWORD || '',
 };

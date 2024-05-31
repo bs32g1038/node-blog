@@ -1,0 +1,16 @@
+.searchForm {
+    position: relative;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.panelFooter {
+    padding: 0 10px 10px;
+    font-size: 13px;
+    color: var(--primary-text-color);
+    svg {
+        vertical-align: text-bottom;
+        margin-right: 2px;
+        fill: var(--primary-text-color);
+    }
+}

@@ -20,41 +20,45 @@ export const AppHeader = () => {
     const theme = useSelector((state: RootState) => state.app.theme);
     return (
         <header className={style.appHeader}>
-            <Link href="/blog" passHref={true} className={style.siteTitle}>
-                <LogoSvg className={style.siteTileSvgWrap}></LogoSvg>
-                <h1>{config.siteTitle}</h1>
-            </Link>
-            <nav className={style.nav}>
-                <NavLink href="/blog" className={clsx(style.navA, 'active')}>
-                    <HomeOutlined></HomeOutlined>
-                    <span>首页</span>
-                </NavLink>
-                <a href="/blog/rss" target="_blank" className={style.navA}>
-                    <RssIcon className={style.branche}></RssIcon>
-                    <span>Rss</span>
-                </a>
+            <nav className={style.navbar}>
+                <Link href="/blog" passHref={true} className={style.siteTitle}>
+                    <LogoSvg className={style.siteTileSvgWrap}></LogoSvg>
+                    <h1>{config?.siteTitle}</h1>
+                </Link>
+                <nav className={style.nav}>
+                    <NavLink href="/blog" className={clsx(style.navA, 'active')}>
+                        <HomeOutlined></HomeOutlined>
+                        <span>首页</span>
+                    </NavLink>
+                    <a href="/blog/rss" target="_blank" className={style.navA}>
+                        <RssIcon className={style.branche}></RssIcon>
+                        <span>Rss</span>
+                    </a>
+                </nav>
+                <div className={style.right}>
+                    <SearchForm></SearchForm>
+                    {theme === 'light' ? (
+                        <Button
+                            type="link"
+                            icon={<MoonIcon className={style.moonIcon}></MoonIcon>}
+                            onClick={() => {
+                                dispatch(setTheme({ theme: 'dark' }));
+                            }}
+                        ></Button>
+                    ) : (
+                        <Button
+                            type="link"
+                            icon={<SunIcon className={style.sunIcon}></SunIcon>}
+                            onClick={() => {
+                                dispatch(setTheme({ theme: 'light' }));
+                            }}
+                        ></Button>
+                    )}
+                    <a href="https://github.com/bs32g1038" target="__blank">
+                        <GithubIcon name="github" width="24px" height="24px" className={style.githubIcon}></GithubIcon>
+                    </a>
+                </div>
             </nav>
-            <SearchForm style={{ marginRight: '10px' }}></SearchForm>
-            {theme === 'light' ? (
-                <Button
-                    type="link"
-                    icon={<MoonIcon className={style.moonIcon}></MoonIcon>}
-                    onClick={() => {
-                        dispatch(setTheme({ theme: 'dark' }));
-                    }}
-                ></Button>
-            ) : (
-                <Button
-                    type="link"
-                    icon={<SunIcon className={style.sunIcon}></SunIcon>}
-                    onClick={() => {
-                        dispatch(setTheme({ theme: 'light' }));
-                    }}
-                ></Button>
-            )}
-            <a href="https://github.com/bs32g1038" target="__blank" style={{ marginLeft: '15px' }}>
-                <GithubIcon name="github" width="24px" height="24px" className={style.githubIcon}></GithubIcon>
-            </a>
         </header>
     );
 };

@@ -34,7 +34,7 @@ export const SearchForm = (props) => {
         <div className={style.searchForm} style={props.style}>
             <Select
                 showSearch
-                style={{ width: '220px', marginRight: '10px' }}
+                style={{ width: '100%' }}
                 placeholder={'请输入关键词'}
                 defaultActiveFirstOption={false}
                 filterOption={false}

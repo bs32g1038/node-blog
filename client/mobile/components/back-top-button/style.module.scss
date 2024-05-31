@@ -1,0 +1,17 @@
+.backTopButton {
+    cursor: pointer;
+    position: absolute;
+    right: -40px;
+    bottom: 40px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    transition: all 0.5s ease;
+    background-color: var(--main-bg-color);
+    svg {
+        fill: #8590a6;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}

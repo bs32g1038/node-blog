@@ -16,11 +16,19 @@ app.prepare().then(() => {
     server.use('/api', createProxyMiddleware({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
     server.get(/^\/static\//, createProxyMiddleware({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
 
+    server.get('/m/blog/articles/:id', (req, res) => {
+        return app.render(req, res, '/m/blog/article', { id: req.params.id });
+    });
+
     server.get('/blog/articles/:id', (req, res) => {
         return app.render(req, res, '/blog/article', { id: req.params.id });
     });
 
-    server.get('/', (req, res) => res.redirect('/blog'));
+    server.get('/', (req, res) => {
+        const userAgent: any = req.headers['user-agent'];
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        res.redirect(isMobile ? '/m/blog' : '/blog');
+    });
 
     server.all('*', (req, res) => {
         return handle(req, res);

@@ -10,9 +10,10 @@ export const indexApi = adminApi.injectEndpoints({
             }),
         }),
         fetchDrfats: build.mutation<any, { limit: number; page: number }>({
-            query: () => ({
+            query: (params) => ({
                 url: '/drafts?type=article',
                 method: 'get',
+                params,
             }),
         }),
         fetchDrfat: build.mutation<any, any>({

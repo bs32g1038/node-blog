@@ -177,6 +177,7 @@ export const {
     useFetchArticleQuery,
     useFetchRecentArticlesQuery,
     useFetchArticlesQuery,
+    useLazyFetchArticlesQuery,
     useFetchConfigQuery,
     useFetchExploreQuery,
     useFetchConfigSvgQuery,

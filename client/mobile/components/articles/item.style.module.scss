@@ -1,0 +1,119 @@
+.item {
+    background-color: var(--main-bg-color);
+    // display: flex;
+    // align-items: center;
+    border-top: 1px dashed var(--border-color);
+    padding: 14px 0;
+    h2 {
+        font-size: 20px;
+        cursor: pointer;
+        white-space: normal;
+        color: var(--title-text-color);
+        margin-bottom: 14px;
+        font-weight: bold;
+        line-height: 1.5;
+    }
+    &:first-child {
+        border-top: none;
+    }
+    &:last-child {
+        border-bottom: 1px dashed var(--border-color);
+        padding: 14px 0;
+    }
+}
+
+.itemLeft {
+    width: 100%;
+    margin-right: 20px;
+}
+
+.itemMeta {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--meta-text-color);
+    line-height: 1;
+    em {
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+}
+
+.itemSummary {
+    white-space: normal;
+    word-break: break-all;
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tags {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    a {
+        font-size: 14px;
+        color: var(--secondary-text-color);
+        text-transform: capitalize;
+    }
+}
+
+.tagIcon {
+    width: 14px;
+    height: 14px;
+    fill: var(--secondary-text-color);
+    margin-right: 8px;
+}
+
+.itemRight {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.thumbImgWrap {
+    height: auto;
+    height: 160px;
+    // width: 160px;
+    position: relative;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    flex-shrink: 0;
+    border-radius: 2px;
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    margin-bottom: 5px;
+    img {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        display: block;
+        max-width: 100%;
+        transition: all 444ms ease-in-out;
+    }
+    :global {
+        .ant-image {
+            height: 100%;
+        }
+    }
+    &:after {
+        content: '';
+        display: block;
+        padding-top: 100%;
+        box-sizing: border-box;
+    }
+}
+
+.thumbImg {
+    height: 100px;
+    width: 150px;
+    background-size: cover;
+    background-position: 100% 100%;
+    background-color: var(--main-bg-color);
+}

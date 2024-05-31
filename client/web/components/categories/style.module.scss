@@ -1,6 +1,6 @@
 .categories {
-    background-color: var(--main-bg-color);
-    padding: 0 30px;
+    // background-color: var(--main-bg-color);
+    padding: 0;
     font-size: 14px;
     color: var(--second-text-color);
     margin-top: 20px;
@@ -10,8 +10,8 @@
 }
 
 .categoriesInnter {
-    padding: 2px 2px;
-    background-color: var(--app-background-color);
+    // padding: 2px 2px;
+    // background-color: var(--app-background-color);
     display: inline-block;
     border-radius: 3px;
 }

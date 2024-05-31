@@ -69,7 +69,7 @@ export class LoginService {
             this.adminLogService.create({
                 data: `用户：${user.account} 登录后台系统`,
                 type: '系统登录',
-                user: user._id,
+                user,
             });
             return {
                 userName: user.userName,

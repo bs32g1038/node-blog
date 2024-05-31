@@ -29,6 +29,7 @@ export class DraftService {
         const { items, totalCount } = await this.draftModel.paginate(query, '', {
             page,
             limit,
+            sort: { createdAt: -1 },
         });
         return {
             items,

@@ -17,13 +17,26 @@ class SSRController {
         return app.render(request, response, '/blog/article', { id: request.params.id });
     }
 
+    @Get('/m/blog/articles/:id')
+    async m_article(@Req() request: Request, @Res() response: Response) {
+        return app.render(request, response, '/m/blog/article', { id: request.params.id });
+    }
+
     @Get('/')
-    async index(@Res() response: Response) {
-        response.redirect('/blog');
+    async index(@Req() request: Request, @Res() response: Response) {
+        const userAgent: any = request.headers['user-agent'];
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        response.redirect(isMobile ? '/m/blog' : '/blog');
     }
 
     @Get('*')
     async _all(@Req() request: Request, @Res() response: Response) {
+        const userAgent: any = request.headers['user-agent'];
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        if (isMobile && !request.path.includes('/m')) {
+            response.redirect('/m/blog');
+            return response.end();
+        }
         handle(request, response);
     }
 }

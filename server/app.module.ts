@@ -40,6 +40,6 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(RateLimitMiddleware).forRoutes('api');
+        // consumer.apply(RateLimitMiddleware).forRoutes('api');
     }
 }

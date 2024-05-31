@@ -15,9 +15,8 @@ export default function Index(props) {
         if (id) {
             fetchCategory({ id: id.toString() })
                 .unwrap()
-                .then((res) => {
-                    const category = res.data;
-                    form.setFieldsValue(category);
+                .then((data) => {
+                    form.setFieldsValue(data);
                 });
         }
     }, [fetchCategory, form, router.query]);

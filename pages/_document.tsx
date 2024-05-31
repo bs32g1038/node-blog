@@ -6,7 +6,6 @@ class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
         const cache = createCache();
         const originalRenderPage = ctx.renderPage;
-
         ctx.renderPage = () =>
             originalRenderPage({
                 enhanceApp: (App) => (props) => (
@@ -29,6 +28,7 @@ class MyDocument extends Document {
                             __html: `</script>${extractStyle(cache)}<script>`,
                         }}
                     />
+                    <script async src="//cdn.embedly.com/widgets/platform.js"></script>
                 </>
             ),
         };
@@ -37,6 +37,10 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
+                />
                 <body>
                     <Main />
                     <NextScript />

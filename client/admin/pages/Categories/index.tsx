@@ -120,7 +120,12 @@ export default function Index(props) {
     );
     return (
         <BasicLayout>
-            <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
+            <ActionCard
+                title={CTitle}
+                styles={{
+                    body: { padding: 0 },
+                }}
+            >
                 <CTable
                     rowKey={(record: any) => record._id}
                     rowSelection={rowSelection}

@@ -4,15 +4,17 @@ import { nanoid } from 'nanoid';
 import Emoji from './emoji';
 import { USER_COMMENT_INFO_KEY } from './constant';
 import axios from '@blog/client/web/utils/axios';
-import { Alert, Tooltip, Input, Button } from 'antd';
+import { Tooltip, Input, Button, Popover, message } from 'antd';
 import style from './style.module.scss';
 import Avatar from 'boring-avatars';
+import { SmileOutlined } from '@ant-design/icons';
 
 interface Props {
     url: string;
     parentId?: string;
     replyId?: string;
     articleId?: string;
+    placeholder?: string;
 }
 
 export const CommentForm = (props: Props) => {
@@ -20,8 +22,8 @@ export const CommentForm = (props: Props) => {
         nickName: '',
         email: '',
     });
+    const [isFocus, setIsFocus] = useState(false);
     const [content, setContent] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [buttonLoading, setButtonLoading] = useState(false);
     const onEmojiInput = (text: string) => {
         setContent((val) => {
@@ -62,9 +64,9 @@ export const CommentForm = (props: Props) => {
             });
         }
         if (!isLength(data.content, { min: 1 })) {
-            return setErrorMessage('最少输入6个字符！');
+            return message.warning('最少输入6个字符！');
         } else if (!isLength(data.content, { max: 490 })) {
-            return setErrorMessage('最多只能输入490个字符！');
+            return message.warning('最多只能输入490个字符！');
         }
         setButtonLoading(true);
         axios
@@ -73,50 +75,77 @@ export const CommentForm = (props: Props) => {
                 location.reload();
             })
             .catch(() => {
-                setErrorMessage('服务器开小差去了，请尝试刷新页面，再进行提交！');
+                message.error('服务器开小差去了，请尝试刷新页面，再进行提交！');
             });
     };
     return (
         <div>
-            <Alert
-                message={
-                    <div>
+            {!props.replyId && (
+                <div>
+                    <span className={style.userInfoText}>
                         当前评论模式：游客模式，系统将自动生成相关数据信息。
                         <Tooltip
                             placement="topLeft"
                             title="发布评论时，请遵守您所在国家和中华人民共和国的法律法规，禁止发布政治相关内容；评论内容应该和所在页面的内容相关，禁止一切无意义和严重跑题的内容；请尊重他人，友好评论，请像和他人面对面谈话时一样保持对他人的尊重；禁止发布商业广告。"
                         >
-                            <a>详情。</a>
+                            《内容规范》
                         </Tooltip>
-                    </div>
-                }
-                type="warning"
-                showIcon
-            />
-            <div className={style.userInfo}>
-                <span className={style.userInfoText}>游客账户：</span>
-                <Avatar size={20} name={userInfo.nickName} variant="beam" />
-                <span className={style.userInfoText}>{userInfo.nickName}</span>
-            </div>
-            <div className={style.inputWrap}>
-                {errorMessage && <Alert message={errorMessage} type="warning" showIcon />}
-                <Input.TextArea
-                    value={content}
-                    placeholder="留点空白给你说~"
-                    autoSize={{ minRows: 3, maxRows: 3 }}
-                    onChange={(event) => {
-                        setContent(event.target.value);
-                    }}
-                />
-                <Emoji
-                    onInput={(text) => {
-                        onEmojiInput(text);
-                    }}
-                ></Emoji>
-                <div className={style.commentFormFooter}>
-                    <Button loading={buttonLoading} size="small" type="primary" onClick={() => submit()}>
-                        提 交
-                    </Button>
+                    </span>
+                    <span className={style.userInfoText}>你的账号名为：</span>
+                    <span className={style.userInfoText} style={{ color: '#f86422' }}>
+                        {userInfo.nickName}
+                    </span>
+                </div>
+            )}
+            <div
+                className={style.userInfo}
+                onFocus={() => {
+                    setIsFocus(true);
+                }}
+            >
+                {!props.replyId && <Avatar size={40} name={userInfo.nickName} square variant="beam" />}
+                <div className={style.commentForm}>
+                    <Input.TextArea
+                        className={style.input}
+                        value={content}
+                        placeholder={props.placeholder || '留点空白给你说~'}
+                        autoSize={{ minRows: 1, maxRows: 3 }}
+                        onChange={(event) => {
+                            setContent(event.target.value);
+                        }}
+                    />
+                    {isFocus && (
+                        <>
+                            <div className={style.line}></div>
+                            <div className={style.commentFormFooter}>
+                                <Popover
+                                    placement="bottomRight"
+                                    content={
+                                        <div>
+                                            <Emoji
+                                                onInput={(text) => {
+                                                    onEmojiInput(text);
+                                                }}
+                                            ></Emoji>
+                                        </div>
+                                    }
+                                    trigger="click"
+                                >
+                                    <Button type="text" style={{ padding: 0, height: 'auto' }}>
+                                        <SmileOutlined style={{ fontSize: 24, color: 'rgb(132, 145, 165)' }} />
+                                    </Button>
+                                </Popover>
+                                <Button
+                                    className={style.submitBtn}
+                                    loading={buttonLoading}
+                                    type="primary"
+                                    onClick={() => submit()}
+                                >
+                                    发 布
+                                </Button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,0 +1,111 @@
+.appFooter {
+    background-color: var(--main-bg-color);
+    color: var(--primary-text-color);
+    // border-top: 1px dashed #eee;
+    margin-top: 15px;
+    // padding-top: 10px;
+}
+
+.appFooterMain {
+    margin: 0 auto;
+    position: relative;
+}
+
+.info {
+    padding: 10px 0 0;
+    font-size: 14px;
+}
+
+.content {
+    gap: 5px;
+}
+
+.siteInfo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.svgWrap {
+    display: flex;
+    align-items: center;
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+}
+
+.siteLogo {
+    fill: #2b414d;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.siteTitle {
+    margin-bottom: 0;
+    color: #f86422;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+}
+
+.contactList {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    svg {
+        fill: var(--footer-text-color);
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+    }
+}
+
+.statement {
+    font-size: 14px;
+    img {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        vertical-align: text-bottom;
+    }
+}
+
+.supportList {
+    a {
+        &:last-of-type {
+            padding-right: 5px;
+        }
+    }
+    img {
+        width: 24px;
+        height: 24px;
+        margin-left: 5px;
+        margin-bottom: 2px;
+    }
+}
+
+.invite {
+    padding: 5px 0 10px;
+}
+
+.inviteTitle {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.siteIcp {
+    color: var(--primary-text-color);
+    color: #f86422;
+}
+
+.icpGovCn {
+    display: flex;
+    gap: 2px;
+}

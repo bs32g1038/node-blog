@@ -4,6 +4,7 @@ const path = require('path');
 const resolve = (dir) => path.resolve(__dirname, dir);
 
 module.exports = {
+    transpilePackages: ['antd-mobile'],
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
         config.module.rules.push({
             test: /\.(txt|svg|ttf)$/,
