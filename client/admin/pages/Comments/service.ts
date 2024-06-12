@@ -4,7 +4,7 @@ export const indexApi = adminApi.injectEndpoints({
     endpoints: (build) => ({
         fetchComments: build.mutation<{ items: any[]; totalCount: number }, { limit: number; page: number }>({
             query: () => ({
-                url: '/admin-comments',
+                url: '/comments',
                 method: 'get',
             }),
         }),

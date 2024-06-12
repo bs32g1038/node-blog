@@ -39,21 +39,21 @@ interface Iconfig {
 }
 
 export interface IComment {
+    readonly isCanDeleted: boolean;
     readonly _id: string;
-    readonly nickName: string;
-    readonly email: string;
-    readonly website: string;
+    readonly user: {
+        username: string;
+        avatar: string;
+        type: string;
+    };
     readonly reply: IComment;
-    readonly location: string;
-    readonly pass: boolean;
     readonly content: string;
-    readonly identity: number;
     readonly createdAt: string;
     readonly updatedAt: string;
+    readonly likes: string[];
+    readonly browser: string;
     readonly article: { _id: string } | string;
-    readonly comments?: {
-        items: IComment[];
-    };
+    readonly comments?: IComment[];
 }
 
 interface CategoryQueryDataLoaded {
@@ -168,6 +168,32 @@ export const appApi = createApi({
                 params,
             }),
         }),
+        likeComment: builder.query<any, { id: string }>({
+            query: (params) => ({
+                url: '/api/like-comment/' + params.id,
+                method: 'post',
+            }),
+        }),
+        deleteComment: builder.mutation<any, { id: string }>({
+            query: (params) => ({
+                url: '/api/comments/' + params.id,
+                method: 'delete',
+            }),
+        }),
+        authLogin: builder.mutation<any, { account: string; password: string; captcha: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/login',
+                method: 'post',
+                data,
+            }),
+        }),
+        register: builder.mutation<any, { account: string; password: string; captcha: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/signup',
+                method: 'post',
+                data,
+            }),
+        }),
     }),
 });
 
@@ -182,6 +208,10 @@ export const {
     useFetchExploreQuery,
     useFetchConfigSvgQuery,
     useLazySearchArticlesQuery,
+    useLazyLikeCommentQuery,
+    useDeleteCommentMutation,
+    useAuthLoginMutation,
+    useRegisterMutation,
 } = appApi;
 
 export const {

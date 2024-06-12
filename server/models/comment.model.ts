@@ -1,76 +1,52 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
-import Joi from '../joi';
 import { Article } from './article.model';
-import paginate from '../mongoose/paginate';
-
-export const CommentJoiSchema = {
-    nickName: Joi.string()
-        .min(1)
-        .max(80)
-        .alter({
-            post: (schema) => schema.required(),
-        }),
-    email: Joi.string()
-        .email()
-        .alter({
-            post: (schema) => schema.required(),
-        }),
-    content: Joi.string()
-        .min(1)
-        .max(500)
-        .alter({
-            post: (schema) => schema.required(),
-        }),
-    parentId: [Joi.equal(null), Joi.objectId()],
-    reply: [Joi.equal(null), Joi.objectId()],
-    article: Joi.objectId().alter({
-        post: (schema) => schema.required(),
-    }),
-    identity: Joi.number().min(0).max(4),
-    website: Joi.string().allow(''),
-};
-
-export type CommentDocument = Comment & Document;
+import paginate from 'mongoose-paginate-v2';
+import { User } from './user.model';
 
 @Schema({
     timestamps: true,
     collection: Comment.name.toLocaleLowerCase(),
 })
 export class Comment {
-    @Prop({ maxlength: 80, trim: true, required: true })
-    nickName: string;
-
-    @Prop({ maxlength: 80, trim: true, required: true })
-    email: string;
-
-    @Prop({ maxlength: 80, trim: true, default: '' })
-    website: string;
-
     @Prop({ maxlength: 500, trim: true, required: true })
-    content: string;
+    content!: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Comment.name, default: null })
-    parentId: string;
+    parentId!: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Comment.name, default: null })
-    reply: string;
+    reply!: string;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Article.name, equired: true })
-    article: string;
-
-    @Prop({ maxlength: 80, trim: true, default: '' })
-    location: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Article.name, required: true })
+    article!: string;
 
     @Prop({ default: true })
-    pass: boolean;
+    pass!: boolean;
 
-    // 管理员身份为1，0为游客
-    @Prop({ max: 4, default: 0 })
-    identity: number;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name, required: true })
+    user!: User;
+
+    @Prop({ trim: true })
+    browser!: string;
+
+    @Prop({ trim: true })
+    os!: string;
+
+    @Prop({ trim: true })
+    ip!: string;
+
+    @Prop([mongoose.Schema.Types.ObjectId])
+    likes!: string[];
+
+    isCanDeleted!: boolean;
 }
+
+export type CommentDocument = HydratedDocument<Comment>;
+
+export type ICommentModel = Model<CommentDocument> & mongoose.PaginateModel<CommentDocument>;
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
 

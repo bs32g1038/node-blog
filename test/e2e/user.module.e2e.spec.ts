@@ -39,7 +39,7 @@ describe('user.module.e2e', () => {
             .set('authorization', __TOKEN__)
             .send({
                 avatar: 'http://127.0.0.1/test.jpg',
-                userName: 'test',
+                username: 'test',
                 email: 'test@test.com',
             })
             .expect(200);

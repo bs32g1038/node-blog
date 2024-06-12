@@ -1,6 +1,8 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { auth } from '../utils/auth.util';
+import jwt from 'jsonwebtoken';
+import { TOKEN_SECRET_KEY } from '../configs/index.config';
+import { Request } from 'express';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -11,9 +13,21 @@ export class RolesGuard implements CanActivate {
         if (!roles) {
             return true;
         }
-        const request = context.switchToHttp().getRequest();
-        const user: any = auth(request);
-        const hasRole = () => user.roles.some((role: string) => roles.includes(role));
-        return user && user.roles && hasRole();
+        const request = context.switchToHttp().getRequest() as Request & { user?: { id: string; roles: string[] } };
+        const mstoken = request.cookies.mstoken;
+        try {
+            const user = jwt.verify(mstoken, TOKEN_SECRET_KEY) as { id: string; roles: string[] };
+            request.user = user;
+            const hasRole = () => {
+                return user?.roles?.some((role: string) => roles.includes(role)) || roles?.includes('all');
+            };
+            return !!(user && user.roles && hasRole());
+        } catch (err: any) {
+            console.log(err);
+            if (!roles.includes('all')) {
+                throw new UnauthorizedException('请先登录', err.message);
+            }
+            return true;
+        }
     }
 }

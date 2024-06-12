@@ -39,7 +39,7 @@ export default function InfoForm() {
     const onFinish = (values) => {
         return injectRequestLoading(updateUserInfo(values)).then(() => {
             message.success('更新成功！');
-            router.reload();
+            // router.reload();
         });
     };
     return (
@@ -60,7 +60,7 @@ export default function InfoForm() {
                 <UploadButton></UploadButton>
             </Form.Item>
             <Form.Item
-                name="userName"
+                name="username"
                 label="用户名"
                 extra="建议使用一个易记的用户名，方便人们认识你"
                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}

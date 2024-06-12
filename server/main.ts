@@ -8,12 +8,24 @@ import { APP_SERVER } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
 import { staticAssetsPath, assetsPath } from './utils/path.util';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import userAgentMiddleware from './middlewares/user-agent.middleware';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.use(
         helmet({
             contentSecurityPolicy: false,
+        })
+    );
+    app.use(userAgentMiddleware());
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: 'my-secret',
+            resave: false,
+            saveUninitialized: false,
         })
     );
     app.use(json({ limit: '20mb' }));

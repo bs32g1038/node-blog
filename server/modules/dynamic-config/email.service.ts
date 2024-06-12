@@ -1,7 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import { Injectable } from '@nestjs/common';
 import Mail from 'nodemailer/lib/mailer';
-import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
+import { DynamicConfigService } from './dynamic.config.service';
 
 export interface EmailOptions {
     subject: string;
@@ -11,10 +11,8 @@ export interface EmailOptions {
 
 @Injectable()
 export class EmailService {
-    private transporter: Mail;
-    constructor(private configService: DynamicConfigService) {
-        this.createTransporter();
-    }
+    private transporter: Mail | undefined;
+    constructor(private configService: DynamicConfigService) {}
 
     isEnableSmtp() {
         return this.configService.config.isEnableSmtp;
@@ -35,22 +33,14 @@ export class EmailService {
         });
     }
 
-    async updateEmailConfig(data) {
-        const config = await this.configService.updateConfig(data);
-        this.createTransporter();
-        return {
-            smtpHost: config.smtpHost,
-            smtpAuthUser: config.smtpAuthUser,
-        };
-    }
-
     // 验证有效性
     verifyClient() {
         if (!this.isEnableSmtp()) {
             return;
         }
+        this.createTransporter();
         return new Promise((resolve) => {
-            this.transporter.verify((error, success) => {
+            this.transporter?.verify((error, success) => {
                 if (error) {
                     return resolve(error);
                 }
@@ -64,12 +54,13 @@ export class EmailService {
         if (!this.isEnableSmtp()) {
             return;
         }
+        this.createTransporter();
         const options = Object.assign(mailOptions, {
             from: `"${this.configService.config.siteTitle}" <${this.configService.config.smtpAuthUser}>`,
             to: this.configService.config.smtpAuthUser,
         });
         return new Promise((resolve, reject) => {
-            this.transporter.sendMail(options, (error, info) => {
+            this.transporter?.sendMail(options, (error, info) => {
                 if (error) {
                     return reject(error);
                 }

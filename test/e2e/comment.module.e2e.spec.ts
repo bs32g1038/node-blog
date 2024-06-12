@@ -60,7 +60,7 @@ describe('comment.module.e2e', () => {
 
         test('permission:admin', async () => {
             await userModel.create({
-                userName: 'bs32g1038',
+                username: 'bs32g1038',
                 account: 'bs32g1038',
                 password: 'test',
                 email: 'bs32g1038@163.com',

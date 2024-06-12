@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { message } from 'antd';
 import Router from 'next/router';
-import config from '@blog/client/configs/admin.default.config';
+import Cookies from 'js-cookie';
 
 axios.defaults.baseURL = '/api';
+axios.defaults.withCredentials = true;
 
 /**
  * 异常处理程序
  */
-const errorHandler = (error) => {
+const errorHandler = (error: { response?: Record<any, any> | undefined; code: any; message: any }) => {
     const { response = {}, code, message: msg } = error;
     if (code === 'ECONNABORTED' || msg.includes('timeout')) {
         message.error('网络超时');
@@ -18,14 +19,15 @@ const errorHandler = (error) => {
     switch (status) {
         case 401:
             // 返回 401 清除token信息并跳转到登录页面
-            localStorage.removeItem(config.tokenKey);
+            Cookies.remove('mstoken');
             Router.push('/admin/login');
-            return Promise.resolve(error);
+            message.error(response.data.message);
+            return Promise.reject(error);
         case 403:
             // 返回 401 清除token信息并跳转到登录页面
-            localStorage.removeItem(config.tokenKey);
+            Cookies.remove('mstoken');
             Router.push('/admin/login');
-            return Promise.resolve(error);
+            return Promise.reject(error);
         default:
             break;
     }
@@ -34,23 +36,6 @@ const errorHandler = (error) => {
     }
     return Promise.reject(error);
 };
-
-axios.interceptors.request.use(
-    function (c: any) {
-        const tokenKey = config.tokenKey;
-        const token = localStorage.getItem(tokenKey);
-        if (!(c.url && (c.url.includes('getFirstLoginInfo') || c.url.includes('login')))) {
-            if (!token) {
-                Router.push('/admin/login');
-            }
-        }
-        c.headers.authorization = token || '';
-        return c;
-    },
-    function (error) {
-        return Promise.reject(error);
-    }
-);
 
 axios.interceptors.response.use(
     function (response) {

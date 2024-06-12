@@ -1,6 +1,16 @@
 import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+import axios from '@blog/client/web/utils/axios';
+import Cookies from 'js-cookie';
+
+export const isClientSide = () => {
+    return typeof window !== 'undefined';
+};
+
+export const isServerSide = () => {
+    return !isClientSide();
+};
 
 class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -14,6 +24,18 @@ class MyDocument extends Document {
                     </StyleProvider>
                 ),
             });
+        const request = ctx.req;
+        if (request && isServerSide()) {
+            let ip =
+                ((request.headers['x-forwarded-for'] ||
+                    request.connection.remoteAddress ||
+                    request.socket.remoteAddress) as string) || undefined;
+            if (ip && ip.split(',').length > 0) {
+                ip = ip.split(',')[0];
+            }
+            axios.defaults.headers.common['x-forwarded-for'] = ip;
+            axios.defaults.headers.common['User-Agent'] = request.headers['user-agent'];
+        }
 
         const initialProps = await Document.getInitialProps(ctx);
 

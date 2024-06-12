@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import defaultConfig from '@blog/client/configs/admin.default.config';
 import menus from '@blog/client/configs/admin.menu.config';
 import Router, { useRouter } from 'next/router';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
@@ -8,7 +7,9 @@ import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } fro
 import style from './style.module.scss';
 import { Layout, Menu, Avatar, Button, Image, Spin } from 'antd';
 import { useFetchConfigQuery } from '@blog/client/web/api';
-import { useFetchUserInfoQuery } from '../../api';
+import { useLazyFetchUserInfoQuery } from '../../api';
+import Cookies from 'js-cookie';
+
 const { Sider } = Layout;
 
 const MenuList = (props) => {
@@ -55,13 +56,16 @@ const setMenuOpen = (props) => {
 };
 
 const logout = () => {
-    localStorage.removeItem(defaultConfig.tokenKey);
+    Cookies.remove('mstoken');
     return Router.push('/admin/login');
 };
 
 export default function SiderMenu(props: Props) {
     const { collapsed } = props;
-    const { data: user, isLoading: isFetchUserLoading } = useFetchUserInfoQuery();
+    const [fetchUserInfo, { data: user, isLoading: isFetchUserLoading }] = useLazyFetchUserInfoQuery();
+    useEffect(() => {
+        fetchUserInfo();
+    }, [fetchUserInfo]);
     const [state, setState] = useState({
         mode: 'inline',
         openKey: [],
@@ -127,7 +131,7 @@ export default function SiderMenu(props: Props) {
                                                 <Avatar src={user.avatar} size={34} icon={<UserOutlined />} />
                                             </div>
                                             <div>
-                                                <h2>{user.userName}</h2>
+                                                <h2>{user.username}</h2>
                                                 <p>{user.account}</p>
                                             </div>
                                         </div>

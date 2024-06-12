@@ -1,43 +1,45 @@
-import { JoiCharSchema } from '@blog/server/joi';
-import { Put } from '@nestjs/common';
+import { Post, Put } from '@nestjs/common';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '@blog/server/guards/roles.guard';
-import { JoiBody } from '@blog/server/decorators/joi.decorator';
+import { ZodBody } from '@blog/server/decorators/zod.decorator';
 import { Roles } from '@blog/server/decorators/roles.decorator';
 import { DynamicConfigService } from './dynamic.config.service';
-import Joi from 'joi';
 import { omit } from 'lodash';
+import { ConfigDto, configZodSchema } from './dynamic.config.zod.schema';
+import { EmailService } from './email.service';
 
-@Controller('/api/configs')
+@Controller('/api')
 @UseGuards(RolesGuard)
 export class DynamicConfigController {
-    constructor(private readonly configService: DynamicConfigService) {}
+    constructor(
+        private readonly configService: DynamicConfigService,
+        private readonly emailService: EmailService
+    ) {}
 
-    @Put()
+    @Put('/configs')
     @Roles('admin')
     async updateConfig(
-        @JoiBody({
-            siteTitle: JoiCharSchema,
-            siteLogo: Joi.string(),
-            siteMetaKeyWords: JoiCharSchema,
-            siteMetaDescription: JoiCharSchema,
-            siteIcp: JoiCharSchema,
-            siteDomain: Joi.string().domain(),
-        })
-        body
+        @ZodBody(configZodSchema)
+        body: ConfigDto
     ) {
         return await this.configService.updateConfig(body);
     }
 
-    @Get('/admin')
+    @Get('/configs/admin')
     @Roles('admin')
     async getAdminConfig() {
         return await this.configService.config;
     }
 
-    @Get()
+    @Get('/configs')
     async getConfig() {
         const config = await this.configService.config;
         return omit(config, 'isEnableSmtp', 'smtpHost', 'smtpSecure', 'smtpPort', 'smtpAuthUser', 'smtpAuthpass');
+    }
+
+    @Post('/email/test')
+    @Roles('admin')
+    async testEmail() {
+        return this.emailService.verifyClient();
     }
 }

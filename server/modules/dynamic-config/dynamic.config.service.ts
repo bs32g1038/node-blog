@@ -1,14 +1,14 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { DynamicConfig, DynamicConfigDocument } from '@blog/server/models/dynamic.config.model';
+import { DynamicConfig, IDynamicConfigModel } from '@blog/server/models/dynamic.config.model';
 import { isEmpty, isEqual } from 'lodash';
 import siteInfo from '@blog/server/configs/site.default.config';
 import logger from '@blog/server/utils/logger.util';
 import { isDevMode } from '@blog/server/configs/index.config';
 import { staticAssetsPath, publicPath } from '@blog/server/utils/path.util';
+import { ConfigDto } from './dynamic.config.zod.schema';
 
 export const CONFIG_KEY = 'app-config';
 
@@ -20,7 +20,7 @@ const config = {
 export class DynamicConfigService {
     _config: DynamicConfig = new DynamicConfig();
     isHasfavicon = true;
-    constructor(@InjectModel(DynamicConfig.name) private readonly configModel: Model<DynamicConfigDocument>) {
+    constructor(@InjectModel(DynamicConfig.name) private readonly configModel: IDynamicConfigModel) {
         configModel.findOne({ key: CONFIG_KEY }).then(async (res) => {
             if (isEmpty(res)) {
                 const data = await configModel.create({
@@ -38,7 +38,7 @@ export class DynamicConfigService {
         return this._config;
     }
 
-    setConfig(data) {
+    setConfig(data: DynamicConfig) {
         this._config = data;
         return this._config;
     }
@@ -47,16 +47,16 @@ export class DynamicConfigService {
         this.isHasfavicon = bool;
     }
 
-    async updateConfig(data) {
+    async updateConfig(data: ConfigDto) {
         if (!isEmpty(data.siteLogo)) {
-            const siteLogo = await this.handleSiteLogoUrl(data);
+            const siteLogo = await this.handleSiteLogoUrl({ siteLogo: data.siteLogo ?? '' });
             Object.assign(data, {
                 siteLogo,
             });
         }
         await this.configModel.updateOne({ key: CONFIG_KEY }, data, { runValidators: true });
         const res = await this.configModel.findOne({ key: CONFIG_KEY });
-        this.setConfig(res.toObject());
+        this.setConfig(res?.toObject() || this._config);
         return this.config;
     }
 
@@ -71,7 +71,7 @@ export class DynamicConfigService {
         return '//' + this.config.siteDomain;
     }
 
-    async handleSiteLogoUrl(data) {
+    async handleSiteLogoUrl(data: { siteLogo: string }) {
         // 重新映射路径
         const oldPath = path.normalize(data.siteLogo.replace(this.siteDomain, publicPath));
         const copyAimPath = path.normalize(staticAssetsPath + '/logo.svg');

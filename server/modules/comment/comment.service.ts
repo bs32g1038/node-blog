@@ -1,33 +1,22 @@
-import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Comment, CommentDocument } from '../../models/comment.model';
-import { Article, ArticleDocument } from '../../models/article.model';
+import { Comment, ICommentModel } from '../../models/comment.model';
+import { Article, IArticelModel } from '../../models/article.model';
 import { BadRequestException } from '@nestjs/common';
 import { QueryRules } from '../../utils/mongoose.query.util';
 import { isEmpty } from 'lodash';
 import { InjectModel } from '@nestjs/mongoose';
-import { IPaginate } from '@blog/server/mongoose/paginate';
-import { User, UserDocument } from '@blog/server/models/user.model';
+import { IUserModel, User } from '@blog/server/models/user.model';
+import { CreateCommentDto } from './comment.zod.schema';
 
 @Injectable()
 export class CommentService {
     constructor(
-        @InjectModel(Comment.name) private readonly commentModel: Model<CommentDocument> & IPaginate,
-        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>,
-        @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+        @InjectModel(Comment.name) private readonly commentModel: ICommentModel,
+        @InjectModel(Article.name) private readonly articleModel: IArticelModel,
+        @InjectModel(User.name) private readonly userModel: IUserModel
     ) {}
 
-    async create(newComment: Comment, isAdmin = false) {
-        if (isAdmin) {
-            const res = (await this.userModel.find({})).at(0);
-            if (res) {
-                Object.assign(newComment, {
-                    identity: 1,
-                    nickName: res.userName,
-                    email: res.email,
-                });
-            }
-        }
+    async create(newComment: CreateCommentDto) {
         const article = await this.articleModel.findById(newComment.article);
         if (isEmpty(article)) {
             throw new BadRequestException('[article]文章id为错误数据');
@@ -51,7 +40,7 @@ export class CommentService {
     }): Promise<{ items: Comment[]; totalCount: number }> {
         const { articleId, page = 1, limit = 10, sort = { createdAt: -1 }, field = '' } = options;
         const q = new QueryRules({ articleId }, { articleId: (id: string) => ({ article: id }) }).generateQuery();
-        return await this.commentModel.paginate(q, field, {
+        const res = await this.commentModel.paginate(q, {
             page,
             limit,
             sort,
@@ -59,10 +48,16 @@ export class CommentService {
                 { path: 'article', select: 'title' },
                 { path: 'reply', select: field },
             ],
+            select: field,
         });
+        return {
+            items: res.docs,
+            totalCount: res.totalDocs,
+        };
     }
 
     async getCommentList(options: {
+        userId?: string;
         articleId?: string;
         page?: number;
         limit?: number;
@@ -78,44 +73,76 @@ export class CommentService {
                 article: articleId,
             };
         }
-        const data = await this.commentModel.paginate(q, field, {
+        const data = await this.commentModel.paginate(q, {
             page,
             limit,
             sort,
-            populate: [{ path: 'article', select: 'title' }],
+            populate: [
+                { path: 'article', select: 'title _id' },
+                { path: 'user', select: 'username avatar' },
+                { path: 'reply' },
+            ],
+            select: field,
         });
         const _ds = await Promise.all(
-            data.items.map(async (item) => {
-                const { page = 1, limit = 100, sort = { createdAt: 1 }, field = '' } = options;
-                const comments = await this.commentModel.paginate(
+            data.docs.map(async (item) => {
+                const { sort = { createdAt: 1 }, field = '' } = options;
+                const comments = await this.commentModel.find(
                     {
                         parentId: item._id,
                         article: articleId,
                     },
                     field,
                     {
-                        page,
-                        limit,
                         sort,
-                        populate: [{ path: 'reply', select: field }],
+                        populate: [
+                            { path: 'user', select: 'username avatar' },
+                            { path: 'reply', populate: [{ path: 'user', select: 'username avatar' }] },
+                        ],
                     }
                 );
-                return { ...item.toJSON(), comments };
+                return {
+                    ...item.toJSON(),
+                    isCanDeleted: item.user._id.toString() === options.userId,
+                    comments: comments.map((com) => {
+                        return {
+                            ...com.toJSON(),
+                            isCanDeleted: com.user._id.toString() === options.userId,
+                        };
+                    }),
+                };
             })
         );
         return {
             items: _ds,
-            totalCount: data.totalCount,
+            totalCount: data.totalDocs,
         };
     }
 
     async getComment(id: string) {
-        const comment = await this.commentModel.findById(id).populate('article', 'title');
+        const comment = await this.commentModel
+            .findById(id)
+            .populate('article', 'title')
+            .populate('user', 'username avatar');
         return comment;
     }
 
-    async deleteComment(id: string) {
-        const comment = await this.commentModel.findById(id);
+    async deleteComment(id: string, userId: string) {
+        if (userId) {
+            const user = await this.userModel.findById(userId);
+            if (user?.type === 'admin') {
+                const comment = await this.commentModel.findById(id);
+                if (comment) {
+                    await this.commentModel.deleteOne({ _id: id });
+                    await this.articleModel.updateOne({ _id: comment.article }, { $inc: { commentCount: -1 } });
+                }
+                return;
+            }
+        }
+        const comment = await this.commentModel.findOne({
+            _id: id,
+            user: userId,
+        });
         if (comment) {
             await this.commentModel.deleteOne({ _id: id });
             await this.articleModel.updateOne({ _id: comment.article }, { $inc: { commentCount: -1 } });
@@ -141,5 +168,17 @@ export class CommentService {
             );
             return this.commentModel.deleteMany({ _id: { $in: commentIds } });
         });
+    }
+
+    async likeComment(commentId: string, userId: string) {
+        const res = await this.commentModel.findById(commentId);
+        if (res?.likes?.includes(userId)) {
+            res.likes = res.likes.filter((item) => item.toString() !== userId);
+            await res.save();
+        } else if (res) {
+            res?.likes?.push(userId);
+            await res.save();
+        }
+        return res;
     }
 }

@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CommentDocument, Comment } from '@blog/server/models/comment.model';
-import { EmailService } from '@blog/server/modules/email/email.service';
+import { EmailService } from '@blog/server/modules/dynamic-config/email.service';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class HasNewCommentTasksService {
     @Cron(CronExpression.EVERY_DAY_AT_9PM)
     async HasNewComment() {
         // 是否开启了邮箱通知服务
-        if (this.emailService.isEnableSmtp) {
+        if (this.emailService.isEnableSmtp()) {
             const count = await this.commentModel.countDocuments({
                 createdAt: { $gte: dayjs().format('YYYY-MM-DD') },
             });

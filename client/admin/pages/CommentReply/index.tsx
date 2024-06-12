@@ -6,7 +6,7 @@ import Router, { useRouter } from 'next/router';
 import BasicLayout from '@blog/client/admin/layouts';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
     const [comment, setComment] = useState({
         article: {
@@ -14,10 +14,11 @@ export default function Index(props) {
             title: '',
         },
         content: '',
-        nickName: '',
-        email: '',
         createdAt: '',
         parentId: '',
+        user: {
+            username: '',
+        },
     });
     const router = useRouter();
     const [form] = Form.useForm();
@@ -34,14 +35,14 @@ export default function Index(props) {
         }
     }, [form, router.query]);
 
-    const publish = (data) => {
+    const publish = (data: any) => {
         const { id } = router.query;
         if (comment.parentId) {
             Object.assign(data, { reply: id, parentId: comment.parentId });
         } else {
             Object.assign(data, { reply: id, parentId: id });
         }
-        axios.post('/admin/reply-comment/', data).then(() => {
+        axios.post('/comments', data).then(() => {
             message.success('提交成功');
             Router.push('/admin/content/comments');
         });
@@ -55,10 +56,7 @@ export default function Index(props) {
                         <Input type="text" />
                     </Form.Item>
                     <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="昵称：">
-                        <span className="ant-form-text">{comment.nickName}</span>
-                    </Form.Item>
-                    <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="email：">
-                        <span className="ant-form-text">{comment.email}</span>
+                        <span className="ant-form-text">{comment?.user?.username}</span>
                     </Form.Item>
                     <Form.Item labelCol={{ span: 3 }} wrapperCol={{ span: 10 }} label="创建时间：">
                         <span className="ant-form-text">{parseTime(comment.createdAt)}</span>
