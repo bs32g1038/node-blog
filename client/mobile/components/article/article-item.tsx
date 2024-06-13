@@ -16,7 +16,6 @@ import { useRouter } from 'next/router';
 
 interface Props {
     article: any;
-    comments: any[];
 }
 
 export default function ArticleItem(props: Props) {

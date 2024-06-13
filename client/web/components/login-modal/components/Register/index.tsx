@@ -27,7 +27,7 @@ export default function CLogin(props: Props) {
             if (values.repeatPassword !== values.password) {
                 return message.error('两次输入的密码不一致！');
             }
-            register(omit(values, 'repeatPassword'))
+            register(omit(values, 'repeatPassword') as any)
                 .unwrap()
                 .then(() => {
                     message.success('注册成功！');
