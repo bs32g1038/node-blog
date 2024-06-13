@@ -1,13 +1,13 @@
 import React from 'react';
 import { Breadcrumb, Space } from 'antd';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { pathToRegexp } from 'path-to-regexp';
 import { urlToList } from '@blog/client/admin/utils/url.util';
 import menu from '@blog/client/configs/admin.menu.config';
 import style from './style.module.scss';
 
-export const getFlatMenuKeys = (menuData = []) => {
-    let keys = [];
+export const getFlatMenuKeys = (menuData: any[] = []) => {
+    let keys: any[] = [];
     menuData.forEach((item: any) => {
         if (!item) {
             return;
@@ -24,10 +24,10 @@ export const getFlatMenuKeys = (menuData = []) => {
     return keys;
 };
 
-export const getMenuMatches = (flatMenuKeys: any = [], path: string) =>
+export const getMenuMatches = (flatMenuKeys: any[] = [], path: string) =>
     flatMenuKeys.filter((item) => item && pathToRegexp(item.path).test(path));
 
-export const getBreadCrumbRoutes = (menus, router) => {
+export const getBreadCrumbRoutes = (menus: any[], router: NextRouter) => {
     const breadcrumbs = urlToList(router.pathname)
         .map((item) => getMenuMatches(getFlatMenuKeys(menus), item)[0])
         .filter((item) => item)
@@ -41,7 +41,7 @@ export default function _Breadcrumb() {
     return (
         <Breadcrumb
             className={style.breadcrumb}
-            items={items.map((item) => {
+            items={items.map((item: any) => {
                 return {
                     title: (
                         <Space>

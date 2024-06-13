@@ -1,23 +1,33 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
-export const createArticleZodSchema = z.object({
-    title: z.string().trim().min(1).max(80),
-    content: z.string().trim().min(1).max(15000),
-    screenshot: z.string().trim().max(100),
-    category: z.custom<mongoose.Types.ObjectId>(),
-    tags: z.array(z.string().trim()).max(3).default([]),
-});
+export const createArticleZodSchema = z
+    .object({
+        _id: z.string(),
+        title: z.string().trim().min(1).max(80),
+        content: z.string().trim().min(1).max(15000),
+        screenshot: z.string().trim().max(100),
+        category: z.custom<mongoose.Types.ObjectId>(),
+        tags: z.array(z.string().trim()).max(3),
+    })
+    .partial({
+        _id: true,
+        tags: true,
+    });
 
 export type CreateArticleDto = z.infer<typeof createArticleZodSchema>;
 
-export const updateArticleZodSchema = z.object({
-    title: z.string().trim().min(1).max(80),
-    content: z.string().trim().min(1).max(15000),
-    screenshot: z.string().trim().max(100),
-    category: z.custom<mongoose.Types.ObjectId>(),
-    tags: z.array(z.string().trim()).max(3),
-});
+export const updateArticleZodSchema = z
+    .object({
+        title: z.string().trim().min(1).max(80),
+        content: z.string().trim().min(1).max(15000),
+        screenshot: z.string().trim().max(100),
+        category: z.custom<mongoose.Types.ObjectId>(),
+        tags: z.array(z.string().trim()).max(3),
+    })
+    .partial({
+        tags: true,
+    });
 
 export type UpdateArticleDto = z.infer<typeof updateArticleZodSchema>;
 

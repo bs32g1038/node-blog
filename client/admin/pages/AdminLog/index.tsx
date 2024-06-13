@@ -4,10 +4,14 @@ import { useFetchAdminLogsMutation } from './service';
 import CTable from '../../components/CTable';
 import { parseTime } from '@blog/client/libs/time';
 import { wrapper } from '@blog/client/redux/store';
+import { TablePaginationConfig } from 'antd';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
-    const [state, setState] = useState({
+    const [state, setState] = useState<{
+        current: number;
+        pageSize: number;
+    }>({
         current: 1,
         pageSize: 10,
     });
@@ -31,10 +35,10 @@ export default function Index(props) {
                 }
             });
     }, [fetchAdminLogs, state]);
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
         fetchData();
     };

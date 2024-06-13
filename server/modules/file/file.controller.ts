@@ -12,6 +12,7 @@ import {
 } from '@blog/server/zod/common.schema';
 import { Response } from 'express';
 import { createCanvas } from '@napi-rs/canvas';
+import { FileEncodePipe } from '@blog/server/pipes/filename.encode.pipe';
 
 // prettier-ignore
 const aCode = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -65,7 +66,8 @@ export class FileController {
     @Post('/files/upload')
     @Roles('admin')
     @UseInterceptors(FileInterceptor('file'))
-    async upload(@UploadedFile() file: any) {
+    async upload(@UploadedFile(FileEncodePipe) file: any) {
+        console.log('file', file);
         return await this.fileService.uploadFile(file);
     }
 

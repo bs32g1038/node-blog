@@ -14,7 +14,7 @@ export const indexApi = adminApi.injectEndpoints({
                 method: 'delete',
             }),
         }),
-        deleteComments: build.mutation<any, { commentIds: string[] }>({
+        deleteComments: build.mutation<any, { ids: string[] }>({
             query: (data) => ({
                 url: '/comments',
                 method: 'delete',

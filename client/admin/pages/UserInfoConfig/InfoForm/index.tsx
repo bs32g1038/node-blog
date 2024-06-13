@@ -23,7 +23,7 @@ const getLoginInfo = () => {
     return axios.get('/user/login-info');
 };
 
-const updateUserInfo = (data) => {
+const updateUserInfo = (data: any) => {
     return axios.put('/user/update', data);
 };
 
@@ -36,10 +36,10 @@ export default function InfoForm() {
             form.setFieldsValue({ ...res.data, avatar: res.data.avatar });
         });
     }, [form]);
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         return injectRequestLoading(updateUserInfo(values)).then(() => {
             message.success('更新成功！');
-            // router.reload();
+            router.reload();
         });
     };
     return (

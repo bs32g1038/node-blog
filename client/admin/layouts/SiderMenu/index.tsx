@@ -12,9 +12,9 @@ import Cookies from 'js-cookie';
 
 const { Sider } = Layout;
 
-const MenuList = (props) => {
+const MenuList = (props: any) => {
     const renderMenuItem = (
-        item // item.route 菜单单独跳转的路由
+        item: any // item.route 菜单单独跳转的路由
     ) => ({
         label: (
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true} className={style.menuLinkA}>
@@ -43,7 +43,7 @@ interface Props {
     collapsed: boolean;
 }
 
-const setMenuOpen = (props) => {
+const setMenuOpen = (props: { router: any; flatMenuKeys?: any }) => {
     const { pathname } = props.router;
     const flatMenuKeys = getDefaultCollapsedSubMenus({ ...props, flatMenuKeys: getFlatMenuKeys(menus) });
     return {
@@ -66,14 +66,19 @@ export default function SiderMenu(props: Props) {
     useEffect(() => {
         fetchUserInfo();
     }, [fetchUserInfo]);
-    const [state, setState] = useState({
+    const [state, setState] = useState<{
+        mode: string;
+        openKey: string[];
+        selectedKey: string[];
+        firstHide: boolean;
+    }>({
         mode: 'inline',
         openKey: [],
         selectedKey: [''],
         firstHide: true,
     });
     const router = useRouter();
-    const menuClick = (e) => {
+    const menuClick = (e: { key: string | string[] }) => {
         setState((data) => ({
             ...data,
             selectedKey: Array.isArray(e.key) ? e.key : [e.key],
@@ -114,8 +119,8 @@ export default function SiderMenu(props: Props) {
             >
                 <Link href="/admin/content/articles">
                     <div className={style.logo}>
-                        <Image preview={false} width={32} height={32} src={config.siteLogo} alt="" />
-                        <h1>{config.siteTitle}</h1>
+                        <Image preview={false} width={32} height={32} src={config?.siteLogo} alt="" />
+                        <h1>{config?.siteTitle ?? '-'}</h1>
                     </div>
                 </Link>
                 <div className={style.userMenu}>

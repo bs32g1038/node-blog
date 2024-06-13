@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { parseTime } from '@blog/client/libs/time';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, message, Upload, Modal, Image } from 'antd';
+import { Button, Popconfirm, message, Upload, Modal, Image, TablePaginationConfig } from 'antd';
 import config from '@blog/client/configs/admin.default.config';
 import style from '@blog/client/admin/styles/index.module.scss';
 import { CloudUploadOutlined, CopyFilled, DeleteFilled, FileFilled, VideoCameraOutlined } from '@ant-design/icons';
@@ -11,11 +10,14 @@ import CTable from '../../components/CTable';
 import { useDeleteFileMutation, useDeleteFilesMutation, useFetchStaticFilesMutation } from './service';
 import { useFetchConfigQuery } from '@blog/client/web/api';
 import { wrapper } from '@blog/client/redux/store';
+import { Typography } from 'antd';
 
-export default function StaticFiles(props) {
+const { Paragraph } = Typography;
+
+export default function StaticFiles(props: any) {
     wrapper.useHydration(props);
     const { data: appConfig } = useFetchConfigQuery();
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
     const [state, setState] = useState({
         current: 1,
@@ -43,7 +45,7 @@ export default function StaticFiles(props) {
             });
     }, [fetchFiles, state]);
     const [_deleteFile, { isLoading: isDeleteFileLoading }] = useDeleteFileMutation();
-    const deleteFile = (id) => {
+    const deleteFile = (id: any) => {
         _deleteFile({ id }).then(() => {
             message.success('删除文件成功！');
             fetchData();
@@ -51,7 +53,7 @@ export default function StaticFiles(props) {
     };
     const [deleteFiles, { isLoading: isDeleteFilesLoading }] = useDeleteFilesMutation();
     const batchDeleteFile = () => {
-        deleteFiles({ fileIds: selectedRowKeys })
+        deleteFiles({ ids: selectedRowKeys })
             .unwrap()
             .then((res) => {
                 if (res && res.deletedCount > 0) {
@@ -66,13 +68,13 @@ export default function StaticFiles(props) {
             setVisible(false);
         });
     };
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
     };
-    const onSelectChange = (selectedRowKeys) => {
+    const onSelectChange = (selectedRowKeys: any[]) => {
         setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
@@ -80,14 +82,21 @@ export default function StaticFiles(props) {
     }, [fetchData]);
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+        onChange: onSelectChange,
     };
     const getTableColums = () => {
         return [
             {
                 title: '文件',
                 dataIndex: 'name',
-                render: (text, record) => {
+                render: (
+                    _text: any,
+                    record: {
+                        type: string;
+                        url: string;
+                        name: string;
+                    }
+                ) => {
                     if (record.type === 'image') {
                         return (
                             <Image width={150} height={100} src={record.url} alt="" style={{ objectFit: 'contain' }} />
@@ -121,39 +130,54 @@ export default function StaticFiles(props) {
                 title: '大小',
                 dataIndex: 'size',
                 width: 100,
-                render: (text, record) => {
+                render: (_text: any, record: { size: number }) => {
                     return record.size ? (record.size / 1024).toFixed(1) + 'k' : '-';
                 },
             },
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                render: (text, record) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
+                render: (_text: any, record: { createdAt: string }) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
             },
             {
                 title: '操作',
                 key: 'operation',
                 width: 190,
-                render: (text, record) => (
+                render: (_text: any, record: { isdir: any; url: string; _id: any }) => (
                     <div>
                         {!record.isdir && (
-                            <CopyToClipboard
-                                text={appConfig.siteDomain + record.url}
-                                onCopy={() => {
-                                    message.success('复制链接成功');
+                            <Paragraph
+                                copyable={{
+                                    text: () => appConfig?.siteDomain + record.url,
+                                    onCopy() {
+                                        message.success('复制链接成功');
+                                    },
+                                    icon: [
+                                        <Button
+                                            key="copy1"
+                                            size="small"
+                                            title="复制"
+                                            data-clipboard-text={record.url}
+                                            className="btnCopy"
+                                            style={{ marginRight: '5px' }}
+                                            icon={<CopyFilled />}
+                                        >
+                                            复制url
+                                        </Button>,
+                                        <Button
+                                            key="copy2"
+                                            size="small"
+                                            title="复制"
+                                            data-clipboard-text={record.url}
+                                            className="btnCopy"
+                                            style={{ marginRight: '5px' }}
+                                            icon={<CopyFilled />}
+                                        >
+                                            复制url
+                                        </Button>,
+                                    ],
                                 }}
-                            >
-                                <Button
-                                    size="small"
-                                    title="复制"
-                                    data-clipboard-text={record.url}
-                                    className="btnCopy"
-                                    style={{ marginRight: '5px' }}
-                                    icon={<CopyFilled />}
-                                >
-                                    复制url
-                                </Button>
-                            </CopyToClipboard>
+                            ></Paragraph>
                         )}
                         <Popconfirm title="确认要删除？" onConfirm={() => deleteFile(record._id)}>
                             <Button size="small" title="删除" icon={<DeleteFilled />} danger>
@@ -172,7 +196,7 @@ export default function StaticFiles(props) {
         headers: {
             authorization: (typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey)) || '',
         },
-        onChange(info) {
+        onChange(info: { file: { status: any; name: any } }) {
             const status = info.file.status;
             if (status !== 'uploading') {
                 // console.log(info.file, info.fileList);
@@ -183,7 +207,7 @@ export default function StaticFiles(props) {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
-    };
+    } as any;
     return (
         <BasicLayout>
             <div className="main-content">
@@ -211,12 +235,9 @@ export default function StaticFiles(props) {
                     title="上传文件"
                     open={visible}
                     onOk={() => handleOk()}
-                    onCancel={() =>
-                        setState((data) => ({
-                            ...data,
-                            visible: false,
-                        }))
-                    }
+                    onCancel={() => {
+                        setVisible(false);
+                    }}
                 >
                     <Upload.Dragger {...uploadProps}>
                         <p className="ant-upload-drag-icon">
@@ -233,7 +254,7 @@ export default function StaticFiles(props) {
                     <CTable
                         rowKey={(record) => record._id}
                         rowSelection={rowSelection}
-                        columns={getTableColums()}
+                        columns={getTableColums() as any[]}
                         dataSource={data.items}
                         loading={isLoading || isDeleteFileLoading || isDeleteFilesLoading}
                         onChange={(pagination) => handleTableChange(pagination)}

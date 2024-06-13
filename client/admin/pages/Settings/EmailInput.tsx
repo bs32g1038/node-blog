@@ -14,7 +14,7 @@ export default function EmailInput(props: Props) {
     const { data } = props;
     const [disabled, setDisabled] = useState(true);
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         updateEmailConfig(values).then(() => {
             message.success('更新成功');
         });

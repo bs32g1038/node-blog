@@ -1,11 +1,12 @@
+import mongoose from 'mongoose';
 import { z } from 'zod';
 
 export const objectIdSchema = z.object({
-    id: z.string(),
+    id: z.custom<mongoose.Types.ObjectId>(),
 });
 
 export const objectIdsSchema = z.object({
-    ids: z.array(objectIdSchema),
+    ids: z.array(z.custom<mongoose.Types.ObjectId>()),
 });
 
 export const standardPaginationSchema = z.object({

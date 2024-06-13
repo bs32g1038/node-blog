@@ -8,11 +8,11 @@ import style from './style.module.scss';
 import { useLazyFetchAdminConfigsQuery, useUpdateAdminConfigsMutation } from './service';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Settings(props) {
+export default function Settings(props: any) {
     wrapper.useHydration(props);
     const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
     const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         updateConfig(values).then(() => {
             message.success('更新成功');
         });

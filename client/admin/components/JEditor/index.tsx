@@ -65,7 +65,7 @@ export default function EditorDemo(props: EditorDemoProps): JSX.Element {
                 }}
                 onReady={(editor) => {
                     const rep = editor.plugins.get('FileRepository') as any;
-                    rep.createUploadAdapter = (loader) => {
+                    rep.createUploadAdapter = (loader: any) => {
                         return new MyUploadAdapter(loader);
                     };
                 }}

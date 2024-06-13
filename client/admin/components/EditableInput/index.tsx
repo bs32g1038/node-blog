@@ -16,14 +16,14 @@ interface Props {
     type?: 'input' | 'textarea' | 'upload' | 'svg';
     autoSize?: AutoSizeType;
     rules?: Rule[];
-    onFinish: (values) => void;
+    onFinish: (values: any) => void;
 }
 
 export default function Index(props: Props) {
     const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
     const [form] = Form.useForm();
     const [disabled, setDisabled] = useState(true);
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         if (props.onFinish) {
             props.onFinish(values);
         }

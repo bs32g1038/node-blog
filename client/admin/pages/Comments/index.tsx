@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { parseTime, timeAgo } from '@blog/client/libs/time';
-import { Avatar, Button, Popconfirm, Space, message } from 'antd';
+import { Avatar, Button, Popconfirm, Space, TablePaginationConfig, message } from 'antd';
 import { handleEmoji } from '@blog/client/common/helper.util';
 import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
@@ -12,9 +12,9 @@ import CTable from '@blog/client/admin/components/CTable';
 import { wrapper } from '@blog/client/redux/store';
 import { xss } from '@blog/client/libs/marked';
 
-export default function Comments(props) {
+export default function Comments(props: any) {
     wrapper.useHydration(props);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
     const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useFetchCommentsMutation();
     const [state, setState] = useState({
@@ -41,7 +41,7 @@ export default function Comments(props) {
             });
     }, [fetchComments, state]);
     const [_deleteComment] = useDeleteCommentMutation();
-    const deleteComment = (id) => {
+    const deleteComment = (id: any) => {
         _deleteComment({ id }).then(() => {
             message.success('删除评论成功');
             fetchData();
@@ -49,7 +49,7 @@ export default function Comments(props) {
     };
     const [_deleteComments] = useDeleteCommentsMutation();
     const batchDeleteComment = () => {
-        _deleteComments({ commentIds: selectedRowKeys })
+        _deleteComments({ ids: selectedRowKeys })
             .unwrap()
             .then((res) => {
                 if (res && res.deletedCount > 0) {
@@ -59,14 +59,14 @@ export default function Comments(props) {
                 message.error('删除评论失败，请重新尝试。');
             });
     };
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
         fetchData();
     };
-    const onSelectChange = (selectedRowKeys) => {
+    const onSelectChange = (selectedRowKeys: string[]) => {
         setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
@@ -117,7 +117,7 @@ export default function Comments(props) {
     };
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+        onChange: onSelectChange,
     };
     const expandedRowKeys = data.items.map((item) => item._id);
     const CTitle = (
@@ -144,7 +144,7 @@ export default function Comments(props) {
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
                 <CTable
                     rowKey={(record) => record._id}
-                    rowSelection={rowSelection}
+                    rowSelection={rowSelection as any}
                     columns={getTableColums()}
                     loading={isLoading}
                     dataSource={data.items}

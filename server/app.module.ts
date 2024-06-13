@@ -15,6 +15,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
 import { SSRModule } from '@blog/client/server';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.module';
+import { DraftModule } from './modules/draft/draft.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { DynamicConfigModule } from './modules/dynamic-config/dynamic.config.mod
         RssModule,
         SearchModule,
         UserModule,
+        DraftModule,
         ...(isProdMode ? [ScheduleModule.forRoot(), TasksModule] : []),
         ...(isProdMode ? [SSRModule.forRoot()] : []),
     ],

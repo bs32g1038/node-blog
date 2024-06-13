@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, message, Popconfirm } from 'antd';
 import axios from '@blog/client/admin/axios';
-import { encrypt } from '@blog/client/admin/utils/crypto.util';
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -16,7 +15,7 @@ const tailFormItemLayout = {
     },
 };
 
-const resetPassword = (data) => {
+const resetPassword = (data: { password: any }) => {
     return axios.put('/user/reset-password', data);
 };
 

@@ -25,7 +25,7 @@ const JEditor = dynamic(() => import('@blog/client/admin/components/JEditor'), {
 
 const { TextArea } = Input;
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
 
     const router = useRouter();
@@ -83,7 +83,7 @@ export default function Index(props) {
         }
     }, [fetchDraft, fetchArticle, form, id, type]);
 
-    const publish = (data) => {
+    const publish = (data: { content?: any; id?: any }) => {
         const { id } = data;
         if (!isLength(data?.content, { min: 1, max: 15000 })) {
             return message.error('文章详情不能为空，且最多15000个字符!');
@@ -97,7 +97,7 @@ export default function Index(props) {
 
     const categoryOptions =
         categories &&
-        categories.map((category) => (
+        categories.map((category: { _id: string; name: string }) => (
             <Select.Option key={category._id} value={category._id}>
                 {category.name}
             </Select.Option>

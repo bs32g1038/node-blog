@@ -2,7 +2,6 @@ import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import axios from '@blog/client/web/utils/axios';
-import Cookies from 'js-cookie';
 
 export const isClientSide = () => {
     return typeof window !== 'undefined';
