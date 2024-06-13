@@ -79,9 +79,8 @@ export class CommentController {
     }
 
     @Post('/like-comment/:id')
-    @Roles('user')
+    @Roles('user', 'admin')
     likeComment(@Req() req: any, @ZodParam(objectIdSchema) params: { id: string }) {
-        console.log(req.user.id);
         return this.commentService.likeComment(params.id, req.user.id);
     }
 }

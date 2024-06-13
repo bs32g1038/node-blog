@@ -15,7 +15,7 @@ import { isArray, isString, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
 import { InfiniteScroll, Skeleton, ErrorBlock } from 'antd-mobile';
 
-const Page = (props) => {
+const Page = (props: any) => {
     wrapper.useHydration(props);
     const router = useRouter();
     const { data: config } = useFetchConfigQuery();
@@ -24,7 +24,7 @@ const Page = (props) => {
     const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
     const { data = { items: [], totalCount: 0 }, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
     const [fetchArticles] = useLazyFetchArticlesQuery();
-    const refData = useRef([]);
+    const refData = useRef<any[]>([]);
     const refPage = useRef(page);
     const results = [...data.items, ...refData.current];
     const [hasMore, setHasMore] = useState(true);
@@ -32,7 +32,6 @@ const Page = (props) => {
         return fetchArticles({ page: refPage.current + 1, filter: { cid, tag } })
             .unwrap()
             .then((res) => {
-                console.log(res, refData.current);
                 refData.current = [...refData.current, ...res.items];
                 refPage.current += 1;
                 setHasMore(res?.items?.length > 0);
@@ -41,7 +40,7 @@ const Page = (props) => {
     return (
         <AppLayout>
             <Head>
-                <title>{config.siteTitle + '-博客'}</title>
+                <title>{config?.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
             <div style={{ margin: '15px 0' }}>

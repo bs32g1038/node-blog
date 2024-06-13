@@ -4,9 +4,9 @@ import style from './style.module.scss';
 const BackTopButton = () => {
     const $el = useRef(null);
     useEffect(() => {
-        let timer = null;
+        let timer: any = null;
         if ($el.current) {
-            const backTopEl = $el.current;
+            const backTopEl = $el.current as any;
             backTopEl.onclick = () => {
                 cancelAnimationFrame(timer);
                 timer = requestAnimationFrame(function fn() {

@@ -1,15 +1,18 @@
 import Link from '../link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { timeAgo } from '@blog/client/libs/time';
-import Comment from './comment';
-import { Space } from 'antd-mobile';
+import { DotLoading, Space } from 'antd-mobile';
 import dynamic from 'next/dynamic';
+const Comment = dynamic(() => import('./comment'), { ssr: false });
 const ArticleAddress = dynamic(() => import('./article-address'), { ssr: false });
 import style from './article-item.style.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '@blog/client/redux/store';
 import clsx from 'clsx';
 import { CommentOutlined, EyeOutlined } from '@ant-design/icons';
+import { useFetchCommentsQuery } from '@blog/client/web/api';
+import { useStore } from './zustand';
+import { useRouter } from 'next/router';
 
 interface Props {
     article: any;
@@ -17,8 +20,20 @@ interface Props {
 }
 
 export default function ArticleItem(props: Props) {
-    const { article, comments } = props;
+    const { article } = props;
+    const refreshCommentListTag = useStore((state) => state.refreshCommentListTag);
     const theme = useSelector((state: RootState) => state.app.theme);
+    const router = useRouter();
+    const {
+        data: { items: comments } = { items: [] },
+        isLoading,
+        refetch,
+    } = useFetchCommentsQuery(router.query.id as string);
+    useEffect(() => {
+        if (refreshCommentListTag !== 0) {
+            refetch();
+        }
+    }, [refetch, refreshCommentListTag]);
     return (
         <div className={style.article}>
             <div className={style.media}>
@@ -102,7 +117,7 @@ export default function ArticleItem(props: Props) {
                     </div>
                 )}
             </div>
-            <Comment article={article} comments={comments}></Comment>
+            {isLoading ? <DotLoading /> : <Comment article={article} comments={comments ?? []}></Comment>}
         </div>
     );
 }

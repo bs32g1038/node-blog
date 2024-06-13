@@ -17,6 +17,7 @@ export class RolesGuard implements CanActivate {
         const mstoken = request.cookies.mstoken;
         try {
             const user = jwt.verify(mstoken, TOKEN_SECRET_KEY) as { id: string; roles: string[] };
+            console.log(user);
             request.user = user;
             const hasRole = () => {
                 return user?.roles?.some((role: string) => roles.includes(role)) || roles?.includes('all');
