@@ -98,21 +98,6 @@ interface CommentQueryDataLoaded {
     totalCount: number;
 }
 
-interface ExploreDataLoaded {
-    _id: string;
-    content: string;
-    links: {
-        title: string;
-        link: string;
-    }[];
-    pics: string[];
-    createdAt: string;
-}
-
-interface IExploreReponse {
-    items: ExploreDataLoaded[];
-}
-
 export const appApi = createApi({
     reducerPath: 'appApi',
     baseQuery: axiosBaseQuery(),
@@ -154,9 +139,6 @@ export const appApi = createApi({
                 }
                 return { url: '/api/articles', method: 'get', params: query };
             },
-        }),
-        fetchExplore: builder.query<IExploreReponse, void>({
-            query: () => ({ url: `/api/explore`, method: 'get' }),
         }),
         fetchConfigSvg: builder.query<any, { url: string }>({
             query: (params) => ({ url: params.url.replace('/api', ''), method: 'get' }),
@@ -205,7 +187,6 @@ export const {
     useFetchArticlesQuery,
     useLazyFetchArticlesQuery,
     useFetchConfigQuery,
-    useFetchExploreQuery,
     useFetchConfigSvgQuery,
     useLazySearchArticlesQuery,
     useLazyLikeCommentQuery,
@@ -221,6 +202,5 @@ export const {
     fetchArticle,
     fetchComments,
     fetchRecentArticles,
-    fetchExplore,
     fetchConfigSvg,
 } = appApi.endpoints;

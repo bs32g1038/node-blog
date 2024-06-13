@@ -14,7 +14,7 @@ import { Comment, CommentSchema } from '@blog/server/models/comment.model';
 import { User, UserSchema } from '@blog/server/models/user.model';
 import { LoginLog, LoginLogSchema } from '@blog/server/models/loginlog.model';
 import { File, FileSchema } from '@blog/server/models/file.model';
-// import { Draft, DraftSchema } from '@blog/server/models/draft.model';
+import { Draft, DraftSchema } from '@blog/server/models/draft.model';
 
 export const getToken = () => {
     return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
@@ -33,12 +33,9 @@ export const createModels = async ({
     isMemory?: boolean;
     connection?: any;
 }) => {
-    const mongoServer = isMemory ? await MongoMemoryServer.create() : null;
-    if (!mongoServer) {
-        return;
-    }
+    const mongoServer: MongoMemoryServer = await MongoMemoryServer.create();
     const mongooseConnection = isMemory
-        ? await mongoose.createConnection(mongoServer.getUri(), {}).asPromise()
+        ? await mongoose.createConnection(mongoServer?.getUri?.() ?? '', {}).asPromise()
         : connection || mongoose;
     const articleModel = mongooseConnection.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());
     const categoryModel = mongooseConnection.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());
@@ -46,7 +43,7 @@ export const createModels = async ({
     const userModel = mongooseConnection.model(User.name, UserSchema, User.name.toLocaleLowerCase());
     const adminLogModel = mongooseConnection.model(LoginLog.name, LoginLogSchema, LoginLog.name.toLocaleLowerCase());
     const fileModel = mongooseConnection.model(File.name, FileSchema, File.name.toLocaleLowerCase());
-    // const draftModel = mongooseConnection.model(Draft.name, DraftSchema, Draft.name.toLocaleLowerCase());
+    const draftModel = mongooseConnection.model(Draft.name, DraftSchema, Draft.name.toLocaleLowerCase());
     return {
         mongod: mongoServer,
         mongooseConnection,
@@ -56,17 +53,18 @@ export const createModels = async ({
         userModel,
         adminLogModel,
         fileModel,
-        // draftModel,
+        draftModel,
     };
 };
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const model = await createModels({ isMemory: true });
-    if (!model?.mongod) {
-        return;
-    }
     const testModule = await Test.createTestingModule({
-        imports: [MongooseModule.forRoot(model.mongod.getUri()), DynamicConfigModule, ...(metadata.imports || [])],
+        imports: [
+            MongooseModule.forRoot(model?.mongod?.getUri() ?? ''),
+            DynamicConfigModule,
+            ...(metadata.imports || []),
+        ],
         providers: metadata.providers ?? [],
     }).compile();
     const app = testModule.createNestApplication();
@@ -97,7 +95,7 @@ export const isExpectPass = (arr1: any[], arr2: any[], skipFields: string[] = []
 };
 
 export const generateDataList = (fn: () => void, len = 0) => {
-    const arr = [];
+    const arr: any[] = [];
     for (let i = 0; i < len; i++) {
         arr.push(fn());
     }
