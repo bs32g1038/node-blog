@@ -38,6 +38,9 @@ export class FileController {
     async captcha(@Session() session: any, @Res() res: Response) {
         const canvas = createCanvas(120, 40);
         const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#eee';
+        // 填充整个canvas
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         let code = '';
         for (let i = 0; i < 4; i++) {
             const x = 20 + i * 20;
@@ -59,8 +62,8 @@ export class FileController {
             ctx.lineTo(x + 1, y + 1);
             ctx.stroke();
         }
-        res.type('png');
-        return res.send(await canvas.encode('png'));
+        res.type('jpeg');
+        return res.send(await canvas.encode('jpeg'));
     }
 
     @Post('/files/upload')

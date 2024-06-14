@@ -72,7 +72,7 @@ export class ArticleService {
         const query = {
             isDeleted: false,
             ...(options.title ? { title: new RegExp(options.title) } : {}),
-            ...(options.category ? { category: options.category } : {}),
+            ...(options.cid ? { category: options.cid } : {}),
             ...(options.tag ? { tags: { $elemMatch: { $regex: new RegExp(options.tag, 'i') } } } : {}),
         };
         const { docs, totalDocs } = await this.articleModel.paginate(query, {
