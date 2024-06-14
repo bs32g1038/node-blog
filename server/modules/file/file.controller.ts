@@ -50,7 +50,7 @@ export class FileController {
             const index = Math.floor(Math.random() * aCode.length); //获取到一个随机的索引值
             const txt = aCode[index].toString(); //获取到数组里面的随机的内容
             code += txt;
-            ctx.font = 'bold 20px'; //设置文字样式
+            ctx.font = 'bold 20px HelveticaNeue'; //设置文字样式
             ctx.fillStyle = getColor();
             ctx.fillText(txt, x, y);
         }
