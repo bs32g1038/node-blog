@@ -86,7 +86,7 @@ export const initApp = async (metadata: ModuleMetadata) => {
     );
     await app.init();
     const user = await model.userModel.create({
-        account: 'admin',
+        account: 'test',
         password: getDerivedKey('admin'),
         type: 'admin',
     });
