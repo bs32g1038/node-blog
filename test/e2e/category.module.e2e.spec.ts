@@ -3,11 +3,9 @@ import { CategoryModule } from '@blog/server/modules/category/category.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass } from '../util';
 import { getCategory, getObjectId } from '../faker';
-import { getToken } from '../util';
 import { Connection, Model } from 'mongoose';
 import { Category } from '@blog/server/models/category.model';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-const __TOKEN__ = getToken();
 
 /**
  * 分类模块 api 测试
@@ -17,6 +15,7 @@ describe('category.module.e2e', () => {
     let mongod: MongoMemoryServer;
     let mongooseConnection: Connection;
     let categoryModel: Model<Category>;
+    let getToken: () => string[];
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -26,6 +25,7 @@ describe('category.module.e2e', () => {
         mongod = instance.mongod;
         mongooseConnection = instance.mongooseConnection;
         categoryModel = instance.categoryModel;
+        getToken = instance.getToken;
     });
 
     beforeEach(async () => {
@@ -37,7 +37,7 @@ describe('category.module.e2e', () => {
 
         return request(app.getHttpServer())
             .post('/api/categories')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .send(category)
             .expect(201);
     });
@@ -49,7 +49,7 @@ describe('category.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .get('/api/categories')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .expect(200)
                 .then((res) => {
                     expect(res.body.length).toBeGreaterThanOrEqual(10);
@@ -90,7 +90,7 @@ describe('category.module.e2e', () => {
 
         return request(app.getHttpServer())
             .put('/api/categories/' + _id)
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .send(category)
             .expect(200)
             .then((res) => {
@@ -104,28 +104,28 @@ describe('category.module.e2e', () => {
         const { _id } = await categoryModel.create(category);
         return request(app.getHttpServer())
             .delete('/api/categories/' + _id)
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .expect(200);
     });
 
     describe('batch delete', () => {
-        test('bad request, batch delete the data failure, the categoryIds should be an objectId array', async () => {
+        test('bad request, batch delete the data failure, the ids should be an objectId array', async () => {
             return request(app.getHttpServer())
                 .delete('/api/categories')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    categoryIds: [],
+                    ids: [],
                 })
                 .expect(400);
         });
 
-        test('bad request, batch delete the data failure, the categoryIds data should be found in db', async () => {
+        test('bad request, batch delete the data failure, the ids data should be found in db', async () => {
             const testId = getObjectId();
             return request(app.getHttpServer())
                 .delete('/api/categories')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    categoryIds: [testId],
+                    ids: [testId],
                 })
                 .expect(400);
         });
@@ -136,9 +136,9 @@ describe('category.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .delete('/api/categories')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    categoryIds: [_id],
+                    ids: [_id],
                 })
                 .expect(200);
         });

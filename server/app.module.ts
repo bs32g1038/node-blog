@@ -1,6 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { AdminLogModule } from './modules/loginlog/loginlog.module';
+import { LoginLogModule } from './modules/loginlog/loginlog.module';
 import { ArticleModule } from './modules/article/article.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CommentModule } from './modules/comment/comment.module';
@@ -21,7 +21,7 @@ import { DraftModule } from './modules/draft/draft.module';
     imports: [
         MongooseModule.forRoot(MONGODB.uri),
         DynamicConfigModule,
-        AdminLogModule,
+        LoginLogModule,
         ArticleModule,
         CategoryModule,
         CommentModule,

@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 import { z } from 'zod';
 
 export const objectIdSchema = z.object({
-    id: z.custom<mongoose.Types.ObjectId>(),
+    id: z.string().refine(mongoose.Types.ObjectId.isValid),
 });
 
 export const objectIdsSchema = z.object({
-    ids: z.array(z.custom<mongoose.Types.ObjectId>()),
+    ids: z.array(z.string().refine(mongoose.Types.ObjectId.isValid)).min(1),
 });
 
 export const standardPaginationSchema = z.object({

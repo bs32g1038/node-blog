@@ -5,11 +5,33 @@ import { getDerivedKey } from '@blog/server/utils/crypto.util';
 import infoLogger from '@blog/server/utils/logger.util';
 import { TOKEN_SECRET_KEY } from '@blog/server/configs/index.config';
 import jwt from 'jsonwebtoken';
+import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
+export const importDynamic = new Function('modulePath', 'return import(modulePath)');
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private readonly userModel: IUserModel) {
+    constructor(
+        @InjectModel(User.name) private readonly userModel: IUserModel,
+        private readonly configService: DynamicConfigService
+    ) {
         this.initAadminAccount();
+    }
+
+    async generateGithubAndStateAndUrl() {
+        const { GitHub, generateState } = await importDynamic('arctic');
+        const github = new GitHub(
+            this.configService.config.githubClientId,
+            this.configService.config.githubClientSecret
+        );
+        const state = generateState();
+        const url = await github.createAuthorizationURL(state, {
+            scopes: ['user:email'],
+        });
+        return {
+            state,
+            url,
+            github,
+        };
     }
 
     async initAadminAccount() {

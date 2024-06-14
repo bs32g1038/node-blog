@@ -15,11 +15,17 @@ import { User, UserSchema } from '@blog/server/models/user.model';
 import { LoginLog, LoginLogSchema } from '@blog/server/models/loginlog.model';
 import { File, FileSchema } from '@blog/server/models/file.model';
 import { Draft, DraftSchema } from '@blog/server/models/draft.model';
+import { getDerivedKey } from '@blog/server/utils/crypto.util';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import userAgentMiddleware from '@blog/server/middlewares/user-agent.middleware';
 
 export const getToken = () => {
-    return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
-        expiresIn: 60 * 60,
-    });
+    // const res = jwt.sign({ id: , roles: ['admin'] }, TOKEN_SECRET_KEY, {
+    //     expiresIn: 60 * 60,
+    // });
+    // return [`mstoken=${res}`];
+    return [];
 };
 
 export const verifyToken = (str: string) => {
@@ -69,10 +75,31 @@ export const initApp = async (metadata: ModuleMetadata) => {
     }).compile();
     const app = testModule.createNestApplication();
     app.useGlobalFilters(new AllExceptionsFilter());
+    app.use(userAgentMiddleware());
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: 'my-secret',
+            resave: false,
+            saveUninitialized: false,
+        })
+    );
     await app.init();
+    const user = await model.userModel.create({
+        account: 'admin',
+        password: getDerivedKey('admin'),
+        type: 'admin',
+    });
     return {
         app,
         ...model,
+        getToken: () => {
+            const res = jwt.sign({ id: user._id, roles: [user.type] }, TOKEN_SECRET_KEY, {
+                expiresIn: '7d',
+            });
+            return [`mstoken=${res}`];
+        },
+        user,
     };
 };
 

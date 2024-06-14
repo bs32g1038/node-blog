@@ -17,7 +17,7 @@ export const requestArticlesZodSchema = z
     .object({
         tag: z.string().trim().min(1).max(20),
         title: z.string().trim().min(1).max(80),
-        category: z.custom<mongoose.Types.ObjectId>(),
+        category: z.string().refine(mongoose.Types.ObjectId.isValid),
         page: z.number().min(1).max(100).default(1),
         limit: z.number().min(10).max(1000).default(10),
     })

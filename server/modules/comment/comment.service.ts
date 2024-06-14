@@ -103,7 +103,7 @@ export class CommentService {
                 );
                 return {
                     ...item.toJSON(),
-                    isCanDeleted: item.user._id.toString() === options.userId,
+                    isCanDeleted: item.user?._id?.toString() === options.userId,
                     comments: comments.map((com) => {
                         return {
                             ...com.toJSON(),

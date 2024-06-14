@@ -22,30 +22,19 @@ import { getDerivedKey } from '../../utils/crypto.util';
 import { Roles } from '@blog/server/decorators/roles.decorator';
 import { UserInfoDto, userInfoZodSchema } from './user.zod.schema';
 import { GitHubTokens } from 'arctic';
-import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
 import { LoginLogService } from '../loginlog/loginlog.service';
-export const importDynamic = new Function('modulePath', 'return import(modulePath)');
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)
 export class UserController {
     constructor(
         private readonly userService: UserService,
-        private readonly configService: DynamicConfigService,
         private readonly loginLogService: LoginLogService
     ) {}
 
     @Get('authorize/github')
     async github(@Session() session: Record<string, any>, @Query() query: { href: string }, @Res() res: Response) {
-        const { GitHub, generateState } = await importDynamic('arctic');
-        const github = new GitHub(
-            this.configService.config.githubClientId,
-            this.configService.config.githubClientSecret
-        );
-        const state = generateState();
-        const url = await github.createAuthorizationURL(state, {
-            scopes: ['user:email'],
-        });
+        const { state, url } = await this.userService.generateGithubAndStateAndUrl();
         res.cookie('state', state, {
             secure: true,
             path: '/',
@@ -63,11 +52,7 @@ export class UserController {
         @Query() query: { code: string },
         @Res() res: Response
     ) {
-        const { GitHub } = await importDynamic('arctic');
-        const github = new GitHub(
-            this.configService.config.githubClientId,
-            this.configService.config.githubClientSecret
-        );
+        const { github } = await this.userService.generateGithubAndStateAndUrl();
         const tokens: GitHubTokens = await github.validateAuthorizationCode(query.code);
         try {
             const response = await fetch('https://api.github.com/user', {

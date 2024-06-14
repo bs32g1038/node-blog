@@ -149,7 +149,6 @@ export class ArticleService {
         if (!article) {
             throw new NotFoundException();
         }
-        ``;
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         return null;
     }

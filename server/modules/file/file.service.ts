@@ -71,7 +71,6 @@ export class FileService {
     }
 
     public async uploadFile(file: Express.Multer.File) {
-        console.log(file.originalname, 'file.originalname');
         const mimetype = file.mimetype;
         const size = file.size;
         const name = md5(file.buffer);

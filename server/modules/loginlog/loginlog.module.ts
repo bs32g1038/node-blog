@@ -8,4 +8,4 @@ import { LoginLogService } from './loginlog.service';
     controllers: [LoginLogController],
     providers: [LoginLogService],
 })
-export class AdminLogModule {}
+export class LoginLogModule {}

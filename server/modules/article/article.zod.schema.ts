@@ -7,7 +7,7 @@ export const createArticleZodSchema = z
         title: z.string().trim().min(1).max(80),
         content: z.string().trim().min(1).max(15000),
         screenshot: z.string().trim().max(100),
-        category: z.custom<mongoose.Types.ObjectId>(),
+        category: z.string().refine(mongoose.Types.ObjectId.isValid),
         tags: z.array(z.string().trim()).max(3),
     })
     .partial({
@@ -22,7 +22,7 @@ export const updateArticleZodSchema = z
         title: z.string().trim().min(1).max(80),
         content: z.string().trim().min(1).max(15000),
         screenshot: z.string().trim().max(100),
-        category: z.custom<mongoose.Types.ObjectId>(),
+        category: z.string().refine(mongoose.Types.ObjectId.isValid),
         tags: z.array(z.string().trim()).max(3),
     })
     .partial({
@@ -35,7 +35,7 @@ export const requestArticlesZodSchema = z
     .object({
         tag: z.string().trim().min(1).max(20),
         title: z.string().trim().min(1).max(80),
-        category: z.custom<mongoose.Types.ObjectId>(),
+        category: z.string().refine(mongoose.Types.ObjectId.isValid),
         page: z.number({ coerce: true }).min(1).max(100).default(1),
         limit: z.number({ coerce: true }).min(10).max(1000).default(10),
     })

@@ -105,7 +105,6 @@ export default function Index(props: any) {
 
     const onValuesChange = useMemo(() => {
         return debounce((_, values) => {
-            console.log('values', values);
             if (values.id) {
                 return updateDrfat({ id: values.id, data: values } as any);
             }

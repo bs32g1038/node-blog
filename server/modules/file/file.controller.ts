@@ -67,7 +67,6 @@ export class FileController {
     @Roles('admin')
     @UseInterceptors(FileInterceptor('file'))
     async upload(@UploadedFile(FileEncodePipe) file: any) {
-        console.log('file', file);
         return await this.fileService.uploadFile(file);
     }
 

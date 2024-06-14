@@ -5,7 +5,7 @@ import { ZodQuery, ZodParam, ZodBody } from '../../decorators/zod.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
 import { omit } from 'lodash';
 import { CreateCommentDto, createCommentZodSchema } from './comment.zod.schema';
-import { objectIdSchema, standardPaginationSchema } from '@blog/server/zod/common.schema';
+import { objectIdSchema, objectIdsSchema, standardPaginationSchema } from '@blog/server/zod/common.schema';
 import { z } from 'zod';
 @Controller('/api')
 @UseGuards(RolesGuard)
@@ -15,6 +15,7 @@ export class CommentController {
     @Post('/comments')
     @Roles('user', 'admin')
     async create(@Req() req: any, @ZodBody(createCommentZodSchema) comment: CreateCommentDto) {
+        console.log(comment, 'asdsad');
         const ua = req.useragent;
         comment.ip = req.ip;
         comment.user = req.user.id;
@@ -74,7 +75,7 @@ export class CommentController {
 
     @Delete('/comments')
     @Roles('admin')
-    deleteComments(@ZodBody(objectIdSchema) body: { ids: string[] }) {
+    deleteComments(@ZodBody(objectIdsSchema) body: { ids: string[] }) {
         return this.commentService.batchDelete(body.ids);
     }
 

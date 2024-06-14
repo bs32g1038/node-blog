@@ -30,10 +30,9 @@ export const getArticle = (obj = {}) => {
 
 export const getComment = (obj = {}) => {
     return {
-        nickName: faker.person.fullName(),
-        email: 'bs32g1038@163.com',
         article: null,
         reply: null,
+        user: getObjectId(),
         content: faker.lorem.paragraph(),
         ...obj,
     };
