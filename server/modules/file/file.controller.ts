@@ -11,8 +11,10 @@ import {
     standardPaginationSchema,
 } from '@blog/server/zod/common.schema';
 import { Response } from 'express';
-import { createCanvas } from '@napi-rs/canvas';
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { FileEncodePipe } from '@blog/server/pipes/filename.encode.pipe';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+GlobalFonts.registerFromPath(require('@canvas-fonts/helveticaneue'), 'HelveticaNeue');
 
 // prettier-ignore
 const aCode = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -38,7 +40,7 @@ export class FileController {
     async captcha(@Session() session: any, @Res() res: Response) {
         const canvas = createCanvas(120, 40);
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#eee';
+        ctx.fillStyle = '#f1f1f1';
         // 填充整个canvas
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         let code = '';
@@ -48,7 +50,7 @@ export class FileController {
             const index = Math.floor(Math.random() * aCode.length); //获取到一个随机的索引值
             const txt = aCode[index].toString(); //获取到数组里面的随机的内容
             code += txt;
-            ctx.font = 'bold 20px 微软雅黑'; //设置文字样式
+            ctx.font = 'bold 20px'; //设置文字样式
             ctx.fillStyle = getColor();
             ctx.fillText(txt, x, y);
         }

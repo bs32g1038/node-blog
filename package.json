@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@auth/express": "^0.5.5",
+    "@canvas-fonts/helveticaneue": "^1.0.4",
     "@napi-rs/canvas": "^0.1.52",
     "@nestjs/common": "10.3.8",
     "@nestjs/config": "^3.2.2",
