@@ -80,7 +80,7 @@ export class UserController {
             });
             return res.redirect(session.href);
         } catch (error) {
-            throw new GatewayTimeoutException('连接超时！');
+            throw new GatewayTimeoutException('连接超时！' + error);
         }
     }
 
