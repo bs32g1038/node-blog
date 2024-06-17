@@ -17,6 +17,13 @@
         input:-internal-autofill-selected {
             background-color: transparent;
         }
+        input:-webkit-autofill,
+        input:-webkit-autofill:active,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:hover {
+            -webkit-transition: background-color 60000s ease-in-out 0s;
+            transition: background-color 60000s ease-in-out 0s;
+        }
     }
 }
 .login {

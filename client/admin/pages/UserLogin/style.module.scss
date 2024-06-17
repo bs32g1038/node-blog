@@ -70,6 +70,19 @@
             max-width: 300px;
             margin: 0 auto;
         }
+        @keyframes resetBg {
+            to {
+                color: #fff !important;
+                background: transparent !important;
+            }
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:active,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:hover {
+            -webkit-transition: background-color 60000s ease-in-out 0s;
+            transition: background-color 60000s ease-in-out 0s;
+        }
     }
 }
 .signInHeader {
