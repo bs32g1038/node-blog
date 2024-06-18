@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET_KEY } from '../configs/index.config';
 import { Request } from 'express';
+import logger from '@blog/server/utils/logger.util';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -23,7 +24,7 @@ export class RolesGuard implements CanActivate {
             };
             return !!(user && user.roles && hasRole());
         } catch (err: any) {
-            console.log(err);
+            logger.info(err);
             if (!roles.includes('all')) {
                 throw new UnauthorizedException('请先登录', err.message);
             }

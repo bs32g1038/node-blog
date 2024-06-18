@@ -7,6 +7,7 @@ import { omit } from 'lodash';
 import { CreateCommentDto, createCommentZodSchema } from './comment.zod.schema';
 import { objectIdSchema, objectIdsSchema, standardPaginationSchema } from '@blog/server/zod/common.schema';
 import { z } from 'zod';
+import { getClientIp } from '@blog/server/utils/helper';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CommentController {
@@ -15,9 +16,8 @@ export class CommentController {
     @Post('/comments')
     @Roles('user', 'admin')
     async create(@Req() req: any, @ZodBody(createCommentZodSchema) comment: CreateCommentDto) {
-        console.log(comment, 'asdsad');
         const ua = req.useragent;
-        comment.ip = req.ip;
+        comment.ip = getClientIp(req);
         comment.user = req.user.id;
         comment.browser = `${ua.browser.name} ${ua.browser.version}`;
         comment.os = `${ua.os.name} ${ua.os.version}`;
