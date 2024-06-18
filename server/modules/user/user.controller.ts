@@ -23,6 +23,7 @@ import { Roles } from '@blog/server/decorators/roles.decorator';
 import { UserInfoDto, userInfoZodSchema } from './user.zod.schema';
 import { GitHubTokens } from 'arctic';
 import { LoginLogService } from '../loginlog/loginlog.service';
+import { getClientIp } from '@blog/server/utils/helper';
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)
@@ -102,7 +103,7 @@ export class UserController {
         res.cookie('user', JSON.stringify(data.user));
         const ua = req.useragent;
         this.loginLogService.create({
-            ip: req.ip,
+            ip: getClientIp(req),
             browser: `${ua.browser.name} ${ua.browser.version}`,
             os: `${ua.os.name} ${ua.os.version}`,
             type: '账号登录',
