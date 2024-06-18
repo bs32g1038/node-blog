@@ -85,8 +85,8 @@ export class FileService {
             });
             if (rs) {
                 if (item.type === FileType.image) {
-                    if (Number(size) > 1024 * 1024 * 2) {
-                        throw new BadRequestException('图片最大为 2MB');
+                    if (Number(size) > 1024 * 1024 * 5) {
+                        throw new BadRequestException('图片最大为 5MB');
                     }
                 }
                 type = item.type;
