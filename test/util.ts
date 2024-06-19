@@ -19,14 +19,7 @@ import { getDerivedKey } from '@blog/server/utils/crypto.util';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import userAgentMiddleware from '@blog/server/middlewares/user-agent.middleware';
-
-export const getToken = () => {
-    // const res = jwt.sign({ id: , roles: ['admin'] }, TOKEN_SECRET_KEY, {
-    //     expiresIn: 60 * 60,
-    // });
-    // return [`mstoken=${res}`];
-    return [];
-};
+import { TestModule } from '@blog/server/modules/test/test.module';
 
 export const verifyToken = (str: string) => {
     return jwt.verify(str, TOKEN_SECRET_KEY);
@@ -65,15 +58,16 @@ export const createModels = async ({
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const model = await createModels({ isMemory: true });
-    const testModule = await Test.createTestingModule({
+    const testingModule = await Test.createTestingModule({
         imports: [
             MongooseModule.forRoot(model?.mongod?.getUri() ?? ''),
             DynamicConfigModule,
+            TestModule,
             ...(metadata.imports || []),
         ],
         providers: metadata.providers ?? [],
     }).compile();
-    const app = testModule.createNestApplication();
+    const app = testingModule.createNestApplication();
     app.useGlobalFilters(new AllExceptionsFilter());
     app.use(userAgentMiddleware());
     app.use(cookieParser());

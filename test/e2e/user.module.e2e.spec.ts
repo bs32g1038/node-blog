@@ -5,6 +5,7 @@ import { initApp } from '../util';
 import { encrypt } from '@blog/server/utils/crypto.util';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Connection } from 'mongoose';
+import { FileModule } from '@blog/server/modules/file/file.module';
 
 /**
  * 用户模块 api 测试
@@ -17,7 +18,7 @@ describe('user.module.e2e', () => {
 
     beforeAll(async () => {
         const instance = await initApp({
-            imports: [UserModule],
+            imports: [UserModule, FileModule],
         });
         app = instance.app;
         mongod = instance.mongod;
@@ -31,6 +32,33 @@ describe('user.module.e2e', () => {
 
     test('forbidden request, get user login info failure', async () => {
         return request(app.getHttpServer()).get('/api/user/login-info').expect(401);
+    });
+
+    describe('user registration captcha code', () => {
+        test('incorrect captcha code', async () => {
+            return request(app.getHttpServer())
+                .post('/api/user/auth/signup')
+                .send({
+                    account: 'test1',
+                    password: 'test1',
+                })
+                .expect(400);
+        });
+        test('correct captcha code', async () => {
+            const resultCaptcha = await request(app.getHttpServer()).get('/api/files/captcha');
+            const res = await request(app.getHttpServer())
+                .get('/api/test/session')
+                .set('Cookie', resultCaptcha.header['set-cookie']);
+            return request(app.getHttpServer())
+                .post('/api/user/auth/signup')
+                .set('Cookie', resultCaptcha.header['set-cookie'])
+                .send({
+                    account: 'test1',
+                    password: 'test1',
+                    captcha: res.body.captcha,
+                })
+                .expect(201);
+        });
     });
 
     test('update user info success', async () => {

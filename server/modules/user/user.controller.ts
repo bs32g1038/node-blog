@@ -114,7 +114,7 @@ export class UserController {
 
     @Post('auth/signup')
     async authRegister(@Session() session: any, @Body() body: any) {
-        if (session.captcha !== body.captcha) {
+        if (!body.captcha || session.captcha !== body.captcha) {
             throw new BadRequestException('验证码输入有误，请重新检查后再登陆');
         }
         return await this.userService.authRegister(body);
