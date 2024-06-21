@@ -1,7 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, message, Space, Image } from 'antd';
+import { Form, Input, Button, Space, Image, Toast } from 'antd-mobile';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useForm } from 'antd/lib/form/Form';
 import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { useAuthLoginMutation } from '@blog/client/web/api';
@@ -24,9 +23,10 @@ interface Props {
 
 export default function CLogin(props: Props) {
     const { jumpRegister } = props;
-    const [form] = useForm();
+    const [form] = Form.useForm();
     const [login] = useAuthLoginMutation();
     const onFinish = (values: any) => {
+        console.log('values', values);
         form.validateFields().then(() => {
             login(values)
                 .unwrap()
@@ -35,7 +35,9 @@ export default function CLogin(props: Props) {
                 })
                 .catch((err) => {
                     if (err?.data) {
-                        message.error(err.data.message);
+                        Toast.show({
+                            content: err.data.message,
+                        });
                     }
                 });
             return;
@@ -43,63 +45,79 @@ export default function CLogin(props: Props) {
     };
     return (
         <div className={styles.wrap}>
-            <Form form={form} name="normal_login" initialValues={{ remember: true }} onFinish={onFinish}>
-                <Form.Item name="account" rules={[{ required: true, message: '请输入账号!' }]}>
-                    <Input
-                        prefix={
-                            <Space size={3}>
-                                <UserOutlined className="site-form-item-icon" />
-                                <span>账号</span>
-                            </Space>
-                        }
-                        placeholder="请输入账号"
-                    />
+            <Form
+                layout="horizontal"
+                form={form}
+                onFinish={onFinish}
+                style={{
+                    '--prefix-width': '90px',
+                }}
+            >
+                <Form.Item
+                    label={
+                        <Space>
+                            <UserOutlined className="site-form-item-icon" />
+                            <span>账号</span>
+                        </Space>
+                    }
+                    name="account"
+                    rules={[{ required: true, message: '请输入账号!' }]}
+                >
+                    <Input placeholder="请输入账号" />
                 </Form.Item>
-                <Form.Item name="password" rules={[{ required: true, message: '请输入你的密码!' }]}>
-                    <Input
-                        autoComplete="false"
-                        prefix={
-                            <Space size={3}>
-                                <LockOutlined className="site-form-item-icon" />
-                                <span>密码</span>
-                            </Space>
-                        }
-                        type="password"
-                        placeholder="请输入密码"
-                        suffix="忘记密码"
-                    />
+                <Form.Item
+                    label={
+                        <Space>
+                            <LockOutlined className="site-form-item-icon" />
+                            <span>密码</span>
+                        </Space>
+                    }
+                    name="password"
+                    rules={[{ required: true, message: '请输入你的密码!' }]}
+                    extra="忘记密码"
+                >
+                    <Input autoComplete="false" type="password" placeholder="请输入密码" />
                 </Form.Item>
-                <Form.Item name="captcha" rules={[{ required: true, message: '请输入验证码!' }]}>
-                    <Space style={{ display: 'flex' }}>
-                        <Input
-                            prefix={
-                                <Space size={3}>
-                                    <CaptchaSvg />
-                                    <span>验证码</span>
-                                </Space>
-                            }
-                            placeholder="请输入验证码"
-                            style={{
-                                width: '100%',
-                            }}
-                        />
+                <Form.Item
+                    label={
+                        <Space>
+                            <CaptchaSvg />
+                            <span>验证码</span>
+                        </Space>
+                    }
+                    name="captcha"
+                    rules={[{ required: true, message: '请输入验证码!' }]}
+                    extra={
                         <Image
                             src="/api/files/captcha"
                             alt=""
                             style={{
-                                height: 40,
+                                height: 30,
+                                width: 60,
                             }}
-                            preview={false}
                             onClick={(e: any) => {
                                 if (e.target?.nodeName?.toLocaleLowerCase() === 'img') {
                                     e.target?.setAttribute('src', '/api/files/captcha?' + new Date().getTime());
                                 }
                             }}
                         ></Image>
-                    </Space>
+                    }
+                >
+                    <Input
+                        placeholder="请输入验证码"
+                        style={{
+                            width: '100%',
+                        }}
+                    />
                 </Form.Item>
                 <Form.Item>
-                    <Button size="large" type="primary" htmlType="submit" className={styles.loginButton}>
+                    <Button
+                        size="large"
+                        className={styles.loginButton}
+                        onClick={() => {
+                            form.submit();
+                        }}
+                    >
                         登录
                     </Button>
                 </Form.Item>
@@ -108,7 +126,7 @@ export default function CLogin(props: Props) {
                         marginBottom: 0,
                     }}
                 >
-                    <Button size="small" type="text" onClick={() => jumpRegister?.()}>
+                    <Button size="small" onClick={() => jumpRegister?.()}>
                         还没有账号，点击这里去注册{'>>'}
                     </Button>
                 </Form.Item>

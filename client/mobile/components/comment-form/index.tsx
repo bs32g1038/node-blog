@@ -119,8 +119,8 @@ export const CommentForm = (props: Props) => {
                                 value={content}
                                 placeholder={props.placeholder || '留点空白给你说~'}
                                 autoSize={{ minRows: 1, maxRows: 3 }}
-                                onChange={(event: any) => {
-                                    setContent(event.target.value);
+                                onChange={(value: any) => {
+                                    setContent(value);
                                 }}
                             />
                             {isFocus && (
@@ -158,7 +158,6 @@ export const CommentForm = (props: Props) => {
                     </div>
                     <div className={style.loginCommentRight}>
                         <Space>
-                            发表评论请
                             <Button
                                 size="small"
                                 color="primary"

@@ -35,7 +35,7 @@
     flex: 1 0 auto;
     border-radius: 4px;
     position: relative;
-    padding: 0 25px;
+    padding: 15px 25px;
     margin: 0 auto;
     background-color: #fff;
     display: flex;
@@ -54,9 +54,9 @@
             padding-bottom: 8px;
         }
 
-        input {
-            background: #eeeff1;
-        }
+        // input {
+        //     background: #eeeff1;
+        // }
 
         .ant-btn-primary:hover,
         .ant-btn-primary:focus {

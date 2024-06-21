@@ -5,7 +5,7 @@ import style from './comment-item.style.module.scss';
 import { xss } from '@blog/client/libs/marked';
 import { IComment, useDeleteCommentMutation, useLazyLikeCommentQuery } from '@blog/client/web/api';
 import { isString } from 'lodash';
-import { Avatar, Button, Popconfirm } from 'antd';
+import { Avatar, Button, Dialog } from 'antd-mobile';
 import { CommentOutlined, DeleteOutlined, LikeOutlined } from '@ant-design/icons';
 import { handleEmoji } from '@blog/client/common/helper.util';
 import { useStore } from './zustand';
@@ -26,7 +26,7 @@ export const CommentItem = (props: {
         <div className={style.commentItem}>
             <div className={style.commentItemInner}>
                 <div className={style.commentItemAvatar}>
-                    <Avatar size={40} src={item?.user?.avatar} />
+                    <Avatar src={item?.user?.avatar} />
                 </div>
                 <div className={style.commentItemRight}>
                     <div className={style.commentItemRightTop}>
@@ -47,19 +47,21 @@ export const CommentItem = (props: {
                                           : '') + xss(handleEmoji(item?.content).replace(/\n/g, '<br>')),
                             }}
                         ></p>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 14 }}>
                             <Button
-                                type="text"
                                 style={{ color: 'var(--meta-text-color)' }}
+                                size="small"
                                 onClick={() => setShowCommentForm(showCommentForm === item._id ? '' : item._id)}
+                                fill="none"
                             >
                                 <CommentOutlined style={{ fontSize: 14 }}></CommentOutlined>
                                 <span>回复</span>
                             </Button>
                             <Button
-                                type="text"
+                                fill="none"
                                 style={{ color: 'var(--meta-text-color)' }}
                                 loading={isLoading}
+                                size="small"
                                 onClick={() => {
                                     likeComment({
                                         id: item._id,
@@ -72,22 +74,26 @@ export const CommentItem = (props: {
                                 <span>点赞（{item.likes.length}）</span>
                             </Button>
                             {item.isCanDeleted && (
-                                <Popconfirm
-                                    title="确认要删除？"
-                                    placement="right"
-                                    onConfirm={() => {
-                                        _deleteComment({
-                                            id: item._id,
-                                        }).then(() => {
-                                            updateCommentListTag();
+                                <Button
+                                    fill="none"
+                                    style={{ color: 'var(--meta-text-color)' }}
+                                    loading={isLoading}
+                                    onClick={async () => {
+                                        const result = await Dialog.confirm({
+                                            content: '确认要删除？',
                                         });
+                                        if (result) {
+                                            _deleteComment({
+                                                id: item._id,
+                                            }).then(() => {
+                                                updateCommentListTag();
+                                            });
+                                        }
                                     }}
                                 >
-                                    <Button type="text" style={{ color: 'var(--meta-text-color)' }} loading={isLoading}>
-                                        <DeleteOutlined style={{ fontSize: 14 }} />
-                                        <span>删除</span>
-                                    </Button>
-                                </Popconfirm>
+                                    <DeleteOutlined style={{ fontSize: 14 }} />
+                                    <span>删除</span>
+                                </Button>
                             )}
                         </div>
                         {showCommentForm === item._id && (
