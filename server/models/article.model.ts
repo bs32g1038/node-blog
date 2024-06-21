@@ -47,6 +47,9 @@ export class Article {
     @Prop({ default: false, select: false })
     isDeleted!: boolean;
 
+    @Prop({ default: false })
+    isDraft!: boolean;
+
     @Prop([DayReadings])
     dayReadings!: DayReadings[];
 }

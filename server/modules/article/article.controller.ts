@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { Article } from '@blog/server/models/article.model';
 import { Roles } from '@blog/server/decorators/roles.decorator';
@@ -35,7 +35,11 @@ export class ArticleController {
     }
 
     @Get('/articles')
-    public async getArticles(@ZodQuery(requestArticlesZodSchema) query: RequestArticlesDto) {
+    @Roles('all')
+    public async getArticles(@Req() req: any, @ZodQuery(requestArticlesZodSchema) query: RequestArticlesDto) {
+        if (!req.user?.roles.includes('admin')) {
+            query.isDraft = false;
+        }
         const { items, totalCount } = await this.articleService.getArticleList(query);
         return {
             items,

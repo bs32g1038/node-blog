@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import Router, { useRouter } from 'next/router';
-import { Form, Input, Button, message, Select, Spin, Popover, Space, Table, Popconfirm } from 'antd';
+import { Form, Input, Button, message, Select, Spin, Popover, Table, Popconfirm, Radio, Space } from 'antd';
 import { ArrowLeftOutlined, HistoryOutlined, SendOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import isLength from 'validator/lib/isLength';
@@ -61,6 +61,7 @@ export default function Index(props: any) {
                         tags: article.tags,
                         summary: article.summary,
                         screenshot: article.screenshot,
+                        isDraft: article.isDraft,
                     });
                 });
         }
@@ -78,6 +79,7 @@ export default function Index(props: any) {
                         tags: article.tags,
                         summary: article.summary,
                         screenshot: article.screenshot,
+                        isDraft: article.isDraft,
                     });
                 });
         }
@@ -204,11 +206,11 @@ export default function Index(props: any) {
                     <Form
                         form={form}
                         layout="vertical"
-                        initialValues={{ content: '' }}
+                        initialValues={{ content: '', isDraft: false }}
                         onValuesChange={onValuesChange}
                         onFinish={(vals) => {
                             form.validateFields().then(() => {
-                                publish({ ...vals, isDraft: false });
+                                publish({ ...vals });
                             });
                         }}
                     >
@@ -223,38 +225,47 @@ export default function Index(props: any) {
                             >
                                 <TextArea placeholder="请输入标题" rows={1} style={{ textAlign: 'center' }} />
                             </Form.Item>
-                            <Space align="start">
+                            <div className={style.lay}>
                                 <Form.Item
                                     required={true}
                                     label="封面图片"
                                     name="screenshot"
                                     rules={[{ required: true, message: '封面图片不能为空!' }]}
+                                    extra="图片上传格式支持 JPEG、JPG、PNG"
                                 >
                                     <UploadImageButton></UploadImageButton>
                                 </Form.Item>
-                                <Form.Item
-                                    name="category"
-                                    label="文章分类"
-                                    rules={[{ required: true, message: '分类不能为空!' }]}
-                                >
-                                    <Select
-                                        style={{ width: 200 }}
-                                        loading={categoryLoading}
-                                        placeholder="请选择一个分类"
+                                <div>
+                                    <Form.Item name="isDraft" label="状态">
+                                        <Radio.Group>
+                                            <Radio value={false}>发布</Radio>
+                                            <Radio value={true}>草稿</Radio>
+                                        </Radio.Group>
+                                    </Form.Item>
+                                    <Form.Item
+                                        name="category"
+                                        label="文章分类"
+                                        rules={[{ required: true, message: '分类不能为空!' }]}
                                     >
-                                        {categoryOptions}
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item name="tags" label="文章标签">
-                                    <Select
-                                        mode="tags"
-                                        style={{ width: 270 }}
-                                        maxCount={3}
-                                        maxTagCount={2}
-                                        placeholder="请输入标签"
-                                    />
-                                </Form.Item>
-                            </Space>
+                                        <Select
+                                            style={{ width: 270 }}
+                                            loading={categoryLoading}
+                                            placeholder="请选择一个分类"
+                                        >
+                                            {categoryOptions}
+                                        </Select>
+                                    </Form.Item>
+                                    <Form.Item name="tags" label="文章标签">
+                                        <Select
+                                            mode="tags"
+                                            style={{ width: 270 }}
+                                            maxCount={3}
+                                            maxTagCount={2}
+                                            placeholder="请输入标签"
+                                        />
+                                    </Form.Item>
+                                </div>
+                            </div>
                             <Form.Item
                                 name="content"
                                 label="文章内容"
