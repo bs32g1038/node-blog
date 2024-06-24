@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Categories from '../categories';
 import ArticleItem from './item';
@@ -24,19 +24,24 @@ const Page = (props: any) => {
     const tag: string = isArray(router.query.tag) ? router.query.tag.join(',') : router.query.tag || '';
     const { data = { items: [], totalCount: 0 }, isLoading } = useFetchArticlesQuery({ page, filter: { cid, tag } });
     const [fetchArticles] = useLazyFetchArticlesQuery();
-    const refData = useRef<any[]>([]);
-    const refPage = useRef(page);
-    const results = [...data.items, ...refData.current];
     const [hasMore, setHasMore] = useState(true);
-    async function loadMore() {
-        return fetchArticles({ page: refPage.current + 1, filter: { cid, tag } })
-            .unwrap()
-            .then((res) => {
-                refData.current = [...refData.current, ...res.items];
-                refPage.current += 1;
-                setHasMore(res?.items?.length > 0);
-            });
-    }
+    const { loadMore, moreData } = useMemo(() => {
+        let _page = page;
+        let moreData: any[] = [];
+        return {
+            moreData,
+            loadMore: async function loadMore() {
+                return fetchArticles({ page: _page + 1, filter: { cid, tag } })
+                    .unwrap()
+                    .then((res) => {
+                        moreData = [...moreData, ...res.items];
+                        _page += 1;
+                        setHasMore(res?.items?.length > 0);
+                    });
+            },
+        };
+    }, [cid, fetchArticles, page, tag]);
+    const results = [...data.items, ...moreData];
     return (
         <AppLayout>
             <Head>
