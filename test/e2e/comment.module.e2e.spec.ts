@@ -1,13 +1,12 @@
 import request from 'supertest';
 import { CommentModule } from '@blog/server/modules/comment/comment.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, isExpectPass } from '../util';
+import { initApp, generateDataList } from '../util';
 import { getComment, getArticle, getObjectId } from '../faker';
 import { Article } from '@blog/server/models/article.model';
-import { Model, Connection } from 'mongoose';
+import mongoose, { Model, Connection } from 'mongoose';
 import { Comment } from '@blog/server/models/comment.model';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { User } from '@blog/server/models/user.model';
 
 /**
  * 评论模块 api 测试
@@ -19,7 +18,6 @@ describe('comment.module.e2e', () => {
     let articleModel: Model<Article>;
     let commentModel: Model<Comment>;
     let getToken: () => string[];
-    let user: User;
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -31,7 +29,6 @@ describe('comment.module.e2e', () => {
         articleModel = instance.articleModel;
         commentModel = instance.commentModel;
         getToken = instance.getToken;
-        user = instance.user;
     });
 
     beforeEach(async () => {
@@ -59,6 +56,15 @@ describe('comment.module.e2e', () => {
     });
 
     describe('get comment list', () => {
+        test('empty query', async () => {
+            return request(app.getHttpServer())
+                .get('/api/comments')
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.items.length).toBeGreaterThanOrEqual(0);
+                });
+        });
+
         test('default query', async () => {
             const article = await articleModel.create(getArticle());
             const comments = generateDataList(() => getComment({ article: article._id.toString() }), 10);
@@ -98,6 +104,29 @@ describe('comment.module.e2e', () => {
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
             });
+    });
+
+    test('the comment cannot be found', async () => {
+        return request(app.getHttpServer())
+            .get('/api/comments/' + new mongoose.Types.ObjectId().toString())
+            .set('Cookie', getToken())
+            .expect(200);
+    });
+
+    test('comment like 200', async () => {
+        const article = await articleModel.create(getArticle());
+        const comment = getComment({ article: article._id.toString() });
+        const { _id } = await commentModel.create(comment);
+        // like
+        await request(app.getHttpServer())
+            .post('/api/like-comment/' + _id)
+            .set('Cookie', getToken())
+            .expect(201);
+        // cancel like
+        await request(app.getHttpServer())
+            .post('/api/like-comment/' + _id)
+            .set('Cookie', getToken())
+            .expect(201);
     });
 
     test('delete comment success', async () => {

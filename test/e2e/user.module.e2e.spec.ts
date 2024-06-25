@@ -40,7 +40,7 @@ describe('user.module.e2e', () => {
                 .post('/api/user/auth/signup')
                 .send({
                     account: 'test1',
-                    password: 'test1',
+                    password: encrypt('test1'),
                 })
                 .expect(400);
         });
@@ -54,7 +54,7 @@ describe('user.module.e2e', () => {
                 .set('Cookie', resultCaptcha.header['set-cookie'])
                 .send({
                     account: 'test1',
-                    password: 'test1',
+                    password: encrypt('test1'),
                     captcha: res.body.captcha,
                 })
                 .expect(201);
