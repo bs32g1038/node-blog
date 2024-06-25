@@ -178,6 +178,7 @@
       "!./server/utils/**",
       "!./server/filters/all-exceptions.filter.ts",
       "!./server/middlewares/rate-limit.middleware.ts",
+      "!./server/middlewares/user-agent.middleware.ts",
       "!./server/database/database.module.ts",
       "!./server/modules/dynamic-config/**",
       "!./server/modules/email/**",

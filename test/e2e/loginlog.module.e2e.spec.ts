@@ -28,6 +28,17 @@ describe('adminlog.module.e2e', () => {
         return request(app.getHttpServer()).get('/api/admin-logs').set('Cookie', getToken()).expect(200);
     });
 
+    test('get admin logs with pagination', async () => {
+        return request(app.getHttpServer())
+            .get('/api/admin-logs')
+            .query({
+                page: 1,
+                limit: 10,
+            })
+            .set('Cookie', getToken())
+            .expect(200);
+    });
+
     test('get recent admin logs success', async () => {
         return request(app.getHttpServer()).get('/api/recent-admin-logs').set('Cookie', getToken()).expect(200);
     });
