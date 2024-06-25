@@ -4,6 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { useAuthLoginMutation } from '@blog/client/web/api';
+import { encrypt } from '@blog/client/libs/crypto-js';
 
 export const LOGIN_TYPE = {
     login: 'login',
@@ -26,9 +27,11 @@ export default function CLogin(props: Props) {
     const [form] = Form.useForm();
     const [login] = useAuthLoginMutation();
     const onFinish = (values: any) => {
-        console.log('values', values);
         form.validateFields().then(() => {
-            login(values)
+            login({
+                ...values,
+                password: encrypt(values.password),
+            })
                 .unwrap()
                 .then(() => {
                     window.location.reload();

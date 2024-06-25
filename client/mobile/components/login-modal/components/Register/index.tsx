@@ -5,6 +5,7 @@ import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { omit } from 'lodash';
 import { useRegisterMutation } from '@blog/client/web/api';
+import { encrypt } from '@blog/client/libs/crypto-js';
 
 export interface SimpleDialogProps {
     open: boolean;
@@ -29,7 +30,10 @@ export default function CLogin(props: Props) {
                 });
                 return;
             }
-            register(omit(values, 'repeatPassword') as any)
+            register({
+                ...(omit(values, 'repeatPassword') as any),
+                password: encrypt(values.password),
+            })
                 .unwrap()
                 .then(() => {
                     Toast.show({

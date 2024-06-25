@@ -7,13 +7,19 @@ import { useFetchConfigQuery } from '@blog/client/web/api';
 import { useLoginMutation } from './service';
 import { wrapper } from '@blog/client/redux/store';
 import CaptchaSvg from '@blog/client/mobile/components/login-modal/components/CaptchaSvg';
+import { encrypt } from '@blog/client/libs/crypto-js';
 
 export default function UserLogin(props: any) {
     wrapper.useHydration(props);
     const { data: appConfig } = useFetchConfigQuery();
     const [login, { isLoading }] = useLoginMutation();
     const handleLogin = async (_data: any) => {
-        await login({ account: _data.account, password: _data.password, isAdmin: true, captcha: _data.captcha })
+        await login({
+            account: _data.account,
+            password: encrypt(_data.password),
+            isAdmin: true,
+            captcha: _data.captcha,
+        })
             .unwrap()
             .then(() => {
                 message.success('登陆成功！');

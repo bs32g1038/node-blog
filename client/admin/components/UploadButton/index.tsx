@@ -3,7 +3,6 @@ import { Image, message, UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { isEqual, noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import config from '@blog/client/configs/admin.default.config';
 
 const isImage = (type: string) => isEqual(type, 'image');
 const isSvg = (type: string) => isEqual(type, 'svg');
@@ -71,9 +70,6 @@ export default function UploadButton(props: Props) {
                 showUploadList={false}
                 disabled={disabled}
                 accept={isImage(type) ? '.jpg,.jpeg,.png' : isSvg(type) && '.svg'}
-                headers={{
-                    authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
-                }}
             >
                 {value ? (
                     <Image preview={false} src={value} alt="" />

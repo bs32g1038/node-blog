@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { IUserModel, User } from '../../models/user.model';
 import { InjectModel } from '@nestjs/mongoose';
-import { getDerivedKey } from '@blog/server/utils/crypto.util';
+import { decrypt, getDerivedKey } from '@blog/server/utils/crypto.util';
 import infoLogger from '@blog/server/utils/logger.util';
 import { TOKEN_SECRET_KEY } from '@blog/server/configs/index.config';
 import jwt from 'jsonwebtoken';
@@ -63,7 +63,7 @@ export class UserService {
     async authLogin(data: { account: string; password: string }) {
         const user = await this.userModel.findOne({
             account: data.account,
-            password: getDerivedKey(data.password),
+            password: getDerivedKey(decrypt(data.password)),
         });
         if (user) {
             return {
@@ -92,7 +92,7 @@ export class UserService {
                 ...data,
                 username: data.account,
                 avatar: '/static/avatar.jpg',
-                password: getDerivedKey(data.password),
+                password: getDerivedKey(decrypt(data.password)),
                 type: 'user',
             });
         }

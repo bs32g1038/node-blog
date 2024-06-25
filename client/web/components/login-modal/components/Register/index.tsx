@@ -6,6 +6,7 @@ import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { omit } from 'lodash';
 import { useRegisterMutation } from '@blog/client/web/api';
+import { encrypt } from '@blog/client/libs/crypto-js';
 
 export interface SimpleDialogProps {
     open: boolean;
@@ -27,7 +28,10 @@ export default function CLogin(props: Props) {
             if (values.repeatPassword !== values.password) {
                 return message.error('两次输入的密码不一致！');
             }
-            register(omit(values, 'repeatPassword') as any)
+            register({
+                ...(omit(values, 'repeatPassword') as any),
+                password: encrypt(values.password),
+            })
                 .unwrap()
                 .then(() => {
                     message.success('注册成功！');
@@ -42,7 +46,7 @@ export default function CLogin(props: Props) {
     };
     return (
         <div className={styles.wrap}>
-            <Form form={form} name="normal_login" initialValues={{ remember: true }} onFinish={onFinish}>
+            <Form form={form} initialValues={{ remember: true }} onFinish={onFinish}>
                 <Form.Item name="account" rules={[{ required: true, message: '请输入账号' }]}>
                     <Input
                         prefix={

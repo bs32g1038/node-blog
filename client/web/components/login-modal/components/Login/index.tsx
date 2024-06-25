@@ -5,6 +5,7 @@ import { useForm } from 'antd/lib/form/Form';
 import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { useAuthLoginMutation } from '@blog/client/web/api';
+import { encrypt } from '@blog/client/libs/crypto-js';
 
 export const LOGIN_TYPE = {
     login: 'login',
@@ -28,7 +29,10 @@ export default function CLogin(props: Props) {
     const [login] = useAuthLoginMutation();
     const onFinish = (values: any) => {
         form.validateFields().then(() => {
-            login(values)
+            login({
+                ...values,
+                password: encrypt(values.password),
+            })
                 .unwrap()
                 .then(() => {
                     window.location.reload();
@@ -43,7 +47,7 @@ export default function CLogin(props: Props) {
     };
     return (
         <div className={styles.wrap}>
-            <Form form={form} name="normal_login" initialValues={{ remember: true }} onFinish={onFinish}>
+            <Form form={form} initialValues={{ remember: true }} onFinish={onFinish}>
                 <Form.Item name="account" rules={[{ required: true, message: '请输入账号!' }]}>
                     <Input
                         prefix={
