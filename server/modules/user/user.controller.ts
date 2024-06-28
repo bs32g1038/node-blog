@@ -13,17 +13,33 @@ import {
     Session,
     GatewayTimeoutException,
     UnauthorizedException,
+    Delete,
 } from '@nestjs/common';
 import { RolesGuard } from '../../guards/roles.guard';
 import { UserService } from './user.service';
 import { Response } from 'express';
-import { ZodBody } from '../../decorators/zod.decorator';
+import { ZodBody, ZodParam, ZodQuery } from '../../decorators/zod.decorator';
 import { getDerivedKey } from '../../utils/crypto.util';
 import { Roles } from '@blog/server/decorators/roles.decorator';
-import { UserInfoDto, userInfoZodSchema } from './user.zod.schema';
+import {
+    RequestUpdateStausDto,
+    RequestUserDto,
+    UserEmailCheckDto,
+    UserInfoDto,
+    UserLoginDto,
+    UserRegisterDto,
+    requestUpdateStatusZodSchema,
+    requestUsersZodSchema,
+    userEmailCheckZodSchema,
+    userInfoZodSchema,
+    userLoginZodSchema,
+    userRegisterZodSchema,
+} from './user.zod.schema';
 import { GitHubTokens } from 'arctic';
 import { LoginLogService } from '../loginlog/loginlog.service';
 import { getClientIp } from '@blog/server/utils/helper';
+import { objectIdSchema, objectIdsSchema } from '@blog/server/zod/common.schema';
+import { User } from '@blog/server/models/user.model';
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)
@@ -64,7 +80,7 @@ export class UserController {
             const result = await response.json();
             const data = await this.userService.githubLogin({
                 githubId: result.id,
-                account: result.email,
+                email: result.email,
                 avatar_url: result.avatar_url,
                 username: result.login,
                 accessToken: tokens.accessToken,
@@ -89,7 +105,7 @@ export class UserController {
     async authLogin(
         @Req() req: any,
         @Session() session: any,
-        @Body() body: { isAdmin: boolean; captcha: string; account: string; password: string },
+        @ZodBody(userLoginZodSchema) body: UserLoginDto,
         @Res() res: Response
     ) {
         if (session.captcha !== body.captcha) {
@@ -112,10 +128,20 @@ export class UserController {
         return res.json(data);
     }
 
-    @Post('auth/signup')
-    async authRegister(@Session() session: any, @Body() body: any) {
+    @Post('auth/email')
+    async authEmail(@Session() session: any, @ZodBody(userEmailCheckZodSchema) body: UserEmailCheckDto) {
         if (!body.captcha || session.captcha !== body.captcha) {
             throw new BadRequestException('验证码输入有误，请重新检查后再登陆');
+        }
+        const res = await this.userService.sendRegisterCodeEmail(body);
+        session.emailCode = res.verifyCode;
+        return true;
+    }
+
+    @Post('auth/signup')
+    async authRegister(@Session() session: any, @ZodBody(userRegisterZodSchema) body: UserRegisterDto) {
+        if (!body.emailCode || session.emailCode !== body.emailCode) {
+            throw new BadRequestException('邮箱验证码输入有误');
         }
         return await this.userService.authRegister(body);
     }
@@ -142,5 +168,29 @@ export class UserController {
     async resetPassword(@Req() req: any, @Body() body: any) {
         const password = getDerivedKey(body.password);
         return await this.userService.resetPasswordById(req.user.id, password);
+    }
+
+    @Get('list')
+    @Roles('admin')
+    async getUserList(@ZodQuery(requestUsersZodSchema) query: RequestUserDto) {
+        return await this.userService.getUserList(query);
+    }
+
+    @Delete('delete/:id')
+    @Roles('admin')
+    public async deleteUser(@ZodParam(objectIdSchema) params: { id: string }): Promise<User | null> {
+        return await this.userService.deleteUser(params.id);
+    }
+
+    @Delete('batch')
+    @Roles('admin')
+    deleteUsers(@ZodBody(objectIdsSchema) body: { ids: string[] }): Promise<any> {
+        return this.userService.batchDelete(body.ids);
+    }
+
+    @Put('update-status')
+    @Roles('admin')
+    async updateStatus(@ZodBody(requestUpdateStatusZodSchema) body: RequestUpdateStausDto) {
+        return await this.userService.updateStatusById(body);
     }
 }

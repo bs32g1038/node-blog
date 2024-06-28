@@ -162,16 +162,23 @@ export const appApi = createApi({
                 method: 'delete',
             }),
         }),
-        authLogin: builder.mutation<any, { account: string; password: string; captcha: string }>({
+        authLogin: builder.mutation<any, { email: string; password: string; captcha: string }>({
             query: (data) => ({
                 url: '/api/user/auth/login',
                 method: 'post',
                 data,
             }),
         }),
-        register: builder.mutation<any, { account: string; password: string; captcha: string }>({
+        register: builder.mutation<any, { email: string; password: string; emailCode: string }>({
             query: (data) => ({
                 url: '/api/user/auth/signup',
+                method: 'post',
+                data,
+            }),
+        }),
+        registerSendEmail: builder.mutation<any, { email: string; captcha: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/email',
                 method: 'post',
                 data,
             }),
@@ -193,6 +200,7 @@ export const {
     useDeleteCommentMutation,
     useAuthLoginMutation,
     useRegisterMutation,
+    useRegisterSendEmailMutation,
 } = appApi;
 
 export const {

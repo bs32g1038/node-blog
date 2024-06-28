@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Space, Image, Toast } from 'antd-mobile';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { useAuthLoginMutation } from '@blog/client/web/api';
@@ -57,21 +57,21 @@ export default function CLogin(props: Props) {
                 }}
             >
                 <Form.Item
+                    name="email"
+                    rules={[{ required: true, message: '请输入邮箱' }]}
                     label={
                         <Space>
-                            <UserOutlined className="site-form-item-icon" />
-                            <span>账号</span>
+                            <MailOutlined />
+                            <span>邮箱</span>
                         </Space>
                     }
-                    name="account"
-                    rules={[{ required: true, message: '请输入账号!' }]}
                 >
-                    <Input placeholder="请输入账号" />
+                    <Input placeholder="请输入" />
                 </Form.Item>
                 <Form.Item
                     label={
                         <Space>
-                            <LockOutlined className="site-form-item-icon" />
+                            <LockOutlined />
                             <span>密码</span>
                         </Space>
                     }
@@ -92,7 +92,7 @@ export default function CLogin(props: Props) {
                     rules={[{ required: true, message: '请输入验证码!' }]}
                     extra={
                         <Image
-                            src="/api/files/captcha"
+                            src={'/api/files/captcha?' + new Date().getTime()}
                             alt=""
                             style={{
                                 height: 30,

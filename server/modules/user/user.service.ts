@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { IUserModel, User } from '../../models/user.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { decrypt, getDerivedKey } from '@blog/server/utils/crypto.util';
@@ -6,13 +6,35 @@ import infoLogger from '@blog/server/utils/logger.util';
 import { TOKEN_SECRET_KEY } from '@blog/server/configs/index.config';
 import jwt from 'jsonwebtoken';
 import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
+import {
+    RequestUpdateStausDto,
+    RequestUserDto,
+    UserEmailCheckDto,
+    UserLoginDto,
+    UserRegisterDto,
+} from './user.zod.schema';
+import { EmailService } from '../dynamic-config/email.service';
 export const importDynamic = new Function('modulePath', 'return import(modulePath)');
+import { getTemplate } from './template';
+import crypto from 'crypto';
+import { nanoid } from '@reduxjs/toolkit';
+
+function generateRandomCode(length) {
+    const charset = '0123456789';
+    let randomCode = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = crypto.randomInt(0, charset.length);
+        randomCode += charset[randomIndex];
+    }
+    return randomCode;
+}
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(User.name) private readonly userModel: IUserModel,
-        private readonly configService: DynamicConfigService
+        private readonly configService: DynamicConfigService,
+        private readonly emailService: EmailService
     ) {
         this.initAadminAccount();
     }
@@ -56,13 +78,17 @@ export class UserService {
         return this.userModel.updateOne({ _id }, user);
     }
 
+    async updateStatusById(dto: RequestUpdateStausDto) {
+        return this.userModel.updateOne({ _id: dto.id }, { disabled: dto.disabled });
+    }
+
     async resetPasswordById(_id: string, password: string) {
         return this.userModel.updateOne({ _id }, { password });
     }
 
-    async authLogin(data: { account: string; password: string }) {
+    async authLogin(data: UserLoginDto) {
         const user = await this.userModel.findOne({
-            account: data.account,
+            ...(data.email ? { email: data.email } : data.account ? { account: data.account } : {}),
             password: getDerivedKey(decrypt(data.password)),
         });
         if (user) {
@@ -78,19 +104,45 @@ export class UserService {
                 }),
             };
         }
-        throw new BadRequestException('用户名或者密码输入有误，请重新检查后再登陆');
+        if (data.isAdmin) {
+            throw new BadRequestException('账号或者密码输入有误，请重新检查后再登陆');
+        }
+        throw new BadRequestException('邮箱或者密码输入有误，请重新检查后再登陆');
     }
 
-    async authRegister(data: { account: string; password: string }) {
-        let user = await this.userModel.findOne({
-            account: data.account,
+    async sendRegisterCodeEmail(data: UserEmailCheckDto) {
+        const user = await this.userModel.findOne({
+            email: data.email,
         });
         if (user) {
-            throw new BadRequestException('账号已存在！');
+            throw new BadRequestException('该邮箱已被注册使用');
+        }
+        const verifyCode = generateRandomCode(6);
+        await this.emailService.sendMail({
+            html: getTemplate({
+                verifyCode: verifyCode,
+                siteTitle: this.configService.config.siteTitle,
+            }),
+            to: data.email,
+            subject: '注册邮箱校验验证码',
+        });
+        return {
+            verifyCode,
+        };
+    }
+
+    async authRegister(data: UserRegisterDto) {
+        let user = await this.userModel.findOne({
+            email: data.email,
+        });
+        if (user) {
+            throw new BadRequestException('该邮箱已被注册使用');
         } else {
             user = await this.userModel.create({
                 ...data,
-                username: data.account,
+                username: data.email.split('@')[0],
+                account: nanoid(6),
+                email: data.email,
                 avatar: '/static/avatar.jpg',
                 password: getDerivedKey(decrypt(data.password)),
                 type: 'user',
@@ -107,7 +159,7 @@ export class UserService {
 
     async githubLogin(data: {
         accessToken: string;
-        account: string;
+        email: string;
         githubId: string;
         username: string;
         avatar_url: string;
@@ -117,6 +169,8 @@ export class UserService {
         });
         if (user) {
             user.username = data.username;
+            user.account = data.githubId;
+            user.email = data.email;
             user.avatar = data.avatar_url;
             user.password = data.accessToken;
             await user.save();
@@ -138,5 +192,37 @@ export class UserService {
                 expiresIn: '7d',
             }),
         };
+    }
+
+    async getUserList(options: RequestUserDto) {
+        const { page = 1, limit = 10 } = options;
+        const query = {};
+        const { docs, totalDocs } = await this.userModel.paginate(query, {
+            page,
+            limit,
+            sort: { createdAt: -1 },
+        });
+        return {
+            items: docs,
+            totalCount: totalDocs,
+        };
+    }
+
+    async deleteUser(id: string) {
+        const user = await this.userModel.findById(id);
+        await this.userModel.deleteOne({ _id: id });
+        if (!user) {
+            throw new NotFoundException();
+        }
+        return user;
+    }
+
+    public async batchDelete(userIds: string[]) {
+        return this.userModel.find({ _id: { $in: userIds } }).then(async (users) => {
+            if (users.length <= 0) {
+                throw new NotFoundException('没有可删除的用户');
+            }
+            return this.userModel.deleteMany({ _id: { $in: userIds } });
+        });
     }
 }

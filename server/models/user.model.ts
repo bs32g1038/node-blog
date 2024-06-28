@@ -34,15 +34,13 @@ export class User {
     @Prop({
         maxlength: 100,
         trim: true,
+        unique: true,
     })
     email!: string;
 
     @Prop({
         unique: true,
-        minlength: 1,
-        maxlength: 30,
         trim: true,
-        lowercase: true,
         required: true,
     })
     account!: string;
@@ -54,11 +52,23 @@ export class User {
 
     @Prop({ minlength: 6, maxlength: 40, set: sha1, trim: true, required: true, select: false })
     password!: string;
+
+    @Prop({
+        default: false,
+    })
+    disabled!: boolean;
+
+    @Prop({
+        // 0 未知 1男 2女
+        enum: [0, 1, 2],
+        default: 0,
+    })
+    gender!: number;
 }
 
 export type UserDocument = HydratedDocument<User>;
 
-export type IUserModel = Model<UserDocument>;
+export type IUserModel = Model<UserDocument> & mongoose.PaginateModel<UserDocument>;
 
 export const UserSchema = SchemaFactory.createForClass(User);
 

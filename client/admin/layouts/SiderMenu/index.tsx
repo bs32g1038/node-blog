@@ -57,6 +57,7 @@ const setMenuOpen = (props: { router: any; flatMenuKeys?: any }) => {
 
 const logout = () => {
     Cookies.remove('mstoken');
+    Cookies.remove('user');
     return Router.push('/admin/login');
 };
 

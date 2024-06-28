@@ -1,12 +1,12 @@
-import React from 'react';
-import { Form, Input, Button, Space, Image, Toast } from 'antd-mobile';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Form, Input, Button, Space, Image, Toast, NumberKeyboard, PasscodeInput } from 'antd-mobile';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import styles from '../../index.module.scss';
 import CaptchaSvg from '../CaptchaSvg';
 import { omit } from 'lodash';
-import { useRegisterMutation } from '@blog/client/web/api';
+import { useRegisterMutation, useRegisterSendEmailMutation } from '@blog/client/web/api';
 import { encrypt } from '@blog/client/libs/crypto-js';
-
+import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 export interface SimpleDialogProps {
     open: boolean;
     onClose: () => void;
@@ -21,7 +21,10 @@ interface Props {
 export default function CLogin(props: Props) {
     const { jumpLogin } = props;
     const [form] = Form.useForm();
+    const [step, setStep] = useState(1);
     const [register] = useRegisterMutation();
+    const [visible, setVisible] = useState(false);
+    const [registerSendEmail] = useRegisterSendEmailMutation();
     const onFinish = (values: any) => {
         form.validateFields().then(() => {
             if (values.repeatPassword !== values.password) {
@@ -60,86 +63,104 @@ export default function CLogin(props: Props) {
                     '--prefix-width': '90px',
                 }}
             >
-                <Form.Item
-                    label={
-                        <Space>
-                            <UserOutlined className="site-form-item-icon" />
-                            <span>账号</span>
-                        </Space>
-                    }
-                    name="account"
-                    rules={[{ required: true, message: '请输入账号!' }]}
+                <div
+                    style={{
+                        display: step === 1 ? 'block' : 'none',
+                    }}
                 >
-                    <Input placeholder="请输入账号" />
-                </Form.Item>
-                <Form.Item
-                    label={
-                        <Space>
-                            <CaptchaSvg />
-                            <span>验证码</span>
-                        </Space>
-                    }
-                    name="captcha"
-                    rules={[{ required: true, message: '请输入验证码!' }]}
-                    extra={
-                        <Image
-                            src="/api/files/captcha"
-                            alt=""
-                            style={{
-                                height: 30,
-                                width: 60,
-                            }}
-                            onClick={(e: any) => {
-                                if (e.target?.nodeName?.toLocaleLowerCase() === 'img') {
-                                    e.target?.setAttribute('src', '/api/files/captcha?' + new Date().getTime());
-                                }
-                            }}
-                        ></Image>
-                    }
-                >
-                    <Input
-                        placeholder="请输入验证码"
-                        style={{
-                            width: '100%',
-                        }}
-                    />
-                </Form.Item>
-                <Form.Item
-                    label={
-                        <Space>
-                            <LockOutlined className="site-form-item-icon" />
-                            <span>密码</span>
-                        </Space>
-                    }
-                    name="password"
-                    rules={[{ required: true, message: '请输入你的密码!' }]}
-                    extra="忘记密码"
-                >
-                    <Input autoComplete="false" type="password" placeholder="请输入密码" />
-                </Form.Item>
-                <Form.Item
-                    label={
-                        <Space>
-                            <LockOutlined className="site-form-item-icon" />
-                            <span>确认密码</span>
-                        </Space>
-                    }
-                    name="repeatPassword"
-                    rules={[{ required: true, message: '请再次输入你的密码' }]}
-                >
-                    <Input type="password" placeholder="请再次输入你的密码" />
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        size="large"
-                        className={styles.loginButton}
-                        onClick={() => {
-                            form.submit();
-                        }}
+                    <Form.Item
+                        label={
+                            <Space>
+                                <MailOutlined />
+                                <span>邮箱</span>
+                            </Space>
+                        }
+                        name="email"
+                        rules={[{ required: true, message: '请输入邮箱' }]}
                     >
-                        注册
-                    </Button>
-                </Form.Item>
+                        <Input autoComplete="off" placeholder="请输入" />
+                    </Form.Item>
+                    <Form.Item
+                        name="captcha"
+                        rules={[{ required: true, message: '请输入验证码' }]}
+                        label={
+                            <Space>
+                                <CaptchaSvg />
+                                <span>验证码</span>
+                            </Space>
+                        }
+                        extra={
+                            <Image
+                                src={'/api/files/captcha?' + new Date().getTime()}
+                                alt=""
+                                style={{
+                                    height: 30,
+                                    width: 60,
+                                }}
+                                onClick={(e: any) => {
+                                    if (e.target?.nodeName?.toLocaleLowerCase() === 'img') {
+                                        e.target?.setAttribute('src', '/api/files/captcha?' + new Date().getTime());
+                                    }
+                                }}
+                            ></Image>
+                        }
+                    >
+                        <Input placeholder="请输入" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            className={styles.loginButton}
+                            onClick={() => {
+                                form.validateFields().then((values) => {
+                                    registerSendEmail(values)
+                                        .unwrap()
+                                        .then(() => {
+                                            setStep(2);
+                                        });
+                                });
+                            }}
+                        >
+                            下一步
+                        </Button>
+                    </Form.Item>
+                </div>
+                {step === 2 && (
+                    <div>
+                        <Space direction="vertical">
+                            <div>已发送验证码到邮你的邮箱，注意查收</div>
+                            <Form.Item name="emailCode" rules={[{ required: true, message: '请输入邮箱验证码' }]}>
+                                <PasscodeInput seperated keyboard={<NumberKeyboard />} />
+                            </Form.Item>
+                            <Form.Item
+                                label={
+                                    <Space>
+                                        <LockOutlined />
+                                        <span>密码</span>
+                                    </Space>
+                                }
+                                name="password"
+                                rules={[{ required: true, message: '请输入密码' }]}
+                            >
+                                <Input
+                                    className={styles.input}
+                                    placeholder="请输入密码"
+                                    type={visible ? 'text' : 'password'}
+                                />
+                            </Form.Item>
+                        </Space>
+                        <Form.Item>
+                            <Button
+                                size="large"
+                                className={styles.loginButton}
+                                onClick={() => {
+                                    form.submit();
+                                }}
+                            >
+                                注册
+                            </Button>
+                        </Form.Item>
+                    </div>
+                )}
                 <Form.Item
                     style={{
                         marginBottom: 0,

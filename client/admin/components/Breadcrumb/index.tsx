@@ -46,7 +46,7 @@ export default function _Breadcrumb() {
                     title: (
                         <Space>
                             {item.breadcrumbIcon}
-                            <span>{item.breadcrumbName}</span>
+                            <span style={{ fontSize: 14 }}>{item.breadcrumbName}</span>
                         </Space>
                     ),
                 };

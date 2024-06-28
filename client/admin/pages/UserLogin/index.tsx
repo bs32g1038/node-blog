@@ -42,7 +42,7 @@ export default function UserLogin(props: any) {
                             label="账号："
                             labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
-                            rules={[{ required: true, message: '请输入你的账号!' }]}
+                            rules={[{ required: true, message: '请输入你的邮箱!' }]}
                         >
                             <Input prefix={<UserOutlined />} placeholder="请输入" />
                         </Form.Item>
@@ -71,7 +71,7 @@ export default function UserLogin(props: any) {
                                     }}
                                 />
                                 <Image
-                                    src="/api/files/captcha"
+                                    src={'/api/files/captcha?' + new Date().getTime()}
                                     alt=""
                                     style={{
                                         height: 32,
