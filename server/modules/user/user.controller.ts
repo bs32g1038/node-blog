@@ -112,6 +112,9 @@ export class UserController {
             throw new BadRequestException('验证码输入有误，请重新检查后再登陆');
         }
         const data = await this.userService.authLogin(body);
+        if (data.user.disabled) {
+            throw new UnauthorizedException('该账号已被管理员禁用！');
+        }
         if (body.isAdmin && data.user.type !== 'admin') {
             throw new UnauthorizedException('该账号未被授权登录管理系统！');
         }

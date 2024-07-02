@@ -150,6 +150,13 @@ export const appApi = createApi({
                 params,
             }),
         }),
+        postComment: builder.mutation<any, { url: string; data: any }>({
+            query: (params) => ({
+                url: params.url,
+                method: 'post',
+                data: params.data,
+            }),
+        }),
         likeComment: builder.query<any, { id: string }>({
             query: (params) => ({
                 url: '/api/like-comment/' + params.id,
@@ -201,6 +208,7 @@ export const {
     useAuthLoginMutation,
     useRegisterMutation,
     useRegisterSendEmailMutation,
+    usePostCommentMutation,
 } = appApi;
 
 export const {

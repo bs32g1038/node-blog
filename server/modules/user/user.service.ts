@@ -98,8 +98,9 @@ export class UserService {
                     username: user.username,
                     avatar: user.avatar,
                     id: user.id,
+                    disabled: user.disabled,
                 },
-                token: jwt.sign({ id: user._id, roles: [user.type] }, TOKEN_SECRET_KEY, {
+                token: jwt.sign({ id: user._id, roles: [user.type], disabled: user.disabled }, TOKEN_SECRET_KEY, {
                     expiresIn: '7d',
                 }),
             };
@@ -151,7 +152,7 @@ export class UserService {
         return {
             username: user.username,
             avatar: user.avatar,
-            token: jwt.sign({ id: user._id, roles: ['user'] }, TOKEN_SECRET_KEY, {
+            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, TOKEN_SECRET_KEY, {
                 expiresIn: '7d',
             }),
         };
@@ -187,8 +188,9 @@ export class UserService {
                 username: user.username,
                 avatar: user.avatar,
                 id: user.id,
+                disabled: user.disabled,
             },
-            token: jwt.sign({ id: user._id, roles: ['user'] }, TOKEN_SECRET_KEY, {
+            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, TOKEN_SECRET_KEY, {
                 expiresIn: '7d',
             }),
         };

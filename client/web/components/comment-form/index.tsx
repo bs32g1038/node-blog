@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import isLength from 'validator/lib/isLength';
 import Emoji from './emoji';
-import axios from '@blog/client/web/utils/axios';
 import { Tooltip, Input, Button, Popover, message, Space, Avatar } from 'antd';
 import style from './style.module.scss';
 import { SmileOutlined, UserOutlined } from '@ant-design/icons';
@@ -10,6 +9,7 @@ import Cookies from 'js-cookie';
 import LoginModal from '../login-modal';
 import { useStore } from '../login-modal/zustand';
 import { useStore as userArticleStore } from '../article/zustand';
+import { usePostCommentMutation } from '../../api';
 
 interface Props {
     url: string;
@@ -25,7 +25,7 @@ export const CommentForm = (props: Props) => {
     const [content, setContent] = useState('');
     const { showLoginModal } = useStore();
     const articleStore = userArticleStore();
-    const [buttonLoading, setButtonLoading] = useState(false);
+    const [postComment, { isLoading }] = usePostCommentMutation();
     const onEmojiInput = (text: string) => {
         setContent((val) => {
             return val + text;
@@ -58,16 +58,17 @@ export const CommentForm = (props: Props) => {
         } else if (!isLength(data.content, { max: 490 })) {
             return message.warning('最多只能输入490个字符！');
         }
-        setButtonLoading(true);
-        axios
-            .post(props.url, data)
+        postComment({
+            url: props.url,
+            data,
+        })
+            .unwrap()
             .then(() => {
                 articleStore.updateCommentListTag();
                 setContent('');
-                setButtonLoading(false);
             })
-            .catch(() => {
-                message.error('服务器开小差去了，请尝试刷新页面，再进行提交！');
+            .catch((err) => {
+                message.error(err?.data?.message);
             });
     };
     return (
@@ -114,7 +115,7 @@ export const CommentForm = (props: Props) => {
                                     <div className={style.line}></div>
                                     <div className={style.commentFormFooter}>
                                         <Popover
-                                            placement="bottomRight"
+                                            placement="rightTop"
                                             content={
                                                 <div>
                                                     <Emoji
@@ -132,7 +133,7 @@ export const CommentForm = (props: Props) => {
                                         </Popover>
                                         <Button
                                             className={style.submitBtn}
-                                            loading={buttonLoading}
+                                            loading={isLoading}
                                             type="primary"
                                             onClick={() => submit()}
                                         >
