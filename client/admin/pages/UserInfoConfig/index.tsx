@@ -5,7 +5,7 @@ import PasswordForm from './PasswordForm';
 import style from './style.module.scss';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function UserInfoConfig(props) {
+export default function UserInfoConfig(props: any) {
     wrapper.useHydration(props);
     return (
         <BasicLayout>

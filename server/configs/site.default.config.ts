@@ -24,6 +24,9 @@ const config = {
 
     siteDomain: process.env.NODE_ENV === 'production' ? 'http://www.lizc.net' : 'http://127.0.0.1:3000',
 
+    githubClientId: 'github clientId',
+    githubClientSecret: 'github client secret',
+
     ...smptConfig,
 };
 

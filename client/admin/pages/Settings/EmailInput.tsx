@@ -14,18 +14,19 @@ export default function EmailInput(props: Props) {
     const { data } = props;
     const [disabled, setDisabled] = useState(true);
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         updateEmailConfig(values).then(() => {
             message.success('更新成功');
+            setDisabled(true);
         });
     };
     useEffect(() => {
         form.setFieldsValue(data);
-    }, [data, form]);
+    }, [data, form, disabled]);
     return (
         <Form form={form} className="form" layout="vertical" onFinish={onFinish} wrapperCol={{ span: 16 }}>
             <div className={style.tip}>
-                网站邮箱服务通知配置
+                网站邮箱推送配置
                 {disabled && (
                     <Button
                         type="link"
@@ -50,17 +51,18 @@ export default function EmailInput(props: Props) {
             <Form.Item
                 name="isEnableSmtp"
                 valuePropName="checked"
-                label="是否开启邮箱通知服务"
-                extra="勾选，系统将会在有新的评论时，给你发送通知邮件"
+                label="是否开启邮箱推送服务"
+                extra="用于注册激活、密码找回等功能验证"
             >
                 <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} disabled={disabled} />
             </Form.Item>
             {!disabled && (
-                <Form.Item>
+                <Form.Item label="操作">
                     <Button type="primary" htmlType="submit" loading={updateLoading} style={{ marginRight: '10px' }}>
                         <SendOutlined></SendOutlined>保存邮箱配置
                     </Button>
                     <Button
+                        style={{ marginRight: '10px' }}
                         loading={testEmailLoading}
                         onClick={() => {
                             testEmail()
@@ -75,6 +77,14 @@ export default function EmailInput(props: Props) {
                     >
                         <SoundOutlined />
                         测试发送邮件
+                    </Button>
+                    <Button
+                        danger
+                        onClick={() => {
+                            setDisabled(true);
+                        }}
+                    >
+                        <SendOutlined></SendOutlined>取消
                     </Button>
                 </Form.Item>
             )}

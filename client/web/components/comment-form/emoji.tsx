@@ -10,12 +10,12 @@ interface Props {
 
 const Emoji = (props: Props) => {
     const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        let $el = null;
+        let $el: any = null;
         if (event.target instanceof HTMLElement) {
             if (event.target.nodeName.toLowerCase() === 'button') {
                 $el = event.target;
             } else if (event.target.nodeName.toLowerCase() === 'img') {
-                $el = event.target.parentNode.parentNode;
+                $el = event.target.parentNode?.parentNode;
             }
             if ($el) {
                 const text = $el.getAttribute('data-input').trim();

@@ -5,7 +5,7 @@ import BasicLayout from '@blog/client/admin/layouts';
 import { useCreateCategoryMutation, useFetchCategoryMutation, useUpdateCategoryMutation } from '../Categories/service';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
     const router = useRouter();
     const [form] = Form.useForm();
@@ -22,7 +22,7 @@ export default function Index(props) {
     }, [fetchCategory, form, router.query]);
     const [createCategory] = useCreateCategoryMutation();
     const [updateCategory] = useUpdateCategoryMutation();
-    const publish = (data) => {
+    const publish = (data: any) => {
         const { id } = router.query;
         const p = id ? updateCategory({ id: id.toString(), data }) : createCategory(data);
         p.then(() => {

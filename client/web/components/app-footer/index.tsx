@@ -21,7 +21,7 @@ export const AppFooter = () => {
                                 <LogoSvg></LogoSvg>
                                 <p style={{ margin: 0 }}>
                                     欢迎来到
-                                    <span className={style.siteTitle}>{config.siteTitle} </span>
+                                    <span className={style.siteTitle}>{config?.siteTitle} </span>
                                     😀
                                 </p>
                             </div>
@@ -30,8 +30,8 @@ export const AppFooter = () => {
                         <BlogRuningTime></BlogRuningTime>
                         <Space>
                             <span>版权 © 2016-{new Date().getFullYear()}</span>
-                            <a href={config.icpGovCn} className={style.icpGovCn}>
-                                <span className={style.siteIcp}>{config.siteIcp}</span>
+                            <a href={config?.icpGovCn} className={style.icpGovCn}>
+                                <span className={style.siteIcp}>{config?.siteIcp}</span>
                             </a>
                         </Space>
                         <div className={style.contactList}>
@@ -44,7 +44,7 @@ export const AppFooter = () => {
                             <a>
                                 <QQIcon></QQIcon>
                             </a>
-                            <a href={config.projectGithub}>
+                            <a href={config?.projectGithub}>
                                 <GithubIcon></GithubIcon>
                             </a>
                         </div>

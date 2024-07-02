@@ -29,7 +29,7 @@ const app = createSlice({
 
 export const { setTheme } = app.actions;
 
-export const makeStore = ({ reduxWrapperMiddleware }) =>
+export const makeStore = ({ reduxWrapperMiddleware }: { reduxWrapperMiddleware: any }) =>
     configureStore({
         reducer: {
             app: app.reducer,

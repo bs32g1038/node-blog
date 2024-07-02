@@ -22,7 +22,10 @@ export const MONGODB = {
 
 export const TOKEN_SECRET_KEY = 'NODEBLOG/bs32g1038@163.com/TOKEN';
 
-export const GITHUB_SECRET_KEY = 'Github/bs32g1038@163.com/TOKEN';
+export const GITHUB_AUTH = {
+    clientId: process.env.GITHUB_CLIENT_ID || 'Iv23liHrC97AAAOLDt1r',
+    clientSecret: process.env.GITHUB_CLIENT_SECRET || 'de7a654fd660ecaa51426a1c83ab1389d51461f7',
+};
 
 export const ADMIN_USER_INFO = {
     nickName: '李志成',

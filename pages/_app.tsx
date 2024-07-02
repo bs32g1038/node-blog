@@ -40,6 +40,9 @@ function MyApp({ Component, pageProps }: any) {
 
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
     const res = await store.dispatch(fetchConfig.initiate());
+    if (!res.data) {
+        return { pageProps: {} };
+    }
     let url = res.data.siteLogo;
     if (res.data.siteLogo.indexOf(res.data.siteDomain) > 0) {
         url = res.data.siteLogo.substring(res.data.siteLogo.indexOf(res.data.siteDomain) + res.data.siteDomain.length);

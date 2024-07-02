@@ -5,11 +5,9 @@ import { initApp, isExpectPass, generateDataList } from '../util';
 import { getFile, getObjectId } from '../faker';
 import path from 'path';
 import { rootPath } from '@blog/server/utils/path.util';
-import { getToken } from '../util';
 import { File } from '@blog/server/models/file.model';
 import { Model, Connection } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-const __TOKEN__ = getToken();
 
 const resolve = (str: string) => {
     return path.join(rootPath, 'test/assets/' + str);
@@ -23,6 +21,7 @@ describe('file.module.e2e', () => {
     let mongod: MongoMemoryServer;
     let mongooseConnection: Connection;
     let fileModel: Model<File>;
+    let getToken: () => string[];
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -32,6 +31,7 @@ describe('file.module.e2e', () => {
         mongod = instance.mongod;
         mongooseConnection = instance.mongooseConnection;
         fileModel = instance.fileModel;
+        getToken = instance.getToken;
     });
 
     beforeEach(async () => {
@@ -41,7 +41,7 @@ describe('file.module.e2e', () => {
     test('upload static .text file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.txt'))
             .expect(201)
@@ -53,7 +53,7 @@ describe('file.module.e2e', () => {
     test('upload static .png file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.png'))
             .expect(201)
@@ -65,7 +65,7 @@ describe('file.module.e2e', () => {
     test('upload static .mp3 file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.mp3'))
             .expect(201)
@@ -77,7 +77,7 @@ describe('file.module.e2e', () => {
     test('upload static .mp4 file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.mp4'))
             .expect(201)
@@ -89,7 +89,7 @@ describe('file.module.e2e', () => {
     test('upload static .docx file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.docx'))
             .expect(201)
@@ -101,7 +101,7 @@ describe('file.module.e2e', () => {
     test('upload static .doc file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.doc'))
             .expect(201)
@@ -113,7 +113,7 @@ describe('file.module.e2e', () => {
     test('upload static .md file success', async () => {
         return request(app.getHttpServer())
             .post('/api/files/upload')
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .attach('file', resolve('test.md'))
             .expect(201)
@@ -127,7 +127,7 @@ describe('file.module.e2e', () => {
         const { _id } = await fileModel.create(file);
         return request(app.getHttpServer())
             .delete(`/api/files/${_id}`)
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .send(file)
             .expect(200);
     });
@@ -135,8 +135,8 @@ describe('file.module.e2e', () => {
     test('batch delete file success, fields is a object id array & not in db', async () => {
         return request(app.getHttpServer())
             .delete('/api/files')
-            .set('authorization', __TOKEN__)
-            .send({ fileIds: [getObjectId()] })
+            .set('Cookie', getToken())
+            .send({ ids: [getObjectId()] })
             .expect(200);
     });
 
@@ -145,24 +145,24 @@ describe('file.module.e2e', () => {
         const { _id } = await fileModel.create(file);
         return request(app.getHttpServer())
             .delete('/api/files')
-            .set('authorization', __TOKEN__)
-            .send({ fileIds: [_id] })
+            .set('Cookie', getToken())
+            .send({ ids: [_id] })
             .expect(200);
     });
 
     test('batch delete file failure, bad request, fields can not be a empty array', async () => {
         return request(app.getHttpServer())
             .delete('/api/files')
-            .set('authorization', __TOKEN__)
-            .send({ fileIds: [] })
+            .set('Cookie', getToken())
+            .send({ ids: [] })
             .expect(400);
     });
 
     test('batch delete file failure, bad request, fields can not be a empty string', async () => {
         return request(app.getHttpServer())
             .delete('/api/files')
-            .set('authorization', __TOKEN__)
-            .send({ fileIds: '' })
+            .set('Cookie', getToken())
+            .send({ ids: '' })
             .expect(400);
     });
 
@@ -171,7 +171,7 @@ describe('file.module.e2e', () => {
         await fileModel.create(files);
         return request(app.getHttpServer())
             .get(`/api/files`)
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .expect(200)
             .then((res) => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
@@ -186,7 +186,7 @@ describe('file.module.e2e', () => {
         return request(app.getHttpServer())
             .get(`/api/files?`)
             .query({ page: 1, limit: 30 })
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .expect(200)
             .then((res) => {
                 expect(res.body.totalCount).toBeGreaterThanOrEqual(30);

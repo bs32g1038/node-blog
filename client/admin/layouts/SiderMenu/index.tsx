@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import defaultConfig from '@blog/client/configs/admin.default.config';
 import menus from '@blog/client/configs/admin.menu.config';
 import Router, { useRouter } from 'next/router';
 import { HomeOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
@@ -8,12 +7,14 @@ import { getDefaultCollapsedSubMenus, getSelectedMenuKeys, getFlatMenuKeys } fro
 import style from './style.module.scss';
 import { Layout, Menu, Avatar, Button, Image, Spin } from 'antd';
 import { useFetchConfigQuery } from '@blog/client/web/api';
-import { useFetchUserInfoQuery } from '../../api';
+import { useLazyFetchUserInfoQuery } from '../../api';
+import Cookies from 'js-cookie';
+
 const { Sider } = Layout;
 
-const MenuList = (props) => {
+const MenuList = (props: any) => {
     const renderMenuItem = (
-        item // item.route 菜单单独跳转的路由
+        item: any // item.route 菜单单独跳转的路由
     ) => ({
         label: (
             <Link href={(item.route || item.path) + (item.query || '')} passHref={true} className={style.menuLinkA}>
@@ -42,7 +43,7 @@ interface Props {
     collapsed: boolean;
 }
 
-const setMenuOpen = (props) => {
+const setMenuOpen = (props: { router: any; flatMenuKeys?: any }) => {
     const { pathname } = props.router;
     const flatMenuKeys = getDefaultCollapsedSubMenus({ ...props, flatMenuKeys: getFlatMenuKeys(menus) });
     return {
@@ -55,21 +56,30 @@ const setMenuOpen = (props) => {
 };
 
 const logout = () => {
-    localStorage.removeItem(defaultConfig.tokenKey);
+    Cookies.remove('mstoken');
+    Cookies.remove('user');
     return Router.push('/admin/login');
 };
 
 export default function SiderMenu(props: Props) {
     const { collapsed } = props;
-    const { data: user, isLoading: isFetchUserLoading } = useFetchUserInfoQuery();
-    const [state, setState] = useState({
+    const [fetchUserInfo, { data: user, isLoading: isFetchUserLoading }] = useLazyFetchUserInfoQuery();
+    useEffect(() => {
+        fetchUserInfo();
+    }, [fetchUserInfo]);
+    const [state, setState] = useState<{
+        mode: string;
+        openKey: string[];
+        selectedKey: string[];
+        firstHide: boolean;
+    }>({
         mode: 'inline',
         openKey: [],
         selectedKey: [''],
         firstHide: true,
     });
     const router = useRouter();
-    const menuClick = (e) => {
+    const menuClick = (e: { key: string | string[] }) => {
         setState((data) => ({
             ...data,
             selectedKey: Array.isArray(e.key) ? e.key : [e.key],
@@ -110,8 +120,8 @@ export default function SiderMenu(props: Props) {
             >
                 <Link href="/admin/content/articles">
                     <div className={style.logo}>
-                        <Image preview={false} width={32} height={32} src={config.siteLogo} alt="" />
-                        <h1>{config.siteTitle}</h1>
+                        <Image preview={false} width={32} height={32} src={config?.siteLogo} alt="" />
+                        <h1>{config?.siteTitle ?? '-'}</h1>
                     </div>
                 </Link>
                 <div className={style.userMenu}>
@@ -127,7 +137,7 @@ export default function SiderMenu(props: Props) {
                                                 <Avatar src={user.avatar} size={34} icon={<UserOutlined />} />
                                             </div>
                                             <div>
-                                                <h2>{user.userName}</h2>
+                                                <h2>{user.username}</h2>
                                                 <p>{user.account}</p>
                                             </div>
                                         </div>

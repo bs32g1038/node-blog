@@ -15,7 +15,7 @@ export const indexApi = adminApi.injectEndpoints({
                 method: 'delete',
             }),
         }),
-        deleteFiles: build.mutation<any, { fileIds: string[] }>({
+        deleteFiles: build.mutation<any, { ids: string[] }>({
             query: (data) => ({
                 url: '/files',
                 method: 'delete',

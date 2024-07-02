@@ -1,8 +1,9 @@
 import React from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from './ckeditor.js';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import style from './style.module.scss';
 import axios from '@blog/client/admin/axios';
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh-cn';
 
 type EditorDemoProps = {
     value?: string;
@@ -50,6 +51,7 @@ const editorConfiguration = {
         'redo',
     ],
     placeholder: '输入正文...',
+    language: 'zh-cn',
 };
 
 export default function EditorDemo(props: EditorDemoProps): JSX.Element {
@@ -65,7 +67,7 @@ export default function EditorDemo(props: EditorDemoProps): JSX.Element {
                 }}
                 onReady={(editor) => {
                     const rep = editor.plugins.get('FileRepository') as any;
-                    rep.createUploadAdapter = (loader) => {
+                    rep.createUploadAdapter = (loader: any) => {
                         return new MyUploadAdapter(loader);
                     };
                 }}

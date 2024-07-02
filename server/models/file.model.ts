@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { HydratedDocument, Model } from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 import { getMongooseModule } from '../mongoose';
-import Joi from '../joi';
-import paginate from '../mongoose/paginate';
 
 export enum FileType {
     image = 'image',
@@ -11,15 +10,6 @@ export enum FileType {
     document = 'document',
     other = 'other',
 }
-
-export const FileJoiSchema = {
-    name: Joi.string().min(1).max(80),
-    type: Joi.string(),
-    size: Joi.number(),
-    url: Joi.string().max(2000),
-};
-
-export type FileDocument = File & Document;
 
 @Schema({
     timestamps: true,
@@ -30,34 +20,38 @@ export class File {
         trim: true,
         required: true,
     })
-    name: string;
+    name!: string;
 
     @Prop({
         maxlength: 80,
         trim: true,
         required: true,
     })
-    originName: string;
+    originName!: string;
 
     @Prop({
         enum: ['image', 'video', 'audio', 'document', 'other'],
         trim: true,
         required: true,
     })
-    type: string;
+    type!: string;
 
     @Prop({
         type: Number,
         required: true,
     })
-    size: number;
+    size!: number;
 
     @Prop({
         trim: true,
         required: true,
     })
-    url: string;
+    url!: string;
 }
+
+export type FileDocument = HydratedDocument<File>;
+
+export type IFileModel = Model<FileDocument> & mongoose.PaginateModel<FileDocument>;
 
 export const FileSchema = SchemaFactory.createForClass(File);
 

@@ -4,10 +4,14 @@ import { useFetchAdminLogsMutation } from './service';
 import CTable from '../../components/CTable';
 import { parseTime } from '@blog/client/libs/time';
 import { wrapper } from '@blog/client/redux/store';
+import { TablePaginationConfig } from 'antd';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
-    const [state, setState] = useState({
+    const [state, setState] = useState<{
+        current: number;
+        pageSize: number;
+    }>({
         current: 1,
         pageSize: 10,
     });
@@ -31,28 +35,43 @@ export default function Index(props) {
                 }
             });
     }, [fetchAdminLogs, state]);
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
         fetchData();
     };
     const getTableColums = () => {
         return [
             {
-                title: '类型',
+                title: '登录时间',
+                dataIndex: 'createdAt',
+                width: 160,
+                render: (text: string, record: any) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
+            },
+
+            {
+                title: '用户昵称',
+                render: (text: string, record: any) => {
+                    return record.user?.username ?? '-';
+                },
+            },
+            {
+                title: '登录行为',
                 dataIndex: 'type',
             },
             {
-                title: '数据',
-                dataIndex: 'data',
+                title: '登录 IP',
+                dataIndex: 'ip',
             },
             {
-                title: '创建时间',
-                dataIndex: 'createdAt',
-                width: 160,
-                render: (text, record) => parseTime(record.createdAt, 'YYYY-MM-DD hh:mm'),
+                title: '浏览器',
+                dataIndex: 'browser',
+            },
+            {
+                title: '终端系统',
+                dataIndex: 'os',
             },
         ];
     };

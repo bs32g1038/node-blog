@@ -95,3 +95,10 @@ textarea.input {
         border-top: 1px solid var(--border-color);
     }
 }
+
+.loginComment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}

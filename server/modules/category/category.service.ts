@@ -1,17 +1,17 @@
-import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { Category, CategoryDocument } from '../../models/category.model';
+import { Category, ICategoryModel } from '../../models/category.model';
 import { InjectModel } from '@nestjs/mongoose';
+import { CreateCategoryDto, UpdateCategoryDto } from './category.zod.schema';
 
 @Injectable()
 export class CategoryService {
-    constructor(@InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>) {}
+    constructor(@InjectModel(Category.name) private readonly categoryModel: ICategoryModel) {}
 
-    async create(newCategory: Category): Promise<Category> {
+    async create(newCategory: CreateCategoryDto): Promise<Category> {
         return await this.categoryModel.create(newCategory);
     }
 
-    async update(id: string, data: Category): Promise<Category | null> {
+    async update(id: string, data: UpdateCategoryDto): Promise<Category | null> {
         await this.categoryModel.updateOne({ _id: id }, data, { runValidators: true });
         return await this.categoryModel.findById(id);
     }

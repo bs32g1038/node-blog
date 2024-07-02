@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { parseTime, timeAgo } from '@blog/client/libs/time';
-import { Button, Popconfirm, Space, message } from 'antd';
+import { Avatar, Button, Popconfirm, Space, TablePaginationConfig, message } from 'antd';
 import { handleEmoji } from '@blog/client/common/helper.util';
 import Router from 'next/router';
 import { DeleteFilled, EditFilled, SendOutlined, CommentOutlined, BranchesOutlined } from '@ant-design/icons';
@@ -10,12 +10,11 @@ import ActionCard from '@blog/client/admin/components/ActionCard';
 import { useDeleteCommentMutation, useDeleteCommentsMutation, useFetchCommentsMutation } from './service';
 import CTable from '@blog/client/admin/components/CTable';
 import { wrapper } from '@blog/client/redux/store';
-import Avatar from 'boring-avatars';
 import { xss } from '@blog/client/libs/marked';
 
-export default function Comments(props) {
+export default function Comments(props: any) {
     wrapper.useHydration(props);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
     const [fetchComments, { data = { items: [], totalCount: 0 }, isLoading }] = useFetchCommentsMutation();
     const [state, setState] = useState({
@@ -42,7 +41,7 @@ export default function Comments(props) {
             });
     }, [fetchComments, state]);
     const [_deleteComment] = useDeleteCommentMutation();
-    const deleteComment = (id) => {
+    const deleteComment = (id: any) => {
         _deleteComment({ id }).then(() => {
             message.success('删除评论成功');
             fetchData();
@@ -50,7 +49,7 @@ export default function Comments(props) {
     };
     const [_deleteComments] = useDeleteCommentsMutation();
     const batchDeleteComment = () => {
-        _deleteComments({ commentIds: selectedRowKeys })
+        _deleteComments({ ids: selectedRowKeys })
             .unwrap()
             .then((res) => {
                 if (res && res.deletedCount > 0) {
@@ -60,14 +59,14 @@ export default function Comments(props) {
                 message.error('删除评论失败，请重新尝试。');
             });
     };
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
         fetchData();
     };
-    const onSelectChange = (selectedRowKeys) => {
+    const onSelectChange = (selectedRowKeys: string[]) => {
         setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
@@ -77,25 +76,25 @@ export default function Comments(props) {
         return [
             {
                 title: '昵称',
-                dataIndex: 'nickName',
                 width: 160,
+                render: (text: string, record: any) => record.user?.username || '-',
             },
             {
                 title: '文章标题',
                 dataIndex: 'article',
-                render: (text, record) => (record.article && record.article.title) || '--',
+                render: (text: string, record: any) => (record.article && record.article.title) || '-',
             },
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
                 width: 180,
-                render: (text, record) => parseTime(record.createdAt),
+                render: (text: string, record: any) => parseTime(record.createdAt),
             },
             {
                 title: '操作',
                 key: 'operation',
                 width: 180,
-                render: (text, record) => (
+                render: (text: string, record: any) => (
                     <Space>
                         <Button
                             type="primary"
@@ -118,7 +117,7 @@ export default function Comments(props) {
     };
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+        onChange: onSelectChange,
     };
     const expandedRowKeys = data.items.map((item) => item._id);
     const CTitle = (
@@ -145,7 +144,7 @@ export default function Comments(props) {
             <ActionCard title={CTitle} bodyStyle={{ padding: 0 }}>
                 <CTable
                     rowKey={(record) => record._id}
-                    rowSelection={rowSelection}
+                    rowSelection={rowSelection as any}
                     columns={getTableColums()}
                     loading={isLoading}
                     dataSource={data.items}
@@ -166,12 +165,14 @@ export default function Comments(props) {
                                         </div>
                                         <div className={style.replyListItem}>
                                             <div className={style.userAvatar}>
-                                                <Avatar size={32} name={record.reply.nickName} variant="beam" />
+                                                <Avatar size={32} src={record.user?.avatar} />
                                             </div>
                                             <div className={style.replyContent}>
                                                 <div className={style.replyInfo}>
                                                     <div className={style.baseInfo}>
-                                                        <div className="reply-author">{record.reply.nickName}</div>
+                                                        <div className="reply-author">
+                                                            {record?.reply.user?.username}
+                                                        </div>
                                                         <a className="reply-time">
                                                             在 {timeAgo(record.reply.createdAt)} 评论
                                                         </a>
@@ -182,7 +183,8 @@ export default function Comments(props) {
                                                             icon={<SendOutlined />}
                                                             onClick={() => {
                                                                 Router.push(
-                                                                    '/admin/content/comments/reply/' + record.reply._id
+                                                                    '/admin/content/comments/reply/' +
+                                                                        record.reply?.user?._id
                                                                 );
                                                             }}
                                                         >
@@ -193,7 +195,7 @@ export default function Comments(props) {
                                                 <div
                                                     className={style.markdownText}
                                                     dangerouslySetInnerHTML={{
-                                                        __html: xss(handleEmoji(record.reply.content)),
+                                                        __html: xss(handleEmoji(record.reply?.content ?? '')),
                                                     }}
                                                 ></div>
                                             </div>

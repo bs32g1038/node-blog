@@ -2,12 +2,10 @@ import request from 'supertest';
 import { DraftModule } from '@blog/server/modules/draft/draft.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp } from '../util';
-import { getToken } from '../util';
 import { Connection, Model } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Draft } from '@blog/server/models/draft.model';
 import { getObjectId } from '../faker';
-const __TOKEN__ = getToken();
 
 /**
  * 草稿模块 api 测试
@@ -17,6 +15,7 @@ describe('draft.module.e2e', () => {
     let mongod: MongoMemoryServer;
     let mongooseConnection: Connection;
     let draftModel: Model<Draft>;
+    let getToken: () => string[];
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -26,6 +25,7 @@ describe('draft.module.e2e', () => {
         mongod = instance.mongod;
         mongooseConnection = instance.mongooseConnection;
         draftModel = instance.draftModel;
+        getToken = instance.getToken;
     });
 
     beforeEach(async () => {
@@ -37,7 +37,7 @@ describe('draft.module.e2e', () => {
             const draft = { data: {}, type: 'article' };
             return request(app.getHttpServer())
                 .post('/api/drafts')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(draft)
                 .expect(201)
                 .then((res) => {
@@ -46,12 +46,8 @@ describe('draft.module.e2e', () => {
         });
 
         test('bad request, create draft failure, the type incorrect', async () => {
-            const draft = { data: {}, type: 'other' };
-            return request(app.getHttpServer())
-                .post('/api/drafts')
-                .set('authorization', __TOKEN__)
-                .send(draft)
-                .expect(400);
+            const draft = { data: null, type: 'other' };
+            return request(app.getHttpServer()).post('/api/drafts').set('Cookie', getToken()).send(draft).expect(400);
         });
     });
 
@@ -61,7 +57,7 @@ describe('draft.module.e2e', () => {
             const { _id } = await draftModel.create(draft);
             return request(app.getHttpServer())
                 .put('/api/drafts/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(draft)
                 .expect(200);
         });
@@ -70,7 +66,7 @@ describe('draft.module.e2e', () => {
             const draft = { data: {}, type: 'article' };
             return request(app.getHttpServer())
                 .put('/api/drafts/' + getObjectId())
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(draft)
                 .expect(200);
         });
@@ -82,7 +78,7 @@ describe('draft.module.e2e', () => {
             const { _id } = await draftModel.create(draft);
             return request(app.getHttpServer())
                 .get('/api/drafts/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .expect(200)
                 .then((res) => {
                     const a = res.body;
@@ -93,7 +89,7 @@ describe('draft.module.e2e', () => {
         test('get draft not found', async () => {
             return request(app.getHttpServer())
                 .get('/api/drafts/' + getObjectId())
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .expect(404);
         });
     });
@@ -104,7 +100,7 @@ describe('draft.module.e2e', () => {
             await draftModel.create(draft);
             return request(app.getHttpServer())
                 .get('/api/drafts')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .query({
                     page: 1,
                     limit: 10,

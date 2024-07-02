@@ -3,10 +3,9 @@ import { Image, message, UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { isEqual, noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import config from '@blog/client/configs/admin.default.config';
 
-const isImage = (type) => isEqual(type, 'image');
-const isSvg = (type) => isEqual(type, 'svg');
+const isImage = (type: string) => isEqual(type, 'image');
+const isSvg = (type: string) => isEqual(type, 'svg');
 
 interface Props {
     value?: string;
@@ -64,16 +63,13 @@ export default function UploadButton(props: Props) {
     return (
         <React.Fragment>
             <Upload
-                {...updateLoadProps}
+                {...(updateLoadProps as any)}
                 listType="picture-card"
                 fileList={fileList}
                 maxCount={1}
                 showUploadList={false}
                 disabled={disabled}
                 accept={isImage(type) ? '.jpg,.jpeg,.png' : isSvg(type) && '.svg'}
-                headers={{
-                    authorization: typeof localStorage !== 'undefined' && localStorage.getItem(config.tokenKey),
-                }}
             >
                 {value ? (
                     <Image preview={false} src={value} alt="" />

@@ -1,19 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
-import Joi from '../joi';
-import paginate from '../mongoose/paginate';
-
-export const CategoryJoiSchema = {
-    name: Joi.string()
-        .min(1)
-        .max(80)
-        .alter({
-            post: (schema) => schema.required(),
-        }),
-};
-
-export type CategoryDocument = Category & Document;
+import paginate from 'mongoose-paginate-v2';
+import mongoose, { HydratedDocument, Model } from 'mongoose';
 
 @Schema({
     timestamps: true,
@@ -25,19 +13,23 @@ export class Category {
         trim: true,
         required: true,
     })
-    name: string;
+    name!: string;
 
     @Prop({
         max: 200,
         default: 0,
     })
-    order: number;
+    order!: number;
 
     @Prop({
         default: 0,
     })
-    articleCount: number;
+    articleCount!: number;
 }
+
+export type CategoryDocument = HydratedDocument<Category>;
+
+export type ICategoryModel = Model<CategoryDocument> & mongoose.PaginateModel<CategoryDocument>;
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
 

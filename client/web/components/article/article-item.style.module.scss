@@ -86,10 +86,29 @@
 .footer {
     color: var(--secondary-text-color);
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 
 .editor {
     border-top: 1px solid var(--border-color) !important;
     padding-top: 16px;
+}
+
+.recentArticleItem {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    border: 1px solid var(--border-color);
+    padding: 2px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.recentArticleItemTitle{
+    position: relative;
+    z-index: 1000;
+    color: var(--primary-text-color);
+    background-color: #f1f1f165;
 }

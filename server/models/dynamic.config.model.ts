@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { HydratedDocument, Model } from 'mongoose';
 import { getMongooseModule } from '../mongoose';
-
-export type DynamicConfigDocument = DynamicConfig & Document;
 
 @Schema({
     timestamps: true,
@@ -10,47 +8,60 @@ export type DynamicConfigDocument = DynamicConfig & Document;
 })
 export class DynamicConfig {
     @Prop({ unique: true, select: false })
-    key: string;
+    key!: string;
 
     @Prop({ MaxLength: 200, default: '', trim: true })
-    siteTitle: string;
+    siteTitle!: string;
 
     @Prop({ MaxLength: 1024 * 100, default: '', trim: true })
-    siteLogo: string;
+    siteLogo!: string;
 
     @Prop({ MaxLength: 2000, default: '', trim: true })
-    siteMetaKeyWords: string;
+    siteMetaKeyWords!: string;
 
     @Prop({ MaxLength: 2000, default: '', trim: true })
-    siteMetaDescription: string;
+    siteMetaDescription!: string;
 
     @Prop({ MaxLength: 100, default: '', trim: true })
-    siteIcp: string;
+    siteIcp!: string;
 
     @Prop({ MaxLength: 100, default: '', trim: true })
-    siteDomain: string;
+    siteDomain!: string;
 
     /**
      * 邮箱通知服务配置
      */
     @Prop({ default: false, trim: true })
-    isEnableSmtp: boolean;
+    isEnableSmtp!: boolean;
 
     @Prop({ MaxLength: 100, default: '', trim: true })
-    smtpHost: string;
+    smtpHost!: string;
 
     @Prop({})
-    smtpPort: number;
+    smtpPort!: number;
 
     @Prop({ default: false, trim: true })
-    smtpSecure: boolean;
+    smtpSecure!: boolean;
 
     @Prop({ MaxLength: 100, default: '', trim: true })
-    smtpAuthUser: string;
+    smtpAuthUser!: string;
 
     @Prop({ MaxLength: 100, default: '', trim: true })
-    smtpAuthpass: string;
+    smtpAuthpass!: string;
+
+    @Prop({ MaxLength: 100, default: '', trim: true })
+    git!: string;
+
+    @Prop({ MaxLength: 100, default: '', trim: true })
+    githubClientId!: string;
+
+    @Prop({ MaxLength: 100, default: '', trim: true })
+    githubClientSecret!: string;
 }
+
+export type DynamicConfigDocument = HydratedDocument<DynamicConfig>;
+
+export type IDynamicConfigModel = Model<DynamicConfigDocument>;
 
 export const DynamicConfigSchema = SchemaFactory.createForClass(DynamicConfig);
 

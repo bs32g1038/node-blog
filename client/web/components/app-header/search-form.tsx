@@ -23,7 +23,7 @@ export const SearchResultFooter = (props: { isLoading: boolean; totalCount: numb
     );
 };
 
-export const SearchForm = (props) => {
+export const SearchForm = (props: { style?: React.CSSProperties | undefined }) => {
     const router = useRouter();
     const [search, { data: { items = [], totalCount = 0 } = {}, isLoading }] = useLazySearchArticlesQuery();
     const fetchData = (key: string) => {

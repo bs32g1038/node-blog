@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Router from 'next/router';
 import { parseTime } from '@blog/client/libs/time';
-import { Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space } from 'antd';
+import { Button, Popconfirm, message, Input, Row, Tag, Typography, Image, Space, TablePaginationConfig } from 'antd';
 import { PlusOutlined, DeleteFilled, EditFilled, SearchOutlined, HighlightOutlined } from '@ant-design/icons';
 import BasicLayout from '@blog/client/admin/layouts';
 import ActionCard from '@blog/client/admin/components/ActionCard';
@@ -9,9 +9,9 @@ import { useDeleteArticleMutation, useDeleteArticlesMutation, useFetchArticlesMu
 import CTable from '@blog/client/admin/components/CTable';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
     const [searchKey, setSearchKey] = useState('');
     const [state, setState] = useState({
@@ -43,7 +43,7 @@ export default function Index(props) {
         [state, fetchArticles]
     );
     const [_deleteArticle, { isLoading: isDeleteArticleLoading }] = useDeleteArticleMutation();
-    const deleteArticle = (id) => {
+    const deleteArticle = (id: string) => {
         _deleteArticle({ id }).then(() => {
             message.success('删除文章成功！');
             fetchData();
@@ -52,7 +52,7 @@ export default function Index(props) {
     const [deleteArticles, { isLoading: isDeleteArticlesLoading }] = useDeleteArticlesMutation();
     const batchDeleteArticle = () => {
         deleteArticles({
-            articleIds: selectedRowKeys,
+            ids: selectedRowKeys,
         })
             .unwrap()
             .then((res) => {
@@ -68,7 +68,7 @@ export default function Index(props) {
             {
                 title: '文章摘要',
                 dataIndex: 'title',
-                render: (text, record) => (
+                render: (text: string, record: { _id: string; screenshot: string | undefined }) => (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div style={{ marginRight: '15px' }}>
                             <a href={'/blog/articles/' + record._id} className="thumbnail">
@@ -110,7 +110,8 @@ export default function Index(props) {
                 title: '分类',
                 dataIndex: 'category',
                 width: 100,
-                render: (text, record) => (record.category ? record.category.name : '未分类'),
+                render: (_text: any, record: { category: { name: string } }) =>
+                    record.category ? record.category.name : '未分类',
             },
             {
                 title: '浏览数',
@@ -125,32 +126,29 @@ export default function Index(props) {
             {
                 title: '状态',
                 dataIndex: 'isDraft',
-                render: (text, record) =>
+                render: (_text: any, record: { isDraft: any }) =>
                     record.isDraft ? <Tag color="default">草稿</Tag> : <Tag color="green">已发布</Tag>,
             },
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
                 width: 160,
-                render: (text, record) => parseTime(record.createdAt),
+                render: (_text: any, record: { createdAt: string }) => parseTime(record.createdAt),
             },
         ];
     };
-    const handleTableChange = (pagination) => {
+    const handleTableChange = (pagination: TablePaginationConfig) => {
         setState((data) => ({
             ...data,
-            current: pagination.current,
+            current: pagination.current ?? 1,
         }));
-    };
-    const onSelectChange = (selectedRowKeys) => {
-        setSelectedRowKeys(selectedRowKeys);
     };
     useEffect(() => {
         fetchData();
     }, [fetchData]);
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange.bind(this),
+        onChange: (value: any[]) => setSelectedRowKeys(value),
     };
     const CTitle = (
         <Row justify="space-between">
@@ -222,7 +220,7 @@ export default function Index(props) {
                 <CTable
                     rowKey={(record) => record._id}
                     rowSelection={rowSelection}
-                    columns={getTableColums()}
+                    columns={getTableColums() as any[]}
                     dataSource={data.items}
                     pagination={{
                         current: state.current,

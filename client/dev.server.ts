@@ -13,7 +13,7 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    server.use('/api', createProxyMiddleware({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
+    server.use('/api', createProxyMiddleware({ target: 'http://127.0.0.1:8080/api', changeOrigin: true }));
     server.get(/^\/static\//, createProxyMiddleware({ target: 'http://127.0.0.1:8080', changeOrigin: true }));
 
     server.get('/m/blog/articles/:id', (req, res) => {

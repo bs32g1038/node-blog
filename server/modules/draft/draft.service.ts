@@ -1,24 +1,23 @@
-import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { IPaginate } from '@blog/server/mongoose/paginate';
-import { Draft, DraftDocument } from '@blog/server/models/draft.model';
+import { Draft, IDraftModel } from '@blog/server/models/draft.model';
 import { isEmpty } from 'lodash';
+import { CreateDraftDto, UpdateDraftDto } from './draft.zod.schema';
 
 @Injectable()
 export class DraftService {
-    constructor(@InjectModel(Draft.name) private readonly draftModel: Model<DraftDocument> & IPaginate) {}
+    constructor(@InjectModel(Draft.name) private readonly draftModel: IDraftModel) {}
 
-    async create(document: Draft) {
+    async create(document: CreateDraftDto) {
         return await this.draftModel.create(document);
     }
 
-    async update(_id: string, data: Draft) {
+    async update(_id: string, data: UpdateDraftDto) {
         const draft = await this.draftModel.findOneAndUpdate({ _id }, data, {
             runValidators: true,
         });
         if (isEmpty(draft)) {
-            return await this.create({ _id, ...data });
+            return await this.create({ _id, ...data } as any);
         }
         return draft;
     }
@@ -26,14 +25,14 @@ export class DraftService {
     async getList(options: { type: string; page: number; limit: number }) {
         const { page = 1, limit = 10, type } = options;
         const query = { type };
-        const { items, totalCount } = await this.draftModel.paginate(query, '', {
+        const res = await this.draftModel.paginate(query, {
             page,
             limit,
             sort: { createdAt: -1 },
         });
         return {
-            items,
-            totalCount,
+            items: res.docs,
+            totalCount: res.totalDocs,
         };
     }
 

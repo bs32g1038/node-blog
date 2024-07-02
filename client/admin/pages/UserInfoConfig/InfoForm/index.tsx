@@ -23,7 +23,7 @@ const getLoginInfo = () => {
     return axios.get('/user/login-info');
 };
 
-const updateUserInfo = (data) => {
+const updateUserInfo = (data: any) => {
     return axios.put('/user/update', data);
 };
 
@@ -36,7 +36,7 @@ export default function InfoForm() {
             form.setFieldsValue({ ...res.data, avatar: res.data.avatar });
         });
     }, [form]);
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         return injectRequestLoading(updateUserInfo(values)).then(() => {
             message.success('更新成功！');
             router.reload();
@@ -60,7 +60,7 @@ export default function InfoForm() {
                 <UploadButton></UploadButton>
             </Form.Item>
             <Form.Item
-                name="userName"
+                name="username"
                 label="用户名"
                 extra="建议使用一个易记的用户名，方便人们认识你"
                 rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}

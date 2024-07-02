@@ -1,4 +1,4 @@
-export const handleEmoji = (text) => {
+export const handleEmoji = (text: string) => {
     const regex = /@\((.+?)\)/g;
     return text.replace(regex, (str) => {
         if (str) {

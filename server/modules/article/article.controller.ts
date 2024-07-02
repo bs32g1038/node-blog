@@ -1,11 +1,19 @@
 import { Controller, Get, Post, Delete, Put, UseGuards, Req } from '@nestjs/common';
 import { ArticleService } from './article.service';
-import { Article, ArticleJoiSchema } from '../../models/article.model';
-import { Roles } from '../../decorators/roles.decorator';
-import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
-import { RolesGuard } from '../../guards/roles.guard';
-import Joi, { ObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
-import { Request } from 'express';
+import { Article } from '@blog/server/models/article.model';
+import { Roles } from '@blog/server/decorators/roles.decorator';
+import { ZodBody, ZodQuery, ZodParam } from '@blog/server/decorators/zod.decorator';
+import { RolesGuard } from '@blog/server/guards/roles.guard';
+import { objectIdSchema, objectIdsSchema } from '@blog/server/zod/common.schema';
+import {
+    CreateArticleDto,
+    RequestArticlesDto,
+    UpdateArticleDto,
+    createArticleZodSchema,
+    requestArticlesZodSchema,
+    updateArticleZodSchema,
+} from './article.zod.schema';
+
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class ArticleController {
@@ -13,33 +21,25 @@ export class ArticleController {
 
     @Post('/articles')
     @Roles('admin')
-    public async create(@JoiBody(ArticleJoiSchema, { method: 'post' }) article: Article) {
-        return await this.articleService.create(article);
+    public async create(@ZodBody(createArticleZodSchema) createArticleDto: CreateArticleDto) {
+        return await this.articleService.create(createArticleDto);
     }
 
     @Put('/articles/:id')
     @Roles('admin')
-    public async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(ArticleJoiSchema) article: Article) {
+    public async update(
+        @ZodParam(objectIdSchema) params: { id: string },
+        @ZodBody(updateArticleZodSchema) article: UpdateArticleDto
+    ) {
         return await this.articleService.update(params.id, article);
     }
 
     @Get('/articles')
-    public async getArticles(
-        @Req() req: Request,
-        @JoiQuery({
-            cid: Joi.objectId(),
-            tag: Joi.string().max(20),
-            title: Joi.string().trim().max(80),
-            ...StandardPaginationSchema,
-        })
-        query: {
-            page: number;
-            limit: number;
-            cid: string;
-            tag: string;
-            title: string;
+    @Roles('all')
+    public async getArticles(@Req() req: any, @ZodQuery(requestArticlesZodSchema) query: RequestArticlesDto) {
+        if (!req.user?.roles.includes('admin')) {
+            query.isDraft = false;
         }
-    ) {
         const { items, totalCount } = await this.articleService.getArticleList(query);
         return {
             items,
@@ -53,19 +53,19 @@ export class ArticleController {
     }
 
     @Get('/articles/:id')
-    public async getArticle(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Article> {
+    public async getArticle(@ZodParam(objectIdSchema) params: { id: string }): Promise<Article> {
         return await this.articleService.getArticle(params.id);
     }
 
     @Delete('/articles/:id')
     @Roles('admin')
-    public async deleteArticle(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Article | null> {
+    public async deleteArticle(@ZodParam(objectIdSchema) params: { id: string }): Promise<Article | null> {
         return await this.articleService.deleteArticle(params.id);
     }
 
     @Delete('/articles')
     @Roles('admin')
-    deleteArticles(@JoiBody(generateObjectIdsSchema('articleIds')) body: { articleIds: string[] }): Promise<any> {
-        return this.articleService.batchDelete(body.articleIds);
+    deleteArticles(@ZodBody(objectIdsSchema) body: { ids: string[] }): Promise<any> {
+        return this.articleService.batchDelete(body.ids);
     }
 }

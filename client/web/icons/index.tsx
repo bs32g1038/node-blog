@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const GithubIcon = (props) => {
+export const GithubIcon = (props: any) => {
     return (
         <svg viewBox="0 0 291.32 291.32" focusable="false" name="GithubIcon" {...props} fill="currentColor">
             <g>
@@ -21,7 +21,7 @@ C264.008,196.668,231.69,239.992,186.462,256.625z"
     );
 };
 
-export const EmailIcon = (props) => {
+export const EmailIcon = (props: any) => {
     return (
         <svg viewBox="0 0 1462 1024" focusable="false" name="EmailIcon" {...props} fill="currentColor">
             <path
@@ -32,7 +32,7 @@ export const EmailIcon = (props) => {
     );
 };
 
-export const WechatIcon = (props) => {
+export const WechatIcon = (props: any) => {
     return (
         <svg viewBox="0 0 1280 1024" focusable="false" name="WechatIcon" {...props} fill="currentColor">
             <path
@@ -43,7 +43,7 @@ export const WechatIcon = (props) => {
     );
 };
 
-export const QQIcon = (props) => {
+export const QQIcon = (props: any) => {
     return (
         <svg viewBox="0 0 1024 1024" focusable="false" name="qq-icon" {...props} fill="currentColor">
             <g>
@@ -110,7 +110,7 @@ export const RssIcon = (props: any) => (
     </svg>
 );
 
-export const TagIcon = (props) => {
+export const TagIcon = (props: any) => {
     return (
         <svg viewBox="0 0 32 32" focusable="false" name="tag" {...props} fill="currentColor">
             <path d="M8 4v28l10-10 10 10v-28h-20zM24 0h-20v28l2-2v-24h18v-2z"></path>
@@ -118,7 +118,7 @@ export const TagIcon = (props) => {
     );
 };
 
-export const MoonIcon = (props) => {
+export const MoonIcon = (props: any) => {
     return (
         <svg viewBox="0 0 24 24" name="moon" {...props} fill="currentColor">
             <path d="M21.4,13.7C20.6,13.9,19.8,14,19,14c-5,0-9-4-9-9c0-0.8,0.1-1.6,0.3-2.4c0.1-0.3,0-0.7-0.3-1 c-0.3-0.3-0.6-0.4-1-0.3C4.3,2.7,1,7.1,1,12c0,6.1,4.9,11,11,11c4.9,0,9.3-3.3,10.6-8.1c0.1-0.3,0-0.7-0.3-1 C22.1,13.7,21.7,13.6,21.4,13.7z"></path>
@@ -126,7 +126,7 @@ export const MoonIcon = (props) => {
     );
 };
 
-export const SunIcon = (props) => {
+export const SunIcon = (props: any) => {
     return (
         <svg viewBox="0 0 24 24" name="sun" {...props} fill="currentColor">
             <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor">

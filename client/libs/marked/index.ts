@@ -22,7 +22,7 @@ const Xss = new jsxss.FilterXSS({
     },
 });
 
-const xss = (html) => {
+const xss = (html: string) => {
     return Xss.process(html);
 };
 

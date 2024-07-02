@@ -1,14 +1,13 @@
 import path from 'path';
 import multr from 'multer';
-import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { File, FileType, FileDocument } from '@blog/server/models/file.model';
+import { File, FileType, IFileModel } from '@blog/server/models/file.model';
 import { MulterModule } from '@nestjs/platform-express';
 import { md5 } from '@blog/server/utils/crypto.util';
 import { creteUploadFile } from '@blog/server/utils/upload.util';
 import { DynamicConfigService } from '@blog/server/modules/dynamic-config/dynamic.config.service';
 import { InjectModel } from '@nestjs/mongoose';
-import { IPaginate } from '@blog/server/mongoose/paginate';
+import { StandardPaginationDto } from '@blog/server/zod/common.schema';
 
 MulterModule.register({
     storage: multr.memoryStorage(),
@@ -39,21 +38,24 @@ export class FileService {
         },
     ];
     constructor(
-        @InjectModel(File.name) private readonly fileModel: Model<FileDocument> & IPaginate,
+        @InjectModel(File.name) private readonly fileModel: IFileModel,
         private readonly configService: DynamicConfigService
     ) {}
 
-    async getFileList(options: {
-        page?: number;
-        limit?: number;
-        sort?: any;
-    }): Promise<{ items: File[]; totalCount: number }> {
-        const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
-        return await this.fileModel.paginate({}, '', {
-            page,
-            limit,
-            sort,
-        });
+    async getFileList(options: StandardPaginationDto): Promise<{ items: File[]; totalCount: number }> {
+        const { page = 1, limit = 10 } = options;
+        const res = await this.fileModel.paginate(
+            {},
+            {
+                page,
+                limit,
+                sort: { createdAt: -1 },
+            }
+        );
+        return {
+            items: res.docs,
+            totalCount: res.totalDocs,
+        };
     }
 
     async deleteFile(id: string) {
@@ -83,8 +85,8 @@ export class FileService {
             });
             if (rs) {
                 if (item.type === FileType.image) {
-                    if (Number(size) > 1024 * 1024 * 2) {
-                        throw new BadRequestException('图片最大为 2MB');
+                    if (Number(size) > 1024 * 1024 * 5) {
+                        throw new BadRequestException('图片最大为 5MB');
                     }
                 }
                 type = item.type;

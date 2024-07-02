@@ -1,15 +1,14 @@
 import { Model } from 'mongoose';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryDocument, Category } from '../../models/category.model';
-import { QueryRules } from '../../utils/mongoose.query.util';
 import { isEmpty, isEqual, omit } from 'lodash';
-import { Article, ArticleDocument } from '@blog/server/models/article.model';
+import { IArticelModel, Article } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
-import { IPaginate } from '@blog/server/mongoose/paginate';
 import sanitizeHtml from 'sanitize-html';
-import { Draft } from '@blog/server/models/draft.model';
+import { CreateArticleDto, RequestArticlesDto, UpdateArticleDto } from './article.zod.schema';
+import { Draft, IDraftModel } from '@blog/server/models/draft.model';
 
-function truncateString(str, maxLength = 180) {
+function truncateString(str: string, maxLength = 180) {
     let result = '';
     let charCount = 0;
     for (let i = 0; i < str.length; i++) {
@@ -33,18 +32,18 @@ function truncateString(str, maxLength = 180) {
 @Injectable()
 export class ArticleService {
     constructor(
-        @InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument> & IPaginate,
+        @InjectModel(Article.name) private readonly articleModel: IArticelModel,
         @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>,
-        @InjectModel(Draft.name) private readonly draftModel: Model<ArticleDocument> & IPaginate
+        @InjectModel(Draft.name) private readonly draftModel: IDraftModel
     ) {}
 
-    async create(articleDocument: Article) {
-        const article = await this.articleModel.create(articleDocument);
+    async create(createArticleDto: CreateArticleDto) {
+        const article = await this.articleModel.create(createArticleDto);
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: 1 } });
         return article;
     }
 
-    async update(_id: string, data: Article) {
+    async update(_id: string, data: UpdateArticleDto) {
         const article = await this.articleModel.findOneAndUpdate({ _id }, data, {
             runValidators: true,
         });
@@ -68,32 +67,23 @@ export class ArticleService {
         return article;
     }
 
-    async getArticleList(options: {
-        cid?: string;
-        tag?: string;
-        page?: number;
-        limit?: number;
-        sort?: object;
-        title?: string;
-    }) {
-        const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
-        const q = new QueryRules(options, {
-            cid: (str: string) => ({ category: str }),
-            tag: (str: string) => ({ tags: { $elemMatch: { $regex: new RegExp(str, 'i') } } }),
-            title: (str: string) => ({ title: new RegExp(str) }),
-        }).generateQuery();
+    async getArticleList(options: RequestArticlesDto) {
+        const { page = 1, limit = 10 } = options;
         const query = {
             isDeleted: false,
-            ...q,
+            ...(options.title ? { title: new RegExp(options.title) } : {}),
+            ...(options.cid ? { category: options.cid } : {}),
+            ...(options.isDraft === false ? { isDraft: options.isDraft } : {}),
+            ...(options.tag ? { tags: { $elemMatch: { $regex: new RegExp(options.tag, 'i') } } } : {}),
         };
-        const { items, totalCount } = await this.articleModel.paginate(query, '', {
+        const { docs, totalDocs } = await this.articleModel.paginate(query, {
             page,
             limit,
-            sort,
+            sort: { createdAt: -1 },
             populate: [{ path: 'category' }],
         });
         return {
-            items: (items as any).map((item) => {
+            items: docs.map((item) => {
                 const data = item.toJSON();
                 const textContent = sanitizeHtml(data.content, {
                     allowedTags: [],
@@ -104,7 +94,7 @@ export class ArticleService {
                     summary: truncateString(textContent),
                 };
             }),
-            totalCount,
+            totalCount: totalDocs,
         };
     }
 
@@ -160,7 +150,6 @@ export class ArticleService {
         if (!article) {
             throw new NotFoundException();
         }
-        ``;
         await this.categoryModel.updateOne({ _id: article.category }, { $inc: { articleCount: -1 } });
         return null;
     }
