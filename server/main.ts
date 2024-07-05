@@ -14,6 +14,7 @@ import userAgentMiddleware from './middlewares/user-agent.middleware';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    app.set('trust proxy', true);
     app.use(
         helmet({
             contentSecurityPolicy: false,
