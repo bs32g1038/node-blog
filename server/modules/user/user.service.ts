@@ -120,7 +120,7 @@ export class UserService {
         }
         const verifyCode = generateRandomCode(6);
         try {
-            this.emailService.sendMail({
+            await this.emailService.sendMail({
                 html: getTemplate({
                     verifyCode: verifyCode,
                     siteTitle: this.configService.config.siteTitle,
