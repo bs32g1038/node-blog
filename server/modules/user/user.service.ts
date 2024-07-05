@@ -119,14 +119,16 @@ export class UserService {
             throw new BadRequestException('该邮箱已被注册使用');
         }
         const verifyCode = generateRandomCode(6);
-        await this.emailService.sendMail({
-            html: getTemplate({
-                verifyCode: verifyCode,
-                siteTitle: this.configService.config.siteTitle,
-            }),
-            to: data.email,
-            subject: '注册邮箱校验验证码',
-        });
+        try {
+            this.emailService.sendMail({
+                html: getTemplate({
+                    verifyCode: verifyCode,
+                    siteTitle: this.configService.config.siteTitle,
+                }),
+                to: data.email,
+                subject: '注册邮箱校验验证码',
+            });
+        } catch (error) {}
         return {
             verifyCode,
         };

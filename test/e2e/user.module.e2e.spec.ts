@@ -6,6 +6,7 @@ import { encrypt } from '@blog/server/utils/crypto.util';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Connection } from 'mongoose';
 import { FileModule } from '@blog/server/modules/file/file.module';
+import { faker } from '@faker-js/faker';
 
 /**
  * 用户模块 api 测试
@@ -39,7 +40,7 @@ describe('user.module.e2e', () => {
             return request(app.getHttpServer())
                 .post('/api/user/auth/signup')
                 .send({
-                    account: 'test1',
+                    email: faker.internet.email(),
                     password: encrypt('test1'),
                 })
                 .expect(400);
@@ -49,13 +50,23 @@ describe('user.module.e2e', () => {
             const res = await request(app.getHttpServer())
                 .get('/api/test/session')
                 .set('Cookie', resultCaptcha.header['set-cookie']);
-            return request(app.getHttpServer())
+            await request(app.getHttpServer())
+                .post('/api/user/auth/email')
+                .set('Cookie', resultCaptcha.header['set-cookie'])
+                .send({
+                    email: faker.internet.email(),
+                    captcha: res.body.captcha,
+                });
+            const res1 = await request(app.getHttpServer())
+                .get('/api/test/session')
+                .set('Cookie', resultCaptcha.header['set-cookie']);
+            await request(app.getHttpServer())
                 .post('/api/user/auth/signup')
                 .set('Cookie', resultCaptcha.header['set-cookie'])
                 .send({
-                    account: 'test1',
+                    email: faker.internet.email(),
                     password: encrypt('test1'),
-                    captcha: res.body.captcha,
+                    emailCode: res1.body.emailCode,
                 })
                 .expect(201);
         });

@@ -10,6 +10,5 @@ import { LoginLogModelModule } from '@blog/server/models/loginlog.model';
     imports: [UserModelModule, LoginLogModelModule],
     controllers: [UserController],
     providers: [UserService, LoginLogService],
-    exports: [UserService],
 })
 export class UserModule {}

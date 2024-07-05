@@ -1,20 +1,15 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Module } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { TOKEN_SECRET_KEY } from '../configs/index.config';
 import { Request } from 'express';
-import logger from '@blog/server/utils/logger.util';
-import { UserModelModule } from '../models/user.model';
-import { UserService } from '../modules/user/user.service';
+import { AuthService } from '../modules/dynamic-config/auth.service';
 
-@Module({
-    imports: [UserModelModule],
-})
 @Injectable()
 export class RolesGuard implements CanActivate {
     public constructor(
         private readonly reflector: Reflector,
-        private readonly userService: UserService
+        private readonly authService: AuthService
     ) {}
 
     public async canActivate(context: ExecutionContext) {
@@ -36,7 +31,7 @@ export class RolesGuard implements CanActivate {
             const hasRole = () => {
                 return user?.roles?.some((role: string) => roles.includes(role)) || roles?.includes('all');
             };
-            const realUser = await this.userService.getUserById(user.id);
+            const realUser = await this.authService.getUserById(user.id);
             if (realUser?.disabled) {
                 throw new Error('当前账号已被禁用');
             }

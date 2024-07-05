@@ -20,6 +20,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import userAgentMiddleware from '@blog/server/middlewares/user-agent.middleware';
 import { TestModule } from '@blog/server/modules/test/test.module';
+import { faker } from '@faker-js/faker';
 
 export const verifyToken = (str: string) => {
     return jwt.verify(str, TOKEN_SECRET_KEY);
@@ -67,7 +68,7 @@ export const initApp = async (metadata: ModuleMetadata) => {
         ],
         providers: metadata.providers ?? [],
     }).compile();
-    const app = testingModule.createNestApplication();
+    const app = await testingModule.createNestApplication();
     app.useGlobalFilters(new AllExceptionsFilter());
     app.use(userAgentMiddleware());
     app.use(cookieParser());
@@ -80,7 +81,8 @@ export const initApp = async (metadata: ModuleMetadata) => {
     );
     await app.init();
     const user = await model.userModel.create({
-        account: 'test',
+        account: faker.phone.number(),
+        email: faker.internet.email(),
         password: getDerivedKey('admin'),
         type: 'admin',
     });
