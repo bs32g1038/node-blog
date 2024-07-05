@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
+import { getDerivedKey } from '@blog/server/utils/crypto.util';
 
 export const getObjectId = () => {
     return new mongoose.Types.ObjectId().toString();
@@ -45,6 +46,16 @@ export const getFile = (obj = {}) => {
         url: faker.image.url(),
         size: 2000,
         type: 'image',
+        ...obj,
+    };
+};
+
+export const getUsers = (obj = {}) => {
+    return {
+        account: faker.phone.number(),
+        email: faker.internet.email(),
+        password: getDerivedKey('test'),
+        avatar: faker.image.url(),
         ...obj,
     };
 };

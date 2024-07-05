@@ -1,12 +1,14 @@
 import request from 'supertest';
 import { UserModule } from '@blog/server/modules/user/user.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp } from '../util';
+import { generateDataList, initApp } from '../util';
 import { encrypt } from '@blog/server/utils/crypto.util';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { Connection } from 'mongoose';
+import { Connection, Model } from 'mongoose';
 import { FileModule } from '@blog/server/modules/file/file.module';
 import { faker } from '@faker-js/faker';
+import { getUsers } from '../faker';
+import { User } from '@blog/server/models/user.model';
 
 /**
  * 用户模块 api 测试
@@ -15,6 +17,7 @@ describe('user.module.e2e', () => {
     let app: INestApplication;
     let mongod: MongoMemoryServer;
     let mongooseConnection: Connection;
+    let userModel: Model<User>;
     let getToken: () => string[];
 
     beforeAll(async () => {
@@ -24,6 +27,7 @@ describe('user.module.e2e', () => {
         app = instance.app;
         mongod = instance.mongod;
         mongooseConnection = instance.mongooseConnection;
+        userModel = instance.userModel;
         getToken = instance.getToken;
     });
 
@@ -104,6 +108,24 @@ describe('user.module.e2e', () => {
 
     test('forbidden request, reset-password failure', async () => {
         return request(app.getHttpServer()).put('/api/user/reset-password').expect(401);
+    });
+
+    describe('get user list', () => {
+        test('set pagination', async () => {
+            const users = generateDataList(() => getUsers(), 10);
+            await userModel.create(users);
+            return request(app.getHttpServer())
+                .get('/api/user/list')
+                .set('Cookie', getToken())
+                .query({
+                    page: 1,
+                    limit: 10,
+                })
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.totalCount).toBeGreaterThanOrEqual(10);
+                });
+        });
     });
 
     afterAll(async () => {
