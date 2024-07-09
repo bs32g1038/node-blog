@@ -180,6 +180,7 @@ export class UserService {
         } else {
             user = await this.userModel.create({
                 ...data,
+                account: nanoid(6),
                 avatar: data.avatar_url,
                 password: data.accessToken,
                 type: 'user',
