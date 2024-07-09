@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
-import { TOKEN_SECRET_KEY } from '../configs/index.config';
+import { JWT_TOKEN_SECRET_KEY } from '../configs/index.config';
 import { Request } from 'express';
 import { AuthService } from '../modules/dynamic-config/auth.service';
 
@@ -22,7 +22,7 @@ export class RolesGuard implements CanActivate {
         };
         const mstoken = request.cookies?.mstoken;
         try {
-            const user = jwt.verify(mstoken, TOKEN_SECRET_KEY) as {
+            const user = jwt.verify(mstoken, JWT_TOKEN_SECRET_KEY) as {
                 disabled: boolean;
                 id: string;
                 roles: string[];

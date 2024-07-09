@@ -3,7 +3,7 @@ import { IUserModel, User } from '../../models/user.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { decrypt, getDerivedKey } from '@blog/server/utils/crypto.util';
 import infoLogger from '@blog/server/utils/logger.util';
-import { TOKEN_SECRET_KEY } from '@blog/server/configs/index.config';
+import { JWT_TOKEN_SECRET_KEY } from '@blog/server/configs/index.config';
 import jwt from 'jsonwebtoken';
 import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
 import {
@@ -100,7 +100,7 @@ export class UserService {
                     id: user.id,
                     disabled: user.disabled,
                 },
-                token: jwt.sign({ id: user._id, roles: [user.type], disabled: user.disabled }, TOKEN_SECRET_KEY, {
+                token: jwt.sign({ id: user._id, roles: [user.type], disabled: user.disabled }, JWT_TOKEN_SECRET_KEY, {
                     expiresIn: '7d',
                 }),
             };
@@ -154,7 +154,7 @@ export class UserService {
         return {
             username: user.username,
             avatar: user.avatar,
-            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, TOKEN_SECRET_KEY, {
+            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, JWT_TOKEN_SECRET_KEY, {
                 expiresIn: '7d',
             }),
         };
@@ -193,7 +193,7 @@ export class UserService {
                 id: user.id,
                 disabled: user.disabled,
             },
-            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, TOKEN_SECRET_KEY, {
+            token: jwt.sign({ id: user._id, roles: ['user'], disabled: user.disabled }, JWT_TOKEN_SECRET_KEY, {
                 expiresIn: '7d',
             }),
         };

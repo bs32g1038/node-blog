@@ -57,6 +57,9 @@ export class DynamicConfig {
 
     @Prop({ MaxLength: 100, default: '', trim: true })
     githubClientSecret!: string;
+
+    @Prop({ MaxLength: 100, default: '', trim: true })
+    email!: string;
 }
 
 export type DynamicConfigDocument = HydratedDocument<DynamicConfig>;

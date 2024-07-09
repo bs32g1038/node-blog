@@ -52,6 +52,14 @@ export default function Settings(props: any) {
                     ]}
                 ></EditableInput>
                 <EditableInput
+                    value={data.email}
+                    label="网站邮箱"
+                    name="email"
+                    placeholder="请输入网站邮箱"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
                     value={data.siteIcp}
                     label="网站备案icp"
                     name="siteIcp"
@@ -86,6 +94,23 @@ export default function Settings(props: any) {
                     label="META 描述"
                     name="siteMetaDescription"
                     placeholder="请输入描述"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <div className={style.tip}>GITHUB 授权配置</div>
+                <EditableInput
+                    value={data.githubClientId}
+                    label="Client ID"
+                    name="githubClientId"
+                    placeholder="请输入"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
+                    value={data.githubClientSecret}
+                    label="Client secrets"
+                    name="githubClientSecret"
+                    placeholder="请输入"
                     loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>

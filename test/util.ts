@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
+import { JWT_TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
@@ -23,7 +23,7 @@ import { TestModule } from '@blog/server/modules/test/test.module';
 import { faker } from '@faker-js/faker';
 
 export const verifyToken = (str: string) => {
-    return jwt.verify(str, TOKEN_SECRET_KEY);
+    return jwt.verify(str, JWT_TOKEN_SECRET_KEY);
 };
 
 export const createModels = async ({
@@ -90,7 +90,7 @@ export const initApp = async (metadata: ModuleMetadata) => {
         app,
         ...model,
         getToken: () => {
-            const res = jwt.sign({ id: user._id, roles: [user.type] }, TOKEN_SECRET_KEY, {
+            const res = jwt.sign({ id: user._id, roles: [user.type] }, JWT_TOKEN_SECRET_KEY, {
                 expiresIn: '7d',
             });
             return [`mstoken=${res}`];

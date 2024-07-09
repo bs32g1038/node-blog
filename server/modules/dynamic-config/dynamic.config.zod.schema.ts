@@ -14,6 +14,9 @@ export const configZodSchema = z
         smtpPort: z.number(),
         smtpAuthUser: z.string(),
         smtpAuthpass: z.string(),
+        email: z.string(),
+        githubClientId: z.string(),
+        githubClientSecret: z.string(),
     })
     .partial();
 
