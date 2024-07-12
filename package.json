@@ -50,6 +50,7 @@
     "@types/cookie-parser": "1.4.7",
     "@types/fs-extra": "11.0.4",
     "arctic": "1.9.0",
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "1.4.6",
     "cross-env": "7.0.3",
     "crypto-js": "4.2.0",
