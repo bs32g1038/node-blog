@@ -16,7 +16,7 @@ const Page = (props: any) => {
             <Head>
                 <title>{article?.title + ' - ' + config?.siteTitle}</title>
             </Head>
-            <ArticleItem article={article}></ArticleItem>
+            <ArticleItem article={article ?? {}}></ArticleItem>
         </AppLayout>
     );
 };

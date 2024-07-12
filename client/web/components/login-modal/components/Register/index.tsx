@@ -7,6 +7,7 @@ import CaptchaSvg from '../CaptchaSvg';
 import { useRegisterMutation, useRegisterSendEmailMutation } from '@blog/client/web/api';
 import { encrypt } from '@blog/client/libs/crypto-js';
 import { useStore, LOGIN_TYPE } from '../../zustand';
+import { response } from 'express';
 
 export interface SimpleDialogProps {
     open: boolean;
@@ -19,6 +20,7 @@ export default function CLogin() {
     const { setTab } = useStore();
     const [form] = useForm();
     const [step, setStep] = useState(1);
+    const [reponseEmailMessage, setResponseEmaiMessage] = useState('');
     const [register] = useRegisterMutation();
     const [registerSendEmail] = useRegisterSendEmailMutation();
     const onFinish = (values: any) => {
@@ -99,8 +101,16 @@ export default function CLogin() {
                                 form.validateFields().then((values) => {
                                     registerSendEmail(values)
                                         .unwrap()
-                                        .then(() => {
+                                        .then((res) => {
+                                            if (res) {
+                                                setResponseEmaiMessage(res.message);
+                                            }
                                             setStep(2);
+                                        })
+                                        .catch((err) => {
+                                            if (err.data) {
+                                                message.error(err.data.message);
+                                            }
                                         });
                                 });
                             }}
@@ -112,7 +122,7 @@ export default function CLogin() {
                 {step === 2 && (
                     <div>
                         <Space direction="vertical">
-                            <div>已发送验证码到邮你的邮箱，注意查收</div>
+                            <div>{reponseEmailMessage}</div>
                             <Form.Item name="emailCode" rules={[{ required: true, message: '请输入邮箱验证码' }]}>
                                 <Input.OTP length={6} />
                             </Form.Item>

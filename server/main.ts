@@ -4,7 +4,7 @@ import { json } from 'body-parser';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { APP_SERVER } from './configs/index.config';
+import { APP_SERVER, SESSION_SECRET_KEY } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
 import { staticAssetsPath, assetsPath } from './utils/path.util';
@@ -14,7 +14,6 @@ import userAgentMiddleware from './middlewares/user-agent.middleware';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.set('trust proxy', true);
     app.use(
         helmet({
             contentSecurityPolicy: false,
@@ -24,7 +23,7 @@ export async function bootstrap() {
     app.use(cookieParser());
     app.use(
         session({
-            secret: 'my-secret',
+            secret: SESSION_SECRET_KEY,
             resave: false,
             saveUninitialized: false,
         })

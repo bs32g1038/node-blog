@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 import { RolesGuard } from '../../guards/roles.guard';
 import { UserService } from './user.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { ZodBody, ZodParam, ZodQuery } from '../../decorators/zod.decorator';
 import { getDerivedKey } from '../../utils/crypto.util';
 import { Roles } from '@blog/server/decorators/roles.decorator';
@@ -40,12 +40,17 @@ import { LoginLogService } from '../loginlog/loginlog.service';
 import { getClientIp } from '@blog/server/utils/helper';
 import { objectIdSchema, objectIdsSchema } from '@blog/server/zod/common.schema';
 import { User } from '@blog/server/models/user.model';
+import { EmailService } from '../dynamic-config/email.service';
+import cache from '@blog/server/utils/cache.util';
+import dayjs from 'dayjs';
+import { message } from 'antd';
 
 @Controller('/api/user/')
 @UseGuards(RolesGuard)
 export class UserController {
     constructor(
         private readonly userService: UserService,
+        private readonly emailService: EmailService,
         private readonly loginLogService: LoginLogService
     ) {}
 
@@ -132,13 +137,28 @@ export class UserController {
     }
 
     @Post('auth/email')
-    async authEmail(@Session() session: any, @ZodBody(userEmailCheckZodSchema) body: UserEmailCheckDto) {
+    async authEmail(
+        @Req() req: Request,
+        @Session() session: any,
+        @ZodBody(userEmailCheckZodSchema) body: UserEmailCheckDto
+    ) {
+        const key = this.emailService.getEmailCodeCacheKey(req);
+        const NO_REPEAT_CODE_TIME = 60 * 1000; // 60秒
+        const startTime: number = cache.get(key) as number;
+        if (startTime && dayjs().valueOf() - startTime <= NO_REPEAT_CODE_TIME) {
+            return {
+                message: '上一次的邮箱验证码仍然有效',
+            };
+        }
         if (!body.captcha || session.captcha !== body.captcha) {
             throw new BadRequestException('验证码输入有误，请重新检查后再登陆');
         }
         const res = await this.userService.sendRegisterCodeEmail(body);
+        cache.set(key, dayjs().valueOf());
         session.emailCode = res.verifyCode;
-        return true;
+        return {
+            message: '已发送验证码到邮你的邮箱，注意查收',
+        };
     }
 
     @Post('auth/signup')

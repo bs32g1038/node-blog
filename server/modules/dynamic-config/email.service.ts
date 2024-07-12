@@ -2,6 +2,9 @@ import * as nodemailer from 'nodemailer';
 import { Injectable } from '@nestjs/common';
 import Mail from 'nodemailer/lib/mailer';
 import { DynamicConfigService } from './dynamic.config.service';
+import { getClientIp } from '@blog/server/utils/helper';
+import { Request } from 'express';
+import { md5 } from '@blog/server/utils/crypto.util';
 
 export interface EmailOptions {
     to: string;
@@ -68,5 +71,15 @@ export class EmailService {
                 resolve(info);
             });
         });
+    }
+
+    /**
+     * 获取缓存key
+     */
+    getEmailCodeCacheKey(request: Request) {
+        const ip = getClientIp(request);
+        const userAgent = request.headers['user-agent'];
+        const key = 'user-service:captcha:' + md5(ip + userAgent);
+        return key;
     }
 }

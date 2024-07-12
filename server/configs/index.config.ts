@@ -22,6 +22,8 @@ export const MONGODB = {
 
 export const JWT_TOKEN_SECRET_KEY = process.env.JWT_TOKEN_SECRET_KEY || 'jwt-token';
 
+export const SESSION_SECRET_KEY = process.env.SESSION_SECRET_KEY || 'my-secret';
+
 /**
  * 间隔时间 1 个小时 (60 * 60 * 1000毫秒)
  * 每个 ip 最多 30 条
