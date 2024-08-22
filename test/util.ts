@@ -1,30 +1,29 @@
 import mongoose from 'mongoose';
 import { isEqual } from 'lodash';
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET_KEY } from '../server/configs/index.config';
+import { JWT_TOKEN_SECRET_KEY } from '../server/configs/index.config';
 import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 import { Test } from '@nestjs/testing';
 import { AllExceptionsFilter } from '../server/filters/all-exceptions.filter';
 import { DynamicConfigModule } from '@blog/server/modules/dynamic-config/dynamic.config.module';
-import { EmailModule } from '@blog/server/modules/email/email.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Article, ArticleSchema } from '@blog/server/models/article.model';
 import { Category, CategorySchema } from '@blog/server/models/category.model';
 import { Comment, CommentSchema } from '@blog/server/models/comment.model';
 import { User, UserSchema } from '@blog/server/models/user.model';
-import { AdminLog, AdminLogSchema } from '@blog/server/models/adminlog.model';
+import { LoginLog, LoginLogSchema } from '@blog/server/models/loginlog.model';
 import { File, FileSchema } from '@blog/server/models/file.model';
 import { Draft, DraftSchema } from '@blog/server/models/draft.model';
+import { getDerivedKey } from '@blog/server/utils/crypto.util';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import userAgentMiddleware from '@blog/server/middlewares/user-agent.middleware';
+import { TestModule } from '@blog/server/modules/test/test.module';
+import { faker } from '@faker-js/faker';
 
-export const getToken = () => {
-    return jwt.sign({ account: 'test', roles: ['admin'] }, TOKEN_SECRET_KEY, {
-        expiresIn: 60 * 60,
-    });
-};
-
-export const verifyToken = (str) => {
-    return jwt.verify(str, TOKEN_SECRET_KEY);
+export const verifyToken = (str: string) => {
+    return jwt.verify(str, JWT_TOKEN_SECRET_KEY);
 };
 
 export const createModels = async ({
@@ -34,15 +33,15 @@ export const createModels = async ({
     isMemory?: boolean;
     connection?: any;
 }) => {
-    const mongoServer = isMemory ? await MongoMemoryServer.create() : null;
+    const mongoServer: MongoMemoryServer = await MongoMemoryServer.create();
     const mongooseConnection = isMemory
-        ? await mongoose.createConnection(mongoServer.getUri(), {}).asPromise()
+        ? await mongoose.createConnection(mongoServer?.getUri?.() ?? '', {}).asPromise()
         : connection || mongoose;
     const articleModel = mongooseConnection.model(Article.name, ArticleSchema, Article.name.toLocaleLowerCase());
     const categoryModel = mongooseConnection.model(Category.name, CategorySchema, Category.name.toLocaleLowerCase());
     const commentModel = mongooseConnection.model(Comment.name, CommentSchema, Comment.name.toLocaleLowerCase());
     const userModel = mongooseConnection.model(User.name, UserSchema, User.name.toLocaleLowerCase());
-    const adminLogModel = mongooseConnection.model(AdminLog.name, AdminLogSchema, AdminLog.name.toLocaleLowerCase());
+    const adminLogModel = mongooseConnection.model(LoginLog.name, LoginLogSchema, LoginLog.name.toLocaleLowerCase());
     const fileModel = mongooseConnection.model(File.name, FileSchema, File.name.toLocaleLowerCase());
     const draftModel = mongooseConnection.model(Draft.name, DraftSchema, Draft.name.toLocaleLowerCase());
     return {
@@ -60,25 +59,47 @@ export const createModels = async ({
 
 export const initApp = async (metadata: ModuleMetadata) => {
     const model = await createModels({ isMemory: true });
-    const testModule = await Test.createTestingModule({
+    const testingModule = await Test.createTestingModule({
         imports: [
-            MongooseModule.forRoot(model.mongod.getUri()),
+            MongooseModule.forRoot(model?.mongod?.getUri() ?? ''),
             DynamicConfigModule,
-            EmailModule,
+            TestModule,
             ...(metadata.imports || []),
         ],
         providers: metadata.providers ?? [],
     }).compile();
-    const app = testModule.createNestApplication();
+    const app = await testingModule.createNestApplication();
     app.useGlobalFilters(new AllExceptionsFilter());
+    app.use(userAgentMiddleware());
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: 'my-secret',
+            resave: false,
+            saveUninitialized: false,
+        })
+    );
     await app.init();
+    const user = await model.userModel.create({
+        account: faker.phone.number(),
+        email: faker.internet.email(),
+        password: getDerivedKey('admin'),
+        type: 'admin',
+    });
     return {
         app,
         ...model,
+        getToken: () => {
+            const res = jwt.sign({ id: user._id, roles: [user.type] }, JWT_TOKEN_SECRET_KEY, {
+                expiresIn: '7d',
+            });
+            return [`mstoken=${res}`];
+        },
+        user,
     };
 };
 
-export const isExpectPass = (arr1: unknown[], arr2: unknown[], skipFields: string[] = []) => {
+export const isExpectPass = (arr1: any[], arr2: any[], skipFields: string[] = []) => {
     for (let i = 0; i < arr1.length; i++) {
         const rs = arr2.some((item) => {
             return Object.keys(item).every((key) => {
@@ -97,7 +118,7 @@ export const isExpectPass = (arr1: unknown[], arr2: unknown[], skipFields: strin
 };
 
 export const generateDataList = (fn: () => void, len = 0) => {
-    const arr = [];
+    const arr: any[] = [];
     for (let i = 0; i < len; i++) {
         arr.push(fn());
     }

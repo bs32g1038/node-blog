@@ -15,7 +15,7 @@ export const indexApi = adminApi.injectEndpoints({
                 method: 'delete',
             }),
         }),
-        deleteArticles: build.mutation<any, { articleIds: string[] }>({
+        deleteArticles: build.mutation<any, { ids: string[] }>({
             query: (data) => ({
                 url: '/articles',
                 method: 'delete',

@@ -11,7 +11,7 @@ const getTop = (e: HTMLElement) => {
 };
 
 export const useFixedTopInScroll = () => {
-    const $dom = useRef(null);
+    const $dom = useRef<any>(null);
     const [isFixed, setIsFixed] = useState(false);
     useEffect(() => {
         const load = debounce(() => {

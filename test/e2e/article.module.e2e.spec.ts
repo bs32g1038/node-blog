@@ -3,13 +3,10 @@ import { ArticleModule } from '@blog/server/modules/article/article.module';
 import { INestApplication } from '@nestjs/common';
 import { initApp, generateDataList, isExpectPass } from '../util';
 import { getArticle, getObjectId } from '../faker';
-import { getToken } from '../util';
 import { Connection, Model } from 'mongoose';
 import { Article } from '@blog/server/models/article.model';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { Draft } from '@blog/server/models/draft.model';
-
-const __TOKEN__ = getToken();
 
 /**
  * 文章模块 api 测试
@@ -20,6 +17,7 @@ describe('article.module.e2e', () => {
     let mongooseConnection: Connection;
     let articleModel: Model<Article>;
     let draftModel: Model<Draft>;
+    let getToken: () => string[];
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -30,6 +28,7 @@ describe('article.module.e2e', () => {
         mongooseConnection = instance.mongooseConnection;
         articleModel = instance.articleModel;
         draftModel = instance.draftModel;
+        getToken = instance.getToken;
     });
 
     beforeEach(async () => {
@@ -41,7 +40,7 @@ describe('article.module.e2e', () => {
             const article = getArticle();
             return request(app.getHttpServer())
                 .post('/api/articles')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(article)
                 .expect(201)
                 .then((res) => {
@@ -53,7 +52,7 @@ describe('article.module.e2e', () => {
             const article1 = getArticle({ category: '' });
             return request(app.getHttpServer())
                 .post('/api/articles')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(article1)
                 .expect(400);
         });
@@ -66,7 +65,7 @@ describe('article.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .put('/api/articles/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(article)
                 .expect(200);
         });
@@ -78,7 +77,7 @@ describe('article.module.e2e', () => {
             const newCategory = getObjectId();
             return request(app.getHttpServer())
                 .put('/api/articles/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({ ...article, category: newCategory })
                 .expect(200);
         });
@@ -87,7 +86,7 @@ describe('article.module.e2e', () => {
             const article = getArticle();
             return request(app.getHttpServer())
                 .put('/api/articles/' + getObjectId())
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(article)
                 .expect(400);
         });
@@ -98,30 +97,30 @@ describe('article.module.e2e', () => {
             const article = getArticle();
             return request(app.getHttpServer())
                 .put('/api/articles/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send(article)
                 .expect(200);
         });
     });
 
     describe('batch delete', () => {
-        test('bad request, batch delete the data failure, the articleIds should be an objectId array', async () => {
+        test('bad request, batch delete the data failure, the ids should be an objectId array', async () => {
             return request(app.getHttpServer())
                 .delete('/api/articles')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    articleIds: [],
+                    ids: [],
                 })
                 .expect(400);
         });
 
-        test('not found, batch delete the data failure, the articleIds data should be found in db', async () => {
+        test('not found, batch delete the data failure, the ids data should be found in db', async () => {
             const testId = getObjectId();
             return request(app.getHttpServer())
                 .delete('/api/articles')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    articleIds: [testId],
+                    ids: [testId],
                 })
                 .expect(404);
         });
@@ -132,9 +131,9 @@ describe('article.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .delete('/api/articles')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    articleIds: [_id],
+                    ids: [_id],
                 })
                 .expect(200);
         });
@@ -146,14 +145,14 @@ describe('article.module.e2e', () => {
             const { _id } = await articleModel.create(article);
             return request(app.getHttpServer())
                 .delete('/api/articles/' + _id)
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .expect(200);
         });
 
         test('not found, delete failure, the article id not found in db', async () => {
             return request(app.getHttpServer())
                 .delete('/api/articles/' + getObjectId())
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .expect(404);
         });
     });

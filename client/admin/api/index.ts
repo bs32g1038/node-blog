@@ -38,4 +38,4 @@ export const adminApi = createApi({
     }),
 });
 
-export const { useFetchUserInfoQuery } = adminApi;
+export const { useLazyFetchUserInfoQuery } = adminApi;

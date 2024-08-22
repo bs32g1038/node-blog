@@ -4,16 +4,36 @@ import { json } from 'body-parser';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { APP_SERVER } from './configs/index.config';
+import { APP_SERVER, MONGODB, SESSION_SECRET_KEY } from './configs/index.config';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import logger, { requestInfoLogger } from './utils/logger.util';
 import { staticAssetsPath, assetsPath } from './utils/path.util';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import userAgentMiddleware from './middlewares/user-agent.middleware';
+import MongoStore from 'connect-mongo';
 
 export async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.use(
         helmet({
             contentSecurityPolicy: false,
+        })
+    );
+    app.use(userAgentMiddleware());
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: SESSION_SECRET_KEY,
+            cookie: {
+                maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+            },
+            store: MongoStore.create({
+                mongoUrl: MONGODB.uri,
+                touchAfter: 24 * 3600, // time period in seconds
+            }),
+            saveUninitialized: false, // don't create session until something stored
+            resave: false, //don't save session if unmodified
         })
     );
     app.use(json({ limit: '20mb' }));

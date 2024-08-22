@@ -1,69 +1,47 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import data2xml from 'data2xml';
-import { RSS as RSSCONFIG, ADMIN_USER_INFO } from '../../configs/index.config';
-import { Article, ArticleDocument } from '@blog/server/models/article.model';
+import { Article, IArticelModel } from '@blog/server/models/article.model';
 import { InjectModel } from '@nestjs/mongoose';
-
-const convert = data2xml();
-
-function utf8ForXml(inputStr: string) {
-    // FIXME: no-control-regex
-    /* eslint-disable no-control-regex */
-    return inputStr.replace(/[^\x09\x0A\x0D\x20-\xFF\x85\xA0-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '');
-}
+import { DynamicConfigService } from '../dynamic-config/dynamic.config.service';
+import { XMLBuilder } from 'fast-xml-parser';
 
 @Injectable()
 export class RssService {
-    constructor(@InjectModel(Article.name) private readonly articleModel: Model<ArticleDocument>) {}
+    constructor(
+        @InjectModel(Article.name) private readonly articleModel: IArticelModel,
+        private readonly configService: DynamicConfigService
+    ) {}
 
     async index() {
-        const rssObj: {
-            _attr: { version: string };
-            channel: {
-                title: string;
-                link: string;
-                language: string;
-                description: string;
-                item: {
-                    title: string;
-                    link: string;
-                    guid: string;
-                    description: string;
-                    author: string;
-                    pubDate: string | Date | undefined;
-                }[];
-            };
-        } = {
-            _attr: { version: '2.0' },
-            channel: {
-                title: RSSCONFIG.title,
-                link: RSSCONFIG.link,
-                language: RSSCONFIG.language,
-                description: RSSCONFIG.description,
-                item: [],
-            },
+        const xmlOptions = {
+            ignoreAttributes: false,
+            // Avoid correcting self-closing tags to standard tags
+            // when using `customData`
+            // https://github.com/withastro/astro/issues/5794
+            suppressEmptyNode: true,
+            suppressBooleanAttributes: false,
         };
-
+        const root: any = { '?xml': { '@_version': '1.0', '@_encoding': 'UTF-8' } };
+        root.rss = { '@_version': '2.0' };
+        root.rss.channel = {
+            title: this.configService.config.siteTitle,
+            description: this.configService.config.siteMetaDescription,
+            link: this.configService.config.siteDomain,
+        };
         const articles = await this.articleModel.find({}, '', {
             skip: 0,
-            limit: RSSCONFIG.maxRssItems,
+            limit: 50,
             sort: { createdAt: -1 },
         });
-
-        articles.forEach((article: Article) => {
-            rssObj.channel.item.push({
+        root.rss.channel.item = articles.map((article: Article) => {
+            return {
                 title: article.title,
-                link: RSSCONFIG.link + '/articles/' + article._id,
-                guid: RSSCONFIG.link + '/articles/' + article._id,
+                link: 'https://' + this.configService.config.siteDomain + '/articles/' + article._id,
+                guid: 'https://' + this.configService.config.siteDomain + '/articles/' + article._id,
                 description: article.content,
-                author: ADMIN_USER_INFO.email,
-                pubDate: article.createdAt,
-            });
+                author: this.configService.config.email,
+                pubDate: new Date(article.createdAt).toUTCString(),
+            };
         });
-
-        let rssContent = convert('rss', rssObj);
-        rssContent = utf8ForXml(rssContent);
-        return rssContent;
+        return new XMLBuilder(xmlOptions).build(root);
     }
 }

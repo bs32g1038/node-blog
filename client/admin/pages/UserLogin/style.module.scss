@@ -70,6 +70,19 @@
             max-width: 300px;
             margin: 0 auto;
         }
+        @keyframes resetBg {
+            to {
+                color: #fff !important;
+                background: transparent !important;
+            }
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:active,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:hover {
+            -webkit-transition: background-color 60000s ease-in-out 0s;
+            transition: background-color 60000s ease-in-out 0s;
+        }
     }
 }
 .signInHeader {
@@ -78,6 +91,9 @@
     padding: 5px 10px;
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .signInTitle {
     margin-top: 0;

@@ -1,95 +1,53 @@
-import { Controller, Get, Post, Delete, Put, UseGuards, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Post, Delete, UseGuards, Req } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { Comment, CommentJoiSchema } from '../../models/comment.model';
 import { Roles } from '../../decorators/roles.decorator';
-import { JoiQuery, JoiParam, JoiBody } from '../../decorators/joi.decorator';
+import { ZodQuery, ZodParam, ZodBody } from '../../decorators/zod.decorator';
 import { RolesGuard } from '../../guards/roles.guard';
-import { auth } from '../../utils/auth.util';
-import { ADMIN_USER_INFO } from '../../configs/index.config';
-import { ObjectIdSchema, generateObjectIdSchema, StandardPaginationSchema, generateObjectIdsSchema } from '../../joi';
 import { omit } from 'lodash';
-
+import { CreateCommentDto, createCommentZodSchema } from './comment.zod.schema';
+import { objectIdSchema, objectIdsSchema, standardPaginationSchema } from '@blog/server/zod/common.schema';
+import { z } from 'zod';
+import { getClientIp } from '@blog/server/utils/helper';
 @Controller('/api')
 @UseGuards(RolesGuard)
 export class CommentController {
     constructor(private readonly commentService: CommentService) {}
 
     @Post('/comments')
-    async create(@Req() req: Request, @JoiBody(CommentJoiSchema, { method: 'post' }) comment: Comment) {
+    @Roles('user', 'admin')
+    async create(@Req() req: any, @ZodBody(createCommentZodSchema) comment: CreateCommentDto) {
+        const ua = req.useragent;
+        comment.ip = getClientIp(req);
+        comment.user = req.user.id;
+        comment.browser = `${ua.browser.name} ${ua.browser.version}`;
+        comment.os = `${ua.os.name} ${ua.os.version}`;
         const data = await this.commentService.create(comment);
         return omit(data.toJSON(), 'email');
     }
 
-    /**
-     * 管理员回复评论接口，需要登录授权
-     */
-    @Post('/admin/reply-comment')
-    @Roles('admin')
-    async adminReplyComment(
-        @JoiBody(
-            {
-                article: CommentJoiSchema.article,
-                parentId: CommentJoiSchema.parentId[1].required(),
-                reply: CommentJoiSchema.reply[1],
-                content: CommentJoiSchema.content,
-            },
-            { method: 'post' }
-        )
-        comment: Comment
-    ) {
-        const data = await this.commentService.create(comment, true);
-        return data;
-    }
-
-    @Put('/comments/:id')
-    @Roles('admin')
-    async update(@JoiParam(ObjectIdSchema) params: { id: string }, @JoiBody(CommentJoiSchema) comment: Comment) {
-        return await this.commentService.update(params.id, comment);
-    }
-
-    @Get('/admin-comments')
-    @Roles('admin')
-    async getAdminComments(
-        @Req() req: Request,
-        @JoiQuery({ ...StandardPaginationSchema, ...generateObjectIdSchema('articleId') })
-        query: {
-            page: number;
-            limit: number;
-            articleId: string;
-        }
-    ) {
-        let field = '';
-        if (!auth(req)) {
-            field = '-email';
-        }
-        const { items, totalCount } = await this.commentService.getAdminCommentList({
-            ...query,
-            field,
-        });
-        return {
-            items,
-            totalCount,
-        };
-    }
-
     @Get('/comments')
+    @Roles('all')
     async getComments(
-        @Req() req: Request,
-        @JoiQuery({ ...StandardPaginationSchema, ...generateObjectIdSchema('articleId') })
+        @Req() req: any,
+        @ZodQuery(
+            standardPaginationSchema.merge(
+                z
+                    .object({
+                        articleId: z.string(),
+                    })
+                    .partial()
+            )
+        )
         query: {
             page: number;
             limit: number;
             articleId: string;
         }
     ) {
-        let field = '';
-        if (!auth(req)) {
-            field = '-email';
-        }
         const { items, totalCount } = await this.commentService.getCommentList({
             ...query,
-            field,
+            userId: req?.user?.id,
+            field: '',
         });
         return {
             items,
@@ -99,14 +57,14 @@ export class CommentController {
 
     @Get('/comments/:id')
     @Roles('admin')
-    async getComment(@JoiParam(ObjectIdSchema) params: { id: string }): Promise<Comment | null> {
+    async getComment(@ZodParam(objectIdSchema) params: { id: string }) {
         return await this.commentService.getComment(params.id);
     }
 
     @Delete('/comments/:id')
-    @Roles('admin')
-    async deleteComment(@JoiParam(ObjectIdSchema) params: { id: string }) {
-        return await this.commentService.deleteComment(params.id);
+    @Roles('user', 'admin')
+    async deleteComment(@Req() req: any, @ZodParam(objectIdSchema) params: { id: string }) {
+        return await this.commentService.deleteComment(params.id, req?.user?.id);
     }
 
     @Get('/recent-comments')
@@ -117,7 +75,13 @@ export class CommentController {
 
     @Delete('/comments')
     @Roles('admin')
-    deleteComments(@JoiBody(generateObjectIdsSchema('commentIds')) body: { commentIds: string[] }): Promise<any> {
-        return this.commentService.batchDelete(body.commentIds);
+    deleteComments(@ZodBody(objectIdsSchema) body: { ids: string[] }) {
+        return this.commentService.batchDelete(body.ids);
+    }
+
+    @Post('/like-comment/:id')
+    @Roles('user', 'admin')
+    likeComment(@Req() req: any, @ZodParam(objectIdSchema) params: { id: string }) {
+        return this.commentService.likeComment(params.id, req.user.id);
     }
 }

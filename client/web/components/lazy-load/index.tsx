@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export const LazyLoad = React.memo((props: { component: any; attrs: any }) => {
     const [attrs, setAttrs] = useState({});
-    const $dom = useRef(null);
+    const $dom = useRef<any>(null);
     useEffect(() => {
         const intersectionObserver: IntersectionObserver = new IntersectionObserver(function (entries) {
             if (entries[0].intersectionRatio <= 0) return;

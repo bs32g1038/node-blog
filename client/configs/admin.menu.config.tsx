@@ -74,6 +74,12 @@ const menuConfig = [
         exact: true,
     },
     {
+        path: '/admin/users',
+        icon: <UserOutlined />,
+        title: '用户管理',
+        exact: true,
+    },
+    {
         path: '/admin/settings',
         icon: <SettingOutlined />,
         title: '系统配置',

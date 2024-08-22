@@ -39,21 +39,21 @@ interface Iconfig {
 }
 
 export interface IComment {
+    readonly isCanDeleted: boolean;
     readonly _id: string;
-    readonly nickName: string;
-    readonly email: string;
-    readonly website: string;
+    readonly user: {
+        username: string;
+        avatar: string;
+        type: string;
+    };
     readonly reply: IComment;
-    readonly location: string;
-    readonly pass: boolean;
     readonly content: string;
-    readonly identity: number;
     readonly createdAt: string;
     readonly updatedAt: string;
+    readonly likes: string[];
+    readonly browser: string;
     readonly article: { _id: string } | string;
-    readonly comments?: {
-        items: IComment[];
-    };
+    readonly comments?: IComment[];
 }
 
 interface CategoryQueryDataLoaded {
@@ -98,21 +98,6 @@ interface CommentQueryDataLoaded {
     totalCount: number;
 }
 
-interface ExploreDataLoaded {
-    _id: string;
-    content: string;
-    links: {
-        title: string;
-        link: string;
-    }[];
-    pics: string[];
-    createdAt: string;
-}
-
-interface IExploreReponse {
-    items: ExploreDataLoaded[];
-}
-
 export const appApi = createApi({
     reducerPath: 'appApi',
     baseQuery: axiosBaseQuery(),
@@ -155,9 +140,6 @@ export const appApi = createApi({
                 return { url: '/api/articles', method: 'get', params: query };
             },
         }),
-        fetchExplore: builder.query<IExploreReponse, void>({
-            query: () => ({ url: `/api/explore`, method: 'get' }),
-        }),
         fetchConfigSvg: builder.query<any, { url: string }>({
             query: (params) => ({ url: params.url.replace('/api', ''), method: 'get' }),
         }),
@@ -166,6 +148,46 @@ export const appApi = createApi({
                 url: '/api/search',
                 method: 'get',
                 params,
+            }),
+        }),
+        postComment: builder.mutation<any, { url: string; data: any }>({
+            query: (params) => ({
+                url: params.url,
+                method: 'post',
+                data: params.data,
+            }),
+        }),
+        likeComment: builder.query<any, { id: string }>({
+            query: (params) => ({
+                url: '/api/like-comment/' + params.id,
+                method: 'post',
+            }),
+        }),
+        deleteComment: builder.mutation<any, { id: string }>({
+            query: (params) => ({
+                url: '/api/comments/' + params.id,
+                method: 'delete',
+            }),
+        }),
+        authLogin: builder.mutation<any, { email: string; password: string; captcha: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/login',
+                method: 'post',
+                data,
+            }),
+        }),
+        register: builder.mutation<any, { email: string; password: string; emailCode: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/signup',
+                method: 'post',
+                data,
+            }),
+        }),
+        registerSendEmail: builder.mutation<any, { email: string; captcha: string }>({
+            query: (data) => ({
+                url: '/api/user/auth/email',
+                method: 'post',
+                data,
             }),
         }),
     }),
@@ -179,9 +201,14 @@ export const {
     useFetchArticlesQuery,
     useLazyFetchArticlesQuery,
     useFetchConfigQuery,
-    useFetchExploreQuery,
     useFetchConfigSvgQuery,
     useLazySearchArticlesQuery,
+    useLazyLikeCommentQuery,
+    useDeleteCommentMutation,
+    useAuthLoginMutation,
+    useRegisterMutation,
+    useRegisterSendEmailMutation,
+    usePostCommentMutation,
 } = appApi;
 
 export const {
@@ -191,6 +218,5 @@ export const {
     fetchArticle,
     fetchComments,
     fetchRecentArticles,
-    fetchExplore,
     fetchConfigSvg,
 } = appApi.endpoints;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Key, useCallback, useEffect, useState } from 'react';
 import { parseTime } from '@blog/client/libs/time';
 import { Button, Popconfirm, message, Space } from 'antd';
 import Router from 'next/router';
@@ -9,9 +9,9 @@ import { useDeleteCategoriesMutation, useDeleteCategoryMutation, useFetchCategor
 import CTable from '@blog/client/admin/components/CTable';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Index(props) {
+export default function Index(props: any) {
     wrapper.useHydration(props);
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
     const [fetchCategories, { data = [], isLoading }] = useFetchCategoriesMutation();
     const fetchData = useCallback(() => {
@@ -22,7 +22,7 @@ export default function Index(props) {
         fetchCategories(query);
     }, [fetchCategories]);
     const [_deleteCategory, { isLoading: isDeleteCategoryLoading }] = useDeleteCategoryMutation();
-    const deleteCategory = (id) => {
+    const deleteCategory = (id: string) => {
         _deleteCategory({ id })
             .unwrap()
             .then((res) => {
@@ -32,7 +32,7 @@ export default function Index(props) {
     };
     const [deleteCategories, { isLoading: isDeleteCategoriesLoading }] = useDeleteCategoriesMutation();
     const batchDeleteCategory = () => {
-        deleteCategories({ categoryIds: selectedRowKeys })
+        deleteCategories({ ids: selectedRowKeys })
             .unwrap()
             .then((res) => {
                 if (res && res.deletedCount > 0) {
@@ -51,7 +51,7 @@ export default function Index(props) {
             {
                 title: '创建时间',
                 dataIndex: 'createdAt',
-                render: (text, record) => parseTime(record.createdAt),
+                render: (_text: any, record: { createdAt: string }) => parseTime(record.createdAt),
             },
             {
                 title: '文章数量',
@@ -61,7 +61,7 @@ export default function Index(props) {
                 title: '操作',
                 key: 'operation',
                 width: 180,
-                render: (text, record) => (
+                render: (_text: any, record: { _id: string }) => (
                     <div>
                         <Button
                             type="primary"
@@ -88,7 +88,7 @@ export default function Index(props) {
     }, [fetchData]);
     const rowSelection = {
         selectedRowKeys,
-        onChange: setSelectedRowKeys,
+        onChange: (value: any[]) => setSelectedRowKeys(value),
     };
     const CTitle = (
         <Space>

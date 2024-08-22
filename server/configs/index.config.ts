@@ -20,23 +20,9 @@ export const MONGODB = {
     password: process.env.MONGODB_PASSWORD || '',
 };
 
-export const TOKEN_SECRET_KEY = 'NODEBLOG/bs32g1038@163.com/TOKEN';
+export const JWT_TOKEN_SECRET_KEY = process.env.JWT_TOKEN_SECRET_KEY || 'jwt-token';
 
-export const GITHUB_SECRET_KEY = 'Github/bs32g1038@163.com/TOKEN';
-
-export const ADMIN_USER_INFO = {
-    nickName: '李志成',
-    email: 'bs32g1038@163.com',
-    location: '广东 广州',
-};
-
-export const RSS = {
-    title: '李志成的个人网站',
-    link: 'http://www.lizc.net',
-    language: 'zh-cn',
-    description: '博客小站，专注于web开发，尤其是前端开发。喜欢和同道中人一起搞开发！',
-    maxRssItems: 50,
-};
+export const SESSION_SECRET_KEY = process.env.SESSION_SECRET_KEY || 'my-secret';
 
 /**
  * 间隔时间 1 个小时 (60 * 60 * 1000毫秒)

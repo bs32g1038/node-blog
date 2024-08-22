@@ -32,8 +32,8 @@ export const AppFooter = () => {
                             </span>
                         </Space>
                         <div className={style.contactList}>
-                            <a href={config.icpGovCn} className={style.icpGovCn}>
-                                <span className={style.siteIcp}>{config.siteIcp}</span>
+                            <a href={config?.icpGovCn} className={style.icpGovCn}>
+                                <span className={style.siteIcp}>{config?.siteIcp}</span>
                             </a>
                             <a href="mailto:bs32g1038@163.com">
                                 <EmailIcon></EmailIcon>
@@ -44,7 +44,7 @@ export const AppFooter = () => {
                             <a>
                                 <QQIcon></QQIcon>
                             </a>
-                            <a href={config.projectGithub}>
+                            <a href={config?.projectGithub}>
                                 <GithubIcon></GithubIcon>
                             </a>
                         </div>

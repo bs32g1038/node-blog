@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { isArray, isString, toInteger } from 'lodash';
 import { wrapper } from '@blog/client/redux/store';
 
-const Page = (props) => {
+const Page = (props: any) => {
     wrapper.useHydration(props);
     const router = useRouter();
     const { data: config } = useFetchConfigQuery();
@@ -21,7 +21,7 @@ const Page = (props) => {
     return (
         <AppLayout>
             <Head>
-                <title>{config.siteTitle + '-博客'}</title>
+                <title>{config?.siteTitle + '-博客'}</title>
             </Head>
             <Categories></Categories>
             <div style={{ margin: '15px 0' }}>

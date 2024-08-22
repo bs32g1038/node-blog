@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { SearchService } from './search.service';
-import { JoiQuery } from '../../decorators/joi.decorator';
-import Joi from '../../joi';
+import { ZodQuery } from '../../decorators/zod.decorator';
+import { z } from 'zod';
 
 @Controller('/api/search')
 export class SearchController {
@@ -9,9 +9,11 @@ export class SearchController {
 
     @Get('')
     async getArticles(
-        @JoiQuery({
-            key: Joi.string().default('').max(10).allow(''),
-        })
+        @ZodQuery(
+            z.object({
+                key: z.string().max(10).default(''),
+            })
+        )
         query: {
             key: string;
         }

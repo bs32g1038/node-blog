@@ -15,6 +15,11 @@
         .ck.ck-toolbar .ck.ck-toolbar__separator {
             display: none;
         }
+
+        .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content {
+            border: none;
+        }
+
         .tox-editor-header {
             box-shadow: none !important;
             border-bottom: 1px solid #f5f5f5 !important;

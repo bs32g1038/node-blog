@@ -11,7 +11,7 @@ const TinyArea = dynamic(() => import('@ant-design/plots').then(({ TinyArea }) =
 
 const Item = (props: any) => {
     const item = props.item;
-    const data = [1, 1, ...item.dayReadings.map((item) => item.count), 1, 1];
+    const data = [1, 1, ...item.dayReadings.map((item: { count: number }) => item.count), 1, 1];
     const config: TinyAreaConfig = {
         autoFit: true,
         data,

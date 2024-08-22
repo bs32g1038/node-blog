@@ -8,11 +8,11 @@ import style from './style.module.scss';
 import { useLazyFetchAdminConfigsQuery, useUpdateAdminConfigsMutation } from './service';
 import { wrapper } from '@blog/client/redux/store';
 
-export default function Settings(props) {
+export default function Settings(props: any) {
     wrapper.useHydration(props);
     const [fetchConfig, { data = {} }] = useLazyFetchAdminConfigsQuery();
     const [updateConfig, { isLoading }] = useUpdateAdminConfigsMutation();
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
         updateConfig(values).then(() => {
             message.success('更新成功');
         });
@@ -52,6 +52,14 @@ export default function Settings(props) {
                     ]}
                 ></EditableInput>
                 <EditableInput
+                    value={data.email}
+                    label="网站邮箱"
+                    name="email"
+                    placeholder="请输入网站邮箱"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
                     value={data.siteIcp}
                     label="网站备案icp"
                     name="siteIcp"
@@ -86,6 +94,23 @@ export default function Settings(props) {
                     label="META 描述"
                     name="siteMetaDescription"
                     placeholder="请输入描述"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <div className={style.tip}>GITHUB 授权配置</div>
+                <EditableInput
+                    value={data.githubClientId}
+                    label="Client ID"
+                    name="githubClientId"
+                    placeholder="请输入"
+                    loading={isLoading}
+                    onFinish={onFinish}
+                ></EditableInput>
+                <EditableInput
+                    value={data.githubClientSecret}
+                    label="Client secrets"
+                    name="githubClientSecret"
+                    placeholder="请输入"
                     loading={isLoading}
                     onFinish={onFinish}
                 ></EditableInput>

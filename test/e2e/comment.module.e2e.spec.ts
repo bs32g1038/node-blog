@@ -1,14 +1,12 @@
 import request from 'supertest';
 import { CommentModule } from '@blog/server/modules/comment/comment.module';
 import { INestApplication } from '@nestjs/common';
-import { initApp, generateDataList, isExpectPass } from '../util';
+import { initApp, generateDataList } from '../util';
 import { getComment, getArticle, getObjectId } from '../faker';
-import { getToken } from '../util';
 import { Article } from '@blog/server/models/article.model';
-import { Model, Connection } from 'mongoose';
+import mongoose, { Model, Connection } from 'mongoose';
 import { Comment } from '@blog/server/models/comment.model';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-const __TOKEN__ = getToken();
 
 /**
  * 评论模块 api 测试
@@ -19,7 +17,7 @@ describe('comment.module.e2e', () => {
     let mongooseConnection: Connection;
     let articleModel: Model<Article>;
     let commentModel: Model<Comment>;
-    let userModel: Model<Comment>;
+    let getToken: () => string[];
 
     beforeAll(async () => {
         const instance = await initApp({
@@ -30,7 +28,7 @@ describe('comment.module.e2e', () => {
         mongooseConnection = instance.mongooseConnection;
         articleModel = instance.articleModel;
         commentModel = instance.commentModel;
-        userModel = instance.userModel;
+        getToken = instance.getToken;
     });
 
     beforeEach(async () => {
@@ -39,57 +37,34 @@ describe('comment.module.e2e', () => {
     });
 
     describe('create comment', () => {
-        test('permission:visitor', async () => {
+        test('permission:user or admin', async () => {
             const article = await articleModel.create(getArticle());
             const comment = getComment({ article: article._id.toString() });
-
             return request(app.getHttpServer())
                 .post('/api/comments')
+                .set('Cookie', getToken())
                 .send(comment)
                 .expect(201)
                 .then((res) => {
                     const a = res.body;
                     expect(a.pass).toEqual(true);
-                    expect(a.identity).toEqual(0);
-                    expect(a.nickName).toEqual(comment.nickName);
                     expect(a.content).toEqual(comment.content);
                     expect(a.reply).toEqual(comment.reply);
-                    expect(a.article).toEqual(article._id.toString());
-                });
-        });
-
-        test('permission:admin', async () => {
-            await userModel.create({
-                userName: 'bs32g1038',
-                account: 'bs32g1038',
-                password: 'test',
-                email: 'bs32g1038@163.com',
-            });
-            const article = await articleModel.create(getArticle());
-            const replyComment = {
-                article: article._id.toString(),
-                content: getComment().content,
-                parentId: getObjectId(),
-                reply: getObjectId(),
-            };
-
-            return request(app.getHttpServer())
-                .post('/api/admin/reply-comment')
-                .set('authorization', __TOKEN__)
-                .send(replyComment)
-                .expect(201)
-                .then((res) => {
-                    const a = res.body;
-                    expect(a.pass).toEqual(true);
-                    expect(a.identity).toEqual(1);
-                    expect(a.content).toEqual(replyComment.content);
-                    expect(a.reply).toBe(replyComment.reply);
                     expect(a.article).toEqual(article._id.toString());
                 });
         });
     });
 
     describe('get comment list', () => {
+        test('empty query', async () => {
+            return request(app.getHttpServer())
+                .get('/api/comments')
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.items.length).toBeGreaterThanOrEqual(0);
+                });
+        });
+
         test('default query', async () => {
             const article = await articleModel.create(getArticle());
             const comments = generateDataList(() => getComment({ article: article._id.toString() }), 10);
@@ -100,7 +75,6 @@ describe('comment.module.e2e', () => {
                 .expect(200)
                 .then((res) => {
                     expect(res.body.items.length).toBeGreaterThanOrEqual(10);
-                    expect(isExpectPass(res.body.items, comments, ['email', 'article', 'reply'])).toEqual(true);
                 });
         });
 
@@ -112,7 +86,7 @@ describe('comment.module.e2e', () => {
     });
 
     test('get recent comment list 200', async () => {
-        return request(app.getHttpServer()).get('/api/recent-comments').set('authorization', __TOKEN__).expect(200);
+        return request(app.getHttpServer()).get('/api/recent-comments').set('Cookie', getToken()).expect(200);
     });
 
     test('get one comment success', async () => {
@@ -122,36 +96,37 @@ describe('comment.module.e2e', () => {
 
         return request(app.getHttpServer())
             .get('/api/comments/' + _id.toString())
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .expect(200)
             .then((res) => {
                 const a = res.body;
                 expect(a.pass).toEqual(true);
-                expect(a.identity).toEqual(0);
-                expect(a.nickName).toEqual(comment.nickName);
                 expect(a.content).toEqual(comment.content);
                 expect(a.reply).toEqual(comment.reply);
             });
     });
 
-    test('update comment success', async () => {
+    test('the comment cannot be found', async () => {
+        return request(app.getHttpServer())
+            .get('/api/comments/' + new mongoose.Types.ObjectId().toString())
+            .set('Cookie', getToken())
+            .expect(200);
+    });
+
+    test('comment like 200', async () => {
         const article = await articleModel.create(getArticle());
         const comment = getComment({ article: article._id.toString() });
         const { _id } = await commentModel.create(comment);
-
-        return request(app.getHttpServer())
-            .put('/api/comments/' + _id.toString())
-            .set('authorization', __TOKEN__)
-            .send(comment)
-            .expect(200)
-            .then((res) => {
-                const a = res.body;
-                expect(a.pass).toEqual(true);
-                expect(a.nickName).toEqual(comment.nickName);
-                expect(a.content).toEqual(comment.content);
-                expect(a.reply).toEqual(comment.reply);
-                expect(a.article).toEqual(article._id.toString());
-            });
+        // like
+        await request(app.getHttpServer())
+            .post('/api/like-comment/' + _id)
+            .set('Cookie', getToken())
+            .expect(201);
+        // cancel like
+        await request(app.getHttpServer())
+            .post('/api/like-comment/' + _id)
+            .set('Cookie', getToken())
+            .expect(201);
     });
 
     test('delete comment success', async () => {
@@ -162,28 +137,28 @@ describe('comment.module.e2e', () => {
 
         return request(app.getHttpServer())
             .delete('/api/comments/' + _id)
-            .set('authorization', __TOKEN__)
+            .set('Cookie', getToken())
             .expect(200);
     });
 
     describe('batch delete', () => {
-        test('bad request, batch delete the data failure, the commentIds should be an objectId array', async () => {
+        test('bad request, batch delete the data failure, the ids should be an objectId array', async () => {
             return request(app.getHttpServer())
                 .delete('/api/comments')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    commentIds: [],
+                    ids: [],
                 })
                 .expect(400);
         });
 
-        test('not found, batch delete the data failure, the commentIds data should be found in db', async () => {
+        test('not found, batch delete the data failure, the ids data should be found in db', async () => {
             const testId = getObjectId();
             return request(app.getHttpServer())
                 .delete('/api/comments')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    commentIds: [testId],
+                    ids: [testId],
                 })
                 .expect(404);
         });
@@ -196,9 +171,9 @@ describe('comment.module.e2e', () => {
 
             return request(app.getHttpServer())
                 .delete('/api/comments')
-                .set('authorization', __TOKEN__)
+                .set('Cookie', getToken())
                 .send({
-                    commentIds: [_id],
+                    ids: [_id],
                 })
                 .expect(200);
         });
